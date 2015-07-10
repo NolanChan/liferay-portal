@@ -2235,9 +2235,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	protected void copyExpandoRowModifiedDate(
-			long companyId, long sourceFileVersionId,
-			long destinationFileVersionId)
-		throws PortalException {
+		long companyId, long sourceFileVersionId,
+		long destinationFileVersionId) {
 
 		ExpandoTable expandoTable = null;
 
@@ -2314,8 +2313,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	protected String getNextVersion(
-			DLFileEntry dlFileEntry, boolean majorVersion, int workflowAction)
-		throws PortalException {
+		DLFileEntry dlFileEntry, boolean majorVersion, int workflowAction) {
 
 		String version = dlFileEntry.getVersion();
 
