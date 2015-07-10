@@ -547,6 +547,7 @@ public class TrashImpl implements Trash {
 		return isTrashEnabled(GroupLocalServiceUtil.getGroup(groupId));
 	}
 
+	@Override
 	public boolean isValidTrashTitle(String title) {
 		return isValidTrashTitle(title, TRASH_PREFIX);
 	}
