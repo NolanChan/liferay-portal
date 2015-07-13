@@ -1231,6 +1231,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			return;
 		}
 
+		dlFolder.setModifiedDate(dlFolder.getModifiedDate());
 		dlFolder.setLastPostDate(lastPostDate);
 
 		dlFolderPersistence.update(dlFolder);

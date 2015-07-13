@@ -1568,6 +1568,7 @@ public class DLFileEntryLocalServiceImpl
 			return;
 		}
 
+		dlFileEntry.setModifiedDate(dlFileEntry.getModifiedDate());
 		dlFileEntry.setReadCount(dlFileEntry.getReadCount() + increment);
 
 		dlFileEntryPersistence.update(dlFileEntry);
