@@ -13,7 +13,6 @@
 
 package com.liferay.mobile.device.recognition.provider.wurfl.internal;
 
-import com.liferay.mobile.device.recognition.provider.wurfl.internal.util.WURFLPropsValues;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
@@ -21,28 +20,11 @@ import com.liferay.portal.kernel.mobile.device.DeviceCapabilityFilter;
 import com.liferay.portal.kernel.mobile.device.DeviceRecognitionProvider;
 import com.liferay.portal.kernel.mobile.device.KnownDevices;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.ZipInputStream;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.wurfl.core.WURFLEngine;
-import net.sourceforge.wurfl.core.resource.WURFLResources;
-import net.sourceforge.wurfl.core.resource.XMLResource;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -60,7 +42,7 @@ public class WURFLDeviceRecognitionProvider
 	@Override
 	public Device detectDevice(HttpServletRequest request) {
 		net.sourceforge.wurfl.core.Device wurflDevice =
-			_wurflEngine.getDeviceForRequest(request);
+			_wurflEngineProxy.getDeviceForRequest(request);
 
 		Device device = null;
 
@@ -85,22 +67,9 @@ public class WURFLDeviceRecognitionProvider
 
 	@Override
 	public void reload() throws Exception {
-		List<InputStream> inputStreams = new ArrayList<>();
+		_wurflEngineProxy.reload();
 
-		try {
-			XMLResource xmlResource = getXMLResource(inputStreams);
-
-			WURFLResources wurflResources = getWURFLResources(inputStreams);
-
-			_wurflEngine.reload(xmlResource, wurflResources);
-
-			_knownDevices.reload();
-		}
-		finally {
-			for (InputStream inputStream : inputStreams) {
-				StreamUtil.cleanUp(inputStream);
-			}
-		}
+		_knownDevices.reload();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialised");
@@ -118,77 +87,14 @@ public class WURFLDeviceRecognitionProvider
 		_deviceCapabilityFilter = deviceCapabilityFilter;
 	}
 
-	@Activate
-	protected void activate() throws Exception {
-		reload();
-	}
-
-	protected WURFLResources getWURFLResources(List<InputStream> inputStreams)
-		throws FileNotFoundException {
-
-		WURFLResources wurflResources = new WURFLResources();
-
-		String[] fileNames = FileUtil.listFiles(
-			WURFLPropsValues.WURFL_DATABASE_PATCHES);
-
-		for (String fileName : fileNames) {
-			File file = new File(
-				WURFLPropsValues.WURFL_DATABASE_PATCHES, fileName);
-
-			FileInputStream fileInputStream = new FileInputStream(file);
-
-			inputStreams.add(fileInputStream);
-
-			XMLResource xmlResource = new XMLResource(file);
-
-			wurflResources.add(xmlResource);
-		}
-
-		return wurflResources;
-	}
-
-	protected XMLResource getXMLResource(List<InputStream> inputStreams)
-		throws IOException {
-
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			WURFLPropsValues.WURFL_DATABASE_PRIMARY);
-
-		if (inputStream == null) {
-			throw new IllegalStateException(
-				"Unable to find " + WURFLPropsValues.WURFL_DATABASE_PRIMARY);
-		}
-
-		if (WURFLPropsValues.WURFL_DATABASE_PRIMARY.endsWith(".gz")) {
-			inputStream = new GZIPInputStream(inputStream);
-		}
-		else if (WURFLPropsValues.WURFL_DATABASE_PRIMARY.endsWith(".jar") ||
-				 WURFLPropsValues.WURFL_DATABASE_PRIMARY.endsWith(".zip")) {
-
-			ZipInputStream zipInputStream = new ZipInputStream(inputStream);
-
-			inputStream = zipInputStream;
-
-			zipInputStream.getNextEntry();
-		}
-
-		XMLResource xmlResource = new XMLResource(
-			inputStream, WURFLPropsValues.WURFL_DATABASE_PRIMARY);
-
-		inputStreams.add(inputStream);
-
-		return xmlResource;
-	}
-
 	@Reference(unbind = "-")
 	protected void setKnownDevices(KnownDevices knownDevices) {
 		_knownDevices = knownDevices;
 	}
 
 	@Reference(unbind = "-")
-	protected void setWURFLEngine(WURFLEngine wurflEngine) {
-		_wurflEngine = wurflEngine;
+	protected void setWurflEngineProxy(WURFLEngineProxy wurflEngineProxy) {
+		_wurflEngineProxy = wurflEngineProxy;
 	}
 
 	protected void unsetDeviceCapabilityFilter(
@@ -202,6 +108,6 @@ public class WURFLDeviceRecognitionProvider
 
 	private DeviceCapabilityFilter _deviceCapabilityFilter;
 	private KnownDevices _knownDevices;
-	private WURFLEngine _wurflEngine;
+	private WURFLEngineProxy _wurflEngineProxy;
 
 }

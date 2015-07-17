@@ -44,10 +44,10 @@ public interface WURFLEngineConfiguration {
 	)
 	public String engineTarget();
 
-	@Meta.AD(
-		deflt = "classpath:/META-INF/resources/wurfl-latest.zip",
-		required = false
-	)
+	@Meta.AD(deflt = "/META-INF/resources/wurfl-latest.zip", required = false)
 	public String wurflDatabaseFile();
+
+	@Meta.AD(deflt = "/data/wurfl/patches", required = false)
+	public String wurflDatabasePatchDir();
 
 }
