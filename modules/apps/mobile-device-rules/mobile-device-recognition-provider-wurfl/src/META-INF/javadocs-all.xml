@@ -633,26 +633,4 @@
 			<name>_wurflKnownDevices</name>
 		</field>
 	</javadoc>
-	<javadoc>
-		<name>PortletPropsKeys</name>
-		<type>com.liferay.mobile.device.recognition.provider.wurfl.internal.util.PortletPropsKeys</type>
-		<author><![CDATA[Michael C. Han]]></author>
-		<field>
-			<name>WURFL_DATABASE_PATCHES</name>
-		</field>
-		<field>
-			<name>WURFL_DATABASE_PRIMARY</name>
-		</field>
-	</javadoc>
-	<javadoc>
-		<name>PortletPropsValues</name>
-		<type>com.liferay.mobile.device.recognition.provider.wurfl.internal.util.PortletPropsValues</type>
-		<author><![CDATA[Michael C. Han]]></author>
-		<field>
-			<name>WURFL_DATABASE_PATCHES</name>
-		</field>
-		<field>
-			<name>WURFL_DATABASE_PRIMARY</name>
-		</field>
-	</javadoc>
 </javadocs>
