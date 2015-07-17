@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+>
+	<bean id="com.liferay.portal.mobile.device.wurfl.WURFLDeviceRecognitionProvider" class="com.liferay.portal.mobile.device.wurfl.WURFLDeviceRecognitionProvider">
+		<property name="deviceCapabilityFilter">
+			<bean class="com.liferay.portal.kernel.mobile.device.DefaultDeviceCapabilityFilter" />
+		</property>
+		<property name="knownDevices" ref="com.liferay.portal.mobile.device.wurfl.WURFLKnownDevices" />
+		<property name="WURFLEngine" ref="net.sourceforge.wurfl.core.WURFLEngine" />
+	</bean>
+	<bean id="com.liferay.portal.mobile.device.wurfl.WURFLKnownDevices" class="com.liferay.portal.mobile.device.wurfl.WURFLKnownDevices">
+		<property name="WURFLEngine" ref="net.sourceforge.wurfl.core.WURFLEngine" />
+	</bean>
+	<bean id="com.liferay.portal.mobile.device.wurfl.jmx.WURFLDeviceRecognitionProviderMBean" class="com.liferay.portal.mobile.device.wurfl.jmx.WURFLDeviceRecognitionProviderManager">
+		<property name="WURFLDeviceRecognitionProvider" ref="com.liferay.portal.mobile.device.wurfl.WURFLDeviceRecognitionProvider" />
+	</bean>
+	<bean id="net.sourceforge.wurfl.core.WURFLEngine" class="net.sourceforge.wurfl.core.GeneralWURFLEngine">
+		<constructor-arg index="0" value="classpath:/META-INF/wurfl-latest.zip" />
+		<property name="cacheProvider" ref="net.sourceforge.wurfl.core.cache.CacheProvider" />
+		<property name="capabilityFilter">
+			<set>
+				<value>brand_name</value>
+				<value>can_assign_phone_number</value>
+				<value>columns</value>
+				<value>device_os</value>
+				<value>device_os_version</value>
+				<value>dual_orientation</value>
+				<value>has_cellular_radio</value>
+				<value>has_querty_keyboard</value>
+				<value>https_support</value>
+				<value>https_verisign_class3</value>
+				<value>is_smarttv</value>
+				<value>is_tablet</value>
+				<value>is_wireless_device</value>
+				<value>marketing_name</value>
+				<value>max_data_rate</value>
+				<value>mobile_browser</value>
+				<value>mobile_browser_version</value>
+				<value>model_name</value>
+				<value>physical_screen_height</value>
+				<value>physical_screen_width</value>
+				<value>pointing_method</value>
+				<value>preferred_markup</value>
+				<value>resolution_height</value>
+				<value>resolution_width</value>
+				<value>rows</value>
+				<value>ux_full_desktop</value>
+				<value>vpn</value>
+				<value>wifi</value>
+				<value>xhtml_can_embed_video</value>
+				<value>xhtml_support_level</value>
+			</set>
+		</property>
+		<property name="engineTarget" value="performance" />
+	</bean>
+	<bean id="net.sourceforge.wurfl.core.cache.CacheProvider" class="com.liferay.portal.mobile.device.wurfl.cache.LiferayCacheProvider" />
+	<bean id="wurflMBeanExporter" class="org.springframework.jmx.export.MBeanExporter">
+		<property name="beans">
+			<map>
+				<entry key="com.liferay.portal.mobile.device:classification=wurfl,name=WURFLDeviceRecognitionProviderManager" value-ref="com.liferay.portal.mobile.device.wurfl.jmx.WURFLDeviceRecognitionProviderMBean" />
+			</map>
+		</property>
+		<property name="registrationBehavior">
+			<util:constant static-field="org.springframework.jmx.support.MBeanRegistrationSupport.REGISTRATION_IGNORE_EXISTING" />
+		</property>
+		<property name="server">
+			<bean class="org.springframework.jmx.support.MBeanServerFactoryBean">
+				<property name="locateExistingServerIfPossible" value="true" />
+			</bean>
+		</property>
+	</bean>
+</beans>
