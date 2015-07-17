@@ -7,4 +7,16 @@
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
 
+	<target name="compile">
+		<process-ivy
+			module.dir="${basedir}"
+		/>
+
+		<copy file="wurfl.jar" todir="lib" />
+
+		<compile
+			module.dir="${basedir}"
+		/>
+	</target>
+
 </project>
