@@ -15,18 +15,40 @@ package com.liferay.mobile.device.recognition.provider.wurfl.internal.jmx;
 
 import com.liferay.mobile.device.recognition.provider.wurfl.internal.WURFLDeviceRecognitionProvider;
 
+import javax.management.DynamicMBean;
+import javax.management.NotCompliantMBeanException;
+import javax.management.StandardMBean;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {
+		"jmx.objectname=com.liferay.mobile.device.recognition.provider:classification=wurfl,name=WURFLDeviceRecognitionProviderManager",
+		"jmx.objectname.cache.key=WURFLDeviceRecognitionProviderManager"
+	},
+	service = DynamicMBean.class
+)
 public class WURFLDeviceRecognitionProviderManager
-	implements WURFLDeviceRecognitionProviderMBean {
+	extends StandardMBean implements WURFLDeviceRecognitionProviderMBean {
+
+	public WURFLDeviceRecognitionProviderManager()
+		throws NotCompliantMBeanException {
+
+		super(WURFLDeviceRecognitionProviderMBean.class);
+	}
 
 	@Override
 	public void reload() throws Exception {
 		_wurflDeviceRecognitionProvider.reload();
 	}
 
-	public void setWURFLDeviceRecognitionProvider(
+	@Reference(unbind = "-")
+	protected void setWURFLDeviceRecognitionProvider(
 		WURFLDeviceRecognitionProvider wurflDeviceRecognitionProvider) {
 
 		_wurflDeviceRecognitionProvider = wurflDeviceRecognitionProvider;

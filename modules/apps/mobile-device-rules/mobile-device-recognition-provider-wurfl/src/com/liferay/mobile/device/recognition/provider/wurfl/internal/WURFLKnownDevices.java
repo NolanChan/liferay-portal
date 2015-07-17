@@ -33,10 +33,14 @@ import net.sourceforge.wurfl.core.WURFLUtils;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Milen Dyankov
  * @author Michael C. Han
  */
+@Component(immediate = true, service = KnownDevices.class)
 public class WURFLKnownDevices implements KnownDevices {
 
 	@Override
@@ -99,10 +103,6 @@ public class WURFLKnownDevices implements KnownDevices {
 		loadWURFLDevices();
 	}
 
-	public void setWURFLEngine(WURFLEngine wurflEngine) {
-		_wurflEngine = wurflEngine;
-	}
-
 	protected void loadWURFLDevices() {
 		if (_initialized) {
 			return;
@@ -160,6 +160,11 @@ public class WURFLKnownDevices implements KnownDevices {
 		}
 
 		_initialized = true;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWURFLEngine(WURFLEngine wurflEngine) {
+		_wurflEngine = wurflEngine;
 	}
 
 	protected void updateCapability(
@@ -243,14 +248,15 @@ public class WURFLKnownDevices implements KnownDevices {
 		versionableCapability.addVersion(capabilityVersionValue);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WURFLKnownDevices.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WURFLKnownDevices.class);
 
 	private Set<VersionableName> _brands;
 	private Set<VersionableName> _browsers;
-	private Map<Capability, Set<String>> _devicesIds = new HashMap<>();
+	private final Map<Capability, Set<String>> _devicesIds = new HashMap<>();
 	private boolean _initialized;
 	private Set<VersionableName> _operatingSystems;
-	private Set<String> _pointingMethods = new TreeSet<>();
+	private final Set<String> _pointingMethods = new TreeSet<>();
 	private WURFLEngine _wurflEngine;
 
 }

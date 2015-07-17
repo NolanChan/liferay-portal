@@ -18,12 +18,12 @@ import com.liferay.util.portlet.PortletProps;
 /**
  * @author Michael C. Han
  */
-public class PortletPropsValues {
+public class WURFLPropsValues {
 
 	public static final String WURFL_DATABASE_PATCHES = PortletProps.get(
-		PortletPropsKeys.WURFL_DATABASE_PATCHES);
+		WURFLPropsKeys.WURFL_DATABASE_PATCHES);
 
 	public static final String WURFL_DATABASE_PRIMARY = PortletProps.get(
-		PortletPropsKeys.WURFL_DATABASE_PRIMARY);
+		WURFLPropsKeys.WURFL_DATABASE_PRIMARY);
 
 }

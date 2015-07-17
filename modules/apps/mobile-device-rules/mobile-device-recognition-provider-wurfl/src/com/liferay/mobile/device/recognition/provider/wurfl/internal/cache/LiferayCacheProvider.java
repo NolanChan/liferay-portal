@@ -14,14 +14,18 @@
 package com.liferay.mobile.device.recognition.provider.wurfl.internal.cache;
 
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 
 import net.sourceforge.wurfl.core.InternalDevice;
 import net.sourceforge.wurfl.core.cache.CacheProvider;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = CacheProvider.class)
 public class LiferayCacheProvider implements CacheProvider {
 
 	@Override
@@ -44,7 +48,13 @@ public class LiferayCacheProvider implements CacheProvider {
 		_portalCache.put(deviceId, internalDevice);
 	}
 
-	private PortalCache<String, InternalDevice> _portalCache =
-		SingleVMPoolUtil.getPortalCache(LiferayCacheProvider.class.getName());
+	@Reference(unbind = "-")
+	protected void setSingleVMPool(SingleVMPool singleVMPool) {
+		_portalCache =
+			(PortalCache<String, InternalDevice>)singleVMPool.getPortalCache(
+				LiferayCacheProvider.class.getName());
+	}
+
+	private PortalCache<String, InternalDevice> _portalCache;
 
 }

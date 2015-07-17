@@ -16,7 +16,7 @@ package com.liferay.mobile.device.recognition.provider.wurfl.internal.util;
 /**
  * @author Michael C. Han
  */
-public class PortletPropsKeys {
+public class WURFLPropsKeys {
 
 	public static final String WURFL_DATABASE_PATCHES =
 		"wurfl.database.patches";

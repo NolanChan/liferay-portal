@@ -38,7 +38,9 @@ public class WURFLDevice extends AbstractDevice {
 			String name = entry.getKey();
 			String value = entry.getValue();
 
-			if (!deviceCapabilityFilter.accept(name, value)) {
+			if ((deviceCapabilityFilter != null) &&
+				!deviceCapabilityFilter.accept(name, value)) {
+
 				continue;
 			}
 
@@ -175,6 +177,6 @@ public class WURFLDevice extends AbstractDevice {
 		return capability.getValue();
 	}
 
-	private Map<String, Capability> _capabilities = new HashMap<>();
+	private final Map<String, Capability> _capabilities = new HashMap<>();
 
 }
