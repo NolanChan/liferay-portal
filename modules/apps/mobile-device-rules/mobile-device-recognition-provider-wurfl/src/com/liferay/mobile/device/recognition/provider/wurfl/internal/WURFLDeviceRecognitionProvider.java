@@ -11,7 +11,7 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.wurfl;
+package com.liferay.mobile.device.recognition.provider.wurfl.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.mobile.device.KnownDevices;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.mobile.device.wurfl.util.PortletPropsValues;
+import com.liferay.mobile.device.recognition.provider.wurfl.internal.util.PortletPropsValues;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -11,9 +11,9 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.wurfl.jmx;
+package com.liferay.mobile.device.recognition.provider.wurfl.internal.jmx;
 
-import com.liferay.portal.mobile.device.wurfl.WURFLDeviceRecognitionProvider;
+import com.liferay.mobile.device.recognition.provider.wurfl.internal.WURFLDeviceRecognitionProvider;
 
 /**
  * @author Michael C. Han

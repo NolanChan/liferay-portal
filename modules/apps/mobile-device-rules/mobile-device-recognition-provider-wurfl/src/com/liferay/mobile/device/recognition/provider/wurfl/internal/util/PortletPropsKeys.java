@@ -11,19 +11,17 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.wurfl.util;
-
-import com.liferay.util.portlet.PortletProps;
+package com.liferay.mobile.device.recognition.provider.wurfl.internal.util;
 
 /**
  * @author Michael C. Han
  */
-public class PortletPropsValues {
+public class PortletPropsKeys {
 
-	public static final String WURFL_DATABASE_PATCHES = PortletProps.get(
-		PortletPropsKeys.WURFL_DATABASE_PATCHES);
+	public static final String WURFL_DATABASE_PATCHES =
+		"wurfl.database.patches";
 
-	public static final String WURFL_DATABASE_PRIMARY = PortletProps.get(
-		PortletPropsKeys.WURFL_DATABASE_PRIMARY);
+	public static final String WURFL_DATABASE_PRIMARY =
+		"wurfl.database.primary";
 
 }

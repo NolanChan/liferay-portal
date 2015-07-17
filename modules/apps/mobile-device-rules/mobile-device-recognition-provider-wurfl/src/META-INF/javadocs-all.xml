@@ -3,7 +3,7 @@
 <javadocs>
 	<javadoc>
 		<name>WURFLConstants</name>
-		<type>com.liferay.portal.mobile.device.wurfl.WURFLConstants</type>
+		<type>com.liferay.mobile.device.recognition.provider.wurfl.internal.WURFLConstants</type>
 		<author><![CDATA[Milen Dyankov]]></author>
 		<author><![CDATA[Michael C. Han]]></author>
 		<field>
@@ -54,7 +54,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WURFLDevice</name>
-		<type>com.liferay.portal.mobile.device.wurfl.WURFLDevice</type>
+		<type>com.liferay.mobile.device.recognition.provider.wurfl.internal.WURFLDevice</type>
 		<author><![CDATA[Milen Dyankov]]></author>
 		<author><![CDATA[Michael C. Han]]></author>
 		<method>
@@ -186,7 +186,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WURFLDeviceRecognitionProvider</name>
-		<type>com.liferay.portal.mobile.device.wurfl.WURFLDeviceRecognitionProvider</type>
+		<type>com.liferay.mobile.device.recognition.provider.wurfl.internal.WURFLDeviceRecognitionProvider</type>
 		<author><![CDATA[Milen Dyankov]]></author>
 		<author><![CDATA[Michael C. Han]]></author>
 		<method>
@@ -365,7 +365,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WURFLKnownDevices</name>
-		<type>com.liferay.portal.mobile.device.wurfl.WURFLKnownDevices</type>
+		<type>com.liferay.mobile.device.recognition.provider.wurfl.internal.WURFLKnownDevices</type>
 		<author><![CDATA[Milen Dyankov]]></author>
 		<author><![CDATA[Michael C. Han]]></author>
 		<method>
@@ -501,7 +501,7 @@
 	</javadoc>
 	<javadoc>
 		<name>LiferayCacheProvider</name>
-		<type>com.liferay.portal.mobile.device.wurfl.cache.LiferayCacheProvider</type>
+		<type>com.liferay.mobile.device.recognition.provider.wurfl.internal.cache.LiferayCacheProvider</type>
 		<author><![CDATA[Michael C. Han]]></author>
 		<method>
 			<name>clear</name>
@@ -547,7 +547,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WURFLDeviceRecognitionProviderMBean</name>
-		<type>com.liferay.portal.mobile.device.wurfl.jmx.WURFLDeviceRecognitionProviderMBean</type>
+		<type>com.liferay.mobile.device.recognition.provider.wurfl.internal.jmx.WURFLDeviceRecognitionProviderMBean</type>
 		<author><![CDATA[Michael C. Han]]></author>
 		<method>
 			<name>reload</name>
@@ -560,7 +560,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WURFLDeviceRecognitionProviderManager</name>
-		<type>com.liferay.portal.mobile.device.wurfl.jmx.WURFLDeviceRecognitionProviderManager</type>
+		<type>com.liferay.mobile.device.recognition.provider.wurfl.internal.jmx.WURFLDeviceRecognitionProviderManager</type>
 		<author><![CDATA[Michael C. Han]]></author>
 		<method>
 			<name>reload</name>
@@ -574,7 +574,7 @@
 			<name>setWURFLDeviceRecognitionProvider</name>
 			<param>
 				<name>wurflDeviceRecognitionProvider</name>
-				<type>com.liferay.portal.mobile.device.wurfl.WURFLDeviceRecognitionProvider</type>
+				<type>com.liferay.mobile.device.recognition.provider.wurfl.internal.WURFLDeviceRecognitionProvider</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
@@ -606,7 +606,7 @@
 			<name>setWurflKnownDevices</name>
 			<param>
 				<name>wurflKnownDevices</name>
-				<type>com.liferay.portal.mobile.device.wurfl.WURFLKnownDevices</type>
+				<type>com.liferay.mobile.device.recognition.provider.wurfl.internal.WURFLKnownDevices</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
@@ -635,7 +635,7 @@
 	</javadoc>
 	<javadoc>
 		<name>PortletPropsKeys</name>
-		<type>com.liferay.portal.mobile.device.wurfl.util.PortletPropsKeys</type>
+		<type>com.liferay.mobile.device.recognition.provider.wurfl.internal.util.PortletPropsKeys</type>
 		<author><![CDATA[Michael C. Han]]></author>
 		<field>
 			<name>WURFL_DATABASE_PATCHES</name>
@@ -646,7 +646,7 @@
 	</javadoc>
 	<javadoc>
 		<name>PortletPropsValues</name>
-		<type>com.liferay.portal.mobile.device.wurfl.util.PortletPropsValues</type>
+		<type>com.liferay.mobile.device.recognition.provider.wurfl.internal.util.PortletPropsValues</type>
 		<author><![CDATA[Michael C. Han]]></author>
 		<field>
 			<name>WURFL_DATABASE_PATCHES</name>

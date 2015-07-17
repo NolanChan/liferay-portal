@@ -11,13 +11,19 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.wurfl.jmx;
+package com.liferay.mobile.device.recognition.provider.wurfl.internal.util;
+
+import com.liferay.util.portlet.PortletProps;
 
 /**
  * @author Michael C. Han
  */
-public interface WURFLDeviceRecognitionProviderMBean {
+public class PortletPropsValues {
 
-	public void reload() throws Exception;
+	public static final String WURFL_DATABASE_PATCHES = PortletProps.get(
+		PortletPropsKeys.WURFL_DATABASE_PATCHES);
+
+	public static final String WURFL_DATABASE_PRIMARY = PortletProps.get(
+		PortletPropsKeys.WURFL_DATABASE_PRIMARY);
 
 }
