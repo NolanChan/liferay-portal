@@ -20,5 +20,7 @@
 	<classpathentry kind="lib" path="lib/jackson-core-asl.jar" />
 	<classpathentry kind="lib" path="lib/jackson-mapper-asl.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.compendium.jar" />
+	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
+	<classpathentry kind="lib" path="lib/wurfl.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>
