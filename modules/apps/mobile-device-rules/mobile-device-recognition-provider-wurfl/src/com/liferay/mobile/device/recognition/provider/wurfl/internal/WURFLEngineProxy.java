@@ -149,7 +149,8 @@ public class WURFLEngineProxy {
 		String wurflDatabaseFileName =
 			_wurflEngineConfiguration.wurflDatabaseFileName();
 
-		InputStream inputStream = clazz.getResourceAsStream(wurflDatabaseFileName);
+		InputStream inputStream = clazz.getResourceAsStream(
+			wurflDatabaseFileName);
 
 		if (inputStream == null) {
 			throw new IllegalStateException(
@@ -185,10 +186,8 @@ public class WURFLEngineProxy {
 				WURFLEngineConfiguration.class, properties);
 
 			_wurflEngine.setCacheProvider(_cacheProvider);
-
 			_wurflEngine.setCapabilityFilter(
 				_wurflEngineConfiguration.capabilityFilter());
-
 			_wurflEngine.setEngineTarget(
 				EngineTarget.valueOf(_wurflEngineConfiguration.engineTarget()));
 
