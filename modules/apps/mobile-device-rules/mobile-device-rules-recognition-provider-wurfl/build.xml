@@ -8,9 +8,7 @@
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
 
 	<target name="compile">
-		<process-ivy
-			module.dir="${basedir}"
-		/>
+		<mkdir dir="lib" />
 
 		<copy file="wurfl.jar" todir="lib" />
 
@@ -18,5 +16,4 @@
 			module.dir="${basedir}"
 		/>
 	</target>
-
 </project>
