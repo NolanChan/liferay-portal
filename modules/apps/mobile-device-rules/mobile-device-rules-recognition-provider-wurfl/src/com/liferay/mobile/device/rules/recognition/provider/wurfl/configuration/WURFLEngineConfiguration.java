@@ -11,7 +11,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.recognition.provider.wurfl.configuration;
+package com.liferay.mobile.device.rules.recognition.provider.wurfl.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -19,7 +19,7 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Michael C. Han
  */
 @Meta.OCD(
-	id = "com.liferay.mobile.device.recognition.provider.wurfl.configuration.WURFLEngineConfiguration"
+	id = "com.liferay.mobile.device.rules.recognition.provider.wurfl.configuration.WURFLEngineConfiguration"
 )
 public interface WURFLEngineConfiguration {
 

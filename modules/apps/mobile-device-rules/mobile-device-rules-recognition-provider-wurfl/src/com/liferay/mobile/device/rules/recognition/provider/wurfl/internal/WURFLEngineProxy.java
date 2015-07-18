@@ -11,12 +11,12 @@
  * details.
  */
 
-package com.liferay.mobile.device.recognition.provider.wurfl.internal;
+package com.liferay.mobile.device.rules.recognition.provider.wurfl.internal;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.mobile.device.recognition.provider.wurfl.configuration.WURFLEngineConfiguration;
-import com.liferay.mobile.device.recognition.provider.wurfl.internal.util.WURFLUtil;
+import com.liferay.mobile.device.rules.recognition.provider.wurfl.configuration.WURFLEngineConfiguration;
+import com.liferay.mobile.device.rules.recognition.provider.wurfl.internal.util.WURFLUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.mobile.device.recognition.provider.wurfl.configuration.WURFLEngineConfiguration",
+	configurationPid = "com.liferay.mobile.device.rules.recognition.provider.wurfl.configuration.WURFLEngineConfiguration",
 	immediate = true, service = WURFLEngineProxy.class
 )
 public class WURFLEngineProxy {
