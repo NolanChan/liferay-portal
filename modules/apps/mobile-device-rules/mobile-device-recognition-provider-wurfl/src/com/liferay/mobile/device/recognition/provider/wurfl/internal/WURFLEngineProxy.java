@@ -146,10 +146,10 @@ public class WURFLEngineProxy {
 
 		Class<?> clazz = getClass();
 
-		String wurflDatabaesFile =
+		String wurflDatabaseFile =
 			_wurflEngineConfiguration.wurflDatabaseFile();
 
-		InputStream inputStream = clazz.getResourceAsStream(wurflDatabaesFile);
+		InputStream inputStream = clazz.getResourceAsStream(wurflDatabaseFile);
 
 		if (inputStream == null) {
 			throw new IllegalStateException(
@@ -157,11 +157,11 @@ public class WURFLEngineProxy {
 					_wurflEngineConfiguration.wurflDatabaseFile());
 		}
 
-		if (wurflDatabaesFile.endsWith(".gz")) {
+		if (wurflDatabaseFile.endsWith(".gz")) {
 			inputStream = new GZIPInputStream(inputStream);
 		}
-		else if (wurflDatabaesFile.endsWith(".jar") ||
-				 wurflDatabaesFile.endsWith(".zip")) {
+		else if (wurflDatabaseFile.endsWith(".jar") ||
+				 wurflDatabaseFile.endsWith(".zip")) {
 
 			ZipInputStream zipInputStream = new ZipInputStream(inputStream);
 
