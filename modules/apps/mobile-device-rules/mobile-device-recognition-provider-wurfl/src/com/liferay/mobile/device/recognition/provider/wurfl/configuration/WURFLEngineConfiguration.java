@@ -24,16 +24,7 @@ import aQute.bnd.annotation.metatype.Meta;
 public interface WURFLEngineConfiguration {
 
 	@Meta.AD(
-		deflt =
-			"brand_name|can_assign_phone_number|columns|device_os|" +
-				"device_os_version|dual_orientation|has_cellular_radio|" +
-				"has_querty_keyboard|https_support|https_verisign_class3|" +
-				"is_smarttv|is_tablet|is_wireless_device|marketing_name|" +
-				"max_data_rate|mobile_browser|mobile_browser_version|" +
-				"model_name|physical_screen_height|physical_screen_width|" +
-				"pointing_method|preferred_markup|resolution_height|" +
-				"resolution_width|rows|ux_full_desktop|vpn|wifi|" +
-				"xhtml_can_embed_video<|xhtml_support_level",
+		deflt = "brand_name|can_assign_phone_number|columns|device_os|device_os_version|dual_orientation|has_cellular_radio|has_querty_keyboard|https_support|https_verisign_class3|is_smarttv|is_tablet|is_wireless_device|marketing_name|max_data_rate|mobile_browser|mobile_browser_version|model_name|physical_screen_height|physical_screen_width|pointing_method|preferred_markup|resolution_height|resolution_width|rows|ux_full_desktop|vpn|wifi|xhtml_can_embed_video<|xhtml_support_level",
 		required = false
 	)
 	public String[] capabilityFilter();
