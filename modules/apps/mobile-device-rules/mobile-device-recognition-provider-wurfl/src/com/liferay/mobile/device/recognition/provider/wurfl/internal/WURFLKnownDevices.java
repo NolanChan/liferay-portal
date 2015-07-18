@@ -162,7 +162,7 @@ public class WURFLKnownDevices implements KnownDevices {
 	}
 
 	@Reference(unbind = "-")
-	protected void setWurflEngineProxy(WURFLEngineProxy wurflEngineProxy) {
+	protected void setWURFLEngineProxy(WURFLEngineProxy wurflEngineProxy) {
 		_wurflEngineProxy = wurflEngineProxy;
 	}
 
