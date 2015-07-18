@@ -22,12 +22,12 @@ import com.liferay.portal.kernel.util.PropsKeys;
  */
 public class WURFLUtil {
 
-	public static String getWURFLDatabasePatchDir(
+	public static String getWURFLDatabasePatchDirName(
 		WURFLEngineConfiguration wurflEngineConfiguration, Props props) {
 
 		return
 			props.get(PropsKeys.LIFERAY_HOME) +
-			wurflEngineConfiguration.wurflDatabasePatchDir();
+			wurflEngineConfiguration.wurflDatabasePatchDirName();
 	}
 
 }

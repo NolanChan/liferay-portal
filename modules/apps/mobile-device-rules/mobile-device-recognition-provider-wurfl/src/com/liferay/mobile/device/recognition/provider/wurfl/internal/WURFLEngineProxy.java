@@ -98,10 +98,8 @@ public class WURFLEngineProxy {
 			_wurflEngine = new GeneralWURFLEngine(xmlResource, wurflResources);
 
 			_wurflEngine.setCacheProvider(_cacheProvider);
-
 			_wurflEngine.setCapabilityFilter(
 				_wurflEngineConfiguration.capabilityFilter());
-
 			_wurflEngine.setEngineTarget(
 				EngineTarget.valueOf(_wurflEngineConfiguration.engineTarget()));
 
@@ -122,13 +120,14 @@ public class WURFLEngineProxy {
 
 		WURFLResources wurflResources = new WURFLResources();
 
-		String wurflDatabasePatchDir = WURFLUtil.getWURFLDatabasePatchDir(
-			_wurflEngineConfiguration, _props);
+		String wurflDatabasePatchDirName =
+			WURFLUtil.getWURFLDatabasePatchDirName(
+				_wurflEngineConfiguration, _props);
 
-		String[] fileNames = FileUtil.listFiles(wurflDatabasePatchDir);
+		String[] fileNames = FileUtil.listFiles(wurflDatabasePatchDirName);
 
 		for (String fileName : fileNames) {
-			File file = new File(wurflDatabasePatchDir, fileName);
+			File file = new File(wurflDatabasePatchDirName, fileName);
 
 			FileInputStream fileInputStream = new FileInputStream(file);
 

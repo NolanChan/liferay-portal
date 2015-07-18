@@ -39,6 +39,6 @@ public interface WURFLEngineConfiguration {
 	public String wurflDatabaseFile();
 
 	@Meta.AD(deflt = "/data/wurfl/patches", required = false)
-	public String wurflDatabasePatchDir();
+	public String wurflDatabasePatchDirName();
 
 }
