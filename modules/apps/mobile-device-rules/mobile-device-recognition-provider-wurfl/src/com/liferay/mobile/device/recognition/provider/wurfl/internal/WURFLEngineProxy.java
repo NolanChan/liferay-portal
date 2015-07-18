@@ -146,22 +146,22 @@ public class WURFLEngineProxy {
 
 		Class<?> clazz = getClass();
 
-		String wurflDatabaseFile =
-			_wurflEngineConfiguration.wurflDatabaseFile();
+		String wurflDatabaseFileName =
+			_wurflEngineConfiguration.wurflDatabaseFileName();
 
-		InputStream inputStream = clazz.getResourceAsStream(wurflDatabaseFile);
+		InputStream inputStream = clazz.getResourceAsStream(wurflDatabaseFileName);
 
 		if (inputStream == null) {
 			throw new IllegalStateException(
 				"Unable to find " +
-					_wurflEngineConfiguration.wurflDatabaseFile());
+					_wurflEngineConfiguration.wurflDatabaseFileName());
 		}
 
-		if (wurflDatabaseFile.endsWith(".gz")) {
+		if (wurflDatabaseFileName.endsWith(".gz")) {
 			inputStream = new GZIPInputStream(inputStream);
 		}
-		else if (wurflDatabaseFile.endsWith(".jar") ||
-				 wurflDatabaseFile.endsWith(".zip")) {
+		else if (wurflDatabaseFileName.endsWith(".jar") ||
+				 wurflDatabaseFileName.endsWith(".zip")) {
 
 			ZipInputStream zipInputStream = new ZipInputStream(inputStream);
 
@@ -171,7 +171,7 @@ public class WURFLEngineProxy {
 		}
 
 		XMLResource xmlResource = new XMLResource(
-			inputStream, _wurflEngineConfiguration.wurflDatabaseFile());
+			inputStream, _wurflEngineConfiguration.wurflDatabaseFileName());
 
 		inputStreams.add(inputStream);
 

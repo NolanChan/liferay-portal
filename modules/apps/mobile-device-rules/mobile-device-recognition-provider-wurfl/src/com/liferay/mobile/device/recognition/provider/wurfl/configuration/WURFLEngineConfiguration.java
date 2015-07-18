@@ -36,7 +36,7 @@ public interface WURFLEngineConfiguration {
 	public String engineTarget();
 
 	@Meta.AD(deflt = "/META-INF/resources/wurfl-latest.zip", required = false)
-	public String wurflDatabaseFile();
+	public String wurflDatabaseFileName();
 
 	@Meta.AD(deflt = "/data/wurfl/patches", required = false)
 	public String wurflDatabasePatchDirName();
