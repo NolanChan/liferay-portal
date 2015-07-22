@@ -1,0 +1,33 @@
+Bundle-Name: Liferay Portal Cache Ehcache EE Provider
+Bundle-SymbolicName: com.liferay.portal.cache.ehcache.ee.provider
+Bundle-Version: 1.0.0
+DynamicImport-Package: com.liferay.portal.cache.ehcache
+Export-Package:\
+	net.sf.ehcache,\
+	net.sf.ehcache.bootstrap,\
+	net.sf.ehcache.config,\
+	net.sf.ehcache.constructs,\
+	net.sf.ehcache.distribution,\
+	net.sf.ehcache.event,\
+	net.sf.ehcache.management,\
+	net.sf.ehcache.util
+Import-Package:\
+	!com.google.*,\
+	!com.tc.*,\
+	!org.quartz,\
+	!org.quartz.impl,\
+	!org.quartz.impl.jdbcjobstore,\
+	!org.quartz.impl.matchers,\
+	!org.quartz.simpl,\
+	!org.terracotta.quartz,\
+	!sun.misc,\
+	*
+Include-Resource:\
+	classes,\
+	@lib/ehcache-ee.jar!/com/*,\
+	@lib/ehcache-ee.jar!/net/*,\
+	@lib/ehcache-ee.jar!/org/*,\
+	@lib/ehcache-ee.jar!/META-INF/*,\
+	@lib/terracotta-toolkit-runtime-ee.jar!/com/*,\
+	@lib/terracotta-toolkit-runtime-ee.jar!/org/*,\
+	@lib/terracotta-toolkit-runtime-ee.jar!/META-INF/*
