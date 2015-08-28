@@ -1,0 +1,7 @@
+dependencies {
+	compile project(":portal:portal-search-elasticsearch")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

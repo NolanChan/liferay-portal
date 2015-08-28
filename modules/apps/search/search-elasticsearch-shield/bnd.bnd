@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Search Elasticsearch Shield
+Bundle-SymbolicName: com.liferay.portal.search.elasticsearch.shield
+Bundle-Version: 1.0.0
+Include-Resource: classes
