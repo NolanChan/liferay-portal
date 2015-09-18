@@ -49,7 +49,7 @@ public class ShieldRemoteSettingsContributor extends BaseSettingsContributor {
 
 		String user =
 			shieldConfiguration.username() + ":" +
-			shieldConfiguration.password();
+				shieldConfiguration.password();
 
 		builder.put("shield.user", user);
 
