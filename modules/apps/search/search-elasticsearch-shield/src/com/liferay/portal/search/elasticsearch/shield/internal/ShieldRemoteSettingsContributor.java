@@ -23,6 +23,7 @@ import com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfig
 import java.util.Map;
 
 import org.elasticsearch.common.settings.ImmutableSettings.Builder;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -59,8 +60,7 @@ public class ShieldRemoteSettingsContributor extends BaseSettingsContributor {
 
 		builder.put("shield.http.ssl", "true");
 		builder.put(
-			"shield.ssl.keystore.path",
-			shieldConfiguration.sslKeystorePath());
+			"shield.ssl.keystore.path", shieldConfiguration.sslKeystorePath());
 		builder.put(
 			"shield.ssl.keystore.password",
 			shieldConfiguration.sslKeystorePassword());
@@ -71,8 +71,7 @@ public class ShieldRemoteSettingsContributor extends BaseSettingsContributor {
 
 		if (sslKeystoreKeyPassword != null) {
 			builder.put(
-				"shield.ssl.keystore.key_password",
-				sslKeystoreKeyPassword);
+				"shield.ssl.keystore.key_password", sslKeystoreKeyPassword);
 		}
 	}
 
