@@ -24,14 +24,14 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface ShieldConfiguration {
 
-	@Meta.AD(deflt = "true", required = true)
-	public boolean authentication();
-
 	@Meta.AD(deflt = "liferay", required = false)
 	public String password();
 
 	@Meta.AD(deflt = "true", required = false)
-	public boolean ssl();
+	public boolean requiresAuthentication();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean requiresSSL();
 
 	@Meta.AD(required = false)
 	public String sslKeystoreKeyPassword();

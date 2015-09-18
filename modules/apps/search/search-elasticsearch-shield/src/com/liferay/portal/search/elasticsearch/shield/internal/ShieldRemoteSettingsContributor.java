@@ -43,7 +43,7 @@ public class ShieldRemoteSettingsContributor extends BaseSettingsContributor {
 
 	@Override
 	public void populate(Builder builder) {
-		if (!shieldConfiguration.authentication()) {
+		if (!shieldConfiguration.requiresAuthentication()) {
 			return;
 		}
 
@@ -53,24 +53,26 @@ public class ShieldRemoteSettingsContributor extends BaseSettingsContributor {
 
 		builder.put("shield.user", user);
 
-		if (shieldConfiguration.ssl()) {
-			builder.put("shield.http.ssl", "true");
-			builder.put(
-				"shield.ssl.keystore.path",
-				shieldConfiguration.sslKeystorePath());
-			builder.put(
-				"shield.ssl.keystore.password",
-				shieldConfiguration.sslKeystorePassword());
-			builder.put("shield.transport.ssl", "true");
+		if (!shieldConfiguration.requiresSSL()) {
+			return;
+		}
 
-			String sslKeystoreKeyPassword =
-				shieldConfiguration.sslKeystoreKeyPassword();
+		builder.put("shield.http.ssl", "true");
+		builder.put(
+			"shield.ssl.keystore.path",
+			shieldConfiguration.sslKeystorePath());
+		builder.put(
+			"shield.ssl.keystore.password",
+			shieldConfiguration.sslKeystorePassword());
+		builder.put("shield.transport.ssl", "true");
 
-			if (sslKeystoreKeyPassword != null) {
-				builder.put(
-					"shield.ssl.keystore.key_password",
-					sslKeystoreKeyPassword);
-			}
+		String sslKeystoreKeyPassword =
+			shieldConfiguration.sslKeystoreKeyPassword();
+
+		if (sslKeystoreKeyPassword != null) {
+			builder.put(
+				"shield.ssl.keystore.key_password",
+				sslKeystoreKeyPassword);
 		}
 	}
 
