@@ -1,0 +1,1 @@
+create unique index IX_A500C06 on KaleoDraftDefinition (companyId, name, version, draftVersion);
