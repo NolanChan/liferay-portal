@@ -1,5 +1,7 @@
 dependencies {
 	compile project(":portal:portal-search-elasticsearch")
+	
+	provided group: "org.elasticsearch", name: "elasticsearch", version: "1.7.2"
 }
 
 liferay {
