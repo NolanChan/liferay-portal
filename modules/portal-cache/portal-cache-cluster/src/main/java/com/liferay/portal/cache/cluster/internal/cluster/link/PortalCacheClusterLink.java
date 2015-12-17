@@ -113,7 +113,8 @@ public class PortalCacheClusterLink {
 		PortalCacheClusterChannelSelector portalCacheClusterChannelSelector) {
 	}
 
-	private PortalCacheClusterChannelFactory _portalCacheClusterChannelFactory;
+	private volatile PortalCacheClusterChannelFactory
+		_portalCacheClusterChannelFactory;
 	private volatile List<PortalCacheClusterChannel>
 		_portalCacheClusterChannels;
 	private volatile PortalCacheClusterChannelSelector
