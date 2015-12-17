@@ -15,14 +15,19 @@
 package com.liferay.portal.cache.cluster.internal.cluster.link.messaging;
 
 import com.liferay.portal.cache.cluster.internal.DestinationNames;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+
+import java.util.Dictionary;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tina Tian
@@ -34,26 +39,48 @@ import org.osgi.service.component.annotations.Deactivate;
 public class ClusterLinkMessagingConfigurator {
 
 	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 				DestinationNames.CACHE_REPLICATION);
 
+		Destination destination = _destinationFactory.createDestination(
+			destinationConfiguration);
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("destination.name", destination.getName());
+
 		_serviceRegistration = bundleContext.registerService(
-			DestinationConfiguration.class, destinationConfiguration,
-			new HashMapDictionary<String, Object>());
+			Destination.class, destination, dictionary);
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		if (_serviceRegistration != null) {
+			Destination destination = _bundleContext.getService(
+				_serviceRegistration.getReference());
+
 			_serviceRegistration.unregister();
+
+			destination.destroy();
 		}
 
-		_serviceRegistration = null;
+		_bundleContext = null;
 	}
 
-	private ServiceRegistration<DestinationConfiguration> _serviceRegistration;
+	@Reference(unbind = "-")
+	protected void setDestinationFactory(
+		DestinationFactory destinationFactory) {
+
+		_destinationFactory = destinationFactory;
+	}
+
+	private volatile BundleContext _bundleContext;
+	private volatile DestinationFactory _destinationFactory;
+	private ServiceRegistration<Destination> _serviceRegistration;
 
 }
