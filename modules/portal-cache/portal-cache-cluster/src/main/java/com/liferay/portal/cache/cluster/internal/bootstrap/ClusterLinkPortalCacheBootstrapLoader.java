@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.cluster.internal.bootstrap;
 
-import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoader;
+import com.liferay.portal.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
