@@ -3,6 +3,8 @@ FileTree fileTree = fileTree(rootDir) {
 	exclude "sdk/*/samples/"
 
 	if (Boolean.getBoolean("portal.build")) {
+		exclude "portal-cache/portal-cache-cluster/build.gradle"
+		exclude "portal-cache/portal-cache-ehcache-ee-provider/build.gradle"
 		exclude "portal-cache/portal-cache-memory/"
 		exclude "portal/portal-cluster/"
 		exclude "portal/portal-scheduler-cluster/"
