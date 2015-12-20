@@ -22,7 +22,7 @@ import com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfig
 
 import java.util.Map;
 
-import org.elasticsearch.common.settings.ImmutableSettings.Builder;
+import org.elasticsearch.common.settings.Settings.Builder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
