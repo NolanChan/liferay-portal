@@ -48,12 +48,30 @@ public class ShieldRemoteSettingsContributor extends BaseSettingsContributor {
 			return;
 		}
 
+		builder.extendArray(
+			"plugin.types", "org.elasticsearch.shield.ShieldPlugin");
+
+		configureAuthentication(builder);
+
+		configureSSL(builder);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		shieldConfiguration = Configurable.createConfigurable(
+			ShieldConfiguration.class, properties);
+	}
+
+	protected void configureAuthentication(Builder builder) {
 		String user =
 			shieldConfiguration.username() + ":" +
 				shieldConfiguration.password();
 
 		builder.put("shield.user", user);
+	}
 
+	protected void configureSSL(Builder builder) {
 		if (!shieldConfiguration.requiresSSL()) {
 			return;
 		}
@@ -73,13 +91,6 @@ public class ShieldRemoteSettingsContributor extends BaseSettingsContributor {
 			builder.put(
 				"shield.ssl.keystore.key_password", sslKeystoreKeyPassword);
 		}
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		shieldConfiguration = Configurable.createConfigurable(
-			ShieldConfiguration.class, properties);
 	}
 
 	protected volatile ShieldConfiguration shieldConfiguration;
