@@ -14,11 +14,14 @@
 
 package com.liferay.portal.search.elasticsearch.shield.configuration;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 import aQute.bnd.annotation.metatype.Meta;
 
 /**
  * @author André de Oliveira
  */
+@ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration"
 )
