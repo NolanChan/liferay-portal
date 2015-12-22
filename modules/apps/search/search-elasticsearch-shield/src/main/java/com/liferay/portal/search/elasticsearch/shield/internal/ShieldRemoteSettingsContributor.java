@@ -52,7 +52,6 @@ public class ShieldRemoteSettingsContributor extends BaseSettingsContributor {
 			"plugin.types", "org.elasticsearch.shield.ShieldPlugin");
 
 		configureAuthentication(builder);
-
 		configureSSL(builder);
 	}
 
