@@ -12,4 +12,4 @@ Include-Resource:\
 	@lib/jackson-core-asl.jar,\
 	@lib/jackson-mapper-asl.jar,\
 	@lib/wurfl.jar,\
-	META-INF/resources=src/META-INF/resources
+	META-INF/resources=src/main/resources/META-INF/resources
