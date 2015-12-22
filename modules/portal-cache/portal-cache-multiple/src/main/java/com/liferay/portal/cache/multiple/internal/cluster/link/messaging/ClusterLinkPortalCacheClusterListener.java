@@ -46,13 +46,10 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		byte[] data = (byte[])message.getPayload();
-
-		Class<?> clazz = ClusterLinkPortalCacheClusterListener.class;
-
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			(PortalCacheClusterEvent)SerializableUtil.deserialize(
-				data, clazz.getClassLoader());
+				(byte[])message.getPayload(),
+				ClusterLinkPortalCacheClusterListener.class.getClassLoader());
 
 		if (portalCacheClusterEvent == null) {
 			if (_log.isWarnEnabled()) {
