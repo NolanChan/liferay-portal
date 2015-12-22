@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scheduler.cluster.internal;
+package com.liferay.portal.scheduler.multiple.internal;
 
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;

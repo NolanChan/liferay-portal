@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scheduler.cluster.internal;
+package com.liferay.portal.scheduler.multiple.internal;
 
 import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
