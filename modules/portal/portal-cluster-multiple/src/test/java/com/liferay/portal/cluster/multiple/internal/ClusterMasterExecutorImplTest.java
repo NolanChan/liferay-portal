@@ -661,8 +661,8 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		}
 
 		@Around(
-			"execution(protected * com.liferay.portal.cluster.internal." +
-				"ClusterExecutorImpl.getClusterNode(..))"
+			"execution(protected * com.liferay.portal.cluster.multiple." +
+				"internal.ClusterExecutorImpl.getClusterNode(..))"
 		)
 		public Object getClusterNode(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
