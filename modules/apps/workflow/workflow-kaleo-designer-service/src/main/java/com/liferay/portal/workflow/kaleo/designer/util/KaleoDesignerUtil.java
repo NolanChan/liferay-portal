@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
@@ -30,6 +31,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.workflow.kaleo.designer.constants.KaleoDesignerWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
 import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalServiceUtil;
 
@@ -71,14 +73,15 @@ public class KaleoDesignerUtil {
 
 		KaleoDraftDefinition kaleoDraftDefinition =
 			(KaleoDraftDefinition)request.getAttribute(
-				WebKeys.KALEO_DRAFT_DEFINITION);
+				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 
 		if (kaleoDraftDefinition != null) {
 			return kaleoDraftDefinition;
 		}
 
 		long kaleoDraftDefinitionId = GetterUtil.getLong(
-			request.getAttribute(WebKeys.KALEO_DRAFT_DEFINITION_ID));
+			request.getAttribute(
+				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION_ID));
 
 		if (kaleoDraftDefinitionId > 0) {
 			return KaleoDraftDefinitionLocalServiceUtil.getKaleoDraftDefinition(
@@ -203,6 +206,7 @@ public class KaleoDesignerUtil {
 		return title;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(KaleoDesignerUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		KaleoDesignerUtil.class);
 
 }
