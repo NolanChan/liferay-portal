@@ -37,10 +37,10 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -50,7 +50,7 @@ import com.liferay.portal.workflow.kaleo.designer.exception.KaleoDraftDefinition
 import com.liferay.portal.workflow.kaleo.designer.exception.KaleoDraftDefinitionNameException;
 import com.liferay.portal.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
 import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
-import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionServiceUtil;
+import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionService;
 import com.liferay.portal.workflow.kaleo.designer.util.KaleoDesignerUtil;
 import com.liferay.workflow.kaleo.designer.constants.KaleoDesignerPortletKeys;
 
@@ -71,6 +71,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
@@ -121,7 +122,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		KaleoDraftDefinitionServiceUtil.deleteKaleoDraftDefinitions(
+		_kaleoDraftDefinitionService.deleteKaleoDraftDefinitions(
 			name, version, serviceContext);
 	}
 
@@ -149,7 +150,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 				actionRequest);
 
 			KaleoDraftDefinition kaleoDraftDefinition =
-				KaleoDraftDefinitionServiceUtil.publishKaleoDraftDefinition(
+				_kaleoDraftDefinitionService.publishKaleoDraftDefinition(
 					themeDisplay.getUserId(), themeDisplay.getCompanyGroupId(),
 					name, titleMap, content, serviceContext);
 
@@ -254,7 +255,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 					content, titleMap.get(themeDisplay.getSiteDefaultLocale()));
 
 				kaleoDraftDefinition =
-					KaleoDraftDefinitionServiceUtil.addKaleoDraftDefinition(
+					_kaleoDraftDefinitionService.addKaleoDraftDefinition(
 						themeDisplay.getUserId(),
 						themeDisplay.getCompanyGroupId(), name, titleMap,
 						content, version, 1, serviceContext);
@@ -263,7 +264,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 				String name = ParamUtil.getString(actionRequest, "name");
 
 				kaleoDraftDefinition =
-					KaleoDraftDefinitionServiceUtil.updateKaleoDraftDefinition(
+					_kaleoDraftDefinitionService.updateKaleoDraftDefinition(
 						themeDisplay.getUserId(), name, titleMap, content,
 						version, serviceContext);
 			}
@@ -352,7 +353,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 		if (Validator.isNotNull(name) && (draftVersion > 0)) {
 			KaleoDraftDefinition kaleoDraftDefinition =
-				KaleoDraftDefinitionServiceUtil.getKaleoDraftDefinition(
+				_kaleoDraftDefinitionService.getKaleoDraftDefinition(
 					name, version, draftVersion, serviceContext);
 
 			jsonObject.put("content", kaleoDraftDefinition.getContent());
@@ -378,7 +379,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		String keywords = ParamUtil.getString(resourceRequest, "keywords");
 		int type = ParamUtil.getInteger(resourceRequest, "type");
 
-		List<Role> roles = RoleLocalServiceUtil.search(
+		List<Role> roles = _roleLocalService.search(
 			themeDisplay.getCompanyId(), keywords, getRoleTypesObj(type), 0,
 			SearchContainer.DEFAULT_DELTA, (OrderByComparator)null);
 
@@ -412,7 +413,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 		String keywords = ParamUtil.getString(resourceRequest, "keywords");
 
-		List<User> users = UserLocalServiceUtil.search(
+		List<User> users = _userLocalService.search(
 			themeDisplay.getCompanyId(), keywords,
 			WorkflowConstants.STATUS_APPROVED,
 			new LinkedHashMap<String, Object>(), 0,
@@ -441,7 +442,28 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		writeJSON(resourceRequest, resourceResponse, jsonArray);
 	}
 
+	@Reference(unbind = "-")
+	protected void setKaleoDraftDefinitionService(
+		KaleoDraftDefinitionService kaleoDraftDefinitionService) {
+
+		_kaleoDraftDefinitionService = kaleoDraftDefinitionService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoDesignerPortlet.class);
+
+	private volatile KaleoDraftDefinitionService _kaleoDraftDefinitionService;
+	private volatile RoleLocalService _roleLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }
