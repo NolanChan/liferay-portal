@@ -98,7 +98,7 @@
 									</aui:field-wrapper>
 
 									<aui:field-wrapper label="workflow-definition-status">
-										<%= workflowDefinition.isActive() ? LanguageUtil.get(locale, "active") : LanguageUtil.get(locale, "not-active") %>
+										<%= workflowDefinition.isActive() ? LanguageUtil.get(request, "active") : LanguageUtil.get(request, "not-active") %>
 									</aui:field-wrapper>
 								</c:if>
 

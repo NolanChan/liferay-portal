@@ -75,7 +75,7 @@
 
 				<liferay-ui:search-container-column-text
 					name="published"
-					value='<%= (kaleoDraftDefinition.getVersion() > 0) ? LanguageUtil.get(locale, "yes") : LanguageUtil.get(locale, "no") %>'
+					value='<%= (kaleoDraftDefinition.getVersion() > 0) ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
 				/>
 
 				<liferay-ui:search-container-column-jsp
