@@ -397,6 +397,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		writeJSON(resourceRequest, resourceResponse, jsonArray);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(KaleoDesignerPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		KaleoDesignerPortlet.class);
 
 }
