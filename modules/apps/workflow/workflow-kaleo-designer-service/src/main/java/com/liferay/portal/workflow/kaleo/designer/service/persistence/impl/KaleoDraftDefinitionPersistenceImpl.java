@@ -16,8 +16,8 @@ package com.liferay.portal.workflow.kaleo.designer.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -32,8 +32,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.service.persistence.CompanyProvider;
+import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.portal.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
 import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
 import com.liferay.portal.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionImpl;
 import com.liferay.portal.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionModelImpl;
@@ -157,6 +160,28 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	public List<KaleoDraftDefinition> findByCompanyId(long companyId,
 		int start, int end,
 		OrderByComparator<KaleoDraftDefinition> orderByComparator) {
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo draft definitions where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoDraftDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of kaleo draft definitions
+	 * @param end the upper bound of the range of kaleo draft definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching kaleo draft definitions
+	 */
+	@Override
+	public List<KaleoDraftDefinition> findByCompanyId(long companyId,
+		int start, int end,
+		OrderByComparator<KaleoDraftDefinition> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -172,15 +197,19 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
-		List<KaleoDraftDefinition> list = (List<KaleoDraftDefinition>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<KaleoDraftDefinition> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (KaleoDraftDefinition kaleoDraftDefinition : list) {
-				if ((companyId != kaleoDraftDefinition.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<KaleoDraftDefinition>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (KaleoDraftDefinition kaleoDraftDefinition : list) {
+					if ((companyId != kaleoDraftDefinition.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -237,10 +266,10 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -258,7 +287,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo draft definition
-	 * @throws NoSuchKaleoDraftDefinitionException if a matching kaleo draft definition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException if a matching kaleo draft definition could not be found
 	 */
 	@Override
 	public KaleoDraftDefinition findByCompanyId_First(long companyId,
@@ -309,7 +338,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo draft definition
-	 * @throws NoSuchKaleoDraftDefinitionException if a matching kaleo draft definition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException if a matching kaleo draft definition could not be found
 	 */
 	@Override
 	public KaleoDraftDefinition findByCompanyId_Last(long companyId,
@@ -367,7 +396,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next kaleo draft definition
-	 * @throws NoSuchKaleoDraftDefinitionException if a kaleo draft definition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException if a kaleo draft definition with the primary key could not be found
 	 */
 	@Override
 	public KaleoDraftDefinition[] findByCompanyId_PrevAndNext(
@@ -532,8 +561,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 
 		Object[] finderArgs = new Object[] { companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -557,10 +585,10 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -658,6 +686,31 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	public List<KaleoDraftDefinition> findByC_N_V(long companyId, String name,
 		int version, int start, int end,
 		OrderByComparator<KaleoDraftDefinition> orderByComparator) {
+		return findByC_N_V(companyId, name, version, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo draft definitions where companyId = &#63; and name = &#63; and version = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoDraftDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param version the version
+	 * @param start the lower bound of the range of kaleo draft definitions
+	 * @param end the upper bound of the range of kaleo draft definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching kaleo draft definitions
+	 */
+	@Override
+	public List<KaleoDraftDefinition> findByC_N_V(long companyId, String name,
+		int version, int start, int end,
+		OrderByComparator<KaleoDraftDefinition> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -677,17 +730,22 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 				};
 		}
 
-		List<KaleoDraftDefinition> list = (List<KaleoDraftDefinition>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<KaleoDraftDefinition> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (KaleoDraftDefinition kaleoDraftDefinition : list) {
-				if ((companyId != kaleoDraftDefinition.getCompanyId()) ||
-						!Validator.equals(name, kaleoDraftDefinition.getName()) ||
-						(version != kaleoDraftDefinition.getVersion())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<KaleoDraftDefinition>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (KaleoDraftDefinition kaleoDraftDefinition : list) {
+					if ((companyId != kaleoDraftDefinition.getCompanyId()) ||
+							!Validator.equals(name,
+								kaleoDraftDefinition.getName()) ||
+							(version != kaleoDraftDefinition.getVersion())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -766,10 +824,10 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -789,7 +847,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	 * @param version the version
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo draft definition
-	 * @throws NoSuchKaleoDraftDefinitionException if a matching kaleo draft definition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException if a matching kaleo draft definition could not be found
 	 */
 	@Override
 	public KaleoDraftDefinition findByC_N_V_First(long companyId, String name,
@@ -850,7 +908,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	 * @param version the version
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo draft definition
-	 * @throws NoSuchKaleoDraftDefinitionException if a matching kaleo draft definition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException if a matching kaleo draft definition could not be found
 	 */
 	@Override
 	public KaleoDraftDefinition findByC_N_V_Last(long companyId, String name,
@@ -918,7 +976,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	 * @param version the version
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next kaleo draft definition
-	 * @throws NoSuchKaleoDraftDefinitionException if a kaleo draft definition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException if a kaleo draft definition with the primary key could not be found
 	 */
 	@Override
 	public KaleoDraftDefinition[] findByC_N_V_PrevAndNext(
@@ -1110,8 +1168,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 
 		Object[] finderArgs = new Object[] { companyId, name, version };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -1157,10 +1214,10 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1198,14 +1255,14 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 			});
 
 	/**
-	 * Returns the kaleo draft definition where companyId = &#63; and name = &#63; and version = &#63; and draftVersion = &#63; or throws a {@link NoSuchKaleoDraftDefinitionException} if it could not be found.
+	 * Returns the kaleo draft definition where companyId = &#63; and name = &#63; and version = &#63; and draftVersion = &#63; or throws a {@link com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException} if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param version the version
 	 * @param draftVersion the draft version
 	 * @return the matching kaleo draft definition
-	 * @throws NoSuchKaleoDraftDefinitionException if a matching kaleo draft definition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException if a matching kaleo draft definition could not be found
 	 */
 	@Override
 	public KaleoDraftDefinition findByC_N_V_D(long companyId, String name,
@@ -1265,7 +1322,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	 * @param name the name
 	 * @param version the version
 	 * @param draftVersion the draft version
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching kaleo draft definition, or <code>null</code> if a matching kaleo draft definition could not be found
 	 */
 	@Override
@@ -1278,7 +1335,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_N_V_D,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_N_V_D,
 					finderArgs, this);
 		}
 
@@ -1342,7 +1399,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 				List<KaleoDraftDefinition> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N_V_D,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_N_V_D,
 						finderArgs, list);
 				}
 				else {
@@ -1357,13 +1414,13 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 							!kaleoDraftDefinition.getName().equals(name) ||
 							(kaleoDraftDefinition.getVersion() != version) ||
 							(kaleoDraftDefinition.getDraftVersion() != draftVersion)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N_V_D,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_N_V_D,
 							finderArgs, kaleoDraftDefinition);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_V_D,
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N_V_D,
 					finderArgs);
 
 				throw processException(e);
@@ -1418,8 +1475,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 				companyId, name, version, draftVersion
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -1469,10 +1525,10 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1502,11 +1558,11 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	 */
 	@Override
 	public void cacheResult(KaleoDraftDefinition kaleoDraftDefinition) {
-		EntityCacheUtil.putResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoDraftDefinitionImpl.class,
 			kaleoDraftDefinition.getPrimaryKey(), kaleoDraftDefinition);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N_V_D,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_N_V_D,
 			new Object[] {
 				kaleoDraftDefinition.getCompanyId(),
 				kaleoDraftDefinition.getName(),
@@ -1525,7 +1581,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	@Override
 	public void cacheResult(List<KaleoDraftDefinition> kaleoDraftDefinitions) {
 		for (KaleoDraftDefinition kaleoDraftDefinition : kaleoDraftDefinitions) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 						KaleoDraftDefinitionImpl.class,
 						kaleoDraftDefinition.getPrimaryKey()) == null) {
@@ -1541,98 +1597,95 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	 * Clears the cache for all kaleo draft definitions.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(KaleoDraftDefinitionImpl.class);
+		entityCache.clearCache(KaleoDraftDefinitionImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the kaleo draft definition.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(KaleoDraftDefinition kaleoDraftDefinition) {
-		EntityCacheUtil.removeResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoDraftDefinitionImpl.class, kaleoDraftDefinition.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(kaleoDraftDefinition);
+		clearUniqueFindersCache((KaleoDraftDefinitionModelImpl)kaleoDraftDefinition);
 	}
 
 	@Override
 	public void clearCache(List<KaleoDraftDefinition> kaleoDraftDefinitions) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (KaleoDraftDefinition kaleoDraftDefinition : kaleoDraftDefinitions) {
-			EntityCacheUtil.removeResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 				KaleoDraftDefinitionImpl.class,
 				kaleoDraftDefinition.getPrimaryKey());
 
-			clearUniqueFindersCache(kaleoDraftDefinition);
+			clearUniqueFindersCache((KaleoDraftDefinitionModelImpl)kaleoDraftDefinition);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		KaleoDraftDefinition kaleoDraftDefinition) {
-		if (kaleoDraftDefinition.isNew()) {
+		KaleoDraftDefinitionModelImpl kaleoDraftDefinitionModelImpl,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
-					kaleoDraftDefinition.getCompanyId(),
-					kaleoDraftDefinition.getName(),
-					kaleoDraftDefinition.getVersion(),
-					kaleoDraftDefinition.getDraftVersion()
+					kaleoDraftDefinitionModelImpl.getCompanyId(),
+					kaleoDraftDefinitionModelImpl.getName(),
+					kaleoDraftDefinitionModelImpl.getVersion(),
+					kaleoDraftDefinitionModelImpl.getDraftVersion()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N_V_D, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_N_V_D, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N_V_D, args,
-				kaleoDraftDefinition);
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_N_V_D, args,
+				kaleoDraftDefinitionModelImpl);
 		}
 		else {
-			KaleoDraftDefinitionModelImpl kaleoDraftDefinitionModelImpl = (KaleoDraftDefinitionModelImpl)kaleoDraftDefinition;
-
 			if ((kaleoDraftDefinitionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_N_V_D.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						kaleoDraftDefinition.getCompanyId(),
-						kaleoDraftDefinition.getName(),
-						kaleoDraftDefinition.getVersion(),
-						kaleoDraftDefinition.getDraftVersion()
+						kaleoDraftDefinitionModelImpl.getCompanyId(),
+						kaleoDraftDefinitionModelImpl.getName(),
+						kaleoDraftDefinitionModelImpl.getVersion(),
+						kaleoDraftDefinitionModelImpl.getDraftVersion()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N_V_D, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_N_V_D, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N_V_D, args,
-					kaleoDraftDefinition);
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_N_V_D, args,
+					kaleoDraftDefinitionModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		KaleoDraftDefinition kaleoDraftDefinition) {
-		KaleoDraftDefinitionModelImpl kaleoDraftDefinitionModelImpl = (KaleoDraftDefinitionModelImpl)kaleoDraftDefinition;
-
+		KaleoDraftDefinitionModelImpl kaleoDraftDefinitionModelImpl) {
 		Object[] args = new Object[] {
-				kaleoDraftDefinition.getCompanyId(),
-				kaleoDraftDefinition.getName(),
-				kaleoDraftDefinition.getVersion(),
-				kaleoDraftDefinition.getDraftVersion()
+				kaleoDraftDefinitionModelImpl.getCompanyId(),
+				kaleoDraftDefinitionModelImpl.getName(),
+				kaleoDraftDefinitionModelImpl.getVersion(),
+				kaleoDraftDefinitionModelImpl.getDraftVersion()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_V_D, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_V_D, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N_V_D, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N_V_D, args);
 
 		if ((kaleoDraftDefinitionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_N_V_D.getColumnBitmask()) != 0) {
@@ -1643,8 +1696,8 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 					kaleoDraftDefinitionModelImpl.getOriginalDraftVersion()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_V_D, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N_V_D, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N_V_D, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N_V_D, args);
 		}
 	}
 
@@ -1661,6 +1714,8 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 		kaleoDraftDefinition.setNew(true);
 		kaleoDraftDefinition.setPrimaryKey(kaleoDraftDefinitionId);
 
+		kaleoDraftDefinition.setCompanyId(companyProvider.getCompanyId());
+
 		return kaleoDraftDefinition;
 	}
 
@@ -1669,7 +1724,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	 *
 	 * @param kaleoDraftDefinitionId the primary key of the kaleo draft definition
 	 * @return the kaleo draft definition that was removed
-	 * @throws NoSuchKaleoDraftDefinitionException if a kaleo draft definition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException if a kaleo draft definition with the primary key could not be found
 	 */
 	@Override
 	public KaleoDraftDefinition remove(long kaleoDraftDefinitionId)
@@ -1682,7 +1737,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	 *
 	 * @param primaryKey the primary key of the kaleo draft definition
 	 * @return the kaleo draft definition that was removed
-	 * @throws NoSuchKaleoDraftDefinitionException if a kaleo draft definition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException if a kaleo draft definition with the primary key could not be found
 	 */
 	@Override
 	public KaleoDraftDefinition remove(Serializable primaryKey)
@@ -1794,7 +1849,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 				kaleoDraftDefinition.setNew(false);
 			}
 			else {
-				session.merge(kaleoDraftDefinition);
+				kaleoDraftDefinition = (KaleoDraftDefinition)session.merge(kaleoDraftDefinition);
 			}
 		}
 		catch (Exception e) {
@@ -1804,10 +1859,10 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !KaleoDraftDefinitionModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -1817,16 +1872,14 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 						kaleoDraftDefinitionModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
 				args = new Object[] { kaleoDraftDefinitionModelImpl.getCompanyId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 			}
 
@@ -1838,8 +1891,8 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 						kaleoDraftDefinitionModelImpl.getOriginalVersion()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_V, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_V,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N_V, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_V,
 					args);
 
 				args = new Object[] {
@@ -1848,18 +1901,18 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 						kaleoDraftDefinitionModelImpl.getVersion()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N_V, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_V,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N_V, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_V,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoDraftDefinitionImpl.class,
 			kaleoDraftDefinition.getPrimaryKey(), kaleoDraftDefinition, false);
 
-		clearUniqueFindersCache(kaleoDraftDefinition);
-		cacheUniqueFindersCache(kaleoDraftDefinition);
+		clearUniqueFindersCache(kaleoDraftDefinitionModelImpl);
+		cacheUniqueFindersCache(kaleoDraftDefinitionModelImpl, isNew);
 
 		kaleoDraftDefinition.resetOriginalValues();
 
@@ -1898,7 +1951,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	 *
 	 * @param primaryKey the primary key of the kaleo draft definition
 	 * @return the kaleo draft definition
-	 * @throws NoSuchKaleoDraftDefinitionException if a kaleo draft definition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException if a kaleo draft definition with the primary key could not be found
 	 */
 	@Override
 	public KaleoDraftDefinition findByPrimaryKey(Serializable primaryKey)
@@ -1918,11 +1971,11 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	}
 
 	/**
-	 * Returns the kaleo draft definition with the primary key or throws a {@link NoSuchKaleoDraftDefinitionException} if it could not be found.
+	 * Returns the kaleo draft definition with the primary key or throws a {@link com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException} if it could not be found.
 	 *
 	 * @param kaleoDraftDefinitionId the primary key of the kaleo draft definition
 	 * @return the kaleo draft definition
-	 * @throws NoSuchKaleoDraftDefinitionException if a kaleo draft definition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException if a kaleo draft definition with the primary key could not be found
 	 */
 	@Override
 	public KaleoDraftDefinition findByPrimaryKey(long kaleoDraftDefinitionId)
@@ -1938,7 +1991,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	 */
 	@Override
 	public KaleoDraftDefinition fetchByPrimaryKey(Serializable primaryKey) {
-		KaleoDraftDefinition kaleoDraftDefinition = (KaleoDraftDefinition)EntityCacheUtil.getResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+		KaleoDraftDefinition kaleoDraftDefinition = (KaleoDraftDefinition)entityCache.getResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 				KaleoDraftDefinitionImpl.class, primaryKey);
 
 		if (kaleoDraftDefinition == _nullKaleoDraftDefinition) {
@@ -1958,13 +2011,13 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 					cacheResult(kaleoDraftDefinition);
 				}
 				else {
-					EntityCacheUtil.putResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 						KaleoDraftDefinitionImpl.class, primaryKey,
 						_nullKaleoDraftDefinition);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoDraftDefinitionImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2014,7 +2067,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			KaleoDraftDefinition kaleoDraftDefinition = (KaleoDraftDefinition)EntityCacheUtil.getResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			KaleoDraftDefinition kaleoDraftDefinition = (KaleoDraftDefinition)entityCache.getResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoDraftDefinitionImpl.class, primaryKey);
 
 			if (kaleoDraftDefinition == null) {
@@ -2067,7 +2120,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoDraftDefinitionImpl.class, primaryKey,
 					_nullKaleoDraftDefinition);
 			}
@@ -2123,6 +2176,26 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	@Override
 	public List<KaleoDraftDefinition> findAll(int start, int end,
 		OrderByComparator<KaleoDraftDefinition> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo draft definitions.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoDraftDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of kaleo draft definitions
+	 * @param end the upper bound of the range of kaleo draft definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of kaleo draft definitions
+	 */
+	@Override
+	public List<KaleoDraftDefinition> findAll(int start, int end,
+		OrderByComparator<KaleoDraftDefinition> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2138,8 +2211,12 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<KaleoDraftDefinition> list = (List<KaleoDraftDefinition>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<KaleoDraftDefinition> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<KaleoDraftDefinition>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2186,10 +2263,10 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2219,7 +2296,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2232,11 +2309,11 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2249,6 +2326,11 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 		return count.intValue();
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return KaleoDraftDefinitionModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the kaleo draft definition persistence.
 	 */
@@ -2256,12 +2338,18 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(KaleoDraftDefinitionImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(KaleoDraftDefinitionImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = CompanyProviderWrapper.class)
+	protected CompanyProvider companyProvider;
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KALEODRAFTDEFINITION = "SELECT kaleoDraftDefinition FROM KaleoDraftDefinition kaleoDraftDefinition";
 	private static final String _SQL_SELECT_KALEODRAFTDEFINITION_WHERE_PKS_IN = "SELECT kaleoDraftDefinition FROM KaleoDraftDefinition kaleoDraftDefinition WHERE kaleoDraftDefinitionId IN (";
 	private static final String _SQL_SELECT_KALEODRAFTDEFINITION_WHERE = "SELECT kaleoDraftDefinition FROM KaleoDraftDefinition kaleoDraftDefinition WHERE ";

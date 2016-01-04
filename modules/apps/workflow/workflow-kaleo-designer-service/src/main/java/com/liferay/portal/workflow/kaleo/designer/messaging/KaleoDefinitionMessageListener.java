@@ -54,7 +54,7 @@ public class KaleoDefinitionMessageListener implements MessageListener {
 			name, version, serviceContext);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoDefinitionMessageListener.class);
 
 }

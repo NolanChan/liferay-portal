@@ -18,12 +18,13 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.workflow.kaleo.designer.constants.KaleoDesignerActionKeys;
 import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
 import com.liferay.portal.workflow.kaleo.designer.service.base.KaleoDraftDefinitionServiceBaseImpl;
 import com.liferay.portal.workflow.kaleo.designer.service.permission.KaleoDesignerPermission;
 import com.liferay.portal.workflow.kaleo.designer.service.permission.KaleoDraftDefinitionPermission;
-import com.liferay.portal.workflow.kaleo.designer.util.ActionKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,7 +47,7 @@ public class KaleoDraftDefinitionServiceImpl
 		throws PortalException {
 
 		KaleoDesignerPermission.check(
-			getPermissionChecker(), groupId, ActionKeys.ADD_DRAFT);
+			getPermissionChecker(), groupId, KaleoDesignerActionKeys.ADD_DRAFT);
 
 		return kaleoDraftDefinitionLocalService.addKaleoDraftDefinition(
 			userId, groupId, name, titleMap, content, version, draftVersion,
@@ -129,7 +130,7 @@ public class KaleoDraftDefinitionServiceImpl
 		throws PortalException {
 
 		KaleoDesignerPermission.check(
-			getPermissionChecker(), groupId, ActionKeys.PUBLISH);
+			getPermissionChecker(), groupId, KaleoDesignerActionKeys.PUBLISH);
 
 		return kaleoDraftDefinitionLocalService.publishKaleoDraftDefinition(
 			userId, groupId, name, titleMap, content, serviceContext);
