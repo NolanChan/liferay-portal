@@ -6,7 +6,6 @@ FileTree fileTree = fileTree(rootDir) {
 		exclude "portal-cache/portal-cache-ehcache-ee-provider/build.gradle"
 		exclude "portal-cache/portal-cache-memory/"
 		exclude "portal-cache/portal-cache-single/build.gradle"
-		exclude "portal-security/portal-security-antisamy/"
 		exclude "portal/portal-cluster-single/"
 		exclude "portal/portal-scheduler-single/"
 		exclude "portal/portal-scripting-beanshell/"
