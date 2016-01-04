@@ -222,14 +222,9 @@ public class KaleoDraftDefinitionLocalServiceWrapper
 		return _kaleoDraftDefinitionLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _kaleoDraftDefinitionLocalService.getBeanIdentifier();
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoDraftDefinitionLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -322,6 +317,16 @@ public class KaleoDraftDefinitionLocalServiceWrapper
 			version);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoDraftDefinitionLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -339,14 +344,6 @@ public class KaleoDraftDefinitionLocalServiceWrapper
 	}
 
 	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _kaleoDraftDefinitionLocalService.invokeMethod(name,
-			parameterTypes, arguments);
-	}
-
-	@Override
 	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition publishKaleoDraftDefinition(
 		long userId, long groupId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -355,16 +352,6 @@ public class KaleoDraftDefinitionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoDraftDefinitionLocalService.publishKaleoDraftDefinition(userId,
 			groupId, name, titleMap, content, serviceContext);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_kaleoDraftDefinitionLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**
@@ -388,23 +375,6 @@ public class KaleoDraftDefinitionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoDraftDefinitionLocalService.updateKaleoDraftDefinition(userId,
 			name, titleMap, content, version, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public KaleoDraftDefinitionLocalService getWrappedKaleoDraftDefinitionLocalService() {
-		return _kaleoDraftDefinitionLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedKaleoDraftDefinitionLocalService(
-		KaleoDraftDefinitionLocalService kaleoDraftDefinitionLocalService) {
-		_kaleoDraftDefinitionLocalService = kaleoDraftDefinitionLocalService;
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.designer.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -35,4 +36,21 @@ public interface KaleoDraftDefinition extends KaleoDraftDefinitionModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<KaleoDraftDefinition, Long> KALEO_DRAFT_DEFINITION_ID_ACCESSOR =
+		new Accessor<KaleoDraftDefinition, Long>() {
+			@Override
+			public Long get(KaleoDraftDefinition kaleoDraftDefinition) {
+				return kaleoDraftDefinition.getKaleoDraftDefinitionId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<KaleoDraftDefinition> getTypeClass() {
+				return KaleoDraftDefinition.class;
+			}
+		};
 }

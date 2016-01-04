@@ -54,16 +54,6 @@ public class KaleoDraftDefinitionServiceWrapper
 			serviceContext);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _kaleoDraftDefinitionService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
 		java.lang.String name, int version, int draftVersion,
@@ -97,12 +87,14 @@ public class KaleoDraftDefinitionServiceWrapper
 			version, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _kaleoDraftDefinitionService.invokeMethod(name, parameterTypes,
-			arguments);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoDraftDefinitionService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -116,16 +108,6 @@ public class KaleoDraftDefinitionServiceWrapper
 			groupId, name, titleMap, content, serviceContext);
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_kaleoDraftDefinitionService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition updateKaleoDraftDefinition(
 		long userId, java.lang.String name,
@@ -135,23 +117,6 @@ public class KaleoDraftDefinitionServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoDraftDefinitionService.updateKaleoDraftDefinition(userId,
 			name, titleMap, content, version, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public KaleoDraftDefinitionService getWrappedKaleoDraftDefinitionService() {
-		return _kaleoDraftDefinitionService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedKaleoDraftDefinitionService(
-		KaleoDraftDefinitionService kaleoDraftDefinitionService) {
-		_kaleoDraftDefinitionService = kaleoDraftDefinitionService;
 	}
 
 	@Override

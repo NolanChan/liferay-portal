@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseLocalService;
-import com.liferay.portal.service.InvokableLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
 
 /**
@@ -42,7 +41,7 @@ import com.liferay.portal.service.PersistedModelLocalService;
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
-	InvokableLocalService, PersistedModelLocalService {
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -187,12 +186,8 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the kaleo draft definition with the primary key.
@@ -258,6 +253,13 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLatestKaleoDraftDefinitionsCount(long companyId, int version);
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -268,24 +270,12 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
-
 	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition publishKaleoDraftDefinition(
 		long userId, long groupId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.lang.String content,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the kaleo draft definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

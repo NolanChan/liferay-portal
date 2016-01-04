@@ -691,14 +691,6 @@ public class KaleoDraftDefinitionWrapper implements KaleoDraftDefinition,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public KaleoDraftDefinition getWrappedKaleoDraftDefinition() {
-		return _kaleoDraftDefinition;
-	}
-
 	@Override
 	public KaleoDraftDefinition getWrappedModel() {
 		return _kaleoDraftDefinition;

@@ -20,11 +20,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
-import com.liferay.portal.service.InvokableService;
 
 /**
  * Provides the remote service interface for KaleoDraftDefinition. Methods of this
@@ -39,11 +39,12 @@ import com.liferay.portal.service.InvokableService;
  */
 @AccessControlled
 @JSONWebService
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=kaleodesigner", "json.web.service.context.path=KaleoDraftDefinition"}, service = KaleoDraftDefinitionService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface KaleoDraftDefinitionService extends BaseService,
-	InvokableService {
+public interface KaleoDraftDefinitionService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -59,13 +60,6 @@ public interface KaleoDraftDefinitionService extends BaseService,
 	public void deleteKaleoDraftDefinitions(java.lang.String name, int version,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
@@ -89,10 +83,12 @@ public interface KaleoDraftDefinitionService extends BaseService,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws PortalException;
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition publishKaleoDraftDefinition(
 		long userId, long groupId, java.lang.String name,
@@ -100,13 +96,6 @@ public interface KaleoDraftDefinitionService extends BaseService,
 		java.lang.String content,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition updateKaleoDraftDefinition(
 		long userId, java.lang.String name,
