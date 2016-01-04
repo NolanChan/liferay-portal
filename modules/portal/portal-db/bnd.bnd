@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal DB
+Bundle-SymbolicName: com.liferay.portal.db
+Bundle-Version: 1.0.0
+Include-Resource: classes
