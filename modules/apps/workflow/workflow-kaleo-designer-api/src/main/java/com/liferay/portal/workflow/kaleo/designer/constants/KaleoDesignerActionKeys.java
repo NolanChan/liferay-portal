@@ -12,20 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.util;
+package com.liferay.portal.workflow.kaleo.designer.constants;
 
 /**
- * @author Eduardo Lundgren
+ * @author Marcellus Tavares
  */
-public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
+public class KaleoDesignerActionKeys {
 
-	public static final String KALEO_DRAFT_DEFINITION =
-		"KALEO_DRAFT_DEFINITION";
+	public static final String ADD_DRAFT = "ADD_DRAFT";
 
-	public static final String KALEO_DRAFT_DEFINITION_CONTENT =
-		"KALEO_DRAFT_DEFINITION_CONTENT";
-
-	public static final String KALEO_DRAFT_DEFINITION_ID =
-		"KALEO_DRAFT_DEFINITION_ID";
+	public static final String PUBLISH = "PUBLISH";
 
 }
