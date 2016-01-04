@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.xml.Document;
@@ -43,14 +44,15 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.workflow.kaleo.designer.DuplicateKaleoDraftDefinitionNameException;
-import com.liferay.portal.workflow.kaleo.designer.KaleoDraftDefinitionContentException;
-import com.liferay.portal.workflow.kaleo.designer.KaleoDraftDefinitionNameException;
-import com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException;
+import com.liferay.portal.workflow.kaleo.designer.constants.KaleoDesignerWebKeys;
+import com.liferay.portal.workflow.kaleo.designer.exception.DuplicateKaleoDraftDefinitionNameException;
+import com.liferay.portal.workflow.kaleo.designer.exception.KaleoDraftDefinitionContentException;
+import com.liferay.portal.workflow.kaleo.designer.exception.KaleoDraftDefinitionNameException;
+import com.liferay.portal.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
 import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
 import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionServiceUtil;
 import com.liferay.portal.workflow.kaleo.designer.util.KaleoDesignerUtil;
-import com.liferay.portal.workflow.kaleo.designer.util.WebKeys;
+import com.liferay.workflow.kaleo.designer.constants.KaleoDesignerPortletKeys;
 
 import java.io.IOException;
 
@@ -61,15 +63,52 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo Lundgren
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.autopropagated-parameters=availableFields",
+		"com.liferay.portlet.autopropagated-parameters=availablePropertyModels",
+		"com.liferay.portlet.autopropagated-parameters=kaleoProcessId",
+		"com.liferay.portlet.autopropagated-parameters=openerWindowName",
+		"com.liferay.portlet.autopropagated-parameters=portletResourceNamespace",
+		"com.liferay.portlet.autopropagated-parameters=propertiesSaveCallback",
+		"com.liferay.portlet.autopropagated-parameters=refreshOpenerOnClose",
+		"com.liferay.portlet.autopropagated-parameters=saveCallback",
+		"com.liferay.portlet.autopropagated-parameters=uiScope",
+		"com.liferay.portlet.css-class-wrapper=kaleo-designer-portlet",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.footer-portlet-javascript=/designer/js/main.js",
+		"com.liferay.portlet.header-portlet-css=/designer/css/main.css",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Kaleo Designer Web",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.copy-request-parameters=true",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/designer/view.jsp",
+		"javax.portlet.name="+ KaleoDesignerPortletKeys.KALEO_DESIGNER,
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,power-user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class KaleoDesignerPortlet extends MVCPortlet {
 
 	public void deleteKaleoDraftDefinition(
@@ -115,7 +154,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 					name, titleMap, content, serviceContext);
 
 			actionRequest.setAttribute(
-				WebKeys.KALEO_DRAFT_DEFINITION, kaleoDraftDefinition);
+				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
+				kaleoDraftDefinition);
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {
@@ -126,7 +166,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
 				actionRequest.setAttribute(
-					WebKeys.KALEO_DRAFT_DEFINITION_CONTENT, content);
+					KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION_CONTENT,
+					content);
 			}
 			else {
 				throw e;
@@ -148,7 +189,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 					KaleoDesignerUtil.getKaleoDraftDefinition(renderRequest);
 
 				renderRequest.setAttribute(
-					WebKeys.KALEO_DRAFT_DEFINITION, kaleoDraftDefinition);
+					KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
+					kaleoDraftDefinition);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -227,7 +269,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 			}
 
 			actionRequest.setAttribute(
-				WebKeys.KALEO_DRAFT_DEFINITION, kaleoDraftDefinition);
+				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
+				kaleoDraftDefinition);
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {
@@ -238,7 +281,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
 				actionRequest.setAttribute(
-					WebKeys.KALEO_DRAFT_DEFINITION_CONTENT, content);
+					KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION_CONTENT,
+					content);
 			}
 			else {
 				throw e;
