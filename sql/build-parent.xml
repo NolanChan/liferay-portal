@@ -13,7 +13,7 @@
 	<var name="fork.mode" value="true" if:true="${jvm.debug}" />
 
 	<target name="build-db">
-		<gradle-execute dir="${project.dir}/modules/portal/portal-db" task="jar" />
+		<gradle-execute dir="${project.dir}/modules/portal/portal-dao-db" task="jar" />
 
 		<if>
 			<not>
@@ -24,14 +24,14 @@
 			</then>
 		</if>
 
-		<path id="dbbuilder.classpath">
-			<fileset dir="${sdk.dir}/dist" includes="com.liferay.portal.db-*.jar" />
+		<path id="db.builder.classpath">
+			<fileset dir="${sdk.dir}/dist" includes="com.liferay.portal.dao.db-*.jar" />
 			<path refid="project.classpath" />
 		</path>
 
 		<java
 			classname="com.liferay.portal.tools.DBBuilder"
-			classpathref="dbbuilder.classpath"
+			classpathref="db.builder.classpath"
 			fork="${fork.mode}"
 		>
 			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
