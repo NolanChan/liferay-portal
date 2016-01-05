@@ -21,7 +21,7 @@
 
 	<!-- Configurator -->
 
-	<bean id="messagingConfigurator" class="com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator">
+	<bean id="messagingConfigurator" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
 		<property name="destinations">
 			<list>
 				<ref bean="destination.kaleo_definition" />
