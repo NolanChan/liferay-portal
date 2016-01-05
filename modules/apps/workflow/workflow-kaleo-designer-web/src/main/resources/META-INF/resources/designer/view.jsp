@@ -32,7 +32,7 @@
 			total= "<%= latestKaleoDraftDefinitions.size() %>"
 		>
 
-			<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), ActionKeys.ADD_DRAFT) %>">
+			<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT) %>">
 				<portlet:renderURL var="editKaleoDraftDefinitionURL">
 					<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_draft_definition.jsp" %>' />
 					<portlet:param name="backURL" value="<%= currentURL %>" />

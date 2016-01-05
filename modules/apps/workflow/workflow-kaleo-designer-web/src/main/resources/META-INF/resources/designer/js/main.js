@@ -162,7 +162,7 @@ AUI.add(
 			freemarker: Liferay.Language.get('freemarker'),
 			groovy: Liferay.Language.get('groovy'),
 			im: Liferay.Language.get('instant-messenger'),
-			initial: Liferay.Language.get('Initial'),
+			initial: Liferay.Language.get('initial'),
 			inspectTaskMessage: Liferay.Language.get('inspect-the-task-nodes-to-assign-a-form-template'),
 			javascript: Liferay.Language.get('javascript'),
 			language: Liferay.Language.get('language'),

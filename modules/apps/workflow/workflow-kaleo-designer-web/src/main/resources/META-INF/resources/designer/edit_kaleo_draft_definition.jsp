@@ -28,7 +28,7 @@
 
 		KaleoDraftDefinition kaleoDraftDefinition = KaleoDesignerUtil.getKaleoDraftDefinition(request);
 
-		String content = (String)request.getAttribute(WebKeys.KALEO_DRAFT_DEFINITION_CONTENT);
+		String content = (String)request.getAttribute(KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION_CONTENT);
 
 		WorkflowDefinition workflowDefinition = null;
 
@@ -340,7 +340,7 @@
 						['aui-base']
 					);
 
-					<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), ActionKeys.PUBLISH) %>">
+					<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.PUBLISH) %>">
 						Liferay.provide(
 							window,
 							'<portlet:namespace />publishKaleoDraftDefinition',
@@ -372,7 +372,7 @@
 						['aui-base']
 					);
 
-					<c:if test="<%= ((kaleoDraftDefinition == null) && KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), ActionKeys.ADD_DRAFT)) || ((kaleoDraftDefinition != null) && KaleoDraftDefinitionPermission.contains(permissionChecker, kaleoDraftDefinition, ActionKeys.UPDATE)) %>">
+					<c:if test="<%= ((kaleoDraftDefinition == null) && KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT)) || ((kaleoDraftDefinition != null) && KaleoDraftDefinitionPermission.contains(permissionChecker, kaleoDraftDefinition, ActionKeys.UPDATE)) %>">
 						Liferay.provide(
 							window,
 							'<portlet:namespace />updateKaleoDraftDefinition',
@@ -703,11 +703,11 @@
 				</aui:script>
 
 				<aui:button-row>
-					<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), ActionKeys.ADD_DRAFT) || ((kaleoDraftDefinition != null) && KaleoDraftDefinitionPermission.contains(permissionChecker, kaleoDraftDefinition, ActionKeys.UPDATE)) %>">
+					<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT) || ((kaleoDraftDefinition != null) && KaleoDraftDefinitionPermission.contains(permissionChecker, kaleoDraftDefinition, ActionKeys.UPDATE)) %>">
 						<aui:button onClick='<%= renderResponse.getNamespace() + "updateKaleoDraftDefinition();" %>' value="save-as-draft" />
 					</c:if>
 
-					<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), ActionKeys.PUBLISH) %>">
+					<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.PUBLISH) %>">
 						<aui:button onClick='<%= renderResponse.getNamespace() + "publishKaleoDraftDefinition();" %>' primary="<%= true %>" value="publish" />
 					</c:if>
 
