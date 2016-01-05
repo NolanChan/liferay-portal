@@ -2,6 +2,7 @@ dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "2.4.1"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":portal-cache:portal-cache")
 
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
