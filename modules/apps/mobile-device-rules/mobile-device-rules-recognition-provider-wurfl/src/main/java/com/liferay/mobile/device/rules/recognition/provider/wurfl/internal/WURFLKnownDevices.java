@@ -256,6 +256,6 @@ public class WURFLKnownDevices implements KnownDevices {
 	private boolean _initialized;
 	private Set<VersionableName> _operatingSystems;
 	private final Set<String> _pointingMethods = new TreeSet<>();
-	private WURFLEngineProxy _wurflEngineProxy;
+	private volatile WURFLEngineProxy _wurflEngineProxy;
 
 }

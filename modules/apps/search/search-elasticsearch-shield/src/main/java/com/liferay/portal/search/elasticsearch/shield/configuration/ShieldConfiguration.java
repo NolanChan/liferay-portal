@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch.shield.configuration;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
-
 import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.configuration.admin.ConfigurationAdmin;
 
 /**
  * @author André de Oliveira

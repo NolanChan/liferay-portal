@@ -208,8 +208,8 @@ public class WURFLEngineProxy {
 		_props = props;
 	}
 
-	private CacheProvider _cacheProvider;
-	private Props _props;
+	private volatile CacheProvider _cacheProvider;
+	private volatile Props _props;
 	private WURFLEngine _wurflEngine;
 	private volatile WURFLEngineConfiguration _wurflEngineConfiguration;
 
