@@ -16,8 +16,8 @@ package com.liferay.search.elasticsearch.shield.internal;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.search.elasticsearch.settings.BaseSettingsContributor;
-import com.liferay.search.elasticsearch.settings.SettingsContributor;
+import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
+import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 import com.liferay.search.elasticsearch.shield.configuration.ShieldConfiguration;
 
 import java.util.Map;
