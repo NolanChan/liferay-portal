@@ -17,6 +17,7 @@ package com.liferay.workflow.kaleo.designer.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
+
 import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
 
 /**
