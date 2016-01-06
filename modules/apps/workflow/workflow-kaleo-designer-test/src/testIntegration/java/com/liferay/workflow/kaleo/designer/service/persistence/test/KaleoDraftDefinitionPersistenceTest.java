@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.service.persistence.test;
+package com.liferay.workflow.kaleo.designer.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
@@ -35,11 +35,11 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
-import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
-import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalServiceUtil;
-import com.liferay.portal.workflow.kaleo.designer.service.persistence.KaleoDraftDefinitionPersistence;
-import com.liferay.portal.workflow.kaleo.designer.service.persistence.KaleoDraftDefinitionUtil;
+import com.liferay.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
+import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
+import com.liferay.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalServiceUtil;
+import com.liferay.workflow.kaleo.designer.service.persistence.KaleoDraftDefinitionPersistence;
+import com.liferay.workflow.kaleo.designer.service.persistence.KaleoDraftDefinitionUtil;
 
 import org.junit.After;
 import org.junit.Assert;
