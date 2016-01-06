@@ -48,7 +48,7 @@
 			/>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition"
+				className="com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition"
 				escapedModel="<%= true %>"
 				keyProperty="kaleoDraftDefinitionId"
 				modelVar="kaleoDraftDefinition"
