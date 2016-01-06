@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.shield.internal;
+package com.liferay.search.elasticsearch.shield.internal;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
-import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
-import com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration;
+import com.liferay.search.elasticsearch.settings.BaseSettingsContributor;
+import com.liferay.search.elasticsearch.settings.SettingsContributor;
+import com.liferay.search.elasticsearch.shield.configuration.ShieldConfiguration;
 
 import java.util.Map;
 
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author André de Oliveira
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration",
+	configurationPid = "com.liferay.search.elasticsearch.shield.configuration.ShieldConfiguration",
 	immediate = true, property = {"operation.mode=REMOTE"},
 	service = SettingsContributor.class
 )

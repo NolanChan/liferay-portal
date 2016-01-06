@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.shield.internal;
+package com.liferay.search.elasticsearch.shield.internal;
 
-import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
-import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
+import com.liferay.search.elasticsearch.settings.BaseSettingsContributor;
+import com.liferay.search.elasticsearch.settings.SettingsContributor;
 
 import org.elasticsearch.common.settings.Settings.Builder;
 
