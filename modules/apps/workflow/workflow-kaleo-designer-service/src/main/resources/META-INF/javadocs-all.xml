@@ -3,7 +3,7 @@
 <javadocs>
 	<javadoc>
 		<name>KaleoDesignerPortlet</name>
-		<type>com.liferay.portal.workflow.kaleo.designer.designer.portlet.KaleoDesignerPortlet</type>
+		<type>com.liferay.workflow.kaleo.designer.designer.portlet.KaleoDesignerPortlet</type>
 		<author><![CDATA[Eduardo Lundgren]]></author>
 		<method>
 			<name>addKaleoDraftDefinition</name>
@@ -200,7 +200,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoDraftDefinitionImpl</name>
-		<type>com.liferay.portal.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionImpl</type>
+		<type>com.liferay.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionImpl</type>
 		<author><![CDATA[Eduardo Lundgren]]></author>
 		<method>
 			<name>KaleoDraftDefinitionImpl</name>
@@ -208,7 +208,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoDraftDefinitionLocalServiceImpl</name>
-		<type>com.liferay.portal.workflow.kaleo.designer.service.impl.KaleoDraftDefinitionLocalServiceImpl</type>
+		<type>com.liferay.workflow.kaleo.designer.service.impl.KaleoDraftDefinitionLocalServiceImpl</type>
 		<author><![CDATA[Eduardo Lundgren]]></author>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
@@ -743,7 +743,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoDraftDefinitionServiceImpl</name>
-		<type>com.liferay.portal.workflow.kaleo.designer.service.impl.KaleoDraftDefinitionServiceImpl</type>
+		<type>com.liferay.workflow.kaleo.designer.service.impl.KaleoDraftDefinitionServiceImpl</type>
 		<author><![CDATA[Gregory Amerson]]></author>
 		<author><![CDATA[Eduardo Lundgren]]></author>
 		<method>
@@ -965,7 +965,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoDesignerUtil</name>
-		<type>com.liferay.portal.workflow.kaleo.designer.util.KaleoDesignerUtil</type>
+		<type>com.liferay.workflow.kaleo.designer.util.KaleoDesignerUtil</type>
 		<author><![CDATA[Eduardo Lundgren]]></author>
 		<method>
 			<name>deployWorkflowDefinition</name>
@@ -1034,7 +1034,7 @@
 			<name>isPublished</name>
 			<param>
 				<name>kaleoDraftDefinition</name>
-				<type>com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition</type>
+				<type>com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -1058,7 +1058,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WebKeys</name>
-		<type>com.liferay.portal.workflow.kaleo.designer.util.WebKeys</type>
+		<type>com.liferay.workflow.kaleo.designer.util.WebKeys</type>
 		<author><![CDATA[Eduardo Lundgren]]></author>
 		<field>
 			<name>KALEO_DRAFT_DEFINITION</name>

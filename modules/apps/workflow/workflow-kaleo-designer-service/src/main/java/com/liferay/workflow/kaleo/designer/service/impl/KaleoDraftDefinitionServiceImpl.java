@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.service.impl;
+package com.liferay.workflow.kaleo.designer.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -20,11 +20,11 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.workflow.kaleo.designer.constants.KaleoDesignerActionKeys;
-import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
-import com.liferay.portal.workflow.kaleo.designer.service.base.KaleoDraftDefinitionServiceBaseImpl;
-import com.liferay.portal.workflow.kaleo.designer.service.permission.KaleoDesignerPermission;
-import com.liferay.portal.workflow.kaleo.designer.service.permission.KaleoDraftDefinitionPermission;
+import com.liferay.workflow.kaleo.designer.constants.KaleoDesignerActionKeys;
+import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
+import com.liferay.workflow.kaleo.designer.service.base.KaleoDraftDefinitionServiceBaseImpl;
+import com.liferay.workflow.kaleo.designer.service.permission.KaleoDesignerPermission;
+import com.liferay.workflow.kaleo.designer.service.permission.KaleoDraftDefinitionPermission;
 
 import java.util.ArrayList;
 import java.util.Collections;

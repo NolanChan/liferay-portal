@@ -17,7 +17,7 @@
 
 	<!-- Listeners -->
 
-	<bean id="messageListener.kaleo_definition" class="com.liferay.portal.workflow.kaleo.designer.messaging.KaleoDefinitionMessageListener" />
+	<bean id="messageListener.kaleo_definition" class="com.liferay.workflow.kaleo.designer.messaging.KaleoDefinitionMessageListener" />
 
 	<!-- Configurator -->
 

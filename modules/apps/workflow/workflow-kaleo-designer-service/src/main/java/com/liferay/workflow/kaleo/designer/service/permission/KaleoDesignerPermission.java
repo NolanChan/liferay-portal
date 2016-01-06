@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.service.permission;
+package com.liferay.workflow.kaleo.designer.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -24,7 +24,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 public class KaleoDesignerPermission {
 
 	public static final String RESOURCE_NAME =
-		"com.liferay.portal.workflow.kaleo.designer";
+		"com.liferay.workflow.kaleo.designer";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)

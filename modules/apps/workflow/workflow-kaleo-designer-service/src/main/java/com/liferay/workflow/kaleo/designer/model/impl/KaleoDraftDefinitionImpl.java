@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.model.impl;
+package com.liferay.workflow.kaleo.designer.model.impl;
 
 /**
  * @author Eduardo Lundgren

@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.model.impl;
+package com.liferay.workflow.kaleo.designer.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
-import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalServiceUtil;
+import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
+import com.liferay.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalServiceUtil;
 
 /**
  * The extended model base implementation for the KaleoDraftDefinition service. Represents a row in the &quot;KaleoDraftDefinition&quot; database table, with each column mapped to a property of this class.

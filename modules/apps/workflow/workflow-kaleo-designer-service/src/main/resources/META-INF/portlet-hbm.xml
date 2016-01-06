@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false" auto-import="false">
-	<import class="com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition" />
-	<class name="com.liferay.portal.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionImpl" table="KaleoDraftDefinition">
+	<import class="com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition" />
+	<class name="com.liferay.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionImpl" table="KaleoDraftDefinition">
 		<id name="kaleoDraftDefinitionId" type="long">
 			<generator class="assigned" />
 		</id>

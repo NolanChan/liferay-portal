@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.portal.workflow.kaleo.designer</model-name>
+		<model-name>com.liferay.workflow.kaleo.designer</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_workflow_kaleo_designer_web_portlet_KaleoDesignerPortlet</portlet-name>
 		</portlet-ref>
@@ -25,7 +25,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition</model-name>
+		<model-name>com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_workflow_kaleo_designer_web_portlet_KaleoDesignerPortlet</portlet-name>
 		</portlet-ref>
