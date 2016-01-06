@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.service;
+package com.liferay.workflow.kaleo.designer.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -35,7 +35,7 @@ public class KaleoDraftDefinitionServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition addKaleoDraftDefinition(
+	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition addKaleoDraftDefinition(
 		long userId, long groupId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.lang.String content, int version, int draftVersion,
@@ -55,7 +55,7 @@ public class KaleoDraftDefinitionServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
+	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
 		java.lang.String name, int version, int draftVersion,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -64,13 +64,13 @@ public class KaleoDraftDefinitionServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions()
+	public java.util.List<com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoDraftDefinitionService.getKaleoDraftDefinitions();
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition getLatestKaleoDraftDefinition(
+	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition getLatestKaleoDraftDefinition(
 		java.lang.String name, int version,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -79,7 +79,7 @@ public class KaleoDraftDefinitionServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+	public java.util.List<com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
 		long companyId, int version, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -98,7 +98,7 @@ public class KaleoDraftDefinitionServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition publishKaleoDraftDefinition(
+	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition publishKaleoDraftDefinition(
 		long userId, long groupId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.lang.String content,
@@ -109,7 +109,7 @@ public class KaleoDraftDefinitionServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition updateKaleoDraftDefinition(
+	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition updateKaleoDraftDefinition(
 		long userId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.lang.String content, int version,

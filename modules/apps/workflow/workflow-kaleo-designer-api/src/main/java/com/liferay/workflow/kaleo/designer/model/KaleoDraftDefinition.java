@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.model;
+package com.liferay.workflow.kaleo.designer.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -24,8 +24,8 @@ import com.liferay.portal.model.PersistedModel;
  *
  * @author Eduardo Lundgren
  * @see KaleoDraftDefinitionModel
- * @see com.liferay.portal.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionImpl
- * @see com.liferay.portal.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionModelImpl
+ * @see com.liferay.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionImpl
+ * @see com.liferay.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionModelImpl
  * @generated
  */
 @ProviderType
@@ -34,7 +34,7 @@ public interface KaleoDraftDefinition extends KaleoDraftDefinitionModel,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<KaleoDraftDefinition, Long> KALEO_DRAFT_DEFINITION_ID_ACCESSOR =
 		new Accessor<KaleoDraftDefinition, Long>() {

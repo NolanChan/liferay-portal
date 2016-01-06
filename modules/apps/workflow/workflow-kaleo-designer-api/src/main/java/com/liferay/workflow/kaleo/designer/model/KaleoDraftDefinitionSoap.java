@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.model;
+package com.liferay.workflow.kaleo.designer.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,10 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.portal.workflow.kaleo.designer.service.http.KaleoDraftDefinitionServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.workflow.kaleo.designer.service.http.KaleoDraftDefinitionServiceSoap}.
  *
  * @author Eduardo Lundgren
- * @see com.liferay.portal.workflow.kaleo.designer.service.http.KaleoDraftDefinitionServiceSoap
+ * @see com.liferay.workflow.kaleo.designer.service.http.KaleoDraftDefinitionServiceSoap
  * @generated
  */
 @ProviderType

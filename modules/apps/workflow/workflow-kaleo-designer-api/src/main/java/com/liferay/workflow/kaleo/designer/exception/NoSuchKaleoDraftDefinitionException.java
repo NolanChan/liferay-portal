@@ -12,20 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.constants;
+package com.liferay.workflow.kaleo.designer.exception;
+
+import com.liferay.portal.NoSuchModelException;
 
 /**
  * @author Eduardo Lundgren
  */
-public class KaleoDesignerWebKeys {
+public class NoSuchKaleoDraftDefinitionException extends NoSuchModelException {
 
-	public static final String KALEO_DRAFT_DEFINITION =
-		"KALEO_DRAFT_DEFINITION";
+	public NoSuchKaleoDraftDefinitionException() {
+	}
 
-	public static final String KALEO_DRAFT_DEFINITION_CONTENT =
-		"KALEO_DRAFT_DEFINITION_CONTENT";
+	public NoSuchKaleoDraftDefinitionException(String msg) {
+		super(msg);
+	}
 
-	public static final String KALEO_DRAFT_DEFINITION_ID =
-		"KALEO_DRAFT_DEFINITION_ID";
+	public NoSuchKaleoDraftDefinitionException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public NoSuchKaleoDraftDefinitionException(Throwable cause) {
+		super(cause);
+	}
 
 }

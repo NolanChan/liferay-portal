@@ -12,27 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.exception;
+package com.liferay.workflow.kaleo.designer.exception;
 
-import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Eduardo Lundgren
  */
-public class NoSuchKaleoDraftDefinitionException extends NoSuchModelException {
+public class DuplicateKaleoDraftDefinitionNameException
+	extends PortalException {
 
-	public NoSuchKaleoDraftDefinitionException() {
+	public DuplicateKaleoDraftDefinitionNameException() {
 	}
 
-	public NoSuchKaleoDraftDefinitionException(String msg) {
+	public DuplicateKaleoDraftDefinitionNameException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchKaleoDraftDefinitionException(String msg, Throwable cause) {
+	public DuplicateKaleoDraftDefinitionNameException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 
-	public NoSuchKaleoDraftDefinitionException(Throwable cause) {
+	public DuplicateKaleoDraftDefinitionNameException(Throwable cause) {
 		super(cause);
 	}
 

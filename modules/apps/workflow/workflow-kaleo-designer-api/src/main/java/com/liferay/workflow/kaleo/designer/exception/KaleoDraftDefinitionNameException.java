@@ -12,27 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.exception;
+package com.liferay.workflow.kaleo.designer.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Eduardo Lundgren
  */
-public class KaleoDraftDefinitionContentException extends PortalException {
+public class KaleoDraftDefinitionNameException extends PortalException {
 
-	public KaleoDraftDefinitionContentException() {
+	public KaleoDraftDefinitionNameException() {
 	}
 
-	public KaleoDraftDefinitionContentException(String msg) {
+	public KaleoDraftDefinitionNameException(String msg) {
 		super(msg);
 	}
 
-	public KaleoDraftDefinitionContentException(String msg, Throwable cause) {
+	public KaleoDraftDefinitionNameException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public KaleoDraftDefinitionContentException(Throwable cause) {
+	public KaleoDraftDefinitionNameException(Throwable cause) {
 		super(cause);
 	}
 

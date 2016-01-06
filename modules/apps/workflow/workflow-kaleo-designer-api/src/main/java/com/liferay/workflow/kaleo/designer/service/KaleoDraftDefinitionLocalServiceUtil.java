@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.service;
+package com.liferay.workflow.kaleo.designer.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -22,7 +22,7 @@ import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for KaleoDraftDefinition. This utility wraps
- * {@link com.liferay.portal.workflow.kaleo.designer.service.impl.KaleoDraftDefinitionLocalServiceImpl} and is the
+ * {@link com.liferay.workflow.kaleo.designer.service.impl.KaleoDraftDefinitionLocalServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on the local server. Methods of this service will not have security checks
  * based on the propagated JAAS credentials because this service can only be
@@ -30,8 +30,8 @@ import org.osgi.util.tracker.ServiceTracker;
  *
  * @author Eduardo Lundgren
  * @see KaleoDraftDefinitionLocalService
- * @see com.liferay.portal.workflow.kaleo.designer.service.base.KaleoDraftDefinitionLocalServiceBaseImpl
- * @see com.liferay.portal.workflow.kaleo.designer.service.impl.KaleoDraftDefinitionLocalServiceImpl
+ * @see com.liferay.workflow.kaleo.designer.service.base.KaleoDraftDefinitionLocalServiceBaseImpl
+ * @see com.liferay.workflow.kaleo.designer.service.impl.KaleoDraftDefinitionLocalServiceImpl
  * @generated
  */
 @ProviderType
@@ -39,7 +39,7 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.designer.service.impl.KaleoDraftDefinitionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.workflow.kaleo.designer.service.impl.KaleoDraftDefinitionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -48,12 +48,12 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 	* @param kaleoDraftDefinition the kaleo draft definition
 	* @return the kaleo draft definition that was added
 	*/
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition addKaleoDraftDefinition(
-		com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition kaleoDraftDefinition) {
+	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition addKaleoDraftDefinition(
+		com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition kaleoDraftDefinition) {
 		return getService().addKaleoDraftDefinition(kaleoDraftDefinition);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition addKaleoDraftDefinition(
+	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition addKaleoDraftDefinition(
 		long userId, long groupId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.lang.String content, int version, int draftVersion,
@@ -70,7 +70,7 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 	* @param kaleoDraftDefinitionId the primary key for the new kaleo draft definition
 	* @return the new kaleo draft definition
 	*/
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition createKaleoDraftDefinition(
+	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition createKaleoDraftDefinition(
 		long kaleoDraftDefinitionId) {
 		return getService().createKaleoDraftDefinition(kaleoDraftDefinitionId);
 	}
@@ -82,8 +82,8 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 	* @return the kaleo draft definition that was removed
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition deleteKaleoDraftDefinition(
-		com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition kaleoDraftDefinition)
+	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition deleteKaleoDraftDefinition(
+		com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition kaleoDraftDefinition)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteKaleoDraftDefinition(kaleoDraftDefinition);
 	}
@@ -95,13 +95,13 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 	* @return the kaleo draft definition that was removed
 	* @throws PortalException if a kaleo draft definition with the primary key could not be found
 	*/
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition deleteKaleoDraftDefinition(
+	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition deleteKaleoDraftDefinition(
 		long kaleoDraftDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteKaleoDraftDefinition(kaleoDraftDefinitionId);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition deleteKaleoDraftDefinition(
+	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition deleteKaleoDraftDefinition(
 		java.lang.String name, int version, int draftVersion,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -144,7 +144,7 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -162,7 +162,7 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -203,7 +203,7 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition fetchKaleoDraftDefinition(
+	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition fetchKaleoDraftDefinition(
 		long kaleoDraftDefinitionId) {
 		return getService().fetchKaleoDraftDefinition(kaleoDraftDefinitionId);
 	}
@@ -223,13 +223,13 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 	* @return the kaleo draft definition
 	* @throws PortalException if a kaleo draft definition with the primary key could not be found
 	*/
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
+	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
 		long kaleoDraftDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getKaleoDraftDefinition(kaleoDraftDefinitionId);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
+	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
 		java.lang.String name, int version, int draftVersion,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -238,7 +238,7 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions(
+	public static java.util.List<com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions(
 		java.lang.String name, int version, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator,
 		com.liferay.portal.service.ServiceContext serviceContext) {
@@ -251,14 +251,14 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 	* Returns a range of all the kaleo draft definitions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of kaleo draft definitions
 	* @param end the upper bound of the range of kaleo draft definitions (not inclusive)
 	* @return the range of kaleo draft definitions
 	*/
-	public static java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions(
+	public static java.util.List<com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions(
 		int start, int end) {
 		return getService().getKaleoDraftDefinitions(start, end);
 	}
@@ -278,7 +278,7 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 				   .getKaleoDraftDefinitionsCount(name, version, serviceContext);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition getLatestKaleoDraftDefinition(
+	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition getLatestKaleoDraftDefinition(
 		java.lang.String name, int version,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -286,7 +286,7 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 				   .getLatestKaleoDraftDefinition(name, version, serviceContext);
 	}
 
-	public static java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+	public static java.util.List<com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
 		long companyId, int version, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
@@ -315,7 +315,7 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition incrementKaleoDraftDefinitionDraftVersion(
+	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition incrementKaleoDraftDefinitionDraftVersion(
 		long userId, java.lang.String name, int version,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -324,7 +324,7 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 			version, serviceContext);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition publishKaleoDraftDefinition(
+	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition publishKaleoDraftDefinition(
 		long userId, long groupId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.lang.String content,
@@ -341,12 +341,12 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 	* @param kaleoDraftDefinition the kaleo draft definition
 	* @return the kaleo draft definition that was updated
 	*/
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition updateKaleoDraftDefinition(
-		com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition kaleoDraftDefinition) {
+	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition updateKaleoDraftDefinition(
+		com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition kaleoDraftDefinition) {
 		return getService().updateKaleoDraftDefinition(kaleoDraftDefinition);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition updateKaleoDraftDefinition(
+	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition updateKaleoDraftDefinition(
 		long userId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.lang.String content, int version,

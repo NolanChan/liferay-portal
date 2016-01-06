@@ -12,31 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.exception;
-
-import com.liferay.portal.kernel.exception.PortalException;
+package com.liferay.workflow.kaleo.designer.constants;
 
 /**
- * @author Eduardo Lundgren
+ * @author Marcellus Tavares
  */
-public class DuplicateKaleoDraftDefinitionNameException
-	extends PortalException {
+public class KaleoDesignerActionKeys {
 
-	public DuplicateKaleoDraftDefinitionNameException() {
-	}
+	public static final String ADD_DRAFT = "ADD_DRAFT";
 
-	public DuplicateKaleoDraftDefinitionNameException(String msg) {
-		super(msg);
-	}
-
-	public DuplicateKaleoDraftDefinitionNameException(
-		String msg, Throwable cause) {
-
-		super(msg, cause);
-	}
-
-	public DuplicateKaleoDraftDefinitionNameException(Throwable cause) {
-		super(cause);
-	}
+	public static final String PUBLISH = "PUBLISH";
 
 }
