@@ -16,9 +16,9 @@ package com.liferay.portal.workflow.kaleo.forms.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableService;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for KaleoProcess. This utility wraps
@@ -47,7 +47,7 @@ public class KaleoProcessServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.portal.workflow.kaleo.forms.util.TaskFormPairs taskFormPairs,
+		com.liferay.portal.workflow.kaleo.forms.constants.TaskFormPairs taskFormPairs,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -60,15 +60,6 @@ public class KaleoProcessServiceUtil {
 		long kaleoProcessId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteKaleoProcess(kaleoProcessId);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
 	}
 
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getKaleoProcess(
@@ -88,19 +79,13 @@ public class KaleoProcessServiceUtil {
 		return getService().getKaleoProcessesCount(groupId);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
@@ -109,7 +94,7 @@ public class KaleoProcessServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.portal.workflow.kaleo.forms.util.TaskFormPairs taskFormPairs,
+		com.liferay.portal.workflow.kaleo.forms.constants.TaskFormPairs taskFormPairs,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -118,35 +103,10 @@ public class KaleoProcessServiceUtil {
 			workflowDefinitionVersion, taskFormPairs, serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static KaleoProcessService getService() {
-		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					KaleoProcessService.class.getName());
-
-			if (invokableService instanceof KaleoProcessService) {
-				_service = (KaleoProcessService)invokableService;
-			}
-			else {
-				_service = new KaleoProcessServiceClp(invokableService);
-			}
-
-			ReferenceRegistry.registerReference(KaleoProcessServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(KaleoProcessService service) {
-	}
-
-	private static KaleoProcessService _service;
+	private static ServiceTracker<KaleoProcessService, KaleoProcessService> _serviceTracker =
+		ServiceTrackerFactory.open(KaleoProcessService.class);
 }

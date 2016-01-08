@@ -16,12 +16,14 @@ package com.liferay.portal.workflow.kaleo.forms.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
@@ -158,17 +160,40 @@ public class KaleoProcessLinkUtil {
 	}
 
 	/**
+	* Returns an ordered range of all the kaleo process links where kaleoProcessId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoProcessLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param kaleoProcessId the kaleo process ID
+	* @param start the lower bound of the range of kaleo process links
+	* @param end the upper bound of the range of kaleo process links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching kaleo process links
+	*/
+	public static List<KaleoProcessLink> findByKaleoProcessId(
+		long kaleoProcessId, int start, int end,
+		OrderByComparator<KaleoProcessLink> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByKaleoProcessId(kaleoProcessId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
 	* Returns the first kaleo process link in the ordered set where kaleoProcessId = &#63;.
 	*
 	* @param kaleoProcessId the kaleo process ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo process link
-	* @throws NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
+	* @throws com.liferay.portal.workflow.kaleo.forms.NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
 	*/
 	public static KaleoProcessLink findByKaleoProcessId_First(
 		long kaleoProcessId,
 		OrderByComparator<KaleoProcessLink> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.forms.NoSuchKaleoProcessLinkException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence()
 				   .findByKaleoProcessId_First(kaleoProcessId, orderByComparator);
 	}
@@ -194,12 +219,12 @@ public class KaleoProcessLinkUtil {
 	* @param kaleoProcessId the kaleo process ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo process link
-	* @throws NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
+	* @throws com.liferay.portal.workflow.kaleo.forms.NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
 	*/
 	public static KaleoProcessLink findByKaleoProcessId_Last(
 		long kaleoProcessId,
 		OrderByComparator<KaleoProcessLink> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.forms.NoSuchKaleoProcessLinkException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence()
 				   .findByKaleoProcessId_Last(kaleoProcessId, orderByComparator);
 	}
@@ -225,12 +250,12 @@ public class KaleoProcessLinkUtil {
 	* @param kaleoProcessId the kaleo process ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo process link
-	* @throws NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.forms.NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
 	*/
 	public static KaleoProcessLink[] findByKaleoProcessId_PrevAndNext(
 		long kaleoProcessLinkId, long kaleoProcessId,
 		OrderByComparator<KaleoProcessLink> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.forms.NoSuchKaleoProcessLinkException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence()
 				   .findByKaleoProcessId_PrevAndNext(kaleoProcessLinkId,
 			kaleoProcessId, orderByComparator);
@@ -256,16 +281,16 @@ public class KaleoProcessLinkUtil {
 	}
 
 	/**
-	* Returns the kaleo process link where kaleoProcessId = &#63; and workflowTaskName = &#63; or throws a {@link NoSuchKaleoProcessLinkException} if it could not be found.
+	* Returns the kaleo process link where kaleoProcessId = &#63; and workflowTaskName = &#63; or throws a {@link com.liferay.portal.workflow.kaleo.forms.NoSuchKaleoProcessLinkException} if it could not be found.
 	*
 	* @param kaleoProcessId the kaleo process ID
 	* @param workflowTaskName the workflow task name
 	* @return the matching kaleo process link
-	* @throws NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
+	* @throws com.liferay.portal.workflow.kaleo.forms.NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
 	*/
 	public static KaleoProcessLink findByKPI_WTN(long kaleoProcessId,
 		java.lang.String workflowTaskName)
-		throws com.liferay.portal.workflow.kaleo.forms.NoSuchKaleoProcessLinkException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence().findByKPI_WTN(kaleoProcessId, workflowTaskName);
 	}
 
@@ -286,7 +311,7 @@ public class KaleoProcessLinkUtil {
 	*
 	* @param kaleoProcessId the kaleo process ID
 	* @param workflowTaskName the workflow task name
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching kaleo process link, or <code>null</code> if a matching kaleo process link could not be found
 	*/
 	public static KaleoProcessLink fetchByKPI_WTN(long kaleoProcessId,
@@ -305,7 +330,7 @@ public class KaleoProcessLinkUtil {
 	*/
 	public static KaleoProcessLink removeByKPI_WTN(long kaleoProcessId,
 		java.lang.String workflowTaskName)
-		throws com.liferay.portal.workflow.kaleo.forms.NoSuchKaleoProcessLinkException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence().removeByKPI_WTN(kaleoProcessId, workflowTaskName);
 	}
 
@@ -354,10 +379,10 @@ public class KaleoProcessLinkUtil {
 	*
 	* @param kaleoProcessLinkId the primary key of the kaleo process link
 	* @return the kaleo process link that was removed
-	* @throws NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.forms.NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
 	*/
 	public static KaleoProcessLink remove(long kaleoProcessLinkId)
-		throws com.liferay.portal.workflow.kaleo.forms.NoSuchKaleoProcessLinkException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence().remove(kaleoProcessLinkId);
 	}
 
@@ -366,14 +391,14 @@ public class KaleoProcessLinkUtil {
 	}
 
 	/**
-	* Returns the kaleo process link with the primary key or throws a {@link NoSuchKaleoProcessLinkException} if it could not be found.
+	* Returns the kaleo process link with the primary key or throws a {@link com.liferay.portal.workflow.kaleo.forms.NoSuchKaleoProcessLinkException} if it could not be found.
 	*
 	* @param kaleoProcessLinkId the primary key of the kaleo process link
 	* @return the kaleo process link
-	* @throws NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.forms.NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
 	*/
 	public static KaleoProcessLink findByPrimaryKey(long kaleoProcessLinkId)
-		throws com.liferay.portal.workflow.kaleo.forms.NoSuchKaleoProcessLinkException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence().findByPrimaryKey(kaleoProcessLinkId);
 	}
 
@@ -434,6 +459,26 @@ public class KaleoProcessLinkUtil {
 	}
 
 	/**
+	* Returns an ordered range of all the kaleo process links.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoProcessLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo process links
+	* @param end the upper bound of the range of kaleo process links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of kaleo process links
+	*/
+	public static List<KaleoProcessLink> findAll(int start, int end,
+		OrderByComparator<KaleoProcessLink> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
 	* Removes all the kaleo process links from the database.
 	*/
 	public static void removeAll() {
@@ -450,23 +495,9 @@ public class KaleoProcessLinkUtil {
 	}
 
 	public static KaleoProcessLinkPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (KaleoProcessLinkPersistence)PortletBeanLocatorUtil.locate(com.liferay.portal.workflow.kaleo.forms.service.ClpSerializer.getServletContextName(),
-					KaleoProcessLinkPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(KaleoProcessLinkUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(KaleoProcessLinkPersistence persistence) {
-	}
-
-	private static KaleoProcessLinkPersistence _persistence;
+	private static ServiceTracker<KaleoProcessLinkPersistence, KaleoProcessLinkPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(KaleoProcessLinkPersistence.class);
 }

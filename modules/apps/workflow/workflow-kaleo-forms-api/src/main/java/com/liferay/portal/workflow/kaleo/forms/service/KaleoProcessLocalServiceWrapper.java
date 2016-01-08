@@ -52,7 +52,7 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.portal.workflow.kaleo.forms.util.TaskFormPairs taskFormPairs,
+		com.liferay.portal.workflow.kaleo.forms.constants.TaskFormPairs taskFormPairs,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessLocalService.addKaleoProcess(userId, groupId,
@@ -207,21 +207,16 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 		return _kaleoProcessLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _kaleoProcessLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getDDLRecordSetKaleoProcess(
 		long ddlRecordSetId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessLocalService.getDDLRecordSetKaleoProcess(ddlRecordSetId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoProcessLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -284,29 +279,21 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 		return _kaleoProcessLocalService.getKaleoProcessesCount(groupId);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoProcessLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _kaleoProcessLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_kaleoProcessLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**
@@ -328,30 +315,13 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.portal.workflow.kaleo.forms.util.TaskFormPairs taskFormPairs,
+		com.liferay.portal.workflow.kaleo.forms.constants.TaskFormPairs taskFormPairs,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessLocalService.updateKaleoProcess(kaleoProcessId,
 			ddmStructureId, nameMap, descriptionMap, ddmTemplateId,
 			workflowDefinitionName, workflowDefinitionVersion, taskFormPairs,
 			serviceContext);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public KaleoProcessLocalService getWrappedKaleoProcessLocalService() {
-		return _kaleoProcessLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedKaleoProcessLocalService(
-		KaleoProcessLocalService kaleoProcessLocalService) {
-		_kaleoProcessLocalService = kaleoProcessLocalService;
 	}
 
 	@Override

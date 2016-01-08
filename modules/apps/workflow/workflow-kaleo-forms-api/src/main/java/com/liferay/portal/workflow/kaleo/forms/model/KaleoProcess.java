@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.forms.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,10 +35,27 @@ public interface KaleoProcess extends KaleoProcessModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet getDDLRecordSet()
+	public static final Accessor<KaleoProcess, Long> KALEO_PROCESS_ID_ACCESSOR = new Accessor<KaleoProcess, Long>() {
+			@Override
+			public Long get(KaleoProcess kaleoProcess) {
+				return kaleoProcess.getKaleoProcessId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<KaleoProcess> getTypeClass() {
+				return KaleoProcess.class;
+			}
+		};
+
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet getDDLRecordSet()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getDDMTemplate()
+	public com.liferay.dynamic.data.mapping.model.DDMTemplate getDDMTemplate()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getDescription()

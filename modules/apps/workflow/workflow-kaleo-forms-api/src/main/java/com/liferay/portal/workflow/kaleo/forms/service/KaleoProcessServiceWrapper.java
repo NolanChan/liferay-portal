@@ -39,7 +39,7 @@ public class KaleoProcessServiceWrapper implements KaleoProcessService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.portal.workflow.kaleo.forms.util.TaskFormPairs taskFormPairs,
+		com.liferay.portal.workflow.kaleo.forms.constants.TaskFormPairs taskFormPairs,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessService.addKaleoProcess(groupId, ddmStructureId,
@@ -52,16 +52,6 @@ public class KaleoProcessServiceWrapper implements KaleoProcessService,
 		long kaleoProcessId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessService.deleteKaleoProcess(kaleoProcessId);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _kaleoProcessService.getBeanIdentifier();
 	}
 
 	@Override
@@ -84,21 +74,14 @@ public class KaleoProcessServiceWrapper implements KaleoProcessService,
 		return _kaleoProcessService.getKaleoProcessesCount(groupId);
 	}
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _kaleoProcessService.invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_kaleoProcessService.setBeanIdentifier(beanIdentifier);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoProcessService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -108,30 +91,13 @@ public class KaleoProcessServiceWrapper implements KaleoProcessService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.portal.workflow.kaleo.forms.util.TaskFormPairs taskFormPairs,
+		com.liferay.portal.workflow.kaleo.forms.constants.TaskFormPairs taskFormPairs,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessService.updateKaleoProcess(kaleoProcessId,
 			ddmStructureId, nameMap, descriptionMap, ddmTemplateId,
 			workflowDefinitionName, workflowDefinitionVersion, taskFormPairs,
 			serviceContext);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public KaleoProcessService getWrappedKaleoProcessService() {
-		return _kaleoProcessService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedKaleoProcessService(
-		KaleoProcessService kaleoProcessService) {
-		_kaleoProcessService = kaleoProcessService;
 	}
 
 	@Override

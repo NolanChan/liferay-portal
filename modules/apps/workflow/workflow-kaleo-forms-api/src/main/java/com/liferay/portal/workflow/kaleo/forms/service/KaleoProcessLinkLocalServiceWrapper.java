@@ -211,14 +211,9 @@ public class KaleoProcessLinkLocalServiceWrapper
 		return _kaleoProcessLinkLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _kaleoProcessLinkLocalService.getBeanIdentifier();
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoProcessLinkLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -268,29 +263,21 @@ public class KaleoProcessLinkLocalServiceWrapper
 		return _kaleoProcessLinkLocalService.getKaleoProcessLinksCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoProcessLinkLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessLinkLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _kaleoProcessLinkLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_kaleoProcessLinkLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override
@@ -328,23 +315,6 @@ public class KaleoProcessLinkLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessLinkLocalService.updateKaleoProcessLink(kaleoProcessLinkId,
 			kaleoProcessId, workflowTaskName, ddmTemplateId);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public KaleoProcessLinkLocalService getWrappedKaleoProcessLinkLocalService() {
-		return _kaleoProcessLinkLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedKaleoProcessLinkLocalService(
-		KaleoProcessLinkLocalService kaleoProcessLinkLocalService) {
-		_kaleoProcessLinkLocalService = kaleoProcessLinkLocalService;
 	}
 
 	@Override

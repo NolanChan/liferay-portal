@@ -172,7 +172,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet getDDLRecordSet()
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet getDDLRecordSet()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcess.getDDLRecordSet();
 	}
@@ -188,7 +188,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getDDMTemplate()
+	public com.liferay.dynamic.data.mapping.model.DDMTemplate getDDMTemplate()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcess.getDDMTemplate();
 	}
@@ -568,14 +568,6 @@ public class KaleoProcessWrapper implements KaleoProcess,
 		}
 
 		return false;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public KaleoProcess getWrappedKaleoProcess() {
-		return _kaleoProcess;
 	}
 
 	@Override
