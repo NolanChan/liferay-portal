@@ -1,9 +1,9 @@
 Bundle-Name: Liferay Workflow Kaleo Forms Service
-Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.forms.service
+Bundle-SymbolicName: com.liferay.workflow.kaleo.forms.service
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.portal.workflow.kaleo.forms.service.permission,\
-	com.liferay.portal.workflow.kaleo.forms.util
+	com.liferay.workflow.kaleo.forms.service.permission,\
+	com.liferay.workflow.kaleo.forms.util
 Include-Resource:\
 	classes
 Liferay-Service: true
