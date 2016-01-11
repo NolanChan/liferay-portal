@@ -28,12 +28,13 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcessModel;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcessSoap;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
+
+import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.workflow.kaleo.forms.model.KaleoProcessModel;
+import com.liferay.workflow.kaleo.forms.model.KaleoProcessSoap;
 
 import java.io.Serializable;
 

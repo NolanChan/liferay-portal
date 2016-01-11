@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
+
 import com.liferay.workflow.kaleo.forms.model.KaleoProcessLink;
 
 import java.io.Externalizable;

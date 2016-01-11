@@ -38,6 +38,7 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+
 import com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessImpl;

@@ -24,11 +24,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcessLink;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcessLinkModel;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
+
+import com.liferay.workflow.kaleo.forms.model.KaleoProcessLink;
+import com.liferay.workflow.kaleo.forms.model.KaleoProcessLinkModel;
 
 import java.io.Serializable;
 
@@ -387,8 +388,7 @@ public class KaleoProcessLinkModelImpl extends BaseModelImpl<KaleoProcessLink>
 		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.workflow.kaleo.forms.model.KaleoProcessLink");
+		sb.append("com.liferay.workflow.kaleo.forms.model.KaleoProcessLink");
 		sb.append("</model-name>");
 
 		sb.append(
