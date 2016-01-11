@@ -50,8 +50,6 @@ String mode = ParamUtil.getString(request, "mode");
 	<liferay-ui:search-container-results>
 
 		<%
-		long[] groupIds = ddmDisplay.getTemplateGroupIds(themeDisplay, true);
-
 		total = DDMTemplateLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructureId, scopeClassNameId, displayTerms.getKeywords(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, mode);
 
 		searchContainer.setTotal(total);
@@ -63,7 +61,7 @@ String mode = ParamUtil.getString(request, "mode");
 
 	</liferay-ui:search-container-results>
 
-	<c:if test="<%= permissionChecker.hasPermission(scopeGroupId, ddmPermissionHandler.getResourceName(scopeClassNameId), scopeGroupId, ddmPermissionHandler.getAddTemplateActionId()) %>">
+	<c:if test="<%= DDMTemplatePermission.containsAddTemplatePermission(permissionChecker, scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), scopeClassNameId) %>">
 
 		<%
 		String taglibOnClick = "javascript:" + renderResponse.getNamespace() + "openDDMPortlet();";
@@ -75,7 +73,7 @@ String mode = ParamUtil.getString(request, "mode");
 	</c:if>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate"
+		className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
 		keyProperty="templateId"
 		modelVar="ddmTemplate"
 	>

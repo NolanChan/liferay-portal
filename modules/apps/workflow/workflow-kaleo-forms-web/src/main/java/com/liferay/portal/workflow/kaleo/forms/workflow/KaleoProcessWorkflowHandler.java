@@ -14,6 +14,10 @@
 
 package com.liferay.portal.workflow.kaleo.forms.workflow;
 
+import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,14 +29,10 @@ import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalServiceUtil;
-import com.liferay.portal.workflow.kaleo.forms.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -91,7 +91,8 @@ public class KaleoProcessWorkflowHandler
 
 		try {
 			LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-				serviceContext.getRequest(), PortletKeys.KALEO_FORMS,
+				serviceContext.getRequest(),
+				KaleoFormsPortletKeys.KALEO_FORMS_DISPLAY,
 				serviceContext.getPlid(), PortletRequest.RENDER_PHASE);
 
 			String currentURL = liferayPortletURL.toString();
@@ -159,7 +160,7 @@ public class KaleoProcessWorkflowHandler
 			userId, recordVersion.getRecordVersionId(), status, serviceContext);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoProcessWorkflowHandler.class);
 
 }

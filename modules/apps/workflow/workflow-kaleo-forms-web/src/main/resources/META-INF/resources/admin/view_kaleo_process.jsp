@@ -80,7 +80,7 @@ portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcessId));
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.dynamicdatalists.model.DDLRecord"
+			className="com.liferay.dynamic.data.lists.model.DDLRecord"
 			modelVar="ddlRecord"
 		>
 

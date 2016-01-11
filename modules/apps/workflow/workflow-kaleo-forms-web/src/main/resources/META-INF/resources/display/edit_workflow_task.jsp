@@ -56,7 +56,7 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + workflowH
 		<liferay-ui:error exception="<%= WorkflowTaskDueDateException.class %>" message="please-enter-a-valid-due-date" />
 
 		<aui:layout>
-			<aui:column columnWidth="60">
+			<aui:column columnWidth="<%= 60 %>">
 				<div class="lfr-asset-assigned">
 					<aui:field-wrapper label="assigned-to">
 						<c:choose>
@@ -124,12 +124,12 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + workflowH
 							</portlet:actionURL>
 
 							<%
-							Map<String,Object> data = new HashMap<String,Object>();
+							Map<String, Object> data = new HashMap<String, Object>();
 
 							data.put("navigation", Boolean.TRUE);
 							%>
 
-							<%= StringPool.DASH %> (<span class="task-due-date-link workflow-task"><aui:a data='<%= data %>' href='<%= updateDueDateURL %>' id='<%= randomId + "taskDueDateLink" %>' label="change" />)
+							<%= StringPool.DASH %> (<span class="task-due-date-link workflow-task"><aui:a data="<%= data %>" href="<%= updateDueDateURL %>" id='<%= randomId + "taskDueDateLink" %>' label="change" />)
 						</c:if>
 					</aui:field-wrapper>
 				</div>
@@ -161,7 +161,6 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + workflowH
 					readOnly="<%= true %>"
 					requestedLocale="<%= locale %>"
 				/>
-
 			</liferay-ui:panel>
 
 			<liferay-ui:panel defaultState="closed" title="activities">
@@ -221,7 +220,9 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + workflowH
 												previousActorName = PortalUtil.getUserName(workflowLog.getPreviousUserId(), StringPool.BLANK);
 											%>
 
-												<%= LanguageUtil.format(request, "task-assigned-to-x.-previous-assignee-was-x", new Object[] {HtmlUtil.escape(actorName), HtmlUtil.escape(previousActorName)}) %>
+												<liferay-ui:message arguments="<%= HtmlUtil.escape(actorName) %>" key="tasks-assigned-to-x" translateArguments="<%= false %>" />
+
+												<liferay-ui:message arguments="<%= HtmlUtil.escape(previousActorName) %>" key="previous-assignee-was-x" translateArguments="<%= false %>" />
 
 											<%
 											}

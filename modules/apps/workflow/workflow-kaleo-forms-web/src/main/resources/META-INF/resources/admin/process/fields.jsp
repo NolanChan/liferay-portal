@@ -86,7 +86,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 
 	</liferay-ui:search-container-results>
 
-	<c:if test="<%= permissionChecker.hasPermission(scopeGroupId, ddmPermissionHandler.getResourceName(scopeClassNameId), scopeGroupId, ddmPermissionHandler.getAddStructureActionId()) %>">
+	<c:if test="<%= DDMStructurePermission.containsAddStruturePermission(permissionChecker, scopeGroupId, scopeClassNameId) %>">
 		<portlet:renderURL var="editDefinitionURL">
 			<portlet:param name="mvcPath" value="/admin/process/edit_structure.jsp" />
 			<portlet:param name="redirect" value="<%= currentSectionURL %>" />
@@ -98,7 +98,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 	</c:if>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portlet.dynamicdatamapping.model.DDMStructure"
+		className="com.liferay.dynamic.data.mapping.model.DDMStructure"
 		keyProperty="structureId"
 		modelVar="structure"
 	>
@@ -110,7 +110,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 		<liferay-util:buffer var="structureNameBuffer">
 
 			<%
-			JSONArray definitionFieldsJSONArray = DDMXSDUtil.getJSONArray(structure.getDefinition());
+			JSONArray definitionFieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(structure, structure.getDefinition());
 
 			JSONObject definitionJSONObject = JSONFactoryUtil.createJSONObject();
 

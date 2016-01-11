@@ -16,7 +16,24 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
+<%@ page import="com.liferay.dynamic.data.lists.exception.RecordSetDDMStructureIdException" %><%@
+page import="com.liferay.dynamic.data.lists.exception.RecordSetNameException" %><%@
+page import="com.liferay.dynamic.data.lists.model.DDLRecordConstants" %><%@
+page import="com.liferay.dynamic.data.lists.model.DDLRecordVersion" %><%@
+page import="com.liferay.dynamic.data.lists.service.DDLRecordServiceUtil" %><%@
+page import="com.liferay.dynamic.data.mapping.exception.RequiredStructureException" %><%@
+page import="com.liferay.dynamic.data.mapping.model.DDMFormField" %><%@
+page import="com.liferay.dynamic.data.mapping.model.DDMTemplateConstants" %><%@
+page import="com.liferay.dynamic.data.mapping.model.LocalizedValue" %><%@
+page import="com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil" %><%@
+page import="com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil" %><%@
+page import="com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission" %><%@
+page import="com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission" %><%@
+page import="com.liferay.dynamic.data.mapping.storage.StorageEngineUtil" %><%@
+page import="com.liferay.dynamic.data.mapping.util.DDMDisplay" %><%@
+page import="com.liferay.dynamic.data.mapping.util.DDMDisplayRegistryUtil" %><%@
+page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
 page import="com.liferay.portal.kernel.exception.PortalException" %><%@
 page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
@@ -38,35 +55,18 @@ page import="com.liferay.portal.kernel.workflow.WorkflowInstance" %><%@
 page import="com.liferay.portal.model.Portlet" %><%@
 page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalServiceUtil" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.KaleoProcessDDMTemplateIdException" %><%@
+page import="com.liferay.portal.workflow.kaleo.forms.constants.TaskFormPair" %><%@
+page import="com.liferay.portal.workflow.kaleo.forms.constants.TaskFormPairs" %><%@
+page import="com.liferay.portal.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.search.KaleoProcessSearch" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoFormsPermission" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.util.KaleoFormsUtil" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.util.PortletKeys" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.util.TaskFormPair" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.util.TaskFormPairs" %><%@
 page import="com.liferay.portlet.PortletURLFactoryUtil" %><%@
-page import="com.liferay.portlet.dynamicdatalists.RecordSetDDMStructureIdException" %><%@
-page import="com.liferay.portlet.dynamicdatalists.RecordSetNameException" %><%@
-page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants" %><%@
-page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion" %><%@
-page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordServiceUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.RequiredStructureException" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.model.DDMFormField" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.model.LocalizedValue" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.storage.StorageType" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplay" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %>
+page import="com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition" %><%@
+page import="com.liferay.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalServiceUtil" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.WindowState" %>
@@ -81,22 +81,9 @@ boolean showToolbar = ParamUtil.getBoolean(request, "showToolbar", true);
 
 DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(portletDisplay.getId());
 
-DDMPermissionHandler ddmPermissionHandler = ddmDisplay.getDDMPermissionHandler();
-
 long scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
 
-String scopeAvailableFields = ddmDisplay.getAvailableFields();
-String scopeStorageType = ddmDisplay.getStorageType();
 String scopeTemplateType = ddmDisplay.getTemplateType();
-
-String storageTypeValue = StringPool.BLANK;
-
-if (scopeStorageType.equals("expando")) {
-	storageTypeValue = StorageType.EXPANDO.getValue();
-}
-else if (scopeStorageType.equals("xml")) {
-	storageTypeValue = StorageType.XML.getValue();
-}
 
 String templateTypeValue = StringPool.BLANK;
 

@@ -14,29 +14,31 @@
 
 package com.liferay.portal.workflow.kaleo.forms.ddm;
 
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
+import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
-import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
-import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
+import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marcellus Tavares
  */
+@Component(
+	property = {"javax.portlet.name=" + KaleoFormsPortletKeys.KALEO_FORMS_ADMIN},
+	service = DDMDisplay.class
+)
 public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
-
-	@Override
-	public DDMPermissionHandler getDDMPermissionHandler() {
-		return _ddmPermissionHandler;
-	}
 
 	@Override
 	public String getEditTemplateTitle(
@@ -53,12 +55,12 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getPortletId() {
-		return "2_WAR_kaleoformsportlet";
+		return KaleoFormsPortletKeys.KALEO_FORMS_ADMIN;
 	}
 
 	@Override
 	public String getStorageType() {
-		return StorageType.XML.toString();
+		return StorageType.JSON.toString();
 	}
 
 	@Override
@@ -89,8 +91,5 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 
 		return StringPool.BLANK;
 	}
-
-	private final DDMPermissionHandler _ddmPermissionHandler =
-		new KaleoFormsDDMPermissionHandler();
 
 }

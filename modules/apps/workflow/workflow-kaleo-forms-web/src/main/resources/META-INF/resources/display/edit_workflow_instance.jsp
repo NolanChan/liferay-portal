@@ -48,7 +48,7 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + ddlRecord
 <aui:layout>
 	<aui:column columnWidth="<%= 75 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
 		<aui:layout>
-			<aui:column columnWidth="60">
+			<aui:column columnWidth="<%= 60 %>">
 				<div class="lfr-asset-status">
 					<aui:field-wrapper label="state">
 						<%= LanguageUtil.get(request, HtmlUtil.escape(workflowInstance.getState())) %>
@@ -220,7 +220,9 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + ddlRecord
 												previousActorName = PortalUtil.getUserName(workflowLog.getPreviousUserId(), StringPool.BLANK);
 											%>
 
-												<%= LanguageUtil.format(request, "task-assigned-to-x.-previous-assignee-was-x", new Object[] {HtmlUtil.escape(actorName), HtmlUtil.escape(previousActorName)}) %>
+												<liferay-ui:message arguments="<%= HtmlUtil.escape(actorName) %>" key="tasks-assigned-to-x" translateArguments="<%= false %>" />
+
+												<liferay-ui:message arguments="<%= HtmlUtil.escape(previousActorName) %>" key="previous-assignee-was-x" translateArguments="<%= false %>" />
 
 											<%
 											}
