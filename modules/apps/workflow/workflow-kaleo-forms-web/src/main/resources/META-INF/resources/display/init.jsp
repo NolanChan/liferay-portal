@@ -35,9 +35,9 @@ page import="com.liferay.portal.model.User" %><%@
 page import="com.liferay.portal.service.RoleLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalServiceUtil" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalServiceUtil" %>
+page import="com.liferay.workflow.kaleo.forms.model.KaleoProcessLink" %><%@
+page import="com.liferay.workflow.kaleo.forms.service.KaleoProcessLinkLocalServiceUtil" %><%@
+page import="com.liferay.workflow.kaleo.forms.service.KaleoProcessLocalServiceUtil" %>
 
 <%@ page import="java.io.Serializable" %>
 

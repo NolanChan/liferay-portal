@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.forms.portlet;
+package com.liferay.workflow.kaleo.forms.portlet;
 
 import com.liferay.dynamic.data.lists.exception.RecordSetDDMStructureIdException;
 import com.liferay.dynamic.data.lists.exception.RecordSetNameException;
@@ -70,15 +70,15 @@ import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
-import com.liferay.portal.workflow.kaleo.forms.constants.TaskFormPairs;
-import com.liferay.portal.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException;
-import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
-import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
-import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessService;
-import com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
-import com.liferay.portal.workflow.kaleo.forms.util.ActionKeys;
-import com.liferay.portal.workflow.kaleo.forms.util.WebKeys;
+import com.liferay.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
+import com.liferay.workflow.kaleo.forms.constants.TaskFormPairs;
+import com.liferay.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException;
+import com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
+import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.workflow.kaleo.forms.service.KaleoProcessService;
+import com.liferay.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
+import com.liferay.workflow.kaleo.forms.util.ActionKeys;
+import com.liferay.workflow.kaleo.forms.util.WebKeys;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.workflow.kaleo.designer.exception.DuplicateKaleoDraftDefinitionNameException;

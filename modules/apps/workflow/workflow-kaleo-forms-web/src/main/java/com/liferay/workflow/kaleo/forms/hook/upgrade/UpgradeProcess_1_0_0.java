@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.forms.hook.upgrade;
+package com.liferay.workflow.kaleo.forms.hook.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.workflow.kaleo.forms.hook.upgrade.v1_0_0.UpgradeKaleoProcess;
+import com.liferay.workflow.kaleo.forms.hook.upgrade.v1_0_0.UpgradeKaleoProcess;
 
 /**
  * @author Marcellus Tavares
