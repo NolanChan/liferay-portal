@@ -14,20 +14,20 @@
 
 package com.liferay.portal.workflow.kaleo.forms.service.impl;
 
+import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.workflow.kaleo.forms.KaleoProcessDDMTemplateIdException;
+import com.liferay.portal.workflow.kaleo.forms.constants.TaskFormPair;
+import com.liferay.portal.workflow.kaleo.forms.constants.TaskFormPairs;
+import com.liferay.portal.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.service.base.KaleoProcessLocalServiceBaseImpl;
-import com.liferay.portal.workflow.kaleo.forms.util.TaskFormPair;
-import com.liferay.portal.workflow.kaleo.forms.util.TaskFormPairs;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants;
 
 import java.util.Date;
 import java.util.List;

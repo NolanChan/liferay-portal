@@ -17,12 +17,12 @@ package com.liferay.portal.workflow.kaleo.forms.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.workflow.kaleo.forms.constants.TaskFormPairs;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.service.base.KaleoProcessServiceBaseImpl;
 import com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoFormsPermission;
 import com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
 import com.liferay.portal.workflow.kaleo.forms.util.ActionKeys;
-import com.liferay.portal.workflow.kaleo.forms.util.TaskFormPairs;
 
 import java.util.List;
 import java.util.Locale;

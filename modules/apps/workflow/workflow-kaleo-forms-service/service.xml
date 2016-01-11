@@ -40,10 +40,10 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.dynamic.data.lists" entity="DDLRecord" />
+		<reference package-path="com.liferay.dynamic.data.lists" entity="DDLRecordSet" />
 		<reference package-path="com.liferay.portal" entity="WorkflowDefinitionLink" />
 		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
-		<reference package-path="com.liferay.portlet.dynamicdatalists" entity="DDLRecord" />
-		<reference package-path="com.liferay.portlet.dynamicdatalists" entity="DDLRecordSet" />
 	</entity>
 	<entity name="KaleoProcessLink" local-service="true" remote-service="false">
 
