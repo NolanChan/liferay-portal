@@ -14,6 +14,20 @@
 
 package com.liferay.portal.workflow.kaleo.forms.portlet;
 
+import com.liferay.dynamic.data.lists.exception.RecordSetDDMStructureIdException;
+import com.liferay.dynamic.data.lists.exception.RecordSetNameException;
+import com.liferay.dynamic.data.lists.exporter.DDLExporter;
+import com.liferay.dynamic.data.lists.exporter.DDLExporterFactoryUtil;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.service.DDLRecordService;
+import com.liferay.dynamic.data.lists.util.DDLUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -21,10 +35,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -36,42 +52,41 @@ import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.WorkflowInstanceLink;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
-import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.workflow.kaleo.designer.DuplicateKaleoDraftDefinitionNameException;
-import com.liferay.portal.workflow.kaleo.designer.KaleoDraftDefinitionContentException;
-import com.liferay.portal.workflow.kaleo.designer.KaleoDraftDefinitionNameException;
-import com.liferay.portal.workflow.kaleo.designer.NoSuchKaleoDraftDefinitionException;
-import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
-import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionServiceUtil;
-import com.liferay.portal.workflow.kaleo.forms.KaleoProcessDDMTemplateIdException;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
+import com.liferay.portal.workflow.kaleo.forms.constants.TaskFormPairs;
+import com.liferay.portal.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException;
+import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
-import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
-import com.liferay.portal.workflow.kaleo.forms.util.TaskFormPairs;
+import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessService;
+import com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
+import com.liferay.portal.workflow.kaleo.forms.util.ActionKeys;
 import com.liferay.portal.workflow.kaleo.forms.util.WebKeys;
-import com.liferay.portlet.dynamicdatalists.RecordSetDDMStructureIdException;
-import com.liferay.portlet.dynamicdatalists.RecordSetNameException;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordServiceUtil;
-import com.liferay.portlet.dynamicdatalists.util.DDLExportFormat;
-import com.liferay.portlet.dynamicdatalists.util.DDLExporter;
-import com.liferay.portlet.dynamicdatalists.util.DDLExporterFactory;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.workflow.kaleo.designer.exception.DuplicateKaleoDraftDefinitionNameException;
+import com.liferay.workflow.kaleo.designer.exception.KaleoDraftDefinitionContentException;
+import com.liferay.workflow.kaleo.designer.exception.KaleoDraftDefinitionNameException;
+import com.liferay.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
+import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
+import com.liferay.workflow.kaleo.designer.service.KaleoDraftDefinitionService;
 
 import java.io.IOException;
 
@@ -82,16 +97,51 @@ import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
  * @author Eduardo Lundgren
  */
-public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.css-class-wrapper=kaleo-forms-admin-portlet",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.footer-portal-javascript=/o/dynamic-data-mapping-web/js/custom_fields.js",
+		"com.liferay.portlet.footer-portal-javascript=/o/dynamic-data-mapping-web/js/main.js",
+		"com.liferay.portlet.footer-portlet-javascript=/admin/js/components.js",
+		"com.liferay.portlet.footer-portlet-javascript=/admin/js/main.js",
+		"com.liferay.portlet.header-portal-css=/o/dynamic-data-mapping-web/css/main.css",
+		"com.liferay.portlet.header-portlet-css=/admin/css/main.css",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.render-weight=12",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Kaleo Forms Admin Web",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.copy-request-parameters=true",
+		"javax.portlet.init-param.template-path=/admin/",
+		"javax.portlet.init-param.view-template=/admin/view.jsp",
+		"javax.portlet.name="+ KaleoFormsPortletKeys.KALEO_FORMS_ADMIN,
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,power-user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
+public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 	public void deactivateWorkflowDefinition(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -143,13 +193,14 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 
 				@Override
 				public Void call() throws Exception {
-					DDLRecordServiceUtil.deleteRecord(ddlRecordId);
+					_ddlRecordService.deleteRecord(ddlRecordId);
 
-					WorkflowInstanceLinkLocalServiceUtil.
+					_workflowInstanceLinkLocalService.
 						deleteWorkflowInstanceLink(workflowInstanceLinkId);
 
 					return null;
 				}
+
 			};
 
 			TransactionInvokerUtil.invoke(_transactionAttribute, callable);
@@ -171,7 +222,7 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 			actionRequest, "ddmStructureId");
 
 		try {
-			DDMStructureServiceUtil.deleteStructure(ddmStructureId);
+			_ddmStructureService.deleteStructure(ddmStructureId);
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {
@@ -199,7 +250,7 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		KaleoDraftDefinitionServiceUtil.deleteKaleoDraftDefinitions(
+		_kaleoDraftDefinitionService.deleteKaleoDraftDefinitions(
 			name, version, serviceContext);
 	}
 
@@ -210,7 +261,7 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 		long kaleoProcessId = ParamUtil.getLong(
 			actionRequest, "kaleoProcessId");
 
-		KaleoProcessServiceUtil.deleteKaleoProcess(kaleoProcessId);
+		_kaleoProcessService.deleteKaleoProcess(kaleoProcessId);
 	}
 
 	public void publishKaleoDraftDefinition(
@@ -239,7 +290,7 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 				actionRequest);
 
 			KaleoDraftDefinition kaleoDraftDefinition =
-				KaleoDraftDefinitionServiceUtil.publishKaleoDraftDefinition(
+				_kaleoDraftDefinitionService.publishKaleoDraftDefinition(
 					themeDisplay.getUserId(), themeDisplay.getCompanyGroupId(),
 					name, titleMap, content, serviceContext);
 
@@ -265,6 +316,29 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 				throw e;
 			}
 		}
+	}
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		try {
+			renderKaleoProcess(renderRequest, renderResponse);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchKaleoProcessException ||
+				e instanceof PrincipalException ||
+				e instanceof WorkflowException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+			}
+			else {
+				throw new PortletException(e);
+			}
+		}
+
+		super.render(renderRequest, renderResponse);
 	}
 
 	@Override
@@ -296,6 +370,26 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 		}
 	}
 
+	public void startWorkflowInstance(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDLRecord.class.getName(), uploadPortletRequest);
+
+		checkKaleoProcessPermission(serviceContext, ActionKeys.SUBMIT);
+
+		DDLRecord ddlRecord = updateDDLRecord(serviceContext);
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+			serviceContext.getUserId(), KaleoProcess.class.getName(),
+			ddlRecord.getRecordId(), ddlRecord, serviceContext);
+	}
+
 	public void updateKaleoDraftDefinition(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -324,7 +418,7 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 					content, titleMap.get(themeDisplay.getSiteDefaultLocale()));
 
 				kaleoDraftDefinition =
-					KaleoDraftDefinitionServiceUtil.addKaleoDraftDefinition(
+					_kaleoDraftDefinitionService.addKaleoDraftDefinition(
 						themeDisplay.getUserId(),
 						themeDisplay.getCompanyGroupId(), name, titleMap,
 						content, version, 1, serviceContext);
@@ -333,7 +427,7 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 				String name = ParamUtil.getString(actionRequest, "name");
 
 				kaleoDraftDefinition =
-					KaleoDraftDefinitionServiceUtil.updateKaleoDraftDefinition(
+					_kaleoDraftDefinitionService.updateKaleoDraftDefinition(
 						themeDisplay.getUserId(), name, titleMap, content,
 						version, serviceContext);
 			}
@@ -389,13 +483,13 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 		KaleoProcess kaleoProcess = null;
 
 		if (kaleoProcessId <= 0) {
-			kaleoProcess = KaleoProcessServiceUtil.addKaleoProcess(
+			kaleoProcess = _kaleoProcessService.addKaleoProcess(
 				groupId, ddmStructureId, nameMap, descriptionMap, ddmTemplateId,
 				workflowDefinitionName, workflowDefinitionVersion,
 				taskFormPairs, serviceContext);
 		}
 		else {
-			kaleoProcess = KaleoProcessServiceUtil.updateKaleoProcess(
+			kaleoProcess = _kaleoProcessService.updateKaleoProcess(
 				kaleoProcessId, ddmStructureId, nameMap, descriptionMap,
 				ddmTemplateId, workflowDefinitionName,
 				workflowDefinitionVersion, taskFormPairs, serviceContext);
@@ -404,7 +498,7 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 		String workflowDefinition = ParamUtil.getString(
 			actionRequest, "workflowDefinition");
 
-		WorkflowDefinitionLinkLocalServiceUtil.updateWorkflowDefinitionLink(
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
 			serviceContext.getUserId(), serviceContext.getCompanyId(), groupId,
 			KaleoProcess.class.getName(), kaleoProcess.getKaleoProcessId(), 0,
 			workflowDefinition);
@@ -440,17 +534,15 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 				DDMStructure.class.getName(), actionRequest);
 
 			if (cmd.equals(Constants.ADD)) {
-				DDMStructure ddmStructure =
-					DDMStructureServiceUtil.addStructure(
-						groupId, parentStructureId, scopeClassNameId, null,
-						nameMap, descriptionMap, ddmForm, ddmFormLayout,
-						storageType, DDMStructureConstants.TYPE_DEFAULT,
-						serviceContext);
+				DDMStructure ddmStructure = _ddmStructureService.addStructure(
+					groupId, parentStructureId, scopeClassNameId, null, nameMap,
+					descriptionMap, ddmForm, ddmFormLayout, storageType,
+					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 
 				saveInPortletSession(actionRequest, ddmStructure);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				DDMStructureServiceUtil.updateStructure(
+				_ddmStructureService.updateStructure(
 					classPK, parentStructureId, nameMap, descriptionMap,
 					ddmForm, ddmFormLayout, serviceContext);
 			}
@@ -469,12 +561,49 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 		}
 	}
 
+	protected void checkKaleoProcessPermission(
+			ServiceContext serviceContext, String actionId)
+		throws Exception {
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		long kaleoProcessId = ParamUtil.getLong(request, "kaleoProcessId");
+
+		KaleoProcessPermission.check(
+			permissionChecker, kaleoProcessId, actionId);
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, NoSuchKaleoProcessException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.getNestedClasses()) ||
+			SessionErrors.contains(
+				renderRequest, WorkflowException.class.getName())) {
+
+			include(templatePath + "error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
 	protected long getDDLRecordWorkfowInstanceLinkId(
 			long companyId, long groupId, long ddlRecordId)
 		throws Exception {
 
 		WorkflowInstanceLink workfowInstanceLink =
-			WorkflowInstanceLinkLocalServiceUtil.getWorkflowInstanceLink(
+			_workflowInstanceLinkLocalService.getWorkflowInstanceLink(
 				companyId, groupId, KaleoProcess.class.getName(), ddlRecordId);
 
 		return workfowInstanceLink.getWorkflowInstanceLinkId();
@@ -521,6 +650,46 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 		}
 
 		return false;
+	}
+
+	protected void renderKaleoProcess(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long kaleoProcessId = ParamUtil.getLong(
+			renderRequest, "kaleoProcessId");
+
+		if (kaleoProcessId > 0) {
+			KaleoProcess kaleoProcess = _kaleoProcessService.getKaleoProcess(
+				kaleoProcessId);
+
+			renderRequest.setAttribute(WebKeys.KALEO_PROCESS, kaleoProcess);
+		}
+
+		long workflowInstanceId = ParamUtil.getLong(
+			renderRequest, "workflowInstanceId");
+
+		if (workflowInstanceId > 0) {
+			WorkflowInstance workflowInstance =
+				WorkflowInstanceManagerUtil.getWorkflowInstance(
+					themeDisplay.getCompanyId(), workflowInstanceId);
+
+			renderRequest.setAttribute(
+				WebKeys.WORKFLOW_INSTANCE, workflowInstance);
+		}
+
+		long workflowTaskId = ParamUtil.getLong(
+			renderRequest, "workflowTaskId");
+
+		if (workflowTaskId > 0) {
+			WorkflowTask workflowTask = WorkflowTaskManagerUtil.getWorkflowTask(
+				themeDisplay.getCompanyId(), workflowTaskId);
+
+			renderRequest.setAttribute(WebKeys.WORKFLOW_TASK, workflowTask);
+		}
 	}
 
 	protected void saveInPortletSession(
@@ -584,7 +753,7 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 
 		if (Validator.isNotNull(name) && (draftVersion > 0)) {
 			KaleoDraftDefinition kaleoDraftDefinition =
-				KaleoDraftDefinitionServiceUtil.getKaleoDraftDefinition(
+				_kaleoDraftDefinitionService.getKaleoDraftDefinition(
 					name, version, draftVersion, serviceContext);
 
 			jsonObject.put("content", kaleoDraftDefinition.getContent());
@@ -610,7 +779,7 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 		long kaleoProcessId = ParamUtil.getLong(
 			resourceRequest, "kaleoProcessId");
 
-		KaleoProcess kaleoProcess = KaleoProcessServiceUtil.getKaleoProcess(
+		KaleoProcess kaleoProcess = _kaleoProcessService.getKaleoProcess(
 			kaleoProcessId);
 
 		String fileExtension = ParamUtil.getString(
@@ -629,10 +798,8 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
-		DDLExportFormat ddlExportFormat = DDLExportFormat.parse(fileExtension);
-
-		DDLExporter ddlExporter = DDLExporterFactory.getDDLExporter(
-			ddlExportFormat);
+		DDLExporter ddlExporter = DDLExporterFactoryUtil.getDDLExporter(
+			fileExtension);
 
 		ddlExporter.setLocale(themeDisplay.getLocale());
 
@@ -645,10 +812,64 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 			resourceRequest, resourceResponse, fileName, bytes, contentType);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	@Reference(unbind = "-")
+	protected void setDDLRecordService(DDLRecordService ddlRecordService) {
+		_ddlRecordService = ddlRecordService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureService(
+		DDMStructureService ddmStructureService) {
+
+		_ddmStructureService = ddmStructureService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKaleoDraftDefinitionService(
+		KaleoDraftDefinitionService kaleoDraftDefinitionService) {
+
+		_kaleoDraftDefinitionService = kaleoDraftDefinitionService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKaleoProcessService(
+		KaleoProcessService kaleoProcessService) {
+
+		_kaleoProcessService = kaleoProcessService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWorkflowDefinitionLinkLocalService(
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
+
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWorkflowInstanceLinkLocalService(
+		WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService) {
+
+		_workflowInstanceLinkLocalService = workflowInstanceLinkLocalService;
+	}
+
+	protected DDLRecord updateDDLRecord(ServiceContext serviceContext)
+		throws Exception {
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		long ddlRecordId = ParamUtil.getLong(request, "ddlRecordId");
+
+		long ddlRecordSetId = ParamUtil.getLong(request, "ddlRecordSetId");
+
+		return DDLUtil.updateRecord(
+			ddlRecordId, ddlRecordSetId, true, false, serviceContext);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoFormsAdminPortlet.class);
 
-	private static TransactionAttribute _transactionAttribute;
+	private static final TransactionAttribute _transactionAttribute;
 
 	static {
 		TransactionAttribute.Builder builder =
@@ -659,5 +880,13 @@ public class KaleoFormsAdminPortlet extends BaseKaleoFormsPorlet {
 
 		_transactionAttribute = builder.build();
 	}
+
+	private DDLRecordService _ddlRecordService;
+	private DDMStructureService _ddmStructureService;
+	private KaleoDraftDefinitionService _kaleoDraftDefinitionService;
+	private KaleoProcessService _kaleoProcessService;
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

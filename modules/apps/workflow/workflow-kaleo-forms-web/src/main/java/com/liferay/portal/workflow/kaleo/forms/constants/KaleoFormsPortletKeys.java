@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.forms.util;
+package com.liferay.portal.workflow.kaleo.forms.constants;
 
 /**
  * @author Marcellus Tavares
  */
-public class PortletKeys extends com.liferay.portal.util.PortletKeys {
+public class KaleoFormsPortletKeys {
 
-	public static final String KALEO_DESIGNER = "2_WAR_kaleodesignerportlet";
+	public static final String KALEO_FORMS_ADMIN =
+		"com_liferay_workflow_kaleo_forms_web_portlet_KaleoFormsAdminPortlet";
 
-	public static final String KALEO_FORMS = "1_WAR_kaleoformsportlet";
+	public static final String KALEO_FORMS_DISPLAY =
+		"com_liferay_workflow_kaleo_forms_web_portlet_KaleoFormsDisplayPortlet";
 
 }
