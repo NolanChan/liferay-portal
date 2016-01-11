@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.forms.util;
+package com.liferay.portal.workflow.kaleo.forms.constants;
 
 /**
  * @author Marcellus Tavares
@@ -32,7 +32,7 @@ public class TaskFormPair {
 		return _workflowTaskName;
 	}
 
-	private long _ddmTemplateId;
-	private String _workflowTaskName;
+	private final long _ddmTemplateId;
+	private final String _workflowTaskName;
 
 }

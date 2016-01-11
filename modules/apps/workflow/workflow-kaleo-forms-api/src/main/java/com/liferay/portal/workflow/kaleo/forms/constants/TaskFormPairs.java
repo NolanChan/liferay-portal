@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.forms.util;
+package com.liferay.portal.workflow.kaleo.forms.constants;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -81,6 +81,6 @@ public class TaskFormPairs implements Iterable<TaskFormPair> {
 		return sb.toString();
 	}
 
-	private List<TaskFormPair> _taskFormPairs = new ArrayList<>();
+	private final List<TaskFormPair> _taskFormPairs = new ArrayList<>();
 
 }
