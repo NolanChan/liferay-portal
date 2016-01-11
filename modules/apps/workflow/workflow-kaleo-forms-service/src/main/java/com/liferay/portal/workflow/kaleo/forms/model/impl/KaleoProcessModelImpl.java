@@ -81,6 +81,22 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 			{ "workflowDefinitionName", Types.VARCHAR },
 			{ "workflowDefinitionVersion", Types.INTEGER }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("kaleoProcessId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("DDLRecordSetId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("DDMTemplateId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("workflowDefinitionName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("workflowDefinitionVersion", Types.INTEGER);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table KaleoProcess (kaleoProcessId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DDLRecordSetId LONG,DDMTemplateId LONG,workflowDefinitionName VARCHAR(75) null,workflowDefinitionVersion INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoProcess";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoProcess.kaleoProcessId ASC";
@@ -88,13 +104,13 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.workflow.kaleo.forms.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.workflow.kaleo.forms.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.workflow.kaleo.forms.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"),
 			true);
 	public static final long DDLRECORDSETID_COLUMN_BITMASK = 1L;
@@ -149,7 +165,7 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.workflow.kaleo.forms.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"));
 
 	public KaleoProcessModelImpl() {
