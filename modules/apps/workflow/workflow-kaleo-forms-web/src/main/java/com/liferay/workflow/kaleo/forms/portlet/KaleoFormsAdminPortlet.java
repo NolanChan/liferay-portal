@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -79,14 +81,13 @@ import com.liferay.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionE
 import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
 import com.liferay.workflow.kaleo.designer.service.KaleoDraftDefinitionService;
 import com.liferay.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
+import com.liferay.workflow.kaleo.forms.constants.KaleoFormsWebKeys;
 import com.liferay.workflow.kaleo.forms.constants.TaskFormPairs;
 import com.liferay.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException;
 import com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.workflow.kaleo.forms.service.KaleoProcessService;
 import com.liferay.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
-import com.liferay.workflow.kaleo.forms.util.ActionKeys;
-import com.liferay.workflow.kaleo.forms.util.WebKeys;
 
 import java.io.IOException;
 
@@ -295,7 +296,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 					name, titleMap, content, serviceContext);
 
 			actionRequest.setAttribute(
-				WebKeys.KALEO_DRAFT_DEFINITION_ID,
+				KaleoFormsWebKeys.KALEO_DRAFT_DEFINITION_ID,
 				kaleoDraftDefinition.getKaleoDraftDefinitionId());
 			actionRequest.setAttribute(WebKeys.REDIRECT, backURL);
 
@@ -310,7 +311,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
 				actionRequest.setAttribute(
-					WebKeys.KALEO_DRAFT_DEFINITION_CONTENT, content);
+					KaleoFormsWebKeys.KALEO_DRAFT_DEFINITION_CONTENT, content);
 			}
 			else {
 				throw e;
@@ -433,7 +434,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			}
 
 			actionRequest.setAttribute(
-				WebKeys.KALEO_DRAFT_DEFINITION_ID,
+				KaleoFormsWebKeys.KALEO_DRAFT_DEFINITION_ID,
 				kaleoDraftDefinition.getKaleoDraftDefinitionId());
 		}
 		catch (Exception e) {
@@ -445,7 +446,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
 				actionRequest.setAttribute(
-					WebKeys.KALEO_DRAFT_DEFINITION_CONTENT, content);
+					KaleoFormsWebKeys.KALEO_DRAFT_DEFINITION_CONTENT, content);
 			}
 			else {
 				throw e;
@@ -666,7 +667,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			KaleoProcess kaleoProcess = _kaleoProcessService.getKaleoProcess(
 				kaleoProcessId);
 
-			renderRequest.setAttribute(WebKeys.KALEO_PROCESS, kaleoProcess);
+			renderRequest.setAttribute(
+				KaleoFormsWebKeys.KALEO_PROCESS, kaleoProcess);
 		}
 
 		long workflowInstanceId = ParamUtil.getLong(
@@ -678,7 +680,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 					themeDisplay.getCompanyId(), workflowInstanceId);
 
 			renderRequest.setAttribute(
-				WebKeys.WORKFLOW_INSTANCE, workflowInstance);
+				KaleoFormsWebKeys.WORKFLOW_INSTANCE, workflowInstance);
 		}
 
 		long workflowTaskId = ParamUtil.getLong(
@@ -688,7 +690,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			WorkflowTask workflowTask = WorkflowTaskManagerUtil.getWorkflowTask(
 				themeDisplay.getCompanyId(), workflowTaskId);
 
-			renderRequest.setAttribute(WebKeys.WORKFLOW_TASK, workflowTask);
+			renderRequest.setAttribute(
+				KaleoFormsWebKeys.WORKFLOW_TASK, workflowTask);
 		}
 	}
 

@@ -26,7 +26,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 
 		<aui:nav-item href="<%= viewProcessURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all") %>' />
 
-		<c:if test="<%= KaleoFormsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_PROCESS) %>">
+		<c:if test="<%= KaleoFormsPermission.contains(permissionChecker, scopeGroupId, KaleoFormsActionKeys.ADD_PROCESS) %>">
 			<portlet:renderURL var="addProcessURL">
 				<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />

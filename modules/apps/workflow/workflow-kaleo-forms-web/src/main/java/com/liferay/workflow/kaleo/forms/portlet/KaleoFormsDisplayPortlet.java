@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTaskDueDateException;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
@@ -30,10 +31,9 @@ import com.liferay.portal.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.workflow.kaleo.designer.service.KaleoDraftDefinitionService;
+import com.liferay.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
 import com.liferay.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.workflow.kaleo.forms.service.KaleoProcessService;
-import com.liferay.workflow.kaleo.forms.util.ActionKeys;
-import com.liferay.workflow.kaleo.forms.util.WebKeys;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -105,7 +105,8 @@ public class KaleoFormsDisplayPortlet extends KaleoFormsAdminPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecord.class.getName(), uploadPortletRequest);
 
-		checkKaleoProcessPermission(serviceContext, ActionKeys.COMPLETE_FORM);
+		checkKaleoProcessPermission(
+			serviceContext, KaleoFormsActionKeys.COMPLETE_FORM);
 
 		updateDDLRecord(serviceContext);
 

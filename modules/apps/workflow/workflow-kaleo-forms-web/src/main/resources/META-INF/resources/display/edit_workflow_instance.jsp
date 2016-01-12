@@ -19,7 +19,7 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL");
 
-WorkflowInstance workflowInstance = (WorkflowInstance)request.getAttribute(WebKeys.WORKFLOW_INSTANCE);
+WorkflowInstance workflowInstance = (WorkflowInstance)request.getAttribute(KaleoFormsWebKeys.WORKFLOW_INSTANCE);
 
 Map<String, Serializable> workflowContext = workflowInstance.getWorkflowContext();
 

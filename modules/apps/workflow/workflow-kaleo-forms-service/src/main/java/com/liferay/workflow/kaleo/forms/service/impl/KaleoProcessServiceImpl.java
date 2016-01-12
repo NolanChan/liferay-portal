@@ -16,13 +16,14 @@ package com.liferay.workflow.kaleo.forms.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
 import com.liferay.workflow.kaleo.forms.constants.TaskFormPairs;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.workflow.kaleo.forms.service.base.KaleoProcessServiceBaseImpl;
 import com.liferay.workflow.kaleo.forms.service.permission.KaleoFormsPermission;
 import com.liferay.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
-import com.liferay.workflow.kaleo.forms.util.ActionKeys;
 
 import java.util.List;
 import java.util.Locale;
@@ -41,7 +42,7 @@ public class KaleoProcessServiceImpl extends KaleoProcessServiceBaseImpl {
 		throws PortalException {
 
 		KaleoFormsPermission.check(
-			getPermissionChecker(), groupId, ActionKeys.ADD_PROCESS);
+			getPermissionChecker(), groupId, KaleoFormsActionKeys.ADD_PROCESS);
 
 		return kaleoProcessLocalService.addKaleoProcess(
 			getUserId(), groupId, ddmStructureId, nameMap, descriptionMap,

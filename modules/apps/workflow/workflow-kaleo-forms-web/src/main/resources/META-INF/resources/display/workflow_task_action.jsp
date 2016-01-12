@@ -37,7 +37,7 @@ if (row != null) {
 	ddlRecordId = (Long)row.getParameter("ddlRecordId");
 }
 else {
-	workflowTask = (WorkflowTask)request.getAttribute(WebKeys.WORKFLOW_TASK);
+	workflowTask = (WorkflowTask)request.getAttribute(KaleoFormsWebKeys.WORKFLOW_TASK);
 
 	kaleoProcessId = ParamUtil.getLong(request, "kaleoProcessId");
 
@@ -58,7 +58,7 @@ data.put("navigation", Boolean.TRUE);
 
 boolean showCompleteFormButton = false;
 
-if ((kaleoProcessLinkId > 0) && !workflowTask.isCompleted() && _isAssignedToUser(workflowTask, user) && KaleoProcessPermission.contains(permissionChecker, kaleoProcessId, ActionKeys.COMPLETE_FORM)) {
+if ((kaleoProcessLinkId > 0) && !workflowTask.isCompleted() && _isAssignedToUser(workflowTask, user) && KaleoProcessPermission.contains(permissionChecker, kaleoProcessId, KaleoFormsActionKeys.COMPLETE_FORM)) {
 	showCompleteFormButton = true;
 }
 

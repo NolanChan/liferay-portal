@@ -25,7 +25,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 if (classPK > 0) {
 	DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(classPK);
 
-	renderRequest.setAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE, ddmStructure);
+	renderRequest.setAttribute(KaleoFormsWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE, ddmStructure);
 }
 %>
 

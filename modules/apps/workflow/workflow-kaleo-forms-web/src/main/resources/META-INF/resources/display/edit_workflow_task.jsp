@@ -21,7 +21,7 @@ String randomId = StringUtil.randomId();
 
 String backURL = ParamUtil.getString(request, "backURL");
 
-WorkflowTask workflowTask = (WorkflowTask)request.getAttribute(WebKeys.WORKFLOW_TASK);
+WorkflowTask workflowTask = (WorkflowTask)request.getAttribute(KaleoFormsWebKeys.WORKFLOW_TASK);
 
 WorkflowInstance workflowInstance = WorkflowInstanceManagerUtil.getWorkflowInstance(company.getCompanyId(), workflowTask.getWorkflowInstanceId());
 

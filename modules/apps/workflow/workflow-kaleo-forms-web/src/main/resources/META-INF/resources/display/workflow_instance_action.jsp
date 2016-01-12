@@ -27,7 +27,7 @@ if (row != null) {
 	workflowInstance = (WorkflowInstance)row.getObject();
 }
 else {
-	workflowInstance = (WorkflowInstance)request.getAttribute(WebKeys.WORKFLOW_INSTANCE);
+	workflowInstance = (WorkflowInstance)request.getAttribute(KaleoFormsWebKeys.WORKFLOW_INSTANCE);
 }
 %>
 

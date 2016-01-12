@@ -22,7 +22,7 @@ String currentSectionURL = HttpUtil.setParameter(currentURL, renderResponse.getN
 
 String tabs1 = ParamUtil.getString(request, "tabs1", "published");
 
-KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(WebKeys.KALEO_PROCESS);
+KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS);
 
 long kaleoProcessId = BeanParamUtil.getLong(kaleoProcess, request, "kaleoProcessId");
 
