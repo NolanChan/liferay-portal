@@ -1,7 +1,13 @@
 Bundle-Name: Liferay Workflow Kaleo Forms Web
 Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.forms.web
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.workflow.kaleo.forms.web.constants
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources
-Require-SchemaVersion: 1.0.0
+	META-INF/resources=src/main/resources/META-INF/resources,\
+	META-INF/resources/content=src/main/resources/content
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Kaleo Forms
+Web-ContextPath: /kaleo-forms-web
+-include: ../../../../marketplace/business-productivity/bnd.bnd
