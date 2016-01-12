@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.upgrade.v1_0_0;
+package com.liferay.workflow.kaleo.forms.web.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;

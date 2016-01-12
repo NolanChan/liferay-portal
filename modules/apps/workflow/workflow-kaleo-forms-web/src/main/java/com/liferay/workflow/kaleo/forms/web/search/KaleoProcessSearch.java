@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.search;
+package com.liferay.workflow.kaleo.forms.web.search;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;

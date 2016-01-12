@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.workflow;
+package com.liferay.workflow.kaleo.forms.web.workflow;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -30,9 +30,9 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.workflow.kaleo.forms.service.KaleoProcessLocalServiceUtil;
+import com.liferay.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 
 import java.io.Serializable;
 

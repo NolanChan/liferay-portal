@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.portlet;
+package com.liferay.workflow.kaleo.forms.web.portlet;
 
 import com.liferay.dynamic.data.lists.exception.RecordSetDDMStructureIdException;
 import com.liferay.dynamic.data.lists.exception.RecordSetNameException;
@@ -80,7 +80,6 @@ import com.liferay.workflow.kaleo.designer.exception.KaleoDraftDefinitionNameExc
 import com.liferay.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
 import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
 import com.liferay.workflow.kaleo.designer.service.KaleoDraftDefinitionService;
-import com.liferay.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.workflow.kaleo.forms.constants.KaleoFormsWebKeys;
 import com.liferay.workflow.kaleo.forms.constants.TaskFormPairs;
 import com.liferay.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException;
@@ -88,6 +87,7 @@ import com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.workflow.kaleo.forms.service.KaleoProcessService;
 import com.liferay.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
+import com.liferay.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 
 import java.io.IOException;
 

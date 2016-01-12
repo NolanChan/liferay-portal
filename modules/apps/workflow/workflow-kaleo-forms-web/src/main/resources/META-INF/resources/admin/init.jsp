@@ -62,10 +62,10 @@ page import="com.liferay.workflow.kaleo.forms.constants.TaskFormPair" %><%@
 page import="com.liferay.workflow.kaleo.forms.constants.TaskFormPairs" %><%@
 page import="com.liferay.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException" %><%@
 page import="com.liferay.workflow.kaleo.forms.model.KaleoProcessLink" %><%@
-page import="com.liferay.workflow.kaleo.forms.search.KaleoProcessSearch" %><%@
 page import="com.liferay.workflow.kaleo.forms.service.KaleoProcessServiceUtil" %><%@
 page import="com.liferay.workflow.kaleo.forms.service.permission.KaleoFormsPermission" %><%@
-page import="com.liferay.workflow.kaleo.forms.util.KaleoFormsUtil" %>
+page import="com.liferay.workflow.kaleo.forms.util.KaleoFormsUtil" %><%@
+page import="com.liferay.workflow.kaleo.forms.web.search.KaleoProcessSearch" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.WindowState" %>

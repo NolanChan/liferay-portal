@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.application.list;
+package com.liferay.workflow.kaleo.forms.web.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.model.Portlet;
-import com.liferay.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
+import com.liferay.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
