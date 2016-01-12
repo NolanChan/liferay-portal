@@ -66,7 +66,7 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + ddlRecord
 		</aui:layout>
 
 		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>" id="preview">
-			<liferay-ui:panel defaultState="open" title="current-entry">
+			<liferay-ui:panel extended="<%= false %>" markupView="lexicon" title="current-entry">
 
 				<%
 				Fields fields = StorageEngineUtil.getFields(ddlRecord.getDDMStorageId());
@@ -88,7 +88,7 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + ddlRecord
 			%>
 
 			<c:if test="<%= !workflowTasks.isEmpty() %>">
-				<liferay-ui:panel defaultState="open" title="tasks">
+				<liferay-ui:panel extended="<%= false %>" markupView="lexicon" title="tasks">
 
 					<%
 					PortletURL portletURL = renderResponse.createRenderURL();
@@ -163,7 +163,7 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + ddlRecord
 				</liferay-ui:panel>
 			</c:if>
 
-			<liferay-ui:panel defaultState="closed" title="activities">
+			<liferay-ui:panel markupView="lexicon" title="activities">
 
 				<%
 				List<Integer> logTypes = new ArrayList<Integer>();

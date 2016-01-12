@@ -145,7 +145,7 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + workflowH
 		</c:if>
 
 		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>">
-			<liferay-ui:panel defaultState="open" title="current-entry">
+			<liferay-ui:panel extended="<%= false %>" markupView="lexicon" title="current-entry">
 
 				<%
 				Fields fields = StorageEngineUtil.getFields(ddlRecord.getDDMStorageId());
@@ -163,7 +163,7 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + workflowH
 				/>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel defaultState="closed" title="activities">
+			<liferay-ui:panel markupView="lexicon" title="activities">
 
 				<%
 				List<Integer> logTypes = new ArrayList<Integer>();
