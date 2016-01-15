@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal PLUGIN DEPLOYMENT EXTENSION
+Bundle-SymbolicName: com.liferay.portal.plugin.deployment.extension
+Bundle-Version: 1.0.0
+Include-Resource: classes

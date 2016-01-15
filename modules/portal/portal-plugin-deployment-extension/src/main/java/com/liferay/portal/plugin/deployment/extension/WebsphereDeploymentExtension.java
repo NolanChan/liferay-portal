@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.deploy.extension;
+package com.liferay.portal.plugin.deployment.extension;
 
 import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.deploy.BaseDeployer;
+import com.liferay.portal.tools.deploy.extension.DeploymentExtension;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;

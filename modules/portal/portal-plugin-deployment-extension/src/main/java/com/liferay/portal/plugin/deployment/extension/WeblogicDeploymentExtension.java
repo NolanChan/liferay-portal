@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.tools.deploy.extension;
+package com.liferay.portal.plugin.deployment.extension;
 
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.tools.deploy.BaseDeployer;
+import com.liferay.portal.tools.deploy.extension.DeploymentExtension;
 
 import java.io.File;
 
