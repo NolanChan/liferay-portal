@@ -50,17 +50,17 @@ DDLRecordVersion ddlRecordVersion = ddlRecord.getRecordVersion(version);
 	<%
 	DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
-	Fields fields = null;
+	DDMFormValues ddmFormValues = null;
 
 	if (ddlRecordVersion != null) {
-		fields = StorageEngineUtil.getFields(ddlRecordVersion.getDDMStorageId());
+		ddmFormValues = StorageEngineUtil.getDDMFormValues(ddlRecordVersion.getDDMStorageId());
 	}
 	%>
 
 	<liferay-ddm:html
 		classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 		classPK="<%= ddmStructure.getStructureId() %>"
-		fields="<%= fields %>"
+		ddmFormValues="<%= ddmFormValues %>"
 		readOnly="<%= true %>"
 		requestedLocale="<%= locale %>"
 	/>

@@ -69,7 +69,7 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + ddlRecord
 			<liferay-ui:panel extended="<%= false %>" markupView="lexicon" title="current-entry">
 
 				<%
-				Fields fields = StorageEngineUtil.getFields(ddlRecord.getDDMStorageId());
+				DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(ddlRecord.getDDMStorageId());
 
 				DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 				%>
@@ -77,7 +77,7 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + ddlRecord
 				<liferay-ddm:html
 					classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 					classPK="<%= ddmStructure.getStructureId() %>"
-					fields="<%= fields %>"
+					ddmFormValues="<%= ddmFormValues %>"
 					readOnly="<%= true %>"
 					requestedLocale="<%= locale %>"
 				/>

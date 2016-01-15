@@ -46,7 +46,7 @@ String formName = ParamUtil.getString(request, "formName");
 		<%
 		DDLRecord ddlRecord = DDLRecordLocalServiceUtil.getRecord(ddlRecordId);
 
-		Fields fields = StorageEngineUtil.getFields(ddlRecord.getDDMStorageId());
+		DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(ddlRecord.getDDMStorageId());
 
 		long classNameId = 0;
 		long classPK = 0;
@@ -70,7 +70,7 @@ String formName = ParamUtil.getString(request, "formName");
 		<liferay-ddm:html
 			classNameId="<%= classNameId %>"
 			classPK="<%= classPK %>"
-			fields="<%= fields %>"
+			ddmFormValues="<%= ddmFormValues %>"
 			requestedLocale="<%= locale %>"
 		/>
 	</aui:fieldset>
