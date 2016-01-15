@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.designer.constants;
+package com.liferay.workflow.kaleo.designer.web.constants;
 
 /**
  * @author Marcellus Tavares

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.designer.portlet;
+package com.liferay.workflow.kaleo.designer.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.workflow.kaleo.designer.constants.KaleoDesignerPortletKeys;
+import com.liferay.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 
 import javax.portlet.Portlet;
 

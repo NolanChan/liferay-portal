@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.designer.portlet;
+package com.liferay.workflow.kaleo.designer.web.portlet;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -44,7 +44,6 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.workflow.kaleo.designer.constants.KaleoDesignerPortletKeys;
 import com.liferay.workflow.kaleo.designer.constants.KaleoDesignerWebKeys;
 import com.liferay.workflow.kaleo.designer.exception.DuplicateKaleoDraftDefinitionNameException;
 import com.liferay.workflow.kaleo.designer.exception.KaleoDraftDefinitionContentException;
@@ -53,6 +52,7 @@ import com.liferay.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionE
 import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
 import com.liferay.workflow.kaleo.designer.service.KaleoDraftDefinitionService;
 import com.liferay.workflow.kaleo.designer.util.KaleoDesignerUtil;
+import com.liferay.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 
 import java.io.IOException;
 
