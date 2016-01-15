@@ -27,7 +27,7 @@ String mode = ParamUtil.getString(request, "mode");
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
-	title='<%= LanguageUtil.format(locale, "select-form-for-task-x", workflowTaskName) %>'
+	title='<%= LanguageUtil.format(request, "select-form-for-task-x", workflowTaskName, false) %>'
 />
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
@@ -50,11 +50,11 @@ String mode = ParamUtil.getString(request, "mode");
 	<liferay-ui:search-container-results>
 
 		<%
-		total = DDMTemplateLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructureId, scopeClassNameId, displayTerms.getKeywords(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, mode);
+		total = DDMTemplateLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructureId, scopeClassNameId, displayTerms.getKeywords(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, mode, WorkflowConstants.STATUS_ANY);
 
 		searchContainer.setTotal(total);
 
-		results = DDMTemplateLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructureId, scopeClassNameId, displayTerms.getKeywords(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, mode, searchContainer.getStart(), searchContainer.getEnd(), null);
+		results = DDMTemplateLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructureId, scopeClassNameId, displayTerms.getKeywords(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, mode, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd(), null);
 
 		searchContainer.setResults(results);
 		%>
@@ -127,7 +127,7 @@ String mode = ParamUtil.getString(request, "mode");
 		function(ddmTemplateId) {
 			Liferay.Util.openDDMPortlet(
 				{
-					basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+					basePortletURL: '<%= PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 					classNameId: <%= PortalUtil.getClassNameId(DDMStructure.class) %>,
 					classPK: <%= ddmStructureId %>,
 					resourceClassNameId: <%= scopeClassNameId %>,
@@ -141,12 +141,14 @@ String mode = ParamUtil.getString(request, "mode");
 					},
 					id: 'ddmDialog',
 					mode: '<%= HtmlUtil.escapeJS(mode) %>',
+					mvcPath: '/select_template.jsp',
 					portletResourceNamespace: '<%= renderResponse.getNamespace() %>',
 					redirect: '<portlet:renderURL><portlet:param name="mvcPath" value="/admin/process/update_template_redirect.jsp" /></portlet:renderURL>',
 					refererPortletName: '<%= portletDisplay.getId() %>',
 					showBackURL: false,
+					showHeader: false,
 					structureAvailableFields: '<%= renderResponse.getNamespace() + "getAvailableFields" %>',
-					struts_action: '/dynamic_data_mapping/edit_template',
+					resourceClassNameId: <%= scopeClassNameId %>,
 					templateId: ddmTemplateId,
 					title: '<liferay-ui:message key="form" />'
 				}

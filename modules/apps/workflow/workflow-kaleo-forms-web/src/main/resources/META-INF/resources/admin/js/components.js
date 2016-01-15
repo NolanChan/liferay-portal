@@ -423,8 +423,9 @@ AUI.add(
 
 						availableDefinitions.forEach(
 							function(item, index) {
-								if (item.definitionId === Lang.toInt(definitionId)) {
+								if (Lang.toInt(item.definitionId) === Lang.toInt(definitionId)) {
 									definition = item;
+									return;
 								}
 							}
 						);
@@ -457,8 +458,9 @@ AUI.add(
 
 						availableDefinitions.forEach(
 							function(item, index) {
-								if (item.definitionId === Lang.toInt(definitionId)) {
+								if (Lang.toInt(item.definitionId) === Lang.toInt(definitionId)) {
 									selectedDefinitionId = definitionId;
+									return;
 								}
 							}
 						);

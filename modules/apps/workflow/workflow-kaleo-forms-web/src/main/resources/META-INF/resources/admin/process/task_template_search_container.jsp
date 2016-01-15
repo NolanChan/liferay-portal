@@ -52,55 +52,54 @@ TaskFormPair initialStateTaskFormPair = KaleoFormsUtil.getInitialStateTaskFormPa
 			modelVar="taskFormsPair"
 		>
 
-		<liferay-ui:search-container-column-text
-			name="task"
-			value="<%= HtmlUtil.escape(taskFormsPair.getWorkflowTaskName()) %>"
-		/>
+			<liferay-ui:search-container-column-text
+				name="task"
+				value="<%= HtmlUtil.escape(taskFormsPair.getWorkflowTaskName()) %>"
+			/>
 
-		<%
-		long ddmTemplateId = taskFormsPair.getDDMTemplateId();
+			<%
+			long ddmTemplateId = taskFormsPair.getDDMTemplateId();
 
-		String formName = StringPool.BLANK;
+			String formName = StringPool.BLANK;
 
-		if (ddmTemplateId > 0) {
-			try {
-				DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(ddmTemplateId);
+			if (ddmTemplateId > 0) {
+				try {
+					DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(ddmTemplateId);
 
-				formName = ddmTemplate.getName(locale);
+					formName = ddmTemplate.getName(locale);
+				}
+				catch (PortalException pe) {
+				}
 			}
-			catch (PortalException pe) {
-			}
-		}
-		%>
+			%>
 
-		<liferay-util:buffer var="taskInputBuffer">
-			<c:if test="<%= taskFormsPair.equals(initialStateTaskFormPair) %>">
-				<aui:input name="ddmTemplateId" type="hidden" value="<%= Validator.isNull(formName) ? StringPool.BLANK : String.valueOf(ddmTemplateId) %>">
-					<aui:validator name="required" />
-				</aui:input>
-			</c:if>
-		</liferay-util:buffer>
+			<liferay-util:buffer var="taskInputBuffer">
+				<c:if test="<%= taskFormsPair.equals(initialStateTaskFormPair) %>">
+					<aui:input name="ddmTemplateId" type="hidden" value="<%= Validator.isNull(formName) ? StringPool.BLANK : String.valueOf(ddmTemplateId) %>">
+						<aui:validator name="required" />
+					</aui:input>
+				</c:if>
+			</liferay-util:buffer>
 
-		<liferay-ui:search-container-column-text
-			name="form"
-			value="<%= HtmlUtil.escape(formName) + taskInputBuffer %>"
-		/>
+			<liferay-ui:search-container-column-text
+				name="form"
+				value="<%= HtmlUtil.escape(formName) + taskInputBuffer %>"
+			/>
 
-		<portlet:renderURL var="selectFormURL">
-			<portlet:param name="mvcPath" value="/admin/process/select_template.jsp" />
-			<portlet:param name="backURL" value="<%= backURL %>" />
-			<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" />
-			<portlet:param name="workflowDefinition" value="<%= workflowDefinition %>" />
-			<portlet:param name="workflowTaskName" value="<%= taskFormsPair.getWorkflowTaskName() %>" />
-			<portlet:param name="mode" value="<%= taskFormsPair.getWorkflowTaskName().equals(initialStateName) ? DDMTemplateConstants.TEMPLATE_MODE_CREATE : DDMTemplateConstants.TEMPLATE_MODE_EDIT %>" />
-		</portlet:renderURL>
+			<portlet:renderURL var="selectFormURL">
+				<portlet:param name="mvcPath" value="/admin/process/select_template.jsp" />
+				<portlet:param name="backURL" value="<%= backURL %>" />
+				<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" />
+				<portlet:param name="workflowDefinition" value="<%= workflowDefinition %>" />
+				<portlet:param name="workflowTaskName" value="<%= taskFormsPair.getWorkflowTaskName() %>" />
+				<portlet:param name="mode" value="<%= taskFormsPair.getWorkflowTaskName().equals(initialStateName) ? DDMTemplateConstants.TEMPLATE_MODE_CREATE : DDMTemplateConstants.TEMPLATE_MODE_EDIT %>" />
+			</portlet:renderURL>
 
-		<liferay-ui:search-container-column-text
-			cssClass="kaleo-process-assign-form-button"
-		>
-			<aui:button href="<%= selectFormURL %>" value="assign-form" />
-		</liferay-ui:search-container-column-text>
-
+			<liferay-ui:search-container-column-text
+				cssClass="kaleo-process-assign-form-button"
+			>
+				<aui:button href="<%= selectFormURL %>" value="assign-form" />
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator />

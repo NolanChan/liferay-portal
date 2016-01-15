@@ -78,6 +78,7 @@ if (kaleoProcess != null) {
 		displayStyle="steps"
 		formName="fm"
 		htmlBottom="<%= htmlBottom %>"
+		id="kaleo.form"
 		jspPath="/admin/process/"
 		showButtons="<%= false %>"
 	/>

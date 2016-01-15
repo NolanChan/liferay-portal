@@ -52,7 +52,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.workflow.kaleo.forms.constants.KaleoFormsActionKeys" %><%@
 page import="com.liferay.workflow.kaleo.forms.constants.KaleoFormsWebKeys" %><%@
 page import="com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException" %><%@

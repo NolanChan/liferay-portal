@@ -110,10 +110,6 @@ portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcessId));
 			for (DDMFormField ddmFormField : ddmFormfields) {
 				String name = ddmFormField.getName();
 
-				if (ddmStructure.isFieldPrivate(name)) {
-					continue;
-				}
-
 				LocalizedValue label = ddmFormField.getLabel();
 
 				String value = StringPool.BLANK;
