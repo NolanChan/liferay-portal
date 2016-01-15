@@ -1,8 +1,7 @@
 Bundle-Name: Liferay Workflow Kaleo Designer Web
 Bundle-SymbolicName: com.liferay.workflow.kaleo.designer.web
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.workflow.kaleo.designer.web.constants
+Export-Package: com.liferay.workflow.kaleo.designer.web.constants
 Import-Package:\
 	com.liferay.workflow.kaleo.designer.constants,\
 	com.liferay.workflow.kaleo.designer.exception,\
