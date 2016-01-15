@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.constants;
+package com.liferay.workflow.kaleo.forms.model;
 
 /**
  * @author Marcellus Tavares
