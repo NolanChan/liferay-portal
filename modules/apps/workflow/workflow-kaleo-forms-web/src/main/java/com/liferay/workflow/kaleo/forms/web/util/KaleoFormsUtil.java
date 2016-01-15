@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.util;
+package com.liferay.workflow.kaleo.forms.web.util;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.portal.kernel.util.CharPool;
