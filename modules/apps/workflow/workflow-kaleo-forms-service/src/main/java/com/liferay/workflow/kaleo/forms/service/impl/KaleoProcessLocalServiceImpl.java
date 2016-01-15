@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.workflow.kaleo.forms.constants.TaskFormPair;
-import com.liferay.workflow.kaleo.forms.constants.TaskFormPairs;
 import com.liferay.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.workflow.kaleo.forms.model.TaskFormPair;
+import com.liferay.workflow.kaleo.forms.model.TaskFormPairs;
 import com.liferay.workflow.kaleo.forms.service.base.KaleoProcessLocalServiceBaseImpl;
 
 import java.util.Date;

@@ -28,10 +28,10 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.workflow.kaleo.forms.constants.TaskFormPair;
-import com.liferay.workflow.kaleo.forms.constants.TaskFormPairs;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcessLink;
+import com.liferay.workflow.kaleo.forms.model.TaskFormPair;
+import com.liferay.workflow.kaleo.forms.model.TaskFormPairs;
 import com.liferay.workflow.kaleo.forms.service.KaleoProcessLinkLocalServiceUtil;
 import com.liferay.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
 
