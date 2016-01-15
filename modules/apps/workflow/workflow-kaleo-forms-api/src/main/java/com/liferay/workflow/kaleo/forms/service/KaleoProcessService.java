@@ -56,7 +56,7 @@ public interface KaleoProcessService extends BaseService {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.workflow.kaleo.forms.model.TaskFormPairs taskFormPairs,
+		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -88,7 +88,7 @@ public interface KaleoProcessService extends BaseService {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.workflow.kaleo.forms.model.TaskFormPairs taskFormPairs,
+		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 }

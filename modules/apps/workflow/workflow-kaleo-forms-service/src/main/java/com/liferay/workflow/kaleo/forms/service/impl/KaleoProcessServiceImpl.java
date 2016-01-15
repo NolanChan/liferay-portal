@@ -20,7 +20,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
-import com.liferay.workflow.kaleo.forms.model.TaskFormPairs;
+import com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs;
 import com.liferay.workflow.kaleo.forms.service.base.KaleoProcessServiceBaseImpl;
 import com.liferay.workflow.kaleo.forms.service.permission.KaleoFormsPermission;
 import com.liferay.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
@@ -38,7 +38,8 @@ public class KaleoProcessServiceImpl extends KaleoProcessServiceBaseImpl {
 			long groupId, long ddmStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, long ddmTemplateId,
 			String workflowDefinitionName, int workflowDefinitionVersion,
-			TaskFormPairs taskFormPairs, ServiceContext serviceContext)
+			KaleoTaskFormPairs kaleoTaskFormPairs,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		KaleoFormsPermission.check(
@@ -47,7 +48,7 @@ public class KaleoProcessServiceImpl extends KaleoProcessServiceBaseImpl {
 		return kaleoProcessLocalService.addKaleoProcess(
 			getUserId(), groupId, ddmStructureId, nameMap, descriptionMap,
 			ddmTemplateId, workflowDefinitionName, workflowDefinitionVersion,
-			taskFormPairs, serviceContext);
+			kaleoTaskFormPairs, serviceContext);
 	}
 
 	public KaleoProcess deleteKaleoProcess(long kaleoProcessId)
@@ -83,7 +84,8 @@ public class KaleoProcessServiceImpl extends KaleoProcessServiceBaseImpl {
 			long kaleoProcessId, long ddmStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			long ddmTemplateId, String workflowDefinitionName,
-			int workflowDefinitionVersion, TaskFormPairs taskFormPairs,
+			int workflowDefinitionVersion,
+			KaleoTaskFormPairs kaleoTaskFormPairs,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -93,7 +95,7 @@ public class KaleoProcessServiceImpl extends KaleoProcessServiceBaseImpl {
 		return kaleoProcessLocalService.updateKaleoProcess(
 			kaleoProcessId, ddmStructureId, nameMap, descriptionMap,
 			ddmTemplateId, workflowDefinitionName, workflowDefinitionVersion,
-			taskFormPairs, serviceContext);
+			kaleoTaskFormPairs, serviceContext);
 	}
 
 }

@@ -84,7 +84,7 @@ import com.liferay.workflow.kaleo.forms.constants.KaleoFormsWebKeys;
 import com.liferay.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException;
 import com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
-import com.liferay.workflow.kaleo.forms.model.TaskFormPairs;
+import com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs;
 import com.liferay.workflow.kaleo.forms.service.KaleoProcessService;
 import com.liferay.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
 import com.liferay.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
@@ -473,10 +473,11 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			actionRequest, "workflowDefinitionName");
 		int workflowDefinitionVersion = ParamUtil.getInteger(
 			actionRequest, "workflowDefinitionVersion");
-		String taskFormPairsData = ParamUtil.getString(
-			actionRequest, "taskFormPairsData");
+		String kaleoTaskFormPairsData = ParamUtil.getString(
+			actionRequest, "kaleoTaskFormPairsData");
 
-		TaskFormPairs taskFormPairs = TaskFormPairs.parse(taskFormPairsData);
+		KaleoTaskFormPairs kaleoKaleoTaskFormPairs = KaleoTaskFormPairs.parse(
+			kaleoTaskFormPairsData);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			KaleoProcess.class.getName(), actionRequest);
@@ -487,13 +488,14 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			kaleoProcess = _kaleoProcessService.addKaleoProcess(
 				groupId, ddmStructureId, nameMap, descriptionMap, ddmTemplateId,
 				workflowDefinitionName, workflowDefinitionVersion,
-				taskFormPairs, serviceContext);
+				kaleoKaleoTaskFormPairs, serviceContext);
 		}
 		else {
 			kaleoProcess = _kaleoProcessService.updateKaleoProcess(
 				kaleoProcessId, ddmStructureId, nameMap, descriptionMap,
 				ddmTemplateId, workflowDefinitionName,
-				workflowDefinitionVersion, taskFormPairs, serviceContext);
+				workflowDefinitionVersion, kaleoKaleoTaskFormPairs,
+				serviceContext);
 		}
 
 		String workflowDefinition = ParamUtil.getString(

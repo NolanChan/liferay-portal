@@ -17,9 +17,9 @@ package com.liferay.workflow.kaleo.forms.model;
 /**
  * @author Marcellus Tavares
  */
-public class TaskFormPair {
+public class KaleoTaskFormPair {
 
-	public TaskFormPair(String workflowTaskName, long ddmTemplateId) {
+	public KaleoTaskFormPair(String workflowTaskName, long ddmTemplateId) {
 		_workflowTaskName = workflowTaskName;
 		_ddmTemplateId = ddmTemplateId;
 	}

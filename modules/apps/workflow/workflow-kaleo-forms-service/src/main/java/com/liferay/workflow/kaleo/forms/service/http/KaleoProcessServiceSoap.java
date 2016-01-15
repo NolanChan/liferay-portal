@@ -76,7 +76,7 @@ public class KaleoProcessServiceSoap {
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, long ddmTemplateId,
 		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
-		com.liferay.workflow.kaleo.forms.model.TaskFormPairs taskFormPairs,
+		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -88,7 +88,7 @@ public class KaleoProcessServiceSoap {
 			com.liferay.workflow.kaleo.forms.model.KaleoProcess returnValue = KaleoProcessServiceUtil.addKaleoProcess(groupId,
 					ddmStructureId, nameMap, descriptionMap, ddmTemplateId,
 					workflowDefinitionName, workflowDefinitionVersion,
-					taskFormPairs, serviceContext);
+					kaleoTaskFormPairs, serviceContext);
 
 			return com.liferay.workflow.kaleo.forms.model.KaleoProcessSoap.toSoapModel(returnValue);
 		}
@@ -166,7 +166,7 @@ public class KaleoProcessServiceSoap {
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, long ddmTemplateId,
 		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
-		com.liferay.workflow.kaleo.forms.model.TaskFormPairs taskFormPairs,
+		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -178,7 +178,7 @@ public class KaleoProcessServiceSoap {
 			com.liferay.workflow.kaleo.forms.model.KaleoProcess returnValue = KaleoProcessServiceUtil.updateKaleoProcess(kaleoProcessId,
 					ddmStructureId, nameMap, descriptionMap, ddmTemplateId,
 					workflowDefinitionName, workflowDefinitionVersion,
-					taskFormPairs, serviceContext);
+					kaleoTaskFormPairs, serviceContext);
 
 			return com.liferay.workflow.kaleo.forms.model.KaleoProcessSoap.toSoapModel(returnValue);
 		}

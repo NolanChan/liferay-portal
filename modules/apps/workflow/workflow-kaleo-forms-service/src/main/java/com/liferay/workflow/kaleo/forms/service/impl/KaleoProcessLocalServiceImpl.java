@@ -25,8 +25,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
-import com.liferay.workflow.kaleo.forms.model.TaskFormPair;
-import com.liferay.workflow.kaleo.forms.model.TaskFormPairs;
+import com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPair;
+import com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs;
 import com.liferay.workflow.kaleo.forms.service.base.KaleoProcessLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -44,7 +44,8 @@ public class KaleoProcessLocalServiceImpl
 			long userId, long groupId, long ddmStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			long ddmTemplateId, String workflowDefinitionName,
-			int workflowDefinitionVersion, TaskFormPairs taskFormPairs,
+			int workflowDefinitionVersion,
+			KaleoTaskFormPairs kaleoTaskFormPairs,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -85,7 +86,7 @@ public class KaleoProcessLocalServiceImpl
 
 		// Kaleo process links
 
-		updateKaleoProcessLinks(kaleoProcessId, taskFormPairs);
+		updateKaleoProcessLinks(kaleoProcessId, kaleoTaskFormPairs);
 
 		return kaleoProcess;
 	}
@@ -157,7 +158,8 @@ public class KaleoProcessLocalServiceImpl
 			long kaleoProcessId, long ddmStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			long ddmTemplateId, String workflowDefinitionName,
-			int workflowDefinitionVersion, TaskFormPairs taskFormPairs,
+			int workflowDefinitionVersion,
+			KaleoTaskFormPairs kaleoTaskFormPairs,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -183,7 +185,7 @@ public class KaleoProcessLocalServiceImpl
 
 		kaleoProcessLinkLocalService.deleteKaleoProcessLinks(kaleoProcessId);
 
-		updateKaleoProcessLinks(kaleoProcessId, taskFormPairs);
+		updateKaleoProcessLinks(kaleoProcessId, kaleoTaskFormPairs);
 
 		// Kaleo process data
 
@@ -262,12 +264,12 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	protected void updateKaleoProcessLinks(
-		long kaleoProcessId, TaskFormPairs taskFormPairs) {
+		long kaleoProcessId, KaleoTaskFormPairs kaleoTaskFormPairs) {
 
-		for (TaskFormPair taskFormPair : taskFormPairs) {
+		for (KaleoTaskFormPair kaleoTaskFormPair : kaleoTaskFormPairs) {
 			kaleoProcessLinkLocalService.addKaleoProcessLink(
-				kaleoProcessId, taskFormPair.getWorkflowTaskName(),
-				taskFormPair.getDDMTemplateId());
+				kaleoProcessId, kaleoTaskFormPair.getWorkflowTaskName(),
+				kaleoTaskFormPair.getDDMTemplateId());
 		}
 	}
 

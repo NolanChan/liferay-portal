@@ -172,7 +172,7 @@ AUI.add(
 						var ddmStructureId = instance.one('#ddmStructureId').val();
 						var ddmStructureName = instance.one('#ddmStructureName').val();
 						var ddmTemplateId = instance.one('#ddmTemplateId').val();
-						var taskFormPairsData = instance.one('#taskFormPairsData').val();
+						var kaleoTaskFormPairsData = instance.one('#kaleoTaskFormPairsData').val();
 						var workflowDefinition = instance.one('#workflowDefinition').val();
 
 						return A.merge(
@@ -181,7 +181,7 @@ AUI.add(
 								ddmStructureId: ddmStructureId,
 								ddmStructureName: ddmStructureName,
 								ddmTemplateId: ddmTemplateId,
-								taskFormPairsData: taskFormPairsData,
+								kaleoTaskFormPairsData: kaleoTaskFormPairsData,
 								workflowDefinition: workflowDefinition
 							}
 						);

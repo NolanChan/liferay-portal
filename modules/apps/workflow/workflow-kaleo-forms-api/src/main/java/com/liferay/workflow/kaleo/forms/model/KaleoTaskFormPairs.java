@@ -25,49 +25,49 @@ import java.util.List;
 /**
  * @author Marcellus Tavares
  */
-public class TaskFormPairs implements Iterable<TaskFormPair> {
+public class KaleoTaskFormPairs implements Iterable<KaleoTaskFormPair> {
 
-	public static TaskFormPairs parse(String data) {
-		TaskFormPairs taskFormPairs = new TaskFormPairs();
+	public static KaleoTaskFormPairs parse(String data) {
+		KaleoTaskFormPairs kaleoTaskFormPairs = new KaleoTaskFormPairs();
 
 		for (String taskForm : StringUtil.split(data)) {
 			String[] keyValue = StringUtil.split(taskForm, StringPool.COLON);
 
-			TaskFormPair taskFormPair = new TaskFormPair(
+			KaleoTaskFormPair kaleoTaskFormPair = new KaleoTaskFormPair(
 				keyValue[0], Long.valueOf(keyValue[1]));
 
-			taskFormPairs.add(taskFormPair);
+			kaleoTaskFormPairs.add(kaleoTaskFormPair);
 		}
 
-		return taskFormPairs;
+		return kaleoTaskFormPairs;
 	}
 
-	public void add(int index, TaskFormPair taskFormPair) {
-		_taskFormPairs.add(index, taskFormPair);
+	public void add(int index, KaleoTaskFormPair kaleoTaskFormPair) {
+		_kaleoTaskFormPairs.add(index, kaleoTaskFormPair);
 	}
 
-	public void add(TaskFormPair taskFormPair) {
-		_taskFormPairs.add(taskFormPair);
+	public void add(KaleoTaskFormPair kaleoTaskFormPair) {
+		_kaleoTaskFormPairs.add(kaleoTaskFormPair);
 	}
 
 	@Override
-	public Iterator<TaskFormPair> iterator() {
-		return _taskFormPairs.iterator();
+	public Iterator<KaleoTaskFormPair> iterator() {
+		return _kaleoTaskFormPairs.iterator();
 	}
 
-	public List<TaskFormPair> list() {
-		return _taskFormPairs;
+	public List<KaleoTaskFormPair> list() {
+		return _kaleoTaskFormPairs;
 	}
 
 	public int size() {
-		return _taskFormPairs.size();
+		return _kaleoTaskFormPairs.size();
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(_taskFormPairs.size() * 4);
+		StringBundler sb = new StringBundler(_kaleoTaskFormPairs.size() * 4);
 
-		for (TaskFormPair taskFormPair : _taskFormPairs) {
+		for (KaleoTaskFormPair taskFormPair : _kaleoTaskFormPairs) {
 			sb.append(taskFormPair.getWorkflowTaskName());
 			sb.append(StringPool.COLON);
 			sb.append(taskFormPair.getDDMTemplateId());
@@ -81,6 +81,7 @@ public class TaskFormPairs implements Iterable<TaskFormPair> {
 		return sb.toString();
 	}
 
-	private final List<TaskFormPair> _taskFormPairs = new ArrayList<>();
+	private final List<KaleoTaskFormPair> _kaleoTaskFormPairs =
+		new ArrayList<>();
 
 }

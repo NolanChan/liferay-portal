@@ -24,7 +24,7 @@ long ddmStructureId = KaleoFormsUtil.getKaleoProcessDDMStructureId(kaleoProcessI
 String workflowDefinition = ParamUtil.getString(request, "workflowDefinition");
 String initialStateName = KaleoFormsUtil.getInitialStateName(company.getCompanyId(), workflowDefinition);
 
-TaskFormPair initialStateTaskFormPair = KaleoFormsUtil.getInitialStateTaskFormPair(kaleoProcessId, ddmStructureId, workflowDefinition, initialStateName, portletSession);
+KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialStateKaleoTaskFormPair(kaleoProcessId, ddmStructureId, workflowDefinition, initialStateName, portletSession);
 %>
 
 <div id="<portlet:namespace />formsSearchContainer">
@@ -37,18 +37,18 @@ TaskFormPair initialStateTaskFormPair = KaleoFormsUtil.getInitialStateTaskFormPa
 		<liferay-ui:search-container-results>
 
 			<%
-			TaskFormPairs taskFormPairs = KaleoFormsUtil.getTaskFormPairs(company.getCompanyId(), kaleoProcessId, ddmStructureId, workflowDefinition, portletSession);
+			KaleoTaskFormPairs kaleoTaskFormPairs = KaleoFormsUtil.getKaleoTaskFormPairs(company.getCompanyId(), kaleoProcessId, ddmStructureId, workflowDefinition, portletSession);
 
-			taskFormPairs.add(0, initialStateTaskFormPair);
+			kaleoTaskFormPairs.add(0, initialStateKaleoTaskFormPair);
 
-			searchContainer.setResults(taskFormPairs.list());
-			searchContainer.setTotal(taskFormPairs.size());
+			searchContainer.setResults(kaleoTaskFormPairs.list());
+			searchContainer.setTotal(kaleoTaskFormPairs.size());
 			%>
 
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.workflow.kaleo.forms.model.TaskFormPair"
+			className="com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPair"
 			modelVar="taskFormsPair"
 		>
 
@@ -74,7 +74,7 @@ TaskFormPair initialStateTaskFormPair = KaleoFormsUtil.getInitialStateTaskFormPa
 			%>
 
 			<liferay-util:buffer var="taskInputBuffer">
-				<c:if test="<%= taskFormsPair.equals(initialStateTaskFormPair) %>">
+				<c:if test="<%= taskFormsPair.equals(initialStateKaleoTaskFormPair) %>">
 					<aui:input name="ddmTemplateId" type="hidden" value="<%= Validator.isNull(formName) ? StringPool.BLANK : String.valueOf(ddmTemplateId) %>">
 						<aui:validator name="required" />
 					</aui:input>

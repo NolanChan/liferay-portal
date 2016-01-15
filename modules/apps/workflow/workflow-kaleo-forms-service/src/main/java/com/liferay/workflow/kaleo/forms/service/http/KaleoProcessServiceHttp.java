@@ -61,7 +61,7 @@ public class KaleoProcessServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.workflow.kaleo.forms.model.TaskFormPairs taskFormPairs,
+		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -71,7 +71,7 @@ public class KaleoProcessServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					ddmStructureId, nameMap, descriptionMap, ddmTemplateId,
 					workflowDefinitionName, workflowDefinitionVersion,
-					taskFormPairs, serviceContext);
+					kaleoTaskFormPairs, serviceContext);
 
 			Object returnObj = null;
 
@@ -220,7 +220,7 @@ public class KaleoProcessServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.workflow.kaleo.forms.model.TaskFormPairs taskFormPairs,
+		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -230,7 +230,8 @@ public class KaleoProcessServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					kaleoProcessId, ddmStructureId, nameMap, descriptionMap,
 					ddmTemplateId, workflowDefinitionName,
-					workflowDefinitionVersion, taskFormPairs, serviceContext);
+					workflowDefinitionVersion, kaleoTaskFormPairs,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -258,7 +259,7 @@ public class KaleoProcessServiceHttp {
 	private static final Class<?>[] _addKaleoProcessParameterTypes0 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			long.class, java.lang.String.class, int.class,
-			com.liferay.workflow.kaleo.forms.model.TaskFormPairs.class,
+			com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteKaleoProcessParameterTypes1 = new Class[] {
@@ -277,7 +278,7 @@ public class KaleoProcessServiceHttp {
 	private static final Class<?>[] _updateKaleoProcessParameterTypes5 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			long.class, java.lang.String.class, int.class,
-			com.liferay.workflow.kaleo.forms.model.TaskFormPairs.class,
+			com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 }

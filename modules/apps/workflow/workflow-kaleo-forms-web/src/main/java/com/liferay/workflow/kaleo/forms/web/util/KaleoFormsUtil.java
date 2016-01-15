@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcessLink;
-import com.liferay.workflow.kaleo.forms.model.TaskFormPair;
-import com.liferay.workflow.kaleo.forms.model.TaskFormPairs;
+import com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPair;
+import com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs;
 import com.liferay.workflow.kaleo.forms.service.KaleoProcessLinkLocalServiceUtil;
 import com.liferay.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
 
@@ -60,28 +60,7 @@ public class KaleoFormsUtil {
 		}
 	}
 
-	public static String getInitialStateName(
-			long companyId, String workflowDefinition)
-		throws Exception {
-
-		if (Validator.isNull(workflowDefinition)) {
-			return StringPool.BLANK;
-		}
-
-		String[] workflowDefinitionParts = StringUtil.split(
-			workflowDefinition, CharPool.AT);
-
-		String workflowDefinitionName = workflowDefinitionParts[0];
-		int workflowDefinitionVersion = GetterUtil.getInteger(
-			workflowDefinitionParts[1]);
-
-		Document document = _getWorkflowDefinitionDocument(
-			companyId, workflowDefinitionName, workflowDefinitionVersion);
-
-		return _getInitalStateName(document.getRootElement());
-	}
-
-	public static TaskFormPair getInitialStateTaskFormPair(
+	public static KaleoTaskFormPair getInitialStateKaleoTaskFormPair(
 			long kaleoProcessId, long ddmStructureId, String workflowDefinition,
 			String initialStateName, PortletSession portletSession)
 		throws Exception {
@@ -108,7 +87,28 @@ public class KaleoFormsUtil {
 			}
 		}
 
-		return new TaskFormPair(initialStateName, ddmTemplateId);
+		return new KaleoTaskFormPair(initialStateName, ddmTemplateId);
+	}
+
+	public static String getInitialStateName(
+			long companyId, String workflowDefinition)
+		throws Exception {
+
+		if (Validator.isNull(workflowDefinition)) {
+			return StringPool.BLANK;
+		}
+
+		String[] workflowDefinitionParts = StringUtil.split(
+			workflowDefinition, CharPool.AT);
+
+		String workflowDefinitionName = workflowDefinitionParts[0];
+		int workflowDefinitionVersion = GetterUtil.getInteger(
+			workflowDefinitionParts[1]);
+
+		Document document = _getWorkflowDefinitionDocument(
+			companyId, workflowDefinitionName, workflowDefinitionVersion);
+
+		return _getInitalStateName(document.getRootElement());
 	}
 
 	public static long getKaleoProcessDDMStructureId(
@@ -244,25 +244,25 @@ public class KaleoFormsUtil {
 		return StringPool.BLANK;
 	}
 
-	public static TaskFormPairs getTaskFormPairs(
+	public static KaleoTaskFormPairs getKaleoTaskFormPairs(
 			long companyId, long kaleoProcessId, long ddmStructureId,
 			String workflowDefinition, PortletSession portletSession)
 		throws Exception {
 
-		TaskFormPairs taskFormPairs = new TaskFormPairs();
+		KaleoTaskFormPairs kaleoKaleoTaskFormPairs = new KaleoTaskFormPairs();
 
 		for (String taskName : _getTaskNames(companyId, workflowDefinition)) {
 			long ddmTemplateId = _getDDMTemplateId(
 				kaleoProcessId, ddmStructureId, workflowDefinition, taskName,
 				portletSession);
 
-			TaskFormPair taskFormPair = new TaskFormPair(
+			KaleoTaskFormPair kaleoKaleoTaskFormPair = new KaleoTaskFormPair(
 				taskName, ddmTemplateId);
 
-			taskFormPairs.add(taskFormPair);
+			kaleoKaleoTaskFormPairs.add(kaleoKaleoTaskFormPair);
 		}
 
-		return taskFormPairs;
+		return kaleoKaleoTaskFormPairs;
 	}
 
 	public static String getWorkflowDefinition(
