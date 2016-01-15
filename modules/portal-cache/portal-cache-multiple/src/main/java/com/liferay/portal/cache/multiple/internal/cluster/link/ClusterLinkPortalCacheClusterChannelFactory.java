@@ -43,6 +43,6 @@ public class ClusterLinkPortalCacheClusterChannelFactory
 		_clusterLink = clusterLink;
 	}
 
-	private volatile ClusterLink _clusterLink;
+	private ClusterLink _clusterLink;
 
 }

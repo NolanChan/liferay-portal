@@ -462,8 +462,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoDesignerPortlet.class);
 
-	private volatile KaleoDraftDefinitionService _kaleoDraftDefinitionService;
-	private volatile RoleLocalService _roleLocalService;
-	private volatile UserLocalService _userLocalService;
+	private KaleoDraftDefinitionService _kaleoDraftDefinitionService;
+	private RoleLocalService _roleLocalService;
+	private UserLocalService _userLocalService;
 
 }

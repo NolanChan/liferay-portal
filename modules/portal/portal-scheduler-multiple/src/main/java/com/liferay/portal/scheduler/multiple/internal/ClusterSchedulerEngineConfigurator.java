@@ -95,9 +95,9 @@ public class ClusterSchedulerEngineConfigurator
 			singleDestinationMessageSenderFactory) {
 	}
 
-	private volatile ClusterLink _clusterLink;
-	private volatile ClusterMasterExecutor _clusterMasterExecutor;
-	private volatile Props _props;
+	private ClusterLink _clusterLink;
+	private ClusterMasterExecutor _clusterMasterExecutor;
+	private Props _props;
 	private volatile ServiceRegistration<SchedulerEngine>
 		_schedulerEngineServiceRegistration;
 	private ServiceRegistration<IdentifiableOSGiService> _serviceRegistration;

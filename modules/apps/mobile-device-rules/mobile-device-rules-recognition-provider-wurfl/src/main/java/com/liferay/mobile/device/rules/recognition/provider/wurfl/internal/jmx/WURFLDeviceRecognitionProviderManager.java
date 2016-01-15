@@ -54,7 +54,6 @@ public class WURFLDeviceRecognitionProviderManager
 		_wurflDeviceRecognitionProvider = wurflDeviceRecognitionProvider;
 	}
 
-	private volatile WURFLDeviceRecognitionProvider
-		_wurflDeviceRecognitionProvider;
+	private WURFLDeviceRecognitionProvider _wurflDeviceRecognitionProvider;
 
 }

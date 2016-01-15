@@ -106,8 +106,8 @@ public class WURFLDeviceRecognitionProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		WURFLDeviceRecognitionProvider.class);
 
-	private volatile DeviceCapabilityFilter _deviceCapabilityFilter;
-	private volatile KnownDevices _knownDevices;
-	private volatile WURFLEngineProxy _wurflEngineProxy;
+	private DeviceCapabilityFilter _deviceCapabilityFilter;
+	private KnownDevices _knownDevices;
+	private WURFLEngineProxy _wurflEngineProxy;
 
 }
