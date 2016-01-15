@@ -1,6 +1,8 @@
 Bundle-Name: Liferay Workflow Kaleo Designer Web
 Bundle-SymbolicName: com.liferay.workflow.kaleo.designer.web
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.workflow.kaleo.designer.web.constants
 Import-Package:\
 	com.liferay.workflow.kaleo.designer.constants,\
 	com.liferay.workflow.kaleo.designer.exception,\
@@ -10,5 +12,5 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources
-Require-SchemaVersion: 1.0.0
+	META-INF/resources=src/main/resources/META-INF/resources,\
+	META-INF/resources/content=src/main/resources/content
