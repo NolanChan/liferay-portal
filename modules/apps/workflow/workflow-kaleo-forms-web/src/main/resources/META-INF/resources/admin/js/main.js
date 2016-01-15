@@ -262,12 +262,19 @@ AUI.add(
 						}
 					},
 
-					saveInPortletSession: function(data) {
+					saveInPortletSession: function(data, dialogId) {
 						var instance = this;
 
 						A.io.request(
 							instance.get('saveInPortletSessionURL'),
 							{
+								after: {
+									success: function() {
+										if (dialogId) {
+											Liferay.Util.getWindow(dialogId).hide();
+										}
+									}
+								},
 								data: instance.ns(data)
 							}
 						);

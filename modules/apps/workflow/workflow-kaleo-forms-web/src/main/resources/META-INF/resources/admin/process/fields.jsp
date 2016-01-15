@@ -170,7 +170,8 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 				{
 					ddmStructureId: ddmStructureId,
 					ddmStructureName: ddmStructureName
-				}
+				},
+				event.dialogId
 			);
 
 			kaleoFormsAdmin.updateNavigationControls();
