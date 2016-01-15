@@ -20,6 +20,7 @@
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 long classPK = ParamUtil.getLong(request, "classPK");
 String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
+boolean hiddenWindow = ParamUtil.getBoolean(request, "hiddenWindow");
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
@@ -128,5 +129,5 @@ SearchContainer structureSearch = new StructureSearch(renderRequest, portletURL,
 </aui:script>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectStructureFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectStructureFm', '<%= HtmlUtil.escapeJS(eventName) %>', true, <%= hiddenWindow %>);
 </aui:script>
