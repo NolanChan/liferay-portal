@@ -22,6 +22,8 @@ String currentSectionURL = HttpUtil.setParameter(currentURL, renderResponse.getN
 
 KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS);
 
+long classNameId = ParamUtil.getLong(request, "classNameId");
+
 long kaleoProcessId = BeanParamUtil.getLong(kaleoProcess, request, "kaleoProcessId");
 
 long ddmStructureId = KaleoFormsUtil.getKaleoProcessDDMStructureId(kaleoProcess, portletSession);
@@ -87,13 +89,13 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 	</liferay-ui:search-container-results>
 
 	<c:if test="<%= DDMStructurePermission.containsAddStruturePermission(permissionChecker, scopeGroupId, scopeClassNameId) %>">
-		<portlet:renderURL var="editDefinitionURL">
-			<portlet:param name="mvcPath" value="/admin/process/edit_structure.jsp" />
-			<portlet:param name="redirect" value="<%= currentSectionURL %>" />
-		</portlet:renderURL>
+
+		<%
+		String taglibOnClick = "javascript:" + renderResponse.getNamespace() + "openDDMPortlet();";
+		%>
 
 		<aui:button-row>
-			<aui:button href="<%= editDefinitionURL.toString() %>" primary="<%= true %>" value="add-field-set" />
+			<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="add-field-set" />
 		</aui:button-row>
 	</c:if>
 
@@ -174,6 +176,44 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 			kaleoFormsAdmin.updateNavigationControls();
 		},
 		['aui-base']
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />openDDMPortlet',
+		function(ddmTemplateId) {
+			Liferay.Util.openDDMPortlet(
+				{
+					basePortletURL: '<%= PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+					classNameId: '<%= classNameId %>',
+					classPK: document.<portlet:namespace />fm.<portlet:namespace />ddmStructureId.value,
+					dialog: {
+						destroyOnHide: true,
+						on: {
+							visibleChange: function(event) {
+								if (!event.newVal) {
+									Liferay.Portlet.refresh('#p_p_id_' + '<%= portletDisplay.getId() %>' + '_');
+								}
+							}
+						}
+					},
+					eventName: '<portlet:namespace />selectStructure',
+					groupId: <%= scopeGroupId %>,
+					hiddenWindow: false,
+					id: 'selectStructure',
+					mvcPath: '/select_structure.jsp',
+					redirect: '<%= currentSectionURL %>',
+					refererPortletName: '<%= portletDisplay.getId() %>',
+					showAncestorScopes: true,
+					structureAvailableFields: '<%= renderResponse.getNamespace() + "getAvailableFields" %>',
+					title: '<liferay-ui:message key="field-set" />'
+				},
+				function(event) {
+					Liferay.fire('<portlet:namespace />chooseDefinition', {ddmStructureId: event.ddmstructureid, dialogId: 'selectStructure', name: event.name , node: this});
+				}
+			);
+		},
+		['liferay-util']
 	);
 </aui:script>
 
