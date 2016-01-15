@@ -17,7 +17,7 @@ package com.liferay.workflow.kaleo.forms.web.workflow;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
-import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,13 +25,14 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
-import com.liferay.workflow.kaleo.forms.service.KaleoProcessLocalServiceUtil;
+import com.liferay.workflow.kaleo.forms.service.KaleoProcessLocalService;
 import com.liferay.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 
 import java.io.Serializable;
@@ -43,9 +44,13 @@ import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marcellus Tavares
  */
+@Component(immediate = true, service = WorkflowHandler.class)
 public class KaleoProcessWorkflowHandler
 	extends BaseWorkflowHandler<DDLRecord> {
 
@@ -59,11 +64,10 @@ public class KaleoProcessWorkflowHandler
 	@Override
 	public String getTitle(long classPK, Locale locale) {
 		try {
-			DDLRecord ddlRecord = DDLRecordLocalServiceUtil.getDDLRecord(
-				classPK);
+			DDLRecord ddlRecord = _ddlRecordLocalService.getDDLRecord(classPK);
 
 			KaleoProcess kaleoProcess =
-				KaleoProcessLocalServiceUtil.getDDLRecordSetKaleoProcess(
+				_kaleoProcessLocalService.getDDLRecordSetKaleoProcess(
 					ddlRecord.getRecordSetId());
 
 			DDLRecordSet ddlRecordSet = kaleoProcess.getDDLRecordSet();
@@ -115,16 +119,15 @@ public class KaleoProcessWorkflowHandler
 			long companyId, long groupId, long classPK)
 		throws PortalException {
 
-		DDLRecord ddlRecord = DDLRecordLocalServiceUtil.getRecord(classPK);
+		DDLRecord ddlRecord = _ddlRecordLocalService.getRecord(classPK);
 
 		KaleoProcess kaleoProcess =
-			KaleoProcessLocalServiceUtil.getDDLRecordSetKaleoProcess(
+			_kaleoProcessLocalService.getDDLRecordSetKaleoProcess(
 				ddlRecord.getRecordSetId());
 
-		return WorkflowDefinitionLinkLocalServiceUtil.
-			fetchWorkflowDefinitionLink(
-				companyId, groupId, getClassName(),
-				kaleoProcess.getKaleoProcessId(), 0);
+		return _workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+			companyId, groupId, getClassName(),
+			kaleoProcess.getKaleoProcessId(), 0);
 	}
 
 	@Override
@@ -149,18 +152,45 @@ public class KaleoProcessWorkflowHandler
 			(String)workflowContext.get(
 				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
-		DDLRecord record = DDLRecordLocalServiceUtil.getRecord(ddlRecordId);
+		DDLRecord record = _ddlRecordLocalService.getRecord(ddlRecordId);
 
 		DDLRecordVersion recordVersion = record.getRecordVersion();
 
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
-		return DDLRecordLocalServiceUtil.updateStatus(
+		return _ddlRecordLocalService.updateStatus(
 			userId, recordVersion.getRecordVersionId(), status, serviceContext);
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDLRecordLocalService(
+		DDLRecordLocalService ddlRecordLocalService) {
+
+		_ddlRecordLocalService = ddlRecordLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKaleoProcessLocalService(
+		KaleoProcessLocalService kaleoProcessLocalService) {
+
+		_kaleoProcessLocalService = kaleoProcessLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWorkflowDefinitionLinkLocalService(
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
+
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoProcessWorkflowHandler.class);
+
+	private DDLRecordLocalService _ddlRecordLocalService;
+	private KaleoProcessLocalService _kaleoProcessLocalService;
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }
