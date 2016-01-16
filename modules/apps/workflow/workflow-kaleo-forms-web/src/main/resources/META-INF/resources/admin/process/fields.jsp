@@ -22,8 +22,6 @@ String currentSectionURL = HttpUtil.setParameter(currentURL, renderResponse.getN
 
 KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS);
 
-long classNameId = ParamUtil.getLong(request, "classNameId");
-
 long kaleoProcessId = BeanParamUtil.getLong(kaleoProcess, request, "kaleoProcessId");
 
 long ddmStructureId = KaleoFormsUtil.getKaleoProcessDDMStructureId(kaleoProcess, portletSession);
@@ -37,6 +35,8 @@ if (ddmStructureId > 0) {
 		ddmStructureName = ddmStructure.getName(locale);
 	}
 }
+
+long classNameId = ParamUtil.getLong(request, "classNameId");
 
 JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 %>
