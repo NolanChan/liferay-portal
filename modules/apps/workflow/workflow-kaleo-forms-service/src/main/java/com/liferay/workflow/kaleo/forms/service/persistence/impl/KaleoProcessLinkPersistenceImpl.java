@@ -287,7 +287,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	 * @param kaleoProcessId the kaleo process ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo process link
-	 * @throws com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
+	 * @throws NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
 	 */
 	@Override
 	public KaleoProcessLink findByKaleoProcessId_First(long kaleoProcessId,
@@ -338,7 +338,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	 * @param kaleoProcessId the kaleo process ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo process link
-	 * @throws com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
+	 * @throws NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
 	 */
 	@Override
 	public KaleoProcessLink findByKaleoProcessId_Last(long kaleoProcessId,
@@ -396,7 +396,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	 * @param kaleoProcessId the kaleo process ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next kaleo process link
-	 * @throws com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
+	 * @throws NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
 	 */
 	@Override
 	public KaleoProcessLink[] findByKaleoProcessId_PrevAndNext(
@@ -614,12 +614,12 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the kaleo process link where kaleoProcessId = &#63; and workflowTaskName = &#63; or throws a {@link com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessLinkException} if it could not be found.
+	 * Returns the kaleo process link where kaleoProcessId = &#63; and workflowTaskName = &#63; or throws a {@link NoSuchKaleoProcessLinkException} if it could not be found.
 	 *
 	 * @param kaleoProcessId the kaleo process ID
 	 * @param workflowTaskName the workflow task name
 	 * @return the matching kaleo process link
-	 * @throws com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
+	 * @throws NoSuchKaleoProcessLinkException if a matching kaleo process link could not be found
 	 */
 	@Override
 	public KaleoProcessLink findByKPI_WTN(long kaleoProcessId,
@@ -1026,7 +1026,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	 *
 	 * @param kaleoProcessLinkId the primary key of the kaleo process link
 	 * @return the kaleo process link that was removed
-	 * @throws com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
+	 * @throws NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
 	 */
 	@Override
 	public KaleoProcessLink remove(long kaleoProcessLinkId)
@@ -1039,7 +1039,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	 *
 	 * @param primaryKey the primary key of the kaleo process link
 	 * @return the kaleo process link that was removed
-	 * @throws com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
+	 * @throws NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
 	 */
 	@Override
 	public KaleoProcessLink remove(Serializable primaryKey)
@@ -1196,11 +1196,11 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	}
 
 	/**
-	 * Returns the kaleo process link with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the kaleo process link with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the kaleo process link
 	 * @return the kaleo process link
-	 * @throws com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
+	 * @throws NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
 	 */
 	@Override
 	public KaleoProcessLink findByPrimaryKey(Serializable primaryKey)
@@ -1220,11 +1220,11 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	}
 
 	/**
-	 * Returns the kaleo process link with the primary key or throws a {@link com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessLinkException} if it could not be found.
+	 * Returns the kaleo process link with the primary key or throws a {@link NoSuchKaleoProcessLinkException} if it could not be found.
 	 *
 	 * @param kaleoProcessLinkId the primary key of the kaleo process link
 	 * @return the kaleo process link
-	 * @throws com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
+	 * @throws NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
 	 */
 	@Override
 	public KaleoProcessLink findByPrimaryKey(long kaleoProcessLinkId)

@@ -185,7 +185,7 @@ public class KaleoProcessUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo process
-	* @throws com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessException if a matching kaleo process could not be found
+	* @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
 	*/
 	public static KaleoProcess findByGroupId_First(long groupId,
 		OrderByComparator<KaleoProcess> orderByComparator)
@@ -211,7 +211,7 @@ public class KaleoProcessUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo process
-	* @throws com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessException if a matching kaleo process could not be found
+	* @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
 	*/
 	public static KaleoProcess findByGroupId_Last(long groupId,
 		OrderByComparator<KaleoProcess> orderByComparator)
@@ -238,7 +238,7 @@ public class KaleoProcessUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo process
-	* @throws com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
+	* @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
 	*/
 	public static KaleoProcess[] findByGroupId_PrevAndNext(
 		long kaleoProcessId, long groupId,
@@ -302,7 +302,7 @@ public class KaleoProcessUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo process
-	* @throws com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
+	* @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
 	*/
 	public static KaleoProcess[] filterFindByGroupId_PrevAndNext(
 		long kaleoProcessId, long groupId,
@@ -343,11 +343,11 @@ public class KaleoProcessUtil {
 	}
 
 	/**
-	* Returns the kaleo process where DDLRecordSetId = &#63; or throws a {@link com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessException} if it could not be found.
+	* Returns the kaleo process where DDLRecordSetId = &#63; or throws a {@link NoSuchKaleoProcessException} if it could not be found.
 	*
 	* @param DDLRecordSetId the d d l record set ID
 	* @return the matching kaleo process
-	* @throws com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessException if a matching kaleo process could not be found
+	* @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
 	*/
 	public static KaleoProcess findByDDLRecordSetId(long DDLRecordSetId)
 		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
@@ -431,7 +431,7 @@ public class KaleoProcessUtil {
 	*
 	* @param kaleoProcessId the primary key of the kaleo process
 	* @return the kaleo process that was removed
-	* @throws com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
+	* @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
 	*/
 	public static KaleoProcess remove(long kaleoProcessId)
 		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
@@ -443,11 +443,11 @@ public class KaleoProcessUtil {
 	}
 
 	/**
-	* Returns the kaleo process with the primary key or throws a {@link com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessException} if it could not be found.
+	* Returns the kaleo process with the primary key or throws a {@link NoSuchKaleoProcessException} if it could not be found.
 	*
 	* @param kaleoProcessId the primary key of the kaleo process
 	* @return the kaleo process
-	* @throws com.liferay.workflow.kaleo.forms.NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
+	* @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
 	*/
 	public static KaleoProcess findByPrimaryKey(long kaleoProcessId)
 		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
