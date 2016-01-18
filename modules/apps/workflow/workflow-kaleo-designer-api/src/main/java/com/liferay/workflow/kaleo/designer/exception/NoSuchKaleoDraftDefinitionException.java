@@ -14,7 +14,7 @@
 
 package com.liferay.workflow.kaleo.designer.exception;
 
-import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.exception.NoSuchModelException;
 
 /**
  * @author Eduardo Lundgren
