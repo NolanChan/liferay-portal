@@ -5,8 +5,8 @@ Export-Package:\
 	com.liferay.workflow.kaleo.forms.web.constants
 Include-Resource:\
 	classes,\
-	content=../workflow-lang/src/main/resources/content,\
-	META-INF/resources=src/main/resources/META-INF/resources
+	META-INF/resources=src/main/resources/META-INF/resources,\
+	META-INF/resources/content=src/main/resources/content
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Kaleo Forms
 Web-ContextPath: /kaleo-forms-web
