@@ -1,3 +1,5 @@
+//apply plugin: "com.liferay.lang.merger"
+
 dependencies {
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
 	compile project(":apps:application-list:application-list-api")
