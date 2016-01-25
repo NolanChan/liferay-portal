@@ -16,12 +16,12 @@ package com.liferay.search.elasticsearch.shield.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author André de Oliveira
  */
-@ConfigurationAdmin(category = "platform")
+@ExtendedObjectClassDefinition(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.search.elasticsearch.shield.configuration.ShieldConfiguration"
 )

@@ -16,13 +16,13 @@ package com.liferay.portal.cache.multiple.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
 import com.liferay.portal.kernel.cluster.Priority;
+import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Tina Tian
  */
-@ConfigurationAdmin(category = "platform")
+@ExtendedObjectClassDefinition(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration"
 )
