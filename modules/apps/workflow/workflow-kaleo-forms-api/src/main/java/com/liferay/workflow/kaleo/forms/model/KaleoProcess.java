@@ -16,6 +16,7 @@ package com.liferay.workflow.kaleo.forms.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
@@ -28,6 +29,7 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl
  * @generated
  */
+@ImplementationClassName("com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessImpl")
 @ProviderType
 public interface KaleoProcess extends KaleoProcessModel, PersistedModel {
 	/*
