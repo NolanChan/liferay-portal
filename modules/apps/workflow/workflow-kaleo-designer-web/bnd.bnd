@@ -9,7 +9,3 @@ Import-Package:\
 	com.liferay.workflow.kaleo.designer.service.permission,\
 	com.liferay.workflow.kaleo.designer.util,\
 	*
-Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources,\
-	META-INF/resources/content=src/main/resources/content
