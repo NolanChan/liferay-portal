@@ -49,7 +49,6 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.workflow.definition.link.web:1.0.0,\
 	com.liferay.workflow.definition.web:1.0.0,\
 	com.liferay.workflow.instance.web:1.0.0,\
-	com.liferay.workflow.kaleo.forms.web:1.0.0,\
 	com.liferay.workflow.task.web:1.0.0
 Liferay-Releng-Labs: false
 Liferay-Releng-Marketplace: true

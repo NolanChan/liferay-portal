@@ -6,5 +6,4 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Workflow
-Web-ContextPath: /workflow-definition-web
 -include: ../../../../marketplace/business-productivity/bnd.bnd
