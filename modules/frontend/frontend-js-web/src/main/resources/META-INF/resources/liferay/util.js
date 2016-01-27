@@ -819,7 +819,7 @@
 			);
 		},
 
-		selectEntityHandler: function(container, selectEventName, disableButton, hiddenWindow) {
+		selectEntityHandler: function(container, selectEventName, disableButton) {
 			container = $(container);
 
 			var openingLiferay = Util.getOpener().Liferay;
@@ -842,9 +842,7 @@
 
 					openingLiferay.fire(selectEventName, result);
 
-					if (hiddenWindow !== false) {
-						Util.getWindow().hide();
-					}
+					Util.getWindow().hide();
 				}
 			);
 
