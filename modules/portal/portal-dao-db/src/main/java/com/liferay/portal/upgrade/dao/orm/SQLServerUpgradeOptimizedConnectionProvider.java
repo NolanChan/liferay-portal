@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.upgrade.dao.orm;
+package com.liferay.portal.upgrade.dao.orm;
 
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.upgrade.dao.orm.UpgradeOptimizedConnectionProvider;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.util.PortalUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -96,7 +97,7 @@ public class SQLServerUpgradeOptimizedConnectionProvider
 
 			return (PreparedStatement)ProxyUtil.newProxyInstance(
 				classLoader, new Class[] {PreparedStatement.class},
-				new UpgradeOptimizedPreparedStatementHandler(
+				new SQLServerUpgradeOptimizedPreparedStatementHandler(
 					preparedStatement));
 		}
 
