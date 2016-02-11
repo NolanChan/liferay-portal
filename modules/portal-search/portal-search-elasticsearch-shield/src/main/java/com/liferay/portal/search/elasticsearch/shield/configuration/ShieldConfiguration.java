@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.search.elasticsearch.shield.configuration;
+package com.liferay.portal.search.elasticsearch.shield.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
  */
 @ExtendedObjectClassDefinition(category = "platform")
 @Meta.OCD(
-	id = "com.liferay.search.elasticsearch.shield.configuration.ShieldConfiguration"
+	id = "com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration"
 )
 public interface ShieldConfiguration {
 
