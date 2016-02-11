@@ -1,7 +1,13 @@
+configurations {
+	compile {
+		transitive = false
+	}
+}
+
 dependencies {
 	provided fileTree(dir: "lib-ee", include: "*.jar")
 }
 
 liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
+	deployDir = file("${liferayHome}/osgi/portal")
 }
