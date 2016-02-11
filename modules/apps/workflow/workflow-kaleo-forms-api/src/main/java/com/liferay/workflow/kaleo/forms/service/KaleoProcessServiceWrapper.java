@@ -16,7 +16,7 @@ package com.liferay.workflow.kaleo.forms.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link KaleoProcessService}.
@@ -40,7 +40,7 @@ public class KaleoProcessServiceWrapper implements KaleoProcessService,
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
 		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessService.addKaleoProcess(groupId, ddmStructureId,
 			nameMap, descriptionMap, ddmTemplateId, workflowDefinitionName,
@@ -92,7 +92,7 @@ public class KaleoProcessServiceWrapper implements KaleoProcessService,
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
 		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessService.updateKaleoProcess(kaleoProcessId,
 			ddmStructureId, nameMap, descriptionMap, ddmTemplateId,

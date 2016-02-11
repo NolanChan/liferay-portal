@@ -20,11 +20,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.service.BaseService;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for KaleoProcess. Methods of this
@@ -50,27 +59,23 @@ public interface KaleoProcessService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoProcessServiceUtil} to access the kaleo process remote service. Add custom service methods to {@link com.liferay.workflow.kaleo.forms.service.impl.KaleoProcessServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcess addKaleoProcess(
-		long groupId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long ddmTemplateId, java.lang.String workflowDefinitionName,
-		int workflowDefinitionVersion,
-		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public KaleoProcess addKaleoProcess(long groupId, long ddmStructureId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, long ddmTemplateId,
+		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		KaleoTaskFormPairs kaleoTaskFormPairs, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcess deleteKaleoProcess(
-		long kaleoProcessId) throws PortalException;
+	public KaleoProcess deleteKaleoProcess(long kaleoProcessId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcess getKaleoProcess(
-		long kaleoProcessId) throws PortalException;
+	public KaleoProcess getKaleoProcess(long kaleoProcessId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+	public List<KaleoProcess> getKaleoProcesses(long groupId, int start,
+		int end, OrderByComparator orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKaleoProcessesCount(long groupId);
@@ -82,13 +87,10 @@ public interface KaleoProcessService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
-		long kaleoProcessId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long ddmTemplateId, java.lang.String workflowDefinitionName,
-		int workflowDefinitionVersion,
-		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public KaleoProcess updateKaleoProcess(long kaleoProcessId,
+		long ddmStructureId, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, long ddmTemplateId,
+		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		KaleoTaskFormPairs kaleoTaskFormPairs, ServiceContext serviceContext)
 		throws PortalException;
 }

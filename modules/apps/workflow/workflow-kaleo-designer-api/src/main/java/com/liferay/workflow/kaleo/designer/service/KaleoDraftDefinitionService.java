@@ -20,11 +20,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.service.BaseService;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for KaleoDraftDefinition. Methods of this
@@ -50,38 +58,33 @@ public interface KaleoDraftDefinitionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoDraftDefinitionServiceUtil} to access the kaleo draft definition remote service. Add custom service methods to {@link com.liferay.workflow.kaleo.designer.service.impl.KaleoDraftDefinitionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition addKaleoDraftDefinition(
-		long userId, long groupId, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String content, int version, int draftVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public KaleoDraftDefinition addKaleoDraftDefinition(long userId,
+		long groupId, java.lang.String name,
+		Map<Locale, java.lang.String> titleMap, java.lang.String content,
+		int version, int draftVersion, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteKaleoDraftDefinitions(java.lang.String name, int version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		ServiceContext serviceContext) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoDraftDefinition getKaleoDraftDefinition(java.lang.String name,
+		int version, int draftVersion, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
-		java.lang.String name, int version, int draftVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public List<KaleoDraftDefinition> getKaleoDraftDefinitions()
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions()
+	public KaleoDraftDefinition getLatestKaleoDraftDefinition(
+		java.lang.String name, int version, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition getLatestKaleoDraftDefinition(
-		java.lang.String name, int version,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
 		long companyId, int version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws PortalException;
+		OrderByComparator orderByComparator) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -90,17 +93,13 @@ public interface KaleoDraftDefinitionService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition publishKaleoDraftDefinition(
-		long userId, long groupId, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String content,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public KaleoDraftDefinition publishKaleoDraftDefinition(long userId,
+		long groupId, java.lang.String name,
+		Map<Locale, java.lang.String> titleMap, java.lang.String content,
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition updateKaleoDraftDefinition(
-		long userId, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String content, int version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public KaleoDraftDefinition updateKaleoDraftDefinition(long userId,
+		java.lang.String name, Map<Locale, java.lang.String> titleMap,
+		java.lang.String content, int version, ServiceContext serviceContext)
 		throws PortalException;
 }

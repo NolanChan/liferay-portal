@@ -16,8 +16,13 @@ package com.liferay.workflow.kaleo.forms.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -216,7 +221,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _kaleoProcess.getExpandoBridge();
 	}
 
@@ -278,7 +283,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _kaleoProcess.getPrimaryKeyObj();
 	}
 
@@ -409,19 +414,17 @@ public class KaleoProcessWrapper implements KaleoProcess,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_kaleoProcess.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_kaleoProcess.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_kaleoProcess.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -471,7 +474,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_kaleoProcess.setPrimaryKeyObj(primaryKeyObj);
 	}
 
@@ -527,7 +530,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.workflow.kaleo.forms.model.KaleoProcess> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.workflow.kaleo.forms.model.KaleoProcess> toCacheModel() {
 		return _kaleoProcess.toCacheModel();
 	}
 

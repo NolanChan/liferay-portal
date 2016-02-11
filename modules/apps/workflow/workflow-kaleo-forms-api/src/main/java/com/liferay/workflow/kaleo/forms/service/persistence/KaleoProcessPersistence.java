@@ -16,8 +16,9 @@ package com.liferay.workflow.kaleo.forms.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
 
 /**
@@ -109,7 +110,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	*/
 	public KaleoProcess findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
+		throws NoSuchKaleoProcessException;
 
 	/**
 	* Returns the first kaleo process in the ordered set where groupId = &#63;.
@@ -131,7 +132,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	*/
 	public KaleoProcess findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
+		throws NoSuchKaleoProcessException;
 
 	/**
 	* Returns the last kaleo process in the ordered set where groupId = &#63;.
@@ -155,7 +156,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	public KaleoProcess[] findByGroupId_PrevAndNext(long kaleoProcessId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
+		throws NoSuchKaleoProcessException;
 
 	/**
 	* Returns all the kaleo processes that the user has permission to view where groupId = &#63;.
@@ -209,7 +210,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	public KaleoProcess[] filterFindByGroupId_PrevAndNext(long kaleoProcessId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
+		throws NoSuchKaleoProcessException;
 
 	/**
 	* Removes all the kaleo processes where groupId = &#63; from the database.
@@ -242,7 +243,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
 	*/
 	public KaleoProcess findByDDLRecordSetId(long DDLRecordSetId)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
+		throws NoSuchKaleoProcessException;
 
 	/**
 	* Returns the kaleo process where DDLRecordSetId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -269,7 +270,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @return the kaleo process that was removed
 	*/
 	public KaleoProcess removeByDDLRecordSetId(long DDLRecordSetId)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
+		throws NoSuchKaleoProcessException;
 
 	/**
 	* Returns the number of kaleo processes where DDLRecordSetId = &#63;.
@@ -309,7 +310,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
 	*/
 	public KaleoProcess remove(long kaleoProcessId)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
+		throws NoSuchKaleoProcessException;
 
 	public KaleoProcess updateImpl(KaleoProcess kaleoProcess);
 
@@ -321,7 +322,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
 	*/
 	public KaleoProcess findByPrimaryKey(long kaleoProcessId)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
+		throws NoSuchKaleoProcessException;
 
 	/**
 	* Returns the kaleo process with the primary key or returns <code>null</code> if it could not be found.

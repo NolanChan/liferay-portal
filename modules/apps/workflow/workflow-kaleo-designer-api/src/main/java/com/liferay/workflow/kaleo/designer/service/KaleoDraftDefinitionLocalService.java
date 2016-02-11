@@ -16,14 +16,30 @@ package com.liferay.workflow.kaleo.designer.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.BaseLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.service.BaseLocalService;
-import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for KaleoDraftDefinition. Methods of this
@@ -54,15 +70,14 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	* @param kaleoDraftDefinition the kaleo draft definition
 	* @return the kaleo draft definition that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition addKaleoDraftDefinition(
-		com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition kaleoDraftDefinition);
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoDraftDefinition addKaleoDraftDefinition(
+		KaleoDraftDefinition kaleoDraftDefinition);
 
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition addKaleoDraftDefinition(
-		long userId, long groupId, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String content, int version, int draftVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public KaleoDraftDefinition addKaleoDraftDefinition(long userId,
+		long groupId, java.lang.String name,
+		Map<Locale, java.lang.String> titleMap, java.lang.String content,
+		int version, int draftVersion, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -71,7 +86,7 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	* @param kaleoDraftDefinitionId the primary key for the new kaleo draft definition
 	* @return the new kaleo draft definition
 	*/
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition createKaleoDraftDefinition(
+	public KaleoDraftDefinition createKaleoDraftDefinition(
 		long kaleoDraftDefinitionId);
 
 	/**
@@ -81,10 +96,9 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	* @return the kaleo draft definition that was removed
 	* @throws PortalException
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition deleteKaleoDraftDefinition(
-		com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition kaleoDraftDefinition)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public KaleoDraftDefinition deleteKaleoDraftDefinition(
+		KaleoDraftDefinition kaleoDraftDefinition) throws PortalException;
 
 	/**
 	* Deletes the kaleo draft definition with the primary key from the database. Also notifies the appropriate model listeners.
@@ -93,28 +107,25 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	* @return the kaleo draft definition that was removed
 	* @throws PortalException if a kaleo draft definition with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition deleteKaleoDraftDefinition(
+	@Indexable(type = IndexableType.DELETE)
+	public KaleoDraftDefinition deleteKaleoDraftDefinition(
 		long kaleoDraftDefinitionId) throws PortalException;
 
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition deleteKaleoDraftDefinition(
+	public KaleoDraftDefinition deleteKaleoDraftDefinition(
 		java.lang.String name, int version, int draftVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteKaleoDraftDefinitions(java.lang.String name, int version,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -122,8 +133,7 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -137,8 +147,7 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -154,10 +163,8 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -165,8 +172,7 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -175,19 +181,18 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition fetchKaleoDraftDefinition(
+	public KaleoDraftDefinition fetchKaleoDraftDefinition(
 		long kaleoDraftDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the kaleo draft definition with the primary key.
@@ -197,20 +202,18 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	* @throws PortalException if a kaleo draft definition with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
+	public KaleoDraftDefinition getKaleoDraftDefinition(
 		long kaleoDraftDefinitionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
-		java.lang.String name, int version, int draftVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public KaleoDraftDefinition getKaleoDraftDefinition(java.lang.String name,
+		int version, int draftVersion, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions(
+	public List<KaleoDraftDefinition> getKaleoDraftDefinitions(
 		java.lang.String name, int version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator,
-		com.liferay.portal.service.ServiceContext serviceContext);
+		OrderByComparator orderByComparator, ServiceContext serviceContext);
 
 	/**
 	* Returns a range of all the kaleo draft definitions.
@@ -224,8 +227,8 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	* @return the range of kaleo draft definitions
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions(
-		int start, int end);
+	public List<KaleoDraftDefinition> getKaleoDraftDefinitions(int start,
+		int end);
 
 	/**
 	* Returns the number of kaleo draft definitions.
@@ -237,18 +240,17 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKaleoDraftDefinitionsCount(java.lang.String name,
-		int version, com.liferay.portal.service.ServiceContext serviceContext);
+		int version, ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition getLatestKaleoDraftDefinition(
-		java.lang.String name, int version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public KaleoDraftDefinition getLatestKaleoDraftDefinition(
+		java.lang.String name, int version, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
 		long companyId, int version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+		OrderByComparator orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLatestKaleoDraftDefinitionsCount(long companyId, int version);
@@ -262,20 +264,17 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition incrementKaleoDraftDefinitionDraftVersion(
+	public KaleoDraftDefinition incrementKaleoDraftDefinitionDraftVersion(
 		long userId, java.lang.String name, int version,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition publishKaleoDraftDefinition(
-		long userId, long groupId, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String content,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public KaleoDraftDefinition publishKaleoDraftDefinition(long userId,
+		long groupId, java.lang.String name,
+		Map<Locale, java.lang.String> titleMap, java.lang.String content,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the kaleo draft definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -283,14 +282,12 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 	* @param kaleoDraftDefinition the kaleo draft definition
 	* @return the kaleo draft definition that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition updateKaleoDraftDefinition(
-		com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition kaleoDraftDefinition);
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoDraftDefinition updateKaleoDraftDefinition(
+		KaleoDraftDefinition kaleoDraftDefinition);
 
-	public com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition updateKaleoDraftDefinition(
-		long userId, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String content, int version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public KaleoDraftDefinition updateKaleoDraftDefinition(long userId,
+		java.lang.String name, Map<Locale, java.lang.String> titleMap,
+		java.lang.String content, int version, ServiceContext serviceContext)
 		throws PortalException;
 }

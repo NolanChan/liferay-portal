@@ -16,10 +16,10 @@ package com.liferay.workflow.kaleo.forms.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
 
@@ -145,15 +145,21 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoProcessId = objectInput.readLong();
+
 		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
 		DDLRecordSetId = objectInput.readLong();
+
 		DDMTemplateId = objectInput.readLong();
 		workflowDefinitionName = objectInput.readUTF();
+
 		workflowDefinitionVersion = objectInput.readInt();
 	}
 
@@ -161,8 +167,11 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(kaleoProcessId);
+
 		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -174,7 +183,9 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
 		objectOutput.writeLong(DDLRecordSetId);
+
 		objectOutput.writeLong(DDMTemplateId);
 
 		if (workflowDefinitionName == null) {

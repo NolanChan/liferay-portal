@@ -16,10 +16,10 @@ package com.liferay.workflow.kaleo.designer.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
 
@@ -159,8 +159,11 @@ public class KaleoDraftDefinitionCacheModel implements CacheModel<KaleoDraftDefi
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoDraftDefinitionId = objectInput.readLong();
+
 		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -168,7 +171,9 @@ public class KaleoDraftDefinitionCacheModel implements CacheModel<KaleoDraftDefi
 		name = objectInput.readUTF();
 		title = objectInput.readUTF();
 		content = objectInput.readUTF();
+
 		version = objectInput.readInt();
+
 		draftVersion = objectInput.readInt();
 	}
 
@@ -176,8 +181,11 @@ public class KaleoDraftDefinitionCacheModel implements CacheModel<KaleoDraftDefi
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(kaleoDraftDefinitionId);
+
 		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -212,6 +220,7 @@ public class KaleoDraftDefinitionCacheModel implements CacheModel<KaleoDraftDefi
 		}
 
 		objectOutput.writeInt(version);
+
 		objectOutput.writeInt(draftVersion);
 	}
 

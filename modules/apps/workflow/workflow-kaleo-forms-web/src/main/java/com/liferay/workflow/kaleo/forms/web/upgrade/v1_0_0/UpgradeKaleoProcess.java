@@ -16,7 +16,7 @@ package com.liferay.workflow.kaleo.forms.web.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
 
 import java.sql.Connection;

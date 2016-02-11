@@ -77,7 +77,7 @@ public class KaleoProcessServiceSoap {
 		java.lang.String[] descriptionMapValues, long ddmTemplateId,
 		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
 		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
@@ -167,7 +167,7 @@ public class KaleoProcessServiceSoap {
 		java.lang.String[] descriptionMapValues, long ddmTemplateId,
 		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
 		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,

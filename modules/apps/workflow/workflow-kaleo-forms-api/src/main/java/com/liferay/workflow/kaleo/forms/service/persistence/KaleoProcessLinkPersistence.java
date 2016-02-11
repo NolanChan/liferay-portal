@@ -16,8 +16,9 @@ package com.liferay.workflow.kaleo.forms.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException;
 import com.liferay.workflow.kaleo.forms.model.KaleoProcessLink;
 
 /**
@@ -110,7 +111,7 @@ public interface KaleoProcessLinkPersistence extends BasePersistence<KaleoProces
 	*/
 	public KaleoProcessLink findByKaleoProcessId_First(long kaleoProcessId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcessLink> orderByComparator)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException;
+		throws NoSuchKaleoProcessLinkException;
 
 	/**
 	* Returns the first kaleo process link in the ordered set where kaleoProcessId = &#63;.
@@ -132,7 +133,7 @@ public interface KaleoProcessLinkPersistence extends BasePersistence<KaleoProces
 	*/
 	public KaleoProcessLink findByKaleoProcessId_Last(long kaleoProcessId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcessLink> orderByComparator)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException;
+		throws NoSuchKaleoProcessLinkException;
 
 	/**
 	* Returns the last kaleo process link in the ordered set where kaleoProcessId = &#63;.
@@ -156,7 +157,7 @@ public interface KaleoProcessLinkPersistence extends BasePersistence<KaleoProces
 	public KaleoProcessLink[] findByKaleoProcessId_PrevAndNext(
 		long kaleoProcessLinkId, long kaleoProcessId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcessLink> orderByComparator)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException;
+		throws NoSuchKaleoProcessLinkException;
 
 	/**
 	* Removes all the kaleo process links where kaleoProcessId = &#63; from the database.
@@ -183,7 +184,7 @@ public interface KaleoProcessLinkPersistence extends BasePersistence<KaleoProces
 	*/
 	public KaleoProcessLink findByKPI_WTN(long kaleoProcessId,
 		java.lang.String workflowTaskName)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException;
+		throws NoSuchKaleoProcessLinkException;
 
 	/**
 	* Returns the kaleo process link where kaleoProcessId = &#63; and workflowTaskName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -215,7 +216,7 @@ public interface KaleoProcessLinkPersistence extends BasePersistence<KaleoProces
 	*/
 	public KaleoProcessLink removeByKPI_WTN(long kaleoProcessId,
 		java.lang.String workflowTaskName)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException;
+		throws NoSuchKaleoProcessLinkException;
 
 	/**
 	* Returns the number of kaleo process links where kaleoProcessId = &#63; and workflowTaskName = &#63;.
@@ -257,7 +258,7 @@ public interface KaleoProcessLinkPersistence extends BasePersistence<KaleoProces
 	* @throws NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
 	*/
 	public KaleoProcessLink remove(long kaleoProcessLinkId)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException;
+		throws NoSuchKaleoProcessLinkException;
 
 	public KaleoProcessLink updateImpl(KaleoProcessLink kaleoProcessLink);
 
@@ -269,7 +270,7 @@ public interface KaleoProcessLinkPersistence extends BasePersistence<KaleoProces
 	* @throws NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
 	*/
 	public KaleoProcessLink findByPrimaryKey(long kaleoProcessLinkId)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException;
+		throws NoSuchKaleoProcessLinkException;
 
 	/**
 	* Returns the kaleo process link with the primary key or returns <code>null</code> if it could not be found.

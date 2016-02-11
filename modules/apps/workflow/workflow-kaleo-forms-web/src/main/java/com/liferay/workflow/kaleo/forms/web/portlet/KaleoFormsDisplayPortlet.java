@@ -15,24 +15,18 @@
 package com.liferay.workflow.kaleo.forms.web.portlet;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
-import com.liferay.dynamic.data.lists.service.DDLRecordService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTaskDueDateException;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.service.WorkflowInstanceLinkLocalService;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.workflow.kaleo.designer.service.KaleoDraftDefinitionService;
 import com.liferay.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
-import com.liferay.workflow.kaleo.forms.service.KaleoProcessService;
 import com.liferay.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 
 import java.util.Calendar;
@@ -44,7 +38,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -191,54 +184,6 @@ public class KaleoFormsDisplayPortlet extends KaleoFormsAdminPortlet {
 		WorkflowTaskManagerUtil.updateDueDate(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 			workflowTaskId, comment, dueDate);
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setDDLRecordService(DDLRecordService ddlRecordService) {
-		super.setDDLRecordService(ddlRecordService);
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		super.setDDMStructureService(ddmStructureService);
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setKaleoDraftDefinitionService(
-		KaleoDraftDefinitionService kaleoDraftDefinitionService) {
-
-		super.setKaleoDraftDefinitionService(kaleoDraftDefinitionService);
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setKaleoProcessService(
-		KaleoProcessService kaleoProcessService) {
-
-		super.setKaleoProcessService(kaleoProcessService);
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setWorkflowDefinitionLinkLocalService(
-		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
-
-		super.setWorkflowDefinitionLinkLocalService(
-			workflowDefinitionLinkLocalService);
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setWorkflowInstanceLinkLocalService(
-		WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService) {
-
-		super.setWorkflowInstanceLinkLocalService(
-			workflowInstanceLinkLocalService);
 	}
 
 }

@@ -16,14 +16,27 @@ package com.liferay.workflow.kaleo.forms.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.BaseLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.service.BaseLocalService;
-import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import com.liferay.workflow.kaleo.forms.model.KaleoProcessLink;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for KaleoProcessLink. Methods of this
@@ -47,9 +60,8 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoProcessLinkLocalServiceUtil} to access the kaleo process link local service. Add custom service methods to {@link com.liferay.workflow.kaleo.forms.service.impl.KaleoProcessLinkLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink addKaleoProcessLink(
-		long kaleoProcessId, java.lang.String workflowTaskName,
-		long ddmTemplateId);
+	public KaleoProcessLink addKaleoProcessLink(long kaleoProcessId,
+		java.lang.String workflowTaskName, long ddmTemplateId);
 
 	/**
 	* Adds the kaleo process link to the database. Also notifies the appropriate model listeners.
@@ -57,9 +69,9 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @param kaleoProcessLink the kaleo process link
 	* @return the kaleo process link that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink addKaleoProcessLink(
-		com.liferay.workflow.kaleo.forms.model.KaleoProcessLink kaleoProcessLink);
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoProcessLink addKaleoProcessLink(
+		KaleoProcessLink kaleoProcessLink);
 
 	/**
 	* Creates a new kaleo process link with the primary key. Does not add the kaleo process link to the database.
@@ -67,8 +79,7 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @param kaleoProcessLinkId the primary key for the new kaleo process link
 	* @return the new kaleo process link
 	*/
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink createKaleoProcessLink(
-		long kaleoProcessLinkId);
+	public KaleoProcessLink createKaleoProcessLink(long kaleoProcessLinkId);
 
 	/**
 	* Deletes the kaleo process link from the database. Also notifies the appropriate model listeners.
@@ -76,9 +87,9 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @param kaleoProcessLink the kaleo process link
 	* @return the kaleo process link that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink deleteKaleoProcessLink(
-		com.liferay.workflow.kaleo.forms.model.KaleoProcessLink kaleoProcessLink);
+	@Indexable(type = IndexableType.DELETE)
+	public KaleoProcessLink deleteKaleoProcessLink(
+		KaleoProcessLink kaleoProcessLink);
 
 	/**
 	* Deletes the kaleo process link with the primary key from the database. Also notifies the appropriate model listeners.
@@ -87,9 +98,9 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @return the kaleo process link that was removed
 	* @throws PortalException if a kaleo process link with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink deleteKaleoProcessLink(
-		long kaleoProcessLinkId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public KaleoProcessLink deleteKaleoProcessLink(long kaleoProcessLinkId)
+		throws PortalException;
 
 	public void deleteKaleoProcessLinks(long kaleoProcessId);
 
@@ -97,11 +108,10 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -109,8 +119,7 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -124,8 +133,7 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -141,10 +149,8 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -152,8 +158,7 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -162,23 +167,21 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink fetchKaleoProcessLink(
-		long kaleoProcessId, java.lang.String workflowTaskName);
+	public KaleoProcessLink fetchKaleoProcessLink(long kaleoProcessId,
+		java.lang.String workflowTaskName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink fetchKaleoProcessLink(
-		long kaleoProcessLinkId);
+	public KaleoProcessLink fetchKaleoProcessLink(long kaleoProcessLinkId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the kaleo process link with the primary key.
@@ -188,12 +191,11 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @throws PortalException if a kaleo process link with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink getKaleoProcessLink(
-		long kaleoProcessLinkId) throws PortalException;
+	public KaleoProcessLink getKaleoProcessLink(long kaleoProcessLinkId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.workflow.kaleo.forms.model.KaleoProcessLink> getKaleoProcessLinks(
-		long kaleoProcessId);
+	public List<KaleoProcessLink> getKaleoProcessLinks(long kaleoProcessId);
 
 	/**
 	* Returns a range of all the kaleo process links.
@@ -207,8 +209,7 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @return the range of kaleo process links
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.workflow.kaleo.forms.model.KaleoProcessLink> getKaleoProcessLinks(
-		int start, int end);
+	public List<KaleoProcessLink> getKaleoProcessLinks(int start, int end);
 
 	/**
 	* Returns the number of kaleo process links.
@@ -227,12 +228,11 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
-		long kaleoProcessId, java.lang.String workflowTaskName,
-		long ddmTemplateId);
+	public KaleoProcessLink updateKaleoProcessLink(long kaleoProcessId,
+		java.lang.String workflowTaskName, long ddmTemplateId);
 
 	/**
 	* Updates the kaleo process link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -240,15 +240,14 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	* @param kaleoProcessLink the kaleo process link
 	* @return the kaleo process link that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
-		com.liferay.workflow.kaleo.forms.model.KaleoProcessLink kaleoProcessLink);
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoProcessLink updateKaleoProcessLink(
+		KaleoProcessLink kaleoProcessLink);
 
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
-		long kaleoProcessLinkId, long kaleoProcessId) throws PortalException;
+	public KaleoProcessLink updateKaleoProcessLink(long kaleoProcessLinkId,
+		long kaleoProcessId) throws PortalException;
 
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
-		long kaleoProcessLinkId, long kaleoProcessId,
-		java.lang.String workflowTaskName, long ddmTemplateId)
-		throws PortalException;
+	public KaleoProcessLink updateKaleoProcessLink(long kaleoProcessLinkId,
+		long kaleoProcessId, java.lang.String workflowTaskName,
+		long ddmTemplateId) throws PortalException;
 }

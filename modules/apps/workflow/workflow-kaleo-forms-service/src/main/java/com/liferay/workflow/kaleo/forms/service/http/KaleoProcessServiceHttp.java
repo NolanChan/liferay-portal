@@ -19,9 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.service.http.TunnelUtil;
 
 import com.liferay.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
 
@@ -62,7 +62,7 @@ public class KaleoProcessServiceHttp {
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
 		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KaleoProcessServiceUtil.class,
@@ -221,7 +221,7 @@ public class KaleoProcessServiceHttp {
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
 		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KaleoProcessServiceUtil.class,
@@ -260,7 +260,7 @@ public class KaleoProcessServiceHttp {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			long.class, java.lang.String.class, int.class,
 			com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteKaleoProcessParameterTypes1 = new Class[] {
 			long.class
@@ -279,6 +279,6 @@ public class KaleoProcessServiceHttp {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			long.class, java.lang.String.class, int.class,
 			com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

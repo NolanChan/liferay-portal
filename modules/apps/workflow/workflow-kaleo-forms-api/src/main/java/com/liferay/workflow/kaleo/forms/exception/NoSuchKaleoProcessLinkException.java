@@ -14,7 +14,7 @@
 
 package com.liferay.workflow.kaleo.forms.exception;
 
-import com.liferay.portal.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Marcellus Tavares

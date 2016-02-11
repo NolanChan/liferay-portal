@@ -16,10 +16,10 @@ package com.liferay.workflow.kaleo.forms.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import com.liferay.workflow.kaleo.forms.model.KaleoProcessLink;
 
@@ -103,8 +103,10 @@ public class KaleoProcessLinkCacheModel implements CacheModel<KaleoProcessLink>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoProcessLinkId = objectInput.readLong();
+
 		kaleoProcessId = objectInput.readLong();
 		workflowTaskName = objectInput.readUTF();
+
 		DDMTemplateId = objectInput.readLong();
 	}
 
@@ -112,6 +114,7 @@ public class KaleoProcessLinkCacheModel implements CacheModel<KaleoProcessLink>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(kaleoProcessLinkId);
+
 		objectOutput.writeLong(kaleoProcessId);
 
 		if (workflowTaskName == null) {
