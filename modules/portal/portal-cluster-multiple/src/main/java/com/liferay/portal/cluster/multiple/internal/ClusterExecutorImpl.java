@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalInetSocketAddressEventListener;
+import com.liferay.portal.kernel.util.PortalInetSocketAddressEventListener;
 
 import java.io.Serializable;
 
