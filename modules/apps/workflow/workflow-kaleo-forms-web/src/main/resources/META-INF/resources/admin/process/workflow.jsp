@@ -201,6 +201,7 @@ if (Validator.isNotNull(workflowDefinition)) {
 			</liferay-ui:search-container-row>
 		</c:otherwise>
 	</c:choose>
+
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 

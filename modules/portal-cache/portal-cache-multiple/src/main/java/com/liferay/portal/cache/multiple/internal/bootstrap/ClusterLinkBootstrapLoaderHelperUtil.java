@@ -398,7 +398,8 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 					for (String portalCacheName : _portalCacheNames) {
 						PortalCache<Serializable, Serializable> portalCache =
 							(PortalCache<Serializable, Serializable>)
-							portalCacheManager.getPortalCache(portalCacheName);
+								portalCacheManager.getPortalCache(
+									portalCacheName);
 
 						if (portalCache == null) {
 							_skipBootstrapLoaderThreadLocal.set(Boolean.TRUE);
