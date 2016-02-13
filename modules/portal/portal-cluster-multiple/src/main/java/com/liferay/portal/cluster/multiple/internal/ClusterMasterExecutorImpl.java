@@ -99,19 +99,18 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			return new NoticeableFutureConverter<T, ClusterNodeResponses>(
 				_clusterExecutorImpl.execute(clusterRequest)) {
 
-					@Override
-					protected T convert(
-							ClusterNodeResponses clusterNodeResponses)
-						throws Exception {
+				@Override
+				protected T convert(ClusterNodeResponses clusterNodeResponses)
+					throws Exception {
 
-						ClusterNodeResponse clusterNodeResponse =
-							clusterNodeResponses.getClusterResponse(
-								masterClusterNodeId);
+					ClusterNodeResponse clusterNodeResponse =
+						clusterNodeResponses.getClusterResponse(
+							masterClusterNodeId);
 
-						return (T)clusterNodeResponse.getResult();
-					}
+					return (T)clusterNodeResponse.getResult();
+				}
 
-				};
+			};
 		}
 		catch (Exception e) {
 			throw new SystemException(

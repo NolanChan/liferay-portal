@@ -426,9 +426,9 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 			@Override
 			public void run() {
 				try (CaptureHandler captureHandler =
-					JDKLoggerTestUtil.configureJDKLogger(
-						ClusterMasterExecutorImpl.class.getName(),
-						Level.INFO)) {
+						JDKLoggerTestUtil.configureJDKLogger(
+							ClusterMasterExecutorImpl.class.getName(),
+							Level.INFO)) {
 
 					Assert.assertEquals(
 						_TEST_CLUSTER_NODE_ID,
@@ -483,8 +483,9 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 			@Override
 			public void run() {
 				try (CaptureHandler captureHandler =
-					JDKLoggerTestUtil.configureJDKLogger(
-						ClusterMasterExecutorImpl.class.getName(), Level.OFF)) {
+						JDKLoggerTestUtil.configureJDKLogger(
+							ClusterMasterExecutorImpl.class.getName(),
+							Level.OFF)) {
 
 					Assert.assertEquals(
 						_TEST_CLUSTER_NODE_ID,

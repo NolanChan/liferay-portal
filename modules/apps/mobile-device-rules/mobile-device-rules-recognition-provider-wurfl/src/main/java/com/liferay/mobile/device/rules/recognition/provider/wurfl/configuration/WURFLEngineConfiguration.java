@@ -15,7 +15,7 @@ package com.liferay.mobile.device.rules.recognition.provider.wurfl.configuration
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Michael C. Han
