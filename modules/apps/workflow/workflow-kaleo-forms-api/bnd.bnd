@@ -7,4 +7,6 @@ Export-Package:\
 	com.liferay.workflow.kaleo.forms.model,\
 	com.liferay.workflow.kaleo.forms.service,\
 	com.liferay.workflow.kaleo.forms.service.persistence
-Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Kaleo Forms
+-include: ../../../../marketplace/business-productivity/bnd.bnd

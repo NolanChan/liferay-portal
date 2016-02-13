@@ -2,10 +2,6 @@ Bundle-Name: Liferay Workflow Kaleo Designer Web
 Bundle-SymbolicName: com.liferay.workflow.kaleo.designer.web
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.workflow.kaleo.designer.web.constants
-Import-Package:\
-	com.liferay.workflow.kaleo.designer.constants,\
-	com.liferay.workflow.kaleo.designer.exception,\
-	com.liferay.workflow.kaleo.designer.model,\
-	com.liferay.workflow.kaleo.designer.service.permission,\
-	com.liferay.workflow.kaleo.designer.util,\
-	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Kaleo Designer
+-include: ../../../../marketplace/business-productivity/bnd.bnd
