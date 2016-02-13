@@ -53,7 +53,8 @@ public class KaleoDraftDefinitionServiceUtil {
 	}
 
 	public static void deleteKaleoDraftDefinitions(java.lang.String name,
-		int version, com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		int version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteKaleoDraftDefinitions(name, version, serviceContext);
 	}

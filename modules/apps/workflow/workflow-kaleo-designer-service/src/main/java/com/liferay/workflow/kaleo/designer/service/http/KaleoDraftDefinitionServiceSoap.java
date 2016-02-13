@@ -95,7 +95,8 @@ public class KaleoDraftDefinitionServiceSoap {
 	}
 
 	public static void deleteKaleoDraftDefinitions(java.lang.String name,
-		int version, com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		int version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			KaleoDraftDefinitionServiceUtil.deleteKaleoDraftDefinitions(name,
@@ -204,7 +205,8 @@ public class KaleoDraftDefinitionServiceSoap {
 		long userId, java.lang.String name,
 		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues, java.lang.String content,
-		int version, com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		int version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,

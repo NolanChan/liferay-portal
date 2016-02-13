@@ -111,7 +111,8 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 	}
 
 	public static void deleteKaleoDraftDefinitions(java.lang.String name,
-		int version, com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		int version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteKaleoDraftDefinitions(name, version, serviceContext);
 	}
@@ -273,7 +274,8 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 	}
 
 	public static int getKaleoDraftDefinitionsCount(java.lang.String name,
-		int version, com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		int version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .getKaleoDraftDefinitionsCount(name, version, serviceContext);
 	}

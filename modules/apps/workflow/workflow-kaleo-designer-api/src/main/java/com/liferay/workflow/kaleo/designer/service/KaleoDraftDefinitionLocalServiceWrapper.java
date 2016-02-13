@@ -289,7 +289,8 @@ public class KaleoDraftDefinitionLocalServiceWrapper
 
 	@Override
 	public int getKaleoDraftDefinitionsCount(java.lang.String name,
-		int version, com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		int version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return _kaleoDraftDefinitionLocalService.getKaleoDraftDefinitionsCount(name,
 			version, serviceContext);
 	}
