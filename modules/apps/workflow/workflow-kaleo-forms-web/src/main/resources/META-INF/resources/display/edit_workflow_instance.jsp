@@ -45,25 +45,25 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + ddlRecord
 	title="<%= headerTitle %>"
 />
 
-<aui:layout>
-	<aui:column columnWidth="<%= 75 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
-		<aui:layout>
-			<aui:column columnWidth="<%= 60 %>">
+<aui:row>
+	<aui:col columnWidth="<%= 75 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
+		<aui:row>
+			<aui:col columnWidth="<%= 60 %>">
 				<div class="lfr-asset-status">
 					<aui:field-wrapper label="state">
 						<%= LanguageUtil.get(request, HtmlUtil.escape(workflowInstance.getState())) %>
 					</aui:field-wrapper>
 				</div>
-			</aui:column>
+			</aui:col>
 
-			<aui:column>
+			<aui:col>
 				<div class="lfr-asset-date">
 					<aui:field-wrapper label="end-date">
 						<%= (workflowInstance.getEndDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowInstance.getEndDate()) %>
 					</aui:field-wrapper>
 				</div>
-			</aui:column>
-		</aui:layout>
+			</aui:col>
+		</aui:row>
 
 		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>" id="preview">
 			<liferay-ui:panel extended="<%= false %>" markupView="lexicon" title="current-entry">
@@ -158,6 +158,7 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + ddlRecord
 								path="/display/workflow_task_action.jsp"
 							/>
 						</liferay-ui:search-container-row>
+
 						<liferay-ui:search-iterator />
 					</liferay-ui:search-container>
 				</liferay-ui:panel>
@@ -249,9 +250,9 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + ddlRecord
 
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>
-	</aui:column>
+	</aui:col>
 
-	<aui:column columnWidth="<%= 25 %>" cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>">
+	<aui:col columnWidth="<%= 25 %>" cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>">
 		<div class="lfr-asset-summary">
 			<liferay-ui:icon
 				cssClass="lfr-asset-avatar"
@@ -269,8 +270,8 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + ddlRecord
 		%>
 
 		<liferay-util:include page="/display/workflow_instance_action.jsp" servletContext="<%= application %>" />
-	</aui:column>
-</aui:layout>
+	</aui:col>
+</aui:row>
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, headerTitle, currentURL);

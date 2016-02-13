@@ -16,11 +16,12 @@
 
 <%@ include file="/display/init.jsp" %>
 
-<aui:layout>
-	<aui:column columnWidth="<%= 25 %>" first="<%= true %>">
+<aui:row>
+	<aui:col columnWidth="<%= 25 %>" first="<%= true %>">
 		<%@ include file="/display/navigation.jspf" %>
-	</aui:column>
-	<aui:column columnWidth="<%= 75 %>" last="<%= true %>">
+	</aui:col>
+
+	<aui:col columnWidth="<%= 75 %>" last="<%= true %>">
 		<%@ include file="/display/content.jspf" %>
-	</aui:column>
-</aui:layout>
+	</aui:col>
+</aui:row>
