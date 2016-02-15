@@ -3,11 +3,16 @@ Bundle-SymbolicName: com.liferay.portal.cluster.multiple
 Bundle-Version: 1.0.0
 DynamicImport-Package: *
 Import-Package:\
-	!bsf.*,\
-	!bsh.*,\
 	!COM.ibm.netrexx.*,\
+	\
+	!bsf.*,\
+	\
+	!bsh.*,\
+	\
 	!netrexx.*,\
+	\
 	!org.apache.logging.*,\
+	\
 	!org.mozilla.javascript.*,\
 	*
 Include-Resource:\

@@ -15,13 +15,17 @@ Export-Package:\
 	net.sf.ehcache.util
 Import-Package:\
 	!com.google.*,\
+	\
 	!com.tc.*,\
+	\
 	!org.quartz,\
 	!org.quartz.impl,\
 	!org.quartz.impl.jdbcjobstore,\
 	!org.quartz.impl.matchers,\
 	!org.quartz.simpl,\
+	\
 	!org.terracotta.quartz,\
+	\
 	!sun.misc,\
 	*
 Include-Resource:\

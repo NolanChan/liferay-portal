@@ -3,8 +3,10 @@ Bundle-SymbolicName: com.liferay.mobile.device.rules.recognition.provider.wurfl
 Bundle-Version: 1.0.0
 Import-Package:\
 	!com.liferay.util.portlet,\
+	\
 	!net.sf.ehcache,\
 	!net.sf.jsr107cache,\
+	\
 	!org.joda.time.*,\
 	*
 Include-Resource:\
