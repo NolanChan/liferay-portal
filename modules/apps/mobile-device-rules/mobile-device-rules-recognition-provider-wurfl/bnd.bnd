@@ -10,8 +10,6 @@ Import-Package:\
 	!org.joda.time.*,\
 	*
 Include-Resource:\
-	classes,\
 	@lib/jackson-core-asl.jar,\
 	@lib/jackson-mapper-asl.jar,\
-	@lib/wurfl-1.6.0.jar,\
-	META-INF/resources=src/main/resources/META-INF/resources
+	@lib/wurfl-1.6.0.jar
