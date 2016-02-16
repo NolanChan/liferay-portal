@@ -78,6 +78,10 @@ public class SQLServerUpgradeOptimizedResultSetHandler
 			return _resultSet.getMetaData();
 		}
 
+		if (methodName.equals("getStatement")) {
+			return _resultSet.getStatement();
+		}
+
 		if (methodName.equals("next")) {
 			if (_resultSet.isBeforeFirst()) {
 				_next = _resultSet.next();
