@@ -15,9 +15,8 @@
 package com.liferay.portal.search.elasticsearch.shield.internal;
 
 import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
+import com.liferay.portal.search.elasticsearch.settings.ClientSettingsHelper;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
-
-import org.elasticsearch.common.settings.Settings.Builder;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,8 +34,8 @@ public class ShieldEmbeddedSettingsContributor extends BaseSettingsContributor {
 	}
 
 	@Override
-	public void populate(Builder builder) {
-		builder.put("shield.enabled", false);
+	public void populate(ClientSettingsHelper clientSettingsHelper) {
+		clientSettingsHelper.put("shield.enabled", "false");
 	}
 
 }

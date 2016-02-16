@@ -14,19 +14,18 @@
 
 package com.liferay.portal.search.elasticsearch.shield.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
-import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
-import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
-import com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration;
-
 import java.util.Map;
-
-import org.elasticsearch.common.settings.Settings.Builder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
+import com.liferay.portal.search.elasticsearch.settings.ClientSettingsHelper;
+import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
+import com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration;
 
 /**
  * @author André de Oliveira
@@ -43,16 +42,18 @@ public class ShieldRemoteSettingsContributor extends BaseSettingsContributor {
 	}
 
 	@Override
-	public void populate(Builder builder) {
+	public void populate(ClientSettingsHelper clientSettingsHelper) {
 		if (!shieldConfiguration.requiresAuthentication()) {
 			return;
 		}
 
+		/*
 		builder.extendArray(
 			"plugin.types", "org.elasticsearch.shield.ShieldPlugin");
+		*/
 
-		configureAuthentication(builder);
-		configureSSL(builder);
+		configureAuthentication(clientSettingsHelper);
+		configureSSL(clientSettingsHelper);
 	}
 
 	@Activate
@@ -62,32 +63,34 @@ public class ShieldRemoteSettingsContributor extends BaseSettingsContributor {
 			ShieldConfiguration.class, properties);
 	}
 
-	protected void configureAuthentication(Builder builder) {
+	protected void configureAuthentication(
+		ClientSettingsHelper clientSettingsHelper) {
+
 		String user =
 			shieldConfiguration.username() + ":" +
 				shieldConfiguration.password();
 
-		builder.put("shield.user", user);
+		clientSettingsHelper.put("shield.user", user);
 	}
 
-	protected void configureSSL(Builder builder) {
+	protected void configureSSL(ClientSettingsHelper clientSettingsHelper) {
 		if (!shieldConfiguration.requiresSSL()) {
 			return;
 		}
 
-		builder.put("shield.http.ssl", "true");
-		builder.put(
+		clientSettingsHelper.put("shield.http.ssl", "true");
+		clientSettingsHelper.put(
 			"shield.ssl.keystore.path", shieldConfiguration.sslKeystorePath());
-		builder.put(
+		clientSettingsHelper.put(
 			"shield.ssl.keystore.password",
 			shieldConfiguration.sslKeystorePassword());
-		builder.put("shield.transport.ssl", "true");
+		clientSettingsHelper.put("shield.transport.ssl", "true");
 
 		String sslKeystoreKeyPassword =
 			shieldConfiguration.sslKeystoreKeyPassword();
 
 		if (sslKeystoreKeyPassword != null) {
-			builder.put(
+			clientSettingsHelper.put(
 				"shield.ssl.keystore.key_password", sslKeystoreKeyPassword);
 		}
 	}
