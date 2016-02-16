@@ -5,4 +5,4 @@ Fragment-Host: com.liferay.portal.search.elasticsearch
 Import-Package: !*
 Include-Resource:\
 	classes,\
-	@lib/shield-2.0.0.jar
+	@lib/shield-2.2.0.jar
