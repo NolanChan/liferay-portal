@@ -175,7 +175,8 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	}
 
 	@Override
-	public int compareTo(com.liferay.portal.security.audit.persistence.model.AuditEvent auditEvent) {
+	public int compareTo(
+		com.liferay.portal.security.audit.persistence.model.AuditEvent auditEvent) {
 		return _auditEvent.compareTo(auditEvent);
 	}
 

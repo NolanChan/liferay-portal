@@ -16,17 +16,19 @@ package com.liferay.portal.security.audit.persistence.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.security.audit.persistence.model.AuditEvent;
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.portal.security.audit.persistence.model.AuditEvent;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
 /**
- * The persistence utility for the audit event service. This utility wraps {@link com.liferay.portal.audit.service.persistence.impl.AuditEventPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the audit event service. This utility wraps {@link com.liferay.portal.security.audit.persistence.service.persistence.impl.AuditEventPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -34,7 +36,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see AuditEventPersistence
- * @see com.liferay.portal.audit.service.persistence.impl.AuditEventPersistenceImpl
+ * @see com.liferay.portal.security.audit.persistence.service.persistence.impl.AuditEventPersistenceImpl
  * @generated
  */
 @ProviderType
@@ -417,16 +419,9 @@ public class AuditEventUtil {
 	}
 
 	public static AuditEventPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (AuditEventPersistence)PortletBeanLocatorUtil.locate(com.liferay.portal.security.audit.persistence.service.ClpSerializer.getServletContextName(),
-					AuditEventPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(AuditEventUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
-	private static AuditEventPersistence _persistence;
+	private static ServiceTracker<AuditEventPersistence, AuditEventPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(AuditEventPersistence.class);
 }

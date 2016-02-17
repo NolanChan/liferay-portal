@@ -21,21 +21,21 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
- * The extended model interface for the AuditEvent service. Represents a row in the &quot;Audit_AuditEvent&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the AuditEvent service. Represents a row in the &quot;AuditEvent&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see AuditEventModel
- * @see com.liferay.portal.audit.model.impl.AuditEventImpl
- * @see com.liferay.portal.audit.model.impl.AuditEventModelImpl
+ * @see com.liferay.portal.security.audit.persistence.model.impl.AuditEventImpl
+ * @see com.liferay.portal.security.audit.persistence.model.impl.AuditEventModelImpl
  * @generated
  */
-@ImplementationClassName("com.liferay.portal.audit.model.impl.AuditEventImpl")
+@ImplementationClassName("com.liferay.portal.security.audit.persistence.model.impl.AuditEventImpl")
 @ProviderType
 public interface AuditEvent extends AuditEventModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.audit.model.impl.AuditEventImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.security.audit.persistence.model.impl.AuditEventImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<AuditEvent, Long> AUDIT_EVENT_ID_ACCESSOR = new Accessor<AuditEvent, Long>() {
 			@Override

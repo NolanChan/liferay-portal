@@ -16,9 +16,9 @@ package com.liferay.portal.security.audit.persistence.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.security.audit.persistence.exception.NoSuchEventException;
 import com.liferay.portal.security.audit.persistence.model.AuditEvent;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * The persistence interface for the audit event service.
@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.portal.audit.service.persistence.impl.AuditEventPersistenceImpl
+ * @see com.liferay.portal.security.audit.persistence.service.persistence.impl.AuditEventPersistenceImpl
  * @see AuditEventUtil
  * @generated
  */
