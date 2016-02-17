@@ -12,27 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.audit.hook.security.auth;
+package com.liferay.portal.security.audit.security.auth;
 
-import com.liferay.portal.audit.util.EventTypes;
 import com.liferay.portal.kernel.audit.AuditException;
 import com.liferay.portal.kernel.audit.AuditMessage;
-import com.liferay.portal.kernel.audit.AuditRouterUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.audit.AuditRouter;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.AuthFailure;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.security.audit.util.EventTypes;
 
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = {"key=auth.failure"},
+	service = AuthFailure.class
+)
 public class LoginFailure implements AuthFailure {
 
 	@Override
@@ -41,13 +48,13 @@ public class LoginFailure implements AuthFailure {
 		Map<String, String[]> parameterMap) {
 
 		try {
-			User user = UserLocalServiceUtil.getUserByEmailAddress(
+			User user = _userLocalService.getUserByEmailAddress(
 				companyId, emailAddress);
 
 			AuditMessage auditMessage = buildAuditMessage(
 				user, headerMap, "Failed to authenticate by email address");
 
-			AuditRouterUtil.route(auditMessage);
+			_auditRouter.route(auditMessage);
 		}
 		catch (AuditException ae) {
 			if (_log.isWarnEnabled()) {
@@ -64,13 +71,13 @@ public class LoginFailure implements AuthFailure {
 		Map<String, String[]> parameterMap) {
 
 		try {
-			User user = UserLocalServiceUtil.getUserByScreenName(
+			User user = _userLocalService.getUserByScreenName(
 				companyId, screenName);
 
 			AuditMessage auditMessage = buildAuditMessage(
 				user, headerMap, "Failed to authenticate by screen name");
 
-			AuditRouterUtil.route(auditMessage);
+			_auditRouter.route(auditMessage);
 		}
 		catch (AuditException ae) {
 			if (_log.isWarnEnabled()) {
@@ -78,6 +85,9 @@ public class LoginFailure implements AuthFailure {
 			}
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 	}
 
@@ -87,12 +97,12 @@ public class LoginFailure implements AuthFailure {
 		Map<String, String[]> parameterMap) {
 
 		try {
-			User user = UserLocalServiceUtil.getUserById(companyId, userId);
+			User user = _userLocalService.getUserById(companyId, userId);
 
 			AuditMessage auditMessage = buildAuditMessage(
 				user, headerMap, "Failed to authenticate by user id");
 
-			AuditRouterUtil.route(auditMessage);
+			_auditRouter.route(auditMessage);
 		}
 		catch (AuditException ae) {
 			if (_log.isWarnEnabled()) {
@@ -100,15 +110,18 @@ public class LoginFailure implements AuthFailure {
 			}
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 	}
 
 	protected AuditMessage buildAuditMessage(
 		User user, Map<String, String[]> headerMap, String reason) {
 
-		JSONObject additionalInfo = JSONFactoryUtil.createJSONObject();
+		JSONObject additionalInfo = _jsonFactory.createJSONObject();
 
-		additionalInfo.put("headers", JSONFactoryUtil.serialize(headerMap));
+		additionalInfo.put("headers", _jsonFactory.serialize(headerMap));
 		additionalInfo.put("reason", reason);
 
 		AuditMessage auditMessage = new AuditMessage(
@@ -119,6 +132,15 @@ public class LoginFailure implements AuthFailure {
 		return auditMessage;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LoginFailure.class);
+	private static final Log _log = LogFactoryUtil.getLog(LoginFailure.class);
+
+	@Reference
+	private AuditRouter _auditRouter;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

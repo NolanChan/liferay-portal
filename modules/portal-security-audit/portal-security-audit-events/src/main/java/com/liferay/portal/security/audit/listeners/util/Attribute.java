@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.audit.hook.listeners.util;
+package com.liferay.portal.security.audit.listeners.util;
 
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -44,8 +44,8 @@ public class Attribute {
 		return _oldValue;
 	}
 
-	private String _name;
-	private String _newValue;
-	private String _oldValue;
+	private final String _name;
+	private final String _newValue;
+	private final String _oldValue;
 
 }

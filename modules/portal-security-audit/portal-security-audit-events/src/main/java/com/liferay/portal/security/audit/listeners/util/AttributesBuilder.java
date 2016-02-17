@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.audit.hook.listeners.util;
+package com.liferay.portal.security.audit.listeners.util;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -47,8 +47,8 @@ public class AttributesBuilder {
 		return _attributes;
 	}
 
-	private List<Attribute> _attributes = new ArrayList<Attribute>();
-	private Object _newBean;
-	private Object _oldBean;
+	private final List<Attribute> _attributes = new ArrayList<>();
+	private final Object _newBean;
+	private final Object _oldBean;
 
 }

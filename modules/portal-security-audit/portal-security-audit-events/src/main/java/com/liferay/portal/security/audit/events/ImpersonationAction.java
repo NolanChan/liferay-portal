@@ -12,29 +12,37 @@
  * details.
  */
 
-package com.liferay.portal.audit.hook.events;
+package com.liferay.portal.security.audit.events;
 
-import com.liferay.portal.audit.util.EventTypes;
 import com.liferay.portal.kernel.audit.AuditMessage;
-import com.liferay.portal.kernel.audit.AuditRouterUtil;
+import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.audit.util.EventTypes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = {"key=servlet.service.events.pre"},
+	service = LifecycleAction.class
+)
 public class ImpersonationAction extends Action {
 
 	@Override
@@ -77,7 +85,7 @@ public class ImpersonationAction extends Action {
 			if (impersonatingUser == null) {
 				session.setAttribute(_IMPERSONATING_USER, Boolean.TRUE);
 
-				JSONObject additionalInfo = JSONFactoryUtil.createJSONObject();
+				JSONObject additionalInfo = _jsonFactory.createJSONObject();
 
 				additionalInfo.put("userId", user.getUserId());
 				additionalInfo.put("userName", user.getFullName());
@@ -88,7 +96,7 @@ public class ImpersonationAction extends Action {
 					User.class.getName(), String.valueOf(user.getUserId()),
 					null, additionalInfo);
 
-				AuditRouterUtil.route(auditMessage);
+				_auditRouter.route(auditMessage);
 			}
 		}
 		else if (impersonatingUser != null) {
@@ -98,5 +106,11 @@ public class ImpersonationAction extends Action {
 
 	private static final String _IMPERSONATING_USER =
 		ImpersonationAction.class + ".IMPERSONATING_USER";
+
+	@Reference
+	private AuditRouter _auditRouter;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

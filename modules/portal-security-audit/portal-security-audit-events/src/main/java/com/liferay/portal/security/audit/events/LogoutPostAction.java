@@ -12,24 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.audit.hook.events;
+package com.liferay.portal.security.audit.events;
 
-import com.liferay.portal.audit.util.EventTypes;
 import com.liferay.portal.kernel.audit.AuditMessage;
-import com.liferay.portal.kernel.audit.AuditRouterUtil;
+import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.security.audit.util.EventTypes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = {"key=logout.events.post"},
+	service = LifecycleAction.class
+)
 public class LogoutPostAction extends Action {
 
 	@Override
@@ -48,7 +56,7 @@ public class LogoutPostAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		User user = PortalUtil.getUser(request);
+		User user = _portal.getUser(request);
 
 		if (user == null) {
 			return;
@@ -59,7 +67,13 @@ public class LogoutPostAction extends Action {
 			user.getFullName(), User.class.getName(),
 			String.valueOf(user.getUserId()));
 
-		AuditRouterUtil.route(auditMessage);
+		_auditRouter.route(auditMessage);
 	}
+
+	@Reference
+	private AuditRouter _auditRouter;
+
+	@Reference
+	private Portal _portal;
 
 }

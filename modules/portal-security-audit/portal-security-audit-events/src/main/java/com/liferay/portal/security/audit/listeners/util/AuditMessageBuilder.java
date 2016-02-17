@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.audit.hook.listeners.util;
+package com.liferay.portal.security.audit.listeners.util;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
@@ -49,6 +49,7 @@ public class AuditMessageBuilder {
 			AuditRequestThreadLocal.getAuditThreadLocal();
 
 		long realUserId = auditRequestThreadLocal.getRealUserId();
+
 		String realUserName = PortalUtil.getUserName(
 			realUserId, StringPool.BLANK);
 

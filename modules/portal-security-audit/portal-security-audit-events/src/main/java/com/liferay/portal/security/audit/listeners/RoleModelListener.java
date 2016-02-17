@@ -12,30 +12,35 @@
  * details.
  */
 
-package com.liferay.portal.audit.hook.listeners;
+package com.liferay.portal.security.audit.listeners;
 
-import com.liferay.portal.audit.hook.listeners.util.Attribute;
-import com.liferay.portal.audit.hook.listeners.util.AttributesBuilder;
-import com.liferay.portal.audit.hook.listeners.util.AuditMessageBuilder;
-import com.liferay.portal.audit.util.EventTypes;
 import com.liferay.portal.kernel.audit.AuditMessage;
-import com.liferay.portal.kernel.audit.AuditRouterUtil;
+import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.security.audit.listeners.util.Attribute;
+import com.liferay.portal.security.audit.listeners.util.AttributesBuilder;
+import com.liferay.portal.security.audit.listeners.util.AuditMessageBuilder;
+import com.liferay.portal.security.audit.util.EventTypes;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = ModelListener.class)
 public class RoleModelListener extends BaseModelListener<Role> {
 
 	@Override
@@ -70,7 +75,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 
 	public void onBeforeUpdate(Role newRole) throws ModelListenerException {
 		try {
-			Role oldRole = RoleLocalServiceUtil.getRole(newRole.getRoleId());
+			Role oldRole = _roleLocalService.getRole(newRole.getRoleId());
 
 			List<Attribute> attributes = getModifiedAttributes(
 				newRole, oldRole);
@@ -81,7 +86,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 						EventTypes.UPDATE, Role.class.getName(),
 						newRole.getRoleId(), attributes);
 
-				AuditRouterUtil.route(auditMessage);
+				_auditRouter.route(auditMessage);
 			}
 		}
 		catch (Exception e) {
@@ -107,7 +112,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			if (associationClassName.equals(Group.class.getName())) {
 				long groupId = (Long)associationClassPK;
 
-				Group group = GroupLocalServiceUtil.getGroup(groupId);
+				Group group = _groupLocalService.getGroup(groupId);
 
 				auditMessage = AuditMessageBuilder.buildAuditMessage(
 					eventType, group.getClassName(), group.getClassPK(), null);
@@ -124,11 +129,11 @@ public class RoleModelListener extends BaseModelListener<Role> {
 
 			additionalInfo.put("roleId", roleId);
 
-			Role role = RoleLocalServiceUtil.getRole(roleId);
+			Role role = _roleLocalService.getRole(roleId);
 
 			additionalInfo.put("roleName", role.getName());
 
-			AuditRouterUtil.route(auditMessage);
+			_auditRouter.route(auditMessage);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -142,7 +147,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
 				eventType, Role.class.getName(), role.getRoleId(), null);
 
-			AuditRouterUtil.route(auditMessage);
+			_auditRouter.route(auditMessage);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -162,5 +167,14 @@ public class RoleModelListener extends BaseModelListener<Role> {
 
 		return attributesBuilder.getAttributes();
 	}
+
+	@Reference
+	private AuditRouter _auditRouter;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

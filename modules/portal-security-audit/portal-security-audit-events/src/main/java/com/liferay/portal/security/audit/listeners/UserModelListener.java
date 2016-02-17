@@ -12,26 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.audit.hook.listeners;
+package com.liferay.portal.security.audit.listeners;
 
-import com.liferay.portal.audit.hook.listeners.util.Attribute;
-import com.liferay.portal.audit.hook.listeners.util.AttributesBuilder;
-import com.liferay.portal.audit.hook.listeners.util.AuditMessageBuilder;
-import com.liferay.portal.audit.util.EventTypes;
 import com.liferay.portal.kernel.audit.AuditMessage;
-import com.liferay.portal.kernel.audit.AuditRouterUtil;
+import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.security.audit.listeners.util.Attribute;
+import com.liferay.portal.security.audit.listeners.util.AttributesBuilder;
+import com.liferay.portal.security.audit.listeners.util.AuditMessageBuilder;
+import com.liferay.portal.security.audit.util.EventTypes;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = ModelListener.class)
 public class UserModelListener extends BaseModelListener<User> {
 
 	public void onBeforeCreate(User user) throws ModelListenerException {
@@ -44,7 +49,7 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	public void onBeforeUpdate(User newUser) throws ModelListenerException {
 		try {
-			User oldUser = UserLocalServiceUtil.getUser(newUser.getUserId());
+			User oldUser = _userLocalService.getUser(newUser.getUserId());
 
 			List<Attribute> attributes = getModifiedAttributes(
 				newUser, oldUser);
@@ -55,7 +60,7 @@ public class UserModelListener extends BaseModelListener<User> {
 						EventTypes.UPDATE, User.class.getName(),
 						newUser.getUserId(), attributes);
 
-				AuditRouterUtil.route(auditMessage);
+				_auditRouter.route(auditMessage);
 			}
 		}
 		catch (Exception e) {
@@ -77,7 +82,7 @@ public class UserModelListener extends BaseModelListener<User> {
 			additionalInfo.put("userId", user.getUserId());
 			additionalInfo.put("userName", user.getFullName());
 
-			AuditRouterUtil.route(auditMessage);
+			_auditRouter.route(auditMessage);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -108,5 +113,11 @@ public class UserModelListener extends BaseModelListener<User> {
 
 		return attributes;
 	}
+
+	@Reference
+	private AuditRouter _auditRouter;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

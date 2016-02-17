@@ -12,24 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.audit.hook.listeners;
+package com.liferay.portal.security.audit.listeners;
 
-import com.liferay.portal.audit.hook.listeners.util.AuditMessageBuilder;
-import com.liferay.portal.audit.util.EventTypes;
 import com.liferay.portal.kernel.audit.AuditMessage;
-import com.liferay.portal.kernel.audit.AuditRouterUtil;
+import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.security.audit.listeners.util.AuditMessageBuilder;
+import com.liferay.portal.security.audit.util.EventTypes;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = ModelListener.class)
 public class UserGroupRoleModelListener
 	extends BaseModelListener<UserGroupRole> {
 
@@ -67,11 +72,14 @@ public class UserGroupRoleModelListener
 			additionalInfo.put("scopeClassName", group.getClassName());
 			additionalInfo.put("scopeClassPK", group.getClassPK());
 
-			AuditRouterUtil.route(auditMessage);
+			_auditRouter.route(auditMessage);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
 		}
 	}
+
+	@Reference
+	private AuditRouter _auditRouter;
 
 }
