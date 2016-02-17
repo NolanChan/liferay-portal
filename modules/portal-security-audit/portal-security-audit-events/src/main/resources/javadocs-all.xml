@@ -3,7 +3,7 @@
 <javadocs>
 	<javadoc>
 		<name>ImpersonationAction</name>
-		<type>com.liferay.portal.audit.hook.events.ImpersonationAction</type>
+		<type>com.liferay.portal.security.audit.events.ImpersonationAction</type>
 		<author><![CDATA[Mika Koivisto]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
@@ -48,7 +48,7 @@
 	</javadoc>
 	<javadoc>
 		<name>LoginPostAction</name>
-		<type>com.liferay.portal.audit.hook.events.LoginPostAction</type>
+		<type>com.liferay.portal.security.audit.events.LoginPostAction</type>
 		<author><![CDATA[Bruno Farache]]></author>
 		<author><![CDATA[Mika Koivisto]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
@@ -91,7 +91,7 @@
 	</javadoc>
 	<javadoc>
 		<name>LogoutPostAction</name>
-		<type>com.liferay.portal.audit.hook.events.LogoutPostAction</type>
+		<type>com.liferay.portal.security.audit.events.LogoutPostAction</type>
 		<author><![CDATA[Bruno Farache]]></author>
 		<author><![CDATA[Mika Koivisto]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
@@ -134,19 +134,19 @@
 	</javadoc>
 	<javadoc>
 		<name>AddressListener</name>
-		<type>com.liferay.portal.audit.hook.listeners.AddressListener</type>
+		<type>com.liferay.portal.security.audit.listeners.AddressModelListener</type>
 		<author><![CDATA[Mika Koivisto]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>onBeforeUpdate</name>
 			<param>
 				<name>newAddress</name>
-				<type>com.liferay.portal.model.Address</type>
+				<type>com.liferay.portal.kernel.model.Address</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -154,12 +154,12 @@
 			<name>getModifiedAttributes</name>
 			<param>
 				<name>newAddress</name>
-				<type>com.liferay.portal.model.Address</type>
+				<type>com.liferay.portal.kernel.model.Address</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>oldAddress</name>
-				<type>com.liferay.portal.model.Address</type>
+				<type>com.liferay.portal.kernel.model.Address</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -169,19 +169,19 @@
 	</javadoc>
 	<javadoc>
 		<name>ContactListener</name>
-		<type>com.liferay.portal.audit.hook.listeners.ContactListener</type>
+		<type>com.liferay.portal.security.audit.listeners.ContactListener</type>
 		<author><![CDATA[Mika Koivisto]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>onBeforeUpdate</name>
 			<param>
 				<name>newContact</name>
-				<type>com.liferay.portal.model.Contact</type>
+				<type>com.liferay.portal.kernel.model.Contact</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -189,12 +189,12 @@
 			<name>getModifiedAttributes</name>
 			<param>
 				<name>newContact</name>
-				<type>com.liferay.portal.model.Contact</type>
+				<type>com.liferay.portal.kernel.model.Contact</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>oldContact</name>
-				<type>com.liferay.portal.model.Contact</type>
+				<type>com.liferay.portal.kernel.model.Contact</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -204,7 +204,7 @@
 	</javadoc>
 	<javadoc>
 		<name>RoleListener</name>
-		<type>com.liferay.portal.audit.hook.listeners.RoleListener</type>
+		<type>com.liferay.portal.security.audit.listeners.RoleListener</type>
 		<author><![CDATA[Mika Koivisto]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
@@ -226,7 +226,7 @@
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -234,12 +234,12 @@
 			<name>onBeforeCreate</name>
 			<param>
 				<name>role</name>
-				<type>com.liferay.portal.model.Role</type>
+				<type>com.liferay.portal.kernel.model.Role</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -247,12 +247,12 @@
 			<name>onBeforeRemove</name>
 			<param>
 				<name>role</name>
-				<type>com.liferay.portal.model.Role</type>
+				<type>com.liferay.portal.kernel.model.Role</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -275,7 +275,7 @@
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -283,12 +283,12 @@
 			<name>onBeforeUpdate</name>
 			<param>
 				<name>newRole</name>
-				<type>com.liferay.portal.model.Role</type>
+				<type>com.liferay.portal.kernel.model.Role</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -316,7 +316,7 @@
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -329,12 +329,12 @@
 			</param>
 			<param>
 				<name>role</name>
-				<type>com.liferay.portal.model.Role</type>
+				<type>com.liferay.portal.kernel.model.Role</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -342,12 +342,12 @@
 			<name>getModifiedAttributes</name>
 			<param>
 				<name>newRole</name>
-				<type>com.liferay.portal.model.Role</type>
+				<type>com.liferay.portal.kernel.model.Role</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>oldRole</name>
-				<type>com.liferay.portal.model.Role</type>
+				<type>com.liferay.portal.kernel.model.Role</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -357,7 +357,7 @@
 	</javadoc>
 	<javadoc>
 		<name>UserGroupListener</name>
-		<type>com.liferay.portal.audit.hook.listeners.UserGroupListener</type>
+		<type>com.liferay.portal.security.audit.listeners.UserGroupListener</type>
 		<author><![CDATA[Mika Koivisto]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
@@ -379,7 +379,7 @@
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -387,12 +387,12 @@
 			<name>onBeforeCreate</name>
 			<param>
 				<name>userGroup</name>
-				<type>com.liferay.portal.model.UserGroup</type>
+				<type>com.liferay.portal.kernel.model.UserGroup</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -400,12 +400,12 @@
 			<name>onBeforeRemove</name>
 			<param>
 				<name>userGroup</name>
-				<type>com.liferay.portal.model.UserGroup</type>
+				<type>com.liferay.portal.kernel.model.UserGroup</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -428,7 +428,7 @@
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -436,12 +436,12 @@
 			<name>onBeforeUpdate</name>
 			<param>
 				<name>newUserGroup</name>
-				<type>com.liferay.portal.model.UserGroup</type>
+				<type>com.liferay.portal.kernel.model.UserGroup</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -469,7 +469,7 @@
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -482,12 +482,12 @@
 			</param>
 			<param>
 				<name>userGroup</name>
-				<type>com.liferay.portal.model.UserGroup</type>
+				<type>com.liferay.portal.kernel.model.UserGroup</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -495,12 +495,12 @@
 			<name>getModifiedAttributes</name>
 			<param>
 				<name>newUserGroup</name>
-				<type>com.liferay.portal.model.UserGroup</type>
+				<type>com.liferay.portal.kernel.model.UserGroup</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>oldUserGroup</name>
-				<type>com.liferay.portal.model.UserGroup</type>
+				<type>com.liferay.portal.kernel.model.UserGroup</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -510,19 +510,19 @@
 	</javadoc>
 	<javadoc>
 		<name>UserGroupRoleListener</name>
-		<type>com.liferay.portal.audit.hook.listeners.UserGroupRoleListener</type>
+		<type>com.liferay.portal.security.audit.listeners.UserGroupRoleListener</type>
 		<author><![CDATA[Mika Koivisto]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>onBeforeCreate</name>
 			<param>
 				<name>userGroupRole</name>
-				<type>com.liferay.portal.model.UserGroupRole</type>
+				<type>com.liferay.portal.kernel.model.UserGroupRole</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -530,12 +530,12 @@
 			<name>onBeforeRemove</name>
 			<param>
 				<name>userGroupRole</name>
-				<type>com.liferay.portal.model.UserGroupRole</type>
+				<type>com.liferay.portal.kernel.model.UserGroupRole</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -548,31 +548,31 @@
 			</param>
 			<param>
 				<name>userGroupRole</name>
-				<type>com.liferay.portal.model.UserGroupRole</type>
+				<type>com.liferay.portal.kernel.model.UserGroupRole</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
 	<javadoc>
 		<name>UserListener</name>
-		<type>com.liferay.portal.audit.hook.listeners.UserListener</type>
+		<type>com.liferay.portal.security.audit.listeners.UserListener</type>
 		<author><![CDATA[Mika Koivisto]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>onBeforeCreate</name>
 			<param>
 				<name>user</name>
-				<type>com.liferay.portal.model.User</type>
+				<type>com.liferay.portal.kernel.model.User</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -580,12 +580,12 @@
 			<name>onBeforeRemove</name>
 			<param>
 				<name>user</name>
-				<type>com.liferay.portal.model.User</type>
+				<type>com.liferay.portal.kernel.model.User</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -593,12 +593,12 @@
 			<name>onBeforeUpdate</name>
 			<param>
 				<name>newUser</name>
-				<type>com.liferay.portal.model.User</type>
+				<type>com.liferay.portal.kernel.model.User</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -611,12 +611,12 @@
 			</param>
 			<param>
 				<name>user</name>
-				<type>com.liferay.portal.model.User</type>
+				<type>com.liferay.portal.kernel.model.User</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ModelListenerException</name>
-				<type>com.liferay.portal.ModelListenerException</type>
+				<type>com.liferay.portal.kernel.exception.ModelListenerException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -624,12 +624,12 @@
 			<name>getModifiedAttributes</name>
 			<param>
 				<name>newUser</name>
-				<type>com.liferay.portal.model.User</type>
+				<type>com.liferay.portal.kernel.model.User</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>oldUser</name>
-				<type>com.liferay.portal.model.User</type>
+				<type>com.liferay.portal.kernel.model.User</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -639,7 +639,7 @@
 	</javadoc>
 	<javadoc>
 		<name>Attribute</name>
-		<type>com.liferay.portal.audit.hook.listeners.util.Attribute</type>
+		<type>com.liferay.portal.security.audit.listeners.util.Attribute</type>
 		<author><![CDATA[Mika Koivisto]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
@@ -698,7 +698,7 @@
 	</javadoc>
 	<javadoc>
 		<name>AttributesBuilder</name>
-		<type>com.liferay.portal.audit.hook.listeners.util.AttributesBuilder</type>
+		<type>com.liferay.portal.security.audit.listeners.util.AttributesBuilder</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>AttributesBuilder</name>
@@ -739,7 +739,7 @@
 	</javadoc>
 	<javadoc>
 		<name>AuditMessageBuilder</name>
-		<type>com.liferay.portal.audit.hook.listeners.util.AuditMessageBuilder</type>
+		<type>com.liferay.portal.security.audit.listeners.util.AuditMessageBuilder</type>
 		<author><![CDATA[Mika Koivisto]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
@@ -782,7 +782,7 @@
 	</javadoc>
 	<javadoc>
 		<name>LoginFailure</name>
-		<type>com.liferay.portal.audit.hook.security.auth.LoginFailure</type>
+		<type>com.liferay.portal.security.audit.security.auth.LoginFailure</type>
 		<author><![CDATA[Bruno Farache]]></author>
 		<author><![CDATA[Mika Koivisto]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
@@ -859,7 +859,7 @@
 			<name>buildAuditMessage</name>
 			<param>
 				<name>user</name>
-				<type>com.liferay.portal.model.User</type>
+				<type>com.liferay.portal.kernel.model.User</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -882,7 +882,7 @@
 	</javadoc>
 	<javadoc>
 		<name>EventTypes</name>
-		<type>com.liferay.portal.audit.util.EventTypes</type>
+		<type>com.liferay.portal.security.audit.util.EventTypes</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
 			<name>ADD</name>
