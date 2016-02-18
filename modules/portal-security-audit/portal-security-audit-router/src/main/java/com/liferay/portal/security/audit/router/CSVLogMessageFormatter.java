@@ -14,15 +14,30 @@
 
 package com.liferay.portal.security.audit.router;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.audit.router.configuration.CSVLogMessageFormatterConfiguration;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Mika Koivisto
+ * @author Brian Greenwald
+ * @author Prathima Shreenath
  */
+@Component(
+	configurationPid = "com.liferay.portal.security.audit.router.configuration.CSVLogMessageFormatterConfiguration",
+	immediate = true,
+	service = {CSVLogMessageFormatter.class, LogMessageFormatter.class}
+)
 public class CSVLogMessageFormatter implements LogMessageFormatter {
 
 	public String format(AuditMessage auditMessage) {
@@ -43,8 +58,15 @@ public class CSVLogMessageFormatter implements LogMessageFormatter {
 		return sb.toString();
 	}
 
-	public void setColumns(String columns) {
-		_columns = StringUtil.split(columns);
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		CSVLogMessageFormatterConfiguration
+			csvLogMessageFormatterConfiguration =
+				Configurable.createConfigurable(
+					CSVLogMessageFormatterConfiguration.class, properties);
+
+		_columns = csvLogMessageFormatterConfiguration.columns();
 	}
 
 	private String[] _columns;

@@ -18,12 +18,17 @@ import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
-import com.liferay.portal.security.audit.persistence.service.AuditEventLocalServiceUtil;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = "eventTypes=*",
+	service = AuditMessageProcessor.class
+)
 public class DatabaseAuditRouterProcessor implements AuditMessageProcessor {
 
 	@Override
@@ -37,10 +42,10 @@ public class DatabaseAuditRouterProcessor implements AuditMessageProcessor {
 	}
 
 	protected void doProcess(AuditMessage auditMessage) throws Exception {
-		AuditEventLocalServiceUtil.addAuditEvent(auditMessage);
+		AuditEventManagerUtil.addAuditEvent(auditMessage);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DatabaseAuditRouterProcessor.class);
 
 }

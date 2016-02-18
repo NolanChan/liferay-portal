@@ -14,15 +14,36 @@
 
 package com.liferay.portal.security.audit.router;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
+import com.liferay.portal.security.audit.router.configuration.LogAuditRouterProcessorConfiguration;
+import com.liferay.portal.security.audit.router.constants.AuditConstants;
+
+import java.util.Dictionary;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
+ * @author Brian Greenwald
+ * @author Prathima Shreenath
  */
+@Component(
+	configurationPid = "com.liferay.portal.security.audit.router.configuration.LogAuditRouterProcessorConfiguration",
+	immediate = true, property = "eventTypes=*",
+	service = {AuditMessageProcessor.class, LogAuditRouterProcessor.class}
+)
 public class LogAuditRouterProcessor implements AuditMessageProcessor {
 
 	@Override
@@ -35,14 +56,38 @@ public class LogAuditRouterProcessor implements AuditMessageProcessor {
 		}
 	}
 
-	public void setLogMessageFormatter(
-		LogMessageFormatter logMessageFormatter) {
+	@Activate
+	@Modified
+	protected void activate(ComponentContext componentContext) {
+		Dictionary<String, Object> properties =
+			componentContext.getProperties();
 
-		_logMessageFormatter = logMessageFormatter;
-	}
+		_logAuditRouterProcessorConfiguration = Configurable.createConfigurable(
+			LogAuditRouterProcessorConfiguration.class, properties);
 
-	public void setOutputToConsole(boolean outputToConsole) {
-		_outputToConsole = outputToConsole;
+		_outputToConsole =
+			_logAuditRouterProcessorConfiguration.outputToConsole();
+
+		BundleContext bundleContext = componentContext.getBundleContext();
+
+		String configuredFormatter =
+			_logAuditRouterProcessorConfiguration.logMessageFormatter();
+
+		if (StringUtil.equalsIgnoreCase(
+				configuredFormatter, AuditConstants.CSV)) {
+
+			_serviceReference = bundleContext.getServiceReference(
+				AuditConstants.CSVLogMessageFormatter);
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					configuredFormatter, AuditConstants.JSON)) {
+
+			_serviceReference = bundleContext.getServiceReference(
+				AuditConstants.JSONLogMessageFormatter);
+		}
+
+		_logMessageFormatter = (LogMessageFormatter)bundleContext.getService(
+			_serviceReference);
 	}
 
 	protected void doProcess(AuditMessage auditMessage) throws Exception {
@@ -59,10 +104,13 @@ public class LogAuditRouterProcessor implements AuditMessageProcessor {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LogAuditRouterProcessor.class);
 
+	private volatile LogAuditRouterProcessorConfiguration
+		_logAuditRouterProcessorConfiguration;
 	private LogMessageFormatter _logMessageFormatter;
 	private boolean _outputToConsole;
+	private ServiceReference<?> _serviceReference;
 
 }
