@@ -1,0 +1,23 @@
+buildService {
+	apiDir = "../audit-api/src/main/java"
+	autoNamespaceTables = false
+	testDir = "../audit-test/src/testIntegration/java"
+}
+
+configurations {
+	compile {
+		transitive = false
+	}
+}
+
+dependencies {
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided project(":portal-security-audit:portal-security-audit-api")
+	provided project(":portal-security-audit:portal-security-audit-persistence-api")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

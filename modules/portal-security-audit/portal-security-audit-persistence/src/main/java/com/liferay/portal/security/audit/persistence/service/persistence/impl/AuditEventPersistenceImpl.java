@@ -16,11 +16,8 @@ package com.liferay.portal.security.audit.persistence.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -40,6 +37,7 @@ import com.liferay.portal.security.audit.persistence.model.AuditEvent;
 import com.liferay.portal.security.audit.persistence.model.impl.AuditEventImpl;
 import com.liferay.portal.security.audit.persistence.model.impl.AuditEventModelImpl;
 import com.liferay.portal.security.audit.persistence.service.persistence.AuditEventPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -1259,10 +1257,12 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = CompanyProviderWrapper.class)
+	@ServiceReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
-	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_AUDITEVENT = "SELECT auditEvent FROM AuditEvent auditEvent";
 	private static final String _SQL_SELECT_AUDITEVENT_WHERE_PKS_IN = "SELECT auditEvent FROM AuditEvent auditEvent WHERE auditEventId IN (";
 	private static final String _SQL_SELECT_AUDITEVENT_WHERE = "SELECT auditEvent FROM AuditEvent auditEvent WHERE ";
