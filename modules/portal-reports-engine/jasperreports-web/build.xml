@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="jasperreports-web" basedir="." default="deploy">
+	<property name="original.war.file" value="jasperreports-5.2.0-project.zip" />
+
+	<import file="../build-common-web.xml" />
+
+	<target name="merge-unzip">
+		<unzip
+			dest="test/integration/com/liferay/portal/bi/reporting/jasperreports"
+			src="${original.war.file}"
+		>
+			<patternset
+				includes="**/csvdatasource/data/*,**/csvdatasource/reports/*,**/xlsdatasource/data/*,**/xlsdatasource/reports/*,**/xmldatasource/data/*,**/xmldatasource/reports/*"
+			/>
+			<mapper type="flatten" />
+		</unzip>
+	</target>
+
+	<target name="shrink-zip">
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<unzip
+			dest="${tstamp.value}"
+			src="${original.war.file}"
+		>
+			<patternset
+				includes="**/csvdatasource/data/*,**/csvdatasource/reports/*,**/xlsdatasource/data/*,**/xlsdatasource/reports/*,**/xmldatasource/data/*,**/xmldatasource/reports/*"
+			/>
+		</unzip>
+
+		<zip
+			basedir="${tstamp.value}"
+			destfile="${original.war.file}"
+		/>
+
+		<delete dir="${tstamp.value}" />
+	</target>
+</project>
