@@ -15,31 +15,24 @@
 package com.liferay.portal.reports.engine.jasper.compiler;
 
 import com.liferay.portal.kernel.util.LRUMap;
+import com.liferay.portal.reports.engine.ReportDesignRetriever;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
-import com.liferay.portal.reports.engine.ReportDesignRetriever;
-
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = ReportCompiler.class)
 public class CachedReportCompiler implements ReportCompiler {
-
-	public CachedReportCompiler(ReportCompiler reportCompiler) {
-		this(reportCompiler, _DEFAULT_MAX_SIZE);
-	}
-
-	public CachedReportCompiler(ReportCompiler reportCompiler, int maxSize) {
-		_reportCompiler = reportCompiler;
-		_cachedJasperReports = Collections.synchronizedMap(
-			new LRUMap<String, CachedJasperReport>(maxSize));
-	}
 
 	public JasperReport compile(ReportDesignRetriever reportDesignRetriever)
 		throws JRException {
@@ -76,9 +69,16 @@ public class CachedReportCompiler implements ReportCompiler {
 		_cachedJasperReports.clear();
 	}
 
+	@Reference(unbind = "-")
+	protected void setReportCompiler(ReportCompiler reportCompiler) {
+		_reportCompiler = reportCompiler;
+	}
+
 	private static final int _DEFAULT_MAX_SIZE = 25;
 
-	private Map<String, CachedJasperReport> _cachedJasperReports;
+	private final Map<String, CachedJasperReport> _cachedJasperReports =
+		Collections.synchronizedMap(
+			new LRUMap<String, CachedJasperReport>(_DEFAULT_MAX_SIZE));
 	private ReportCompiler _reportCompiler;
 
 	private class CachedJasperReport {
@@ -96,8 +96,8 @@ public class CachedReportCompiler implements ReportCompiler {
 			return _timestamp;
 		}
 
-		private JasperReport _jasperReport;
-		private long _timestamp;
+		private final JasperReport _jasperReport;
+		private final long _timestamp;
 
 	}
 

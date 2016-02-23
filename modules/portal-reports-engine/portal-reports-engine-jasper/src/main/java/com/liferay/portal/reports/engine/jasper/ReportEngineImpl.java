@@ -14,10 +14,6 @@
 
 package com.liferay.portal.reports.engine.jasper;
 
-import java.util.Map;
-
-import javax.servlet.ServletContext;
-
 import com.liferay.portal.reports.engine.ReportEngine;
 import com.liferay.portal.reports.engine.ReportFormatExporter;
 import com.liferay.portal.reports.engine.ReportFormatExporterRegistry;
@@ -29,13 +25,21 @@ import com.liferay.portal.reports.engine.jasper.compiler.ReportCompiler;
 import com.liferay.portal.reports.engine.jasper.fillmanager.ReportFillManager;
 import com.liferay.portal.reports.engine.jasper.fillmanager.ReportFillManagerRegistry;
 
+import java.util.Map;
+
+import javax.servlet.ServletContext;
+
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = ReportEngine.class)
 public class ReportEngineImpl implements ReportEngine {
 
 	@Override
@@ -100,10 +104,12 @@ public class ReportEngineImpl implements ReportEngine {
 		_engineParameters = engineParameters;
 	}
 
+	@Reference(unbind = "-")
 	public void setReportCompiler(ReportCompiler reportCompiler) {
 		_reportCompiler = reportCompiler;
 	}
 
+	@Reference(unbind = "-")
 	public void setReportFillManagerRegistry(
 		ReportFillManagerRegistry reportFillManagerRegistry) {
 
@@ -111,6 +117,7 @@ public class ReportEngineImpl implements ReportEngine {
 	}
 
 	@Override
+	@Reference(unbind = "-")
 	public void setReportFormatExporterRegistry(
 		ReportFormatExporterRegistry reportFormatExporterRegistry) {
 

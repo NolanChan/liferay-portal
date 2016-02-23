@@ -14,19 +14,21 @@
 
 package com.liferay.portal.reports.engine.jasper.compiler;
 
+import com.liferay.portal.reports.engine.ReportDesignRetriever;
 
 import java.io.InputStream;
-
-import com.liferay.portal.reports.engine.ReportDesignRetriever;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = ReportCompiler.class)
 public class DefaultReportCompiler implements ReportCompiler {
 
 	public JasperReport compile(ReportDesignRetriever reportDesignRetriever)
