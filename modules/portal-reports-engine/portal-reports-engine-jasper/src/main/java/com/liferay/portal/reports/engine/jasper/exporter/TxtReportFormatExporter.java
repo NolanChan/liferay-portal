@@ -16,22 +16,28 @@ package com.liferay.portal.reports.engine.jasper.exporter;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
-
-import java.util.Map;
-
 import com.liferay.portal.reports.engine.ReportExportException;
+import com.liferay.portal.reports.engine.ReportFormatExporter;
 import com.liferay.portal.reports.engine.ReportRequest;
 import com.liferay.portal.reports.engine.ReportResultContainer;
+
+import java.util.Map;
 
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.export.JRTextExporter;
 import net.sf.jasperreports.engine.export.JRTextExporterParameter;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = "reportFormat=txt",
+	service = ReportFormatExporter.class
+)
 public class TxtReportFormatExporter extends BaseReportFormatExporter {
 
 	public void format(

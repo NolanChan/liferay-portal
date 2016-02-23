@@ -14,16 +14,24 @@
 
 package com.liferay.portal.reports.engine.jasper.exporter;
 
+import com.liferay.portal.reports.engine.ReportFormatExporter;
+
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.export.JRXhtmlExporter;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = "reportFormat=html",
+	service = ReportFormatExporter.class
+)
 public class HtmlReportFormatExporter extends BaseReportFormatExporter {
 
-	protected JRExporter getJRExporter() {
+	public JRExporter getJRExporter() {
 		return new JRXhtmlExporter();
 	}
 

@@ -14,13 +14,21 @@
 
 package com.liferay.portal.reports.engine.jasper.exporter;
 
+import com.liferay.portal.reports.engine.ReportFormatExporter;
+
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.export.JRRtfExporter;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = "reportFormat=rtf",
+	service = ReportFormatExporter.class
+)
 public class RtfReportFormatExporter extends BaseReportFormatExporter {
 
 	protected JRExporter getJRExporter() {

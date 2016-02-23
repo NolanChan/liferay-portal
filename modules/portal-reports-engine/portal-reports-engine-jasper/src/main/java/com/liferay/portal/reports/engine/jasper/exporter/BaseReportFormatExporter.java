@@ -15,10 +15,10 @@
 package com.liferay.portal.reports.engine.jasper.exporter;
 
 import com.liferay.portal.reports.engine.ReportExportException;
+import com.liferay.portal.reports.engine.ReportFormatExporter;
 import com.liferay.portal.reports.engine.ReportRequest;
 import com.liferay.portal.reports.engine.ReportResultContainer;
 
-import com.liferay.portal.reports.engine.ReportFormatExporter;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
 
@@ -28,6 +28,7 @@ import net.sf.jasperreports.engine.JRExporterParameter;
  */
 public abstract class BaseReportFormatExporter implements ReportFormatExporter {
 
+	@Override
 	public void format(
 			Object report, ReportRequest request,
 			ReportResultContainer container)
