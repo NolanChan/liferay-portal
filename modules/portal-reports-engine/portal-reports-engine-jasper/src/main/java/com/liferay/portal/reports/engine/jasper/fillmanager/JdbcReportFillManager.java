@@ -14,6 +14,8 @@
 
 package com.liferay.portal.reports.engine.jasper.fillmanager;
 
+import com.liferay.portal.reports.engine.ReportRequest;
+import com.liferay.portal.reports.engine.ReportRequestContext;
 
 import java.sql.Connection;
 
@@ -21,15 +23,18 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import com.liferay.portal.reports.engine.ReportRequest;
-import com.liferay.portal.reports.engine.ReportRequestContext;
-
 import org.apache.commons.dbcp2.BasicDataSourceFactory;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Gavin Wan
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = "reportDataSourceType=jdbc",
+	service = ReportFillManager.class
+)
 public class JdbcReportFillManager extends BaseReportFillManager {
 
 	protected Connection getConnection(ReportRequest reportRequest)

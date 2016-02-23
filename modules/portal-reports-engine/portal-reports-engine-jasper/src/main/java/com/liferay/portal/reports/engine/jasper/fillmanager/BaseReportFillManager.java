@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.reports.engine.ReportRequest;
+import com.liferay.portal.reports.engine.ReportRequestContext;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -37,9 +39,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.liferay.portal.reports.engine.ReportRequest;
-import com.liferay.portal.reports.engine.ReportRequestContext;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -199,7 +198,7 @@ public abstract class BaseReportFillManager implements ReportFillManager {
 		return reportParameters;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseReportFillManager.class);
 
 }

@@ -19,10 +19,16 @@ import com.liferay.portal.reports.engine.ReportRequest;
 
 import java.sql.Connection;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Gavin Wan
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = "reportDataSourceType=portal",
+	service = ReportFillManager.class
+)
 public class PortalReportFillManager extends BaseReportFillManager {
 
 	protected Connection getConnection(ReportRequest reportRequest)

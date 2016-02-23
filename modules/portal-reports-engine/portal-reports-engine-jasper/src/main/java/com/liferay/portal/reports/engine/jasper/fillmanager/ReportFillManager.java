@@ -14,8 +14,8 @@
 
 package com.liferay.portal.reports.engine.jasper.fillmanager;
 
-
 import com.liferay.portal.reports.engine.ReportRequest;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;

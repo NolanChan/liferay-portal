@@ -14,16 +14,27 @@
 
 package com.liferay.portal.reports.engine.jasper.fillmanager;
 
-
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.engine.ReportDataSourceType;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Gavin Wan
  * @author Brian Wing Shun Chan
+ * @author Brian Greenwald
  */
+@Component(immediate = true, service = ReportFillManagerRegistry.class)
 public class ReportFillManagerRegistry {
 
 	public ReportFillManager getReportFillManager(
@@ -40,19 +51,48 @@ public class ReportFillManagerRegistry {
 		return reportFillManager;
 	}
 
-	public void setReportFillManagers(
-		Map<String, ReportFillManager> reportFillManagers) {
+	public void unsetReportFillManager(
+		ReportFillManager reportFillManager, Map<String, Object> properties) {
 
-		for (Map.Entry<String, ReportFillManager> entry :
-				reportFillManagers.entrySet()) {
+		String reportDataSourceTypeString = GetterUtil.getString(
+			properties.get("reportDataSourceType"));
 
-			ReportDataSourceType reportDataSourceType =
-				ReportDataSourceType.parse(entry.getKey());
-			ReportFillManager reportFillManager = entry.getValue();
+		ReportDataSourceType reportSourceDataType = ReportDataSourceType.parse(
+			reportDataSourceTypeString);
 
-			_reportFillManagers.put(reportDataSourceType, reportFillManager);
+		if (Validator.isNull(reportSourceDataType)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No reportDataSourceType specified for: " +
+						reportFillManager);
+			}
+
+			return;
 		}
+
+		_reportFillManagers.remove(reportSourceDataType);
 	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "unsetReportFillManager"
+	)
+	protected void setReportFillManager(
+		ReportFillManager reportFillManager, Map<String, Object> properties) {
+
+		String reportDataSourceTypeString = GetterUtil.getString(
+			properties.get("reportDataSourceType"));
+
+		ReportDataSourceType reportDataSourceType = ReportDataSourceType.parse(
+			reportDataSourceTypeString);
+
+		_reportFillManagers.put(reportDataSourceType, reportFillManager);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ReportFillManagerRegistry.class);
 
 	private Map<ReportDataSourceType, ReportFillManager> _reportFillManagers =
 		new ConcurrentHashMap<>();

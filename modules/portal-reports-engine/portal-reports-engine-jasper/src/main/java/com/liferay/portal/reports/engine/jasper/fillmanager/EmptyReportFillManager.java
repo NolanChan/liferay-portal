@@ -14,9 +14,15 @@
 
 package com.liferay.portal.reports.engine.jasper.fillmanager;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Gavin Wan
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = "reportDataSourceType=empty",
+	service = ReportFillManager.class
+)
 public class EmptyReportFillManager extends BaseReportFillManager {
 }
