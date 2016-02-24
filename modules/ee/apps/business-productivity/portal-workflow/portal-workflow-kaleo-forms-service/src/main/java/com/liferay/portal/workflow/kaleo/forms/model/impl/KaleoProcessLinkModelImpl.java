@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLinkModel;
 
@@ -388,7 +387,8 @@ public class KaleoProcessLinkModelImpl extends BaseModelImpl<KaleoProcessLink>
 		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink");
+		sb.append(
+			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink");
 		sb.append("</model-name>");
 
 		sb.append(

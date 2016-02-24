@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.kaleo.forms.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-
 import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 

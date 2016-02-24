@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-
 import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalServiceUtil;

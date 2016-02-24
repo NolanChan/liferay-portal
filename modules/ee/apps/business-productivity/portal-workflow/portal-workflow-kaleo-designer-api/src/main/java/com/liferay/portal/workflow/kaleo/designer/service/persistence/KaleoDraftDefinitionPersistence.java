@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.kaleo.designer.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-
 import com.liferay.portal.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
 import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
 

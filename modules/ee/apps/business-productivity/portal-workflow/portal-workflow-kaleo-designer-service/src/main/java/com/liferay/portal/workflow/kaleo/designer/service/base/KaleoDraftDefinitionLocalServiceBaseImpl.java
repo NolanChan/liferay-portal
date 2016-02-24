@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-
 import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
 import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.designer.service.persistence.KaleoDraftDefinitionPersistence;

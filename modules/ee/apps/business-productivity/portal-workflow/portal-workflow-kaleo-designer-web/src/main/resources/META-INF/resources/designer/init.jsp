@@ -44,7 +44,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
-page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.portal.workflow.kaleo.designer.constants.KaleoDesignerActionKeys" %><%@
 page import="com.liferay.portal.workflow.kaleo.designer.constants.KaleoDesignerWebKeys" %><%@
 page import="com.liferay.portal.workflow.kaleo.designer.exception.DuplicateKaleoDraftDefinitionNameException" %><%@
@@ -55,7 +54,8 @@ page import="com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefini
 page import="com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionServiceUtil" %><%@
 page import="com.liferay.portal.workflow.kaleo.designer.service.permission.KaleoDesignerPermission" %><%@
 page import="com.liferay.portal.workflow.kaleo.designer.service.permission.KaleoDraftDefinitionPermission" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.util.KaleoDesignerUtil" %>
+page import="com.liferay.portal.workflow.kaleo.designer.util.KaleoDesignerUtil" %><%@
+page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.List" %>
 

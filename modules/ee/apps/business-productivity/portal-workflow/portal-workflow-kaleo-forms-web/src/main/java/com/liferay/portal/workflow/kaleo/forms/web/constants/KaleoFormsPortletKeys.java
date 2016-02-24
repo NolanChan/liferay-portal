@@ -20,9 +20,11 @@ package com.liferay.portal.workflow.kaleo.forms.web.constants;
 public class KaleoFormsPortletKeys {
 
 	public static final String KALEO_FORMS_ADMIN =
-		"com_liferay_portal_workflow_kaleo_forms_web_portlet_KaleoFormsAdminPortlet";
+		"com_liferay_portal_workflow_kaleo_forms_web_portlet_" +
+			"KaleoFormsAdminPortlet";
 
 	public static final String KALEO_FORMS_DISPLAY =
-		"com_liferay_portal_workflow_kaleo_forms_web_portlet_KaleoFormsDisplayPortlet";
+		"com_liferay_portal_workflow_kaleo_forms_web_portlet_" +
+			"KaleoFormsDisplayPortlet";
 
 }

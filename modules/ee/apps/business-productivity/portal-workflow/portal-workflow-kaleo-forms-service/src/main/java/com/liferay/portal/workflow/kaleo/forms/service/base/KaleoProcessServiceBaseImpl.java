@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersi
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessService;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessLinkPersistence;

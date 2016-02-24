@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-
 import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
 import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinitionModel;
 import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinitionSoap;
