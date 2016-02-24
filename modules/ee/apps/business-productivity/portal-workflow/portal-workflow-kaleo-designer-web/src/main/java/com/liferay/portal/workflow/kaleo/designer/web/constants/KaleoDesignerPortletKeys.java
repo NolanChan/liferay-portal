@@ -20,10 +20,10 @@ package com.liferay.portal.workflow.kaleo.designer.web.constants;
 public class KaleoDesignerPortletKeys {
 
 	public static final String KALEO_DESIGNER =
-		"com_liferay_workflow_kaleo_designer_web_portlet_KaleoDesignerPortlet";
+		"com_liferay_portal_workflow_kaleo_designer_web_portlet_KaleoDesignerPortlet";
 
 	public static final String KALEO_DESIGNER_LOADER =
-		"com_liferay_workflow_kaleo_designer_web_portlet_" +
+		"com_liferay_portal_workflow_kaleo_designer_web_portlet_" +
 			"KaleoDesignerLoaderPortlet";
 
 }

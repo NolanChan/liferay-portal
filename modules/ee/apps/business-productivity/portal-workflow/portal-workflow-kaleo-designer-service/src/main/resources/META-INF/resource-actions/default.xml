@@ -5,7 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.workflow.kaleo.designer</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_workflow_kaleo_designer_web_portlet_KaleoDesignerPortlet</portlet-name>
+			<portlet-name>com_liferay_portal_workflow_kaleo_designer_web_portlet_KaleoDesignerPortlet</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -27,7 +27,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_workflow_kaleo_designer_web_portlet_KaleoDesignerPortlet</portlet-name>
+			<portlet-name>com_liferay_portal_workflow_kaleo_designer_web_portlet_KaleoDesignerPortlet</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
