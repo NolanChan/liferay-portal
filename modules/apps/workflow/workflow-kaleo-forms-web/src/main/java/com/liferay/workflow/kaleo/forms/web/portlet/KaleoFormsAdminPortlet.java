@@ -17,10 +17,10 @@ package com.liferay.workflow.kaleo.forms.web.portlet;
 import com.liferay.dynamic.data.lists.exception.RecordSetDDMStructureIdException;
 import com.liferay.dynamic.data.lists.exception.RecordSetNameException;
 import com.liferay.dynamic.data.lists.exporter.DDLExporter;
-import com.liferay.dynamic.data.lists.exporter.DDLExporterFactoryUtil;
+import com.liferay.dynamic.data.lists.exporter.DDLExporterFactory;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.service.DDLRecordService;
-import com.liferay.dynamic.data.lists.util.DDLUtil;
+import com.liferay.dynamic.data.lists.util.DDL;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.CharPool;
@@ -204,7 +204,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 			};
 
-			TransactionInvokerUtil.invoke(_transactionAttribute, callable);
+			TransactionInvokerUtil.invoke(_transactionConfig, callable);
 		}
 		catch (Throwable t) {
 			if (t instanceof PortalException) {
@@ -803,7 +803,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
-		DDLExporter ddlExporter = DDLExporterFactoryUtil.getDDLExporter(
+		DDLExporter ddlExporter = _ddlExporterFactory.getDDLExporter(
 			fileExtension);
 
 		ddlExporter.setLocale(themeDisplay.getLocale());
@@ -815,6 +815,18 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse, fileName, bytes, contentType);
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDL(DDL ddl) {
+		_ddl = ddl;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDLExporterFactory(
+		DDLExporterFactory ddlExporterFactory) {
+
+		_ddlExporterFactory = ddlExporterFactory;
 	}
 
 	@Reference(unbind = "-")
@@ -867,25 +879,19 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 		long ddlRecordSetId = ParamUtil.getLong(request, "ddlRecordSetId");
 
-		return DDLUtil.updateRecord(
+		return _ddl.updateRecord(
 			ddlRecordId, ddlRecordSetId, true, false, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoFormsAdminPortlet.class);
 
-	private static final TransactionAttribute _transactionAttribute;
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
-	static {
-		TransactionAttribute.Builder builder =
-			new TransactionAttribute.Builder();
-
-		builder.setPropagation(Propagation.REQUIRES_NEW);
-		builder.setRollbackForClasses(Exception.class);
-
-		_transactionAttribute = builder.build();
-	}
-
+	private DDL _ddl;
+	private DDLExporterFactory _ddlExporterFactory;
 	private DDLRecordService _ddlRecordService;
 	private DDMStructureService _ddmStructureService;
 	private KaleoDraftDefinitionService _kaleoDraftDefinitionService;
