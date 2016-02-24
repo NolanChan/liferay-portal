@@ -27,7 +27,7 @@ public class WURFLUtil {
 
 		return
 			props.get(PropsKeys.LIFERAY_HOME) +
-			wurflEngineConfiguration.wurflDatabasePatchDirName();
+				wurflEngineConfiguration.wurflDatabasePatchDirName();
 	}
 
 }
