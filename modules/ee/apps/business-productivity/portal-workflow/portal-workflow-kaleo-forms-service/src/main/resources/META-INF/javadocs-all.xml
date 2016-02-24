@@ -3,7 +3,7 @@
 <javadocs>
 	<javadoc>
 		<name>KaleoFormsDDMDisplay</name>
-		<type>com.liferay.workflow.kaleo.forms.ddm.KaleoFormsDDMDisplay</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.ddm.KaleoFormsDDMDisplay</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>getEditTemplateTitle</name>
@@ -102,7 +102,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoProcessImpl</name>
-		<type>com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessImpl</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>getDDLRecordSet</name>
@@ -195,7 +195,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoProcessLinkImpl</name>
-		<type>com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>KaleoProcessLinkImpl</name>
@@ -214,7 +214,7 @@
 	</javadoc>
 	<javadoc>
 		<name>BaseKaleoFormsPorlet</name>
-		<type>com.liferay.workflow.kaleo.forms.portlet.BaseKaleoFormsPorlet</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.portlet.BaseKaleoFormsPorlet</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>render</name>
@@ -335,7 +335,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoFormsAdminPortlet</name>
-		<type>com.liferay.workflow.kaleo.forms.portlet.KaleoFormsAdminPortlet</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.portlet.KaleoFormsAdminPortlet</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<author><![CDATA[Eduardo Lundgren]]></author>
 		<method>
@@ -632,7 +632,7 @@
 			</param>
 			<param>
 				<name>kaleoDraftDefinition</name>
-				<type>com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition</type>
+				<type>com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
@@ -715,7 +715,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoFormsDisplayPortlet</name>
-		<type>com.liferay.workflow.kaleo.forms.portlet.KaleoFormsDisplayPortlet</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.portlet.KaleoFormsDisplayPortlet</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>assignWorkflowTask</name>
@@ -810,7 +810,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoFormsPortlet</name>
-		<type>com.liferay.workflow.kaleo.forms.portlet.KaleoFormsPortlet</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.portlet.KaleoFormsPortlet</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<author><![CDATA[Eduardo Lundgren]]></author>
 		<method>
@@ -1313,7 +1313,7 @@
 			</param>
 			<param>
 				<name>kaleoDraftDefinition</name>
-				<type>com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition</type>
+				<type>com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
@@ -1412,7 +1412,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoProcessSearch</name>
-		<type>com.liferay.workflow.kaleo.forms.search.KaleoProcessSearch</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.search.KaleoProcessSearch</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>KaleoProcessSearch</name>
@@ -1433,7 +1433,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoProcessLinkLocalServiceImpl</name>
-		<type>com.liferay.workflow.kaleo.forms.service.impl.KaleoProcessLinkLocalServiceImpl</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessLinkLocalServiceImpl</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>addKaleoProcessLink</name>
@@ -1567,7 +1567,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoProcessLinkServiceImpl</name>
-		<type>com.liferay.workflow.kaleo.forms.service.impl.KaleoProcessLinkServiceImpl</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessLinkServiceImpl</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>fetchKaleoProcessLink</name>
@@ -1655,7 +1655,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoProcessLocalServiceImpl</name>
-		<type>com.liferay.workflow.kaleo.forms.service.impl.KaleoProcessLocalServiceImpl</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessLocalServiceImpl</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>addKaleoProcess</name>
@@ -1691,7 +1691,7 @@
 			</param>
 			<param>
 				<name>taskFormPairs</name>
-				<type>com.liferay.workflow.kaleo.forms.util.TaskFormPairs</type>
+				<type>com.liferay.portal.workflow.kaleo.forms.util.TaskFormPairs</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1712,7 +1712,7 @@
 			<name>deleteKaleoProcess</name>
 			<param>
 				<name>kaleoProcess</name>
-				<type>com.liferay.workflow.kaleo.forms.model.KaleoProcess</type>
+				<type>com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -1744,7 +1744,7 @@
 			<name>deleteKaleoProcessData</name>
 			<param>
 				<name>kaleoProcess</name>
-				<type>com.liferay.workflow.kaleo.forms.model.KaleoProcess</type>
+				<type>com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
@@ -1870,7 +1870,7 @@
 			</param>
 			<param>
 				<name>taskFormPairs</name>
-				<type>com.liferay.workflow.kaleo.forms.util.TaskFormPairs</type>
+				<type>com.liferay.portal.workflow.kaleo.forms.util.TaskFormPairs</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1896,7 +1896,7 @@
 			</param>
 			<param>
 				<name>taskFormPairs</name>
-				<type>com.liferay.workflow.kaleo.forms.util.TaskFormPairs</type>
+				<type>com.liferay.portal.workflow.kaleo.forms.util.TaskFormPairs</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
@@ -1916,7 +1916,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoProcessServiceImpl</name>
-		<type>com.liferay.workflow.kaleo.forms.service.impl.KaleoProcessServiceImpl</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessServiceImpl</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>addKaleoProcess</name>
@@ -1947,7 +1947,7 @@
 			</param>
 			<param>
 				<name>taskFormPairs</name>
-				<type>com.liferay.workflow.kaleo.forms.util.TaskFormPairs</type>
+				<type>com.liferay.portal.workflow.kaleo.forms.util.TaskFormPairs</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -2070,7 +2070,7 @@
 			</param>
 			<param>
 				<name>taskFormPairs</name>
-				<type>com.liferay.workflow.kaleo.forms.util.TaskFormPairs</type>
+				<type>com.liferay.portal.workflow.kaleo.forms.util.TaskFormPairs</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -2090,7 +2090,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoFormsPermission</name>
-		<type>com.liferay.workflow.kaleo.forms.service.permission.KaleoFormsPermission</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoFormsPermission</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>check</name>
@@ -2142,7 +2142,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoProcessPermission</name>
-		<type>com.liferay.workflow.kaleo.forms.service.permission.KaleoProcessPermission</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoProcessPermission</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>check</name>
@@ -2153,7 +2153,7 @@
 			</param>
 			<param>
 				<name>kaleoProcess</name>
-				<type>com.liferay.workflow.kaleo.forms.model.KaleoProcess</type>
+				<type>com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -2199,7 +2199,7 @@
 			</param>
 			<param>
 				<name>kaleoProcess</name>
-				<type>com.liferay.workflow.kaleo.forms.model.KaleoProcess</type>
+				<type>com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -2240,7 +2240,7 @@
 	</javadoc>
 	<javadoc>
 		<name>ActionKeys</name>
-		<type>com.liferay.workflow.kaleo.forms.util.ActionKeys</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.util.ActionKeys</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<field>
 			<name>ADD_PROCESS</name>
@@ -2251,7 +2251,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoFormsUtil</name>
-		<type>com.liferay.workflow.kaleo.forms.util.KaleoFormsUtil</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.util.KaleoFormsUtil</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>cleanUpPortletSession</name>
@@ -2322,7 +2322,7 @@
 			<name>getKaleoProcessDDMStructureId</name>
 			<param>
 				<name>kaleoProcess</name>
-				<type>com.liferay.workflow.kaleo.forms.model.KaleoProcess</type>
+				<type>com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -2364,7 +2364,7 @@
 			<name>getKaleoProcessDescription</name>
 			<param>
 				<name>kaleoProcess</name>
-				<type>com.liferay.workflow.kaleo.forms.model.KaleoProcess</type>
+				<type>com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -2385,7 +2385,7 @@
 			<name>getKaleoProcessName</name>
 			<param>
 				<name>kaleoProcess</name>
-				<type>com.liferay.workflow.kaleo.forms.model.KaleoProcess</type>
+				<type>com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -2406,7 +2406,7 @@
 			<name>getKaleoProcessName</name>
 			<param>
 				<name>kaleoProcess</name>
-				<type>com.liferay.workflow.kaleo.forms.model.KaleoProcess</type>
+				<type>com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -2468,7 +2468,7 @@
 			<name>getWorkflowDefinition</name>
 			<param>
 				<name>kaleoProcess</name>
-				<type>com.liferay.workflow.kaleo.forms.model.KaleoProcess</type>
+				<type>com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -2670,7 +2670,7 @@
 	</javadoc>
 	<javadoc>
 		<name>PortletKeys</name>
-		<type>com.liferay.workflow.kaleo.forms.util.PortletKeys</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.util.PortletKeys</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<field>
 			<name>KALEO_DESIGNER</name>
@@ -2678,7 +2678,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WebKeys</name>
-		<type>com.liferay.workflow.kaleo.forms.util.WebKeys</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.util.WebKeys</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<field>
 			<name>DYNAMIC_DATA_MAPPING_STRUCTURE</name>
@@ -2701,7 +2701,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoProcessWorkflowHandler</name>
-		<type>com.liferay.workflow.kaleo.forms.workflow.KaleoProcessWorkflowHandler</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.workflow.KaleoProcessWorkflowHandler</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>getClassName</name>

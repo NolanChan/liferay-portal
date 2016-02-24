@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.web.upgrade.v1_0_0;
+package com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

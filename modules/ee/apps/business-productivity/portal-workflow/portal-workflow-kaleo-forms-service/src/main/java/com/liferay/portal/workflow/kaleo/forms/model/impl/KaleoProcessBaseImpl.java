@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.model.impl;
+package com.liferay.portal.workflow.kaleo.forms.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
-import com.liferay.workflow.kaleo.forms.service.KaleoProcessLocalServiceUtil;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalServiceUtil;
 
 /**
  * The extended model base implementation for the KaleoProcess service. Represents a row in the &quot;KaleoProcess&quot; database table, with each column mapped to a property of this class.

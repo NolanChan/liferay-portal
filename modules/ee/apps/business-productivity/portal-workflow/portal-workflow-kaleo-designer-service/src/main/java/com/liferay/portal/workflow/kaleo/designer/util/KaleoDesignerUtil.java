@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.designer.util;
+package com.liferay.portal.workflow.kaleo.designer.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -31,9 +31,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.workflow.kaleo.designer.constants.KaleoDesignerWebKeys;
-import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
-import com.liferay.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalServiceUtil;
+import com.liferay.portal.workflow.kaleo.designer.constants.KaleoDesignerWebKeys;
+import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
+import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalServiceUtil;
 
 import java.util.Locale;
 import java.util.Map;

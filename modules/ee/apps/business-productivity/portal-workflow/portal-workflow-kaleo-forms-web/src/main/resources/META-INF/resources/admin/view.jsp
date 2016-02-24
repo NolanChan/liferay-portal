@@ -31,7 +31,7 @@
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.workflow.kaleo.forms.model.KaleoProcess"
+		className="com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"
 		modelVar="process"
 	>
 

@@ -48,7 +48,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPair"
+			className="com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPair"
 			modelVar="taskFormsPair"
 		>
 			<liferay-ui:search-container-column-text

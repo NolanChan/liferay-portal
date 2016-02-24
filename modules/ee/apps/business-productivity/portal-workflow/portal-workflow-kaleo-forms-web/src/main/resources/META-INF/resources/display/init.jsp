@@ -35,9 +35,9 @@ page import="com.liferay.portal.kernel.workflow.WorkflowTask" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowTaskDueDateException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil" %><%@
-page import="com.liferay.workflow.kaleo.forms.model.KaleoProcessLink" %><%@
-page import="com.liferay.workflow.kaleo.forms.service.KaleoProcessLinkLocalServiceUtil" %><%@
-page import="com.liferay.workflow.kaleo.forms.service.KaleoProcessLocalServiceUtil" %>
+page import="com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink" %><%@
+page import="com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalServiceUtil" %><%@
+page import="com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalServiceUtil" %>
 
 <%@ page import="java.io.Serializable" %>
 

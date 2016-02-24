@@ -2,9 +2,9 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false" auto-import="false">
-	<import class="com.liferay.workflow.kaleo.forms.model.KaleoProcess" />
-	<import class="com.liferay.workflow.kaleo.forms.model.KaleoProcessLink" />
-	<class name="com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessImpl" table="KaleoProcess">
+	<import class="com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess" />
+	<import class="com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink" />
+	<class name="com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl" table="KaleoProcess">
 		<id name="kaleoProcessId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -19,7 +19,7 @@
 		<property name="workflowDefinitionName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="workflowDefinitionVersion" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
-	<class name="com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl" table="KaleoProcessLink">
+	<class name="com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl" table="KaleoProcessLink">
 		<id name="kaleoProcessLinkId" type="long">
 			<generator class="assigned" />
 		</id>

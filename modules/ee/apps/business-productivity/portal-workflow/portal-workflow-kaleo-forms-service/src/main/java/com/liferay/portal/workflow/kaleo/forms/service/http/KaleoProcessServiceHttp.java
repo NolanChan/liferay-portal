@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.service.http;
+package com.liferay.portal.workflow.kaleo.forms.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
-import com.liferay.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
+import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -55,13 +55,13 @@ import com.liferay.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
  */
 @ProviderType
 public class KaleoProcessServiceHttp {
-	public static com.liferay.workflow.kaleo.forms.model.KaleoProcess addKaleoProcess(
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess addKaleoProcess(
 		HttpPrincipal httpPrincipal, long groupId, long ddmStructureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
+		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -86,7 +86,7 @@ public class KaleoProcessServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.workflow.kaleo.forms.model.KaleoProcess)returnObj;
+			return (com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -95,7 +95,7 @@ public class KaleoProcessServiceHttp {
 		}
 	}
 
-	public static com.liferay.workflow.kaleo.forms.model.KaleoProcess deleteKaleoProcess(
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess deleteKaleoProcess(
 		HttpPrincipal httpPrincipal, long kaleoProcessId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -118,7 +118,7 @@ public class KaleoProcessServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.workflow.kaleo.forms.model.KaleoProcess)returnObj;
+			return (com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -127,7 +127,7 @@ public class KaleoProcessServiceHttp {
 		}
 	}
 
-	public static com.liferay.workflow.kaleo.forms.model.KaleoProcess getKaleoProcess(
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getKaleoProcess(
 		HttpPrincipal httpPrincipal, long kaleoProcessId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -150,7 +150,7 @@ public class KaleoProcessServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.workflow.kaleo.forms.model.KaleoProcess)returnObj;
+			return (com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -159,7 +159,7 @@ public class KaleoProcessServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
+	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
 		HttpPrincipal httpPrincipal, long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		try {
@@ -178,7 +178,7 @@ public class KaleoProcessServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.workflow.kaleo.forms.model.KaleoProcess>)returnObj;
+			return (java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -214,13 +214,13 @@ public class KaleoProcessServiceHttp {
 		}
 	}
 
-	public static com.liferay.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
 		HttpPrincipal httpPrincipal, long kaleoProcessId, long ddmStructureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long ddmTemplateId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
+		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -246,7 +246,7 @@ public class KaleoProcessServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.workflow.kaleo.forms.model.KaleoProcess)returnObj;
+			return (com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -259,7 +259,7 @@ public class KaleoProcessServiceHttp {
 	private static final Class<?>[] _addKaleoProcessParameterTypes0 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			long.class, java.lang.String.class, int.class,
-			com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs.class,
+			com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteKaleoProcessParameterTypes1 = new Class[] {
@@ -278,7 +278,7 @@ public class KaleoProcessServiceHttp {
 	private static final Class<?>[] _updateKaleoProcessParameterTypes5 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			long.class, java.lang.String.class, int.class,
-			com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs.class,
+			com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

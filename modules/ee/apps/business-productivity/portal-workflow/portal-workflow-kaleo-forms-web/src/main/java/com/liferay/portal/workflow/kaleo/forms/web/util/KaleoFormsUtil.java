@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.web.util;
+package com.liferay.portal.workflow.kaleo.forms.web.util;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.portal.kernel.util.CharPool;
@@ -28,12 +28,12 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcessLink;
-import com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPair;
-import com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs;
-import com.liferay.workflow.kaleo.forms.service.KaleoProcessLinkLocalServiceUtil;
-import com.liferay.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPair;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs;
+import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalServiceUtil;
+import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -152,7 +152,7 @@ if (Validator.isNotNull(workflowDefinition)) {
 			/>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition"
+				className="com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition"
 				keyProperty="kaleoDraftDefinitionId"
 				modelVar="kaleoDraftDefinition"
 			>

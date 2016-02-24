@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.designer.service.http;
+package com.liferay.portal.workflow.kaleo.designer.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
-import com.liferay.workflow.kaleo.designer.service.KaleoDraftDefinitionServiceUtil;
+import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -55,7 +55,7 @@ import com.liferay.workflow.kaleo.designer.service.KaleoDraftDefinitionServiceUt
  */
 @ProviderType
 public class KaleoDraftDefinitionServiceHttp {
-	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition addKaleoDraftDefinition(
+	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition addKaleoDraftDefinition(
 		HttpPrincipal httpPrincipal, long userId, long groupId,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -84,7 +84,7 @@ public class KaleoDraftDefinitionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition)returnObj;
+			return (com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -123,7 +123,7 @@ public class KaleoDraftDefinitionServiceHttp {
 		}
 	}
 
-	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
+	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
 		HttpPrincipal httpPrincipal, java.lang.String name, int version,
 		int draftVersion,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -149,7 +149,7 @@ public class KaleoDraftDefinitionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition)returnObj;
+			return (com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -158,7 +158,7 @@ public class KaleoDraftDefinitionServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions(
+	public static java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions(
 		HttpPrincipal httpPrincipal)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -181,7 +181,7 @@ public class KaleoDraftDefinitionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition>)returnObj;
+			return (java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -190,7 +190,7 @@ public class KaleoDraftDefinitionServiceHttp {
 		}
 	}
 
-	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition getLatestKaleoDraftDefinition(
+	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition getLatestKaleoDraftDefinition(
 		HttpPrincipal httpPrincipal, java.lang.String name, int version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -215,7 +215,7 @@ public class KaleoDraftDefinitionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition)returnObj;
+			return (com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -224,7 +224,7 @@ public class KaleoDraftDefinitionServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+	public static java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
 		HttpPrincipal httpPrincipal, long companyId, int version, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -250,7 +250,7 @@ public class KaleoDraftDefinitionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition>)returnObj;
+			return (java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -259,7 +259,7 @@ public class KaleoDraftDefinitionServiceHttp {
 		}
 	}
 
-	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition publishKaleoDraftDefinition(
+	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition publishKaleoDraftDefinition(
 		HttpPrincipal httpPrincipal, long userId, long groupId,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -287,7 +287,7 @@ public class KaleoDraftDefinitionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition)returnObj;
+			return (com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -296,7 +296,7 @@ public class KaleoDraftDefinitionServiceHttp {
 		}
 	}
 
-	public static com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition updateKaleoDraftDefinition(
+	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition updateKaleoDraftDefinition(
 		HttpPrincipal httpPrincipal, long userId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.lang.String content, int version,
@@ -323,7 +323,7 @@ public class KaleoDraftDefinitionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition)returnObj;
+			return (com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

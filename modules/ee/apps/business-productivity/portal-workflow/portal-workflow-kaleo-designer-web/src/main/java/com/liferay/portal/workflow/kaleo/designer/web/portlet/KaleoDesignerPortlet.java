@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.designer.web.portlet;
+package com.liferay.portal.workflow.kaleo.designer.web.portlet;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -44,15 +44,15 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.workflow.kaleo.designer.constants.KaleoDesignerWebKeys;
-import com.liferay.workflow.kaleo.designer.exception.DuplicateKaleoDraftDefinitionNameException;
-import com.liferay.workflow.kaleo.designer.exception.KaleoDraftDefinitionContentException;
-import com.liferay.workflow.kaleo.designer.exception.KaleoDraftDefinitionNameException;
-import com.liferay.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
-import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
-import com.liferay.workflow.kaleo.designer.service.KaleoDraftDefinitionService;
-import com.liferay.workflow.kaleo.designer.util.KaleoDesignerUtil;
-import com.liferay.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
+import com.liferay.portal.workflow.kaleo.designer.constants.KaleoDesignerWebKeys;
+import com.liferay.portal.workflow.kaleo.designer.exception.DuplicateKaleoDraftDefinitionNameException;
+import com.liferay.portal.workflow.kaleo.designer.exception.KaleoDraftDefinitionContentException;
+import com.liferay.portal.workflow.kaleo.designer.exception.KaleoDraftDefinitionNameException;
+import com.liferay.portal.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
+import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
+import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionService;
+import com.liferay.portal.workflow.kaleo.designer.util.KaleoDesignerUtil;
+import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 
 import java.io.IOException;
 

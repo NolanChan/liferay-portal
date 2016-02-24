@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.service.persistence;
+package com.liferay.portal.workflow.kaleo.forms.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -22,14 +22,14 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 
 import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
 /**
- * The persistence utility for the kaleo process service. This utility wraps {@link com.liferay.workflow.kaleo.forms.service.persistence.impl.KaleoProcessPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the kaleo process service. This utility wraps {@link com.liferay.portal.workflow.kaleo.forms.service.persistence.impl.KaleoProcessPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -37,7 +37,7 @@ import java.util.List;
  *
  * @author Marcellus Tavares
  * @see KaleoProcessPersistence
- * @see com.liferay.workflow.kaleo.forms.service.persistence.impl.KaleoProcessPersistenceImpl
+ * @see com.liferay.portal.workflow.kaleo.forms.service.persistence.impl.KaleoProcessPersistenceImpl
  * @generated
  */
 @ProviderType
@@ -189,7 +189,7 @@ public class KaleoProcessUtil {
 	*/
 	public static KaleoProcess findByGroupId_First(long groupId,
 		OrderByComparator<KaleoProcess> orderByComparator)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -215,7 +215,7 @@ public class KaleoProcessUtil {
 	*/
 	public static KaleoProcess findByGroupId_Last(long groupId,
 		OrderByComparator<KaleoProcess> orderByComparator)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -243,7 +243,7 @@ public class KaleoProcessUtil {
 	public static KaleoProcess[] findByGroupId_PrevAndNext(
 		long kaleoProcessId, long groupId,
 		OrderByComparator<KaleoProcess> orderByComparator)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(kaleoProcessId, groupId,
 			orderByComparator);
@@ -307,7 +307,7 @@ public class KaleoProcessUtil {
 	public static KaleoProcess[] filterFindByGroupId_PrevAndNext(
 		long kaleoProcessId, long groupId,
 		OrderByComparator<KaleoProcess> orderByComparator)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(kaleoProcessId, groupId,
 			orderByComparator);
@@ -350,7 +350,7 @@ public class KaleoProcessUtil {
 	* @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
 	*/
 	public static KaleoProcess findByDDLRecordSetId(long DDLRecordSetId)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
 		return getPersistence().findByDDLRecordSetId(DDLRecordSetId);
 	}
 
@@ -384,7 +384,7 @@ public class KaleoProcessUtil {
 	* @return the kaleo process that was removed
 	*/
 	public static KaleoProcess removeByDDLRecordSetId(long DDLRecordSetId)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
 		return getPersistence().removeByDDLRecordSetId(DDLRecordSetId);
 	}
 
@@ -434,7 +434,7 @@ public class KaleoProcessUtil {
 	* @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
 	*/
 	public static KaleoProcess remove(long kaleoProcessId)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
 		return getPersistence().remove(kaleoProcessId);
 	}
 
@@ -450,7 +450,7 @@ public class KaleoProcessUtil {
 	* @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
 	*/
 	public static KaleoProcess findByPrimaryKey(long kaleoProcessId)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException {
 		return getPersistence().findByPrimaryKey(kaleoProcessId);
 	}
 

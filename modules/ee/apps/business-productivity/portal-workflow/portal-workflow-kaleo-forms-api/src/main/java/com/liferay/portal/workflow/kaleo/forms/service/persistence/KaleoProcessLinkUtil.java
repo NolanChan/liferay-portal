@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.service.persistence;
+package com.liferay.portal.workflow.kaleo.forms.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -22,14 +22,14 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import com.liferay.workflow.kaleo.forms.model.KaleoProcessLink;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
 
 import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
 /**
- * The persistence utility for the kaleo process link service. This utility wraps {@link com.liferay.workflow.kaleo.forms.service.persistence.impl.KaleoProcessLinkPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the kaleo process link service. This utility wraps {@link com.liferay.portal.workflow.kaleo.forms.service.persistence.impl.KaleoProcessLinkPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -37,7 +37,7 @@ import java.util.List;
  *
  * @author Marcellus Tavares
  * @see KaleoProcessLinkPersistence
- * @see com.liferay.workflow.kaleo.forms.service.persistence.impl.KaleoProcessLinkPersistenceImpl
+ * @see com.liferay.portal.workflow.kaleo.forms.service.persistence.impl.KaleoProcessLinkPersistenceImpl
  * @generated
  */
 @ProviderType
@@ -194,7 +194,7 @@ public class KaleoProcessLinkUtil {
 	public static KaleoProcessLink findByKaleoProcessId_First(
 		long kaleoProcessId,
 		OrderByComparator<KaleoProcessLink> orderByComparator)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence()
 				   .findByKaleoProcessId_First(kaleoProcessId, orderByComparator);
 	}
@@ -225,7 +225,7 @@ public class KaleoProcessLinkUtil {
 	public static KaleoProcessLink findByKaleoProcessId_Last(
 		long kaleoProcessId,
 		OrderByComparator<KaleoProcessLink> orderByComparator)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence()
 				   .findByKaleoProcessId_Last(kaleoProcessId, orderByComparator);
 	}
@@ -256,7 +256,7 @@ public class KaleoProcessLinkUtil {
 	public static KaleoProcessLink[] findByKaleoProcessId_PrevAndNext(
 		long kaleoProcessLinkId, long kaleoProcessId,
 		OrderByComparator<KaleoProcessLink> orderByComparator)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence()
 				   .findByKaleoProcessId_PrevAndNext(kaleoProcessLinkId,
 			kaleoProcessId, orderByComparator);
@@ -291,7 +291,7 @@ public class KaleoProcessLinkUtil {
 	*/
 	public static KaleoProcessLink findByKPI_WTN(long kaleoProcessId,
 		java.lang.String workflowTaskName)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence().findByKPI_WTN(kaleoProcessId, workflowTaskName);
 	}
 
@@ -331,7 +331,7 @@ public class KaleoProcessLinkUtil {
 	*/
 	public static KaleoProcessLink removeByKPI_WTN(long kaleoProcessId,
 		java.lang.String workflowTaskName)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence().removeByKPI_WTN(kaleoProcessId, workflowTaskName);
 	}
 
@@ -383,7 +383,7 @@ public class KaleoProcessLinkUtil {
 	* @throws NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
 	*/
 	public static KaleoProcessLink remove(long kaleoProcessLinkId)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence().remove(kaleoProcessLinkId);
 	}
 
@@ -399,7 +399,7 @@ public class KaleoProcessLinkUtil {
 	* @throws NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
 	*/
 	public static KaleoProcessLink findByPrimaryKey(long kaleoProcessLinkId)
-		throws com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
+		throws com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException {
 		return getPersistence().findByPrimaryKey(kaleoProcessLinkId);
 	}
 

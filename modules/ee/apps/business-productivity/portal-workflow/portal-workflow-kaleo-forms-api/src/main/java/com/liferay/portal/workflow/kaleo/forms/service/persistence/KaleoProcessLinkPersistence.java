@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.service.persistence;
+package com.liferay.portal.workflow.kaleo.forms.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcessLink;
+import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
 
 /**
  * The persistence interface for the kaleo process link service.
@@ -29,7 +29,7 @@ import com.liferay.workflow.kaleo.forms.model.KaleoProcessLink;
  * </p>
  *
  * @author Marcellus Tavares
- * @see com.liferay.workflow.kaleo.forms.service.persistence.impl.KaleoProcessLinkPersistenceImpl
+ * @see com.liferay.portal.workflow.kaleo.forms.service.persistence.impl.KaleoProcessLinkPersistenceImpl
  * @see KaleoProcessLinkUtil
  * @generated
  */

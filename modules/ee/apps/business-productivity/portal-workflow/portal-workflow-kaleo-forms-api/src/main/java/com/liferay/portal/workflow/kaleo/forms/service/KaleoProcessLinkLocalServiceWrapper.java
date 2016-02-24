@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.service;
+package com.liferay.portal.workflow.kaleo.forms.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -35,7 +35,7 @@ public class KaleoProcessLinkLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink addKaleoProcessLink(
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink addKaleoProcessLink(
 		long kaleoProcessId, java.lang.String workflowTaskName,
 		long ddmTemplateId) {
 		return _kaleoProcessLinkLocalService.addKaleoProcessLink(kaleoProcessId,
@@ -49,8 +49,8 @@ public class KaleoProcessLinkLocalServiceWrapper
 	* @return the kaleo process link that was added
 	*/
 	@Override
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink addKaleoProcessLink(
-		com.liferay.workflow.kaleo.forms.model.KaleoProcessLink kaleoProcessLink) {
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink addKaleoProcessLink(
+		com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink kaleoProcessLink) {
 		return _kaleoProcessLinkLocalService.addKaleoProcessLink(kaleoProcessLink);
 	}
 
@@ -61,7 +61,7 @@ public class KaleoProcessLinkLocalServiceWrapper
 	* @return the new kaleo process link
 	*/
 	@Override
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink createKaleoProcessLink(
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink createKaleoProcessLink(
 		long kaleoProcessLinkId) {
 		return _kaleoProcessLinkLocalService.createKaleoProcessLink(kaleoProcessLinkId);
 	}
@@ -73,8 +73,8 @@ public class KaleoProcessLinkLocalServiceWrapper
 	* @return the kaleo process link that was removed
 	*/
 	@Override
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink deleteKaleoProcessLink(
-		com.liferay.workflow.kaleo.forms.model.KaleoProcessLink kaleoProcessLink) {
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink deleteKaleoProcessLink(
+		com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink kaleoProcessLink) {
 		return _kaleoProcessLinkLocalService.deleteKaleoProcessLink(kaleoProcessLink);
 	}
 
@@ -86,7 +86,7 @@ public class KaleoProcessLinkLocalServiceWrapper
 	* @throws PortalException if a kaleo process link with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink deleteKaleoProcessLink(
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink deleteKaleoProcessLink(
 		long kaleoProcessLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessLinkLocalService.deleteKaleoProcessLink(kaleoProcessLinkId);
@@ -128,7 +128,7 @@ public class KaleoProcessLinkLocalServiceWrapper
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -148,7 +148,7 @@ public class KaleoProcessLinkLocalServiceWrapper
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -194,14 +194,14 @@ public class KaleoProcessLinkLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink fetchKaleoProcessLink(
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink fetchKaleoProcessLink(
 		long kaleoProcessId, java.lang.String workflowTaskName) {
 		return _kaleoProcessLinkLocalService.fetchKaleoProcessLink(kaleoProcessId,
 			workflowTaskName);
 	}
 
 	@Override
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink fetchKaleoProcessLink(
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink fetchKaleoProcessLink(
 		long kaleoProcessLinkId) {
 		return _kaleoProcessLinkLocalService.fetchKaleoProcessLink(kaleoProcessLinkId);
 	}
@@ -224,14 +224,14 @@ public class KaleoProcessLinkLocalServiceWrapper
 	* @throws PortalException if a kaleo process link with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink getKaleoProcessLink(
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink getKaleoProcessLink(
 		long kaleoProcessLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessLinkLocalService.getKaleoProcessLink(kaleoProcessLinkId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.workflow.kaleo.forms.model.KaleoProcessLink> getKaleoProcessLinks(
+	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink> getKaleoProcessLinks(
 		long kaleoProcessId) {
 		return _kaleoProcessLinkLocalService.getKaleoProcessLinks(kaleoProcessId);
 	}
@@ -240,7 +240,7 @@ public class KaleoProcessLinkLocalServiceWrapper
 	* Returns a range of all the kaleo process links.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of kaleo process links
@@ -248,7 +248,7 @@ public class KaleoProcessLinkLocalServiceWrapper
 	* @return the range of kaleo process links
 	*/
 	@Override
-	public java.util.List<com.liferay.workflow.kaleo.forms.model.KaleoProcessLink> getKaleoProcessLinks(
+	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink> getKaleoProcessLinks(
 		int start, int end) {
 		return _kaleoProcessLinkLocalService.getKaleoProcessLinks(start, end);
 	}
@@ -281,7 +281,7 @@ public class KaleoProcessLinkLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
 		long kaleoProcessId, java.lang.String workflowTaskName,
 		long ddmTemplateId) {
 		return _kaleoProcessLinkLocalService.updateKaleoProcessLink(kaleoProcessId,
@@ -295,13 +295,13 @@ public class KaleoProcessLinkLocalServiceWrapper
 	* @return the kaleo process link that was updated
 	*/
 	@Override
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
-		com.liferay.workflow.kaleo.forms.model.KaleoProcessLink kaleoProcessLink) {
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
+		com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink kaleoProcessLink) {
 		return _kaleoProcessLinkLocalService.updateKaleoProcessLink(kaleoProcessLink);
 	}
 
 	@Override
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
 		long kaleoProcessLinkId, long kaleoProcessId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessLinkLocalService.updateKaleoProcessLink(kaleoProcessLinkId,
@@ -309,7 +309,7 @@ public class KaleoProcessLinkLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
 		long kaleoProcessLinkId, long kaleoProcessId,
 		java.lang.String workflowTaskName, long ddmTemplateId)
 		throws com.liferay.portal.kernel.exception.PortalException {

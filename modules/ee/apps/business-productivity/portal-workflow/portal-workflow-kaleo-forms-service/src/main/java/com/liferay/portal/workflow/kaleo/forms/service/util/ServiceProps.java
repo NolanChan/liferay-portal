@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.service.util;
+package com.liferay.portal.workflow.kaleo.forms.service.util;
 
 import aQute.bnd.annotation.ProviderType;
 

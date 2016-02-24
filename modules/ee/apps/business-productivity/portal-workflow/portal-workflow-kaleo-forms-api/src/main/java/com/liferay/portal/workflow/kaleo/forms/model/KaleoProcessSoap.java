@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.model;
+package com.liferay.portal.workflow.kaleo.forms.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,10 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.workflow.kaleo.forms.service.http.KaleoProcessServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.portal.workflow.kaleo.forms.service.http.KaleoProcessServiceSoap}.
  *
  * @author Marcellus Tavares
- * @see com.liferay.workflow.kaleo.forms.service.http.KaleoProcessServiceSoap
+ * @see com.liferay.portal.workflow.kaleo.forms.service.http.KaleoProcessServiceSoap
  * @generated
  */
 @ProviderType

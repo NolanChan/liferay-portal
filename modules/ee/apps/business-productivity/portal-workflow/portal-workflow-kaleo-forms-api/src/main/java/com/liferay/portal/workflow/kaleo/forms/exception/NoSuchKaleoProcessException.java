@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.exception;
+package com.liferay.portal.workflow.kaleo.forms.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 

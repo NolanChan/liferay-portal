@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 
-<service-builder package-path="com.liferay.workflow.kaleo.forms" auto-namespace-tables="false">
+<service-builder package-path="com.liferay.portal.workflow.kaleo.forms" auto-namespace-tables="false">
 	<author>Marcellus Tavares</author>
 	<namespace>KaleoForms</namespace>
 	<entity name="KaleoProcess" local-service="true" remote-service="true">

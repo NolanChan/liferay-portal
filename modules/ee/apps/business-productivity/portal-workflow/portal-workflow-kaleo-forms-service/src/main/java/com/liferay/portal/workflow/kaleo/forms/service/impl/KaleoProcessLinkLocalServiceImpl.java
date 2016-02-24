@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.service.impl;
+package com.liferay.portal.workflow.kaleo.forms.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcessLink;
-import com.liferay.workflow.kaleo.forms.service.base.KaleoProcessLinkLocalServiceBaseImpl;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
+import com.liferay.portal.workflow.kaleo.forms.service.base.KaleoProcessLinkLocalServiceBaseImpl;
 
 import java.util.List;
 

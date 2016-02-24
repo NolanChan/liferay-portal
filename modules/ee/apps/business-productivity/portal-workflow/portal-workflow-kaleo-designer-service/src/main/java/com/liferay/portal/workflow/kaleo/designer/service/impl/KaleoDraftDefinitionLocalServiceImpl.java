@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.designer.service.impl;
+package com.liferay.portal.workflow.kaleo.designer.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -29,13 +29,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.workflow.kaleo.designer.exception.DuplicateKaleoDraftDefinitionNameException;
-import com.liferay.workflow.kaleo.designer.exception.KaleoDraftDefinitionContentException;
-import com.liferay.workflow.kaleo.designer.exception.KaleoDraftDefinitionNameException;
-import com.liferay.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
-import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
-import com.liferay.workflow.kaleo.designer.service.base.KaleoDraftDefinitionLocalServiceBaseImpl;
-import com.liferay.workflow.kaleo.designer.util.KaleoDesignerUtil;
+import com.liferay.portal.workflow.kaleo.designer.exception.DuplicateKaleoDraftDefinitionNameException;
+import com.liferay.portal.workflow.kaleo.designer.exception.KaleoDraftDefinitionContentException;
+import com.liferay.portal.workflow.kaleo.designer.exception.KaleoDraftDefinitionNameException;
+import com.liferay.portal.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
+import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
+import com.liferay.portal.workflow.kaleo.designer.service.base.KaleoDraftDefinitionLocalServiceBaseImpl;
+import com.liferay.portal.workflow.kaleo.designer.util.KaleoDesignerUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;

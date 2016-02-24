@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.model;
+package com.liferay.portal.workflow.kaleo.forms.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -25,17 +25,17 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Marcellus Tavares
  * @see KaleoProcessModel
- * @see com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessImpl
- * @see com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl
+ * @see com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl
+ * @see com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl
  * @generated
  */
-@ImplementationClassName("com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessImpl")
+@ImplementationClassName("com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl")
 @ProviderType
 public interface KaleoProcess extends KaleoProcessModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<KaleoProcess, Long> KALEO_PROCESS_ID_ACCESSOR = new Accessor<KaleoProcess, Long>() {
 			@Override
@@ -66,7 +66,7 @@ public interface KaleoProcess extends KaleoProcessModel, PersistedModel {
 	public java.lang.String getDescription(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.workflow.kaleo.forms.model.KaleoProcessLink> getKaleoProcessLinks();
+	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink> getKaleoProcessLinks();
 
 	public java.lang.String getName()
 		throws com.liferay.portal.kernel.exception.PortalException;

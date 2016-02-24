@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.model.impl;
+package com.liferay.portal.workflow.kaleo.forms.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-import com.liferay.workflow.kaleo.forms.model.KaleoProcessLink;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcessLinkModel;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLinkModel;
 
 import java.io.Serializable;
 
@@ -82,20 +82,20 @@ public class KaleoProcessLinkModelImpl extends BaseModelImpl<KaleoProcessLink>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.workflow.kaleo.forms.service.util.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.workflow.kaleo.forms.model.KaleoProcessLink"),
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.kaleo.forms.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.workflow.kaleo.forms.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.workflow.kaleo.forms.model.KaleoProcessLink"),
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.kaleo.forms.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.workflow.kaleo.forms.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.workflow.kaleo.forms.model.KaleoProcessLink"),
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.kaleo.forms.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink"),
 			true);
 	public static final long KALEOPROCESSID_COLUMN_BITMASK = 1L;
 	public static final long WORKFLOWTASKNAME_COLUMN_BITMASK = 2L;
 	public static final long KALEOPROCESSLINKID_COLUMN_BITMASK = 4L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.workflow.kaleo.forms.service.util.ServiceProps.get(
-				"lock.expiration.time.com.liferay.workflow.kaleo.forms.model.KaleoProcessLink"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.workflow.kaleo.forms.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink"));
 
 	public KaleoProcessLinkModelImpl() {
 	}
@@ -388,7 +388,7 @@ public class KaleoProcessLinkModelImpl extends BaseModelImpl<KaleoProcessLink>
 		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.workflow.kaleo.forms.model.KaleoProcessLink");
+		sb.append("com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink");
 		sb.append("</model-name>");
 
 		sb.append(

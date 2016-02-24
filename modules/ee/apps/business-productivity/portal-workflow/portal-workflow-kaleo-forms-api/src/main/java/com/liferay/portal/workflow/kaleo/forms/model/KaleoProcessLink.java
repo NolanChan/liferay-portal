@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.model;
+package com.liferay.portal.workflow.kaleo.forms.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -25,17 +25,17 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Marcellus Tavares
  * @see KaleoProcessLinkModel
- * @see com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl
- * @see com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl
+ * @see com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl
+ * @see com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl
  * @generated
  */
-@ImplementationClassName("com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl")
+@ImplementationClassName("com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl")
 @ProviderType
 public interface KaleoProcessLink extends KaleoProcessLinkModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<KaleoProcessLink, Long> KALEO_PROCESS_LINK_ID_ACCESSOR =
 		new Accessor<KaleoProcessLink, Long>() {
@@ -55,6 +55,6 @@ public interface KaleoProcessLink extends KaleoProcessLinkModel, PersistedModel 
 			}
 		};
 
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcess getKaleoProcess()
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getKaleoProcess()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.web.portlet;
+package com.liferay.portal.workflow.kaleo.forms.web.portlet;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTaskDueDateException;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
-import com.liferay.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
-import com.liferay.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
+import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
+import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 
 import java.util.Calendar;
 import java.util.Date;

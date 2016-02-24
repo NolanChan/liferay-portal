@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.model;
+package com.liferay.portal.workflow.kaleo.forms.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -99,7 +99,7 @@ public class KaleoProcessLinkWrapper implements KaleoProcessLink,
 
 	@Override
 	public int compareTo(
-		com.liferay.workflow.kaleo.forms.model.KaleoProcessLink kaleoProcessLink) {
+		com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink kaleoProcessLink) {
 		return _kaleoProcessLink.compareTo(kaleoProcessLink);
 	}
 
@@ -119,7 +119,7 @@ public class KaleoProcessLinkWrapper implements KaleoProcessLink,
 	}
 
 	@Override
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcess getKaleoProcess()
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getKaleoProcess()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessLink.getKaleoProcess();
 	}
@@ -276,12 +276,12 @@ public class KaleoProcessLinkWrapper implements KaleoProcessLink,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.workflow.kaleo.forms.model.KaleoProcessLink> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink> toCacheModel() {
 		return _kaleoProcessLink.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink toEscapedModel() {
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink toEscapedModel() {
 		return new KaleoProcessLinkWrapper(_kaleoProcessLink.toEscapedModel());
 	}
 
@@ -291,7 +291,7 @@ public class KaleoProcessLinkWrapper implements KaleoProcessLink,
 	}
 
 	@Override
-	public com.liferay.workflow.kaleo.forms.model.KaleoProcessLink toUnescapedModel() {
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink toUnescapedModel() {
 		return new KaleoProcessLinkWrapper(_kaleoProcessLink.toUnescapedModel());
 	}
 

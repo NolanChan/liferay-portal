@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.service.persistence.test;
+package com.liferay.portal.workflow.kaleo.forms.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
@@ -34,11 +34,11 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
-import com.liferay.workflow.kaleo.forms.service.KaleoProcessLocalServiceUtil;
-import com.liferay.workflow.kaleo.forms.service.persistence.KaleoProcessPersistence;
-import com.liferay.workflow.kaleo.forms.service.persistence.KaleoProcessUtil;
+import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalServiceUtil;
+import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessPersistence;
+import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessUtil;
 
 import org.junit.After;
 import org.junit.Assert;

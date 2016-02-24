@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.web.upgrade.v1_0_0;
+package com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_0;
 
-import com.liferay.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
+import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 
 /**
  * @author Inácio Nery

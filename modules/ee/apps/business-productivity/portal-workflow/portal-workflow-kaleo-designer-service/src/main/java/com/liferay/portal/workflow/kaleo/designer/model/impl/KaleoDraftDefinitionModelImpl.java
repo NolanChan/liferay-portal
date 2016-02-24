@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.designer.model.impl;
+package com.liferay.portal.workflow.kaleo.designer.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -36,9 +36,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
-import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinitionModel;
-import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinitionSoap;
+import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
+import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinitionModel;
+import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinitionSoap;
 
 import java.io.Serializable;
 
@@ -114,14 +114,14 @@ public class KaleoDraftDefinitionModelImpl extends BaseModelImpl<KaleoDraftDefin
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.workflow.kaleo.designer.service.util.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition"),
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.kaleo.designer.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.workflow.kaleo.designer.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition"),
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.kaleo.designer.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.workflow.kaleo.designer.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition"),
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.kaleo.designer.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long DRAFTVERSION_COLUMN_BITMASK = 2L;
@@ -179,8 +179,8 @@ public class KaleoDraftDefinitionModelImpl extends BaseModelImpl<KaleoDraftDefin
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.workflow.kaleo.designer.service.util.ServiceProps.get(
-				"lock.expiration.time.com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.workflow.kaleo.designer.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition"));
 
 	public KaleoDraftDefinitionModelImpl() {
 	}
@@ -918,7 +918,7 @@ public class KaleoDraftDefinitionModelImpl extends BaseModelImpl<KaleoDraftDefin
 
 		sb.append("<model><model-name>");
 		sb.append(
-			"com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition");
+			"com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition");
 		sb.append("</model-name>");
 
 		sb.append(

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.service.persistence.impl;
+package com.liferay.portal.workflow.kaleo.forms.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -39,11 +39,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
-import com.liferay.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
-import com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessImpl;
-import com.liferay.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl;
-import com.liferay.workflow.kaleo.forms.service.persistence.KaleoProcessPersistence;
+import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl;
+import com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl;
+import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessPersistence;
 
 import java.io.Serializable;
 
@@ -65,7 +65,7 @@ import java.util.Set;
  *
  * @author Marcellus Tavares
  * @see KaleoProcessPersistence
- * @see com.liferay.workflow.kaleo.forms.service.persistence.KaleoProcessUtil
+ * @see com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessUtil
  * @generated
  */
 @ProviderType

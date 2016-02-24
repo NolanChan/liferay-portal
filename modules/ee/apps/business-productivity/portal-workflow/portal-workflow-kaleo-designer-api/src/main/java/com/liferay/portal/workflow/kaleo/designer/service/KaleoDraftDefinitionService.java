@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.designer.service;
+package com.liferay.portal.workflow.kaleo.designer.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
+import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
 
 import java.util.List;
 import java.util.Locale;
@@ -41,8 +41,8 @@ import java.util.Map;
  *
  * @author Eduardo Lundgren
  * @see KaleoDraftDefinitionServiceUtil
- * @see com.liferay.workflow.kaleo.designer.service.base.KaleoDraftDefinitionServiceBaseImpl
- * @see com.liferay.workflow.kaleo.designer.service.impl.KaleoDraftDefinitionServiceImpl
+ * @see com.liferay.portal.workflow.kaleo.designer.service.base.KaleoDraftDefinitionServiceBaseImpl
+ * @see com.liferay.portal.workflow.kaleo.designer.service.impl.KaleoDraftDefinitionServiceImpl
  * @generated
  */
 @AccessControlled
@@ -56,7 +56,7 @@ public interface KaleoDraftDefinitionService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link KaleoDraftDefinitionServiceUtil} to access the kaleo draft definition remote service. Add custom service methods to {@link com.liferay.workflow.kaleo.designer.service.impl.KaleoDraftDefinitionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link KaleoDraftDefinitionServiceUtil} to access the kaleo draft definition remote service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.designer.service.impl.KaleoDraftDefinitionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public KaleoDraftDefinition addKaleoDraftDefinition(long userId,
 		long groupId, java.lang.String name,

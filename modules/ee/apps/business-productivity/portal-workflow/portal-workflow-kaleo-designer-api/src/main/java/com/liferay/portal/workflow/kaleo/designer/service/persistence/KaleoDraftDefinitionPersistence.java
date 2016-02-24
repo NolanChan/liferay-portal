@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.designer.service.persistence;
+package com.liferay.portal.workflow.kaleo.designer.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import com.liferay.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
-import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
+import com.liferay.portal.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
+import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
 
 /**
  * The persistence interface for the kaleo draft definition service.
@@ -29,7 +29,7 @@ import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
  * </p>
  *
  * @author Eduardo Lundgren
- * @see com.liferay.workflow.kaleo.designer.service.persistence.impl.KaleoDraftDefinitionPersistenceImpl
+ * @see com.liferay.portal.workflow.kaleo.designer.service.persistence.impl.KaleoDraftDefinitionPersistenceImpl
  * @see KaleoDraftDefinitionUtil
  * @generated
  */

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.service.impl;
+package com.liferay.portal.workflow.kaleo.forms.service.impl;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
-import com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPair;
-import com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs;
-import com.liferay.workflow.kaleo.forms.service.base.KaleoProcessLocalServiceBaseImpl;
+import com.liferay.portal.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPair;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs;
+import com.liferay.portal.workflow.kaleo.forms.service.base.KaleoProcessLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;

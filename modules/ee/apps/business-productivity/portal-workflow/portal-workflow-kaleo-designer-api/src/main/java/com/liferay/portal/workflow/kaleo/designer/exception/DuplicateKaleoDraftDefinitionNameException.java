@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.designer.exception;
+package com.liferay.portal.workflow.kaleo.designer.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.service;
+package com.liferay.portal.workflow.kaleo.forms.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
-import com.liferay.workflow.kaleo.forms.model.KaleoTaskFormPairs;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs;
 
 import java.util.List;
 import java.util.Locale;
@@ -42,8 +42,8 @@ import java.util.Map;
  *
  * @author Marcellus Tavares
  * @see KaleoProcessServiceUtil
- * @see com.liferay.workflow.kaleo.forms.service.base.KaleoProcessServiceBaseImpl
- * @see com.liferay.workflow.kaleo.forms.service.impl.KaleoProcessServiceImpl
+ * @see com.liferay.portal.workflow.kaleo.forms.service.base.KaleoProcessServiceBaseImpl
+ * @see com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessServiceImpl
  * @generated
  */
 @AccessControlled
@@ -57,7 +57,7 @@ public interface KaleoProcessService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link KaleoProcessServiceUtil} to access the kaleo process remote service. Add custom service methods to {@link com.liferay.workflow.kaleo.forms.service.impl.KaleoProcessServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link KaleoProcessServiceUtil} to access the kaleo process remote service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public KaleoProcess addKaleoProcess(long groupId, long ddmStructureId,
 		Map<Locale, java.lang.String> nameMap,

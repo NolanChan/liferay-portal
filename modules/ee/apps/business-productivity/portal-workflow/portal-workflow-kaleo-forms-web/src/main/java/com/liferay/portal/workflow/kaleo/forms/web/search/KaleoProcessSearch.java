@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.web.search;
+package com.liferay.portal.workflow.kaleo.forms.web.search;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;

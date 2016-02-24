@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.forms.model.impl;
+package com.liferay.portal.workflow.kaleo.forms.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -32,9 +32,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-import com.liferay.workflow.kaleo.forms.model.KaleoProcess;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcessModel;
-import com.liferay.workflow.kaleo.forms.model.KaleoProcessSoap;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessModel;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessSoap;
 
 import java.io.Serializable;
 
@@ -105,14 +105,14 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.workflow.kaleo.forms.service.util.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.workflow.kaleo.forms.model.KaleoProcess"),
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.kaleo.forms.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.workflow.kaleo.forms.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.workflow.kaleo.forms.model.KaleoProcess"),
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.kaleo.forms.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.workflow.kaleo.forms.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.workflow.kaleo.forms.model.KaleoProcess"),
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.kaleo.forms.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"),
 			true);
 	public static final long DDLRECORDSETID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
@@ -166,8 +166,8 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.workflow.kaleo.forms.service.util.ServiceProps.get(
-				"lock.expiration.time.com.liferay.workflow.kaleo.forms.model.KaleoProcess"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.workflow.kaleo.forms.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"));
 
 	public KaleoProcessModelImpl() {
 	}
@@ -682,7 +682,7 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.workflow.kaleo.forms.model.KaleoProcess");
+		sb.append("com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess");
 		sb.append("</model-name>");
 
 		sb.append(

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.designer.service.persistence.impl;
+package com.liferay.portal.workflow.kaleo.designer.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -37,11 +37,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
-import com.liferay.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
-import com.liferay.workflow.kaleo.designer.model.KaleoDraftDefinition;
-import com.liferay.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionImpl;
-import com.liferay.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionModelImpl;
-import com.liferay.workflow.kaleo.designer.service.persistence.KaleoDraftDefinitionPersistence;
+import com.liferay.portal.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
+import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
+import com.liferay.portal.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionImpl;
+import com.liferay.portal.workflow.kaleo.designer.model.impl.KaleoDraftDefinitionModelImpl;
+import com.liferay.portal.workflow.kaleo.designer.service.persistence.KaleoDraftDefinitionPersistence;
 
 import java.io.Serializable;
 
@@ -63,7 +63,7 @@ import java.util.Set;
  *
  * @author Eduardo Lundgren
  * @see KaleoDraftDefinitionPersistence
- * @see com.liferay.workflow.kaleo.designer.service.persistence.KaleoDraftDefinitionUtil
+ * @see com.liferay.portal.workflow.kaleo.designer.service.persistence.KaleoDraftDefinitionUtil
  * @generated
  */
 @ProviderType

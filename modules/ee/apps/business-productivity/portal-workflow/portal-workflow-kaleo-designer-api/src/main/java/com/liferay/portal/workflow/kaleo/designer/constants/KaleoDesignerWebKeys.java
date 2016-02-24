@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.kaleo.designer.constants;
+package com.liferay.portal.workflow.kaleo.designer.constants;
 
 /**
  * @author Eduardo Lundgren
