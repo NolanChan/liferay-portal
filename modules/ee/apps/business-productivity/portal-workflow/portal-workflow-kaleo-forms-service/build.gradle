@@ -1,7 +1,7 @@
 buildService {
-	apiDir = "../workflow-kaleo-forms-api/src/main/java"
+	apiDir = "../portal-workflow-kaleo-forms-api/src/main/java"
 	autoNamespaceTables = false
-	testDir = "../workflow-kaleo-forms-test/src/testIntegration/java"
+	testDir = "../portal-workflow-kaleo-forms-test/src/testIntegration/java"
 }
 
 dependencies {
