@@ -14,7 +14,7 @@ dependencies {
 	provided project(":apps:business-productivity:dynamic-data-lists:dynamic-data-lists-api")
 	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:platform:osgi-service-tracker-collections")
-	provided project(":ee:apps:business-productivity:portal-workflow:workflow-kaleo-forms-api")
+	provided project(":ee:apps:business-productivity:portal-workflow:portal-workflow-kaleo-forms-api")
 }
 
 liferay {

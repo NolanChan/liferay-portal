@@ -12,10 +12,10 @@ dependencies {
 	provided project(":apps:platform:frontend:frontend-taglib")
 	provided project(":apps:platform:portal:portal-upgrade")
 	provided project(":apps:web-experience-management:application-list:application-list-api")
-	provided project(":ee:apps:business-productivity:portal-workflow:workflow-kaleo-designer-api")
-	provided project(":ee:apps:business-productivity:portal-workflow:workflow-kaleo-designer-web")
-	provided project(":ee:apps:business-productivity:portal-workflow:workflow-kaleo-forms-api")
-	provided project(":ee:apps:business-productivity:portal-workflow:workflow-kaleo-forms-service")
+	provided project(":ee:apps:business-productivity:portal-workflow:portal-workflow-kaleo-designer-api")
+	provided project(":ee:apps:business-productivity:portal-workflow:portal-workflow-kaleo-designer-web")
+	provided project(":ee:apps:business-productivity:portal-workflow:portal-workflow-kaleo-forms-api")
+	provided project(":ee:apps:business-productivity:portal-workflow:portal-workflow-kaleo-forms-service")
 }
 
 liferay {
