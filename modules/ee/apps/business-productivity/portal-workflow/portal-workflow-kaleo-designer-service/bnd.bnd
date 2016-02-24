@@ -1,9 +1,9 @@
-Bundle-Name: Liferay Workflow Kaleo Designer Service
-Bundle-SymbolicName: com.liferay.workflow.kaleo.designer.service
+Bundle-Name: Liferay Portal Workflow Kaleo Designer Service
+Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.designer.service
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.workflow.kaleo.designer.service.permission,\
-	com.liferay.workflow.kaleo.designer.util
+	com.liferay.portal.workflow.kaleo.designer.service.permission,\
+	com.liferay.portal.workflow.kaleo.designer.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Kaleo Designer
 Liferay-Require-SchemaVersion: 1.0.0
