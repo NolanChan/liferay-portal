@@ -1,0 +1,21 @@
+Bundle-Name: Liferay Portal Cluster Multiple
+Bundle-SymbolicName: com.liferay.portal.cluster.multiple
+Bundle-Version: 1.0.0
+DynamicImport-Package: *
+Import-Package:\
+	!COM.ibm.netrexx.*,\
+	\
+	!bsf.*,\
+	\
+	!bsh.*,\
+	\
+	!netrexx.*,\
+	\
+	!org.apache.logging.*,\
+	\
+	!org.mozilla.javascript.*,\
+	*
+Include-Resource: @lib/jgroups.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Clustering
+-include: ../../../../../../marketplace/platform/bnd.bnd

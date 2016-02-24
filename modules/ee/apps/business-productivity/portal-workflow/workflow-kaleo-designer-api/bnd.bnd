@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Workflow Kaleo Designer API
+Bundle-SymbolicName: com.liferay.workflow.kaleo.designer.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.workflow.kaleo.designer.constants,\
+	com.liferay.workflow.kaleo.designer.exception,\
+	com.liferay.workflow.kaleo.designer.model,\
+	com.liferay.workflow.kaleo.designer.service,\
+	com.liferay.workflow.kaleo.designer.service.persistence
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Kaleo Designer
+-include: ../../../../../../marketplace/business-productivity/bnd.bnd
