@@ -12,36 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.bi.reporting.jasperreports;
-
-import com.liferay.portal.bi.reporting.jasperreports.compiler.CachedReportCompiler;
-import com.liferay.portal.bi.reporting.jasperreports.compiler.DefaultReportCompiler;
-import com.liferay.portal.bi.reporting.jasperreports.compiler.ReportCompiler;
-import com.liferay.portal.bi.reporting.jasperreports.exporter.CsvReportFormatExporter;
-import com.liferay.portal.bi.reporting.jasperreports.exporter.HtmlReportFormatExporter;
-import com.liferay.portal.bi.reporting.jasperreports.exporter.PdfReportFormatExporter;
-import com.liferay.portal.bi.reporting.jasperreports.exporter.RtfReportFormatExporter;
-import com.liferay.portal.bi.reporting.jasperreports.exporter.TxtReportFormatExporter;
-import com.liferay.portal.bi.reporting.jasperreports.exporter.XlsReportFormatExporter;
-import com.liferay.portal.bi.reporting.jasperreports.exporter.XmlReportFormatExporter;
-import com.liferay.portal.bi.reporting.jasperreports.fillmanager.CsvReportFillManager;
-import com.liferay.portal.bi.reporting.jasperreports.fillmanager.EmptyReportFillManager;
-import com.liferay.portal.bi.reporting.jasperreports.fillmanager.JdbcReportFillManager;
-import com.liferay.portal.bi.reporting.jasperreports.fillmanager.PortalReportFillManager;
-import com.liferay.portal.bi.reporting.jasperreports.fillmanager.ReportFillManager;
-import com.liferay.portal.bi.reporting.jasperreports.fillmanager.ReportFillManagerRegistry;
-import com.liferay.portal.bi.reporting.jasperreports.fillmanager.XlsReportFillManager;
-import com.liferay.portal.bi.reporting.jasperreports.fillmanager.XmlReportFillManager;
-import com.liferay.portal.kernel.bi.reporting.ByteArrayReportResultContainer;
-import com.liferay.portal.kernel.bi.reporting.MemoryReportDesignRetriever;
-import com.liferay.portal.kernel.bi.reporting.ReportDataSourceType;
-import com.liferay.portal.kernel.bi.reporting.ReportDesignRetriever;
-import com.liferay.portal.kernel.bi.reporting.ReportFormat;
-import com.liferay.portal.kernel.bi.reporting.ReportFormatExporter;
-import com.liferay.portal.kernel.bi.reporting.ReportFormatExporterRegistry;
-import com.liferay.portal.kernel.bi.reporting.ReportRequest;
-import com.liferay.portal.kernel.bi.reporting.ReportRequestContext;
-import com.liferay.portal.kernel.bi.reporting.ReportResultContainer;
+package com.liferay.portal.reports.engine.jasper.test;
 
 import java.io.File;
 
@@ -49,6 +20,33 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.liferay.portal.reports.engine.ByteArrayReportResultContainer;
+import com.liferay.portal.reports.engine.ReportDataSourceType;
+import com.liferay.portal.reports.engine.ReportFormat;
+import com.liferay.portal.reports.engine.ReportFormatExporter;
+import com.liferay.portal.reports.engine.ReportFormatExporterRegistry;
+import com.liferay.portal.reports.engine.ReportRequest;
+import com.liferay.portal.reports.engine.ReportRequestContext;
+import com.liferay.portal.reports.engine.ReportResultContainer;
+import com.liferay.portal.reports.engine.jasper.ReportEngineImpl;
+import com.liferay.portal.reports.engine.jasper.compiler.CachedReportCompiler;
+import com.liferay.portal.reports.engine.jasper.compiler.DefaultReportCompiler;
+import com.liferay.portal.reports.engine.jasper.compiler.ReportCompiler;
+import com.liferay.portal.reports.engine.jasper.exporter.CsvReportFormatExporter;
+import com.liferay.portal.reports.engine.jasper.exporter.HtmlReportFormatExporter;
+import com.liferay.portal.reports.engine.jasper.exporter.PdfReportFormatExporter;
+import com.liferay.portal.reports.engine.jasper.exporter.RtfReportFormatExporter;
+import com.liferay.portal.reports.engine.jasper.exporter.TxtReportFormatExporter;
+import com.liferay.portal.reports.engine.jasper.exporter.XlsReportFormatExporter;
+import com.liferay.portal.reports.engine.jasper.exporter.XmlReportFormatExporter;
+import com.liferay.portal.reports.engine.jasper.fillmanager.CsvReportFillManager;
+import com.liferay.portal.reports.engine.jasper.fillmanager.EmptyReportFillManager;
+import com.liferay.portal.reports.engine.jasper.fillmanager.JdbcReportFillManager;
+import com.liferay.portal.reports.engine.jasper.fillmanager.PortalReportFillManager;
+import com.liferay.portal.reports.engine.jasper.fillmanager.ReportFillManager;
+import com.liferay.portal.reports.engine.jasper.fillmanager.ReportFillManagerRegistry;
+import com.liferay.portal.reports.engine.jasper.fillmanager.XlsReportFillManager;
+import com.liferay.portal.reports.engine.jasper.fillmanager.XmlReportFillManager;
 import junit.framework.TestCase;
 
 import org.apache.commons.io.FileUtils;
