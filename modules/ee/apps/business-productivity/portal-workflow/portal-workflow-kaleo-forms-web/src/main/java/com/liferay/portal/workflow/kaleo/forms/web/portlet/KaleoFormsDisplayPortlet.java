@@ -47,9 +47,9 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=kaleo-forms-display-portlet",
 		"com.liferay.portlet.display-category=category.workflow",
-		"com.liferay.portlet.footer-portal-javascript=/o/workflow-task-web/js/main.js",
+		"com.liferay.portlet.footer-portal-javascript=/o/portal-workflow-task-web/js/main.js",
 		"com.liferay.portlet.footer-portlet-javascript=/display/js/main.js",
-		"com.liferay.portlet.header-portal-css=/o/workflow-definition-web/css/main.css",
+		"com.liferay.portlet.header-portal-css=/o/portal-workflow-definition-web/css/main.css",
 		"com.liferay.portlet.header-portlet-css=/display/css/main.css",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
