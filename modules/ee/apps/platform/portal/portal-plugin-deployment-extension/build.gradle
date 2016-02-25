@@ -1,6 +1,6 @@
 dependencies {
-	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
-	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 }
 
 liferay {

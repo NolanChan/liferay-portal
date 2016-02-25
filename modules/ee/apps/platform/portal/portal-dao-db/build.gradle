@@ -3,13 +3,13 @@ File portalServiceClassesDir = file("../../../../../../portal-service/classes")
 
 if (portalImplClassesDir.exists() && portalServiceClassesDir.exists()) {
 	dependencies {
-		compile files(portalImplClassesDir, portalServiceClassesDir)
+		provided files(portalImplClassesDir, portalServiceClassesDir)
 	}
 }
 else {
 	dependencies {
-		compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
-		compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+		provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+		provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	}
 }
 
