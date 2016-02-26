@@ -14,61 +14,64 @@
 
 package com.liferay.portal.reports.engine.jasper.test;
 
-import java.io.File;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.reports.engine.ByteArrayReportResultContainer;
+import com.liferay.portal.reports.engine.MemoryReportDesignRetriever;
 import com.liferay.portal.reports.engine.ReportDataSourceType;
+import com.liferay.portal.reports.engine.ReportDesignRetriever;
+import com.liferay.portal.reports.engine.ReportEngine;
 import com.liferay.portal.reports.engine.ReportFormat;
-import com.liferay.portal.reports.engine.ReportFormatExporter;
-import com.liferay.portal.reports.engine.ReportFormatExporterRegistry;
 import com.liferay.portal.reports.engine.ReportRequest;
 import com.liferay.portal.reports.engine.ReportRequestContext;
 import com.liferay.portal.reports.engine.ReportResultContainer;
-import com.liferay.portal.reports.engine.jasper.ReportEngineImpl;
-import com.liferay.portal.reports.engine.jasper.compiler.CachedReportCompiler;
-import com.liferay.portal.reports.engine.jasper.compiler.DefaultReportCompiler;
-import com.liferay.portal.reports.engine.jasper.compiler.ReportCompiler;
-import com.liferay.portal.reports.engine.jasper.exporter.CsvReportFormatExporter;
-import com.liferay.portal.reports.engine.jasper.exporter.HtmlReportFormatExporter;
-import com.liferay.portal.reports.engine.jasper.exporter.PdfReportFormatExporter;
-import com.liferay.portal.reports.engine.jasper.exporter.RtfReportFormatExporter;
-import com.liferay.portal.reports.engine.jasper.exporter.TxtReportFormatExporter;
-import com.liferay.portal.reports.engine.jasper.exporter.XlsReportFormatExporter;
-import com.liferay.portal.reports.engine.jasper.exporter.XmlReportFormatExporter;
-import com.liferay.portal.reports.engine.jasper.fillmanager.CsvReportFillManager;
-import com.liferay.portal.reports.engine.jasper.fillmanager.EmptyReportFillManager;
-import com.liferay.portal.reports.engine.jasper.fillmanager.JdbcReportFillManager;
-import com.liferay.portal.reports.engine.jasper.fillmanager.PortalReportFillManager;
-import com.liferay.portal.reports.engine.jasper.fillmanager.ReportFillManager;
-import com.liferay.portal.reports.engine.jasper.fillmanager.ReportFillManagerRegistry;
-import com.liferay.portal.reports.engine.jasper.fillmanager.XlsReportFillManager;
-import com.liferay.portal.reports.engine.jasper.fillmanager.XmlReportFillManager;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+
+import java.io.InputStream;
+
+import java.util.Date;
+import java.util.HashMap;
+
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Michael C. Han
+ * @author Brian Greenwald
+ * @author Prathima Shreenath
  */
+@RunWith(Arquillian.class)
+@Sync
 public class ReportEngineImplTest extends TestCase {
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		_reportEngineImpl = new ReportEngineImpl();
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			SynchronousDestinationTestRule.INSTANCE);
 
-		_reportEngineImpl.setReportCompiler(getReportCompiler());
-		_reportEngineImpl.setReportFormatExporterRegistry(
-			getReportFormatExporterRegistry());
-		_reportEngineImpl.setReportFillManagerRegistry(
-			getReportFillManagerRegistry());
+	@Before
+	public void setUp() throws Exception {
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceReference<ReportEngine> reportEngineServiceReference =
+			registry.getServiceReference(ReportEngine.class);
+
+		_reportEngine = registry.getService(reportEngineServiceReference);
 	}
 
 	@Test
@@ -132,7 +135,7 @@ public class ReportEngineImplTest extends TestCase {
 			reportDataSourceType, dataSourceFileName, dataSourceReportFileName,
 			reportFormat);
 
-		_reportEngineImpl.compile(reportRequest);
+		_reportEngine.compile(reportRequest);
 
 		return reportRequest;
 	}
@@ -145,55 +148,10 @@ public class ReportEngineImplTest extends TestCase {
 		ReportResultContainer reportResultContainer =
 			new ByteArrayReportResultContainer();
 
-		_reportEngineImpl.execute(reportRequest, reportResultContainer);
+		_reportEngine.execute(reportRequest, reportResultContainer);
 
-		assertFalse(reportResultContainer.hasError());
-		assertNotNull(reportResultContainer.getResults());
-	}
-
-	protected ReportCompiler getReportCompiler() {
-		ReportCompiler reportCompiler = new DefaultReportCompiler();
-
-		return new CachedReportCompiler(reportCompiler);
-	}
-
-	protected ReportFillManagerRegistry getReportFillManagerRegistry() {
-		ReportFillManagerRegistry reportFillManagerRegistry =
-			new ReportFillManagerRegistry();
-
-		Map<String, ReportFillManager> reportFillManagers = new HashMap<>();
-
-		reportFillManagers.put("csv", new CsvReportFillManager());
-		reportFillManagers.put("empty", new EmptyReportFillManager());
-		reportFillManagers.put("jdbc", new JdbcReportFillManager());
-		reportFillManagers.put("portal", new PortalReportFillManager());
-		reportFillManagers.put("xls", new XlsReportFillManager());
-		reportFillManagers.put("xml", new XmlReportFillManager());
-
-		reportFillManagerRegistry.setReportFillManagers(reportFillManagers);
-
-		return reportFillManagerRegistry;
-	}
-
-	protected ReportFormatExporterRegistry getReportFormatExporterRegistry() {
-		ReportFormatExporterRegistry reportFormatExporterRegistry =
-			new ReportFormatExporterRegistry();
-
-		Map<String, ReportFormatExporter> reportFormatExporters =
-			new HashMap<>();
-
-		reportFormatExporters.put("csv", new CsvReportFormatExporter());
-		reportFormatExporters.put("html", new HtmlReportFormatExporter());
-		reportFormatExporters.put("pdf", new PdfReportFormatExporter());
-		reportFormatExporters.put("rtf", new RtfReportFormatExporter());
-		reportFormatExporters.put("txt", new TxtReportFormatExporter());
-		reportFormatExporters.put("xls", new XlsReportFormatExporter());
-		reportFormatExporters.put("xml", new XmlReportFormatExporter());
-
-		reportFormatExporterRegistry.setReportFormatExporters(
-			reportFormatExporters);
-
-		return reportFormatExporterRegistry;
+		Assert.assertFalse(reportResultContainer.hasError());
+		Assert.assertNotNull(reportResultContainer.getResults());
 	}
 
 	protected ReportRequest getReportRequest(
@@ -205,10 +163,12 @@ public class ReportEngineImplTest extends TestCase {
 		ReportRequestContext reportRequestContext = new ReportRequestContext(
 			reportDataSourceType);
 
-		File dataSourceFile = new File(_BASE_DIR + dataSourceFileName);
+		ClassLoader classLoader = getClass().getClassLoader();
 
-		byte[] dataSourceByteArray = FileUtils.readFileToByteArray(
-			dataSourceFile);
+		InputStream dataSourceInputStream = classLoader.getResourceAsStream(
+			dataSourceFileName);
+
+		byte[] dataSourceByteArray = IOUtils.toByteArray(dataSourceInputStream);
 
 		reportRequestContext.setAttribute(
 			ReportRequestContext.DATA_SOURCE_BYTE_ARRAY, dataSourceByteArray);
@@ -217,11 +177,11 @@ public class ReportEngineImplTest extends TestCase {
 			ReportRequestContext.DATA_SOURCE_COLUMN_NAMES,
 			"city,id,name,address,state");
 
-		File dataSourceReportFile = new File(
-			_BASE_DIR + dataSourceReportFileName);
+		InputStream dataSourceReportInputStream =
+			classLoader.getResourceAsStream(dataSourceReportFileName);
 
-		byte[] reportByteArray = FileUtils.readFileToByteArray(
-			dataSourceReportFile);
+		byte[] reportByteArray = IOUtils.toByteArray(
+			dataSourceReportInputStream);
 
 		ReportDesignRetriever reportDesignRetriever =
 			new MemoryReportDesignRetriever(
@@ -234,10 +194,6 @@ public class ReportEngineImplTest extends TestCase {
 		return reportRequest;
 	}
 
-	private static final String _BASE_DIR =
-		"webs/jasperreports-web/test/integration/com/liferay/portal/bi/" +
-			"reporting/jasperreports/";
-
-	private ReportEngineImpl _reportEngineImpl;
+	private ReportEngine _reportEngine;
 
 }
