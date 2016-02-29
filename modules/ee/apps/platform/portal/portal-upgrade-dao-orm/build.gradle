@@ -1,15 +1,15 @@
 File portalImplClassesDir = file("../../../../../../portal-impl/classes")
-File portalServiceClassesDir = file("../../../../../../portal-service/classes")
+File portalKernelClassesDir = file("../../../../../../portal-kernel/classes")
 
-if (portalImplClassesDir.exists() && portalServiceClassesDir.exists()) {
+if (portalImplClassesDir.exists() && portalKernelClassesDir.exists()) {
 	dependencies {
-		provided files(portalImplClassesDir, portalServiceClassesDir)
+		provided files(portalImplClassesDir, portalKernelClassesDir)
 	}
 }
 else {
 	dependencies {
 		provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
-		provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+		provided group: "com.liferay.portal", name: "portal-kernel", version: liferay.portalVersion
 	}
 }
 
