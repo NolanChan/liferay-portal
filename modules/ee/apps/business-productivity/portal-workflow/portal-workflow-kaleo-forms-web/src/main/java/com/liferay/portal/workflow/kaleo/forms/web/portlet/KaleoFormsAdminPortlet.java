@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.util.DDL;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -615,7 +615,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	protected DDMForm getDDMForm(ActionRequest actionRequest) throws Exception {
 		String definition = ParamUtil.getString(actionRequest, "definition");
 
-		return DDMFormJSONDeserializerUtil.deserialize(definition);
+		return _ddmFormJSONDeserializer.deserialize(definition);
 	}
 
 	protected String getName(String content, String defaultName) {
@@ -835,6 +835,13 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMFormJSONDeserializer(
+		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
+
+		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMStructureService(
 		DDMStructureService ddmStructureService) {
 
@@ -893,6 +900,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	private DDL _ddl;
 	private DDLExporterFactory _ddlExporterFactory;
 	private DDLRecordService _ddlRecordService;
+	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 	private DDMStructureService _ddmStructureService;
 	private KaleoDraftDefinitionService _kaleoDraftDefinitionService;
 	private KaleoProcessService _kaleoProcessService;
