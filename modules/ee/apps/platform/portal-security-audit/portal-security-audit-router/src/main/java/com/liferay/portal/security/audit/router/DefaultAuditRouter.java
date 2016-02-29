@@ -17,8 +17,6 @@ package com.liferay.portal.security.audit.router;
 import com.liferay.portal.kernel.audit.AuditException;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -90,6 +88,22 @@ public class DefaultAuditRouter implements AuditRouter {
 		}
 	}
 
+	protected String[] getEventTypes(
+		AuditMessageProcessor auditMessageProcessor,
+		Map<String, Object> properties) {
+
+		String eventTypes = (String)properties.get(AuditConstants.EVENT_TYPES);
+
+		if (Validator.isNull(eventTypes)) {
+			throw new IllegalArgumentException(
+				"No eventType specified for: " + auditMessageProcessor);
+		}
+
+		String[] eventTypesArray = StringUtil.split(eventTypes);
+
+		return eventTypesArray;
+	}
+
 	@Reference (
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
@@ -100,26 +114,15 @@ public class DefaultAuditRouter implements AuditRouter {
 		AuditMessageProcessor auditMessageProcessor,
 		Map<String, Object> properties) {
 
-		String eventTypes = (String)properties.get(AuditConstants.EVENT_TYPES);
+		String[] eventTypes = getEventTypes(auditMessageProcessor, properties);
 
-		if (Validator.isNull(eventTypes)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No eventType specified for: " + auditMessageProcessor);
-			}
-
-			return;
-		}
-
-		if (eventTypes.equals(StringPool.STAR)) {
+		if ((eventTypes.length == 1) && eventTypes[0].equals(StringPool.STAR)) {
 			_globalAuditMessageProcessors.add(auditMessageProcessor);
 
 			return;
 		}
 
-		String[] eventTypesArray = StringUtil.split(eventTypes);
-
-		for (String eventType : eventTypesArray) {
+		for (String eventType : eventTypes) {
 			Set<AuditMessageProcessor> auditMessageProcessorsSet =
 				_auditMessageProcessors.get(eventType);
 
@@ -138,26 +141,15 @@ public class DefaultAuditRouter implements AuditRouter {
 		AuditMessageProcessor auditMessageProcessor,
 		Map<String, Object> properties) {
 
-		String eventTypes = (String)properties.get(AuditConstants.EVENT_TYPES);
+		String[] eventTypes = getEventTypes(auditMessageProcessor, properties);
 
-		if (Validator.isNull(eventTypes)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No eventType specified for: " + auditMessageProcessor);
-			}
-
-			return;
-		}
-
-		if (StringPool.STAR.equals(eventTypes)) {
+		if ((eventTypes.length == 1) && eventTypes[0].equals(StringPool.STAR)) {
 			_globalAuditMessageProcessors.remove(auditMessageProcessor);
 
 			return;
 		}
 
-		String[] eventTypesArray = StringUtil.split(eventTypes);
-
-		for (String eventType : eventTypesArray) {
+		for (String eventType : eventTypes) {
 			Set<AuditMessageProcessor> auditMessageProcessorsSet =
 				_auditMessageProcessors.get(eventType);
 
@@ -168,9 +160,6 @@ public class DefaultAuditRouter implements AuditRouter {
 			auditMessageProcessorsSet.remove(auditMessageProcessor);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultAuditRouter.class);
 
 	private final Map<String, Set<AuditMessageProcessor>>
 		_auditMessageProcessors = new ConcurrentHashMap<>();
