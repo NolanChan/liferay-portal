@@ -25,9 +25,8 @@ import java.util.Date;
 public class AuditEventImpl implements AuditEvent {
 
 	public AuditEventImpl(
-		com.
-			liferay.
-				portal.security.audit.persistence.model.AuditEvent auditEvent) {
+		com.liferay.portal.security.audit.persistence.model.AuditEvent
+			auditEvent) {
 
 		_auditEvent = auditEvent;
 	}

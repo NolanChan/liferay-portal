@@ -98,13 +98,6 @@ public class AuditEventManagerImpl implements AuditEventManager {
 			sessionID, andSearch);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAuditEventLocalService(
-		AuditEventLocalService auditEventLocalService) {
-
-		_auditEventLocalService = auditEventLocalService;
-	}
-
 	protected List<AuditEvent> translate(
 		List<com.liferay.portal.security.audit.persistence.model.AuditEvent>
 			auditEventModels) {
@@ -125,6 +118,7 @@ public class AuditEventManagerImpl implements AuditEventManager {
 		return auditEvents;
 	}
 
+	@Reference
 	private AuditEventLocalService _auditEventLocalService;
 
 }

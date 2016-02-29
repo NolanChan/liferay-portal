@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Junction;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -223,8 +222,7 @@ public class AuditEventLocalServiceImpl extends AuditEventLocalServiceBaseImpl {
 			junction.add(property.like(value));
 		}
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			AuditEvent.class, getClassLoader());
+		DynamicQuery dynamicQuery = dynamicQuery();
 
 		if (companyId > 0) {
 			Property property = PropertyFactoryUtil.forName("companyId");
