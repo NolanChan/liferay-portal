@@ -8,8 +8,8 @@ if (portalImplClassesDir.exists() && portalKernelClassesDir.exists()) {
 }
 else {
 	dependencies {
-		provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
-		provided group: "com.liferay.portal", name: "portal-kernel", version: liferay.portalVersion
+		provided group: "com.liferay", name: "com.liferay.portal.impl", version: liferay.portalVersion
+		provided group: "com.liferay", name: "com.liferay.portal.kernel", version: liferay.portalVersion
 	}
 }
 
