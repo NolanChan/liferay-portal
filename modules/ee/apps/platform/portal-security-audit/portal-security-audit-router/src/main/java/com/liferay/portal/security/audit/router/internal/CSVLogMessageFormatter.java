@@ -36,8 +36,8 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.audit.router.configuration.CSVLogMessageFormatterConfiguration",
-	immediate = true,
-	service = {CSVLogMessageFormatter.class, LogMessageFormatter.class}
+	immediate = true, property = {"format=CSV"},
+	service = LogMessageFormatter.class
 )
 public class CSVLogMessageFormatter implements LogMessageFormatter {
 
@@ -70,6 +70,6 @@ public class CSVLogMessageFormatter implements LogMessageFormatter {
 		_columns = csvLogMessageFormatterConfiguration.columns();
 	}
 
-	private String[] _columns;
+	private volatile String[] _columns;
 
 }

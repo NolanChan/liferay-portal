@@ -16,16 +16,16 @@ package com.liferay.portal.security.audit.router.internal;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.json.JSONObject;
-
 import com.liferay.portal.security.audit.router.LogMessageFormatter;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true,
-	service = {JSONLogMessageFormatter.class, LogMessageFormatter.class}
+	immediate = true, property = {"format=JSON"},
+	service = LogMessageFormatter.class
 )
 public class JSONLogMessageFormatter implements LogMessageFormatter {
 
