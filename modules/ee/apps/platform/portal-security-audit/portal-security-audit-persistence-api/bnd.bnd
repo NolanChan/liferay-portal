@@ -2,6 +2,7 @@ Bundle-Name: Liferay Portal Security Audit Persistence API
 Bundle-SymbolicName: com.liferay.portal.security.audit.persistence.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.portal.security.audit.persistence.comparator,\
 	com.liferay.portal.security.audit.persistence.exception,\
 	com.liferay.portal.security.audit.persistence.model,\
 	com.liferay.portal.security.audit.persistence.service,\
