@@ -44,17 +44,13 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	immediate = true, property = "audit.router.proxy=false",
-	service = {DefaultAuditRouter.class, AuditRouter.class}
+	service = AuditRouter.class
 )
 public class DefaultAuditRouter implements AuditRouter {
 
 	@Override
 	public boolean isDeployed() {
-		int auditMessageProcessorsCount = 0;
-
-		if (_auditMessageProcessors != null) {
-			auditMessageProcessorsCount = _auditMessageProcessors.size();
-		}
+		int auditMessageProcessorsCount = _auditMessageProcessors.size();
 
 		if ((auditMessageProcessorsCount > 0) ||
 			!_globalAuditMessageProcessors.isEmpty()) {
