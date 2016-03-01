@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.audit.persistence.util.comparator;
+package com.liferay.portal.security.audit.persistence.comparator;
 
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
