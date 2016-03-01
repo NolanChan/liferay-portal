@@ -42,9 +42,9 @@ import org.osgi.service.component.annotations.Modified;
 @Component(
 	configurationPid = "com.liferay.portal.security.audit.router.configuration.LogAuditRouterProcessorConfiguration",
 	immediate = true, property = "eventTypes=*",
-	service = {AuditMessageProcessor.class, LogAuditRouterProcessor.class}
+	service = {AuditMessageProcessor.class, LoggingAuditMessageProcessor.class}
 )
-public class LogAuditRouterProcessor implements AuditMessageProcessor {
+public class LoggingAuditMessageProcessor implements AuditMessageProcessor {
 
 	@Override
 	public void process(AuditMessage auditMessage) {
@@ -105,7 +105,7 @@ public class LogAuditRouterProcessor implements AuditMessageProcessor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LogAuditRouterProcessor.class);
+		LoggingAuditMessageProcessor.class);
 
 	private volatile LogAuditRouterProcessorConfiguration
 		_logAuditRouterProcessorConfiguration;

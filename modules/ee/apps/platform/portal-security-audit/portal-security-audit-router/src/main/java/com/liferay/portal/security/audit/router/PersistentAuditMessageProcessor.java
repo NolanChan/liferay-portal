@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, property = "eventTypes=*",
 	service = AuditMessageProcessor.class
 )
-public class DatabaseAuditRouterProcessor implements AuditMessageProcessor {
+public class PersistentAuditMessageProcessor implements AuditMessageProcessor {
 
 	@Override
 	public void process(AuditMessage auditMessage) {
@@ -46,6 +46,6 @@ public class DatabaseAuditRouterProcessor implements AuditMessageProcessor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DatabaseAuditRouterProcessor.class);
+		PersistentAuditMessageProcessor.class);
 
 }
