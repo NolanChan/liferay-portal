@@ -17,9 +17,11 @@ package com.liferay.portal.security.audit.router.internal;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.security.audit.AuditEventManager;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
@@ -42,10 +44,13 @@ public class PersistentAuditMessageProcessor implements AuditMessageProcessor {
 	}
 
 	protected void doProcess(AuditMessage auditMessage) throws Exception {
-		AuditEventManagerUtil.addAuditEvent(auditMessage);
+		_auditEventManager.addAuditEvent(auditMessage);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PersistentAuditMessageProcessor.class);
+
+	@Reference
+	private AuditEventManager _auditEventManager;
 
 }
