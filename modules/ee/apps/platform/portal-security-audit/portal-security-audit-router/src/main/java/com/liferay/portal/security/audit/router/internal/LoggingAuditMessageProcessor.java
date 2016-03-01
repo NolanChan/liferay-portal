@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.audit.router;
+package com.liferay.portal.security.audit.router.internal;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
+import com.liferay.portal.security.audit.router.LogMessageFormatter;
 import com.liferay.portal.security.audit.router.configuration.LogAuditRouterProcessorConfiguration;
 import com.liferay.portal.security.audit.router.constants.AuditConstants;
 

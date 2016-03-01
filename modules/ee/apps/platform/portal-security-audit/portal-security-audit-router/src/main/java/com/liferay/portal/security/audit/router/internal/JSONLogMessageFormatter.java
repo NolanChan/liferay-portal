@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.security.audit.router;
+package com.liferay.portal.security.audit.router.internal;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.json.JSONObject;
 
+import com.liferay.portal.security.audit.router.LogMessageFormatter;
 import org.osgi.service.component.annotations.Component;
 
 /**

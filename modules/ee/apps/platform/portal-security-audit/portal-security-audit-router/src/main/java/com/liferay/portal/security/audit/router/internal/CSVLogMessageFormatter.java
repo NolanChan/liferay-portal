@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.audit.router;
+package com.liferay.portal.security.audit.router.internal;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.audit.router.LogMessageFormatter;
 import com.liferay.portal.security.audit.router.configuration.CSVLogMessageFormatterConfiguration;
 
 import java.util.Map;
