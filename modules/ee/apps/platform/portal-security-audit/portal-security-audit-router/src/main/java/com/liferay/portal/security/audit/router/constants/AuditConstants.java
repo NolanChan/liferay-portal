@@ -14,23 +14,12 @@
 
 package com.liferay.portal.security.audit.router.constants;
 
-import com.liferay.portal.security.audit.router.JSONLogMessageFormatter;
-
 /**
  * @author Brian Greenwald
  * @author Prathima Shreenath
  */
 public class AuditConstants {
 
-	public static final String CSV = "CSV";
-
 	public static final String EVENT_TYPES = "eventTypes";
-
-	public static final String JSON = "JSON";
-
-	public static final String CSVLogMessageFormatter =
-		"com.liferay.portal.security.audit.router.CSVLogMessageFormatter";
-	public static final String JSONLogMessageFormatter =
-		"com.liferay.portal.security.audit.router.JSONLogMessageFormatter";
 
 }

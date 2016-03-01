@@ -17,22 +17,23 @@ package com.liferay.portal.security.audit.router.internal;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
+import com.liferay.portal.kernel.concurrent.ConcurrentIdentityHashMap;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
 import com.liferay.portal.security.audit.router.LogMessageFormatter;
-import com.liferay.portal.security.audit.router.configuration.LogAuditRouterProcessorConfiguration;
-import com.liferay.portal.security.audit.router.constants.AuditConstants;
+import com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration;
 
-import java.util.Dictionary;
+import java.util.Map;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Mika Koivisto
@@ -41,9 +42,9 @@ import org.osgi.service.component.annotations.Modified;
  * @author Prathima Shreenath
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.audit.router.configuration.LogAuditRouterProcessorConfiguration",
+	configurationPid = "com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration",
 	immediate = true, property = "eventTypes=*",
-	service = {AuditMessageProcessor.class, LoggingAuditMessageProcessor.class}
+	service = AuditMessageProcessor.class
 )
 public class LoggingAuditMessageProcessor implements AuditMessageProcessor {
 
@@ -59,59 +60,84 @@ public class LoggingAuditMessageProcessor implements AuditMessageProcessor {
 
 	@Activate
 	@Modified
-	protected void activate(ComponentContext componentContext) {
-		Dictionary<String, Object> properties =
-			componentContext.getProperties();
+	protected void activate(Map<String, Object> properties) {
+		_loggingAuditMessageProcessorConfiguration =
+			Configurable.createConfigurable(
+				LoggingAuditMessageProcessorConfiguration.class, properties);
+	}
 
-		_logAuditRouterProcessorConfiguration = Configurable.createConfigurable(
-			LogAuditRouterProcessorConfiguration.class, properties);
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "removeLogMessageFormatter"
+	)
+	protected void addLogMessageFormatter(
+		LogMessageFormatter logMessageFormatter,
+		Map<String, Object> properties) {
 
-		_outputToConsole =
-			_logAuditRouterProcessorConfiguration.outputToConsole();
+		String format = (String)properties.get("format");
 
-		BundleContext bundleContext = componentContext.getBundleContext();
-
-		String configuredFormatter =
-			_logAuditRouterProcessorConfiguration.logMessageFormatter();
-
-		if (StringUtil.equalsIgnoreCase(
-				configuredFormatter, AuditConstants.CSV)) {
-
-			_serviceReference = bundleContext.getServiceReference(
-				AuditConstants.CSVLogMessageFormatter);
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					configuredFormatter, AuditConstants.JSON)) {
-
-			_serviceReference = bundleContext.getServiceReference(
-				AuditConstants.JSONLogMessageFormatter);
+		if (Validator.isNull(format)) {
+			throw new IllegalArgumentException(
+				"Must specify a format: " + logMessageFormatter);
 		}
 
-		_logMessageFormatter = (LogMessageFormatter)bundleContext.getService(
-			_serviceReference);
+		_logMessageFormatters.put(format, logMessageFormatter);
 	}
 
 	protected void doProcess(AuditMessage auditMessage) throws Exception {
-		if (_log.isInfoEnabled() || _outputToConsole) {
-			String logMessage = _logMessageFormatter.format(auditMessage);
+		if (_loggingAuditMessageProcessorConfiguration.enabled() &&
+			(_log.isInfoEnabled() ||
+			 _loggingAuditMessageProcessorConfiguration.outputToConsole())) {
+
+			LogMessageFormatter logMessageFormatter = _logMessageFormatters.get(
+				_loggingAuditMessageProcessorConfiguration.logMessageFormat());
+
+			if (logMessageFormatter == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No LogMessageFormatter for: " +
+							_loggingAuditMessageProcessorConfiguration.
+								logMessageFormat());
+				}
+
+				return;
+			}
+
+			String logMessage = logMessageFormatter.format(auditMessage);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(logMessage);
 			}
 
-			if (_outputToConsole) {
-				System.out.println("LogAuditRouterProcessor: " + logMessage);
+			if (_loggingAuditMessageProcessorConfiguration.outputToConsole()) {
+				System.out.println(
+					"LoggingAuditMessageProcessor: " + logMessage);
 			}
 		}
+	}
+
+	protected void removeLogMessageFormatter(
+		LogMessageFormatter logMessageFormatter,
+		Map<String, Object> properties) {
+
+		String format = (String)properties.get("format");
+
+		if (Validator.isNull(format)) {
+			throw new IllegalArgumentException(
+				"Must specify a format: " + logMessageFormatter);
+		}
+
+		_logMessageFormatters.remove(format);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LoggingAuditMessageProcessor.class);
 
-	private volatile LogAuditRouterProcessorConfiguration
-		_logAuditRouterProcessorConfiguration;
-	private LogMessageFormatter _logMessageFormatter;
-	private boolean _outputToConsole;
-	private ServiceReference<?> _serviceReference;
+	private volatile LoggingAuditMessageProcessorConfiguration
+		_loggingAuditMessageProcessorConfiguration;
+	private Map<String, LogMessageFormatter> _logMessageFormatters =
+		new ConcurrentIdentityHashMap<>();
 
 }
