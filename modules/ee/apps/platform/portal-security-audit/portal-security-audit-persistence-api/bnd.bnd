@@ -8,4 +8,4 @@ Export-Package:\
 	com.liferay.portal.security.audit.persistence.service.persistence
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Audit
--include: ../../../marketplace/platform/bnd.bnd
+-include: ../../../../../../modules/apps/foundation/app.bnd

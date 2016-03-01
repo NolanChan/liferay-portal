@@ -4,4 +4,4 @@ Bundle-Version: 1.0.0
 Export-Package: com.liferay.portal.security.audit.router
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Audit
--include: ../../../marketplace/platform/bnd.bnd
+-include: ../../../../../../modules/apps/foundation/app.bnd
