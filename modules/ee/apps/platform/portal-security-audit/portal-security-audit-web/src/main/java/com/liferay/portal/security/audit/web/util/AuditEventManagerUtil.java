@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.audit.router;
+package com.liferay.portal.security.audit.web.util;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -22,6 +22,9 @@ import com.liferay.portal.security.audit.AuditEventManager;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Greenwald
