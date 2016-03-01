@@ -32,14 +32,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "platform")
 @Meta.OCD(
-	id = "com.liferay.portal.security.audit.router.configuration.LogAuditRouterProcessorConfiguration",
+	id = "com.liferay.portal.security.audit.router.configuration.LoggingAuditRouterProcessorConfiguration",
 	localization = "content/Language",
-	name = "%log.audit.router.processor.configuration.name"
+	name = "%logging.audit.router.processor.configuration.name"
 )
-public interface LogAuditRouterProcessorConfiguration {
+public interface LoggingAuditMessageProcessorConfiguration {
 
 	@Meta.AD(deflt = "CSV", optionValues = {"CSV", "JSON"}, required = false)
-	public String logMessageFormatter();
+	public String logMessageFormat();
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean outputToConsole();
