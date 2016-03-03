@@ -16,12 +16,20 @@ package com.liferay.portal.workflow.kaleo.forms.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marcellus Tavares
  */
-public class KaleoFormsPermission {
+@Component(
+		property = {"resource.name=" + KaleoFormsPermission.RESOURCE_NAME},
+		service = ResourcePermissionChecker.class
+)
+public class KaleoFormsPermission extends BaseResourcePermissionChecker{
 
 	public static final String RESOURCE_NAME =
 		"com.liferay.portal.workflow.kaleo.forms";
@@ -36,10 +44,18 @@ public class KaleoFormsPermission {
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, long groupId, String actionId) {
+			PermissionChecker permissionChecker, long groupId,
+			String actionId) {
 
-		return permissionChecker.hasPermission(
-			groupId, RESOURCE_NAME, groupId, actionId);
+			return contains(permissionChecker, RESOURCE_NAME, groupId, actionId);
+	}
+	
+	@Override
+	public Boolean checkResource(
+			PermissionChecker permissionChecker, long classPK, 
+			String actionId) {
+		
+		return contains(permissionChecker, classPK, actionId);
 	}
 
 }
