@@ -3120,7 +3120,7 @@
 	</javadoc>
 	<javadoc>
 		<name>PortletPropsKeys</name>
-		<type>com.liferay.portal.reports.util.PortletPropsKeys</type>
+		<type>com.liferay.portal.reports.service.configuration.ReportsServiceConfigurationKeys</type>
 		<author><![CDATA[Michael C. Han]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
@@ -3144,7 +3144,7 @@
 	</javadoc>
 	<javadoc>
 		<name>PortletPropsValues</name>
-		<type>com.liferay.portal.reports.util.PortletPropsValues</type>
+		<type>com.liferay.portal.reports.service.configuration.ReportsServiceConfigurationValues</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
 			<name>ADMIN_EMAIL_DELIVERY_BODY</name>

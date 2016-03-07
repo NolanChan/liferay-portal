@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import com.liferay.portal.reports.service.DefinitionServiceUtil;
 
 import java.rmi.RemoteException;
@@ -100,9 +99,10 @@ public class DefinitionServiceSoap {
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.portal.reports.model.Definition> returnValue = DefinitionServiceUtil.getDefinitions(groupId,
-					definitionName, description, sourceId, reportName,
-					andSearch, start, end, orderByComparator);
+			java.util.List<com.liferay.portal.reports.model.Definition> returnValue =
+				DefinitionServiceUtil.getDefinitions(groupId, definitionName,
+					description, sourceId, reportName, andSearch, start, end,
+					orderByComparator);
 
 			return com.liferay.portal.reports.model.DefinitionSoap.toSoapModels(returnValue);
 		}

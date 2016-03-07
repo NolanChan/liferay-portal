@@ -14,14 +14,17 @@
 
 package com.liferay.portal.reports.service.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.reports.model.Source;
 import com.liferay.portal.reports.service.base.SourceServiceBaseImpl;
-import com.liferay.portal.reports.service.permission.ActionKeys;
 import com.liferay.portal.reports.service.permission.AdminPermission;
+import com.liferay.portal.reports.service.permission.ReportsActionKeys;
 import com.liferay.portal.reports.service.permission.SourcePermission;
 
 import java.util.Iterator;
@@ -33,6 +36,7 @@ import java.util.Map;
  * @author Gavin Wan
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class SourceServiceImpl extends SourceServiceBaseImpl {
 
 	public Source addSource(
@@ -43,7 +47,7 @@ public class SourceServiceImpl extends SourceServiceBaseImpl {
 
 		AdminPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ActionKeys.ADD_SOURCE);
+			ReportsActionKeys.ADD_SOURCE);
 
 		return sourceLocalService.addSource(
 			getUserId(), groupId, nameMap, driverClassName, driverUrl,

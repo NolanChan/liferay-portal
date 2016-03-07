@@ -16,11 +16,16 @@ package com.liferay.portal.reports.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.reports.service.EntryLocalServiceUtil;
+import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.reports.service.EntryLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gavin Wan
  */
+@Component(immediate = true, service = MessageListener.class)
 public class SchedulerEventMessageListener extends BaseMessageListener {
 
 	@Override
@@ -28,7 +33,10 @@ public class SchedulerEventMessageListener extends BaseMessageListener {
 		long entryId = message.getLong("entryId");
 		String reportName = message.getString("reportName");
 
-		EntryLocalServiceUtil.generateReport(entryId, reportName);
+		_entryLocalService.generateReport(entryId, reportName);
 	}
+
+	@Reference
+	private EntryLocalService _entryLocalService;
 
 }

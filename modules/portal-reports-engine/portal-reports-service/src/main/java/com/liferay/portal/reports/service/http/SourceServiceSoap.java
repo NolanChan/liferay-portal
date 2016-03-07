@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-
 import com.liferay.portal.reports.service.SourceServiceUtil;
 
 import java.rmi.RemoteException;
@@ -69,8 +68,8 @@ import java.util.Map;
  */
 @ProviderType
 public class SourceServiceSoap {
-	public static com.liferay.portal.reports.model.SourceSoap addSource(long groupId,
-		java.lang.String[] nameMapLanguageIds,
+	public static com.liferay.portal.reports.model.SourceSoap addSource(
+		long groupId, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues, java.lang.String driverClassName,
 		java.lang.String driverUrl, java.lang.String driverUserName,
 		java.lang.String driverPassword,
@@ -107,8 +106,8 @@ public class SourceServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.reports.model.SourceSoap getSource(long sourceId)
-		throws RemoteException {
+	public static com.liferay.portal.reports.model.SourceSoap getSource(
+		long sourceId) throws RemoteException {
 		try {
 			com.liferay.portal.reports.model.Source returnValue = SourceServiceUtil.getSource(sourceId);
 

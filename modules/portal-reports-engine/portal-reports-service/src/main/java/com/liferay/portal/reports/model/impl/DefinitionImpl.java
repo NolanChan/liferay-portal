@@ -14,6 +14,8 @@
 
 package com.liferay.portal.reports.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.document.library.kernel.exception.NoSuchDirectoryException;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class DefinitionImpl extends DefinitionBaseImpl {
 
 	public DefinitionImpl() {

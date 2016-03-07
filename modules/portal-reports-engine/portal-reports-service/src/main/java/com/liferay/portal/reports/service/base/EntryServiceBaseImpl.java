@@ -26,12 +26,12 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
-
 import com.liferay.portal.reports.model.Entry;
 import com.liferay.portal.reports.service.EntryService;
 import com.liferay.portal.reports.service.persistence.DefinitionPersistence;
 import com.liferay.portal.reports.service.persistence.EntryPersistence;
 import com.liferay.portal.reports.service.persistence.SourcePersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import javax.sql.DataSource;
 
@@ -432,9 +432,6 @@ public abstract class EntryServiceBaseImpl extends BaseServiceImpl
 	}
 
 	public void afterPropertiesSet() {
-		Class<?> clazz = getClass();
-
-		_classLoader = clazz.getClassLoader();
 	}
 
 	public void destroy() {
@@ -448,27 +445,6 @@ public abstract class EntryServiceBaseImpl extends BaseServiceImpl
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return EntryService.class.getName();
-	}
-
-	@Override
-	public Object invokeMethod(String name, String[] parameterTypes,
-		Object[] arguments) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != _classLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-		}
-		finally {
-			if (contextClassLoader != _classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
 	}
 
 	protected Class<?> getModelClass() {
@@ -494,7 +470,7 @@ public abstract class EntryServiceBaseImpl extends BaseServiceImpl
 			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql, new int[0]);
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -521,28 +497,26 @@ public abstract class EntryServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.reports.service.SourceService sourceService;
 	@BeanReference(type = SourcePersistence.class)
 	protected SourcePersistence sourcePersistence;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
 	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
-	@BeanReference(type = ClassNamePersistence.class)
+	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.PortletPreferencesLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.PortletPreferencesLocalService.class)
 	protected com.liferay.portal.kernel.service.PortletPreferencesLocalService portletPreferencesLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.PortletPreferencesService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.PortletPreferencesService.class)
 	protected com.liferay.portal.kernel.service.PortletPreferencesService portletPreferencesService;
-	@BeanReference(type = PortletPreferencesPersistence.class)
+	@ServiceReference(type = PortletPreferencesPersistence.class)
 	protected PortletPreferencesPersistence portletPreferencesPersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.UserService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserService.class)
 	protected com.liferay.portal.kernel.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private ClassLoader _classLoader;
-	private EntryServiceClpInvoker _clpInvoker = new EntryServiceClpInvoker();
 }

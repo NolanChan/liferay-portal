@@ -14,6 +14,8 @@
 
 package com.liferay.portal.reports.service.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.document.library.kernel.exception.DuplicateDirectoryException;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -50,6 +52,7 @@ import java.util.Map;
 /**
  * @author Gavin Wan
  */
+@ProviderType
 public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 
 	public Definition addDefinition(

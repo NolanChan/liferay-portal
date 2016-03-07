@@ -16,11 +16,8 @@ package com.liferay.portal.reports.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -36,12 +33,12 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-
 import com.liferay.portal.reports.exception.NoSuchEntryException;
 import com.liferay.portal.reports.model.Entry;
 import com.liferay.portal.reports.model.impl.EntryImpl;
 import com.liferay.portal.reports.model.impl.EntryModelImpl;
 import com.liferay.portal.reports.service.persistence.EntryPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -759,10 +756,12 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = CompanyProviderWrapper.class)
+	@ServiceReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
-	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_ENTRY = "SELECT entry FROM Entry entry";
 	private static final String _SQL_SELECT_ENTRY_WHERE_PKS_IN = "SELECT entry FROM Entry entry WHERE entryId IN (";
 	private static final String _SQL_COUNT_ENTRY = "SELECT COUNT(entry) FROM Entry entry";

@@ -17,33 +17,45 @@ package com.liferay.portal.reports.lar;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.exportimport.kernel.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.reports.model.Definition;
 import com.liferay.portal.reports.model.Source;
-import com.liferay.portal.reports.model.impl.DefinitionImpl;
-import com.liferay.portal.reports.model.impl.SourceImpl;
-import com.liferay.portal.reports.service.DefinitionLocalServiceUtil;
-import com.liferay.portal.reports.service.SourceLocalServiceUtil;
+import com.liferay.portal.reports.service.DefinitionLocalService;
+import com.liferay.portal.reports.service.SourceLocalService;
+import com.liferay.portal.reports.service.permission.AdminPermission;
 
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Mate Thurzo
  */
+@Component(immediate = true, service = PortletDataHandler.class)
 public class AdminPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "reports";
 
-	public AdminPortletDataHandler() {
+	public static final String SCHEMA_VERSION = "1.0.0";
+
+	@Override
+	public String getSchemaVersion() {
+		return SCHEMA_VERSION;
+	}
+
+	@Activate
+	protected void activate() {
 		setDataLevel(DataLevel.SITE);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(Definition.class),
@@ -58,9 +70,6 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 				},
 				Definition.class.getName()));
 		setPublishToLiveByDefault(true);
-
-		XStreamAliasRegistryUtil.register(DefinitionImpl.class, "Definition");
-		XStreamAliasRegistryUtil.register(SourceImpl.class, "Source");
 	}
 
 	@Override
@@ -75,11 +84,10 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		DefinitionLocalServiceUtil.deleteDefinitions(
+		_definitionLocalService.deleteDefinitions(
 			portletDataContext.getScopeGroupId());
 
-		SourceLocalServiceUtil.deleteSources(
-			portletDataContext.getScopeGroupId());
+		_sourceLocalService.deleteSources(portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
 	}
@@ -90,7 +98,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPortletPermissions(RESOURCE_NAME);
+		portletDataContext.addPortletPermissions(AdminPermission.RESOURCE_NAME);
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -99,7 +107,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "sources")) {
 			ActionableDynamicQuery sourceActionableDynamicQuery =
-				SourceLocalServiceUtil.getExportActionableDynamicQuery(
+				_sourceLocalService.getExportActionableDynamicQuery(
 					portletDataContext);
 
 			sourceActionableDynamicQuery.performActions();
@@ -107,7 +115,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "definitions")) {
 			ActionableDynamicQuery definitionActionableDynamicQuery =
-				DefinitionLocalServiceUtil.getExportActionableDynamicQuery(
+				_definitionLocalService.getExportActionableDynamicQuery(
 					portletDataContext);
 
 			definitionActionableDynamicQuery.performActions();
@@ -122,7 +130,8 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		portletDataContext.importPortletPermissions(RESOURCE_NAME);
+		portletDataContext.importPortletPermissions(
+			AdminPermission.RESOURCE_NAME);
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "sources")) {
 			Element sourcesElement =
@@ -158,18 +167,34 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery sourceActionableDynamicQuery =
-			SourceLocalServiceUtil.getExportActionableDynamicQuery(
+			_sourceLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		sourceActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery definitionActionableDynamicQuery =
-			DefinitionLocalServiceUtil.getExportActionableDynamicQuery(
+			_definitionLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		definitionActionableDynamicQuery.performCount();
 	}
 
-	protected static final String RESOURCE_NAME = "com.liferay.portal.reports.admin";
+	@Reference(unbind = "-")
+	protected void setDefinitionLocalService(
+		DefinitionLocalService definitionLocalService) {
+
+		_definitionLocalService = definitionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSourceLocalService(
+		SourceLocalService sourceLocalService) {
+
+		_sourceLocalService = sourceLocalService;
+	}
+
+	private DefinitionLocalService _definitionLocalService;
+
+	private SourceLocalService _sourceLocalService;
 
 }

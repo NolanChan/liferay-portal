@@ -16,11 +16,8 @@ package com.liferay.portal.reports.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -42,12 +39,12 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-
 import com.liferay.portal.reports.exception.NoSuchDefinitionException;
 import com.liferay.portal.reports.model.Definition;
 import com.liferay.portal.reports.model.impl.DefinitionImpl;
 import com.liferay.portal.reports.model.impl.DefinitionModelImpl;
 import com.liferay.portal.reports.service.persistence.DefinitionPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -3664,26 +3661,28 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = CompanyProviderWrapper.class)
+	@ServiceReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
-	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DEFINITION = "SELECT definition FROM Definition definition";
 	private static final String _SQL_SELECT_DEFINITION_WHERE_PKS_IN = "SELECT definition FROM Definition definition WHERE definitionId IN (";
 	private static final String _SQL_SELECT_DEFINITION_WHERE = "SELECT definition FROM Definition definition WHERE ";
 	private static final String _SQL_COUNT_DEFINITION = "SELECT COUNT(definition) FROM Definition definition";
 	private static final String _SQL_COUNT_DEFINITION_WHERE = "SELECT COUNT(definition) FROM Definition definition WHERE ";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "definition.definitionId";
-	private static final String _FILTER_SQL_SELECT_DEFINITION_WHERE = "SELECT DISTINCT {definition.*} FROM Reports_Definition definition WHERE ";
+	private static final String _FILTER_SQL_SELECT_DEFINITION_WHERE = "SELECT DISTINCT {definition.*} FROM Definition definition WHERE ";
 	private static final String _FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_1 =
-		"SELECT {Reports_Definition.*} FROM (SELECT DISTINCT definition.definitionId FROM Reports_Definition definition WHERE ";
+		"SELECT {Definition.*} FROM (SELECT DISTINCT definition.definitionId FROM Definition definition WHERE ";
 	private static final String _FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_2 =
-		") TEMP_TABLE INNER JOIN Reports_Definition ON TEMP_TABLE.definitionId = Reports_Definition.definitionId";
-	private static final String _FILTER_SQL_COUNT_DEFINITION_WHERE = "SELECT COUNT(DISTINCT definition.definitionId) AS COUNT_VALUE FROM Reports_Definition definition WHERE ";
+		") TEMP_TABLE INNER JOIN Definition ON TEMP_TABLE.definitionId = Definition.definitionId";
+	private static final String _FILTER_SQL_COUNT_DEFINITION_WHERE = "SELECT COUNT(DISTINCT definition.definitionId) AS COUNT_VALUE FROM Definition definition WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "definition";
-	private static final String _FILTER_ENTITY_TABLE = "Reports_Definition";
+	private static final String _FILTER_ENTITY_TABLE = "Definition";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "definition.";
-	private static final String _ORDER_BY_ENTITY_TABLE = "Reports_Definition.";
+	private static final String _ORDER_BY_ENTITY_TABLE = "Definition.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Definition exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Definition exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(DefinitionPersistenceImpl.class);

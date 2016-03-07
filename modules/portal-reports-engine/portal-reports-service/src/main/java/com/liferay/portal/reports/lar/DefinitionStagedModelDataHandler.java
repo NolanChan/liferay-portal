@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -30,17 +31,21 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.reports.model.Definition;
 import com.liferay.portal.reports.model.Source;
-import com.liferay.portal.reports.service.DefinitionLocalServiceUtil;
-import com.liferay.portal.reports.service.SourceLocalServiceUtil;
+import com.liferay.portal.reports.service.DefinitionLocalService;
+import com.liferay.portal.reports.service.SourceLocalService;
 
 import java.io.InputStream;
 
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mate Thurzo
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class DefinitionStagedModelDataHandler
 	extends BaseStagedModelDataHandler<Definition> {
 
@@ -50,7 +55,7 @@ public class DefinitionStagedModelDataHandler
 	public void deleteStagedModel(Definition definition)
 		throws PortalException {
 
-		DefinitionLocalServiceUtil.deleteDefinition(definition);
+		_definitionLocalService.deleteDefinition(definition);
 	}
 
 	@Override
@@ -69,7 +74,7 @@ public class DefinitionStagedModelDataHandler
 	public Definition fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return DefinitionLocalServiceUtil.fetchDefinitionByUuidAndGroupId(
+		return _definitionLocalService.fetchDefinitionByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -77,7 +82,7 @@ public class DefinitionStagedModelDataHandler
 	public List<Definition> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return DefinitionLocalServiceUtil.getDefinitionsByUuidAndCompanyId(
+		return _definitionLocalService.getDefinitionsByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<Definition>());
 	}
@@ -97,7 +102,7 @@ public class DefinitionStagedModelDataHandler
 			PortletDataContext portletDataContext, Definition definition)
 		throws Exception {
 
-		Source source = SourceLocalServiceUtil.fetchSource(
+		Source source = _sourceLocalService.fetchSource(
 			definition.getSourceId());
 
 		if (source != null) {
@@ -179,17 +184,15 @@ public class DefinitionStagedModelDataHandler
 				if (existingDefinition == null) {
 					serviceContext.setUuid(definition.getUuid());
 
-					importedDefinition =
-						DefinitionLocalServiceUtil.addDefinition(
-							userId, portletDataContext.getScopeGroupId(),
-							definition.getNameMap(),
-							definition.getDescriptionMap(), sourceId,
-							definition.getReportParameters(), fileName,
-							inputStream, serviceContext);
+					importedDefinition = _definitionLocalService.addDefinition(
+						userId, portletDataContext.getScopeGroupId(),
+						definition.getNameMap(), definition.getDescriptionMap(),
+						sourceId, definition.getReportParameters(), fileName,
+						inputStream, serviceContext);
 				}
 				else {
 					importedDefinition =
-						DefinitionLocalServiceUtil.updateDefinition(
+						_definitionLocalService.updateDefinition(
 							existingDefinition.getDefinitionId(),
 							definition.getNameMap(),
 							definition.getDescriptionMap(), sourceId,
@@ -198,7 +201,7 @@ public class DefinitionStagedModelDataHandler
 				}
 			}
 			else {
-				importedDefinition = DefinitionLocalServiceUtil.addDefinition(
+				importedDefinition = _definitionLocalService.addDefinition(
 					userId, portletDataContext.getScopeGroupId(),
 					definition.getNameMap(), definition.getDescriptionMap(),
 					sourceId, definition.getReportParameters(), fileName,
@@ -212,5 +215,11 @@ public class DefinitionStagedModelDataHandler
 			StreamUtil.cleanUp(inputStream);
 		}
 	}
+
+	@Reference
+	private DefinitionLocalService _definitionLocalService;
+
+	@Reference
+	private SourceLocalService _sourceLocalService;
 
 }

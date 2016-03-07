@@ -14,15 +14,18 @@
 
 package com.liferay.portal.reports.service.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.reports.model.Entry;
 import com.liferay.portal.reports.service.base.EntryServiceBaseImpl;
-import com.liferay.portal.reports.service.permission.ActionKeys;
 import com.liferay.portal.reports.service.permission.DefinitionPermission;
 import com.liferay.portal.reports.service.permission.EntryPermission;
+import com.liferay.portal.reports.service.permission.ReportsActionKeys;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -31,6 +34,7 @@ import java.util.List;
 /**
  * @author Gavin Wan
  */
+@ProviderType
 public class EntryServiceImpl extends EntryServiceBaseImpl {
 
 	public Entry addEntry(
@@ -43,7 +47,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 		throws PortalException {
 
 		DefinitionPermission.check(
-			getPermissionChecker(), definitionId, ActionKeys.ADD_REPORT);
+			getPermissionChecker(), definitionId, ReportsActionKeys.ADD_REPORT);
 
 		return entryLocalService.addEntry(
 			getUserId(), groupId, definitionId, format, schedulerRequest,

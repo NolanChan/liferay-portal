@@ -14,13 +14,15 @@
 
 package com.liferay.portal.reports.service.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.reports.model.Definition;
 import com.liferay.portal.reports.service.base.DefinitionServiceBaseImpl;
-import com.liferay.portal.reports.service.permission.ActionKeys;
 import com.liferay.portal.reports.service.permission.AdminPermission;
 import com.liferay.portal.reports.service.permission.DefinitionPermission;
 
@@ -35,6 +37,7 @@ import java.util.Map;
  * @author Gavin Wan
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class DefinitionServiceImpl extends DefinitionServiceBaseImpl {
 
 	public Definition addDefinition(

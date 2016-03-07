@@ -16,7 +16,7 @@ package com.liferay.portal.reports.admin.util;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.reports.util.PortletPropsValues;
+import com.liferay.portal.reports.service.configuration.ReportsServiceConfigurationValues;
 import com.liferay.util.ContentUtil;
 
 import javax.portlet.PortletPreferences;
@@ -35,7 +35,8 @@ public class AdminUtil {
 			return emailDeliveryBody;
 		}
 
-		return ContentUtil.get(PortletPropsValues.ADMIN_EMAIL_DELIVERY_BODY);
+		return ContentUtil.get(
+			ReportsServiceConfigurationValues.ADMIN_EMAIL_DELIVERY_BODY);
 	}
 
 	public static String getEmailDeliverySubject(
@@ -48,17 +49,20 @@ public class AdminUtil {
 			return emailDeliverySubject;
 		}
 
-		return ContentUtil.get(PortletPropsValues.ADMIN_EMAIL_DELIVERY_SUBJECT);
+		return ContentUtil.get(
+			ReportsServiceConfigurationValues.ADMIN_EMAIL_DELIVERY_SUBJECT);
 	}
 
 	public static String getEmailFromAddress(PortletPreferences preferences) {
-		String emailFromAddress = PortletPropsValues.ADMIN_EMAIL_FROM_ADDRESS;
+		String emailFromAddress =
+			ReportsServiceConfigurationValues.ADMIN_EMAIL_FROM_ADDRESS;
 
 		return preferences.getValue("emailFromAddress", emailFromAddress);
 	}
 
 	public static String getEmailFromName(PortletPreferences preferences) {
-		String emailFromName = PortletPropsValues.ADMIN_EMAIL_FROM_NAME;
+		String emailFromName =
+			ReportsServiceConfigurationValues.ADMIN_EMAIL_FROM_NAME;
 
 		return preferences.getValue("emailFromName", emailFromName);
 	}
@@ -74,7 +78,7 @@ public class AdminUtil {
 		}
 
 		return ContentUtil.get(
-			PortletPropsValues.ADMIN_EMAIL_NOTIFICATIONS_BODY);
+			ReportsServiceConfigurationValues.ADMIN_EMAIL_NOTIFICATIONS_BODY);
 	}
 
 	public static String getEmailNotificationsSubject(
@@ -88,7 +92,8 @@ public class AdminUtil {
 		}
 
 		return ContentUtil.get(
-			PortletPropsValues.ADMIN_EMAIL_NOTIFICATIONS_SUBJECT);
+			ReportsServiceConfigurationValues.
+				ADMIN_EMAIL_NOTIFICATIONS_SUBJECT);
 	}
 
 }

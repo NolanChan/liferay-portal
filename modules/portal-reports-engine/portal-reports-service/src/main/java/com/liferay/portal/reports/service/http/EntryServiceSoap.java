@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import com.liferay.portal.reports.service.EntryServiceUtil;
 
 import java.rmi.RemoteException;
@@ -65,13 +64,13 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class EntryServiceSoap {
-	public static com.liferay.portal.reports.model.EntrySoap addEntry(long groupId,
-		long definitionId, java.lang.String format, boolean schedulerRequest,
-		java.util.Date startDate, java.util.Date endDate, boolean repeating,
-		java.lang.String recurrence, java.lang.String emailNotifications,
-		java.lang.String emailDelivery, java.lang.String portletId,
-		java.lang.String pageURL, java.lang.String reportName,
-		java.lang.String reportParameters,
+	public static com.liferay.portal.reports.model.EntrySoap addEntry(
+		long groupId, long definitionId, java.lang.String format,
+		boolean schedulerRequest, java.util.Date startDate,
+		java.util.Date endDate, boolean repeating, java.lang.String recurrence,
+		java.lang.String emailNotifications, java.lang.String emailDelivery,
+		java.lang.String portletId, java.lang.String pageURL,
+		java.lang.String reportName, java.lang.String reportParameters,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -102,8 +101,8 @@ public class EntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.reports.model.EntrySoap deleteEntry(long entryId)
-		throws RemoteException {
+	public static com.liferay.portal.reports.model.EntrySoap deleteEntry(
+		long entryId) throws RemoteException {
 		try {
 			com.liferay.portal.reports.model.Entry returnValue = EntryServiceUtil.deleteEntry(entryId);
 

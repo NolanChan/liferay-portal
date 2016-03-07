@@ -14,6 +14,8 @@
 
 package com.liferay.portal.reports.service.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Junction;
@@ -44,6 +46,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Gavin Wan
  */
+@ProviderType
 public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 
 	public Source addSource(

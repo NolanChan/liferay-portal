@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 6.2.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_6_2_0.dtd">
+<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.0.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_0_0.dtd">
 
 <resource-action-mapping>
 	<model-resource>
 		<model-name>com.liferay.portal.reports.admin</model-name>
 		<portlet-ref>
-			<portlet-name>1</portlet-name>
+			<portlet-name>com_liferay_portal_reports_web_admin_portlet_AdminPortlet</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -23,7 +23,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.reports.model.Definition</model-name>
 		<portlet-ref>
-			<portlet-name>1</portlet-name>
+			<portlet-name>com_liferay_portal_reports_web_admin_portlet_AdminPortlet</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -50,7 +50,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.reports.model.Entry</model-name>
 		<portlet-ref>
-			<portlet-name>1</portlet-name>
+			<portlet-name>com_liferay_portal_reports_web_admin_portlet_AdminPortlet</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -73,7 +73,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.reports.model.Source</model-name>
 		<portlet-ref>
-			<portlet-name>1</portlet-name>
+			<portlet-name>com_liferay_portal_reports_web_admin_portlet_AdminPortlet</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>

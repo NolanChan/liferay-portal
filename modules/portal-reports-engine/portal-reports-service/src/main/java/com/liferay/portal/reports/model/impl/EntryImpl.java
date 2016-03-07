@@ -14,6 +14,8 @@
 
 package com.liferay.portal.reports.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.document.library.kernel.exception.NoSuchDirectoryException;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.portal.kernel.cal.TZSRecurrence;
@@ -22,12 +24,13 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.reports.engine.messaging.DestinationNames;
-import com.liferay.portal.reports.service.permission.ActionKeys;
+import com.liferay.portal.reports.service.permission.ReportsActionKeys;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Gavin Wan
  */
+@ProviderType
 public class EntryImpl extends EntryBaseImpl {
 
 	public EntryImpl() {
@@ -49,7 +52,8 @@ public class EntryImpl extends EntryBaseImpl {
 	}
 
 	public String getJobName() {
-		return ActionKeys.ADD_REPORT.concat(String.valueOf(getEntryId()));
+		return ReportsActionKeys.ADD_REPORT.concat(
+			String.valueOf(getEntryId()));
 	}
 
 	public TZSRecurrence getRecurrenceObj() {

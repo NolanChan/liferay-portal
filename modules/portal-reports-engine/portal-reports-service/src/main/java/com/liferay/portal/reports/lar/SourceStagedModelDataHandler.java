@@ -17,19 +17,24 @@ package com.liferay.portal.reports.lar;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.reports.model.Source;
-import com.liferay.portal.reports.service.SourceLocalServiceUtil;
+import com.liferay.portal.reports.service.SourceLocalService;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class SourceStagedModelDataHandler
 	extends BaseStagedModelDataHandler<Source> {
 
@@ -37,7 +42,7 @@ public class SourceStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(Source source) throws PortalException {
-		SourceLocalServiceUtil.deleteSource(source);
+		_sourceLocalService.deleteSource(source);
 	}
 
 	@Override
@@ -54,15 +59,14 @@ public class SourceStagedModelDataHandler
 
 	@Override
 	public Source fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
-		return SourceLocalServiceUtil.fetchSourceByUuidAndGroupId(
-			uuid, groupId);
+		return _sourceLocalService.fetchSourceByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
 	public List<Source> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return SourceLocalServiceUtil.getSourcesByUuidAndCompanyId(
+		return _sourceLocalService.getSourcesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<Source>());
 	}
@@ -107,14 +111,14 @@ public class SourceStagedModelDataHandler
 			if (existingSource == null) {
 				serviceContext.setUuid(source.getUuid());
 
-				importedSource = SourceLocalServiceUtil.addSource(
+				importedSource = _sourceLocalService.addSource(
 					userId, portletDataContext.getScopeGroupId(),
 					source.getNameMap(), source.getDriverClassName(),
 					source.getDriverUrl(), source.getDriverUserName(),
 					source.getDriverPassword(), serviceContext);
 			}
 			else {
-				importedSource = SourceLocalServiceUtil.updateSource(
+				importedSource = _sourceLocalService.updateSource(
 					existingSource.getSourceId(), source.getNameMap(),
 					source.getDriverClassName(), source.getDriverUrl(),
 					source.getDriverUserName(), source.getDriverPassword(),
@@ -122,7 +126,7 @@ public class SourceStagedModelDataHandler
 			}
 		}
 		else {
-			importedSource = SourceLocalServiceUtil.addSource(
+			importedSource = _sourceLocalService.addSource(
 				userId, portletDataContext.getScopeGroupId(),
 				source.getNameMap(), source.getDriverClassName(),
 				source.getDriverUrl(), source.getDriverUserName(),
@@ -131,5 +135,8 @@ public class SourceStagedModelDataHandler
 
 		portletDataContext.importClassedModel(source, importedSource);
 	}
+
+	@Reference
+	private SourceLocalService _sourceLocalService;
 
 }

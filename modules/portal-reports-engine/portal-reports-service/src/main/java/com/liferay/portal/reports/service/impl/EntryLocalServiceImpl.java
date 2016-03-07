@@ -14,6 +14,8 @@
 
 package com.liferay.portal.reports.service.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.document.library.kernel.exception.DuplicateDirectoryException;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -81,6 +83,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Gavin Wan
  */
+@ProviderType
 public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 	public Entry addEntry(
@@ -555,8 +558,9 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 				"[$FROM_ADDRESS$]", "[$FROM_NAME$]", "[$PAGE_URL$]",
 				"[$REPORT_NAME$]"
 			},
-			new String[] {fromAddress, fromName, entry.getPageURL(), reportName}
-		);
+			new String[] {
+				fromAddress, fromName, entry.getPageURL(), reportName
+			});
 
 		body = StringUtil.replace(
 			body,
@@ -564,8 +568,9 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 				"[$FROM_ADDRESS$]", "[$FROM_NAME$]", "[$PAGE_URL$]",
 				"[$REPORT_NAME$]"
 			},
-			new String[] {fromAddress, fromName, entry.getPageURL(), reportName}
-		);
+			new String[] {
+				fromAddress, fromName, entry.getPageURL(), reportName
+			});
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 

@@ -16,11 +16,8 @@ package com.liferay.portal.reports.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -42,12 +39,12 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-
 import com.liferay.portal.reports.exception.NoSuchSourceException;
 import com.liferay.portal.reports.model.Source;
 import com.liferay.portal.reports.model.impl.SourceImpl;
 import com.liferay.portal.reports.model.impl.SourceModelImpl;
 import com.liferay.portal.reports.service.persistence.SourcePersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -3637,26 +3634,28 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = CompanyProviderWrapper.class)
+	@ServiceReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
-	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_SOURCE = "SELECT source FROM Source source";
 	private static final String _SQL_SELECT_SOURCE_WHERE_PKS_IN = "SELECT source FROM Source source WHERE sourceId IN (";
 	private static final String _SQL_SELECT_SOURCE_WHERE = "SELECT source FROM Source source WHERE ";
 	private static final String _SQL_COUNT_SOURCE = "SELECT COUNT(source) FROM Source source";
 	private static final String _SQL_COUNT_SOURCE_WHERE = "SELECT COUNT(source) FROM Source source WHERE ";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "source.sourceId";
-	private static final String _FILTER_SQL_SELECT_SOURCE_WHERE = "SELECT DISTINCT {source.*} FROM Reports_Source source WHERE ";
+	private static final String _FILTER_SQL_SELECT_SOURCE_WHERE = "SELECT DISTINCT {source.*} FROM Source source WHERE ";
 	private static final String _FILTER_SQL_SELECT_SOURCE_NO_INLINE_DISTINCT_WHERE_1 =
-		"SELECT {Reports_Source.*} FROM (SELECT DISTINCT source.sourceId FROM Reports_Source source WHERE ";
+		"SELECT {Source.*} FROM (SELECT DISTINCT source.sourceId FROM Source source WHERE ";
 	private static final String _FILTER_SQL_SELECT_SOURCE_NO_INLINE_DISTINCT_WHERE_2 =
-		") TEMP_TABLE INNER JOIN Reports_Source ON TEMP_TABLE.sourceId = Reports_Source.sourceId";
-	private static final String _FILTER_SQL_COUNT_SOURCE_WHERE = "SELECT COUNT(DISTINCT source.sourceId) AS COUNT_VALUE FROM Reports_Source source WHERE ";
+		") TEMP_TABLE INNER JOIN Source ON TEMP_TABLE.sourceId = Source.sourceId";
+	private static final String _FILTER_SQL_COUNT_SOURCE_WHERE = "SELECT COUNT(DISTINCT source.sourceId) AS COUNT_VALUE FROM Source source WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "source";
-	private static final String _FILTER_ENTITY_TABLE = "Reports_Source";
+	private static final String _FILTER_ENTITY_TABLE = "Source";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "source.";
-	private static final String _ORDER_BY_ENTITY_TABLE = "Reports_Source.";
+	private static final String _ORDER_BY_ENTITY_TABLE = "Source.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Source exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Source exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(SourcePersistenceImpl.class);

@@ -37,7 +37,7 @@ public class UpgradeReportEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasTable("Reports_Entry")) {
+		if (hasTable("Entry")) {
 			updateReportEntries();
 		}
 	}
@@ -84,6 +84,6 @@ public class UpgradeReportEntry extends UpgradeProcess {
 		}
 	}
 
-	private static Pattern _pattern = Pattern.compile("[.*=.*]+");
+	private static final Pattern _pattern = Pattern.compile("[.*=.*]+");
 
 }
