@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ page import="com.liferay.portal.workflow.kaleo.forms.web.display.context.KaleoFormsAdminDisplayContext" %>
+
 <%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.dynamic.data.lists.exception.RecordSetDDMStructureIdException" %><%@
@@ -32,7 +34,6 @@ page import="com.liferay.dynamic.data.mapping.service.permission.DDMStructurePer
 page import="com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.StorageEngineUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMDisplay" %><%@
-page import="com.liferay.dynamic.data.mapping.util.DDMDisplayRegistryUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
 page import="com.liferay.portal.kernel.exception.PortalException" %><%@
@@ -66,8 +67,10 @@ page import="com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPair" %>
 page import="com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoFormsPermission" %><%@
+page import="com.liferay.portal.workflow.kaleo.forms.web.display.context.KaleoFormsAdminDisplayContext" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.web.search.KaleoProcessSearch" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.web.util.KaleoFormsUtil" %>
+page import="com.liferay.portal.workflow.kaleo.forms.web.util.KaleoFormsUtil" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.WindowState" %>
@@ -80,7 +83,9 @@ boolean showGlobalScope = ParamUtil.getBoolean(request, "showGlobalScope");
 boolean showManageTemplates = ParamUtil.getBoolean(request, "showManageTemplates", true);
 boolean showToolbar = ParamUtil.getBoolean(request, "showToolbar", true);
 
-DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(portletDisplay.getId());
+KaleoFormsAdminDisplayContext kaleoFormsAdminDisplayContext = (KaleoFormsAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+DDMDisplay ddmDisplay = kaleoFormsAdminDisplayContext.getDDMDisplay();
 
 long scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
 
