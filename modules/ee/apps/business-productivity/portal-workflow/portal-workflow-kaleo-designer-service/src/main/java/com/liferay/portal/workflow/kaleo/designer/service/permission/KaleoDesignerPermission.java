@@ -26,10 +26,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  */
 @Component(
-		property = {"resource.name=" + KaleoDesignerPermission.RESOURCE_NAME},
-		service = ResourcePermissionChecker.class
+	property = {"resource.name=" + KaleoDesignerPermission.RESOURCE_NAME},
+	service = ResourcePermissionChecker.class
 )
-public class KaleoDesignerPermission extends BaseResourcePermissionChecker{
+public class KaleoDesignerPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =
 		"com.liferay.portal.workflow.kaleo.designer";
@@ -44,20 +44,16 @@ public class KaleoDesignerPermission extends BaseResourcePermissionChecker{
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long groupId,
-			String actionId) {
+		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-			return contains(permissionChecker, RESOURCE_NAME, groupId, actionId);
+		return contains(permissionChecker, RESOURCE_NAME, groupId, actionId);
 	}
-	
+
 	@Override
 	public Boolean checkResource(
-			PermissionChecker permissionChecker, long classPK, 
-			String actionId) {
-		
+		PermissionChecker permissionChecker, long classPK, String actionId) {
+
 		return contains(permissionChecker, classPK, actionId);
 	}
-	
-	
 
 }
