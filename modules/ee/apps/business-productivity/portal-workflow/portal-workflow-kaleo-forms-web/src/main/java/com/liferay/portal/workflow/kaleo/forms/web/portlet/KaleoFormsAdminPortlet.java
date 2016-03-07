@@ -795,8 +795,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			resourceRequest, "fileExtension");
 
 		String fileName =
-			kaleoProcess.getName(themeDisplay.getLocale()) +
-				CharPool.PERIOD + fileExtension;
+			kaleoProcess.getName(themeDisplay.getLocale()) + CharPool.PERIOD +
+				fileExtension;
 
 		int status = WorkflowConstants.STATUS_ANY;
 

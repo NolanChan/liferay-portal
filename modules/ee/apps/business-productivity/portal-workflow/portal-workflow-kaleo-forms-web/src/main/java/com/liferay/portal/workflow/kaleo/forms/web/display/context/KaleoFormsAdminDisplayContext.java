@@ -30,6 +30,7 @@ public class KaleoFormsAdminDisplayContext {
 
 		_kaleoFormsAdminRequestHelper = new KaleoFormsAdminRequestHelper(
 			request);
+
 		_ddmDisplayRegistry = ddmDisplayRegistry;
 	}
 
