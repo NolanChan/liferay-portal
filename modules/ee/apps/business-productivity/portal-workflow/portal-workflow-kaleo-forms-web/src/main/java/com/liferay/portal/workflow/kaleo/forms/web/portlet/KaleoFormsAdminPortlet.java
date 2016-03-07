@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -88,6 +89,7 @@ import com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessService;
 import com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
 import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
+import com.liferay.portal.workflow.kaleo.forms.web.display.context.KaleoFormsAdminDisplayContext;
 
 import java.io.IOException;
 
@@ -325,6 +327,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
+			setDisplayContext(renderRequest);
+
 			renderKaleoProcess(renderRequest, renderResponse);
 		}
 		catch (Exception e) {
@@ -835,6 +839,13 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMDisplayRegistry(
+		DDMDisplayRegistry ddmDisplayRegistry) {
+
+		_ddmDisplayRegistry = ddmDisplayRegistry;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMFormJSONDeserializer(
 		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
 
@@ -846,6 +857,17 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		DDMStructureService ddmStructureService) {
 
 		_ddmStructureService = ddmStructureService;
+	}
+
+	protected void setDisplayContext(RenderRequest renderRequest) {
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			renderRequest);
+
+		KaleoFormsAdminDisplayContext kaleoFormsAdminDisplayContext =
+			new KaleoFormsAdminDisplayContext(request, _ddmDisplayRegistry);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, kaleoFormsAdminDisplayContext);
 	}
 
 	@Reference(unbind = "-")
@@ -900,6 +922,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	private DDL _ddl;
 	private DDLExporterFactory _ddlExporterFactory;
 	private DDLRecordService _ddlRecordService;
+	private DDMDisplayRegistry _ddmDisplayRegistry;
 	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 	private DDMStructureService _ddmStructureService;
 	private KaleoDraftDefinitionService _kaleoDraftDefinitionService;
