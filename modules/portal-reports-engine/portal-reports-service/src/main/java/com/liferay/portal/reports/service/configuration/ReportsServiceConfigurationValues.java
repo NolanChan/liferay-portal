@@ -12,36 +12,42 @@
  * details.
  */
 
-package com.liferay.portal.reports.util;
+package com.liferay.portal.reports.service.configuration;
 
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.util.portlet.PortletProps;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortletPropsValues {
+public class ReportsServiceConfigurationValues {
 
 	public static final String ADMIN_EMAIL_DELIVERY_BODY = GetterUtil.getString(
-		PortletProps.get(PortletPropsKeys.ADMIN_EMAIL_DELIVERY_BODY));
+		ReportsServiceConfigurationUtil.get(
+			ReportsServiceConfigurationKeys.ADMIN_EMAIL_DELIVERY_BODY));
 
 	public static final String ADMIN_EMAIL_DELIVERY_SUBJECT =
 		GetterUtil.getString(
-			PortletProps.get(PortletPropsKeys.ADMIN_EMAIL_DELIVERY_SUBJECT));
+			ReportsServiceConfigurationUtil.get(
+				ReportsServiceConfigurationKeys.ADMIN_EMAIL_DELIVERY_SUBJECT));
 
 	public static final String ADMIN_EMAIL_FROM_ADDRESS = GetterUtil.getString(
-		PortletProps.get(PortletPropsKeys.ADMIN_EMAIL_FROM_ADDRESS));
+		ReportsServiceConfigurationUtil.get(
+			ReportsServiceConfigurationKeys.ADMIN_EMAIL_FROM_ADDRESS));
 
 	public static final String ADMIN_EMAIL_FROM_NAME = GetterUtil.getString(
-		PortletProps.get(PortletPropsKeys.ADMIN_EMAIL_FROM_NAME));
+		ReportsServiceConfigurationUtil.get(
+			ReportsServiceConfigurationKeys.ADMIN_EMAIL_FROM_NAME));
 
 	public static final String ADMIN_EMAIL_NOTIFICATIONS_BODY =
 		GetterUtil.getString(
-			PortletProps.get(PortletPropsKeys.ADMIN_EMAIL_NOTIFICATIONS_BODY));
+			ReportsServiceConfigurationUtil.get(
+				ReportsServiceConfigurationKeys.
+					ADMIN_EMAIL_NOTIFICATIONS_BODY));
 
 	public static final String ADMIN_EMAIL_NOTIFICATIONS_SUBJECT =
 		GetterUtil.getString(
-			PortletProps.get(
-				PortletPropsKeys.ADMIN_EMAIL_NOTIFICATIONS_SUBJECT));
+			ReportsServiceConfigurationUtil.get(
+				ReportsServiceConfigurationKeys.
+					ADMIN_EMAIL_NOTIFICATIONS_SUBJECT));
 
 }

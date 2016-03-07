@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.reports.util;
+package com.liferay.portal.reports.service.configuration;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public class PortletPropsKeys {
+public class ReportsServiceConfigurationKeys {
 
 	public static final String ADMIN_EMAIL_DELIVERY_BODY =
 		"admin.email.delivery.body";
