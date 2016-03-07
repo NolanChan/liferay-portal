@@ -14,19 +14,28 @@
 
 package com.liferay.portal.reports.web.admin.action;
 
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.reports.web.admin.util.ReportsPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Gavin Wan
  * @author Peter Shin
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + ReportsPortletKeys.REPORTS_ADMIN},
+	service = ConfigurationAction.class
+)
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 	@Override

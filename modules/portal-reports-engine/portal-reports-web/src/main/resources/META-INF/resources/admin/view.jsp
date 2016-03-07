@@ -26,11 +26,11 @@ portletURL.setParameter("tabs1", tabs1);
 String tabs1Names = "reports";
 
 boolean hasAddDefinitionPermission = AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_DEFINITION);
-boolean hasAddSourcePermission = AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_SOURCE);
+boolean hasAddSourcePermission = AdminPermission.contains(permissionChecker, scopeGroupId, ReportsActionKeys.ADD_SOURCE);
 
 String portletId = portletDisplay.getId();
 
-if (portletId.equals(PortletKeys.REPORTS_ADMIN)) {
+if (portletId.equals(ReportsPortletKeys.REPORTS_ADMIN)) {
 	if (hasAddDefinitionPermission) {
 		tabs1Names += ",definitions";
 	}

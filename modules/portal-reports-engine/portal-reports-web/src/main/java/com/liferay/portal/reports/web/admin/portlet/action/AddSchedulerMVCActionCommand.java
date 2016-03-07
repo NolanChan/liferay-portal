@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.reports.admin.portlet.action;
+package com.liferay.portal.reports.web.admin.portlet.action;
 
 import com.liferay.portal.kernel.cal.DayAndPosition;
 import com.liferay.portal.kernel.cal.Duration;
@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -34,9 +35,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.reports.model.Definition;
 import com.liferay.portal.reports.model.Entry;
-import com.liferay.portal.reports.service.DefinitionServiceUtil;
-import com.liferay.portal.reports.service.EntryServiceUtil;
+import com.liferay.portal.reports.service.DefinitionService;
+import com.liferay.portal.reports.service.EntryService;
 import com.liferay.portal.reports.util.ReportsUtil;
+import com.liferay.portal.reports.web.admin.util.ReportsPortletKeys;
 
 import java.text.DateFormat;
 
@@ -48,10 +50,21 @@ import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Gavin Wan
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + ReportsPortletKeys.REPORTS_ADMIN,
+		"mvc.command.name=addScheduler"
+	},
+	service = MVCActionCommand.class
+)
 public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void addWeeklyDayPos(
@@ -107,8 +120,7 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 		JSONArray entryReportParametersJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
-		Definition definition = DefinitionServiceUtil.getDefinition(
-			definitionId);
+		Definition definition = _definitionService.getDefinition(definitionId);
 
 		JSONArray reportParametersJSONArray = JSONFactoryUtil.createJSONArray(
 			definition.getReportParameters());
@@ -163,7 +175,7 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Entry.class.getName(), actionRequest);
 
-		EntryServiceUtil.addEntry(
+		_entryService.addEntry(
 			themeDisplay.getScopeGroupId(), definitionId, format, true,
 			startCalendar.getTime(), schedulerEndDate,
 			recurrenceType != Recurrence.NO_RECURRENCE, cronText,
@@ -315,5 +327,11 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 
 		return RecurrenceSerializer.toCronText(recurrence);
 	}
+
+	@Reference
+	private static DefinitionService _definitionService;
+
+	@Reference
+	private static EntryService _entryService;
 
 }

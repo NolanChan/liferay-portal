@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.reports.admin.portlet.action;
+package com.liferay.portal.reports.web.admin.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -24,8 +25,9 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.reports.model.Definition;
-import com.liferay.portal.reports.service.DefinitionServiceUtil;
+import com.liferay.portal.reports.service.DefinitionService;
 import com.liferay.portal.reports.util.ReportsUtil;
+import com.liferay.portal.reports.web.admin.util.ReportsPortletKeys;
 
 import java.io.InputStream;
 
@@ -35,10 +37,21 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Gavin Wan
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + ReportsPortletKeys.REPORTS_ADMIN,
+		"mvc.command.name=editDefinition"
+	},
+	service = MVCActionCommand.class
+)
 public class EditDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
@@ -75,13 +88,13 @@ public class EditDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				Definition.class.getName(), actionRequest);
 
 			if (definitionId <= 0) {
-				DefinitionServiceUtil.addDefinition(
+				_definitionService.addDefinition(
 					themeDisplay.getScopeGroupId(), definitionNameMap,
 					definitionDescriptionMap, sourceId, reportParameters,
 					fileName, inputStream, serviceContext);
 			}
 			else {
-				DefinitionServiceUtil.updateDefinition(
+				_definitionService.updateDefinition(
 					definitionId, definitionNameMap, definitionDescriptionMap,
 					sourceId, reportParameters, fileName, inputStream,
 					serviceContext);
@@ -91,5 +104,8 @@ public class EditDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			StreamUtil.cleanUp(inputStream);
 		}
 	}
+
+	@Reference
+	private static DefinitionService _definitionService;
 
 }

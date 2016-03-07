@@ -24,17 +24,51 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.reports.web.admin.util.ReportsPortletKeys;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Gavin Wan
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.css-class-wrapper=reports-portlet",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.footer-portlet-javascript=/admin/js/main.js",
+		"com.liferay.portlet.header-portlet-css=/admin/css/main.css",
+		"com.liferay.portlet.icon=/icons/admin.png",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.preferences-unique-per-layout=false",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.scopeable=true",
+		"javax.portlet.display-name=Report Admin",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.config-template=/admin/configuration.jsp",
+		"javax.portlet.init-param.copy-request-parameters=true",
+		"javax.portlet.init-param.mvc-action-command-package-prefix=com.liferay.portal.reports.web.admin.portlet.action",
+		"javax.portlet.init-param.view-template=/admin/view.jsp",
+		"javax.portlet.name=" + ReportsPortletKeys.REPORTS_ADMIN,
+		"javax.portlet.portlet-info.keywords=Reports Admin",
+		"javax.portlet.portlet-info.short-title=Reports Admin",
+		"javax.portlet.portlet-info.title=Reports Admin",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class AdminPortlet extends MVCPortlet {
 
 	@Override

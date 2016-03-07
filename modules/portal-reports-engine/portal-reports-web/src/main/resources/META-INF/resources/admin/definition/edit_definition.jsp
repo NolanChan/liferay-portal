@@ -174,7 +174,7 @@ if (definition != null) {
 		<aui:button type="submit" value='<%= (definition != null) ? "update" : "save" %>' />
 
 		<c:if test="<%= definition != null %>">
-			<c:if test="<%= DefinitionPermission.contains(permissionChecker, definition, ActionKeys.ADD_REPORT) %>">
+			<c:if test="<%= DefinitionPermission.contains(permissionChecker, definition, ReportsActionKeys.ADD_REPORT) %>">
 				<aui:button onClick='<%= renderResponse.getNamespace() + "addReport();" %>' value="add-report" />
 
 				<aui:button onClick='<%= renderResponse.getNamespace() + "addScheduler();" %>' value="add-schedule" />

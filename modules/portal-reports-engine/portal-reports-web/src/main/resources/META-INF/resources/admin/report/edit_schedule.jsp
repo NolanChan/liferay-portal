@@ -118,6 +118,7 @@ String reportName = BeanParamUtil.getString(definition, request, "reportName");
 									yearValue="<%= calendar.get(Calendar.YEAR) %>"
 								/>
 							</aui:col>
+
 							<aui:col columnWidth="<%= 50 %>">
 								<aui:select label="" name='<%= "useVariable" + key %>' onChange='<%= "useVariable" + key + "();" %>' showEmptyOption="<%= Boolean.TRUE %>">
 									<aui:option label="start-date" value="startDate" />

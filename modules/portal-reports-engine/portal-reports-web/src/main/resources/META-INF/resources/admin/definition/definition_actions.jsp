@@ -54,7 +54,7 @@ Definition definition = (Definition)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DefinitionPermission.contains(permissionChecker, definition, ActionKeys.ADD_REPORT) %>">
+	<c:if test="<%= DefinitionPermission.contains(permissionChecker, definition, ReportsActionKeys.ADD_REPORT) %>">
 		<portlet:renderURL var="addReportURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcPath" value="/admin/report/generate_report.jsp" />
 			<portlet:param name="definitionId" value="<%= String.valueOf(definition.getDefinitionId()) %>" />
@@ -67,7 +67,7 @@ Definition definition = (Definition)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DefinitionPermission.contains(permissionChecker, definition, ActionKeys.ADD_REPORT) %>">
+	<c:if test="<%= DefinitionPermission.contains(permissionChecker, definition, ReportsActionKeys.ADD_REPORT) %>">
 		<portlet:renderURL var="addScheduleURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcPath" value="/admin/report/edit_schedule.jsp" />
 			<portlet:param name="definitionId" value="<%= String.valueOf(definition.getDefinitionId()) %>" />

@@ -12,20 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.reports.admin.portlet.action;
+package com.liferay.portal.reports.web.admin.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.reports.service.EntryServiceUtil;
+import com.liferay.portal.reports.service.EntryService;
+import com.liferay.portal.reports.web.admin.util.ReportsPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Gavin Wan
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + ReportsPortletKeys.REPORTS_ADMIN,
+		"mvc.command.name=deleteReport"
+	},
+	service = MVCActionCommand.class
+)
 public class DeleteReportMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
@@ -40,8 +53,11 @@ public class DeleteReportMVCActionCommand extends BaseMVCActionCommand {
 
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		EntryServiceUtil.deleteAttachment(
+		_entryService.deleteAttachment(
 			themeDisplay.getCompanyId(), entryId, fileName);
 	}
+
+	@Reference
+	private static EntryService _entryService;
 
 }

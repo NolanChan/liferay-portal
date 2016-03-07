@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.reports.admin.portlet.action;
+package com.liferay.portal.reports.web.admin.portlet.action;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -28,9 +29,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.reports.model.Definition;
 import com.liferay.portal.reports.model.Entry;
-import com.liferay.portal.reports.service.DefinitionServiceUtil;
-import com.liferay.portal.reports.service.EntryServiceUtil;
+import com.liferay.portal.reports.service.DefinitionService;
+import com.liferay.portal.reports.service.EntryService;
 import com.liferay.portal.reports.util.ReportsUtil;
+import com.liferay.portal.reports.web.admin.util.ReportsPortletKeys;
 
 import java.text.DateFormat;
 
@@ -39,10 +41,21 @@ import java.util.Calendar;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Gavin Wan
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + ReportsPortletKeys.REPORTS_ADMIN,
+		"mvc.command.name=generateReport"
+	},
+	service = MVCActionCommand.class
+)
 public class GenerateReportMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
@@ -69,8 +82,7 @@ public class GenerateReportMVCActionCommand extends BaseMVCActionCommand {
 			JSONFactoryUtil.createJSONArray();
 		JSONArray reportParametersJSONArray = JSONFactoryUtil.createJSONArray();
 
-		Definition definition = DefinitionServiceUtil.getDefinition(
-			definitionId);
+		Definition definition = _definitionService.getDefinition(definitionId);
 
 		if (Validator.isNotNull(definition.getReportParameters())) {
 			reportParametersJSONArray = JSONFactoryUtil.createJSONArray(
@@ -111,11 +123,17 @@ public class GenerateReportMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Entry.class.getName(), actionRequest);
 
-		EntryServiceUtil.addEntry(
+		_entryService.addEntry(
 			themeDisplay.getScopeGroupId(), definitionId, format, false, null,
 			null, false, null, emailNotifications, emailDelivery, portletId,
 			generatedReportsURL, reportName,
 			entryReportParametersJSONArray.toString(), serviceContext);
 	}
+
+	@Reference
+	private static DefinitionService _definitionService;
+
+	@Reference
+	private static EntryService _entryService;
 
 }

@@ -18,14 +18,18 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+
+<%@
 		taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 		taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 		taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 		taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 		taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %>
+
+<%@
 		page import="com.liferay.portal.reports.engine.ReportDataSourceType" %><%@
 		page import="com.liferay.portal.reports.engine.ReportFormat" %><%@
 		page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
@@ -38,6 +42,7 @@
 		page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 		page import="com.liferay.portal.kernel.model.User" %><%@
 		page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+		page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 		page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 		page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 		page import="com.liferay.portal.kernel.util.Constants" %><%@
@@ -70,12 +75,12 @@
 		page import="com.liferay.portal.reports.service.EntryServiceUtil" %><%@
 		page import="com.liferay.portal.reports.service.SourceLocalServiceUtil" %><%@
 		page import="com.liferay.portal.reports.service.SourceServiceUtil" %><%@
-		page import="com.liferay.portal.reports.service.permission.ActionKeys" %><%@
+		page import="com.liferay.portal.reports.service.permission.ReportsActionKeys" %><%@
 		page import="com.liferay.portal.reports.service.permission.AdminPermission" %><%@
 		page import="com.liferay.portal.reports.service.permission.DefinitionPermission" %><%@
 		page import="com.liferay.portal.reports.service.permission.EntryPermission" %><%@
 		page import="com.liferay.portal.reports.service.permission.SourcePermission" %><%@
-		page import="com.liferay.portal.reports.util.PortletKeys" %><%@
+		page import="com.liferay.portal.reports.web.admin.util.ReportsPortletKeys" %><%@
 		page import="com.liferay.portal.reports.util.ReportsUtil" %><%@
 		page import="com.liferay.taglib.search.ResultRow" %>
 
@@ -108,6 +113,4 @@
 
 	Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 	Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-
-	String languageId = LanguageUtil.getLanguageId(request);
 %>
