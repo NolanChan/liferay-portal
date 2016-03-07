@@ -16,13 +16,14 @@ package com.liferay.portal.reports.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-
 import com.liferay.portal.reports.model.Source;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
@@ -1033,15 +1034,9 @@ public class SourceUtil {
 	}
 
 	public static SourcePersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (SourcePersistence)PortletBeanLocatorUtil.locate(com.liferay.portal.reports.service.ClpSerializer.getServletContextName(),
-					SourcePersistence.class.getName());
-
-			ReferenceRegistry.registerReference(SourceUtil.class, "_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
-	private static SourcePersistence _persistence;
+	private static ServiceTracker<SourcePersistence, SourcePersistence> _serviceTracker =
+		ServiceTrackerFactory.open(SourcePersistence.class);
 }

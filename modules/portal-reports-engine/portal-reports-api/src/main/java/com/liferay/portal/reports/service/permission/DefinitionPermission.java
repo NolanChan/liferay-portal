@@ -18,11 +18,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.reports.model.Definition;
-import com.liferay.portal.reports.service.DefinitionLocalServiceUtil;
+import com.liferay.portal.reports.service.DefinitionLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {"model.class.name=com.portal.reports.model.Definition"},
+	service = DefinitionPermission.class
+)
 public class DefinitionPermission {
 
 	public static void check(
@@ -67,10 +75,13 @@ public class DefinitionPermission {
 			String actionId)
 		throws PortalException {
 
-		Definition definition = DefinitionLocalServiceUtil.getDefinition(
+		Definition definition = _definitionLocalService.getDefinition(
 			definitionId);
 
 		return contains(permissionChecker, definition, actionId);
 	}
+
+	@Reference
+	private static DefinitionLocalService _definitionLocalService;
 
 }

@@ -83,13 +83,6 @@ public class SourceServiceWrapper implements SourceService,
 	}
 
 	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _sourceService.invokeMethod(name, parameterTypes, arguments);
-	}
-
-	@Override
 	public com.liferay.portal.reports.model.Source updateSource(long sourceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String driverClassName, java.lang.String driverUrl,

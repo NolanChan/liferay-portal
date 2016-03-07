@@ -17,8 +17,7 @@ package com.liferay.portal.reports.service.permission;
 /**
  * @author Gavin Wan
  */
-public class ActionKeys
-	extends com.liferay.portal.kernel.security.permission.ActionKeys {
+public class ReportsActionKeys {
 
 	public static final String ADD_REPORT = "ADD_REPORT";
 

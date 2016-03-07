@@ -18,12 +18,16 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Peter Shin
  */
+@Component(immediate = true, service = AdminPermission.class)
 public class AdminPermission {
 
-	public static final String RESOURCE_NAME = "com.liferay.portal.reports.admin";
+	public static final String RESOURCE_NAME =
+		"com.liferay.portal.reports.admin";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)

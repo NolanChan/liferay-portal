@@ -45,13 +45,13 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.reports.model.Entry addEntry(long userId, long groupId,
-		long definitionId, java.lang.String format, boolean schedulerRequest,
-		java.util.Date startDate, java.util.Date endDate, boolean repeating,
-		java.lang.String recurrence, java.lang.String emailNotifications,
-		java.lang.String emailDelivery, java.lang.String portletId,
-		java.lang.String pageURL, java.lang.String reportName,
-		java.lang.String reportParameters,
+	public com.liferay.portal.reports.model.Entry addEntry(long userId,
+		long groupId, long definitionId, java.lang.String format,
+		boolean schedulerRequest, java.util.Date startDate,
+		java.util.Date endDate, boolean repeating, java.lang.String recurrence,
+		java.lang.String emailNotifications, java.lang.String emailDelivery,
+		java.lang.String portletId, java.lang.String pageURL,
+		java.lang.String reportName, java.lang.String reportParameters,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _entryLocalService.addEntry(userId, groupId, definitionId,
@@ -61,7 +61,8 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 	}
 
 	@Override
-	public void addEntryResources(com.liferay.portal.reports.model.Entry entry,
+	public void addEntryResources(
+		com.liferay.portal.reports.model.Entry entry,
 		boolean addCommunityPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_entryLocalService.addEntryResources(entry, addCommunityPermissions,
@@ -69,7 +70,8 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 	}
 
 	@Override
-	public void addEntryResources(com.liferay.portal.reports.model.Entry entry,
+	public void addEntryResources(
+		com.liferay.portal.reports.model.Entry entry,
 		java.lang.String[] communityPermissions,
 		java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -318,13 +320,6 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 	}
 
 	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _entryLocalService.invokeMethod(name, parameterTypes, arguments);
-	}
-
-	@Override
 	public void sendEmails(long entryId, java.lang.String fileName,
 		java.lang.String[] emailAddresses, boolean notification)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -359,7 +354,8 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 
 	@Override
 	public void updateEntryStatus(long entryId,
-		com.liferay.portal.reports.ReportStatus status, java.lang.String errorMessage)
+		com.liferay.portal.reports.ReportStatus status,
+		java.lang.String errorMessage)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_entryLocalService.updateEntryStatus(entryId, status, errorMessage);
 	}

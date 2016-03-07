@@ -21,13 +21,12 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
-import com.liferay.portal.kernel.service.InvokableService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
-
 import com.liferay.portal.reports.model.Definition;
 
 import java.io.InputStream;
@@ -49,10 +48,12 @@ import java.util.Map;
  */
 @AccessControlled
 @JSONWebService
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=reports", "json.web.service.context.path=Definition"}, service = DefinitionService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface DefinitionService extends BaseService, InvokableService {
+public interface DefinitionService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -91,11 +92,6 @@ public interface DefinitionService extends BaseService, InvokableService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
 
 	public Definition updateDefinition(long definitionId,
 		Map<Locale, java.lang.String> nameMap,

@@ -16,9 +16,9 @@ package com.liferay.portal.reports.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableLocalService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for Source. This utility wraps
@@ -53,8 +53,8 @@ public class SourceLocalServiceUtil {
 		return getService().addSource(source);
 	}
 
-	public static com.liferay.portal.reports.model.Source addSource(long userId,
-		long groupId,
+	public static com.liferay.portal.reports.model.Source addSource(
+		long userId, long groupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String driverClassName, java.lang.String driverUrl,
 		java.lang.String driverUserName, java.lang.String driverPassword,
@@ -71,7 +71,8 @@ public class SourceLocalServiceUtil {
 	* @param sourceId the primary key for the new source
 	* @return the new source
 	*/
-	public static com.liferay.portal.reports.model.Source createSource(long sourceId) {
+	public static com.liferay.portal.reports.model.Source createSource(
+		long sourceId) {
 		return getService().createSource(sourceId);
 	}
 
@@ -104,7 +105,8 @@ public class SourceLocalServiceUtil {
 	* @return the source that was removed
 	* @throws PortalException if a source with the primary key could not be found
 	*/
-	public static com.liferay.portal.reports.model.Source deleteSource(long sourceId)
+	public static com.liferay.portal.reports.model.Source deleteSource(
+		long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSource(sourceId);
 	}
@@ -192,7 +194,8 @@ public class SourceLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.reports.model.Source fetchSource(long sourceId) {
+	public static com.liferay.portal.reports.model.Source fetchSource(
+		long sourceId) {
 		return getService().fetchSource(sourceId);
 	}
 
@@ -243,7 +246,8 @@ public class SourceLocalServiceUtil {
 	* @return the source
 	* @throws PortalException if a source with the primary key could not be found
 	*/
-	public static com.liferay.portal.reports.model.Source getSource(long sourceId)
+	public static com.liferay.portal.reports.model.Source getSource(
+		long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSource(sourceId);
 	}
@@ -331,12 +335,6 @@ public class SourceLocalServiceUtil {
 		return getService().getSourcesCount(groupId, name, driverUrl, andSearch);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Updates the source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -348,7 +346,8 @@ public class SourceLocalServiceUtil {
 		return getService().updateSource(source);
 	}
 
-	public static com.liferay.portal.reports.model.Source updateSource(long sourceId,
+	public static com.liferay.portal.reports.model.Source updateSource(
+		long sourceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String driverClassName, java.lang.String driverUrl,
 		java.lang.String driverUserName, java.lang.String driverPassword,
@@ -359,28 +358,10 @@ public class SourceLocalServiceUtil {
 			driverUserName, driverPassword, serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static SourceLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					SourceLocalService.class.getName());
-
-			if (invokableLocalService instanceof SourceLocalService) {
-				_service = (SourceLocalService)invokableLocalService;
-			}
-			else {
-				_service = new SourceLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(SourceLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static SourceLocalService _service;
+	private static ServiceTracker<SourceLocalService, SourceLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(SourceLocalService.class);
 }

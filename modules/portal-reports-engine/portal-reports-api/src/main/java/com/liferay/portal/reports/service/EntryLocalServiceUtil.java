@@ -16,9 +16,9 @@ package com.liferay.portal.reports.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableLocalService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for Entry. This utility wraps
@@ -70,8 +70,8 @@ public class EntryLocalServiceUtil {
 	}
 
 	public static void addEntryResources(
-		com.liferay.portal.reports.model.Entry entry, boolean addCommunityPermissions,
-		boolean addGuestPermissions)
+		com.liferay.portal.reports.model.Entry entry,
+		boolean addCommunityPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.addEntryResources(entry, addCommunityPermissions,
@@ -93,7 +93,8 @@ public class EntryLocalServiceUtil {
 	* @param entryId the primary key for the new entry
 	* @return the new entry
 	*/
-	public static com.liferay.portal.reports.model.Entry createEntry(long entryId) {
+	public static com.liferay.portal.reports.model.Entry createEntry(
+		long entryId) {
 		return getService().createEntry(entryId);
 	}
 
@@ -123,7 +124,8 @@ public class EntryLocalServiceUtil {
 	* @return the entry that was removed
 	* @throws PortalException if a entry with the primary key could not be found
 	*/
-	public static com.liferay.portal.reports.model.Entry deleteEntry(long entryId)
+	public static com.liferay.portal.reports.model.Entry deleteEntry(
+		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteEntry(entryId);
 	}
@@ -215,7 +217,8 @@ public class EntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.reports.model.Entry fetchEntry(long entryId) {
+	public static com.liferay.portal.reports.model.Entry fetchEntry(
+		long entryId) {
 		return getService().fetchEntry(entryId);
 	}
 
@@ -308,12 +311,6 @@ public class EntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	public static void sendEmails(long entryId, java.lang.String fileName,
 		java.lang.String[] emailAddresses, boolean notification)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -343,33 +340,16 @@ public class EntryLocalServiceUtil {
 	}
 
 	public static void updateEntryStatus(long entryId,
-		com.liferay.portal.reports.ReportStatus status, java.lang.String errorMessage)
+		com.liferay.portal.reports.ReportStatus status,
+		java.lang.String errorMessage)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateEntryStatus(entryId, status, errorMessage);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static EntryLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					EntryLocalService.class.getName());
-
-			if (invokableLocalService instanceof EntryLocalService) {
-				_service = (EntryLocalService)invokableLocalService;
-			}
-			else {
-				_service = new EntryLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(EntryLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static EntryLocalService _service;
+	private static ServiceTracker<EntryLocalService, EntryLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(EntryLocalService.class);
 }

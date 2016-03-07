@@ -16,9 +16,9 @@ package com.liferay.portal.reports.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for Source. This utility wraps
@@ -41,7 +41,8 @@ public class SourceServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.reports.service.impl.SourceServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.reports.model.Source addSource(long groupId,
+	public static com.liferay.portal.reports.model.Source addSource(
+		long groupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String driverClassName, java.lang.String driverUrl,
 		java.lang.String driverUserName, java.lang.String driverPassword,
@@ -52,7 +53,8 @@ public class SourceServiceUtil {
 			driverUserName, driverPassword, serviceContext);
 	}
 
-	public static com.liferay.portal.reports.model.Source deleteSource(long sourceId)
+	public static com.liferay.portal.reports.model.Source deleteSource(
+		long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSource(sourceId);
 	}
@@ -66,7 +68,8 @@ public class SourceServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.reports.model.Source getSource(long sourceId)
+	public static com.liferay.portal.reports.model.Source getSource(
+		long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSource(sourceId);
 	}
@@ -86,13 +89,8 @@ public class SourceServiceUtil {
 		return getService().getSourcesCount(groupId, name, driverUrl, andSearch);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
-	public static com.liferay.portal.reports.model.Source updateSource(long sourceId,
+	public static com.liferay.portal.reports.model.Source updateSource(
+		long sourceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String driverClassName, java.lang.String driverUrl,
 		java.lang.String driverUserName, java.lang.String driverPassword,
@@ -103,28 +101,9 @@ public class SourceServiceUtil {
 			driverUserName, driverPassword, serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static SourceService getService() {
-		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					SourceService.class.getName());
-
-			if (invokableService instanceof SourceService) {
-				_service = (SourceService)invokableService;
-			}
-			else {
-				_service = new SourceServiceClp(invokableService);
-			}
-
-			ReferenceRegistry.registerReference(SourceServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static SourceService _service;
+	private static ServiceTracker<SourceService, SourceService> _serviceTracker = ServiceTrackerFactory.open(SourceService.class);
 }

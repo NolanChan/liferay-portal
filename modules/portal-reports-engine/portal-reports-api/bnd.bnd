@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Portal Reports API
+Bundle-SymbolicName: com.liferay.portal.reports.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.reports,\
+	com.liferay.portal.reports.exception,\
+	com.liferay.portal.reports.model,\
+	com.liferay.portal.reports.service,\
+	com.liferay.portal.reports.service.persistence
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Report
+-include: ../../../marketplace/business-productivity/bnd.bnd

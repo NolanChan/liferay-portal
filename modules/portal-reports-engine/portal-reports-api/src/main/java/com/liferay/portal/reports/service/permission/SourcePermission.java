@@ -18,12 +18,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.reports.model.Source;
-import com.liferay.portal.reports.service.SourceLocalServiceUtil;
+import com.liferay.portal.reports.service.SourceLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  * @author Gavin Wan
  */
+@Component(
+	immediate = true,
+	property = {"model.class.name=com.portal.reports.model.Source"},
+	service = SourcePermission.class
+)
 public class SourcePermission {
 
 	public static void check(
@@ -48,7 +56,7 @@ public class SourcePermission {
 			PermissionChecker permissionChecker, long sourceId, String actionId)
 		throws PortalException {
 
-		Source source = SourceLocalServiceUtil.getSource(sourceId);
+		Source source = _sourceLocalService.getSource(sourceId);
 
 		return contains(permissionChecker, source, actionId);
 	}
@@ -67,5 +75,8 @@ public class SourcePermission {
 			source.getGroupId(), Source.class.getName(), source.getSourceId(),
 			actionId);
 	}
+
+	@Reference
+	private static SourceLocalService _sourceLocalService;
 
 }

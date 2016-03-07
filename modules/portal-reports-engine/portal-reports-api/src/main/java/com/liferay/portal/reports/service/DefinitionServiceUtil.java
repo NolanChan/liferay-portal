@@ -16,9 +16,9 @@ package com.liferay.portal.reports.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for Definition. This utility wraps
@@ -95,12 +95,6 @@ public class DefinitionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	public static com.liferay.portal.reports.model.Definition updateDefinition(
 		long definitionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -114,28 +108,10 @@ public class DefinitionServiceUtil {
 			sourceId, reportParameters, fileName, inputStream, serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static DefinitionService getService() {
-		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					DefinitionService.class.getName());
-
-			if (invokableService instanceof DefinitionService) {
-				_service = (DefinitionService)invokableService;
-			}
-			else {
-				_service = new DefinitionServiceClp(invokableService);
-			}
-
-			ReferenceRegistry.registerReference(DefinitionServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static DefinitionService _service;
+	private static ServiceTracker<DefinitionService, DefinitionService> _serviceTracker =
+		ServiceTrackerFactory.open(DefinitionService.class);
 }

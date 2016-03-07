@@ -16,9 +16,9 @@ package com.liferay.portal.reports.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for Entry. This utility wraps
@@ -41,13 +41,13 @@ public class EntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.reports.service.impl.EntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.reports.model.Entry addEntry(long groupId,
-		long definitionId, java.lang.String format, boolean schedulerRequest,
-		java.util.Date startDate, java.util.Date endDate, boolean repeating,
-		java.lang.String recurrence, java.lang.String emailNotifications,
-		java.lang.String emailDelivery, java.lang.String portletId,
-		java.lang.String pageURL, java.lang.String reportName,
-		java.lang.String reportParameters,
+	public static com.liferay.portal.reports.model.Entry addEntry(
+		long groupId, long definitionId, java.lang.String format,
+		boolean schedulerRequest, java.util.Date startDate,
+		java.util.Date endDate, boolean repeating, java.lang.String recurrence,
+		java.lang.String emailNotifications, java.lang.String emailDelivery,
+		java.lang.String portletId, java.lang.String pageURL,
+		java.lang.String reportName, java.lang.String reportParameters,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -63,7 +63,8 @@ public class EntryServiceUtil {
 		getService().deleteAttachment(companyId, entryId, fileName);
 	}
 
-	public static com.liferay.portal.reports.model.Entry deleteEntry(long entryId)
+	public static com.liferay.portal.reports.model.Entry deleteEntry(
+		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteEntry(entryId);
 	}
@@ -97,12 +98,6 @@ public class EntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	public static void sendEmails(long entryId, java.lang.String fileName,
 		java.lang.String[] emailAddresses, boolean notification)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -114,28 +109,9 @@ public class EntryServiceUtil {
 		getService().unscheduleEntry(entryId);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static EntryService getService() {
-		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					EntryService.class.getName());
-
-			if (invokableService instanceof EntryService) {
-				_service = (EntryService)invokableService;
-			}
-			else {
-				_service = new EntryServiceClp(invokableService);
-			}
-
-			ReferenceRegistry.registerReference(EntryServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static EntryService _service;
+	private static ServiceTracker<EntryService, EntryService> _serviceTracker = ServiceTrackerFactory.open(EntryService.class);
 }

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
-import com.liferay.portal.kernel.service.InvokableLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
-
 import com.liferay.portal.reports.model.Source;
 
 import java.io.Serializable;
@@ -63,7 +61,7 @@ import java.util.Map;
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface SourceLocalService extends BaseLocalService,
-	InvokableLocalService, PersistedModelLocalService {
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -296,11 +294,6 @@ public interface SourceLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSourcesCount(long groupId, java.lang.String name,
 		java.lang.String driverUrl, boolean andSearch);
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
 
 	/**
 	* Updates the source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

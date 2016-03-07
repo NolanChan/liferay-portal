@@ -33,7 +33,8 @@ public class DefinitionServiceWrapper implements DefinitionService,
 	}
 
 	@Override
-	public com.liferay.portal.reports.model.Definition addDefinition(long groupId,
+	public com.liferay.portal.reports.model.Definition addDefinition(
+		long groupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long sourceId, java.lang.String reportParameters,
@@ -53,7 +54,8 @@ public class DefinitionServiceWrapper implements DefinitionService,
 	}
 
 	@Override
-	public com.liferay.portal.reports.model.Definition getDefinition(long definitionId)
+	public com.liferay.portal.reports.model.Definition getDefinition(
+		long definitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definitionService.getDefinition(definitionId);
 	}
@@ -87,13 +89,6 @@ public class DefinitionServiceWrapper implements DefinitionService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _definitionService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _definitionService.invokeMethod(name, parameterTypes, arguments);
 	}
 
 	@Override

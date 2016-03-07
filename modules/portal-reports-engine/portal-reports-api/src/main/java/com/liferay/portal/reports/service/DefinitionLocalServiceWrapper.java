@@ -46,8 +46,8 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.reports.model.Definition addDefinition(long userId,
-		long groupId,
+	public com.liferay.portal.reports.model.Definition addDefinition(
+		long userId, long groupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long sourceId, java.lang.String reportParameters,
@@ -241,7 +241,8 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* @throws PortalException if a definition with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portal.reports.model.Definition getDefinition(long definitionId)
+	public com.liferay.portal.reports.model.Definition getDefinition(
+		long definitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definitionLocalService.getDefinition(definitionId);
 	}
@@ -367,14 +368,6 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definitionLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _definitionLocalService.invokeMethod(name, parameterTypes,
-			arguments);
 	}
 
 	/**

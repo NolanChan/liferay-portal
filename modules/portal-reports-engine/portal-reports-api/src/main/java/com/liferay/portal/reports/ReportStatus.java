@@ -48,6 +48,6 @@ public enum ReportStatus {
 		_value = value;
 	}
 
-	private String _value;
+	private final String _value;
 
 }

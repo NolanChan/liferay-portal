@@ -16,9 +16,9 @@ package com.liferay.portal.reports.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableLocalService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for Definition. This utility wraps
@@ -347,12 +347,6 @@ public class DefinitionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Updates the definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -387,28 +381,10 @@ public class DefinitionLocalServiceUtil {
 			guestPermissions);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static DefinitionLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					DefinitionLocalService.class.getName());
-
-			if (invokableLocalService instanceof DefinitionLocalService) {
-				_service = (DefinitionLocalService)invokableLocalService;
-			}
-			else {
-				_service = new DefinitionLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(DefinitionLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static DefinitionLocalService _service;
+	private static ServiceTracker<DefinitionLocalService, DefinitionLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(DefinitionLocalService.class);
 }

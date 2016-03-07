@@ -18,11 +18,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.reports.model.Entry;
-import com.liferay.portal.reports.service.EntryLocalServiceUtil;
+import com.liferay.portal.reports.service.EntryLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gavin Wan
  */
+@Component(
+	immediate = true,
+	property = {"model.class.name=com.portal.reports.model.Entry"},
+	service = EntryPermission.class
+)
 public class EntryPermission {
 
 	public static void check(
@@ -62,9 +70,12 @@ public class EntryPermission {
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		Entry entry = EntryLocalServiceUtil.getEntry(entryId);
+		Entry entry = _entryLocalService.getEntry(entryId);
 
 		return contains(permissionChecker, entry, actionId);
 	}
+
+	@Reference
+	private static EntryLocalService _entryLocalService;
 
 }

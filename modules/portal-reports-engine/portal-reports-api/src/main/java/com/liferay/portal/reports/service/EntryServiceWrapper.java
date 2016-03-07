@@ -91,13 +91,6 @@ public class EntryServiceWrapper implements EntryService,
 	}
 
 	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _entryService.invokeMethod(name, parameterTypes, arguments);
-	}
-
-	@Override
 	public void sendEmails(long entryId, java.lang.String fileName,
 		java.lang.String[] emailAddresses, boolean notification)
 		throws com.liferay.portal.kernel.exception.PortalException {

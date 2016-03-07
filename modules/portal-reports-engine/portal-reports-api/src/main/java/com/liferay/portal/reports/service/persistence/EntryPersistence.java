@@ -17,7 +17,6 @@ package com.liferay.portal.reports.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-
 import com.liferay.portal.reports.exception.NoSuchEntryException;
 import com.liferay.portal.reports.model.Entry;
 
