@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskDueDateException;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
 import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
+import com.liferay.portal.workflow.kaleo.forms.web.display.context.KaleoFormsDisplayContext;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +37,9 @@ import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.RenderRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -184,6 +188,18 @@ public class KaleoFormsDisplayPortlet extends KaleoFormsAdminPortlet {
 		WorkflowTaskManagerUtil.updateDueDate(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 			workflowTaskId, comment, dueDate);
+	}
+
+	@Override
+	protected void setDisplayContext(RenderRequest renderRequest) {
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			renderRequest);
+
+		KaleoFormsDisplayContext kaleoFormsDisplayContext =
+			new KaleoFormsDisplayContext(request);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, kaleoFormsDisplayContext);
 	}
 
 }

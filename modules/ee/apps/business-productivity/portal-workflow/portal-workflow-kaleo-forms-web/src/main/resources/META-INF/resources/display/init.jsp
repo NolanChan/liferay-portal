@@ -25,6 +25,7 @@ page import="com.liferay.portal.kernel.service.RoleLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowHandler" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowInstance" %><%@
@@ -37,11 +38,18 @@ page import="com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalServiceUtil" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalServiceUtil" %>
+page import="com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalServiceUtil" %><%@
+page import="com.liferay.portal.workflow.kaleo.forms.web.display.context.KaleoFormsDisplayContext" %>
 
 <%@ page import="java.io.Serializable" %>
 
 <%@ page import="java.util.HashMap" %>
+
+<%
+
+KaleoFormsDisplayContext kaleoFormsDisplayContext = (KaleoFormsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+%>
 
 <%!
 private boolean _hasOtherAssignees(long[] pooledActorsIds, WorkflowTask workflowTask, User user) {
