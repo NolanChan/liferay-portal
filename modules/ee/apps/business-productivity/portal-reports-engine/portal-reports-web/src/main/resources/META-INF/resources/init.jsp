@@ -80,7 +80,7 @@
 		page import="com.liferay.portal.reports.service.permission.DefinitionPermission" %><%@
 		page import="com.liferay.portal.reports.service.permission.EntryPermission" %><%@
 		page import="com.liferay.portal.reports.service.permission.SourcePermission" %><%@
-		page import="com.liferay.portal.reports.web.admin.util.ReportsPortletKeys" %><%@
+		page import="com.liferay.portal.reports.constants.ReportsPortletKeys" %><%@
 		page import="com.liferay.portal.reports.util.ReportsUtil" %><%@
 		page import="com.liferay.taglib.search.ResultRow" %>
 

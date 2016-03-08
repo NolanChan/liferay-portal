@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.reports.web.admin.util.ReportsPortletKeys;
+import com.liferay.portal.reports.constants.ReportsPortletKeys;
 
 import java.io.IOException;
 import java.io.InputStream;

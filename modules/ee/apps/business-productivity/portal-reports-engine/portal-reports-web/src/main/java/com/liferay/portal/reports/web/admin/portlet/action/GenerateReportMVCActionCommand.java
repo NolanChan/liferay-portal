@@ -27,12 +27,12 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.reports.constants.ReportsPortletKeys;
 import com.liferay.portal.reports.model.Definition;
 import com.liferay.portal.reports.model.Entry;
 import com.liferay.portal.reports.service.DefinitionService;
 import com.liferay.portal.reports.service.EntryService;
 import com.liferay.portal.reports.util.ReportsUtil;
-import com.liferay.portal.reports.web.admin.util.ReportsPortletKeys;
 
 import java.text.DateFormat;
 
@@ -131,9 +131,9 @@ public class GenerateReportMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private static DefinitionService _definitionService;
+	private DefinitionService _definitionService;
 
 	@Reference
-	private static EntryService _entryService;
+	private EntryService _entryService;
 
 }

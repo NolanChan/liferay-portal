@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.reports.constants.ReportsPortletKeys;
 import com.liferay.portal.reports.model.Source;
 import com.liferay.portal.reports.service.SourceService;
-import com.liferay.portal.reports.web.admin.util.ReportsPortletKeys;
 
 import java.util.Locale;
 import java.util.Map;
@@ -84,6 +84,6 @@ public class EditDataSourceMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private static SourceService _sourceService;
+	private SourceService _sourceService;
 
 }

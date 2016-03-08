@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.reports.constants.ReportsPortletKeys;
 import com.liferay.portal.reports.model.Definition;
 import com.liferay.portal.reports.model.Source;
 import com.liferay.portal.reports.service.DefinitionLocalService;
@@ -42,7 +43,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Mate Thurzo
  */
-@Component(immediate = true, service = PortletDataHandler.class)
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + ReportsPortletKeys.DISPLAY_REPORTS,
+		"javax.portlet.name=" + ReportsPortletKeys.REPORTS_ADMIN
+	},
+	service = PortletDataHandler.class
+)
 public class AdminPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "reports";
@@ -194,7 +202,6 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	private DefinitionLocalService _definitionLocalService;
-
 	private SourceLocalService _sourceLocalService;
 
 }

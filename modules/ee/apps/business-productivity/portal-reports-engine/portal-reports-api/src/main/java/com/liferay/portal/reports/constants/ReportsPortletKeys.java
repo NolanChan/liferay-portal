@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.reports.web.admin.util;
+package com.liferay.portal.reports.constants;
 
 /**
  * @author Brian Wing Shun Chan

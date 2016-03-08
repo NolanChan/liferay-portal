@@ -17,8 +17,8 @@ package com.liferay.portal.reports.web.admin.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.reports.constants.ReportsPortletKeys;
 import com.liferay.portal.reports.service.EntryService;
-import com.liferay.portal.reports.web.admin.util.ReportsPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -50,6 +50,6 @@ public class ArchiveRequestMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private static EntryService _entryService;
+	private EntryService _entryService;
 
 }

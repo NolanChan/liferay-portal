@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.reports.constants.ReportsPortletKeys;
 import com.liferay.portal.reports.model.Definition;
 import com.liferay.portal.reports.service.DefinitionService;
 import com.liferay.portal.reports.util.ReportsUtil;
-import com.liferay.portal.reports.web.admin.util.ReportsPortletKeys;
 
 import java.io.InputStream;
 
@@ -106,6 +106,6 @@ public class EditDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private static DefinitionService _definitionService;
+	private DefinitionService _definitionService;
 
 }
