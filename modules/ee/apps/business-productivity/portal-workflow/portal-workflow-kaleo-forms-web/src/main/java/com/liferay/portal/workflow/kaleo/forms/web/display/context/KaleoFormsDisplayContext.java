@@ -14,19 +14,25 @@
 
 package com.liferay.portal.workflow.kaleo.forms.web.display.context;
 
-import com.liferay.portal.workflow.kaleo.forms.web.display.context.util.KaleoFormsRequestHelper;
-
-import javax.servlet.http.HttpServletRequest;
+import com.liferay.dynamic.data.mapping.exception.StorageException;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 
 /**
  * @author Leonardo Barros
  */
 public class KaleoFormsDisplayContext {
 
-	public KaleoFormsDisplayContext(HttpServletRequest request) {
-		_kaleoFormsRequestHelper = new KaleoFormsRequestHelper(request);
+	public KaleoFormsDisplayContext(StorageEngine storageEngine) {
+		_storageEngine = storageEngine;
 	}
 
-	private final KaleoFormsRequestHelper _kaleoFormsRequestHelper;
+	public DDMFormValues getDDMFormValues(long ddmStorageId)
+		throws StorageException {
+
+		return _storageEngine.getDDMFormValues(ddmStorageId);
+	}
+
+	private final StorageEngine _storageEngine;
 
 }

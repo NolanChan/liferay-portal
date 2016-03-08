@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.forms.web.portlet;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -39,9 +40,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.RenderRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -192,14 +192,17 @@ public class KaleoFormsDisplayPortlet extends KaleoFormsAdminPortlet {
 
 	@Override
 	protected void setDisplayContext(RenderRequest renderRequest) {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			renderRequest);
-
 		KaleoFormsDisplayContext kaleoFormsDisplayContext =
-			new KaleoFormsDisplayContext(request);
+			new KaleoFormsDisplayContext(storageEngine);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, kaleoFormsDisplayContext);
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setStorageEngine(StorageEngine storageEngine) {
+		super.setStorageEngine(storageEngine);
 	}
 
 }

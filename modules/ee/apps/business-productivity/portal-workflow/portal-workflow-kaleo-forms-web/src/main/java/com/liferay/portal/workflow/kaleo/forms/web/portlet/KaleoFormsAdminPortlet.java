@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -864,7 +865,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			renderRequest);
 
 		KaleoFormsAdminDisplayContext kaleoFormsAdminDisplayContext =
-			new KaleoFormsAdminDisplayContext(request, _ddmDisplayRegistry);
+			new KaleoFormsAdminDisplayContext(
+				request, _ddmDisplayRegistry, storageEngine);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, kaleoFormsAdminDisplayContext);
@@ -882,6 +884,11 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		KaleoProcessService kaleoProcessService) {
 
 		_kaleoProcessService = kaleoProcessService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setStorageEngine(StorageEngine storageEngine) {
+		this.storageEngine = storageEngine;
 	}
 
 	@Reference(unbind = "-")
@@ -911,6 +918,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		return _ddl.updateRecord(
 			ddlRecordId, ddlRecordSetId, true, false, serviceContext);
 	}
+
+	protected StorageEngine storageEngine;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoFormsAdminPortlet.class);

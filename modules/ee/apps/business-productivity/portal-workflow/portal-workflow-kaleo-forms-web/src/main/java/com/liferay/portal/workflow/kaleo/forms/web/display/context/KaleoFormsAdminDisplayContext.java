@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.forms.web.display.context;
 
+import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.portal.workflow.kaleo.forms.web.display.context.util.KaleoFormsAdminRequestHelper;
@@ -23,10 +24,13 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Leonardo Barros
  */
-public class KaleoFormsAdminDisplayContext {
+public class KaleoFormsAdminDisplayContext extends KaleoFormsDisplayContext {
 
 	public KaleoFormsAdminDisplayContext(
-		HttpServletRequest request, DDMDisplayRegistry ddmDisplayRegistry) {
+		HttpServletRequest request, DDMDisplayRegistry ddmDisplayRegistry,
+		StorageEngine storageEngine) {
+
+		super(storageEngine);
 
 		_kaleoFormsAdminRequestHelper = new KaleoFormsAdminRequestHelper(
 			request);

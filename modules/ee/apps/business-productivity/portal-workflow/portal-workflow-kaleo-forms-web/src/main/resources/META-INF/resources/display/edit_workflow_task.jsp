@@ -148,7 +148,7 @@ headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + workflowH
 			<liferay-ui:panel extended="<%= false %>" markupView="lexicon" title="current-entry">
 
 				<%
-				DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(ddlRecord.getDDMStorageId());
+				DDMFormValues ddmFormValues = kaleoFormsDisplayContext.getDDMFormValues(ddlRecord.getDDMStorageId());
 
 				DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 				%>

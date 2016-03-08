@@ -30,7 +30,6 @@ page import="com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUt
 page import="com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission" %><%@
 page import="com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission" %><%@
-page import="com.liferay.dynamic.data.mapping.storage.StorageEngineUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMDisplay" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@

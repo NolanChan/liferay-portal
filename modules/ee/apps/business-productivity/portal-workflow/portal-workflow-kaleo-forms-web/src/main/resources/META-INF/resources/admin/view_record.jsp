@@ -53,7 +53,7 @@ DDLRecordVersion ddlRecordVersion = ddlRecord.getRecordVersion(version);
 	DDMFormValues ddmFormValues = null;
 
 	if (ddlRecordVersion != null) {
-		ddmFormValues = StorageEngineUtil.getDDMFormValues(ddlRecordVersion.getDDMStorageId());
+		ddmFormValues = kaleoFormsAdminDisplayContext.getDDMFormValues(ddlRecordVersion.getDDMStorageId());
 	}
 	%>
 

@@ -44,9 +44,9 @@ String formName = ParamUtil.getString(request, "formName");
 	<aui:fieldset>
 
 		<%
-		DDLRecord ddlRecord = DDLRecordLocalServiceUtil.getRecord(ddlRecordId);
+		DDLRecord ddlRecord = DDLRecordLocalServiceUtil.getDDLRecord(ddlRecordId);
 
-		DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(ddlRecord.getDDMStorageId());
+		DDMFormValues ddmFormValues = kaleoFormsDisplayContext.getDDMFormValues(ddlRecord.getDDMStorageId());
 
 		long classNameId = 0;
 		long classPK = 0;
