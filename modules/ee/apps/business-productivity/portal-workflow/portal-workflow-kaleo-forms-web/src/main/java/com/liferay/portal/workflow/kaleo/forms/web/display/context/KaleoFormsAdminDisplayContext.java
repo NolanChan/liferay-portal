@@ -32,10 +32,10 @@ public class KaleoFormsAdminDisplayContext extends KaleoFormsDisplayContext {
 
 		super(storageEngine);
 
+		_ddmDisplayRegistry = ddmDisplayRegistry;
+
 		_kaleoFormsAdminRequestHelper = new KaleoFormsAdminRequestHelper(
 			request);
-
-		_ddmDisplayRegistry = ddmDisplayRegistry;
 	}
 
 	public DDMDisplay getDDMDisplay() {
