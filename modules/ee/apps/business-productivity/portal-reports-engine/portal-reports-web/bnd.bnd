@@ -2,7 +2,7 @@ Bundle-Name: Liferay Portal Reports Web
 Bundle-SymbolicName: com.liferay.portal.reports.web
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Reports Web
+Liferay-Releng-Module-Group-Title: Reports Console
 Web-ContextPath=/portal-reports-web
 -dsannotations-options: inherit
--include: ../../../marketplace/business-productivity/bnd.bnd
+-include: ../../../../../../marketplace/business-productivity/bnd.bnd
