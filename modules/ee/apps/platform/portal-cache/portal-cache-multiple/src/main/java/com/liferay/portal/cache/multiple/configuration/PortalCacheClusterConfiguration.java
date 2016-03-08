@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.cluster.Priority;
 /**
  * @author Tina Tian
  */
-@ExtendedObjectClassDefinition(category = "platform")
+@ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
 	id = "com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration"
 )
