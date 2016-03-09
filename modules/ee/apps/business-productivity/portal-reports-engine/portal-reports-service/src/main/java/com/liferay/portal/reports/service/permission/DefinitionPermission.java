@@ -16,6 +16,7 @@ package com.liferay.portal.reports.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.reports.model.Definition;
 import com.liferay.portal.reports.service.DefinitionLocalService;
@@ -29,9 +30,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {"model.class.name=com.portal.reports.model.Definition"},
-	service = DefinitionPermission.class
+	service = BaseModelPermissionChecker.class
 )
-public class DefinitionPermission {
+public class DefinitionPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, Definition definition,
@@ -81,7 +82,22 @@ public class DefinitionPermission {
 		return contains(permissionChecker, definition, actionId);
 	}
 
-	@Reference
+	@Override
+	public void checkBaseModel(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException {
+
+		check(permissionChecker, primaryKey, actionId);
+	}
+
+	@Reference(unbind = "-")
+	protected void setDefinitionLocalService(
+		DefinitionLocalService definitionLocalService) {
+
+		_definitionLocalService = definitionLocalService;
+	}
+
 	private static DefinitionLocalService _definitionLocalService;
 
 }

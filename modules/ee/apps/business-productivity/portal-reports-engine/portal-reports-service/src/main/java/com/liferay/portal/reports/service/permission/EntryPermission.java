@@ -16,6 +16,7 @@ package com.liferay.portal.reports.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.reports.model.Entry;
 import com.liferay.portal.reports.service.EntryLocalService;
@@ -29,9 +30,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {"model.class.name=com.portal.reports.model.Entry"},
-	service = EntryPermission.class
+	service = BaseModelPermissionChecker.class
 )
-public class EntryPermission {
+public class EntryPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, Entry entry, String actionId)
@@ -75,7 +76,20 @@ public class EntryPermission {
 		return contains(permissionChecker, entry, actionId);
 	}
 
-	@Reference
+	@Override
+	public void checkBaseModel(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException {
+
+		check(permissionChecker, primaryKey, actionId);
+	}
+
+	@Reference(unbind = "-")
+	protected void setEntryLocalService(EntryLocalService entryLocalService) {
+		_entryLocalService = entryLocalService;
+	}
+
 	private static EntryLocalService _entryLocalService;
 
 }
