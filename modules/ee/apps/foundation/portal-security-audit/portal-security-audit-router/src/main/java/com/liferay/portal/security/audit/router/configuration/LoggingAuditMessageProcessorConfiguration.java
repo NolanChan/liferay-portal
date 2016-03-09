@@ -34,7 +34,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration",
 	localization = "content/Language",
-	name = "%logging.audit.message.processor.configuration.name"
+	name = "logging.audit.message.processor.configuration.name"
 )
 public interface LoggingAuditMessageProcessorConfiguration {
 

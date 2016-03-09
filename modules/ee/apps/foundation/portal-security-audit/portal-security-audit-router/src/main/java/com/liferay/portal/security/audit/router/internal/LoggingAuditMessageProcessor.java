@@ -137,7 +137,7 @@ public class LoggingAuditMessageProcessor implements AuditMessageProcessor {
 
 	private volatile LoggingAuditMessageProcessorConfiguration
 		_loggingAuditMessageProcessorConfiguration;
-	private Map<String, LogMessageFormatter> _logMessageFormatters =
+	private final Map<String, LogMessageFormatter> _logMessageFormatters =
 		new ConcurrentIdentityHashMap<>();
 
 }
