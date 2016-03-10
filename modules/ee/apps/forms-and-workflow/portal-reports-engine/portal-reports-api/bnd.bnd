@@ -10,4 +10,4 @@ Export-Package:\
 	com.liferay.portal.reports.service.persistence
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Reports Console
--include: ../../../../../../marketplace/business-productivity/bnd.bnd
+-include: ../../../../../../modules/apps/forms-and-workflow/app.bnd

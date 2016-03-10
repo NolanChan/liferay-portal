@@ -1,5 +1,5 @@
 dependencies {
-	testCompile project(":ee:apps:business-productivity:portal-reports-engine:portal-reports-api")
+	testCompile project(":ee:apps:forms-and-workflow:portal-reports-engine:portal-reports-api")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
 }
