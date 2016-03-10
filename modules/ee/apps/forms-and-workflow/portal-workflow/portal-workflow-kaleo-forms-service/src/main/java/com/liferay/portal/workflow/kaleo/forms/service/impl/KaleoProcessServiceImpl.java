@@ -63,8 +63,12 @@ public class KaleoProcessServiceImpl extends KaleoProcessServiceBaseImpl {
 	public KaleoProcess getKaleoProcess(long kaleoProcessId)
 		throws PortalException {
 
-		KaleoProcessPermission.check(
-			getPermissionChecker(), kaleoProcessId, ActionKeys.VIEW);
+		if (!KaleoProcessPermission.contains(
+				getPermissionChecker(), kaleoProcessId, ActionKeys.VIEW)) {
+
+			KaleoProcessPermission.check(
+				getPermissionChecker(), kaleoProcessId, ActionKeys.SUBMIT);
+		}
 
 		return kaleoProcessLocalService.getKaleoProcess(kaleoProcessId);
 	}
