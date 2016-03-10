@@ -51,6 +51,7 @@
 							footer: [
 								{
 									label: '<%= UnicodeLanguageUtil.get(request, "ok") %>',
+									cssClass: 'btn-primary',
 									on: {
 										click: function() {
 											submitForm(form, url, false);
