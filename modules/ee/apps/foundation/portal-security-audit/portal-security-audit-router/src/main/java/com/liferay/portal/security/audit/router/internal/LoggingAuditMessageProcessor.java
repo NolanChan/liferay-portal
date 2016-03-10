@@ -14,8 +14,7 @@
 
 package com.liferay.portal.security.audit.router.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.concurrent.ConcurrentIdentityHashMap;
 import com.liferay.portal.kernel.log.Log;
@@ -62,7 +61,7 @@ public class LoggingAuditMessageProcessor implements AuditMessageProcessor {
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_loggingAuditMessageProcessorConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				LoggingAuditMessageProcessorConfiguration.class, properties);
 	}
 

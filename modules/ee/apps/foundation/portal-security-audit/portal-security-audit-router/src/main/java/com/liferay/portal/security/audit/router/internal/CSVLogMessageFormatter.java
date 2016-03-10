@@ -14,8 +14,7 @@
 
 package com.liferay.portal.security.audit.router.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -64,7 +63,7 @@ public class CSVLogMessageFormatter implements LogMessageFormatter {
 	protected void activate(Map<String, Object> properties) {
 		CSVLogMessageFormatterConfiguration
 			csvLogMessageFormatterConfiguration =
-				Configurable.createConfigurable(
+				ConfigurableUtil.createConfigurable(
 					CSVLogMessageFormatterConfiguration.class, properties);
 
 		_columns = csvLogMessageFormatterConfiguration.columns();
