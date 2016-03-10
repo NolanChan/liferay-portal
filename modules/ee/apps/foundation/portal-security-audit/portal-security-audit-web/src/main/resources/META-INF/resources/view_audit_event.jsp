@@ -28,7 +28,11 @@ String eventTypeAction = StringPool.BLANK;
 if (auditEventId > 0) {
 	auditEvent = AuditEventManagerUtil.fetchAuditEvent(auditEventId);
 
-	eventTypeAction = (String)PortalClassInvoker.invoke(false, new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getAction", HttpServletRequest.class, String.class), request, auditEvent.getEventType());
+	if (auditEvent != null) {
+		auditEvent = auditEvent.toEscapedModel();
+
+		eventTypeAction = (String)PortalClassInvoker.invoke(false, new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getAction", HttpServletRequest.class, String.class), request, auditEvent.getEventType());
+	}
 }
 %>
 

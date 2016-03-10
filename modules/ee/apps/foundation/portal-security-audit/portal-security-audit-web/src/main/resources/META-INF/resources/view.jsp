@@ -87,6 +87,7 @@
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.security.audit.AuditEvent"
+			escapedModel="<%= true %>"
 			keyProperty="auditEventId"
 			modelVar="event"
 		>

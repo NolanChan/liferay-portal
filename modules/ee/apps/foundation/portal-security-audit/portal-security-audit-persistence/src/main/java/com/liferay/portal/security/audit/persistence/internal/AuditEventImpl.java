@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.audit.persistence.internal;
 
+import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.security.audit.AuditEvent;
 
 import java.util.Date;
@@ -201,7 +203,25 @@ public class AuditEventImpl implements AuditEvent {
 		_auditEvent.setUserUuid(userUuid);
 	}
 
+	@Override
+	public AuditEvent toEscapedModel() {
+		if (_escapedModel == null) {
+			_escapedModel = (AuditEvent)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
+		}
+
+		return _escapedModel;
+	}
+
+	private static final ClassLoader _classLoader =
+		AuditEvent.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
+		AuditEvent.class
+	};
+
 	private final com.liferay.portal.security.audit.persistence.model.AuditEvent
 		_auditEvent;
+	private AuditEvent _escapedModel;
 
 }
