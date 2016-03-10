@@ -26,7 +26,7 @@ AuditEvent auditEvent = null;
 String eventTypeAction = StringPool.BLANK;
 
 if (auditEventId > 0) {
-	auditEvent = AuditEventLocalServiceUtil.fetchAuditEvent(auditEventId);
+	auditEvent = AuditEventManagerUtil.fetchAuditEvent(auditEventId);
 
 	eventTypeAction = (String)PortalClassInvoker.invoke(false, new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getAction", HttpServletRequest.class, String.class), request, auditEvent.getEventType());
 }
@@ -45,7 +45,7 @@ if (auditEventId > 0) {
 		</div>
 	</c:when>
 	<c:otherwise>
-		<aui:col width="350">
+		<aui:col columnWidth="350">
 			<aui:field-wrapper label="event-id">
 				<%= auditEvent.getAuditEventId() %>
 			</aui:field-wrapper>

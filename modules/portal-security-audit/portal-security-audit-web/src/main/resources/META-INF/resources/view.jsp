@@ -67,26 +67,26 @@
 		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
 		if (displayTerms.isAdvancedSearch()) {
-			total = AuditEventLocalServiceUtil.getAuditEventsCount(themeDisplay.getCompanyId(), userId, userName, startDate, endDate, eventType, className, classPK, clientHost, clientIP, serverName, serverPort, sessionID, displayTerms.isAndOperator());
+			total = AuditEventManagerUtil.getAuditEventsCount(themeDisplay.getCompanyId(), userId, userName, startDate, endDate, eventType, className, classPK, clientHost, clientIP, serverName, serverPort, sessionID, displayTerms.isAndOperator());
 
 			searchContainer.setTotal(total);
 
-			searchContainer.setResults(AuditEventLocalServiceUtil.getAuditEvents(themeDisplay.getCompanyId(), userId, userName, startDate, endDate, eventType, className, classPK, clientHost, clientIP, serverName, serverPort, sessionID, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), new AuditEventCreateDateComparator()));
+			searchContainer.setResults(AuditEventManagerUtil.getAuditEvents(themeDisplay.getCompanyId(), userId, userName, startDate, endDate, eventType, className, classPK, clientHost, clientIP, serverName, serverPort, sessionID, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), new AuditEventCreateDateComparator()));
 		}
 		else {
 			String keywords = displayTerms.getKeywords();
 			String number = Validator.isNumber(keywords) ? keywords : String.valueOf(0);
 
-			total = AuditEventLocalServiceUtil.getAuditEventsCount(themeDisplay.getCompanyId(), Long.valueOf(number), keywords, null, null, keywords, keywords, keywords, keywords, keywords, keywords, Integer.valueOf(number), keywords, false);
+			total = AuditEventManagerUtil.getAuditEventsCount(themeDisplay.getCompanyId(), Long.valueOf(number), keywords, null, null, keywords, keywords, keywords, keywords, keywords, keywords, Integer.valueOf(number), keywords, false);
 
 			searchContainer.setTotal(total);
 
-			searchContainer.setResults(AuditEventLocalServiceUtil.getAuditEvents(themeDisplay.getCompanyId(), Long.valueOf(number), keywords, null, null, keywords, keywords, keywords, keywords, keywords, keywords, Integer.valueOf(number), keywords, false, searchContainer.getStart(), searchContainer.getEnd(), new AuditEventCreateDateComparator()));
+			searchContainer.setResults(AuditEventManagerUtil.getAuditEvents(themeDisplay.getCompanyId(), Long.valueOf(number), keywords, null, null, keywords, keywords, keywords, keywords, keywords, keywords, Integer.valueOf(number), keywords, false, searchContainer.getStart(), searchContainer.getEnd(), new AuditEventCreateDateComparator()));
 		}
 		%>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.audit.model.AuditEvent"
+			className="com.liferay.portal.security.audit.AuditEvent"
 			keyProperty="auditEventId"
 			modelVar="event"
 		>

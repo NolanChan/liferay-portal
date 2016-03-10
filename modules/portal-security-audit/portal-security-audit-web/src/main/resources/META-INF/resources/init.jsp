@@ -25,10 +25,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.audit.model.AuditEvent" %><%@
-page import="com.liferay.portal.audit.service.AuditEventLocalServiceUtil" %><%@
-page import="com.liferay.portal.audit.util.comparator.AuditEventCreateDateComparator" %><%@
-page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
+<%@ page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
@@ -41,20 +38,21 @@ page import="com.liferay.portal.kernel.util.PortalClassLoaderUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.security.audit.AuditEvent" %><%@
+page import="com.liferay.portal.security.audit.persistence.util.comparator.AuditEventCreateDateComparator" %><%@
+page import="com.liferay.portal.security.audit.router.AuditEventManagerUtil" %>
 
 <%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.Calendar" %><%@
 page import="java.util.Date" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
 
-<%
-String currentURL = PortalUtil.getCurrentURL(request);
+<portlet:defineObjects />
 
+<%
 Calendar today = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
 Calendar yesterday = CalendarFactoryUtil.getCalendar(timeZone, locale);
@@ -78,8 +76,6 @@ int endDateHour = ParamUtil.getInteger(request, "endDateHour", today.get(Calenda
 int endDateMinute = ParamUtil.getInteger(request, "endDateMinute", today.get(Calendar.MINUTE));
 int endDateMonth = ParamUtil.getInteger(request, "endDateMonth", today.get(Calendar.MONTH));
 int endDateYear = ParamUtil.getInteger(request, "endDateYear", today.get(Calendar.YEAR));
-int endDateYearRangeEnd = today.get(Calendar.YEAR);
-int endDateYearRangeStart = today.get(Calendar.YEAR) - 50;
 
 int startDateAmPm = ParamUtil.getInteger(request, "startDateAmPm", yesterday.get(Calendar.AM_PM));
 int startDateDay = ParamUtil.getInteger(request, "startDateDay", yesterday.get(Calendar.DATE));
@@ -87,8 +83,6 @@ int startDateHour = ParamUtil.getInteger(request, "startDateHour", yesterday.get
 int startDateMinute = ParamUtil.getInteger(request, "startDateMinute", yesterday.get(Calendar.MINUTE));
 int startDateMonth = ParamUtil.getInteger(request, "startDateMonth", yesterday.get(Calendar.MONTH));
 int startDateYear = ParamUtil.getInteger(request, "startDateYear", yesterday.get(Calendar.YEAR));
-int startDateYearRangeEnd = yesterday.get(Calendar.YEAR);
-int startDateYearRangeStart = yesterday.get(Calendar.YEAR) - 50;
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

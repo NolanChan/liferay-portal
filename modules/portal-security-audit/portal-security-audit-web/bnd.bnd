@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Security Audit Web
+Bundle-SymbolicName: com.liferay.portal.security.audit.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Audit
+Private-Package: com.liferay.portal.security.audit.web.*
+Web-ContextPath=/audit-web
+-include: ../../../marketplace/platform/bnd.bnd
