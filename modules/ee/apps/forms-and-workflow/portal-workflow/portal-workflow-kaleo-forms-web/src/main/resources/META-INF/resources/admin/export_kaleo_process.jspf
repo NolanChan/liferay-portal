@@ -50,8 +50,8 @@
 						toolbars: {
 							footer: [
 								{
-									label: '<%= UnicodeLanguageUtil.get(request, "ok") %>',
 									cssClass: 'btn-primary',
+									label: '<%= UnicodeLanguageUtil.get(request, "ok") %>',
 									on: {
 										click: function() {
 											submitForm(form, url, false);
