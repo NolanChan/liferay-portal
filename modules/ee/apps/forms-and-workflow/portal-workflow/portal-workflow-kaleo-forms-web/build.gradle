@@ -9,7 +9,7 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
-	provided project(":apps:foundation:frontend:frontend-taglib")
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:foundation:portal:portal-upgrade")
 	provided project(":apps:web-experience:application-list:application-list-api")
 	provided project(":ee:apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-designer-api")
