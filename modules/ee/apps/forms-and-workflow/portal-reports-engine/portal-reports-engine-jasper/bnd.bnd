@@ -119,4 +119,4 @@ Include-Resource:\
 	lib/xml-apis.jar=lib/xml-apis.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Reports Engine
--include: ../../../marketplace/platform/bnd.bnd
+-include: ../../../../../../modules/apps/forms-and-workflow/app.bnd

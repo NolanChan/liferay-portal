@@ -163,7 +163,9 @@ public class ReportEngineImplTest extends TestCase {
 		ReportRequestContext reportRequestContext = new ReportRequestContext(
 			reportDataSourceType);
 
-		ClassLoader classLoader = getClass().getClassLoader();
+		Class reportEngineImplTestClass = getClass();
+
+		ClassLoader classLoader = reportEngineImplTestClass.getClassLoader();
 
 		InputStream dataSourceInputStream = classLoader.getResourceAsStream(
 			dataSourceFileName);
