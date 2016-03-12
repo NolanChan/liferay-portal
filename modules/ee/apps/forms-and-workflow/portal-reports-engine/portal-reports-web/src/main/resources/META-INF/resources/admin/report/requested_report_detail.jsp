@@ -152,7 +152,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 %>
 
 <liferay-ui:search-container
-	delta="2"
+	delta="<%= 2 %>"
 	iteratorURL="<%= portletURL %>"
 	searchContainer="<%= new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null) %>"
 	total="<%= attachmentsFiles.size() %>"

@@ -29,16 +29,12 @@ Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
 int endDateDay = ParamUtil.getInteger(request, "endDateDay", calendar.get(Calendar.DATE));
 int endDateMonth = ParamUtil.getInteger(request, "endDateMonth", calendar.get(Calendar.MONTH));
 int endDateYear = ParamUtil.getInteger(request, "endDateYear", calendar.get(Calendar.YEAR));
-int endDateYearRangeEnd = calendar.get(Calendar.YEAR);
-int endDateYearRangeStart = calendar.get(Calendar.YEAR) - 50;
 
 calendar.add(Calendar.DATE, -1);
 
 int startDateDay = ParamUtil.getInteger(request, "startDateDay", calendar.get(Calendar.DATE));
 int startDateMonth = ParamUtil.getInteger(request, "startDateMonth", calendar.get(Calendar.MONTH));
 int startDateYear = ParamUtil.getInteger(request, "startDateYear", calendar.get(Calendar.YEAR));
-int startDateYearRangeEnd = calendar.get(Calendar.YEAR);
-int startDateYearRangeStart = calendar.get(Calendar.YEAR) - 50;
 %>
 
 <liferay-ui:search-toggle
