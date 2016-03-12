@@ -17,9 +17,8 @@ package com.liferay.portal.reports.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.exception.DuplicateDirectoryException;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Junction;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -41,6 +40,7 @@ import com.liferay.portal.reports.exception.DefinitionFileException;
 import com.liferay.portal.reports.exception.DefinitionNameException;
 import com.liferay.portal.reports.model.Definition;
 import com.liferay.portal.reports.service.base.DefinitionLocalServiceBaseImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.InputStream;
 
@@ -153,7 +153,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 			long companyId, String attachmentsDirectory)
 		throws PortalException {
 
-		DLStoreUtil.deleteDirectory(
+		_dlStore.deleteDirectory(
 			companyId, CompanyConstants.SYSTEM, attachmentsDirectory);
 	}
 
@@ -224,7 +224,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 		if (Validator.isNotNull(fileName) && (inputStream != null)) {
 			long companyId = definition.getCompanyId();
 
-			DLStoreUtil.deleteDirectory(
+			_dlStore.deleteDirectory(
 				companyId, CompanyConstants.SYSTEM,
 				definition.getAttachmentsDir());
 
@@ -253,7 +253,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 		String directoryName = definition.getAttachmentsDir();
 
 		try {
-			DLStoreUtil.addDirectory(
+			_dlStore.addDirectory(
 				companyId, CompanyConstants.SYSTEM, directoryName);
 		}
 		catch (DuplicateDirectoryException dde) {
@@ -262,7 +262,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 		String fileLocation = directoryName.concat(
 			StringPool.SLASH).concat(fileName);
 
-		DLStoreUtil.addFile(
+		_dlStore.addFile(
 			companyId, CompanyConstants.SYSTEM, fileLocation, false,
 			inputStream);
 	}
@@ -312,8 +312,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 			junction.add(property.like(value));
 		}
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Definition.class, getClassLoader());
+		DynamicQuery dynamicQuery = dynamicQuery();
 
 		if (groupId > 0) {
 			Property property = PropertyFactoryUtil.forName("groupId");
@@ -337,5 +336,8 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 			throw new DefinitionNameException();
 		}
 	}
+
+	@ServiceReference(type = DLStore.class)
+	private DLStore _dlStore;
 
 }

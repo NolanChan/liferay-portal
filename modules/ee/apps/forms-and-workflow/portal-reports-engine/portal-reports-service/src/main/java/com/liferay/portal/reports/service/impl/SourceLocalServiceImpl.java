@@ -17,7 +17,6 @@ package com.liferay.portal.reports.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Junction;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -201,8 +200,7 @@ public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 			junction.add(property.like(value));
 		}
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Source.class, getClassLoader());
+		DynamicQuery dynamicQuery = dynamicQuery();
 
 		if (groupId > 0) {
 			Property property = PropertyFactoryUtil.forName("groupId");

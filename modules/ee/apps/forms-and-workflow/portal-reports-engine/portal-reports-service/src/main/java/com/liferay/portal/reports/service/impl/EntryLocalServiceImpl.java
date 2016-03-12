@@ -17,9 +17,8 @@ package com.liferay.portal.reports.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.exception.DuplicateDirectoryException;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Junction;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -28,18 +27,19 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -66,6 +66,7 @@ import com.liferay.portal.reports.model.Definition;
 import com.liferay.portal.reports.model.Entry;
 import com.liferay.portal.reports.model.Source;
 import com.liferay.portal.reports.service.base.EntryLocalServiceBaseImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.File;
 import java.io.IOException;
@@ -182,7 +183,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	public void deleteAttachment(long companyId, String fileName)
 		throws PortalException {
 
-		DLStoreUtil.deleteFile(companyId, CompanyConstants.SYSTEM, fileName);
+		_dlStore.deleteFile(companyId, CompanyConstants.SYSTEM, fileName);
 	}
 
 	@Override
@@ -201,14 +202,14 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		// Scheduler
 
 		if (entry.isRepeating()) {
-			SchedulerEngineHelperUtil.unschedule(
+			_schedulerEngineHelper.unschedule(
 				entry.getJobName(), entry.getSchedulerRequestName(),
 				StorageType.PERSISTED);
 		}
 
 		// Attachments
 
-		DLStoreUtil.deleteDirectory(
+		_dlStore.deleteDirectory(
 			entry.getCompanyId(), CompanyConstants.SYSTEM,
 			entry.getAttachmentsDir());
 
@@ -241,7 +242,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		String[] existingFiles = definition.getAttachmentsFiles();
 
-		byte[] templateFile = DLStoreUtil.getFileAsBytes(
+		byte[] templateFile = _dlStore.getFileAsBytes(
 			definition.getCompanyId(), CompanyConstants.SYSTEM,
 			existingFiles[0]);
 
@@ -253,7 +254,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		Map<String, String> reportParameters = new HashMap<>();
 
-		JSONArray reportParametersJSONArray = JSONFactoryUtil.createJSONArray(
+		JSONArray reportParametersJSONArray = _jsonFactory.createJSONArray(
 			entry.getReportParameters());
 
 		for (int i = 0; i < reportParametersJSONArray.length(); i++) {
@@ -299,7 +300,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		message.setResponseId(String.valueOf(entry.getEntryId()));
 		message.setResponseDestinationName("liferay/reports_admin");
 
-		MessageBusUtil.sendMessage(DestinationNames.REPORT_REQUEST, message);
+		_messageBus.sendMessage(DestinationNames.REPORT_REQUEST, message);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -339,7 +340,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		InputStream inputStream = null;
 
 		try {
-			inputStream = DLStoreUtil.getFileAsStream(
+			inputStream = _dlStore.getFileAsStream(
 				entry.getCompanyId(), CompanyConstants.SYSTEM, fileName);
 
 			if (inputStream == null) {
@@ -370,7 +371,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		entryPersistence.update(entry);
 
-		SchedulerEngineHelperUtil.unschedule(
+		_schedulerEngineHelper.unschedule(
 			entry.getJobName(), entry.getSchedulerRequestName(),
 			StorageType.PERSISTED);
 	}
@@ -402,14 +403,14 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			entry.getAttachmentsDir() + StringPool.SLASH + reportName;
 
 		try {
-			DLStoreUtil.addDirectory(
+			_dlStore.addDirectory(
 				entry.getCompanyId(), CompanyConstants.SYSTEM,
 				entry.getAttachmentsDir());
 		}
 		catch (DuplicateDirectoryException dde) {
 		}
 
-		DLStoreUtil.addFile(
+		_dlStore.addFile(
 			entry.getCompanyId(), CompanyConstants.SYSTEM, fileName, false,
 			reportResults);
 
@@ -453,8 +454,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		}
 
 		if (Validator.isNotNull(definitionName)) {
-			DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-				Definition.class, getClassLoader());
+			DynamicQuery dynamicQuery = definitionLocalService.dynamicQuery();
 
 			Property nameProperty = PropertyFactoryUtil.forName("name");
 
@@ -473,8 +473,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		}
 
 		if (Validator.isNotNull(userName)) {
-			DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-				User.class, getClassLoader());
+			DynamicQuery dynamicQuery = _userLocalService.dynamicQuery();
 
 			Property nameProperty = PropertyFactoryUtil.forName("screenName");
 
@@ -491,8 +490,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			junction.add(definitionIdProperty.in(dynamicQuery));
 		}
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Entry.class, getClassLoader());
+		DynamicQuery dynamicQuery = entryLocalService.dynamicQuery();
 
 		if (groupId > 0) {
 			Property property = PropertyFactoryUtil.forName("groupId");
@@ -615,7 +613,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		message.put("entryId", entry.getEntryId());
 		message.put("reportName", reportName);
 
-		SchedulerEngineHelperUtil.schedule(
+		_schedulerEngineHelper.schedule(
 			trigger, StorageType.PERSISTED, null,
 			"liferay/reports_scheduler_event", message, 0);
 	}
@@ -640,5 +638,20 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			throw new DefinitionNameException();
 		}
 	}
+
+	@ServiceReference(type = DLStore.class)
+	private DLStore _dlStore;
+
+	@ServiceReference(type = JSONFactory.class)
+	private JSONFactory _jsonFactory;
+
+	@ServiceReference(type = MessageBus.class)
+	private MessageBus _messageBus;
+
+	@ServiceReference(type = SchedulerEngineHelper.class)
+	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }
