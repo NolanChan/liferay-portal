@@ -69,7 +69,7 @@ public abstract class AuditEventLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.security.audit.persistence.service.AuditEventLocalServiceUtil} to access the audit event local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.portal.security.audit.storage.service.AuditEventLocalServiceUtil} to access the audit event local service.
 	 */
 
 	/**
@@ -465,13 +465,13 @@ public abstract class AuditEventLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.security.audit.persistence.model.AuditEvent",
+		persistedModelLocalServiceRegistry.register("com.liferay.portal.security.audit.storage.model.AuditEvent",
 			auditEventLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.security.audit.persistence.model.AuditEvent");
+			"com.liferay.portal.security.audit.storage.model.AuditEvent");
 	}
 
 	/**

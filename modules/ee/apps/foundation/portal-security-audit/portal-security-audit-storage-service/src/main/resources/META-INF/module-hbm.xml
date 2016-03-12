@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false" auto-import="false">
-	<import class="com.liferay.portal.security.audit.persistence.model.AuditEvent" />
-	<class name="com.liferay.portal.security.audit.persistence.model.impl.AuditEventImpl" table="AuditEvent">
+	<import class="com.liferay.portal.security.audit.storage.model.AuditEvent" />
+	<class name="com.liferay.portal.security.audit.storage.model.impl.AuditEventImpl" table="AuditEvent">
 		<id name="auditEventId" type="long">
 			<generator class="assigned" />
 		</id>

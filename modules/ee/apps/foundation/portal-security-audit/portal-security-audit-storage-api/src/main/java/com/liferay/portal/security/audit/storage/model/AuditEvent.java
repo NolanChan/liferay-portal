@@ -29,13 +29,13 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see com.liferay.portal.security.audit.storage.model.impl.AuditEventModelImpl
  * @generated
  */
-@ImplementationClassName("com.liferay.portal.security.audit.persistence.model.impl.AuditEventImpl")
+@ImplementationClassName("com.liferay.portal.security.audit.storage.model.impl.AuditEventImpl")
 @ProviderType
 public interface AuditEvent extends AuditEventModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.security.audit.persistence.model.impl.AuditEventImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.security.audit.storage.model.impl.AuditEventImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<AuditEvent, Long> AUDIT_EVENT_ID_ACCESSOR = new Accessor<AuditEvent, Long>() {
 			@Override
