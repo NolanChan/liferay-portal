@@ -14,21 +14,14 @@
 
 package com.liferay.portal.reports.messaging;
 
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.reports.service.EntryLocalServiceUtil;
-
 /**
- * @author Gavin Wan
+ * @author Prathima Shreenath
  */
-public class SchedulerEventMessageListener extends BaseMessageListener {
+public class DestinationNames {
 
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		long entryId = message.getLong("entryId");
-		String reportName = message.getString("reportName");
+	public static final String REPORTS_ADMIN = "liferay/reports_admin";
 
-		EntryLocalServiceUtil.generateReport(entryId, reportName);
-	}
+	public static final String REPORTS_SCHEDULER_EVENT =
+		"liferay/reports_scheduler_event";
 
 }

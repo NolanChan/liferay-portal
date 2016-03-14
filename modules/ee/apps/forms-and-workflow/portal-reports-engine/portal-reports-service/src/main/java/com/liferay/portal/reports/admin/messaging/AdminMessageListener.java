@@ -16,21 +16,15 @@ package com.liferay.portal.reports.admin.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.reports.ReportStatus;
 import com.liferay.portal.reports.engine.ReportGenerationException;
 import com.liferay.portal.reports.engine.ReportResultContainer;
-import com.liferay.portal.reports.service.EntryLocalService;
 import com.liferay.portal.reports.service.EntryLocalServiceUtil;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gavin Wan
  */
-@Component(immediate = true, service = MessageListener.class)
 public class AdminMessageListener extends BaseMessageListener {
 
 	@Override
@@ -44,7 +38,7 @@ public class AdminMessageListener extends BaseMessageListener {
 			ReportGenerationException reportGenerationException =
 				reportResultContainer.getReportGenerationException();
 
-			_entryLocalService.updateEntryStatus(
+			EntryLocalServiceUtil.updateEntryStatus(
 				entryId, ReportStatus.ERROR,
 				reportGenerationException.getMessage());
 		}
@@ -54,8 +48,5 @@ public class AdminMessageListener extends BaseMessageListener {
 				reportResultContainer.getResults());
 		}
 	}
-
-	@Reference
-	private EntryLocalService _entryLocalService;
 
 }
