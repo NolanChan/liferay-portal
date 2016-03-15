@@ -69,16 +69,13 @@ public class CachedReportCompiler implements ReportCompiler {
 		_cachedJasperReports.clear();
 	}
 
-	@Reference(unbind = "-")
-	protected void setReportCompiler(ReportCompiler reportCompiler) {
-		_reportCompiler = reportCompiler;
-	}
-
 	private static final int _DEFAULT_MAX_SIZE = 25;
 
 	private final Map<String, CachedJasperReport> _cachedJasperReports =
 		Collections.synchronizedMap(
 			new LRUMap<String, CachedJasperReport>(_DEFAULT_MAX_SIZE));
+
+	@Reference
 	private ReportCompiler _reportCompiler;
 
 	private class CachedJasperReport {
