@@ -1,31 +1,17 @@
 Bundle-ClassPath:\
 	.,\
-	lib/bcmail-jdk14.jar,\
-	lib/bcprov-jdk14.jar,\
-	lib/bctsp-jdk14.jar,\
-	lib/castor.jar,\
-	lib/commons-beanutils.jar,\
 	lib/commons-collections.jar,\
 	lib/commons-dbcp2.jar,\
 	lib/commons-digester.jar,\
 	lib/commons-javaflow.jar,\
-	lib/commons-logging.jar,\
-	lib/commons-pool2.jar,\
 	lib/core.jar,\
 	lib/groovy-all.jar,\
 	lib/itext.jar,\
-	lib/jackson-annotations.jar,\
-	lib/jackson-core.jar,\
-	lib/jackson-databind.jar,\
 	lib/jasperreports.jar,\
 	lib/jasperreports-fonts.jar,\
-	lib/jdtcore.jar,\
-	lib/jcommon.jar,\
-	lib/jfreechart.jar,\
 	lib/jxl.jar,\
 	lib/png-encoder.jar,\
-	lib/xercesImpl.jar,\
-	lib/xml-apis.jar
+	lib/xercesImpl.jar
 Bundle-Name: Liferay Portal Reports Engine Jasper
 Bundle-SymbolicName: com.liferay.portal.reports.engine.jasper
 Bundle-Version: 1.0.0
@@ -35,7 +21,7 @@ Import-Package:\
 	\
 	!bsh,\
 	\
-	!com.apple.mrj,\
+	!com.fasterxml.jackson.*,\
 	\
 	!com.sun.*,\
 	\
@@ -51,18 +37,13 @@ Import-Package:\
 	\
 	!mondrian.*,\
 	\
-	!net.sf.cglib.proxy.*,\
-	!net.sf.jasperreports.engine.*,\
-	\
 	!net.sourceforge.barbecue.*,\
 	\
-	!netscape.ldap.*,\
-	\
-	!org.apache.avalon.*,\
 	!org.apache.batik.*,\
 	!org.apache.bsf.*,\
 	!org.apache.commons.cli.*,\
 	!org.apache.commons.jci.*,\
+	!org.apache.commons.pool2.*,\
 	!org.apache.ivy.*,\
 	!org.apache.log.*,\
 	!org.apache.oro.*,\
@@ -71,9 +52,15 @@ Import-Package:\
 	!org.apache.xerces.utils.regex.*,\
 	!org.apache.xml.resolver.*,\
 	\
+	!org.bouncycastle.*,\
+	\
 	!org.eclipse.*,\
 	\
+	!org.exolab.castor.*,\
+	\
 	!org.fusesource.*,\
+	\
+	!org.jfree.*,\
 	\
 	!org.junit.*,\
 	\
@@ -86,37 +73,20 @@ Import-Package:\
 	!org.w3c.*,\
 	\
 	!sun.*,\
-	\
-	!weblogic.*,\
 	*
-Include-Resource:\
-	classes,\
-	lib/bcmail-jdk14.jar=lib/bcmail-jdk14.jar,\
-	lib/bcprov-jdk14.jar=lib/bcprov-jdk14.jar,\
-	lib/bctsp-jdk14.jar=lib/bctsp-jdk14.jar,\
-	lib/castor.jar=lib/castor.jar,\
-	lib/commons-beanutils.jar=lib/commons-beanutils.jar,\
-	lib/commons-collections.jar=lib/commons-collections.jar,\
-	lib/commons-dbcp2.jar=lib/commons-dbcp2.jar,\
-	lib/commons-digester.jar=lib/commons-digester.jar,\
-	lib/commons-javaflow.jar=lib/commons-javaflow.jar,\
-	lib/commons-logging.jar=lib/commons-logging.jar,\
-	lib/commons-pool2.jar=lib/commons-pool2.jar,\
-	lib/core.jar=lib/core.jar,\
-	lib/groovy-all.jar=lib/groovy-all.jar,\
-	lib/itext.jar=lib/itext.jar,\
-	lib/jackson-annotations.jar=lib/jackson-annotations.jar,\
-	lib/jackson-core.jar=lib/jackson-core.jar,\
-	lib/jackson-databind.jar=lib/jackson-databind.jar,\
-	lib/jasperreports.jar=lib/jasperreports.jar,\
-	lib/jasperreports-fonts.jar=lib/jasperreports-fonts.jar,\
-	lib/jdtcore.jar=lib/jdtcore.jar,\
-	lib/jfreechart.jar=lib/jfreechart.jar,\
-	lib/jcommon.jar=lib/jcommon.jar,\
-	lib/jxl.jar=lib/jxl.jar,\
-	lib/png-encoder.jar=lib/png-encoder.jar,\
-	lib/xercesImpl.jar=lib/xercesImpl.jar,\
-	lib/xml-apis.jar=lib/xml-apis.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Reports Engine
 -include: ../../../../../../modules/apps/forms-and-workflow/app.bnd
+-liferay-includeresource:\
+	lib/commons-collections.jar=commons-collections-*.jar,\
+	lib/commons-dbcp2.jar=commons-dbcp2-*.jar,\
+	lib/commons-digester.jar=commons-digester-*.jar,\
+	lib/commons-javaflow.jar=commons-javaflow-*.jar,\
+	lib/core.jar=core-*.jar,\
+	lib/groovy-all.jar=groovy-all-*.jar,\
+	lib/itext.jar=itext-*.jar,\
+	lib/jasperreports.jar=jasperreports-*.jar,\
+	lib/jasperreports-fonts.jar=jasperreports-fonts-*.jar,\
+	lib/jxl.jar=jxl-*.jar,\
+	lib/png-encoder.jar=png-encoder-*.jar,\
+	lib/xercesImpl.jar=xercesImpl-*.jar
