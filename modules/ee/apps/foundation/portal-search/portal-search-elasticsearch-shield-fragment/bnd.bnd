@@ -3,6 +3,6 @@ Bundle-SymbolicName: com.liferay.portal.search.elasticsearch.shield.fragment
 Bundle-Version: 1.0.0
 Fragment-Host: com.liferay.portal.search.elasticsearch
 Import-Package: !*
-Include-Resource:\
+-includeresource:\
 	classes,\
 	@lib/shield-2.2.0.jar

@@ -15,7 +15,7 @@ Import-Package:\
 	\
 	!org.mozilla.javascript.*,\
 	*
-Include-Resource: @lib/jgroups.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Clustering
 -include: ../../../../../../modules/apps/foundation/app.bnd
+-includeresource: @lib/jgroups.jar

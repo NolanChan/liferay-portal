@@ -28,6 +28,6 @@ Import-Package:\
 	\
 	!sun.misc,\
 	*
-Include-Resource:\
+-includeresource:\
 	@lib/ehcache-ee-2.8.5.jar,\
 	@lib/terracotta-toolkit-runtime-ee-4.1.5.jar

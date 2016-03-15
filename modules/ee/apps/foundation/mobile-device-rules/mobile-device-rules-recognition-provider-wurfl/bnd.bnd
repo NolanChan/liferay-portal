@@ -9,7 +9,7 @@ Import-Package:\
 	\
 	!org.joda.time.*,\
 	*
-Include-Resource:\
+-includeresource:\
 	@lib/jackson-core-asl.jar,\
 	@lib/jackson-mapper-asl.jar,\
 	@lib/wurfl-1.6.0.jar
