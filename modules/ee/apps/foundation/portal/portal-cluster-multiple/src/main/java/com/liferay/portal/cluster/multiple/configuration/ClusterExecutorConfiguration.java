@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.cluster.configuration.ClusterExecutorConfiguration",
 	localization = "content/Language",
-	name = "%cluster.executor.configuration.name"
+	name = "cluster.executor.configuration.name"
 )
 public interface ClusterExecutorConfiguration {
 

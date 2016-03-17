@@ -14,18 +14,18 @@
 
 package com.liferay.portal.search.elasticsearch.shield.internal;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
-
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
 import com.liferay.portal.search.elasticsearch.settings.ClientSettingsHelper;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 import com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author André de Oliveira
