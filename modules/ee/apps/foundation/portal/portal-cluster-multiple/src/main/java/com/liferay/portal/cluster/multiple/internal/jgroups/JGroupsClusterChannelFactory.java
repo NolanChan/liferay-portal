@@ -142,9 +142,7 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 					_bindInetAddress);
 			}
 			catch (IOException ie) {
-				if (_log.isErrorEnabled()) {
-					_log.error("Unable to bind to lopoback interface", ie);
-				}
+				_log.error("Unable to bind to lopoback interface", ie);
 			}
 		}
 
