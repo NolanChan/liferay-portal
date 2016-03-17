@@ -85,7 +85,9 @@ public class DB2DB extends BaseDB {
 
 	@Override
 	public void runSQL(String template) throws IOException, SQLException {
-		if (template.startsWith(ALTER_COLUMN_NAME)) {
+		String clearTemplate = StringUtil.trim(template);
+
+		if (clearTemplate.startsWith(ALTER_COLUMN_NAME)) {
 			String sql = buildSQL(template);
 
 			String[] alterSqls = StringUtil.split(sql, CharPool.SEMICOLON);
@@ -202,7 +204,9 @@ public class DB2DB extends BaseDB {
 		Set<String> tableNames = new HashSet<>();
 
 		for (String template : templates) {
-			if (template.startsWith("alter table")) {
+			String clearTemplate = StringUtil.trim(template);
+
+			if (clearTemplate.startsWith("alter table")) {
 				tableNames.add(template.split(" ")[2]);
 			}
 		}
