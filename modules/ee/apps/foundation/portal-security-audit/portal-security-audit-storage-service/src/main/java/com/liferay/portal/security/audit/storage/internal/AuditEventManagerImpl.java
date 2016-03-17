@@ -36,16 +36,16 @@ public class AuditEventManagerImpl implements AuditEventManager {
 
 	@Override
 	public AuditEvent addAuditEvent(AuditMessage auditMessage) {
-		com.liferay.portal.security.audit.storage.model.AuditEvent
-			auditEvent = _auditEventLocalService.addAuditEvent(auditMessage);
+		com.liferay.portal.security.audit.storage.model.AuditEvent auditEvent =
+			_auditEventLocalService.addAuditEvent(auditMessage);
 
 		return new AuditEventImpl(auditEvent);
 	}
 
 	@Override
 	public AuditEvent fetchAuditEvent(long auditEventId) {
-		com.liferay.portal.security.audit.storage.model.AuditEvent
-			auditEvent = _auditEventLocalService.fetchAuditEvent(auditEventId);
+		com.liferay.portal.security.audit.storage.model.AuditEvent auditEvent =
+			_auditEventLocalService.fetchAuditEvent(auditEventId);
 
 		return new AuditEventImpl(auditEvent);
 	}
@@ -108,8 +108,7 @@ public class AuditEventManagerImpl implements AuditEventManager {
 
 		List<AuditEvent> auditEvents = new ArrayList<>(auditEventModels.size());
 
-		for (
-			com.liferay.portal.security.audit.storage.model.AuditEvent
+		for (com.liferay.portal.security.audit.storage.model.AuditEvent
 				auditEventModel : auditEventModels) {
 
 			auditEvents.add(new AuditEventImpl(auditEventModel));
