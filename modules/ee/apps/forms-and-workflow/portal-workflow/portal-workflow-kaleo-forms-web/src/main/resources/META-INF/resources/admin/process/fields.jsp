@@ -181,6 +181,26 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 
 	Liferay.provide(
 		window,
+		'<portlet:namespace />editStructure',
+		function(uri) {
+			var A = AUI();
+
+			var WIN = A.config.win;
+
+			Liferay.Util.openWindow(
+				{
+					id: A.guid(),
+					refreshWindow: WIN,
+					title: '<liferay-ui:message key="field-set" />',
+					uri: uri
+				}
+			);
+		},
+		['liferay-util']
+	);
+
+	Liferay.provide(
+		window,
 		'<portlet:namespace />openDDMPortlet',
 		function(ddmTemplateId) {
 			Liferay.Util.openDDMPortlet(

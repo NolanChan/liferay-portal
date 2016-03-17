@@ -25,21 +25,30 @@ String redirect = (String)row.getParameter("redirect");
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcPath" value='<%= "/admin/process/edit_structure.jsp" %>' />
-		<portlet:param name="redirect" value="<%= redirect %>" />
+	<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT) %>" var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+		<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_STRUCTURE %>" />
+		<portlet:param name="closeRedirect" value="<%= currentURL %>" />
+		<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
+		<portlet:param name="refererPortletName" value="<%= KaleoFormsPortletKeys.KALEO_FORMS_ADMIN %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 		<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 		<portlet:param name="classPK" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
-	</portlet:renderURL>
+	</liferay-portlet:renderURL>
+
+	<%
+	String taglibOnClick = "javascript:" + renderResponse.getNamespace() + "editStructure('"+ editURL +"');";
+	%>
 
 	<liferay-ui:icon
 		iconCssClass="icon-edit"
 		message="edit"
-		url="<%= editURL %>"
+		onClick="<%= taglibOnClick %>"
+		url="javascript:;"
 	/>
 
 	<%
-	String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "chooseDefinition', {ddmStructureId: " + ddmStructure.getStructureId() + ", name: '" + HtmlUtil.escapeJS(ddmStructure.getName(locale)) + "', node: this});";
+	 taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "chooseDefinition', {ddmStructureId: " + ddmStructure.getStructureId() + ", name: '" + HtmlUtil.escapeJS(ddmStructure.getName(locale)) + "', node: this});";
 	%>
 
 	<liferay-ui:icon
