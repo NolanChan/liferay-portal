@@ -252,11 +252,12 @@ public class SourcePersistenceTest {
 	}
 
 	protected OrderByComparator<Source> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Source", "uuid", true,
-			"sourceId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"lastPublishDate", true, "name", true, "driverClassName", true,
-			"driverUrl", true, "driverUserName", true, "driverPassword", true);
+		return OrderByComparatorFactoryUtil.create("Reports_Source", "uuid",
+			true, "sourceId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "lastPublishDate", true, "name", true,
+			"driverClassName", true, "driverUrl", true, "driverUserName", true,
+			"driverPassword", true);
 	}
 
 	@Test

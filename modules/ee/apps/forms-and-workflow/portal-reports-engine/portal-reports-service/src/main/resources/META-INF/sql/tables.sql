@@ -1,4 +1,4 @@
-create table Definition (
+create table Reports_Definition (
 	uuid_ VARCHAR(75) null,
 	definitionId LONG not null primary key,
 	groupId LONG,
@@ -15,7 +15,7 @@ create table Definition (
 	lastPublishDate DATE null
 );
 
-create table Entry (
+create table Reports_Entry (
 	entryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -39,7 +39,7 @@ create table Entry (
 	errorMessage VARCHAR(75) null
 );
 
-create table Source (
+create table Reports_Source (
 	uuid_ VARCHAR(75) null,
 	sourceId LONG not null primary key,
 	groupId LONG,

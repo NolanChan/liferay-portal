@@ -3646,16 +3646,16 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 	private static final String _SQL_COUNT_SOURCE = "SELECT COUNT(source) FROM Source source";
 	private static final String _SQL_COUNT_SOURCE_WHERE = "SELECT COUNT(source) FROM Source source WHERE ";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "source.sourceId";
-	private static final String _FILTER_SQL_SELECT_SOURCE_WHERE = "SELECT DISTINCT {source.*} FROM Source source WHERE ";
+	private static final String _FILTER_SQL_SELECT_SOURCE_WHERE = "SELECT DISTINCT {source.*} FROM Reports_Source source WHERE ";
 	private static final String _FILTER_SQL_SELECT_SOURCE_NO_INLINE_DISTINCT_WHERE_1 =
-		"SELECT {Source.*} FROM (SELECT DISTINCT source.sourceId FROM Source source WHERE ";
+		"SELECT {Reports_Source.*} FROM (SELECT DISTINCT source.sourceId FROM Reports_Source source WHERE ";
 	private static final String _FILTER_SQL_SELECT_SOURCE_NO_INLINE_DISTINCT_WHERE_2 =
-		") TEMP_TABLE INNER JOIN Source ON TEMP_TABLE.sourceId = Source.sourceId";
-	private static final String _FILTER_SQL_COUNT_SOURCE_WHERE = "SELECT COUNT(DISTINCT source.sourceId) AS COUNT_VALUE FROM Source source WHERE ";
+		") TEMP_TABLE INNER JOIN Reports_Source ON TEMP_TABLE.sourceId = Reports_Source.sourceId";
+	private static final String _FILTER_SQL_COUNT_SOURCE_WHERE = "SELECT COUNT(DISTINCT source.sourceId) AS COUNT_VALUE FROM Reports_Source source WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "source";
-	private static final String _FILTER_ENTITY_TABLE = "Source";
+	private static final String _FILTER_ENTITY_TABLE = "Reports_Source";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "source.";
-	private static final String _ORDER_BY_ENTITY_TABLE = "Source.";
+	private static final String _ORDER_BY_ENTITY_TABLE = "Reports_Source.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Source exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Source exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(SourcePersistenceImpl.class);
