@@ -215,7 +215,7 @@ public class AuditEventPersistenceTest {
 	}
 
 	protected OrderByComparator<AuditEvent> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("AuditEvent",
+		return OrderByComparatorFactoryUtil.create("Audit_AuditEvent",
 			"auditEventId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "eventType", true,
 			"className", true, "classPK", true, "message", true, "clientHost",

@@ -1,4 +1,4 @@
-create table AuditEvent (
+create table Audit_AuditEvent (
 	auditEventId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

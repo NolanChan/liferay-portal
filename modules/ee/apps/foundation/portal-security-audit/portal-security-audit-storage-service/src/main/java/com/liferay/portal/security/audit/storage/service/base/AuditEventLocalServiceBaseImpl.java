@@ -507,7 +507,7 @@ public abstract class AuditEventLocalServiceBaseImpl
 			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+					sql, new int[0]);
 
 			sqlUpdate.update();
 		}
