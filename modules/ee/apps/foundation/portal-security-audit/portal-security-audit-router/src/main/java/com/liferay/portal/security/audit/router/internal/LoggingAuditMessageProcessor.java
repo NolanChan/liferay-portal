@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.audit.router.internal;
 
-import com.liferay.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.concurrent.ConcurrentIdentityHashMap;
 import com.liferay.portal.kernel.log.Log;
