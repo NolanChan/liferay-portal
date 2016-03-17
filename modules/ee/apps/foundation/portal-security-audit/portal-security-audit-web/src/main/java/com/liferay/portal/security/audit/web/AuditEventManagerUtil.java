@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.audit.web.util;
+package com.liferay.portal.security.audit.web;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.util.OrderByComparator;

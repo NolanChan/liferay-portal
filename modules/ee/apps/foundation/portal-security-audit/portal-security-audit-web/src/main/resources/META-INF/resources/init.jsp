@@ -41,7 +41,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.security.audit.AuditEvent" %><%@
 page import="com.liferay.portal.security.audit.storage.comparator.AuditEventCreateDateComparator" %><%@
-page import="com.liferay.portal.security.audit.web.util.AuditEventManagerUtil" %>
+page import="com.liferay.portal.security.audit.web.AuditEventManagerUtil" %>
 
 <%@ page import="java.text.Format" %>
 
