@@ -1,6 +1,5 @@
 buildService {
 	apiDir = "../portal-security-audit-storage-api/src/main/java"
-	autoNamespaceTables = false
 	testDir = "../portal-security-audit-storage-test/src/testIntegration/java"
 }
 
