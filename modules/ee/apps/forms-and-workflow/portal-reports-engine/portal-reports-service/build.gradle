@@ -1,6 +1,5 @@
 buildService {
 	apiDir = "../portal-reports-api/src/main/java"
-	autoNamespaceTables = false
 	testDir = "../portal-reports-test/src/testIntegration/java"
 }
 
