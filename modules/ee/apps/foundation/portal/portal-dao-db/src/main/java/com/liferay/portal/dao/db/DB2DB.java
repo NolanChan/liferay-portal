@@ -75,6 +75,15 @@ public class DB2DB extends BaseDB {
 	}
 
 	@Override
+	public void runSQL(Connection con, String[] templates)
+		throws IOException, SQLException {
+
+		super.runSQL(con, templates);
+
+		reorgTables(templates);
+	}
+
+	@Override
 	public void runSQL(String template) throws IOException, SQLException {
 		if (template.startsWith(ALTER_COLUMN_NAME)) {
 			String sql = buildSQL(template);
@@ -90,13 +99,6 @@ public class DB2DB extends BaseDB {
 		else {
 			super.runSQL(template);
 		}
-	}
-
-	@Override
-	public void runSQL(String[] templates) throws IOException, SQLException {
-		super.runSQL(templates);
-
-		reorgTables(templates);
 	}
 
 	@Override
