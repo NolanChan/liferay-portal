@@ -79,7 +79,7 @@ public class LoggingAuditMessageProcessor implements AuditMessageProcessor {
 
 		if (Validator.isNull(format)) {
 			throw new IllegalArgumentException(
-				"Must specify a format: " + logMessageFormatter);
+				"The property \"format\" is null");
 		}
 
 		_logMessageFormatters.put(format, logMessageFormatter);
@@ -96,9 +96,10 @@ public class LoggingAuditMessageProcessor implements AuditMessageProcessor {
 			if (logMessageFormatter == null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"No LogMessageFormatter for: " +
-							_loggingAuditMessageProcessorConfiguration.
-								logMessageFormat());
+						"No log message formatter found for log message " +
+							"format " +
+								_loggingAuditMessageProcessorConfiguration.
+									logMessageFormat());
 				}
 
 				return;
@@ -125,7 +126,7 @@ public class LoggingAuditMessageProcessor implements AuditMessageProcessor {
 
 		if (Validator.isNull(format)) {
 			throw new IllegalArgumentException(
-				"Must specify a format: " + logMessageFormatter);
+				"The property \"format\" is null");
 		}
 
 		_logMessageFormatters.remove(format);

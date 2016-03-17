@@ -94,10 +94,11 @@ public class DefaultAuditRouter implements AuditRouter {
 	protected void activate(BundleContext bundleContext) {
 		ProxyMessageListener proxyMessageListener = new ProxyMessageListener();
 
-		proxyMessageListener.setMessageBus(_messageBus);
 		proxyMessageListener.setManager(this);
+		proxyMessageListener.setMessageBus(_messageBus);
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
 		properties.put("destination.name", DestinationNames.AUDIT);
 
 		_serviceRegistration = bundleContext.registerService(
@@ -119,12 +120,10 @@ public class DefaultAuditRouter implements AuditRouter {
 
 		if (Validator.isNull(eventTypes)) {
 			throw new IllegalArgumentException(
-				"No eventType specified for: " + auditMessageProcessor);
+				"The property \"" + AuditConstants.EVENT_TYPES + "\" is null");
 		}
 
-		String[] eventTypesArray = StringUtil.split(eventTypes);
-
-		return eventTypesArray;
+		return StringUtil.split(eventTypes);
 	}
 
 	@Reference (
