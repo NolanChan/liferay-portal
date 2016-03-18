@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.audit.util;
+package com.liferay.portal.security.audit.event.generators.util;
 
 /**
  * @author Brian Wing Shun Chan

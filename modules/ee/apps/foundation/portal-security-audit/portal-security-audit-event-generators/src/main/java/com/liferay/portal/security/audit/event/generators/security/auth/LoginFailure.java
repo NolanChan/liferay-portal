@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.audit.security.auth;
+package com.liferay.portal.security.audit.event.generators.security.auth;
 
 import com.liferay.portal.kernel.audit.AuditException;
 import com.liferay.portal.kernel.audit.AuditMessage;

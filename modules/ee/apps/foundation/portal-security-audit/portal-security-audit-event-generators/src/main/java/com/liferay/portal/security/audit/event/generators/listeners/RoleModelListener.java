@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.audit.listeners;
+package com.liferay.portal.security.audit.event.generators.listeners;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
