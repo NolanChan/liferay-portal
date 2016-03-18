@@ -100,7 +100,7 @@ public class LoginFailure implements AuthFailure {
 			User user = _userLocalService.getUserById(companyId, userId);
 
 			AuditMessage auditMessage = buildAuditMessage(
-				user, headerMap, "Failed to authenticate by user id");
+				user, headerMap, "Failed to authenticate by user ID");
 
 			_auditRouter.route(auditMessage);
 		}
@@ -119,15 +119,17 @@ public class LoginFailure implements AuthFailure {
 	protected AuditMessage buildAuditMessage(
 		User user, Map<String, String[]> headerMap, String reason) {
 
-		JSONObject additionalInfo = _jsonFactory.createJSONObject();
+		JSONObject additionalInfoJSONObject = _jsonFactory.createJSONObject();
 
-		additionalInfo.put("headers", _jsonFactory.serialize(headerMap));
-		additionalInfo.put("reason", reason);
+		additionalInfoJSONObject.put(
+			"headers", _jsonFactory.serialize(headerMap));
+		additionalInfoJSONObject.put("reason", reason);
 
 		AuditMessage auditMessage = new AuditMessage(
 			EventTypes.LOGIN_FAILURE, user.getCompanyId(), user.getUserId(),
 			user.getFullName(), User.class.getName(),
-			String.valueOf(user.getPrimaryKey()), null, additionalInfo);
+			String.valueOf(user.getPrimaryKey()), null,
+			additionalInfoJSONObject);
 
 		return auditMessage;
 	}
