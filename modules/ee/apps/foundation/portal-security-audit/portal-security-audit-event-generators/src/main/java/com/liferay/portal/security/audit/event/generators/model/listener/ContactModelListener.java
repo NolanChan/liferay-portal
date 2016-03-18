@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.audit.event.generators.listeners;
+package com.liferay.portal.security.audit.event.generators.model.listener;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ContactLocalService;
-import com.liferay.portal.security.audit.event.generators.listeners.util.Attribute;
-import com.liferay.portal.security.audit.event.generators.listeners.util.AttributesBuilder;
-import com.liferay.portal.security.audit.event.generators.listeners.util.AuditMessageBuilder;
+import com.liferay.portal.security.audit.event.generators.model.listener.util.Attribute;
+import com.liferay.portal.security.audit.event.generators.model.listener.util.AttributesBuilder;
+import com.liferay.portal.security.audit.event.generators.model.listener.util.AuditMessageBuilder;
 import com.liferay.portal.security.audit.event.generators.util.EventTypes;
 
 import java.util.List;
