@@ -29,14 +29,14 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.icon=/icon.png",
+		"com.liferay.portlet.icon=/icons/audit.png",
 		"com.liferay.portlet.instanceable=false",
-		"javax.portlet.display-name=Audit Portlet",
+		"javax.portlet.display-name=Audit",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + AuditPortletKeys.AUDIT,
-		"javax.portlet.portlet-info.short-title=Audit Portlet",
-		"javax.portlet.portlet-info.title=Audit Portlet",
+		"javax.portlet.portlet-info.short-title=Audit",
+		"javax.portlet.portlet-info.title=Audit",
 		"javax.portlet.portlet-mode=text/html;view",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
