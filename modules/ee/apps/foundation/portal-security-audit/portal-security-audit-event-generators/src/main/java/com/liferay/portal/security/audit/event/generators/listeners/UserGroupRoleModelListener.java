@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.security.audit.listeners.util.AuditMessageBuilder;
-import com.liferay.portal.security.audit.util.EventTypes;
+import com.liferay.portal.security.audit.event.generators.listeners.util.AuditMessageBuilder;
+import com.liferay.portal.security.audit.event.generators.util.EventTypes;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
