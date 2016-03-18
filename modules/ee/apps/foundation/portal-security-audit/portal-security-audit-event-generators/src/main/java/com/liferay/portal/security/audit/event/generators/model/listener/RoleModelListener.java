@@ -26,10 +26,10 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.security.audit.event.generators.model.listener.util.Attribute;
 import com.liferay.portal.security.audit.event.generators.model.listener.util.AttributesBuilder;
 import com.liferay.portal.security.audit.event.generators.model.listener.util.AuditMessageBuilder;
-import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 
 import java.util.List;
 
