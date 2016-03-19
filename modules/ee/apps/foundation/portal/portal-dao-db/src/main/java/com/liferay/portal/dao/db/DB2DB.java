@@ -240,24 +240,24 @@ public class DB2DB extends BaseDB {
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				if (line.startsWith(ALTER_COLUMN_NAME)) {
-					String[] templates = buildColumnNameTokens(line);
+					String[] template = buildColumnNameTokens(line);
 
 					line = StringUtil.replace(
 						"alter table @table@ add column @new-column@ @type@;\n",
-						REWORD_TEMPLATE, templates);
+						REWORD_TEMPLATE, template);
 					line += StringUtil.replace(
 						"update @table@ set @new-column@ = @old-column@;\n",
-						REWORD_TEMPLATE, templates);
+						REWORD_TEMPLATE, template);
 					line += StringUtil.replace(
 						"alter table @table@ drop column @old-column@",
-						REWORD_TEMPLATE, templates);
+						REWORD_TEMPLATE, template);
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {
-					String[] templates = buildTableNameTokens(line);
+					String[] template = buildTableNameTokens(line);
 
 					line = StringUtil.replace(
 						"alter table @old-table@ to @new-table@;",
-						RENAME_TABLE_TEMPLATE, templates);
+						RENAME_TABLE_TEMPLATE, template);
 				}
 				else if (line.contains(DROP_INDEX)) {
 					String[] tokens = StringUtil.split(line, ' ');
