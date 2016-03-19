@@ -204,9 +204,9 @@ public class DB2DB extends BaseDB {
 		Set<String> tableNames = new HashSet<>();
 
 		for (String template : templates) {
-			String clearTemplate = StringUtil.trim(template);
+			template = StringUtil.trim(template);
 
-			if (clearTemplate.startsWith("alter table")) {
+			if (template.startsWith("alter table")) {
 				tableNames.add(template.split(" ")[2]);
 			}
 		}
@@ -240,24 +240,24 @@ public class DB2DB extends BaseDB {
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				if (line.startsWith(ALTER_COLUMN_NAME)) {
-					String[] template = buildColumnNameTokens(line);
+					String[] templates = buildColumnNameTokens(line);
 
 					line = StringUtil.replace(
 						"alter table @table@ add column @new-column@ @type@;\n",
-						REWORD_TEMPLATE, template);
+						REWORD_TEMPLATE, templates);
 					line += StringUtil.replace(
 						"update @table@ set @new-column@ = @old-column@;\n",
-						REWORD_TEMPLATE, template);
+						REWORD_TEMPLATE, templates);
 					line += StringUtil.replace(
 						"alter table @table@ drop column @old-column@",
-						REWORD_TEMPLATE, template);
+						REWORD_TEMPLATE, templates);
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {
-					String[] template = buildTableNameTokens(line);
+					String[] templates = buildTableNameTokens(line);
 
 					line = StringUtil.replace(
 						"alter table @old-table@ to @new-table@;",
-						RENAME_TABLE_TEMPLATE, template);
+						RENAME_TABLE_TEMPLATE, templates);
 				}
 				else if (line.contains(DROP_INDEX)) {
 					String[] tokens = StringUtil.split(line, ' ');
