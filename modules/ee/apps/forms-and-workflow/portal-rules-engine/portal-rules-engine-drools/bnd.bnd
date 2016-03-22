@@ -1,0 +1,54 @@
+Bundle-ClassPath:\
+	.,\
+	lib/antlr-runtime.jar,\
+	lib/drools-compiler.jar,\
+	lib/drools-core.jar,\
+	lib/ecj.jar,\
+	lib/knowledge-api.jar,\
+	lib/knowledge-internal-api.jar,\
+	lib/mvel2.jar,\
+	lib/protobuf.jar,\
+	lib/xstream.jar
+Bundle-Name: Liferay Portal Rules Engine Drools
+Bundle-SymbolicName: com.liferay.portal.rules.engine.drools
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.bea.*,\
+	\
+	!com.sun.codemodel,\
+	!com.sun.tools.xjc.*,\
+	\
+	!javax.enterprise.*,\
+	\
+	!javax.inject,\
+	\
+	!net.sf.cglib.*,\
+	\
+	!nu.xom,\
+	\
+	!org.antlr.stringtemplate.*,\
+	\
+	!org.codehaus.janino.*,\
+	!org.codehaus.jettison.*,\
+	\
+	!org.joda.time.*,\
+	\
+	!org.kxml2.*,\
+	\
+	!org.xmlpull.*,\
+	\
+	!sun.reflect.*,\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Drools Rules Engine
+-include: ../../../../../../modules/apps/forms-and-workflow/app.bnd
+-liferay-includeresource:\
+	lib/antlr-runtime.jar=antlr-runtime-*.jar,\
+	lib/drools-compiler.jar=drools-compiler-*.jar,\
+	lib/drools-core.jar=drools-core-*.jar,\
+	lib/ecj.jar=ecj-*.jar,\
+	lib/knowledge-api.jar=knowledge-api-*.jar,\
+	lib/knowledge-internal-api.jar=knowledge-internal-api-*.jar,\
+	lib/mvel2.jar=mvel2-*.jar,\
+	lib/protobuf.jar=protobuf-java-*.jar,\
+	lib/xstream.jar=xstream-*.jar
