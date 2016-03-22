@@ -37,7 +37,7 @@ String redirect = (String)row.getParameter("redirect");
 	</liferay-portlet:renderURL>
 
 	<%
-	String taglibOnClick = "javascript:" + renderResponse.getNamespace() + "editStructure('"+ editURL +"');";
+	String taglibOnClick = "javascript:" + renderResponse.getNamespace() + "editStructure('" + editURL + "');";
 	%>
 
 	<liferay-ui:icon
