@@ -1,4 +1,4 @@
-package com.liferay.portal.bi.rules.drools;
+package com.liferay.portal.rules.engine.drools.test;
 
 dialect "mvel"
 
