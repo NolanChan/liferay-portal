@@ -21,9 +21,11 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
+import com.liferay.dynamic.data.mapping.util.DDMNavigationHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 
@@ -39,6 +41,25 @@ import org.osgi.service.component.annotations.Component;
 	service = DDMDisplay.class
 )
 public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
+
+	public String getEditTemplateBackURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classNameId,
+			long classPK, long resourceClassNameId, String portletResource)
+		throws Exception {
+
+		DDMNavigationHelper ddmNavigationHelper = getDDMNavigationHelper();
+
+		if (ddmNavigationHelper.isNavigationStartsOnSelectTemplate(
+				liferayPortletRequest)) {
+
+			return ParamUtil.getString(liferayPortletRequest, "redirect");
+		}
+
+		return super.getEditTemplateBackURL(
+			liferayPortletRequest, liferayPortletResponse, classNameId, classPK,
+			resourceClassNameId, portletResource);
+	}
 
 	@Override
 	public String getEditTemplateTitle(
