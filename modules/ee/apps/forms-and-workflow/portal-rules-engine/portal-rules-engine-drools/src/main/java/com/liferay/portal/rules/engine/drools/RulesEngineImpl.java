@@ -15,6 +15,7 @@
 package com.liferay.portal.rules.engine.drools;
 
 import com.liferay.portal.kernel.resource.ResourceRetriever;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.rules.engine.Fact;
 import com.liferay.portal.rules.engine.Query;
@@ -48,11 +49,30 @@ import org.drools.runtime.StatelessKnowledgeSession;
 import org.drools.runtime.rule.QueryResults;
 import org.drools.runtime.rule.QueryResultsRow;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+
 /**
  * @author Michael C. Han
  * @author Vihang Pathak
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = {
+		"proxy.bean=false", "rules.engine.default.language=DRL",
+		"rules.engine.language.mapping.DROOLS_BRL=BRL",
+		"rules.engine.language.mapping.DROOLS_CHANGE_SET=CHANGE_SET",
+		"rules.engine.language.mapping.DROOLS_DECISION_TABLE=DTABLE",
+		"rules.engine.language.mapping.DROOLS_DOMAIN_SPECIFIC=DSL",
+		"rules.engine.language.mapping.DROOLS_DOMAIN_SPECIFIC_RULE=DSLR",
+		"rules.engine.language.mapping.DROOLS_PKG=PKG",
+		"rules.engine.language.mapping.DROOLS_RULE_FLOW=DRF",
+		"rules.engine.language.mapping.DROOLS_RULE_LANGUAGE=DRL",
+		"rules.engine.language.mapping.DROOLS_XML_LANGUAGE=XDRL"
+	}
+)
 public class RulesEngineImpl implements RulesEngine {
 
 	public void add(
@@ -150,6 +170,18 @@ public class RulesEngineImpl implements RulesEngine {
 		add(domainName, rulesResourceRetriever);
 	}
 
+	@Activate
+	protected void activate(Map<String, String> properties) {
+		String defaultRulesLanguage = properties.get(
+			"rules.engine.default.language");
+
+		setDefaultRulesLanguage(defaultRulesLanguage);
+
+		Map<String, String> rulesLanguageMap = getRulesLanguageMap(properties);
+
+		setRulesLanguageMapping(rulesLanguageMap);
+	}
+
 	protected ResourceType convertRulesLanguage(String rulesLanguage) {
 		if (Validator.isNull(rulesLanguage)) {
 			return _defaultResourceType;
@@ -213,6 +245,13 @@ public class RulesEngineImpl implements RulesEngine {
 		}
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_defaultResourceType = null;
+
+		_resourceTypeMap = null;
+	}
+
 	protected void execute(List<Fact<?>> facts, KnowledgeBase knowledgeBase) {
 		execute(facts, knowledgeBase, null);
 	}
@@ -265,6 +304,25 @@ public class RulesEngineImpl implements RulesEngine {
 		return processQueryResults(query, identifiers, executionResults);
 	}
 
+	protected Map<String, String> getRulesLanguageMap(
+		Map<String, String> properties) {
+
+		Map<String, String> rulesLanguageMap = new HashMap<>();
+
+		for (String key : properties.keySet()) {
+			if (!key.startsWith("rules.engine.language.mapping")) {
+				continue;
+			}
+
+			String language = StringUtil.extractLast(
+				key, "rules.engine.language.mapping.");
+
+			rulesLanguageMap.put(language, properties.get(key));
+		}
+
+		return rulesLanguageMap;
+	}
+
 	protected Map<String, ?> processQueryResults(
 		Query query, List<String> identifiers,
 		ExecutionResults executionResults) {
@@ -308,7 +366,7 @@ public class RulesEngineImpl implements RulesEngine {
 	private ResourceType _defaultResourceType;
 	private final Map<String, KnowledgeBase> _knowledgeBaseMap =
 		new ConcurrentHashMap<>();
-	private final Map<RulesLanguage, ResourceType> _resourceTypeMap =
+	private Map<RulesLanguage, ResourceType> _resourceTypeMap =
 		new ConcurrentHashMap<>();
 
 }
