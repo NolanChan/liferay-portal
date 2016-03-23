@@ -25,13 +25,8 @@ import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -55,7 +50,6 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -215,32 +209,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			}
 
 			throw new SystemException(t);
-		}
-	}
-
-	public void deleteDDMStructure(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long ddmStructureId = ParamUtil.getLong(
-			actionRequest, "ddmStructureId");
-
-		try {
-			_ddmStructureService.deleteStructure(ddmStructureId);
-		}
-		catch (Exception e) {
-			if (isSessionErrorException(e)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-
-				SessionErrors.add(actionRequest, e.getClass(), e);
-
-				sendRedirect(actionRequest, actionResponse);
-			}
-			else {
-				throw e;
-			}
 		}
 	}
 
@@ -512,63 +480,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			workflowDefinition);
 	}
 
-	public void updateStructure(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		try {
-			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-			long classPK = ParamUtil.getLong(actionRequest, "classPK");
-
-			long groupId = ParamUtil.getLong(actionRequest, "groupId");
-			long scopeClassNameId = ParamUtil.getLong(
-				actionRequest, "scopeClassNameId");
-			long parentStructureId = ParamUtil.getLong(
-				actionRequest, "parentStructureId",
-				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
-			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-				actionRequest, "name");
-			Map<Locale, String> descriptionMap =
-				LocalizationUtil.getLocalizationMap(
-					actionRequest, "description");
-			DDMForm ddmForm = getDDMForm(actionRequest);
-			DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(
-				ddmForm);
-			String storageType = ParamUtil.getString(
-				actionRequest, "storageType");
-
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				DDMStructure.class.getName(), actionRequest);
-
-			if (cmd.equals(Constants.ADD)) {
-				DDMStructure ddmStructure = _ddmStructureService.addStructure(
-					groupId, parentStructureId, scopeClassNameId, null, nameMap,
-					descriptionMap, ddmForm, ddmFormLayout, storageType,
-					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
-
-				saveInPortletSession(actionRequest, ddmStructure);
-			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				_ddmStructureService.updateStructure(
-					classPK, parentStructureId, nameMap, descriptionMap,
-					ddmForm, ddmFormLayout, serviceContext);
-			}
-		}
-		catch (Exception e) {
-			if (isSessionErrorException(e)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-
-				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
 	protected void checkKaleoProcessPermission(
 			ServiceContext serviceContext, String actionId)
 		throws Exception {
@@ -700,15 +611,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				KaleoFormsWebKeys.WORKFLOW_TASK, workflowTask);
 		}
-	}
-
-	protected void saveInPortletSession(
-		ActionRequest actionRequest, DDMStructure ddmStructure) {
-
-		PortletSession portletSession = actionRequest.getPortletSession();
-
-		portletSession.setAttribute(
-			"ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
 	}
 
 	protected void saveInPortletSession(
@@ -853,13 +755,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		_ddmStructureService = ddmStructureService;
-	}
-
 	protected void setDisplayContext(RenderRequest renderRequest) {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			renderRequest);
@@ -933,7 +828,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	private DDLRecordService _ddlRecordService;
 	private DDMDisplayRegistry _ddmDisplayRegistry;
 	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private DDMStructureService _ddmStructureService;
 	private KaleoDraftDefinitionService _kaleoDraftDefinitionService;
 	private KaleoProcessService _kaleoProcessService;
 	private WorkflowDefinitionLinkLocalService
