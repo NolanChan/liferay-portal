@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.bi.rules.drools;
+package com.liferay.portal.rules.engine.drools;
 
-import com.liferay.portal.kernel.bi.rules.Fact;
-import com.liferay.portal.kernel.bi.rules.Query;
-import com.liferay.portal.kernel.bi.rules.QueryType;
-import com.liferay.portal.kernel.bi.rules.RulesEngine;
-import com.liferay.portal.kernel.bi.rules.RulesEngineException;
-import com.liferay.portal.kernel.bi.rules.RulesLanguage;
-import com.liferay.portal.kernel.bi.rules.RulesResourceRetriever;
 import com.liferay.portal.kernel.resource.ResourceRetriever;
-import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.rules.engine.Fact;
+import com.liferay.portal.rules.engine.Query;
+import com.liferay.portal.rules.engine.QueryType;
+import com.liferay.portal.rules.engine.RulesEngine;
+import com.liferay.portal.rules.engine.RulesEngineException;
+import com.liferay.portal.rules.engine.RulesLanguage;
+import com.liferay.portal.rules.engine.RulesResourceRetriever;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,15 +56,13 @@ import org.drools.runtime.rule.QueryResultsRow;
 public class RulesEngineImpl implements RulesEngine {
 
 	public void add(
-			String domainName, RulesResourceRetriever rulesResourceRetriever,
-			ClassLoader... classloaders)
+			String domainName, RulesResourceRetriever rulesResourceRetriever)
 		throws RulesEngineException {
 
 		KnowledgeBase knowledgeBase = _knowledgeBaseMap.get(domainName);
 
 		if (knowledgeBase == null) {
-			knowledgeBase = createKnowledgeBase(
-				rulesResourceRetriever, classloaders);
+			knowledgeBase = createKnowledgeBase(rulesResourceRetriever);
 
 			_knowledgeBaseMap.put(domainName, knowledgeBase);
 		}
@@ -77,29 +74,27 @@ public class RulesEngineImpl implements RulesEngine {
 	}
 
 	public void execute(
-			RulesResourceRetriever rulesResourceRetriever, List<Fact<?>> facts,
-			ClassLoader... classloaders)
+			RulesResourceRetriever rulesResourceRetriever, List<Fact<?>> facts)
 		throws RulesEngineException {
 
 		KnowledgeBase knowledgeBase = createKnowledgeBase(
-			rulesResourceRetriever, classloaders);
+			rulesResourceRetriever);
 
 		execute(facts, knowledgeBase);
 	}
 
 	public Map<String, ?> execute(
 			RulesResourceRetriever rulesResourceRetriever, List<Fact<?>> facts,
-			Query query, ClassLoader... classloaders)
+			Query query)
 		throws RulesEngineException {
 
 		KnowledgeBase knowledgeBase = createKnowledgeBase(
-			rulesResourceRetriever, classloaders);
+			rulesResourceRetriever);
 
 		return execute(facts, knowledgeBase, query);
 	}
 
-	public void execute(
-			String domainName, List<Fact<?>> facts, ClassLoader... classloaders)
+	public void execute(String domainName, List<Fact<?>> facts)
 		throws RulesEngineException {
 
 		KnowledgeBase knowledgeBase = _knowledgeBaseMap.get(domainName);
@@ -113,8 +108,7 @@ public class RulesEngineImpl implements RulesEngine {
 	}
 
 	public Map<String, ?> execute(
-			String domainName, List<Fact<?>> facts, Query query,
-			ClassLoader... classloaders)
+			String domainName, List<Fact<?>> facts, Query query)
 		throws RulesEngineException {
 
 		KnowledgeBase knowledgeBase = _knowledgeBaseMap.get(domainName);
@@ -148,13 +142,12 @@ public class RulesEngineImpl implements RulesEngine {
 	}
 
 	public void update(
-			String domainName, RulesResourceRetriever rulesResourceRetriever,
-			ClassLoader... classloaders)
+			String domainName, RulesResourceRetriever rulesResourceRetriever)
 		throws RulesEngineException {
 
 		remove(domainName);
 
-		add(domainName, rulesResourceRetriever, classloaders);
+		add(domainName, rulesResourceRetriever);
 	}
 
 	protected ResourceType convertRulesLanguage(String rulesLanguage) {
@@ -178,15 +171,11 @@ public class RulesEngineImpl implements RulesEngine {
 		throws RulesEngineException {
 
 		try {
-			ClassLoader classLoader = resolveClassLoaders(classloaders);
-
 			KnowledgeBaseConfiguration knowledgeBaseConfiguration =
-				KnowledgeBaseFactory.newKnowledgeBaseConfiguration(
-					null, classLoader);
+				KnowledgeBaseFactory.newKnowledgeBaseConfiguration();
 
 			KnowledgeBuilderConfiguration knowledgeBuilderConfiguration =
-				KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration(
-					null, classLoader);
+				KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration();
 
 			KnowledgeBase knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase(
 				knowledgeBaseConfiguration);
@@ -247,9 +236,9 @@ public class RulesEngineImpl implements RulesEngine {
 		StatelessKnowledgeSession statelessKnowledgeSession =
 			knowledgeBase.newStatelessKnowledgeSession();
 
-		List<Command<?>> commands = new ArrayList<Command<?>>();
+		List<Command<?>> commands = new ArrayList<>();
 
-		List<String> identifiers = new ArrayList<String>(facts.size());
+		List<String> identifiers = new ArrayList<>(facts.size());
 
 		for (Fact<?> fact : facts) {
 			String identifier = fact.getIdentifier();
@@ -284,7 +273,7 @@ public class RulesEngineImpl implements RulesEngine {
 			return Collections.emptyMap();
 		}
 
-		Map<String, Object> returnValues = new HashMap<String, Object>();
+		Map<String, Object> returnValues = new HashMap<>();
 
 		QueryType queryType = query.getQueryType();
 
@@ -316,22 +305,10 @@ public class RulesEngineImpl implements RulesEngine {
 		return returnValues;
 	}
 
-	protected ClassLoader resolveClassLoaders(ClassLoader... classloaders) {
-		ClassLoader classLoader = AggregateClassLoader.getAggregateClassLoader(
-			classloaders);
-
-		if (classLoader != null) {
-			classLoader = AggregateClassLoader.getAggregateClassLoader(
-				new ClassLoader[] {getClass().getClassLoader(), classLoader});
-		}
-
-		return classLoader;
-	}
-
 	private ResourceType _defaultResourceType;
-	private Map<String, KnowledgeBase> _knowledgeBaseMap =
-		new ConcurrentHashMap<String, KnowledgeBase>();
-	private Map<RulesLanguage, ResourceType> _resourceTypeMap =
-		new ConcurrentHashMap<RulesLanguage, ResourceType>();
+	private final Map<String, KnowledgeBase> _knowledgeBaseMap =
+		new ConcurrentHashMap<>();
+	private final Map<RulesLanguage, ResourceType> _resourceTypeMap =
+		new ConcurrentHashMap<>();
 
 }
