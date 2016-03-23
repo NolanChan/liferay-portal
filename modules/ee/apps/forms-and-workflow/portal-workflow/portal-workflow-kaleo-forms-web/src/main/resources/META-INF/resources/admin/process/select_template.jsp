@@ -125,7 +125,6 @@ String mode = ParamUtil.getString(request, "mode");
 					basePortletURL: '<%= PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 					classNameId: <%= PortalUtil.getClassNameId(DDMStructure.class) %>,
 					classPK: <%= ddmStructureId %>,
-					resourceClassNameId: <%= scopeClassNameId %>,
 					dialog: {
 						destroyOnHide: true,
 						on: {
@@ -137,8 +136,8 @@ String mode = ParamUtil.getString(request, "mode");
 					id: 'ddmDialog',
 					mode: '<%= HtmlUtil.escapeJS(mode) %>',
 					mvcPath: '/select_template.jsp',
+					navigationStartsOn: '<%= DDMNavigationHelper.SELECT_TEMPLATE %>',
 					portletResourceNamespace: '<%= renderResponse.getNamespace() %>',
-					redirect: '<portlet:renderURL><portlet:param name="mvcPath" value="/admin/process/update_template_redirect.jsp" /></portlet:renderURL>',
 					refererPortletName: '<%= portletDisplay.getId() %>',
 					showBackURL: false,
 					showHeader: false,
