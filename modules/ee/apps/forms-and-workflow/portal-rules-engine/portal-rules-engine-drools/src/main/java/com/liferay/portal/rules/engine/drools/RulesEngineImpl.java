@@ -49,6 +49,8 @@ import org.drools.runtime.StatelessKnowledgeSession;
 import org.drools.runtime.rule.QueryResults;
 import org.drools.runtime.rule.QueryResultsRow;
 
+import org.mvel2.MVELRuntime;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -250,6 +252,8 @@ public class RulesEngineImpl implements RulesEngine {
 		_defaultResourceType = null;
 
 		_resourceTypeMap = null;
+
+		MVELRuntime.resetDebugger();
 	}
 
 	protected void execute(List<Fact<?>> facts, KnowledgeBase knowledgeBase) {
