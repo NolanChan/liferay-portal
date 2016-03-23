@@ -58,10 +58,10 @@ String redirect = (String)row.getParameter("redirect");
 		url="javascript:;"
 	/>
 
-	<portlet:actionURL name="deleteDDMStructure" var="deleteDDMStructureURL">
+	<liferay-portlet:actionURL name="deleteStructure" portletName="<%= DDMPortletKeys.DYNAMIC_DATA_MAPPING %>" var="deleteDDMStructureURL">
 		<portlet:param name="redirect" value="<%= redirect %>" />
-		<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
-	</portlet:actionURL>
+		<portlet:param name="deleteStructureIds" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
+	</liferay-portlet:actionURL>
 
 	<liferay-ui:icon-delete url="<%= deleteDDMStructureURL %>" />
 </liferay-ui:icon-menu>
