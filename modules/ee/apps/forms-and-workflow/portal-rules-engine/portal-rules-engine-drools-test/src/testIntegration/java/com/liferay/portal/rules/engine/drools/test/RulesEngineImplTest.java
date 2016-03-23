@@ -14,12 +14,15 @@
 
 package com.liferay.portal.rules.engine.drools.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.resource.StringResourceRetriever;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.rules.engine.Fact;
 import com.liferay.portal.rules.engine.Query;
 import com.liferay.portal.rules.engine.RulesEngine;
 import com.liferay.portal.rules.engine.RulesResourceRetriever;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -27,19 +30,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public class RulesEngineImplTest extends TestCase {
+@RunWith(Arquillian.class)
+public class RulesEngineImplTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -55,7 +65,7 @@ public class RulesEngineImplTest extends TestCase {
 	public void testAdd() throws Exception {
 		_rulesEngine.add("testDomainName", _rulesResourceRetriever);
 
-		assertTrue(_rulesEngine.containsRuleDomain("testDomainName"));
+		Assert.assertTrue(_rulesEngine.containsRuleDomain("testDomainName"));
 	}
 
 	@Test
@@ -72,7 +82,7 @@ public class RulesEngineImplTest extends TestCase {
 
 		_rulesEngine.execute("testDomainName", facts);
 
-		assertEquals(30, userProfile.getAge());
+		Assert.assertEquals(30, userProfile.getAge());
 	}
 
 	@Test
@@ -89,7 +99,7 @@ public class RulesEngineImplTest extends TestCase {
 
 		_rulesEngine.execute("testDomainName", facts);
 
-		assertEquals(50, userProfile.getAge());
+		Assert.assertEquals(50, userProfile.getAge());
 	}
 
 	@Test
@@ -107,11 +117,11 @@ public class RulesEngineImplTest extends TestCase {
 		Map<String, ?> results = _rulesEngine.execute(
 			_rulesResourceRetriever, facts, Query.createStandardQuery());
 
-		assertEquals(1, results.size());
+		Assert.assertEquals(1, results.size());
 
 		userProfile = (UserProfile)results.get("userProfile");
 
-		assertEquals(30, userProfile.getAge());
+		Assert.assertEquals(30, userProfile.getAge());
 	}
 
 	@Test
@@ -129,11 +139,11 @@ public class RulesEngineImplTest extends TestCase {
 		Map<String, ?> results = _rulesEngine.execute(
 			_rulesResourceRetriever, facts, Query.createStandardQuery());
 
-		assertEquals(1, results.size());
+		Assert.assertEquals(1, results.size());
 
 		userProfile = (UserProfile)results.get("userProfile");
 
-		assertEquals(50, userProfile.getAge());
+		Assert.assertEquals(50, userProfile.getAge());
 	}
 
 	@Test
@@ -148,7 +158,7 @@ public class RulesEngineImplTest extends TestCase {
 
 		_rulesEngine.execute(_rulesResourceRetriever, facts);
 
-		assertEquals(30, userProfile.getAge());
+		Assert.assertEquals(30, userProfile.getAge());
 	}
 
 	@Test
@@ -163,7 +173,7 @@ public class RulesEngineImplTest extends TestCase {
 
 		_rulesEngine.execute(_rulesResourceRetriever, facts);
 
-		assertEquals(50, userProfile.getAge());
+		Assert.assertEquals(50, userProfile.getAge());
 	}
 
 	protected String read(String fileName) throws Exception {
@@ -171,7 +181,7 @@ public class RulesEngineImplTest extends TestCase {
 
 		return StringUtil.read(
 			clazz.getClassLoader(),
-			"com/liferay/portal/rules/engine/drools/test/" + fileName);
+			"com/liferay/portal/rules/engine/drools/dependencies/" + fileName);
 	}
 
 	private RulesEngine _rulesEngine;
