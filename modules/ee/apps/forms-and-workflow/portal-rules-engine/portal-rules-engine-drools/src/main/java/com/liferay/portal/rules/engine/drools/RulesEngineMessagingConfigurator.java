@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.rules.engine.RulesEngine;
+import com.liferay.portal.rules.engine.RulesEngineConstants;
 
 import java.util.Dictionary;
 
@@ -44,7 +44,7 @@ public class RulesEngineMessagingConfigurator {
 
 		registerRulesEngineDestination();
 
-		wireRulesEngineMessageListener();
+		registerRulesEngineMessageListener();
 	}
 
 	@Deactivate
@@ -68,27 +68,23 @@ public class RulesEngineMessagingConfigurator {
 			Destination.class, destination, properties);
 	}
 
-	protected MessageListener registerProxyMessageListener(
-		Object manager, String destinationName) {
-
-		ProxyMessageListener proxyMessageListener = new ProxyMessageListener();
-
-		proxyMessageListener.setManager(manager);
-		proxyMessageListener.setMessageBus(_messageBus);
-
-		_messageBus.registerMessageListener(
-			destinationName, proxyMessageListener);
-
-		return proxyMessageListener;
-	}
-
 	protected void registerRulesEngineDestination() {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
-				"liferay/rules_engine");
+				RulesEngineConstants.DESTINATION_NAME);
 
 		registerDestination(destinationConfiguration);
+	}
+
+	protected void registerRulesEngineMessageListener() {
+		ProxyMessageListener proxyMessageListener = new ProxyMessageListener();
+
+		proxyMessageListener.setManager(_rulesEngine);
+		proxyMessageListener.setMessageBus(_messageBus);
+
+		_messageBus.registerMessageListener(
+			RulesEngineConstants.DESTINATION_NAME, proxyMessageListener);
 	}
 
 	protected void unregisterRulesEngineDestination() {
@@ -102,10 +98,6 @@ public class RulesEngineMessagingConfigurator {
 		_rulesEngineServiceRegistration.unregister();
 
 		destination.destroy();
-	}
-
-	protected void wireRulesEngineMessageListener() {
-		registerProxyMessageListener(_rulesEngine, "liferay/rules_engine");
 	}
 
 	private BundleContext _bundleContext;
