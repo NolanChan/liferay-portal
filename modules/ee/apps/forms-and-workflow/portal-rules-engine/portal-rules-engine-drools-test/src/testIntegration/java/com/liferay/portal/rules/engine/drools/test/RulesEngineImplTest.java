@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.bi.rules.drools;
+package com.liferay.portal.rules.engine.drools.test;
 
-import com.liferay.portal.kernel.bi.rules.Fact;
-import com.liferay.portal.kernel.bi.rules.Query;
-import com.liferay.portal.kernel.bi.rules.RulesResourceRetriever;
 import com.liferay.portal.kernel.resource.StringResourceRetriever;
-
-import java.io.File;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.rules.engine.Fact;
+import com.liferay.portal.rules.engine.Query;
+import com.liferay.portal.rules.engine.RulesEngine;
+import com.liferay.portal.rules.engine.RulesResourceRetriever;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import junit.framework.TestCase;
-
-import org.apache.commons.io.FileUtils;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,15 +41,11 @@ public class RulesEngineImplTest extends TestCase {
 	@Before
 	@Override
 	public void setUp() throws Exception {
-		_rulesEngineImpl = new RulesEngineImpl();
+		Registry registry = RegistryUtil.getRegistry();
 
-		_rulesEngineImpl.setDefaultRulesLanguage("DRL");
+		_rulesEngine = registry.getService(RulesEngine.class);
 
-		File rulesFile = new File(
-			"webs/drools-web/test/integration/com/liferay/portal/bi/rules/" +
-				"drools/test.drl");
-
-		String rules = FileUtils.readFileToString(rulesFile);
+		String rules = read("test.drl");
 
 		_rulesResourceRetriever = new RulesResourceRetriever(
 			new StringResourceRetriever(rules));
@@ -57,9 +53,9 @@ public class RulesEngineImplTest extends TestCase {
 
 	@Test
 	public void testAdd() throws Exception {
-		_rulesEngineImpl.add("testDomainName", _rulesResourceRetriever);
+		_rulesEngine.add("testDomainName", _rulesResourceRetriever);
 
-		assertTrue(_rulesEngineImpl.containsRuleDomain("testDomainName"));
+		assertTrue(_rulesEngine.containsRuleDomain("testDomainName"));
 	}
 
 	@Test
@@ -68,30 +64,30 @@ public class RulesEngineImplTest extends TestCase {
 
 		userProfile.setAge(18);
 
-		List<Fact<?>> facts = new ArrayList<Fact<?>>();
+		List<Fact<?>> facts = new ArrayList<>();
 
 		facts.add(new Fact<UserProfile>("userProfile", userProfile));
 
-		_rulesEngineImpl.add("testDomainName", _rulesResourceRetriever);
+		_rulesEngine.add("testDomainName", _rulesResourceRetriever);
 
-		_rulesEngineImpl.execute("testDomainName", facts);
+		_rulesEngine.execute("testDomainName", facts);
 
 		assertEquals(30, userProfile.getAge());
 	}
 
 	@Test
 	public void testExecuteWithPrecompiledRuleAge50() throws Exception {
-		_rulesEngineImpl.add("testDomainName", _rulesResourceRetriever);
+		_rulesEngine.add("testDomainName", _rulesResourceRetriever);
 
 		UserProfile userProfile = new UserProfile();
 
 		userProfile.setAge(50);
 
-		List<Fact<?>> facts = new ArrayList<Fact<?>>();
+		List<Fact<?>> facts = new ArrayList<>();
 
 		facts.add(new Fact<UserProfile>("userProfile", userProfile));
 
-		_rulesEngineImpl.execute("testDomainName", facts);
+		_rulesEngine.execute("testDomainName", facts);
 
 		assertEquals(50, userProfile.getAge());
 	}
@@ -104,11 +100,11 @@ public class RulesEngineImplTest extends TestCase {
 
 		userProfile.setAge(18);
 
-		List<Fact<?>> facts = new ArrayList<Fact<?>>();
+		List<Fact<?>> facts = new ArrayList<>();
 
 		facts.add(new Fact<UserProfile>("userProfile", userProfile));
 
-		Map<String, ?> results = _rulesEngineImpl.execute(
+		Map<String, ?> results = _rulesEngine.execute(
 			_rulesResourceRetriever, facts, Query.createStandardQuery());
 
 		assertEquals(1, results.size());
@@ -126,11 +122,11 @@ public class RulesEngineImplTest extends TestCase {
 
 		userProfile.setAge(50);
 
-		List<Fact<?>> facts = new ArrayList<Fact<?>>();
+		List<Fact<?>> facts = new ArrayList<>();
 
 		facts.add(new Fact<UserProfile>("userProfile", userProfile));
 
-		Map<String, ?> results = _rulesEngineImpl.execute(
+		Map<String, ?> results = _rulesEngine.execute(
 			_rulesResourceRetriever, facts, Query.createStandardQuery());
 
 		assertEquals(1, results.size());
@@ -146,11 +142,11 @@ public class RulesEngineImplTest extends TestCase {
 
 		userProfile.setAge(18);
 
-		List<Fact<?>> facts = new ArrayList<Fact<?>>();
+		List<Fact<?>> facts = new ArrayList<>();
 
 		facts.add(new Fact<UserProfile>("userProfile", userProfile));
 
-		_rulesEngineImpl.execute(_rulesResourceRetriever, facts);
+		_rulesEngine.execute(_rulesResourceRetriever, facts);
 
 		assertEquals(30, userProfile.getAge());
 	}
@@ -161,16 +157,24 @@ public class RulesEngineImplTest extends TestCase {
 
 		userProfile.setAge(50);
 
-		List<Fact<?>> facts = new ArrayList<Fact<?>>();
+		List<Fact<?>> facts = new ArrayList<>();
 
 		facts.add(new Fact<UserProfile>("userProfile", userProfile));
 
-		_rulesEngineImpl.execute(_rulesResourceRetriever, facts);
+		_rulesEngine.execute(_rulesResourceRetriever, facts);
 
 		assertEquals(50, userProfile.getAge());
 	}
 
-	private RulesEngineImpl _rulesEngineImpl;
+	protected String read(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		return StringUtil.read(
+			clazz.getClassLoader(),
+			"com/liferay/portal/rules/engine/drools/test/" + fileName);
+	}
+
+	private RulesEngine _rulesEngine;
 	private RulesResourceRetriever _rulesResourceRetriever;
 
 }

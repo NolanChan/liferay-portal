@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.bi.rules.drools;
+package com.liferay.portal.rules.engine.drools.test;
 
 import com.liferay.portal.kernel.util.StringBundler;
 
