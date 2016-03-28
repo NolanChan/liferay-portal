@@ -14,19 +14,26 @@
 
 package com.liferay.portal.rules.engine.drools;
 
+import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
 import com.liferay.portal.kernel.resource.ResourceRetriever;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.rules.engine.Fact;
 import com.liferay.portal.rules.engine.Query;
 import com.liferay.portal.rules.engine.QueryType;
 import com.liferay.portal.rules.engine.RulesEngine;
+import com.liferay.portal.rules.engine.RulesEngineConstants;
 import com.liferay.portal.rules.engine.RulesEngineException;
 import com.liferay.portal.rules.engine.RulesLanguage;
 import com.liferay.portal.rules.engine.RulesResourceRetriever;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,9 +58,13 @@ import org.drools.runtime.rule.QueryResultsRow;
 
 import org.mvel2.MVELRuntime;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -73,7 +84,8 @@ import org.osgi.service.component.annotations.Deactivate;
 		"rules.engine.language.mapping.DROOLS_RULE_FLOW=DRF",
 		"rules.engine.language.mapping.DROOLS_RULE_LANGUAGE=DRL",
 		"rules.engine.language.mapping.DROOLS_XML_LANGUAGE=XDRL"
-	}
+	},
+	service = RulesEngineImpl.class
 )
 public class RulesEngineImpl implements RulesEngine {
 
@@ -173,15 +185,35 @@ public class RulesEngineImpl implements RulesEngine {
 	}
 
 	@Activate
-	protected void activate(Map<String, String> properties) {
-		String defaultRulesLanguage = properties.get(
-			"rules.engine.default.language");
+	protected void activate(ComponentContext componentContext) {
+		Dictionary<String, Object> properties =
+			componentContext.getProperties();
+
+		String defaultRulesLanguage = GetterUtil.getString(
+			properties.get("rules.engine.default.language"));
 
 		setDefaultRulesLanguage(defaultRulesLanguage);
 
 		Map<String, String> rulesLanguageMap = getRulesLanguageMap(properties);
 
 		setRulesLanguageMapping(rulesLanguageMap);
+
+		ProxyMessageListener proxyMessageListener = new ProxyMessageListener();
+
+		proxyMessageListener.setManager(this);
+		proxyMessageListener.setMessageBus(_messageBus);
+
+		Dictionary<String, Object> proxyMessageListenerProperties =
+			new HashMapDictionary<>();
+
+		properties.put(
+			"destination.name", RulesEngineConstants.DESTINATION_NAME);
+
+		BundleContext bundleContext = componentContext.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			ProxyMessageListener.class, proxyMessageListener,
+			proxyMessageListenerProperties);
 	}
 
 	protected ResourceType convertRulesLanguage(String rulesLanguage) {
@@ -249,6 +281,10 @@ public class RulesEngineImpl implements RulesEngine {
 
 	@Deactivate
 	protected void deactivate() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+
 		_defaultResourceType = null;
 
 		_resourceTypeMap = null;
@@ -309,11 +345,15 @@ public class RulesEngineImpl implements RulesEngine {
 	}
 
 	protected Map<String, String> getRulesLanguageMap(
-		Map<String, String> properties) {
+		Dictionary<String, Object> properties) {
 
 		Map<String, String> rulesLanguageMap = new HashMap<>();
 
-		for (String key : properties.keySet()) {
+		Enumeration<String> keys = properties.keys();
+
+		while (keys.hasMoreElements()) {
+			String key = keys.nextElement();
+
 			if (!key.startsWith("rules.engine.language.mapping")) {
 				continue;
 			}
@@ -321,7 +361,8 @@ public class RulesEngineImpl implements RulesEngine {
 			String language = StringUtil.extractLast(
 				key, "rules.engine.language.mapping.");
 
-			rulesLanguageMap.put(language, properties.get(key));
+			rulesLanguageMap.put(
+				language, GetterUtil.getString(properties.get(key)));
 		}
 
 		return rulesLanguageMap;
@@ -370,7 +411,12 @@ public class RulesEngineImpl implements RulesEngine {
 	private ResourceType _defaultResourceType;
 	private final Map<String, KnowledgeBase> _knowledgeBaseMap =
 		new ConcurrentHashMap<>();
+
+	@Reference
+	private MessageBus _messageBus;
+
 	private Map<RulesLanguage, ResourceType> _resourceTypeMap =
 		new ConcurrentHashMap<>();
+	private ServiceRegistration<ProxyMessageListener> _serviceRegistration;
 
 }
