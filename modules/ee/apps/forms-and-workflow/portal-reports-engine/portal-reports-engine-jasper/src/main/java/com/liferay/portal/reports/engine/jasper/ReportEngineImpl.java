@@ -58,6 +58,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -262,8 +265,12 @@ public class ReportEngineImpl implements ReportEngine {
 	private final List<ServiceRegistration<MessageListener>>
 		_messageListenerServiceRegistrations = new ArrayList<>();
 
-	@Reference
-	private ReportCompiler _reportCompiler;
+	@Reference(
+		cardinality = ReferenceCardinality.MANDATORY,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile ReportCompiler _reportCompiler;
 
 	@Reference
 	private ReportFillManagerRegistry _reportFillManagerRegistry;
