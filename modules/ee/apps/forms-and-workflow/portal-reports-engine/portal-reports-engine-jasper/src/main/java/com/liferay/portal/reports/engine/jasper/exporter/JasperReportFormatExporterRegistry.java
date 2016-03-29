@@ -74,7 +74,7 @@ public class JasperReportFormatExporterRegistry
 			return;
 		}
 
-		_reportFormatExporters.remove(reportFormatString);
+		_reportFormatExporters.remove(reportFormat);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

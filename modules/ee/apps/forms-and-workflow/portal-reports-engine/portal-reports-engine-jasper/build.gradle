@@ -1,4 +1,8 @@
 dependencies {
+	compile group: "net.sf.jasperreports", name: "jasperreports", version: "5.2.0"
+	compile group: "net.sourceforge.jexcelapi", name: "jxl", version: "2.6.10"
+	compile group: "org.codehaus.groovy", name: "groovy-all", version: "2.0.1"
+
 	provided group: "com.keypoint", name: "png-encoder", version: "1.5"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.lowagie", name: "itext", version: "4.2.0"
@@ -6,11 +10,8 @@ dependencies {
 	provided group: "commons-digester", name: "commons-digester", version: "2.1"
 	provided group: "commons-javaflow", name: "commons-javaflow", version: "20060411"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-	provided group: "net.sf.jasperreports", name: "jasperreports", version: "5.2.0"
 	provided group: "net.sf.jasperreports", name: "jasperreports-fonts", version: "5.6.1"
-	provided group: "net.sourceforge.jexcelapi", name: "jxl", version: "2.6.10"
 	provided group: "org.apache.commons", name: "commons-dbcp2", version: "2.0"
-	provided group: "org.codehaus.groovy", name: "groovy-all", version: "2.0.1"
 	provided group: "org.eclipse.jdt", name: "core", version: "3.1.1"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.component", version: "1.3.0"
