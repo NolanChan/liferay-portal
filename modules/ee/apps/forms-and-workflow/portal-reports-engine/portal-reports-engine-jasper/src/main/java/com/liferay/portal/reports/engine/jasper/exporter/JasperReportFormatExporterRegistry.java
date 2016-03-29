@@ -38,6 +38,21 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class JasperReportFormatExporterRegistry
 	extends ReportFormatExporterRegistry {
 
+	@Override
+	public ReportFormatExporter getReportFormatExporter(
+		ReportFormat reportFormat) {
+
+		ReportFormatExporter reportFormatExporter = _reportFormatExporters.get(
+			reportFormat);
+
+		if (reportFormatExporter == null) {
+			throw new IllegalArgumentException(
+				"No report format exporter found for " + reportFormat);
+		}
+
+		return reportFormatExporter;
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
