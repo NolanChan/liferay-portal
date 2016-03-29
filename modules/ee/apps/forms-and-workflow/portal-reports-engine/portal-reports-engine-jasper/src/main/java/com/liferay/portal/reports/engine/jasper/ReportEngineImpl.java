@@ -155,30 +155,27 @@ public class ReportEngineImpl implements ReportEngine {
 
 	@Deactivate
 	protected void deactivate() {
-		if (_destinationServiceRegistrations != null) {
-			for (
-				ServiceRegistration<Destination>
-					destinationServiceRegistration :
-						_destinationServiceRegistrations) {
+		for (ServiceRegistration<Destination> destinationServiceRegistration :
+				_destinationServiceRegistrations) {
 
-				Destination destination = _bundleContext.getService(
-					destinationServiceRegistration.getReference());
+			Destination destination = _bundleContext.getService(
+				destinationServiceRegistration.getReference());
 
-				destinationServiceRegistration.unregister();
+			destinationServiceRegistration.unregister();
 
-				destination.destroy();
-			}
+			destination.destroy();
 		}
 
-		if (_messageListenerServiceRegistrations != null) {
-			for (
-				ServiceRegistration<MessageListener>
-					messageListenerServiceRegistration :
-						_messageListenerServiceRegistrations) {
+		_destinationServiceRegistrations.clear();
 
-				messageListenerServiceRegistration.unregister();
-			}
+		for (ServiceRegistration<MessageListener>
+				messageListenerServiceRegistration :
+					_messageListenerServiceRegistrations) {
+
+			messageListenerServiceRegistration.unregister();
 		}
+
+		_messageListenerServiceRegistrations.clear();
 
 		_bundleContext = null;
 	}
