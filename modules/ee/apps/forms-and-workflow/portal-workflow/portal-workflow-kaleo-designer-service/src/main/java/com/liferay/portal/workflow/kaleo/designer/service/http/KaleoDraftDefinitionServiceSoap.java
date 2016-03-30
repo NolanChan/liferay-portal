@@ -177,6 +177,25 @@ public class KaleoDraftDefinitionServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinitionSoap[] getLatestKaleoDraftDefinitions(
+		long companyId, java.lang.String keywords, int version, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> returnValue =
+				KaleoDraftDefinitionServiceUtil.getLatestKaleoDraftDefinitions(companyId,
+					keywords, version, start, end, orderByComparator);
+
+			return com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinitionSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinitionSoap publishKaleoDraftDefinition(
 		long userId, long groupId, java.lang.String name,
 		java.lang.String[] titleMapLanguageIds,

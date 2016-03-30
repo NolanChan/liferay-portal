@@ -258,6 +258,41 @@ public class KaleoDraftDefinitionServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		HttpPrincipal httpPrincipal, long companyId, java.lang.String keywords,
+		int version, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(KaleoDraftDefinitionServiceUtil.class,
+					"getLatestKaleoDraftDefinitions",
+					_getLatestKaleoDraftDefinitionsParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, keywords, version, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition publishKaleoDraftDefinition(
 		HttpPrincipal httpPrincipal, long userId, long groupId,
 		java.lang.String name,
@@ -268,7 +303,7 @@ public class KaleoDraftDefinitionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KaleoDraftDefinitionServiceUtil.class,
 					"publishKaleoDraftDefinition",
-					_publishKaleoDraftDefinitionParameterTypes6);
+					_publishKaleoDraftDefinitionParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					groupId, name, titleMap, content, serviceContext);
@@ -304,7 +339,7 @@ public class KaleoDraftDefinitionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KaleoDraftDefinitionServiceUtil.class,
 					"updateKaleoDraftDefinition",
-					_updateKaleoDraftDefinitionParameterTypes7);
+					_updateKaleoDraftDefinitionParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					name, titleMap, content, version, serviceContext);
@@ -358,12 +393,17 @@ public class KaleoDraftDefinitionServiceHttp {
 			long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _publishKaleoDraftDefinitionParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getLatestKaleoDraftDefinitionsParameterTypes6 =
+		new Class[] {
+			long.class, java.lang.String.class, int.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _publishKaleoDraftDefinitionParameterTypes7 = new Class[] {
 			long.class, long.class, java.lang.String.class, java.util.Map.class,
 			java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateKaleoDraftDefinitionParameterTypes7 = new Class[] {
+	private static final Class<?>[] _updateKaleoDraftDefinitionParameterTypes8 = new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,
 			java.lang.String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

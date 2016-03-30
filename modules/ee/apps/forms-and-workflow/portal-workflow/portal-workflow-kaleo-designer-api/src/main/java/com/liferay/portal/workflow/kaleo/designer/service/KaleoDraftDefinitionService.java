@@ -82,6 +82,11 @@ public interface KaleoDraftDefinitionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		long companyId, java.lang.String keywords, int version, int start,
+		int end, OrderByComparator orderByComparator) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
 		long companyId, int version, int start, int end,
 		OrderByComparator orderByComparator) throws PortalException;
 

@@ -289,11 +289,27 @@ public class KaleoDraftDefinitionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		long companyId, java.lang.String keywords, int version, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getLatestKaleoDraftDefinitions(companyId, keywords,
+			version, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
 		long companyId, int version, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .getLatestKaleoDraftDefinitions(companyId, version, start,
 			end, orderByComparator);
+	}
+
+	public static int getLatestKaleoDraftDefinitionsCount(long companyId,
+		java.lang.String keywords, int version) {
+		return getService()
+				   .getLatestKaleoDraftDefinitionsCount(companyId, keywords,
+			version);
 	}
 
 	public static int getLatestKaleoDraftDefinitionsCount(long companyId,

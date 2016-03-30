@@ -248,8 +248,17 @@ public interface KaleoDraftDefinitionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		long companyId, java.lang.String keywords, int version, int start,
+		int end, OrderByComparator orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
 		long companyId, int version, int start, int end,
 		OrderByComparator orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLatestKaleoDraftDefinitionsCount(long companyId,
+		java.lang.String keywords, int version);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLatestKaleoDraftDefinitionsCount(long companyId, int version);

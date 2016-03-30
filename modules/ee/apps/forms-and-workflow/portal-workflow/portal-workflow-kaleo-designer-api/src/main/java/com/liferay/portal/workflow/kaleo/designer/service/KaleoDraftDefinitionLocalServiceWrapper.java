@@ -306,10 +306,26 @@ public class KaleoDraftDefinitionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		long companyId, java.lang.String keywords, int version, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _kaleoDraftDefinitionLocalService.getLatestKaleoDraftDefinitions(companyId,
+			keywords, version, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
 		long companyId, int version, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _kaleoDraftDefinitionLocalService.getLatestKaleoDraftDefinitions(companyId,
 			version, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getLatestKaleoDraftDefinitionsCount(long companyId,
+		java.lang.String keywords, int version) {
+		return _kaleoDraftDefinitionLocalService.getLatestKaleoDraftDefinitionsCount(companyId,
+			keywords, version);
 	}
 
 	@Override

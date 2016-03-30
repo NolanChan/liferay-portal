@@ -123,6 +123,19 @@ public class KaleoDraftDefinitionServiceImpl
 			latestKaleoDraftDefinitions, ActionKeys.VIEW);
 	}
 
+	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+			long companyId, String keywords, int version, int start, int end,
+			OrderByComparator orderByComparator)
+		throws PortalException {
+
+		List<KaleoDraftDefinition> latestKaleoDraftDefinitions =
+			kaleoDraftDefinitionLocalService.getLatestKaleoDraftDefinitions(
+				companyId, keywords, version, start, end, orderByComparator);
+
+		return filterKaleoDraftDefinitions(
+			latestKaleoDraftDefinitions, ActionKeys.VIEW);
+	}
+
 	public KaleoDraftDefinition publishKaleoDraftDefinition(
 			long userId, long groupId, String name,
 			Map<Locale, String> titleMap, String content,
