@@ -28,6 +28,8 @@
 
 		<liferay-util:include page="/designer/navigation_bar.jsp" servletContext="<%= application %>" />
 
+		<liferay-util:include page="/designer/management_bar.jsp" servletContext="<%= application %>" />
+
 		<div class="container-fluid-1280 main-content-body">
 
 			<liferay-ui:search-container
