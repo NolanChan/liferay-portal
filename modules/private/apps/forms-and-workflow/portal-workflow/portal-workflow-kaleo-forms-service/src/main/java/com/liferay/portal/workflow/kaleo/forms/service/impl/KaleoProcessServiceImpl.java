@@ -73,15 +73,16 @@ public class KaleoProcessServiceImpl extends KaleoProcessServiceBaseImpl {
 		return kaleoProcessLocalService.getKaleoProcess(kaleoProcessId);
 	}
 
-	public List<KaleoProcess> getKaleoProcesses(
-		long groupId, int start, int end, OrderByComparator orderByComparator) {
+	public List<KaleoProcess> search(
+		long groupId, String keywords, int start, int end,
+		OrderByComparator orderByComparator) {
 
-		return kaleoProcessPersistence.filterFindByGroupId(
-			groupId, start, end, orderByComparator);
+		return kaleoProcessFinder.filterFindByKeywords(
+			groupId, keywords, start, end, orderByComparator);
 	}
 
-	public int getKaleoProcessesCount(long groupId) {
-		return kaleoProcessPersistence.filterCountByGroupId(groupId);
+	public int searchCount(long groupId, String keywords) {
+		return kaleoProcessFinder.filterCountByKeywords(groupId, keywords);
 	}
 
 	public KaleoProcess updateKaleoProcess(
