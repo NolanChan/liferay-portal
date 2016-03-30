@@ -14,17 +14,21 @@
 
 package com.liferay.portal.workflow.kaleo.designer.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionList;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
@@ -178,8 +182,16 @@ public class KaleoDraftDefinitionLocalServiceImpl
 		long companyId, int version, int start, int end,
 		OrderByComparator orderByComparator) {
 
+		return getLatestKaleoDraftDefinitions(
+			companyId, null, version, start, end, orderByComparator);
+	}
+
+	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		long companyId, String keywords, int version, int start, int end,
+		OrderByComparator orderByComparator) {
+
 		List<Object> kaleoDraftDefinitioIds = getKaleoDraftDefinitionIds(
-			companyId, version);
+			companyId, keywords, version);
 
 		if (kaleoDraftDefinitioIds.isEmpty()) {
 			return Collections.emptyList();
@@ -199,8 +211,14 @@ public class KaleoDraftDefinitionLocalServiceImpl
 	public int getLatestKaleoDraftDefinitionsCount(
 		long companyId, int version) {
 
+		return getLatestKaleoDraftDefinitionsCount(companyId, null, version);
+	}
+
+	public int getLatestKaleoDraftDefinitionsCount(
+		long companyId, String keywords, int version) {
+
 		List<Object> kaleoDraftDefinitioIds = getKaleoDraftDefinitionIds(
-			companyId, version);
+			companyId, keywords, version);
 
 		if (kaleoDraftDefinitioIds.isEmpty()) {
 			return 0;
@@ -279,18 +297,44 @@ public class KaleoDraftDefinitionLocalServiceImpl
 	protected List<Object> getKaleoDraftDefinitionIds(
 		long companyId, int version) {
 
+		return getKaleoDraftDefinitionIds(companyId, null, version);
+	}
+
+	protected List<Object> getKaleoDraftDefinitionIds(
+		long companyId, String keywords, int version) {
+
 		List<Object> kaleoDraftDefinitionIds = new ArrayList<>();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			KaleoDraftDefinition.class, getClassLoader());
 
-		dynamicQuery.add(
-			PropertyFactoryUtil.forName("companyId").eq(companyId));
+		Criterion criterion = RestrictionsFactoryUtil.eq(
+			"companyId", companyId);
 
 		if (version >= 0) {
-			dynamicQuery.add(
-				PropertyFactoryUtil.forName("version").eq(version));
+			criterion = RestrictionsFactoryUtil.and(
+				criterion, RestrictionsFactoryUtil.eq("version", version));
 		}
+
+		if (Validator.isNotNull(keywords)) {
+			StringBundler sb = new StringBundler();
+
+			sb.append(StringPool.PERCENT);
+			sb.append(keywords);
+			sb.append(StringPool.PERCENT);
+
+			Criterion keywordsCriterion = RestrictionsFactoryUtil.ilike(
+				"title", sb.toString());
+
+			keywordsCriterion = RestrictionsFactoryUtil.or(
+				keywordsCriterion,
+				RestrictionsFactoryUtil.ilike("name", sb.toString()));
+
+			criterion = RestrictionsFactoryUtil.and(
+				criterion, keywordsCriterion);
+		}
+
+		dynamicQuery.add(criterion);
 
 		ProjectionList projectionList = ProjectionFactoryUtil.projectionList();
 
