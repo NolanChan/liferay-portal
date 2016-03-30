@@ -4,7 +4,7 @@
 <service-builder package-path="com.liferay.portal.workflow.kaleo.forms" auto-namespace-tables="false">
 	<author>Marcellus Tavares</author>
 	<namespace>KaleoForms</namespace>
-	<entity name="KaleoProcess" local-service="true" remote-service="true">
+	<entity name="KaleoProcess" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
