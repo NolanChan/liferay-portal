@@ -23,8 +23,4 @@ public class KaleoFormsPortletKeys {
 		"com_liferay_portal_workflow_kaleo_forms_web_portlet_" +
 			"KaleoFormsAdminPortlet";
 
-	public static final String KALEO_FORMS_DISPLAY =
-		"com_liferay_portal_workflow_kaleo_forms_web_portlet_" +
-			"KaleoFormsDisplayPortlet";
-
 }
