@@ -16,16 +16,14 @@
 
 <%@ include file="/designer/init.jsp" %>
 
+<%
+PortletURL iteratorURL = kaleoDesignerDisplayContext.getBasePortletURL();
+
+iteratorURL.setParameter("mvcPath", "/designer/view.jsp");
+%>
+
 <c:choose>
 	<c:when test="<%= WorkflowEngineManagerUtil.isDeployed() %>">
-		<liferay-portlet:renderURL varImpl="iteratorURL">
-			<portlet:param name="mvcPath" value="/designer/view.jsp" />
-		</liferay-portlet:renderURL>
-
-		<%
-		List<KaleoDraftDefinition> latestKaleoDraftDefinitions = KaleoDraftDefinitionServiceUtil.getLatestKaleoDraftDefinitions(company.getCompanyId(), -1, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-		%>
-
 		<liferay-util:include page="/designer/navigation_bar.jsp" servletContext="<%= application %>" />
 
 		<liferay-util:include page="/designer/management_bar.jsp" servletContext="<%= application %>" />
@@ -35,12 +33,13 @@
 			<liferay-ui:search-container
 				emptyResultsMessage="no-workflow-definitions-are-defined"
 				iteratorURL="<%= iteratorURL %>"
-				total="<%= latestKaleoDraftDefinitions.size() %>"
+				orderByComparator="<%= kaleoDesignerDisplayContext.getKaleoDraftDefinitionOrderByComparator() %>"
+				searchTerms="<%= new DisplayTerms(renderRequest) %>"
 			>
 
-				<liferay-ui:search-container-results
-					 results="<%= ListUtil.subList(latestKaleoDraftDefinitions, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				/>
+				<liferay-ui:search-container-results>
+					<%@ include file="/designer/kaleo_draft_definitions_search_results.jspf" %>
+				</liferay-ui:search-container-results>
 
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition"
