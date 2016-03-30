@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
@@ -56,6 +57,7 @@ page import="com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefini
 page import="com.liferay.portal.workflow.kaleo.designer.service.permission.KaleoDesignerPermission" %><%@
 page import="com.liferay.portal.workflow.kaleo.designer.service.permission.KaleoDraftDefinitionPermission" %><%@
 page import="com.liferay.portal.workflow.kaleo.designer.util.KaleoDesignerUtil" %><%@
+page import="com.liferay.portal.workflow.kaleo.designer.web.portlet.display.context.KaleoDesignerDisplayContext" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.List" %>
@@ -67,3 +69,7 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+KaleoDesignerDisplayContext kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(renderRequest, renderResponse);
+%>

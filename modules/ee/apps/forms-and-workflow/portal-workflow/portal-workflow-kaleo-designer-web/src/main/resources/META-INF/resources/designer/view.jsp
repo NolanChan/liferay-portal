@@ -26,55 +26,58 @@
 		List<KaleoDraftDefinition> latestKaleoDraftDefinitions = KaleoDraftDefinitionServiceUtil.getLatestKaleoDraftDefinitions(company.getCompanyId(), -1, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		%>
 
-		<liferay-ui:search-container
-			emptyResultsMessage="no-workflow-definitions-are-defined"
-			iteratorURL="<%= iteratorURL %>"
-			total="<%= latestKaleoDraftDefinitions.size() %>"
-		>
+		<liferay-util:include page="/designer/navigation_bar.jsp" servletContext="<%= application %>" />
 
-			<liferay-ui:search-container-results
-				results="<%= ListUtil.subList(latestKaleoDraftDefinitions, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
-
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition"
-				escapedModel="<%= true %>"
-				keyProperty="kaleoDraftDefinitionId"
-				modelVar="kaleoDraftDefinition"
 		<div class="container-fluid-1280 main-content-body">
 
+			<liferay-ui:search-container
+				emptyResultsMessage="no-workflow-definitions-are-defined"
+				iteratorURL="<%= iteratorURL %>"
+				total="<%= latestKaleoDraftDefinitions.size() %>"
 			>
-				<liferay-ui:search-container-column-text
-					name="name"
-					value="<%= HtmlUtil.escape(kaleoDraftDefinition.getName()) %>"
+
+				<liferay-ui:search-container-results
+					 results="<%= ListUtil.subList(latestKaleoDraftDefinitions, searchContainer.getStart(), searchContainer.getEnd()) %>"
 				/>
 
-				<liferay-ui:search-container-column-text
-					name="title"
-					value="<%= HtmlUtil.escape(kaleoDraftDefinition.getTitle(themeDisplay.getLanguageId())) %>"
-				/>
+				<liferay-ui:search-container-row
+					className="com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition"
+					escapedModel="<%= true %>"
+					keyProperty="kaleoDraftDefinitionId"
+					modelVar="kaleoDraftDefinition"
+				>
+					<liferay-ui:search-container-column-text
+						name="name"
+						value="<%= HtmlUtil.escape(kaleoDraftDefinition.getName()) %>"
+					/>
+					<liferay-ui:search-container-column-text
 
-				<liferay-ui:search-container-column-text
-					name="version"
-					value="<%= String.valueOf(kaleoDraftDefinition.getVersion()) %>"
-				/>
+						name="title"
+						value="<%= HtmlUtil.escape(kaleoDraftDefinition.getTitle(themeDisplay.getLanguageId())) %>"
+					/>
 
-				<liferay-ui:search-container-column-text
-					name="draft-version"
-					value="<%= String.valueOf(kaleoDraftDefinition.getDraftVersion()) %>"
-				/>
+					<liferay-ui:search-container-column-text
+						name="version"
+						value="<%= String.valueOf(kaleoDraftDefinition.getVersion()) %>"
+					/>
 
-				<liferay-ui:search-container-column-text
-					name="published"
-					value='<%= (kaleoDraftDefinition.getVersion() > 0) ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
-				/>
+					<liferay-ui:search-container-column-text
+						name="draft-version"
+						value="<%= String.valueOf(kaleoDraftDefinition.getDraftVersion()) %>"
+					/>
 
-				<liferay-ui:search-container-column-jsp
-					align="right"
-					cssClass="entry-action"
-					path="/designer/kaleo_draft_definition_action.jsp"
-				/>
-			</liferay-ui:search-container-row>
+					<liferay-ui:search-container-column-text
+						name="published"
+						value='<%= (kaleoDraftDefinition.getVersion() > 0) ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
+					/>
+
+					<liferay-ui:search-container-column-jsp
+						align="right"
+						cssClass="entry-action"
+						path="/designer/kaleo_draft_definition_action.jsp"
+					/>
+				</liferay-ui:search-container-row>
+
 				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= searchContainer %>" />
 			</liferay-ui:search-container>
 		</div>
