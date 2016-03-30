@@ -32,17 +32,6 @@
 			total="<%= latestKaleoDraftDefinitions.size() %>"
 		>
 
-			<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT) %>">
-				<portlet:renderURL var="editKaleoDraftDefinitionURL">
-					<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_draft_definition.jsp" %>' />
-					<portlet:param name="backURL" value="<%= currentURL %>" />
-				</portlet:renderURL>
-
-				<aui:button-row>
-					<aui:button href="<%= editKaleoDraftDefinitionURL %>" primary="<%= true %>" value='<%= LanguageUtil.format(request, "add-new-x", "definition") %>' />
-				</aui:button-row>
-			</c:if>
-
 			<liferay-ui:search-container-results
 				results="<%= ListUtil.subList(latestKaleoDraftDefinitions, searchContainer.getStart(), searchContainer.getEnd()) %>"
 			/>
@@ -52,6 +41,8 @@
 				escapedModel="<%= true %>"
 				keyProperty="kaleoDraftDefinitionId"
 				modelVar="kaleoDraftDefinition"
+		<div class="container-fluid-1280 main-content-body">
+
 			>
 				<liferay-ui:search-container-column-text
 					name="name"
@@ -84,9 +75,20 @@
 					path="/designer/kaleo_draft_definition_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
+				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= searchContainer %>" />
+			</liferay-ui:search-container>
+		</div>
 
-			<liferay-ui:search-iterator />
-		</liferay-ui:search-container>
+		<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT) %>">
+			<portlet:renderURL var="editKaleoDraftDefinitionURL">
+				<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_draft_definition.jsp" %>' />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu>
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-new-x", "definition") %>' url="<%= editKaleoDraftDefinitionURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</c:when>
 	<c:otherwise>
 		<div class="portlet-msg-info">
