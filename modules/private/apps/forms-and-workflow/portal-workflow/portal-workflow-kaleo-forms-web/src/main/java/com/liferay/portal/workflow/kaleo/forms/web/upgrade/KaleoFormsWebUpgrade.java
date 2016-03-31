@@ -14,10 +14,11 @@
 
 package com.liferay.portal.workflow.kaleo.forms.web.upgrade;
 
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_0.UpgradeKaleoProcess;
-import com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_1.UpgradePortletId;
+import com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_1.UpgradeSchema;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,12 +33,32 @@ public class KaleoFormsWebUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.portal.workflow.kaleo.forms.web.web", "0.0.1", "1.0.0",
-			new UpgradePortletId(), new UpgradeKaleoProcess());
+			new com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_0.
+				UpgradeKaleoProcess());
+
+		registry.register(
+			"com.liferay.portal.workflow.kaleo.forms.web.web", "1.0.0", "1.0.1",
+			new UpgradeSchema(), new UpgradePortletId(),
+			new com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_1.
+				UpgradeKaleoProcess(
+					_assetEntryLocalService, _ddlRecordSetLocalService));
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
+	@Reference(unbind = "-")
+	public void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
 	}
+
+	@Reference(unbind = "-")
+	public void setDDLRecordSetLocalService(
+		DDLRecordSetLocalService ddlRecordSetLocalService) {
+
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+	}
+
+	private AssetEntryLocalService _assetEntryLocalService;
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 
 }
