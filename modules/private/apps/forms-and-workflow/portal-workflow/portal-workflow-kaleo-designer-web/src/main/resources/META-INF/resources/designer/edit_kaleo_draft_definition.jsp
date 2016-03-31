@@ -92,16 +92,8 @@
 						<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-portlet-workflowdesigner-panel" extended="<%= false %>" id="kaleoDesignerSectionPanel" markupView="lexicon" persistState="<%= true %>" title='<%= LanguageUtil.get(request, "details") %>'>
 							<div class="lfr-portlet-workflowdesigner-details-view">
 								<c:if test="<%= workflowDefinition != null %>">
-									<liferay-portlet:renderURL portletName="151" var="workflowDefinitionEditURL">
-										<portlet:param name="struts_action" value="/workflow_definitions/edit_workflow_definition" />
-										<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
-										<portlet:param name="redirect" value="<%= currentURL %>" />
-										<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
-										<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
-									</liferay-portlet:renderURL>
-
 									<aui:field-wrapper cssClass="lfr-portlet-workflowdesigner-field-wrapper-first" helpMessage="the-definition-name-is-defined-in-the-workflow-definition-file" label="workflow-definition-name">
-										<aui:a href="<%= themeDisplay.getURLControlPanel() + StringPool.AMPERSAND + HttpUtil.getQueryString(workflowDefinitionEditURL) %>" target="_blank"><%= HtmlUtil.escape(workflowDefinition.getName()) %></aui:a>
+										<%= HtmlUtil.escape(workflowDefinition.getName()) %>
 									</aui:field-wrapper>
 
 									<aui:field-wrapper label="workflow-definition-version">
