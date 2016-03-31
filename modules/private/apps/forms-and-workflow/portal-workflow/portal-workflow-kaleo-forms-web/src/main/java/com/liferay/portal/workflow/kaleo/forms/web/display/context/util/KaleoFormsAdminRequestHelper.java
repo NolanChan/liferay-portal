@@ -15,28 +15,17 @@
 package com.liferay.portal.workflow.kaleo.forms.web.display.context.util;
 
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
-import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.RenderRequest;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Leonardo Barros
  */
 public class KaleoFormsAdminRequestHelper extends BaseRequestHelper {
 
-	public KaleoFormsAdminRequestHelper(HttpServletRequest request) {
-		super(request);
-
-		_renderRequest = (RenderRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+	public KaleoFormsAdminRequestHelper(RenderRequest renderRequest) {
+		super(PortalUtil.getHttpServletRequest(renderRequest));
 	}
-
-	public RenderRequest getRenderRequest() {
-		return _renderRequest;
-	}
-
-	private final RenderRequest _renderRequest;
 
 }

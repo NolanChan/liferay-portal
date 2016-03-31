@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 KaleoProcess kaleoProcess = (KaleoProcess)row.getObject();
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= KaleoProcessPermission.contains(permissionChecker, kaleoProcess, ActionKeys.VIEW) %>">
 		<portlet:renderURL var="viewURL">
 			<portlet:param name="mvcPath" value='<%= "/admin/view_kaleo_process.jsp" %>' />
@@ -31,8 +31,7 @@ KaleoProcess kaleoProcess = (KaleoProcess)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-search"
-			message="view"
+			message="view[action]"
 			url="<%= viewURL %>"
 		/>
 	</c:if>
@@ -54,7 +53,6 @@ KaleoProcess kaleoProcess = (KaleoProcess)row.getObject();
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-arrow-down"
 			message="export"
 			url="<%= sb.toString() %>"
 		/>
@@ -69,7 +67,6 @@ KaleoProcess kaleoProcess = (KaleoProcess)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			method="get"
 			url="<%= editURL %>"
@@ -86,7 +83,6 @@ KaleoProcess kaleoProcess = (KaleoProcess)row.getObject();
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
 			url="<%= permissionsURL %>"

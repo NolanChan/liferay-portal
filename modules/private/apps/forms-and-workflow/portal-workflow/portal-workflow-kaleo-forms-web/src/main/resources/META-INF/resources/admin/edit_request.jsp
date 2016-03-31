@@ -19,18 +19,55 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 String backURL = ParamUtil.getString(request, "backURL");
+long classPK = ParamUtil.getLong(request, "classPK");
 
 KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS);
 
-long kaleoProcessId = BeanParamUtil.getLong(kaleoProcess, request, "kaleoProcessId");
+long kaleoProcessId = BeanParamUtil.getLong(kaleoProcess, request, "kaleoProcessId", classPK);
 
 long groupId = BeanParamUtil.getLong(kaleoProcess, request, "groupId", scopeGroupId);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.format(request, "new-x", kaleoProcess.getName(locale), false));
 %>
 
-<div class="kaleo-forms-display-portlet">
-	<liferay-util:include page="/display/edit_request.jsp" servletContext="<%= application %>">
-		<portlet:param name="redirect" value="<%= redirect %>" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
-		<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
-	</liferay-util:include>
+<div class="container-fluid-1280 sidenav-container sidenav-right">
+	<portlet:actionURL name="startWorkflowInstance" var="startWorkflowInstanceURL" />
+
+	<aui:form action="<%= startWorkflowInstanceURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm1">
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+		<aui:input name="kaleoProcessId" type="hidden" value="<%= String.valueOf(kaleoProcessId) %>" />
+		<aui:input name="ddlRecordSetId" type="hidden" value="<%= String.valueOf(kaleoProcess.getDDLRecordSetId()) %>" />
+		<aui:input name="ddmTemplateId" type="hidden" value="<%= String.valueOf(kaleoProcess.getDDMTemplateId()) %>" />
+		<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
+		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
+
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+
+				<%
+				DDMTemplate ddmTemplate = kaleoProcess.getDDMTemplate();
+				%>
+
+				<liferay-ddm:html
+					classNameId="<%= PortalUtil.getClassNameId(DDMTemplate.class) %>"
+					classPK="<%= ddmTemplate.getTemplateId() %>"
+					requestedLocale="<%= locale %>"
+				/>
+			</aui:fieldset>
+		</aui:fieldset-group>
+
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" name="saveButton" type="submit" value="save" />
+
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
+		</aui:button-row>
+	</aui:form>
 </div>
+
+<%
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(request, "add-x", kaleoProcess.getName(locale), false), currentURL);
+%>

@@ -32,40 +32,47 @@ long kaleoProcessId = BeanParamUtil.getLong(kaleoProcess, request, "kaleoProcess
 String version = ParamUtil.getString(request, "version", DDLRecordConstants.VERSION_DEFAULT);
 
 DDLRecordVersion ddlRecordVersion = ddlRecord.getRecordVersion(version);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.format(request, "view-x", kaleoProcess.getName(locale), false));
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title='<%= LanguageUtil.format(request, "view-x", kaleoProcess.getName(locale), false) %>'
-/>
+<div class="container-fluid-1280">
 
-<c:if test="<%= ddlRecordVersion != null %>">
-	<aui:model-context bean="<%= ddlRecordVersion %>" model="<%= DDLRecordVersion.class %>" />
+	<c:if test="<%= ddlRecordVersion != null %>">
+		<aui:model-context bean="<%= ddlRecordVersion %>" model="<%= DDLRecordVersion.class %>" />
 
-	<aui:workflow-status model="<%= DDLRecord.class %>" status="<%= ddlRecordVersion.getStatus() %>" version="<%= ddlRecordVersion.getVersion() %>" />
-</c:if>
+		<div class="panel text-center">
+			<aui:workflow-status markupView="lexicon" model="<%= DDLRecord.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= ddlRecordVersion.getStatus() %>" version="<%= ddlRecordVersion.getVersion() %>" />
+		</div>
+	</c:if>
 
-<aui:fieldset>
+	<aui:fieldset>
 
-	<%
-	DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+		<%
+		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
-	DDMFormValues ddmFormValues = null;
+		DDMFormValues ddmFormValues = null;
 
-	if (ddlRecordVersion != null) {
-		ddmFormValues = kaleoFormsAdminDisplayContext.getDDMFormValues(ddlRecordVersion.getDDMStorageId());
-	}
-	%>
+		if (ddlRecordVersion != null) {
+			ddmFormValues = kaleoFormsAdminDisplayContext.getDDMFormValues(ddlRecordVersion.getDDMStorageId());
+		}
+		%>
 
-	<liferay-ddm:html
-		classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-		classPK="<%= ddmStructure.getStructureId() %>"
-		ddmFormValues="<%= ddmFormValues %>"
-		readOnly="<%= true %>"
-		requestedLocale="<%= locale %>"
-	/>
+		<div class="panel">
+			<liferay-ddm:html
+				classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+				classPK="<%= ddmStructure.getStructureId() %>"
+				ddmFormValues="<%= ddmFormValues %>"
+				readOnly="<%= true %>"
+				requestedLocale="<%= locale %>"
+			/>
+		</div>
 
-	<aui:button-row>
-		<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
-	</aui:button-row>
-</aui:fieldset>
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
+		</aui:button-row>
+	</aui:fieldset>
+</div>

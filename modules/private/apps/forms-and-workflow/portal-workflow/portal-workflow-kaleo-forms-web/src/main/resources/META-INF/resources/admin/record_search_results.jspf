@@ -30,6 +30,7 @@ else {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setAttribute("recordSetId", kaleoProcess.getDDLRecordSetId());
+	searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
 	searchContext.setEnd(searchContainer.getEnd());
 	searchContext.setKeywords(displayTerms.getKeywords());
 	searchContext.setStart(searchContainer.getStart());
