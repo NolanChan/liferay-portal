@@ -18,13 +18,15 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.security.audit.AuditEvent;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
  * @author Brian Greenwald
  * @author Prathima Shreenath
  */
-public class AuditEventImpl implements AuditEvent {
+public class AuditEventImpl implements AuditEvent, Serializable {
 
 	public AuditEventImpl(
 		com.liferay.portal.security.audit.storage.model.AuditEvent
