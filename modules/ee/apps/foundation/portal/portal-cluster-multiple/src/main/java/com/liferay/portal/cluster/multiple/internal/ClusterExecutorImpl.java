@@ -365,9 +365,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			}
 		}
 
-		if (_log.isErrorEnabled()) {
-			_log.error("Unable to get cluster node with address " + address);
-		}
+		_log.error("Unable to get cluster node with address " + address);
 
 		return null;
 	}
