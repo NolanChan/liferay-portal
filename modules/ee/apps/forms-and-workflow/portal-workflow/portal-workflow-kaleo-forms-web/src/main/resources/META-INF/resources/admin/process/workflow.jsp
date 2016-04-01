@@ -83,7 +83,7 @@ if (Validator.isNotNull(workflowDefinition)) {
 <liferay-ui:search-container
 	emptyResultsMessage='<%= tabs1.equals("published") ? "there-are-no-published-definitions" : "there-are-no-unpublished-definitions" %>'
 	iteratorURL="<%= iteratorURL %>"
-	total= '<%= tabs1.equals("published") ? WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitionCount(company.getCompanyId()) : KaleoDraftDefinitionLocalServiceUtil.getLatestKaleoDraftDefinitionsCount(company.getCompanyId(), 0) %>'
+	total='<%= tabs1.equals("published") ? WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitionCount(company.getCompanyId()) : KaleoDraftDefinitionLocalServiceUtil.getLatestKaleoDraftDefinitionsCount(company.getCompanyId(), 0) %>'
 >
 	<portlet:renderURL var="editWorkflowURL">
 		<portlet:param name="mvcPath" value="/admin/process/edit_workflow.jsp" />

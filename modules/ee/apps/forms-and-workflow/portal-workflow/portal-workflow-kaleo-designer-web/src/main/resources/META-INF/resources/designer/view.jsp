@@ -29,7 +29,7 @@
 		<liferay-ui:search-container
 			emptyResultsMessage="no-workflow-definitions-are-defined"
 			iteratorURL="<%= iteratorURL %>"
-			total= "<%= latestKaleoDraftDefinitions.size() %>"
+			total="<%= latestKaleoDraftDefinitions.size() %>"
 		>
 
 			<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT) %>">
@@ -44,7 +44,7 @@
 			</c:if>
 
 			<liferay-ui:search-container-results
-				 results="<%= ListUtil.subList(latestKaleoDraftDefinitions, searchContainer.getStart(), searchContainer.getEnd()) %>"
+				results="<%= ListUtil.subList(latestKaleoDraftDefinitions, searchContainer.getStart(), searchContainer.getEnd()) %>"
 			/>
 
 			<liferay-ui:search-container-row
