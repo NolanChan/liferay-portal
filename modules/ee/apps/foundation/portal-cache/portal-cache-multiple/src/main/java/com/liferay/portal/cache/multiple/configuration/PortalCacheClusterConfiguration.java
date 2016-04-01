@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.cluster.Priority;
 )
 public interface PortalCacheClusterConfiguration {
 
-	@Meta.AD(deflt = "LEVEL1|LEVEL2", required = false)
+	@Meta.AD(deflt = "LEVEL1,LEVEL2", required = false)
 	public Priority[] priorities();
 
 }
