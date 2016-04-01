@@ -14,8 +14,8 @@
 
 package com.liferay.portal.cluster.multiple.internal;
 
+import com.liferay.portal.kernel.util.PortalInetSocketAddressEventListener;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.PortalInetSocketAddressEventListener;
 
 import java.io.File;
 import java.io.InputStream;
