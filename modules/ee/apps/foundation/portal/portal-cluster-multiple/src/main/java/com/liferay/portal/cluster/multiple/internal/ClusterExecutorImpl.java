@@ -352,6 +352,32 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		return uuid.toString();
 	}
 
+	protected String getChannelName(Dictionary<String, Object> properties) {
+		String channelName = GetterUtil.getString(
+			properties.get(ClusterPropsKeys.CHANNEL_NAME_CONTROL));
+
+		if (Validator.isNull(channelName)) {
+			channelName = _props.get(
+				PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL);
+		}
+
+		return channelName;
+	}
+
+	protected String getChannelPropertiesString(
+		Dictionary<String, Object> properties) {
+
+		String channelPropertiesString = GetterUtil.getString(
+			properties.get(ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL));
+
+		if (Validator.isNull(channelPropertiesString)) {
+			channelPropertiesString = _props.get(
+				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
+		}
+
+		return channelPropertiesString;
+	}
+
 	protected ClusterChannel getClusterChannel() {
 		return _clusterChannel;
 	}
@@ -431,7 +457,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			Serializable result = clusterNodeResponse.getResult();
 
 			if (result instanceof ClusterNodeStatus) {
-				_memberJoined((ClusterNodeStatus)result);
+				memberJoined((ClusterNodeStatus)result);
 
 				return;
 			}
@@ -468,7 +494,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		Serializable payload = clusterRequest.getPayload();
 
 		if (payload instanceof ClusterNodeStatus) {
-			_memberJoined((ClusterNodeStatus)payload);
+			memberJoined((ClusterNodeStatus)payload);
 
 			return ClusterNodeResponse.createResultClusterNodeResponse(
 				_localClusterNodeStatus.getClusterNode(),
@@ -513,7 +539,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		_localClusterNodeStatus = new ClusterNodeStatus(
 			localClusterNode, _clusterChannel.getLocalAddress());
 
-		_memberJoined(_localClusterNodeStatus);
+		memberJoined(_localClusterNodeStatus);
 
 		sendNotifyRequest();
 
@@ -538,6 +564,30 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 			removeClusterEventListener(_debugClusterEventListener);
 		}
+	}
+
+	protected boolean memberJoined(ClusterNodeStatus clusterNodeStatus) {
+		ClusterNodeStatus oldClusterNodeStatus = _clusterNodeStatuses.put(
+			clusterNodeStatus.getClusterNodeId(), clusterNodeStatus);
+
+		if (oldClusterNodeStatus != null) {
+			if (!oldClusterNodeStatus.equals(clusterNodeStatus)) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Updated cluster node " +
+							clusterNodeStatus.getClusterNode());
+				}
+			}
+
+			return false;
+		}
+
+		ClusterEvent clusterEvent = ClusterEvent.join(
+			clusterNodeStatus.getClusterNode());
+
+		fireClusterEvent(clusterEvent);
+
+		return true;
 	}
 
 	protected void memberRemoved(List<Address> departAddresses) {
@@ -610,56 +660,6 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 	protected volatile ClusterExecutorConfiguration
 		clusterExecutorConfiguration;
-
-	private boolean _memberJoined(ClusterNodeStatus clusterNodeStatus) {
-		ClusterNodeStatus oldClusterNodeStatus = _clusterNodeStatuses.put(
-			clusterNodeStatus.getClusterNodeId(), clusterNodeStatus);
-
-		if (oldClusterNodeStatus != null) {
-			if (!oldClusterNodeStatus.equals(clusterNodeStatus)) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Updated cluster node " +
-							clusterNodeStatus.getClusterNode());
-				}
-			}
-
-			return false;
-		}
-
-		ClusterEvent clusterEvent = ClusterEvent.join(
-			clusterNodeStatus.getClusterNode());
-
-		fireClusterEvent(clusterEvent);
-
-		return true;
-	}
-
-	private String getChannelName(Dictionary<String, Object> properties) {
-		String channelName = GetterUtil.getString(
-			properties.get(ClusterPropsKeys.CHANNEL_NAME_CONTROL));
-
-		if (Validator.isNull(channelName)) {
-			channelName = _props.get(
-				PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL);
-		}
-
-		return channelName;
-	}
-
-	private String getChannelPropertiesString(
-		Dictionary<String, Object> properties) {
-
-		String channelPropertiesString = GetterUtil.getString(
-			properties.get(ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL));
-
-		if (Validator.isNull(channelPropertiesString)) {
-			channelPropertiesString = _props.get(
-				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
-		}
-
-		return channelPropertiesString;
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterExecutorImpl.class);
