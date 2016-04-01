@@ -62,13 +62,8 @@ String mode = ParamUtil.getString(request, "mode");
 	</liferay-ui:search-container-results>
 
 	<c:if test="<%= DDMTemplatePermission.containsAddTemplatePermission(permissionChecker, scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), scopeClassNameId) %>">
-
-		<%
-		String taglibOnClick = "javascript:" + renderResponse.getNamespace() + "openDDMPortlet();";
-		%>
-
 		<aui:button-row>
-			<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="add-form" />
+			<aui:button onClick='<%= "javascript:" + renderResponse.getNamespace() + "openDDMPortlet();" %>' primary="<%= true %>" value="add-form" />
 		</aui:button-row>
 	</c:if>
 

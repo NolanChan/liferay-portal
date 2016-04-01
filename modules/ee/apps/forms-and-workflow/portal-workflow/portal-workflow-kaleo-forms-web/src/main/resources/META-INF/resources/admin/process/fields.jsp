@@ -89,13 +89,8 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 	</liferay-ui:search-container-results>
 
 	<c:if test="<%= DDMStructurePermission.containsAddStruturePermission(permissionChecker, scopeGroupId, scopeClassNameId) %>">
-
-		<%
-		String taglibOnClick = "javascript:" + renderResponse.getNamespace() + "openDDMPortlet();";
-		%>
-
 		<aui:button-row>
-			<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="add-field-set" />
+			<aui:button onClick='<%= "javascript:" + renderResponse.getNamespace() + "openDDMPortlet();" %>' primary="<%= true %>" value="add-field-set" />
 		</aui:button-row>
 	</c:if>
 
