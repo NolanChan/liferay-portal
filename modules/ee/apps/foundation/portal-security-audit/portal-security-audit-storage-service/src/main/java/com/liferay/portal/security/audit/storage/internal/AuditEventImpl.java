@@ -218,9 +218,8 @@ public class AuditEventImpl implements AuditEvent, Serializable {
 
 	private static final ClassLoader _classLoader =
 		AuditEvent.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-		AuditEvent.class
-	};
+	private static final Class<?>[] _escapedModelInterfaces =
+		new Class[] {AuditEvent.class};
 
 	private final com.liferay.portal.security.audit.storage.model.AuditEvent
 		_auditEvent;
