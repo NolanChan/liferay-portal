@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.shield.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
 import com.liferay.portal.search.elasticsearch.settings.ClientSettingsHelper;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
@@ -56,7 +55,7 @@ public class ShieldRemoteSettingsContributor extends BaseSettingsContributor {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		shieldConfiguration = Configurable.createConfigurable(
+		shieldConfiguration = ConfigurableUtil.createConfigurable(
 			ShieldConfiguration.class, properties);
 	}
 

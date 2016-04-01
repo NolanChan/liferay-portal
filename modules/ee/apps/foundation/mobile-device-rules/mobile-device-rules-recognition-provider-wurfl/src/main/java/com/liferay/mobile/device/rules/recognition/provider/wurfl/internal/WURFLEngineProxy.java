@@ -13,10 +13,9 @@
 
 package com.liferay.mobile.device.rules.recognition.provider.wurfl.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.mobile.device.rules.recognition.provider.wurfl.configuration.WURFLEngineConfiguration;
 import com.liferay.mobile.device.rules.recognition.provider.wurfl.internal.util.WURFLUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -85,7 +84,7 @@ public class WURFLEngineProxy {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_wurflEngineConfiguration = Configurable.createConfigurable(
+		_wurflEngineConfiguration = ConfigurableUtil.createConfigurable(
 			WURFLEngineConfiguration.class, properties);
 
 		List<InputStream> inputStreams = new ArrayList<>();
@@ -182,7 +181,7 @@ public class WURFLEngineProxy {
 	@Modified
 	protected void modified(Map<String, Object> properties) {
 		try {
-			_wurflEngineConfiguration = Configurable.createConfigurable(
+			_wurflEngineConfiguration = ConfigurableUtil.createConfigurable(
 				WURFLEngineConfiguration.class, properties);
 
 			_wurflEngine.setCacheProvider(_cacheProvider);

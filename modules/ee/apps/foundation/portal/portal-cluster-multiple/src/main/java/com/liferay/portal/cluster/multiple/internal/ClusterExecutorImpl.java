@@ -14,10 +14,9 @@
 
 package com.liferay.portal.cluster.multiple.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.cluster.multiple.internal.constants.ClusterPropsKeys;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
@@ -231,7 +230,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		clusterExecutorConfiguration = Configurable.createConfigurable(
+		clusterExecutorConfiguration = ConfigurableUtil.createConfigurable(
 			ClusterExecutorConfiguration.class,
 			componentContext.getProperties());
 
@@ -620,7 +619,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 	@Modified
 	protected synchronized void modified(Map<String, Object> properties) {
-		clusterExecutorConfiguration = Configurable.createConfigurable(
+		clusterExecutorConfiguration = ConfigurableUtil.createConfigurable(
 			ClusterExecutorConfiguration.class, properties);
 
 		manageDebugClusterEventListener();

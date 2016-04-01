@@ -14,10 +14,9 @@
 
 package com.liferay.portal.cache.multiple.internal.cluster.link;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.portal.cache.multiple.configuration.PortalCacheClusterConfiguration;
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterEvent;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.Priority;
 
 import java.util.ArrayList;
@@ -74,7 +73,7 @@ public class PortalCacheClusterLink {
 	@Modified
 	protected void activate(ComponentContext componentContext) {
 		PortalCacheClusterConfiguration portalCacheClusterConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				PortalCacheClusterConfiguration.class,
 				componentContext.getProperties());
 
