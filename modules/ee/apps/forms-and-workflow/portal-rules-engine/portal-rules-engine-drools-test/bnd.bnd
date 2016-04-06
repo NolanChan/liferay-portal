@@ -3,5 +3,5 @@ Bundle-SymbolicName: com.liferay.portal.rules.engine.drools.test
 Bundle-Version: 1.0.0
 Include-Resource: test-classes/integration
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Drools Rules Engine
+Liferay-Releng-Module-Group-Title:
 -include: ../../../../../../modules/apps/forms-and-workflow/app.bnd
