@@ -40,7 +40,7 @@ Import-Package:\
 	!sun.reflect.*,\
 	*
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Drools Rules Engine
+Liferay-Releng-Module-Group-Title:
 -include: ../../../../../../modules/apps/forms-and-workflow/app.bnd
 -liferay-includeresource:\
 	lib/antlr-runtime.jar=antlr-runtime-*.jar,\
