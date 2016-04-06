@@ -178,6 +178,8 @@ public class ReportEngineImpl implements ReportEngine {
 			messageListenerServiceRegistration.unregister();
 		}
 
+		_messageListeners.clear();
+
 		_messageListenerServiceRegistrations.clear();
 
 		_bundleContext = null;
