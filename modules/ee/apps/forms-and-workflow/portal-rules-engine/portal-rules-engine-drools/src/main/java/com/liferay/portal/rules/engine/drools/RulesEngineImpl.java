@@ -206,7 +206,7 @@ public class RulesEngineImpl implements RulesEngine {
 		Dictionary<String, Object> proxyMessageListenerProperties =
 			new HashMapDictionary<>();
 
-		properties.put(
+		proxyMessageListenerProperties.put(
 			"destination.name", RulesEngineConstants.DESTINATION_NAME);
 
 		BundleContext bundleContext = componentContext.getBundleContext();
