@@ -29,14 +29,12 @@ iteratorURL.setParameter("mvcPath", "/designer/view.jsp");
 		<liferay-util:include page="/designer/management_bar.jsp" servletContext="<%= application %>" />
 
 		<div class="container-fluid-1280 main-content-body">
-
 			<liferay-ui:search-container
 				emptyResultsMessage="no-workflow-definitions-are-defined"
 				iteratorURL="<%= iteratorURL %>"
 				orderByComparator="<%= kaleoDesignerDisplayContext.getKaleoDraftDefinitionOrderByComparator() %>"
 				searchTerms="<%= new DisplayTerms(renderRequest) %>"
 			>
-
 				<liferay-ui:search-container-results>
 					<%@ include file="/designer/kaleo_draft_definitions_search_results.jspf" %>
 				</liferay-ui:search-container-results>

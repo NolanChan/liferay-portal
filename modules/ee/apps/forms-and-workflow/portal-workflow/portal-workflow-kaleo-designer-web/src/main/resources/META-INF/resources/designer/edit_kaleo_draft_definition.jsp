@@ -129,7 +129,7 @@
 					</liferay-ui:panel-container>
 				</c:if>
 
-					<aui:fieldset>
+				<aui:fieldset>
 					<div class="diagram-builder property-builder" id="<portlet:namespace />propertyBuilder">
 						<div class="property-builder-content" id="<portlet:namespace />propertyBuilderContent">
 							<div class="tabbable">
