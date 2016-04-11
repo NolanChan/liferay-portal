@@ -7,6 +7,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_portal_workflow_kaleo_designer_web_portlet_KaleoDesignerPortlet</portlet-name>
 		</portlet-ref>
+		<root>true</root>
 		<permissions>
 			<supports>
 				<action-key>ADD_DRAFT</action-key>
