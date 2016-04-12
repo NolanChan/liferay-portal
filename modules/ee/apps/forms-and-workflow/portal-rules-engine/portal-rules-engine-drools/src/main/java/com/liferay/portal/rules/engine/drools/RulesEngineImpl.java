@@ -85,7 +85,7 @@ import org.osgi.service.component.annotations.Reference;
 		"rules.engine.language.mapping.DROOLS_RULE_LANGUAGE=DRL",
 		"rules.engine.language.mapping.DROOLS_XML_LANGUAGE=XDRL"
 	},
-	service = RulesEngineImpl.class
+	service = {RulesEngine.class, RulesEngineImpl.class}
 )
 public class RulesEngineImpl implements RulesEngine {
 

@@ -23,19 +23,25 @@ import com.liferay.portal.rules.engine.Query;
 import com.liferay.portal.rules.engine.RulesEngine;
 import com.liferay.portal.rules.engine.RulesResourceRetriever;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Michael C. Han
@@ -51,14 +57,48 @@ public class RulesEngineImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		_rulesEngine = registry.getService(RulesEngine.class);
+		_bundleContext = bundle.getBundleContext();
+
+		int counter = 0;
+
+		do {
+			Collection<ServiceReference<RulesEngine>> serviceReferences =
+				_bundleContext.getServiceReferences(
+					RulesEngine.class, "(proxy.bean=false)");
+
+			if (serviceReferences.isEmpty()) {
+				counter++;
+
+				if (counter >= 5) {
+					throw new IllegalStateException(
+						"Cannot obtain reference to RulesEngineImpl");
+				}
+
+				Thread.sleep(500);
+			}
+
+			Iterator<ServiceReference<RulesEngine>> iterator =
+				serviceReferences.iterator();
+
+			_serviceReference = iterator.next();
+		}
+		while (_serviceReference == null);
+
+		_rulesEngine = _bundleContext.getService(_serviceReference);
 
 		String rules = read("test.drl");
 
 		_rulesResourceRetriever = new RulesResourceRetriever(
 			new StringResourceRetriever(rules));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_bundleContext.ungetService(_serviceReference);
+
+		_bundleContext = null;
 	}
 
 	@Test
@@ -184,7 +224,9 @@ public class RulesEngineImplTest {
 			"com/liferay/portal/rules/engine/drools/dependencies/" + fileName);
 	}
 
+	private BundleContext _bundleContext;
 	private RulesEngine _rulesEngine;
 	private RulesResourceRetriever _rulesResourceRetriever;
+	private ServiceReference<RulesEngine> _serviceReference;
 
 }
