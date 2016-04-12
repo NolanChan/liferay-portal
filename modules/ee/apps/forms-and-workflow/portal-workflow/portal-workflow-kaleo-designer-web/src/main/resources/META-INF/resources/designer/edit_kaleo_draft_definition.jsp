@@ -50,6 +50,9 @@
 			}
 		}
 
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(backURL);
+
 		String title = null;
 
 		if (kaleoDraftDefinition == null) {
@@ -60,9 +63,6 @@
 		}
 
 		renderResponse.setTitle(title);
-
-		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(backURL);
 		%>
 
 		<aui:form cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault();">
