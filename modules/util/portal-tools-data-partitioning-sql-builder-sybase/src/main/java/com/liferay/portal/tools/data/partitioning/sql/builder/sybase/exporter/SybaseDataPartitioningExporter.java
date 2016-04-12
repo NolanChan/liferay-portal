@@ -53,8 +53,8 @@ public class SybaseDataPartitioningExporter
 
 		sb.append("select so2.");
 		sb.append(getTableNameFieldName());
-		sb.append(" from syscolumns sc2, sysobjects so2 where sc2.id = so2.id");
-		sb.append(" and sc2.name = 'companyId' group by so2.");
+		sb.append(" from syscolumns sc2, sysobjects so2 where sc2.id = ");
+		sb.append("so2.id and sc2.name = 'companyId' group by so2.");
 		sb.append(getTableNameFieldName());
 
 		return sb.toString();

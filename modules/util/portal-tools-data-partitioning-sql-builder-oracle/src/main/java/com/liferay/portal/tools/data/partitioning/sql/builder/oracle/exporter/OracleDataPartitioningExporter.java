@@ -86,14 +86,14 @@ public class OracleDataPartitioningExporter
 			sb.append("TO_CLOB('");
 
 			try (InputStream inputStream = ((Clob)field).getAsciiStream()) {
-				Reader read = new InputStreamReader(
+				Reader reader = new InputStreamReader(
 					inputStream, Charset.forName("UTF-8"));
 
 				StringWriter stringWriter = new StringWriter();
 
 				int c = -1;
 
-				while ((c = read.read()) != -1) {
+				while ((c = reader.read()) != -1) {
 					stringWriter.write(c);
 				}
 
@@ -102,7 +102,7 @@ public class OracleDataPartitioningExporter
 				sb.append(stringWriter.toString());
 			}
 			catch (IOException | SQLException e) {
-				throw new RuntimeException("Unable to read the clob value", e);
+				throw new RuntimeException("Unable to read the CLOB value", e);
 			}
 
 			sb.append("')");
