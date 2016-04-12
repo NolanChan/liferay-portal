@@ -61,7 +61,7 @@ public class RulesEngineImplTest {
 
 		_bundleContext = bundle.getBundleContext();
 
-		int counter = 0;
+		int count = 0;
 
 		do {
 			Collection<ServiceReference<RulesEngine>> serviceReferences =
@@ -69,11 +69,11 @@ public class RulesEngineImplTest {
 					RulesEngine.class, "(proxy.bean=false)");
 
 			if (serviceReferences.isEmpty()) {
-				counter++;
+				count++;
 
-				if (counter >= 5) {
+				if (count >= 5) {
 					throw new IllegalStateException(
-						"Cannot obtain reference to RulesEngineImpl");
+						"Unable to a reference to a rules engine");
 				}
 
 				Thread.sleep(500);
