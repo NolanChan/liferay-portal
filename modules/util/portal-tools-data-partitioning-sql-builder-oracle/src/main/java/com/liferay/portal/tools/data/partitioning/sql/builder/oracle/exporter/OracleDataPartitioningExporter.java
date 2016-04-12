@@ -64,7 +64,7 @@ public class OracleDataPartitioningExporter
 
 		sb.append("select ");
 		sb.append(getTableNameFieldName());
-		sb.append(" from cols where column_name='COMPANYID' group by ");
+		sb.append(" from cols where column_name = 'COMPANYID' group by ");
 		sb.append(getTableNameFieldName());
 
 		return sb.toString();
@@ -102,7 +102,7 @@ public class OracleDataPartitioningExporter
 				sb.append(stringWriter.toString());
 			}
 			catch (IOException | SQLException e) {
-				throw new RuntimeException("Cannot read the Clob value", e);
+				throw new RuntimeException("Unable to read the clob value", e);
 			}
 
 			sb.append("')");
@@ -140,14 +140,16 @@ public class OracleDataPartitioningExporter
 	protected String formatDateTime(Object date) {
 		if (date instanceof oracle.sql.TIMESTAMP) {
 			try {
-				Timestamp timestamp =
-					((oracle.sql.TIMESTAMP)date).timestampValue();
+				oracle.sql.TIMESTAMP oracleTimestamp =
+					(oracle.sql.TIMESTAMP)date;
+
+				Timestamp timestamp = oracleTimestamp.timestampValue();
 
 				return super.formatDateTime(timestamp);
 			}
 			catch (SQLException sqle) {
 				throw new RuntimeException(
-					"Cannot get the timestamp value of " + date, sqle);
+					"Unable to get the timestamp value of " + date, sqle);
 			}
 		}
 
