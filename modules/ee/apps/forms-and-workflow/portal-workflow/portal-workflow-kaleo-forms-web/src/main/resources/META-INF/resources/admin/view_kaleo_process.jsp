@@ -121,7 +121,7 @@ portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcessId));
 
 					value = ddmFormFieldValueRenderer.render(ddmFormFieldValues, themeDisplay.getLocale());
 				}
-				%>
+			%>
 
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"

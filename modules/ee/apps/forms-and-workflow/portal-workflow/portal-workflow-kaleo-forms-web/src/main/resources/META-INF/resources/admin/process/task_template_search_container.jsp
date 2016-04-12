@@ -33,7 +33,6 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 	<liferay-ui:search-container
 		searchContainer='<%= new SearchContainer<Object>(renderRequest, portletURL, null, "no-tasks-were-found") %>'
 	>
-
 		<liferay-ui:search-container-results>
 
 			<%

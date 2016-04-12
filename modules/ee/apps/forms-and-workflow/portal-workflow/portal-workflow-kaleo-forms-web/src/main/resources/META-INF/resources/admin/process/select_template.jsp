@@ -72,7 +72,6 @@ String mode = ParamUtil.getString(request, "mode");
 		keyProperty="templateId"
 		modelVar="ddmTemplate"
 	>
-
 		<liferay-ui:search-container-column-text
 			name="name"
 			value="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>"
