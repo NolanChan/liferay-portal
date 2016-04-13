@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Mobile Device Rules Recognition Provider 51 Degrees
+Bundle-SymbolicName: com.liferay.mobile.device.rules.recognition.provider.fiftyone
+Bundle-Version: 1.0.0
+-includeresource: @lib-ee/device-detection-core-3.2.4.3.jar
