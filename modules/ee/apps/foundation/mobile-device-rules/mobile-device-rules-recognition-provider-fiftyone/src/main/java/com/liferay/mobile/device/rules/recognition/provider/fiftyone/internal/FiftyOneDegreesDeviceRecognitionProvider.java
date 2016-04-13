@@ -21,8 +21,11 @@ import com.liferay.portal.kernel.mobile.device.DeviceCapabilityFilter;
 import com.liferay.portal.kernel.mobile.device.DeviceRecognitionProvider;
 import com.liferay.portal.kernel.mobile.device.KnownDevices;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -41,23 +44,34 @@ public class FiftyOneDegreesDeviceRecognitionProvider
 
 	@Override
 	public KnownDevices getKnownDevices() {
-		//return 51 degrees known device
-		return null;
+		return _fiftyOneDegreesKnownDevices;
 	}
 
 	@Override
 	public void reload() throws Exception {
-
-		// 51DegreesKnownDevice.reload(
-
-		return;
+		_fiftyOneDegreesKnownDevices.reload();
 	}
 
 	@Deprecated
 	public void setDeviceCapabilityFilter(
 		DeviceCapabilityFilter deviceCapabilityFilter) {
+	}
 
-		return;
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		try {
+			reload();
+		}
+		catch (Exception e) {
+			_log.error("Unable to initialize 51 Degrees Known Devices: " + e);
+		}
+	}
+
+	@Reference(unbind = "-")
+	protected void set_fiftyOneDegreesKnownDevices(
+		FiftyOneDegreesKnownDevices fiftyOneDegreesKnownDevices) {
+
+		_fiftyOneDegreesKnownDevices = fiftyOneDegreesKnownDevices;
 	}
 
 	@Reference(unbind = "-")
@@ -71,5 +85,6 @@ public class FiftyOneDegreesDeviceRecognitionProvider
 		FiftyOneDegreesDeviceRecognitionProvider.class);
 
 	private FiftyOneDegreesEngineProxy _fiftyOneDegreesEngineProxy;
+	private FiftyOneDegreesKnownDevices _fiftyOneDegreesKnownDevices;
 
 }

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.util.StreamUtil;
 
 import fiftyone.mobile.detection.Dataset;
+import fiftyone.mobile.detection.Match;
 import fiftyone.mobile.detection.Provider;
 import fiftyone.mobile.detection.factories.StreamFactory;
 
@@ -53,16 +54,16 @@ public class FiftyOneDegreesEngineProxy {
 		return _provider.dataSet;
 	}
 
-	public Device getDeviceForRequest(HttpServletRequest httpServletRequest) {
-		String userAgent = httpServletRequest.getHeader(
+	public Device getDeviceForRequest(HttpServletRequest request) {
+		String userAgent = request.getHeader(
 			FiftyOneDegreesConstants.USER_AGENT);
 
+		Device device = null;
+
 		try {
-			match = _provider.match(userAgent);
+			Match match = _provider.match(userAgent);
 
-			// return 51 degrees device here
-
-			return null;
+			device = new FiftyOneDegreesDevice(match);
 		}
 		catch (IOException ioe) {
 			if (_log.isDebugEnabled()) {
@@ -72,7 +73,7 @@ public class FiftyOneDegreesEngineProxy {
 			}
 		}
 
-		return null;
+		return device;
 	}
 
 	@Activate
