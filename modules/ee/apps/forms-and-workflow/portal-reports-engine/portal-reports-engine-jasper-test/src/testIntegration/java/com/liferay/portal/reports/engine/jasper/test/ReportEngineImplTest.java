@@ -28,9 +28,6 @@ import com.liferay.portal.reports.engine.ReportRequest;
 import com.liferay.portal.reports.engine.ReportRequestContext;
 import com.liferay.portal.reports.engine.ReportResultContainer;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
 
 import java.io.InputStream;
 
@@ -42,11 +39,17 @@ import junit.framework.TestCase;
 
 import org.apache.commons.io.IOUtils;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Michael C. Han
@@ -66,12 +69,37 @@ public class ReportEngineImplTest extends TestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		ServiceReference<ReportEngine> reportEngineServiceReference =
-			registry.getServiceReference(ReportEngine.class);
+		_bundleContext = bundle.getBundleContext();
 
-		_reportEngine = registry.getService(reportEngineServiceReference);
+		int counter = 0;
+
+		do {
+			_serviceReference = _bundleContext.getServiceReference(
+				ReportEngine.class);
+
+			if (_serviceReference == null) {
+				Thread.sleep(500);
+			}
+
+			counter++;
+
+			if (counter >= 5) {
+				throw new IllegalStateException(
+					"Cannot obtain reference to ReportEngine");
+			}
+		}
+		while (_serviceReference == null);
+
+		_reportEngine = _bundleContext.getService(_serviceReference);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_bundleContext.ungetService(_serviceReference);
+
+		_bundleContext = null;
 	}
 
 	@Test
@@ -196,6 +224,8 @@ public class ReportEngineImplTest extends TestCase {
 		return reportRequest;
 	}
 
+	private BundleContext _bundleContext;
 	private ReportEngine _reportEngine;
+	private ServiceReference<ReportEngine> _serviceReference;
 
 }
