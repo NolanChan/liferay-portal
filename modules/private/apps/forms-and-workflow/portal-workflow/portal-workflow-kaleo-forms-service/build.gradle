@@ -14,7 +14,7 @@ dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-	provided project(":ee:apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-forms-api")
+	provided project(":private:apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-forms-api")
 }
 
 liferay {
