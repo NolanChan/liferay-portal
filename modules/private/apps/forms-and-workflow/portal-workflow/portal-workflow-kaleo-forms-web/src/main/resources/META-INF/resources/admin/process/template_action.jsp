@@ -22,14 +22,13 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 DDMTemplate ddmTemplate = (DDMTemplate)row.getObject();
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 
 	<%
 	String taglibOnClick = "javascript:" + renderResponse.getNamespace() + "openDDMPortlet('"+ ddmTemplate.getTemplateId() +"');";
 	%>
 
 	<liferay-ui:icon
-		iconCssClass="icon-edit"
 		message="edit"
 		onClick="<%= taglibOnClick %>"
 		url="javascript:;"
@@ -40,7 +39,6 @@ DDMTemplate ddmTemplate = (DDMTemplate)row.getObject();
 	%>
 
 	<liferay-ui:icon
-		iconCssClass="icon-check"
 		message="choose"
 		onClick="<%= taglibOnClick %>"
 		url="javascript:;"

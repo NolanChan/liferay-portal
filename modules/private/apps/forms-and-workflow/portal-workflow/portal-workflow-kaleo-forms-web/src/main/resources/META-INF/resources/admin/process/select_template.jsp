@@ -23,12 +23,12 @@ long ddmStructureId = ParamUtil.getLong(request, "ddmStructureId");
 String workflowDefinition = ParamUtil.getString(request, "workflowDefinition");
 String workflowTaskName = ParamUtil.getString(request, "workflowTaskName");
 String mode = ParamUtil.getString(request, "mode");
-%>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	title='<%= LanguageUtil.format(request, "select-form-for-task-x", workflowTaskName, false) %>'
-/>
+renderResponse.setTitle(LanguageUtil.format(request, "select-form-for-task-x", workflowTaskName, false));
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+%>
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
 	<portlet:param name="mvcPath" value="/admin/process/select_template.jsp" />
@@ -39,58 +39,60 @@ String mode = ParamUtil.getString(request, "mode");
 	<portlet:param name="mode" value="<%= mode %>" />
 </liferay-portlet:renderURL>
 
-<liferay-ui:search-container
-	searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, iteratorURL, null, "there-are-no-results") %>'
->
-
-	<%
-	DisplayTerms displayTerms = searchContainer.getDisplayTerms();
-	%>
-
-	<liferay-ui:search-container-results>
-
-		<%
-		total = DDMTemplateLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructureId, scopeClassNameId, displayTerms.getKeywords(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, mode, WorkflowConstants.STATUS_ANY);
-
-		searchContainer.setTotal(total);
-
-		results = DDMTemplateLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructureId, scopeClassNameId, displayTerms.getKeywords(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, mode, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd(), null);
-
-		searchContainer.setResults(results);
-		%>
-
-	</liferay-ui:search-container-results>
-
+<div class="container-fluid-1280">
 	<c:if test="<%= DDMTemplatePermission.containsAddTemplatePermission(permissionChecker, scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), scopeClassNameId) %>">
 		<aui:button-row>
 			<aui:button onClick='<%= "javascript:" + renderResponse.getNamespace() + "openDDMPortlet();" %>' primary="<%= true %>" value="add-form" />
 		</aui:button-row>
 	</c:if>
 
-	<liferay-ui:search-container-row
-		className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
-		keyProperty="templateId"
-		modelVar="ddmTemplate"
+	<liferay-ui:search-container
+		searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, iteratorURL, null, "there-are-no-results") %>'
 	>
-		<liferay-ui:search-container-column-text
-			name="name"
-			value="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>"
-		/>
 
-		<liferay-ui:search-container-column-date
-			name="modified-date"
-			value="<%= ddmTemplate.getModifiedDate() %>"
-		/>
+		<%
+		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
+		%>
 
-		<liferay-ui:search-container-column-jsp
-			align="right"
-			cssClass="entry-action"
-			path="/admin/process/template_action.jsp"
-		/>
-	</liferay-ui:search-container-row>
+		<liferay-ui:search-container-results>
 
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+			<%
+			total = DDMTemplateLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructureId, scopeClassNameId, displayTerms.getKeywords(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, mode, WorkflowConstants.STATUS_ANY);
+
+			searchContainer.setTotal(total);
+
+			results = DDMTemplateLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructureId, scopeClassNameId, displayTerms.getKeywords(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, mode, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd(), null);
+
+			searchContainer.setResults(results);
+			%>
+
+		</liferay-ui:search-container-results>
+
+		<liferay-ui:search-container-row
+			className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
+			keyProperty="templateId"
+			modelVar="ddmTemplate"
+		>
+			<liferay-ui:search-container-column-text
+				name="name"
+				value="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>"
+			/>
+
+			<liferay-ui:search-container-column-date
+				name="modified-date"
+				value="<%= ddmTemplate.getModifiedDate() %>"
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				align="right"
+				cssClass="entry-action"
+				path="/admin/process/template_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
+</div>
 
 <aui:script>
 	Liferay.on(

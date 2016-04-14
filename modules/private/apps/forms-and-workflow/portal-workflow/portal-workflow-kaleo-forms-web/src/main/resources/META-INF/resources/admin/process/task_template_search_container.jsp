@@ -48,6 +48,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPair"
+			cssClass="entry-display-style"
 			modelVar="taskFormsPair"
 		>
 			<liferay-ui:search-container-column-text
@@ -94,12 +95,12 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
-				cssClass="kaleo-process-assign-form-button"
+				cssClass="entry-action"
 			>
 				<aui:button href="<%= selectFormURL %>" value="assign-form" />
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>
