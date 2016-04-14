@@ -32,13 +32,21 @@ boolean kaleoProcessStarted = false;
 if (kaleoProcess != null) {
 	kaleoProcessStarted = (DDLRecordLocalServiceUtil.getRecordsCount(kaleoProcess.getDDLRecordSetId(), WorkflowConstants.STATUS_ANY) > 0);
 }
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= (kaleoProcess == null) %>"
-	title='<%= Validator.isNull(kaleoProcessName) ? "new-process" : kaleoProcessName %>'
-/>
+String title = null;
+
+if (Validator.isNull(kaleoProcessName)) {
+	title = LanguageUtil.get(request, "new-process");
+}
+else {
+	title = kaleoProcessName;
+}
+
+renderResponse.setTitle(title);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+%>
 
 <c:if test="<%= kaleoProcessStarted %>">
 	<div class="alert alert-info">
@@ -51,7 +59,7 @@ if (kaleoProcess != null) {
 	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editKaleoProcessURL %>" method="post" name="fm">
+<aui:form action="<%= editKaleoProcessURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="kaleoProcessId" type="hidden" value="<%= kaleoProcessId %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="scope" type="hidden" value="1" />
