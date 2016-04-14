@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.reports.engine.ByteArrayReportResultContainer;
 import com.liferay.portal.reports.engine.ReportEngine;
 import com.liferay.portal.reports.engine.ReportFormatExporter;
@@ -79,7 +80,8 @@ public class ReportEngineImpl implements ReportEngine {
 				reportRequest.getReportDesignRetriever(), true);
 		}
 		catch (Exception e) {
-			throw new ReportGenerationException("Unable to compile report", e);
+			throw new ReportGenerationException(
+				"Unable to compile report: " + StackTraceUtil.getStackTrace(e));
 		}
 	}
 
@@ -114,7 +116,8 @@ public class ReportEngineImpl implements ReportEngine {
 				jasperPrint, reportRequest, resultContainer);
 		}
 		catch (Exception e) {
-			throw new ReportGenerationException("Unable to execute report", e);
+			throw new ReportGenerationException(
+				"Unable to execute report: " + StackTraceUtil.getStackTrace(e));
 		}
 	}
 
