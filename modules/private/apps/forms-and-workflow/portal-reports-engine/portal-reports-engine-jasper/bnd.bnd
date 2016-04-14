@@ -69,8 +69,6 @@ Import-Package:\
 	\
 	!org.osgi.service.prefs.*,\
 	\
-	!org.w3c.*,\
-	\
 	!sun.*,\
 	*
 Liferay-Releng-Module-Group-Description:
