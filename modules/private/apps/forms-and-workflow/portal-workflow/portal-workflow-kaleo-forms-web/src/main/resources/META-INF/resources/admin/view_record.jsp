@@ -40,7 +40,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "view-x", kaleoProcess.getN
 %>
 
 <div class="container-fluid-1280">
-
 	<c:if test="<%= ddlRecordVersion != null %>">
 		<aui:model-context bean="<%= ddlRecordVersion %>" model="<%= DDLRecordVersion.class %>" />
 

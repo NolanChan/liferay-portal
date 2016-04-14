@@ -52,7 +52,6 @@ DisplayTerms displayTerms = kaleoProcessSearch.getDisplayTerms();
 				keyProperty="kaleoProcessId"
 				modelVar="process"
 			>
-
 				<portlet:renderURL var="rowURL">
 					<portlet:param name="mvcPath" value='<%= "/admin/view_kaleo_process.jsp" %>' />
 					<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />

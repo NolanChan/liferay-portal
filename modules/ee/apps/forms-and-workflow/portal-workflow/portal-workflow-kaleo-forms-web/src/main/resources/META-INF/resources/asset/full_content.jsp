@@ -47,5 +47,4 @@ DDLRecordVersion ddlRecordVersion = (DDLRecordVersion)request.getAttribute(DDLWe
 		readOnly="<%= true %>"
 		requestedLocale="<%= locale %>"
 	/>
-
 </aui:fieldset>

@@ -30,7 +30,6 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -224,7 +223,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			}
 		}
 	}
-
 
 	public void deleteKaleoDraftDefinition(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -613,8 +611,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		String definition = ParamUtil.getString(actionRequest, "definition");
 
 		return _ddmFormJSONDeserializer.deserialize(definition);
-
 	}
+
 	protected long[] getKaleoProcessIds(ActionRequest actionRequest) {
 		long recordId = ParamUtil.getLong(actionRequest, "kaleoProcessId");
 

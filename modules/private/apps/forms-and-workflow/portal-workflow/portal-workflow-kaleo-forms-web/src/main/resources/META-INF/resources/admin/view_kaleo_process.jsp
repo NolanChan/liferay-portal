@@ -94,9 +94,7 @@ recordSearchContainer.setOrderByType(kaleoFormsViewRecordsDisplayContext.getOrde
 	includeCheckBox="<%= !user.isDefaultUser() %>"
 	searchContainerId="ddlRecord"
 >
-
 	<liferay-frontend:management-bar-filters>
-
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
 			portletURL="<%= portletURL %>"
