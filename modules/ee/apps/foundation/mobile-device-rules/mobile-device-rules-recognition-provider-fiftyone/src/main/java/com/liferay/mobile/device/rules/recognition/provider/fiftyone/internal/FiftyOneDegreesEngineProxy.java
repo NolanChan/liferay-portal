@@ -39,6 +39,7 @@ import org.apache.commons.io.IOUtils;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Brian Greenwald
@@ -82,7 +83,7 @@ public class FiftyOneDegreesEngineProxy {
 			FiftyOneDegreesConfiguration.class, properties);
 
 		String fileName =
-			_fiftyOneDegreesConfiguration.fiftyOneDegreesDatabaseFileName();
+			_fiftyOneDegreesConfiguration.fiftyOneDegreesDataFileName();
 
 		Class fiftyOneDegreesProxyClass = getClass();
 
@@ -97,12 +98,8 @@ public class FiftyOneDegreesEngineProxy {
 					dataSourceInputStream);
 			}
 			else if (fileName.endsWith(".jar") || fileName.endsWith(".zip")) {
-				ZipInputStream zipInputStream = new ZipInputStream(
+				dataSourceInputStream = new ZipInputStream(
 					dataSourceInputStream);
-
-				dataSourceInputStream = zipInputStream;
-
-				zipInputStream.getNextEntry();
 			}
 
 			byte[] dataSourceByteArray = IOUtils.toByteArray(
@@ -120,6 +117,12 @@ public class FiftyOneDegreesEngineProxy {
 		finally {
 			StreamUtil.cleanUp(dataSourceInputStream);
 		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_fiftyOneDegreesConfiguration = null;
+		_provider = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

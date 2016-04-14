@@ -30,10 +30,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface FiftyOneDegreesConfiguration {
 
-	@Meta.AD(
-		deflt = "/META-INF/resources/51Degrees-PremiumV3_2.dat.gz",
-		required = false
-	)
-	public String fiftyOneDegreesDatabaseFileName();
+	@Meta.AD(deflt = "51Degrees-PremiumV3_2.dat.gz", required = false)
+	public String fiftyOneDegreesDataFileName();
 
 }
