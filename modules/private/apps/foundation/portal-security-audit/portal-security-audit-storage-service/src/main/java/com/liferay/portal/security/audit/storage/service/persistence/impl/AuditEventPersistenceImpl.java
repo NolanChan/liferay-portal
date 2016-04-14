@@ -718,8 +718,8 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 					primaryKey);
 
 			if (auditEvent == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				if (_log.isDebugEnabled()) {
+					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
@@ -875,8 +875,8 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 		AuditEvent auditEvent = fetchByPrimaryKey(primaryKey);
 
 		if (auditEvent == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			if (_log.isDebugEnabled()) {
+				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			throw new NoSuchEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
