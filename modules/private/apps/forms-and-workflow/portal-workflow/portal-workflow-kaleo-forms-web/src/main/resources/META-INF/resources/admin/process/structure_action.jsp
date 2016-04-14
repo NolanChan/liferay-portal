@@ -24,7 +24,7 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 String redirect = (String)row.getParameter("redirect");
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT) %>" var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcPath" value="/edit_structure.jsp" />
 		<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_STRUCTURE %>" />
@@ -41,7 +41,6 @@ String redirect = (String)row.getParameter("redirect");
 	%>
 
 	<liferay-ui:icon
-		iconCssClass="icon-edit"
 		message="edit"
 		onClick="<%= taglibOnClick %>"
 		url="javascript:;"
@@ -52,7 +51,6 @@ String redirect = (String)row.getParameter("redirect");
 	%>
 
 	<liferay-ui:icon
-		iconCssClass="icon-check"
 		message="choose"
 		onClick="<%= taglibOnClick %>"
 		url="javascript:;"

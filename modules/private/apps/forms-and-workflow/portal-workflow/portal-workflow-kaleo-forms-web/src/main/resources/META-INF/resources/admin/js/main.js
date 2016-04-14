@@ -106,7 +106,7 @@ AUI.add(
 
 							currentName = Liferay.Util.escapeHTML(currentName);
 
-							instance.one('.header-title span').setContent(currentName);
+							instance.one('.control-menu-level-1-nav .tools-control-group span.control-menu-level-1-heading').setContent(currentName);
 						}
 
 						if (currentStep === STEPS_MAP.FORMS) {
@@ -268,13 +268,6 @@ AUI.add(
 						A.io.request(
 							instance.get('saveInPortletSessionURL'),
 							{
-								after: {
-									success: function() {
-										if (dialogId) {
-											Liferay.Util.getWindow(dialogId).hide();
-										}
-									}
-								},
 								data: instance.ns(data)
 							}
 						);
