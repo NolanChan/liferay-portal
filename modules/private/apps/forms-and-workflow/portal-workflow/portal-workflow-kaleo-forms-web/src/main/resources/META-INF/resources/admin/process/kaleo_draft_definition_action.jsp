@@ -24,7 +24,7 @@ KaleoDraftDefinition kaleoDraftDefinition = (KaleoDraftDefinition)row.getObject(
 String backURL = (String)row.getParameter("backURL");
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcPath" value='<%= "/admin/process/edit_workflow.jsp" %>' />
 		<portlet:param name="backURL" value="<%= backURL %>" />
@@ -34,7 +34,6 @@ String backURL = (String)row.getParameter("backURL");
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		iconCssClass="icon-edit"
 		message="edit"
 		url="<%= editURL %>"
 	/>

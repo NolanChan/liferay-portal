@@ -102,10 +102,37 @@ if (Validator.isNotNull(workflowDefinition)) {
 		<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
 	</liferay-portlet:renderURL>
 
-	<liferay-ui:tabs
-		names="published,unpublished"
-		url="<%= portletURL.toString() %>"
-	/>
+	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+		<aui:nav cssClass="nav-bar-workflow nav-tabs nav-tabs-default kaleo-process-workflow-nav-tabs">
+			<liferay-portlet:renderURL var="viewPublishedURL">
+				<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="tabs1" value="published" />
+				<portlet:param name="historyKey" value="workflow" />
+				<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
+			</liferay-portlet:renderURL>
+
+			<aui:nav-item
+				href="<%= viewPublishedURL %>"
+				label="published"
+				selected='<%= tabs1.equals("published") %>'
+			/>
+
+			<liferay-portlet:renderURL var="viewUnpublishedURL">
+				<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="tabs1" value="unpublished" />
+				<portlet:param name="historyKey" value="workflow" />
+				<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
+			</liferay-portlet:renderURL>
+
+			<aui:nav-item
+				href="<%= viewUnpublishedURL %>"
+				label="unpublished"
+				selected='<%= tabs1.equals("unpublished") %>'
+			/>
+		</aui:nav>
+	</aui:nav-bar>
 
 	<c:choose>
 		<c:when test='<%= tabs1.equals("published") %>'>
@@ -202,7 +229,7 @@ if (Validator.isNotNull(workflowDefinition)) {
 		</c:otherwise>
 	</c:choose>
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
 <aui:script>
