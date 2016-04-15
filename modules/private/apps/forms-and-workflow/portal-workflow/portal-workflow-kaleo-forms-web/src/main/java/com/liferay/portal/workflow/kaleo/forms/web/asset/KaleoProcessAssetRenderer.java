@@ -136,10 +136,10 @@ public class KaleoProcessAssetRenderer
 			liferayPortletRequest, KaleoFormsPortletKeys.KALEO_FORMS_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
+		portletURL.setParameter("mvcPath", "/admin/edit_record.jsp");
 		portletURL.setParameter(
 			"kaleoProcessId",
 			String.valueOf(_kaleoProcess.getKaleoProcessId()));
-		portletURL.setParameter("mvcPath", "/admin/edit_record.jsp");
 		portletURL.setParameter(
 			"ddlRecordId", String.valueOf(_record.getRecordId()));
 
