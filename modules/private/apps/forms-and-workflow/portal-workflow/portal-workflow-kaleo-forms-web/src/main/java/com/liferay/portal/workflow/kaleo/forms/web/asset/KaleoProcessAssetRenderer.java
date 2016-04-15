@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
@@ -95,9 +94,8 @@ public class KaleoProcessAssetRenderer
 
 			return "/asset/full_content.jsp";
 		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override
@@ -168,7 +166,7 @@ public class KaleoProcessAssetRenderer
 			ResultRow resultRow = (ResultRow)liferayPortletRequest.getAttribute(
 				WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-			if (Validator.isNotNull(resultRow)) {
+			if (resultRow != null) {
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)liferayPortletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);

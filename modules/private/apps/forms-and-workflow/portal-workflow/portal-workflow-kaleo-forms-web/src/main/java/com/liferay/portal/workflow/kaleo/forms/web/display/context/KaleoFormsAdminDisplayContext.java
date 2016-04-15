@@ -73,32 +73,33 @@ public class KaleoFormsAdminDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		if (_kaleoFormsAdminDisplayStyle == null) {
-			PortalPreferences portalPreferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					_renderRequest);
+		if (_kaleoFormsAdminDisplayStyle != null) {
+			return _kaleoFormsAdminDisplayStyle;
+		}
 
-			_kaleoFormsAdminDisplayStyle = ParamUtil.getString(
-				_renderRequest, "displayStyle");
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(_renderRequest);
 
-			if (Validator.isNull(_kaleoFormsAdminDisplayStyle)) {
-				_kaleoFormsAdminDisplayStyle = portalPreferences.getValue(
-					KaleoFormsPortletKeys.KALEO_FORMS_ADMIN, "display-style",
-					_kaleoFormsWebConfiguration.defaultDisplayView());
-			}
-			else if (ArrayUtil.contains(
-						getDisplayViews(), _kaleoFormsAdminDisplayStyle)) {
+		_kaleoFormsAdminDisplayStyle = ParamUtil.getString(
+			_renderRequest, "displayStyle");
 
-				portalPreferences.setValue(
-					KaleoFormsPortletKeys.KALEO_FORMS_ADMIN, "display-style",
-					_kaleoFormsAdminDisplayStyle);
-			}
-
-			if (!ArrayUtil.contains(
+		if (Validator.isNull(_kaleoFormsAdminDisplayStyle)) {
+			_kaleoFormsAdminDisplayStyle = portalPreferences.getValue(
+				KaleoFormsPortletKeys.KALEO_FORMS_ADMIN, "display-style",
+				_kaleoFormsWebConfiguration.defaultDisplayView());
+		}
+		else if (ArrayUtil.contains(
 					getDisplayViews(), _kaleoFormsAdminDisplayStyle)) {
 
-				_kaleoFormsAdminDisplayStyle = getDisplayViews()[0];
-			}
+			portalPreferences.setValue(
+				KaleoFormsPortletKeys.KALEO_FORMS_ADMIN, "display-style",
+				_kaleoFormsAdminDisplayStyle);
+		}
+
+		if (!ArrayUtil.contains(
+				getDisplayViews(), _kaleoFormsAdminDisplayStyle)) {
+
+			_kaleoFormsAdminDisplayStyle = getDisplayViews()[0];
 		}
 
 		return _kaleoFormsAdminDisplayStyle;

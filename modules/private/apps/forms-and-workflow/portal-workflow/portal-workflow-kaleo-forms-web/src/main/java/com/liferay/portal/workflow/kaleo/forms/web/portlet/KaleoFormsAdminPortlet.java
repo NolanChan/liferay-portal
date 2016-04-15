@@ -385,8 +385,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 		DDLRecordSet recordSet = record.getRecordSet();
 
-		boolean visible = true;
-
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 		String ddmStructureName = ddmStructure.getName(locale);
@@ -401,7 +399,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			userId, kaleoProcess.getGroupId(), kaleoProcess.getCreateDate(),
 			kaleoProcess.getModifiedDate(), KaleoProcess.class.getName(),
 			kaleoProcess.getKaleoProcessId(), kaleoProcess.getUuid(), 0,
-			assetCategoryIds, assetTagNames, true, visible, null, null, null,
+			assetCategoryIds, assetTagNames, true, true, null, null, null,
 			ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null, null,
 			0, 0, priority);
 	}
@@ -915,9 +913,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		HttpServletRequest request = serviceContext.getRequest();
 
 		long ddlRecordId = ParamUtil.getLong(request, "ddlRecordId");
-
 		long ddlRecordSetId = ParamUtil.getLong(request, "ddlRecordSetId");
-
 		long kaleoProcessId = ParamUtil.getLong(request, "kaleoProcessId");
 
 		Locale locale = serviceContext.getLocale();

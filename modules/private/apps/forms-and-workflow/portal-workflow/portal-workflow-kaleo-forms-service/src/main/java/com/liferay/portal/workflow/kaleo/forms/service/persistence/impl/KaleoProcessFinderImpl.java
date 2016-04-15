@@ -237,14 +237,12 @@ public class KaleoProcessFinderImpl
 
 		String[] names = null;
 		String[] descriptions = null;
-		boolean andOperator = false;
+		boolean andOperator = true;
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
-		}
-		else {
-			andOperator = true;
+			andOperator = false;
 		}
 
 		return doCountByG_N_D(

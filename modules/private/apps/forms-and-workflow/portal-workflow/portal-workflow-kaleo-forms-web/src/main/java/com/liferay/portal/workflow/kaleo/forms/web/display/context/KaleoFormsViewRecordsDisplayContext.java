@@ -76,29 +76,31 @@ public class KaleoFormsViewRecordsDisplayContext {
 	}
 
 	public List<DDMFormField> getDDMFormFields() throws PortalException {
-		if (_ddmFormFields == null) {
-			DDMStructure ddmStructure = _ddlRecordSet.getDDMStructure();
-
-			DDMForm ddmForm = ddmStructure.getDDMForm();
-
-			List<DDMFormField> ddmFormFields = new ArrayList<>();
-
-			for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-				if (isDDMFormFieldTransient(ddmFormField)) {
-					continue;
-				}
-
-				ddmFormFields.add(ddmFormField);
-			}
-
-			int totalColumns = _TOTAL_COLUMNS;
-
-			if (ddmFormFields.size() < totalColumns) {
-				totalColumns = ddmFormFields.size();
-			}
-
-			_ddmFormFields = ddmFormFields.subList(0, totalColumns);
+		if (_ddmFormFields != null) {
+			return _ddmFormFields;
 		}
+
+		DDMStructure ddmStructure = _ddlRecordSet.getDDMStructure();
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		List<DDMFormField> ddmFormFields = new ArrayList<>();
+
+		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+			if (isDDMFormFieldTransient(ddmFormField)) {
+				continue;
+			}
+
+			ddmFormFields.add(ddmFormField);
+		}
+
+		int totalColumns = _TOTAL_COLUMNS;
+
+		if (ddmFormFields.size() < totalColumns) {
+			totalColumns = ddmFormFields.size();
+		}
+
+		_ddmFormFields = ddmFormFields.subList(0, totalColumns);
 
 		return _ddmFormFields;
 	}
