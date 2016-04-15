@@ -81,13 +81,11 @@ renderResponse.setTitle(title);
 	</liferay-util:buffer>
 
 	<liferay-ui:form-navigator
-		categoryNames="<%= _CATEGORY_NAMES %>"
-		categorySections="<%= _CATEGORY_SECTIONS %>"
 		displayStyle="steps"
 		formName="fm"
 		htmlBottom="<%= htmlBottom %>"
 		id="kaleo.form"
-		jspPath="/admin/process/"
+		markupView="lexicon"
 		showButtons="<%= false %>"
 	/>
 
@@ -126,9 +124,3 @@ renderResponse.setTitle(title);
 		Liferay.on('destroyPortlet', clearAfterFormRegistered);
 	</aui:script>
 </aui:form>
-
-<%!
-private static final String[] _CATEGORY_NAMES = {""};
-
-private static final String[][] _CATEGORY_SECTIONS = {{"details", "fields", "workflow", "forms"}};
-%>
