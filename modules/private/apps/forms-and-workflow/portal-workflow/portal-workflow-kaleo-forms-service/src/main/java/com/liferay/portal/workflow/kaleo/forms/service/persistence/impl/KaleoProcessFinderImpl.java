@@ -167,6 +167,23 @@ public class KaleoProcessFinderImpl
 			orderByComparator, false);
 	}
 
+	protected int doCountByKeywords(
+		long groupId, String keywords, boolean inlineSQLHelper) {
+
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = true;
+
+		if (Validator.isNotNull(keywords)) {
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords, false);
+			andOperator = false;
+		}
+
+		return doCountByG_N_D(
+			groupId, names, descriptions, andOperator, inlineSQLHelper);
+	}
+
 	protected int doCountByG_N_D(
 		long groupId, String[] names, String[] descriptions,
 		boolean andOperator, boolean inlineSQLHelper) {
@@ -230,23 +247,6 @@ public class KaleoProcessFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	protected int doCountByKeywords(
-		long groupId, String keywords, boolean inlineSQLHelper) {
-
-		String[] names = null;
-		String[] descriptions = null;
-		boolean andOperator = true;
-
-		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-			andOperator = false;
-		}
-
-		return doCountByG_N_D(
-			groupId, names, descriptions, andOperator, inlineSQLHelper);
 	}
 
 	protected List<KaleoProcess> doFindByG_N_D(
