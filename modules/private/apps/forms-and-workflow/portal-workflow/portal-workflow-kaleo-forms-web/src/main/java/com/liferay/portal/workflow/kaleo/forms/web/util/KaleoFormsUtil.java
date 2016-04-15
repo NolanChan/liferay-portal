@@ -152,16 +152,14 @@ public class KaleoFormsUtil {
 		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		String translatedLanguagesDescription = GetterUtil.getString(
-			portletSession.getAttribute("translatedLanguagesDescription"),
-			StringPool.BLANK);
+			portletSession.getAttribute("translatedLanguagesDescription"));
 
 		for (String translatedLanguageId :
 				StringUtil.split(translatedLanguagesDescription)) {
 
 			String description = GetterUtil.getString(
 				portletSession.getAttribute(
-					"description" + translatedLanguageId),
-				StringPool.BLANK);
+					"description" + translatedLanguageId));
 
 			Locale locale = LocaleUtil.fromLanguageId(translatedLanguageId);
 
@@ -190,15 +188,13 @@ public class KaleoFormsUtil {
 		Map<Locale, String> nameMap = new HashMap<>();
 
 		String translatedLanguagesName = GetterUtil.getString(
-			portletSession.getAttribute("translatedLanguagesName"),
-			StringPool.BLANK);
+			portletSession.getAttribute("translatedLanguagesName"));
 
 		for (String translatedLanguageId :
 				StringUtil.split(translatedLanguagesName)) {
 
 			String name = GetterUtil.getString(
-				portletSession.getAttribute("name" + translatedLanguageId),
-				StringPool.BLANK);
+				portletSession.getAttribute("name" + translatedLanguageId));
 
 			Locale locale = LocaleUtil.fromLanguageId(translatedLanguageId);
 
@@ -225,8 +221,7 @@ public class KaleoFormsUtil {
 		throws Exception {
 
 		String defaultName = GetterUtil.getString(
-			portletSession.getAttribute("name" + _getDefaultLanguageId()),
-			StringPool.BLANK);
+			portletSession.getAttribute("name" + _getDefaultLanguageId()));
 
 		String languageId = LocaleUtil.toLanguageId(locale);
 
@@ -269,8 +264,7 @@ public class KaleoFormsUtil {
 		KaleoProcess kaleoProcess, PortletSession portletSession) {
 
 		String workflowDefinition = GetterUtil.getString(
-			portletSession.getAttribute("workflowDefinition"),
-			StringPool.BLANK);
+			portletSession.getAttribute("workflowDefinition"));
 
 		if (Validator.isNotNull(workflowDefinition)) {
 			return workflowDefinition;

@@ -123,7 +123,7 @@ public class WURFLDevice extends AbstractDevice {
 			return false;
 		}
 
-		return GetterUtil.getBoolean(capability.getValue(), false);
+		return GetterUtil.getBoolean(capability.getValue());
 	}
 
 	@Override
@@ -134,7 +134,7 @@ public class WURFLDevice extends AbstractDevice {
 			return false;
 		}
 
-		return GetterUtil.getBoolean(capability.getValue(), false);
+		return GetterUtil.getBoolean(capability.getValue());
 	}
 
 	protected Dimensions getDimensions(
