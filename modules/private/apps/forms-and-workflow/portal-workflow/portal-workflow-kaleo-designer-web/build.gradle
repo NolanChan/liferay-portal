@@ -14,6 +14,15 @@ dependencies {
 	provided project(":private:apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-designer-service")
 }
 
+mergeLang {
+	sourceDirs = [
+		"../../../../../apps/forms-and-workflow/dynamic-data-lists/dynamic-data-lists-form-web/src/main/resources/content",
+		"../../../../../apps/forms-and-workflow/dynamic-data-lists/dynamic-data-lists-web/src/main/resources/content",
+		"../../../../../apps/forms-and-workflow/portal-workflow/portal-workflow-lang/src/main/resources/content",
+		"src/main/resources/content"
+	]
+}
+
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
