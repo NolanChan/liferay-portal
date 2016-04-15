@@ -14,7 +14,7 @@ dependencies {
 	provided project(":apps:forms-and-workflow:portal-reports-engine:portal-reports-engine-api")
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided project(":apps:foundation:portal:portal-spring-extender")
-	provided project(":ee:apps:forms-and-workflow:portal-reports-engine:portal-reports-api")
+	provided project(":private:apps:forms-and-workflow:portal-reports-engine:portal-reports-api")
 }
 
 liferay {
