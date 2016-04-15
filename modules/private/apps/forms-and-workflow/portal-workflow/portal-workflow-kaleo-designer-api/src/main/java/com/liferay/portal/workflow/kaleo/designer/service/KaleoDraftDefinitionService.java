@@ -63,39 +63,15 @@ public interface KaleoDraftDefinitionService extends BaseService {
 		int version, int draftVersion, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteKaleoDraftDefinitions(java.lang.String name, int version,
-		ServiceContext serviceContext) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoDraftDefinition getKaleoDraftDefinition(java.lang.String name,
 		int version, int draftVersion, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoDraftDefinition> getKaleoDraftDefinitions()
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoDraftDefinition getLatestKaleoDraftDefinition(
 		java.lang.String name, int version, ServiceContext serviceContext)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
-		long companyId, java.lang.String keywords, int version, int start,
-		int end, OrderByComparator orderByComparator) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
-		long companyId, int version, int start, int end,
-		OrderByComparator orderByComparator) throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	public KaleoDraftDefinition publishKaleoDraftDefinition(long userId,
 		long groupId, java.lang.String name,
@@ -106,4 +82,28 @@ public interface KaleoDraftDefinitionService extends BaseService {
 		java.lang.String name, Map<Locale, java.lang.String> titleMap,
 		java.lang.String content, int version, ServiceContext serviceContext)
 		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoDraftDefinition> getKaleoDraftDefinitions()
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		long companyId, int version, int start, int end,
+		OrderByComparator orderByComparator) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		long companyId, java.lang.String keywords, int version, int start,
+		int end, OrderByComparator orderByComparator) throws PortalException;
+
+	public void deleteKaleoDraftDefinitions(java.lang.String name, int version,
+		ServiceContext serviceContext) throws PortalException;
 }

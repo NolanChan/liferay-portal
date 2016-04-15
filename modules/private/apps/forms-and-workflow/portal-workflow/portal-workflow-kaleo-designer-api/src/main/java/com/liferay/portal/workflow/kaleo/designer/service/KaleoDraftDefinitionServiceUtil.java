@@ -52,13 +52,6 @@ public class KaleoDraftDefinitionServiceUtil {
 			content, version, draftVersion, serviceContext);
 	}
 
-	public static void deleteKaleoDraftDefinitions(java.lang.String name,
-		int version,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteKaleoDraftDefinitions(name, version, serviceContext);
-	}
-
 	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
 		java.lang.String name, int version, int draftVersion,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -68,45 +61,12 @@ public class KaleoDraftDefinitionServiceUtil {
 			serviceContext);
 	}
 
-	public static java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getKaleoDraftDefinitions();
-	}
-
 	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition getLatestKaleoDraftDefinition(
 		java.lang.String name, int version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getLatestKaleoDraftDefinition(name, version, serviceContext);
-	}
-
-	public static java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
-		long companyId, java.lang.String keywords, int version, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getLatestKaleoDraftDefinitions(companyId, keywords,
-			version, start, end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
-		long companyId, int version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getLatestKaleoDraftDefinitions(companyId, version, start,
-			end, orderByComparator);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition publishKaleoDraftDefinition(
@@ -129,6 +89,46 @@ public class KaleoDraftDefinitionServiceUtil {
 		return getService()
 				   .updateKaleoDraftDefinition(userId, name, titleMap, content,
 			version, serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKaleoDraftDefinitions();
+	}
+
+	public static java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		long companyId, int version, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLatestKaleoDraftDefinitions(companyId, version, start,
+			end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		long companyId, java.lang.String keywords, int version, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLatestKaleoDraftDefinitions(companyId, keywords,
+			version, start, end, orderByComparator);
+	}
+
+	public static void deleteKaleoDraftDefinitions(java.lang.String name,
+		int version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteKaleoDraftDefinitions(name, version, serviceContext);
 	}
 
 	public static KaleoDraftDefinitionService getService() {

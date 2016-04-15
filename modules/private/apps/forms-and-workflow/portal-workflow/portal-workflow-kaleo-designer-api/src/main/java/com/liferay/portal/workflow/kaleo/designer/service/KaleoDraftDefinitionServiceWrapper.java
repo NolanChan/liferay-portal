@@ -47,14 +47,6 @@ public class KaleoDraftDefinitionServiceWrapper
 	}
 
 	@Override
-	public void deleteKaleoDraftDefinitions(java.lang.String name, int version,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_kaleoDraftDefinitionService.deleteKaleoDraftDefinitions(name, version,
-			serviceContext);
-	}
-
-	@Override
 	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition getKaleoDraftDefinition(
 		java.lang.String name, int version, int draftVersion,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -64,47 +56,12 @@ public class KaleoDraftDefinitionServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoDraftDefinitionService.getKaleoDraftDefinitions();
-	}
-
-	@Override
 	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition getLatestKaleoDraftDefinition(
 		java.lang.String name, int version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoDraftDefinitionService.getLatestKaleoDraftDefinition(name,
 			version, serviceContext);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
-		long companyId, java.lang.String keywords, int version, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoDraftDefinitionService.getLatestKaleoDraftDefinitions(companyId,
-			keywords, version, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
-		long companyId, int version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoDraftDefinitionService.getLatestKaleoDraftDefinitions(companyId,
-			version, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _kaleoDraftDefinitionService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -127,6 +84,49 @@ public class KaleoDraftDefinitionServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoDraftDefinitionService.updateKaleoDraftDefinition(userId,
 			name, titleMap, content, version, serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoDraftDefinitionService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getKaleoDraftDefinitions()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoDraftDefinitionService.getKaleoDraftDefinitions();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		long companyId, int version, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoDraftDefinitionService.getLatestKaleoDraftDefinitions(companyId,
+			version, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> getLatestKaleoDraftDefinitions(
+		long companyId, java.lang.String keywords, int version, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoDraftDefinitionService.getLatestKaleoDraftDefinitions(companyId,
+			keywords, version, start, end, orderByComparator);
+	}
+
+	@Override
+	public void deleteKaleoDraftDefinitions(java.lang.String name, int version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_kaleoDraftDefinitionService.deleteKaleoDraftDefinitions(name, version,
+			serviceContext);
 	}
 
 	@Override

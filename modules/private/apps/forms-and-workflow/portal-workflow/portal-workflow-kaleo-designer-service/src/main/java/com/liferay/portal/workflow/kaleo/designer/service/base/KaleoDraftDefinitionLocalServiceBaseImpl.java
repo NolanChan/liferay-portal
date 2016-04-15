@@ -233,7 +233,7 @@ public abstract class KaleoDraftDefinitionLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(kaleoDraftDefinitionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(KaleoDraftDefinition.class);
 
@@ -247,7 +247,7 @@ public abstract class KaleoDraftDefinitionLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(kaleoDraftDefinitionLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(KaleoDraftDefinition.class);
 
@@ -259,7 +259,7 @@ public abstract class KaleoDraftDefinitionLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(kaleoDraftDefinitionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(KaleoDraftDefinition.class);
 

@@ -228,7 +228,7 @@ public abstract class AuditEventLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.security.audit.storage.service.AuditEventLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(auditEventLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AuditEvent.class);
 
@@ -241,7 +241,7 @@ public abstract class AuditEventLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.security.audit.storage.service.AuditEventLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(auditEventLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(AuditEvent.class);
 
@@ -253,7 +253,7 @@ public abstract class AuditEventLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.security.audit.storage.service.AuditEventLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(auditEventLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AuditEvent.class);
 

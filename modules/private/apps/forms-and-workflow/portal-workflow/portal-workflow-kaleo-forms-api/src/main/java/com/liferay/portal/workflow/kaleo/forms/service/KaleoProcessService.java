@@ -72,9 +72,12 @@ public interface KaleoProcessService extends BaseService {
 	public KaleoProcess getKaleoProcess(long kaleoProcessId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoProcess> getKaleoProcesses(long groupId, int start,
-		int end, OrderByComparator orderByComparator);
+	public KaleoProcess updateKaleoProcess(long kaleoProcessId,
+		long ddmStructureId, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, long ddmTemplateId,
+		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
+		KaleoTaskFormPairs kaleoTaskFormPairs, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKaleoProcessesCount(long groupId);
@@ -86,10 +89,7 @@ public interface KaleoProcessService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public KaleoProcess updateKaleoProcess(long kaleoProcessId,
-		long ddmStructureId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, long ddmTemplateId,
-		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
-		KaleoTaskFormPairs kaleoTaskFormPairs, ServiceContext serviceContext)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoProcess> getKaleoProcesses(long groupId, int start,
+		int end, OrderByComparator orderByComparator);
 }

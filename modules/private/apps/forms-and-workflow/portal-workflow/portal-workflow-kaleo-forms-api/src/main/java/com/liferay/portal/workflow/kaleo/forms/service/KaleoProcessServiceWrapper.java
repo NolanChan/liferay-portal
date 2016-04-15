@@ -62,11 +62,19 @@ public class KaleoProcessServiceWrapper implements KaleoProcessService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		return _kaleoProcessService.getKaleoProcesses(groupId, start, end,
-			orderByComparator);
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
+		long kaleoProcessId, long ddmStructureId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long ddmTemplateId, java.lang.String workflowDefinitionName,
+		int workflowDefinitionVersion,
+		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoProcessService.updateKaleoProcess(kaleoProcessId,
+			ddmStructureId, nameMap, descriptionMap, ddmTemplateId,
+			workflowDefinitionName, workflowDefinitionVersion,
+			kaleoTaskFormPairs, serviceContext);
 	}
 
 	@Override
@@ -85,19 +93,11 @@ public class KaleoProcessServiceWrapper implements KaleoProcessService,
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
-		long kaleoProcessId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long ddmTemplateId, java.lang.String workflowDefinitionName,
-		int workflowDefinitionVersion,
-		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoProcessService.updateKaleoProcess(kaleoProcessId,
-			ddmStructureId, nameMap, descriptionMap, ddmTemplateId,
-			workflowDefinitionName, workflowDefinitionVersion,
-			kaleoTaskFormPairs, serviceContext);
+	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _kaleoProcessService.getKaleoProcesses(groupId, start, end,
+			orderByComparator);
 	}
 
 	@Override

@@ -41,6 +41,32 @@ public class KaleoProcessLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
 
 	/**
 	* Adds the kaleo process to the database. Also notifies the appropriate model listeners.
@@ -105,17 +131,76 @@ public class KaleoProcessLocalServiceUtil {
 		return getService().deleteKaleoProcess(kaleoProcessId);
 	}
 
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess fetchKaleoProcess(
+		long kaleoProcessId) {
+		return getService().fetchKaleoProcess(kaleoProcessId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getDDLRecordSetKaleoProcess(
+		long ddlRecordSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDDLRecordSetKaleoProcess(ddlRecordSetId);
+	}
+
+	/**
+	* Returns the kaleo process with the primary key.
+	*
+	* @param kaleoProcessId the primary key of the kaleo process
+	* @return the kaleo process
+	* @throws PortalException if a kaleo process with the primary key could not be found
+	*/
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getKaleoProcess(
+		long kaleoProcessId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKaleoProcess(kaleoProcessId);
+	}
+
+	/**
+	* Updates the kaleo process in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoProcess the kaleo process
+	* @return the kaleo process that was updated
+	*/
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
+		com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess kaleoProcess) {
+		return getService().updateKaleoProcess(kaleoProcess);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
+		long kaleoProcessId, long ddmStructureId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long ddmTemplateId, java.lang.String workflowDefinitionName,
+		int workflowDefinitionVersion,
+		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateKaleoProcess(kaleoProcessId, ddmStructureId, nameMap,
+			descriptionMap, ddmTemplateId, workflowDefinitionName,
+			workflowDefinitionVersion, kaleoTaskFormPairs, serviceContext);
+	}
+
+	/**
+	* Returns the number of kaleo processes.
+	*
+	* @return the number of kaleo processes
+	*/
+	public static int getKaleoProcessesCount() {
+		return getService().getKaleoProcessesCount();
+	}
+
+	public static int getKaleoProcessesCount(long groupId) {
+		return getService().getKaleoProcessesCount(groupId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -169,6 +254,34 @@ public class KaleoProcessLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the kaleo processes.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo processes
+	* @param end the upper bound of the range of kaleo processes (not inclusive)
+	* @return the range of kaleo processes
+	*/
+	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
+		int start, int end) {
+		return getService().getKaleoProcesses(start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
+		long groupId) {
+		return getService().getKaleoProcesses(groupId);
+	}
+
+	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getKaleoProcesses(groupId, start, end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -190,120 +303,6 @@ public class KaleoProcessLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess fetchKaleoProcess(
-		long kaleoProcessId) {
-		return getService().fetchKaleoProcess(kaleoProcessId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getDDLRecordSetKaleoProcess(
-		long ddlRecordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDDLRecordSetKaleoProcess(ddlRecordSetId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the kaleo process with the primary key.
-	*
-	* @param kaleoProcessId the primary key of the kaleo process
-	* @return the kaleo process
-	* @throws PortalException if a kaleo process with the primary key could not be found
-	*/
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getKaleoProcess(
-		long kaleoProcessId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getKaleoProcess(kaleoProcessId);
-	}
-
-	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
-		long groupId) {
-		return getService().getKaleoProcesses(groupId);
-	}
-
-	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		return getService()
-				   .getKaleoProcesses(groupId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns a range of all the kaleo processes.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of kaleo processes
-	* @param end the upper bound of the range of kaleo processes (not inclusive)
-	* @return the range of kaleo processes
-	*/
-	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
-		int start, int end) {
-		return getService().getKaleoProcesses(start, end);
-	}
-
-	/**
-	* Returns the number of kaleo processes.
-	*
-	* @return the number of kaleo processes
-	*/
-	public static int getKaleoProcessesCount() {
-		return getService().getKaleoProcessesCount();
-	}
-
-	public static int getKaleoProcessesCount(long groupId) {
-		return getService().getKaleoProcessesCount(groupId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Updates the kaleo process in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoProcess the kaleo process
-	* @return the kaleo process that was updated
-	*/
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
-		com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess kaleoProcess) {
-		return getService().updateKaleoProcess(kaleoProcess);
-	}
-
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
-		long kaleoProcessId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long ddmTemplateId, java.lang.String workflowDefinitionName,
-		int workflowDefinitionVersion,
-		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateKaleoProcess(kaleoProcessId, ddmStructureId, nameMap,
-			descriptionMap, ddmTemplateId, workflowDefinitionName,
-			workflowDefinitionVersion, kaleoTaskFormPairs, serviceContext);
 	}
 
 	public static KaleoProcessLocalService getService() {

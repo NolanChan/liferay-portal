@@ -68,11 +68,19 @@ public class KaleoProcessServiceUtil {
 		return getService().getKaleoProcess(kaleoProcessId);
 	}
 
-	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
+		long kaleoProcessId, long ddmStructureId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long ddmTemplateId, java.lang.String workflowDefinitionName,
+		int workflowDefinitionVersion,
+		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getKaleoProcesses(groupId, start, end, orderByComparator);
+				   .updateKaleoProcess(kaleoProcessId, ddmStructureId, nameMap,
+			descriptionMap, ddmTemplateId, workflowDefinitionName,
+			workflowDefinitionVersion, kaleoTaskFormPairs, serviceContext);
 	}
 
 	public static int getKaleoProcessesCount(long groupId) {
@@ -88,19 +96,11 @@ public class KaleoProcessServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
-		long kaleoProcessId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long ddmTemplateId, java.lang.String workflowDefinitionName,
-		int workflowDefinitionVersion,
-		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
-				   .updateKaleoProcess(kaleoProcessId, ddmStructureId, nameMap,
-			descriptionMap, ddmTemplateId, workflowDefinitionName,
-			workflowDefinitionVersion, kaleoTaskFormPairs, serviceContext);
+				   .getKaleoProcesses(groupId, start, end, orderByComparator);
 	}
 
 	public static KaleoProcessService getService() {

@@ -41,12 +41,31 @@ public class KaleoProcessLinkLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessLinkLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink addKaleoProcessLink(
-		long kaleoProcessId, java.lang.String workflowTaskName,
-		long ddmTemplateId) {
-		return getService()
-				   .addKaleoProcessLink(kaleoProcessId, workflowTaskName,
-			ddmTemplateId);
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -58,6 +77,14 @@ public class KaleoProcessLinkLocalServiceUtil {
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink addKaleoProcessLink(
 		com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink kaleoProcessLink) {
 		return getService().addKaleoProcessLink(kaleoProcessLink);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink addKaleoProcessLink(
+		long kaleoProcessId, java.lang.String workflowTaskName,
+		long ddmTemplateId) {
+		return getService()
+				   .addKaleoProcessLink(kaleoProcessId, workflowTaskName,
+			ddmTemplateId);
 	}
 
 	/**
@@ -95,21 +122,81 @@ public class KaleoProcessLinkLocalServiceUtil {
 		return getService().deleteKaleoProcessLink(kaleoProcessLinkId);
 	}
 
-	public static void deleteKaleoProcessLinks(long kaleoProcessId) {
-		getService().deleteKaleoProcessLinks(kaleoProcessId);
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink fetchKaleoProcessLink(
+		long kaleoProcessId, java.lang.String workflowTaskName) {
+		return getService()
+				   .fetchKaleoProcessLink(kaleoProcessId, workflowTaskName);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink fetchKaleoProcessLink(
+		long kaleoProcessLinkId) {
+		return getService().fetchKaleoProcessLink(kaleoProcessLinkId);
 	}
 
 	/**
-	* @throws PortalException
+	* Returns the kaleo process link with the primary key.
+	*
+	* @param kaleoProcessLinkId the primary key of the kaleo process link
+	* @return the kaleo process link
+	* @throws PortalException if a kaleo process link with the primary key could not be found
 	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink getKaleoProcessLink(
+		long kaleoProcessLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
+		return getService().getKaleoProcessLink(kaleoProcessLinkId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	/**
+	* Updates the kaleo process link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoProcessLink the kaleo process link
+	* @return the kaleo process link that was updated
+	*/
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
+		com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink kaleoProcessLink) {
+		return getService().updateKaleoProcessLink(kaleoProcessLink);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
+		long kaleoProcessId, java.lang.String workflowTaskName,
+		long ddmTemplateId) {
+		return getService()
+				   .updateKaleoProcessLink(kaleoProcessId, workflowTaskName,
+			ddmTemplateId);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
+		long kaleoProcessLinkId, long kaleoProcessId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateKaleoProcessLink(kaleoProcessLinkId, kaleoProcessId);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
+		long kaleoProcessLinkId, long kaleoProcessId,
+		java.lang.String workflowTaskName, long ddmTemplateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateKaleoProcessLink(kaleoProcessLinkId, kaleoProcessId,
+			workflowTaskName, ddmTemplateId);
+	}
+
+	/**
+	* Returns the number of kaleo process links.
+	*
+	* @return the number of kaleo process links
+	*/
+	public static int getKaleoProcessLinksCount() {
+		return getService().getKaleoProcessLinksCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -163,6 +250,27 @@ public class KaleoProcessLinkLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the kaleo process links.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo process links
+	* @param end the upper bound of the range of kaleo process links (not inclusive)
+	* @return the range of kaleo process links
+	*/
+	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink> getKaleoProcessLinks(
+		int start, int end) {
+		return getService().getKaleoProcessLinks(start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink> getKaleoProcessLinks(
+		long kaleoProcessId) {
+		return getService().getKaleoProcessLinks(kaleoProcessId);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -186,116 +294,8 @@ public class KaleoProcessLinkLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink fetchKaleoProcessLink(
-		long kaleoProcessId, java.lang.String workflowTaskName) {
-		return getService()
-				   .fetchKaleoProcessLink(kaleoProcessId, workflowTaskName);
-	}
-
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink fetchKaleoProcessLink(
-		long kaleoProcessLinkId) {
-		return getService().fetchKaleoProcessLink(kaleoProcessLinkId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the kaleo process link with the primary key.
-	*
-	* @param kaleoProcessLinkId the primary key of the kaleo process link
-	* @return the kaleo process link
-	* @throws PortalException if a kaleo process link with the primary key could not be found
-	*/
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink getKaleoProcessLink(
-		long kaleoProcessLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getKaleoProcessLink(kaleoProcessLinkId);
-	}
-
-	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink> getKaleoProcessLinks(
-		long kaleoProcessId) {
-		return getService().getKaleoProcessLinks(kaleoProcessId);
-	}
-
-	/**
-	* Returns a range of all the kaleo process links.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of kaleo process links
-	* @param end the upper bound of the range of kaleo process links (not inclusive)
-	* @return the range of kaleo process links
-	*/
-	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink> getKaleoProcessLinks(
-		int start, int end) {
-		return getService().getKaleoProcessLinks(start, end);
-	}
-
-	/**
-	* Returns the number of kaleo process links.
-	*
-	* @return the number of kaleo process links
-	*/
-	public static int getKaleoProcessLinksCount() {
-		return getService().getKaleoProcessLinksCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
-		long kaleoProcessId, java.lang.String workflowTaskName,
-		long ddmTemplateId) {
-		return getService()
-				   .updateKaleoProcessLink(kaleoProcessId, workflowTaskName,
-			ddmTemplateId);
-	}
-
-	/**
-	* Updates the kaleo process link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoProcessLink the kaleo process link
-	* @return the kaleo process link that was updated
-	*/
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
-		com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink kaleoProcessLink) {
-		return getService().updateKaleoProcessLink(kaleoProcessLink);
-	}
-
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
-		long kaleoProcessLinkId, long kaleoProcessId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateKaleoProcessLink(kaleoProcessLinkId, kaleoProcessId);
-	}
-
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink updateKaleoProcessLink(
-		long kaleoProcessLinkId, long kaleoProcessId,
-		java.lang.String workflowTaskName, long ddmTemplateId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateKaleoProcessLink(kaleoProcessLinkId, kaleoProcessId,
-			workflowTaskName, ddmTemplateId);
+	public static void deleteKaleoProcessLinks(long kaleoProcessId) {
+		getService().deleteKaleoProcessLinks(kaleoProcessId);
 	}
 
 	public static KaleoProcessLinkLocalService getService() {
