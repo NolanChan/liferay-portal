@@ -14,14 +14,10 @@
 
 package com.liferay.mobile.device.rules.recognition.provider.fiftyone.internal;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.DeviceCapabilityFilter;
 import com.liferay.portal.kernel.mobile.device.DeviceRecognitionProvider;
 import com.liferay.portal.kernel.mobile.device.KnownDevices;
-
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -58,12 +54,13 @@ public class FiftyOneDegreesDeviceRecognitionProvider
 	}
 
 	@Activate
-	protected void activate(Map<String, Object> properties) {
+	protected void activate() {
 		try {
 			reload();
 		}
 		catch (Exception e) {
-			_log.error("Unable to initialize 51 Degrees Known Devices: " + e);
+			throw new IllegalStateException(
+				"Unable to load 51Degrees device data", e);
 		}
 	}
 
@@ -80,9 +77,6 @@ public class FiftyOneDegreesDeviceRecognitionProvider
 
 		_fiftyOneDegreesEngineProxy = fiftyOneDegreesEngineProxy;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FiftyOneDegreesDeviceRecognitionProvider.class);
 
 	private FiftyOneDegreesEngineProxy _fiftyOneDegreesEngineProxy;
 	private FiftyOneDegreesKnownDevices _fiftyOneDegreesKnownDevices;

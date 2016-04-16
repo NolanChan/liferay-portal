@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.mobile.device.Capability;
 import com.liferay.portal.kernel.mobile.device.Dimensions;
 import com.liferay.portal.kernel.mobile.device.VersionableName;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import fiftyone.mobile.detection.Match;
 
@@ -136,9 +135,12 @@ public class FiftyOneDegreesDevice extends AbstractDevice {
 			value = _match.getValues(property).toBool();
 		}
 		catch (IOException ioe) {
-			_log.error(
-				"Unable to retrieve device information for " + property +
-					" property: " + ioe);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to retrieve device information for " + property +
+						" property: ",
+					ioe);
+			}
 		}
 
 		return value;
@@ -155,11 +157,13 @@ public class FiftyOneDegreesDevice extends AbstractDevice {
 			width = (float)_match.getValues(widthProperty).toDouble();
 		}
 		catch (IOException ioe) {
-			_log.error(
-				"Unable to retrieve device's dimension information: " + ioe);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to retrieve device's dimension information: ", ioe);
+			}
 		}
 
-		if (Validator.equals(height, 0f) || Validator.equals(width, 0f)) {
+		if ((height == 0f) || (width == 0f)) {
 			return Dimensions.UNKNOWN;
 		}
 
@@ -179,9 +183,12 @@ public class FiftyOneDegreesDevice extends AbstractDevice {
 			}
 		}
 		catch (IOException ioe) {
-			_log.error(
-				"Unable to retrieve device information for " + property +
-					" property: " + ioe);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to retrieve device information for " + property +
+						" property: ",
+					ioe);
+			}
 		}
 
 		return value;

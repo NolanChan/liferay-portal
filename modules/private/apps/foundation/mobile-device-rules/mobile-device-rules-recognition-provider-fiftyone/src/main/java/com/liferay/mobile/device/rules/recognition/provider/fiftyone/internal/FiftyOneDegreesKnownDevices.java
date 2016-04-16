@@ -14,8 +14,6 @@
 
 package com.liferay.mobile.device.rules.recognition.provider.fiftyone.internal;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Capability;
 import com.liferay.portal.kernel.mobile.device.KnownDevices;
 import com.liferay.portal.kernel.mobile.device.NoKnownDevices;
@@ -97,41 +95,6 @@ public class FiftyOneDegreesKnownDevices implements KnownDevices {
 	public synchronized void reload() throws Exception {
 		_initialized = false;
 
-		loadFiftyOneDegreesDevices();
-	}
-
-	protected void addProperties(
-			Set<VersionableName> propertiesSet,
-			fiftyone.mobile.detection.entities.Component propertiesComponent,
-			String propertyName, String propertyVersionName,
-			String propertySubVersionName)
-		throws IOException {
-
-		for (Profile profile : propertiesComponent.getProfiles()) {
-			String propertyValue = profile.getValues(propertyName).toString();
-
-			String propertyVersion = profile.getValues(
-				propertyVersionName).toString();
-
-			VersionableName versionableName = new VersionableName(
-				propertyValue, propertyVersion);
-
-			if (Validator.isNotNull(propertySubVersionName)) {
-				String propertySubVersion = profile.getValues(
-					propertySubVersionName).toString();
-
-				versionableName.addVersion(propertySubVersion);
-			}
-
-			propertiesSet.add(versionableName);
-		}
-	}
-
-	protected void loadFiftyOneDegreesDevices() throws IOException {
-		if (_initialized) {
-			return;
-		}
-
 		Dataset dataset = _fiftyOneDegreesEngineProxy.getDataset();
 
 		fiftyone.mobile.detection.entities.Component browsersComponent =
@@ -167,15 +130,39 @@ public class FiftyOneDegreesKnownDevices implements KnownDevices {
 		_initialized = true;
 	}
 
+	protected void addProperties(
+			Set<VersionableName> propertiesSet,
+			fiftyone.mobile.detection.entities.Component propertiesComponent,
+			String propertyName, String propertyVersionName,
+			String propertySubVersionName)
+		throws IOException {
+
+		for (Profile profile : propertiesComponent.getProfiles()) {
+			String propertyValue = profile.getValues(propertyName).toString();
+
+			String propertyVersion = profile.getValues(
+				propertyVersionName).toString();
+
+			VersionableName versionableName = new VersionableName(
+				propertyValue, propertyVersion);
+
+			if (Validator.isNotNull(propertySubVersionName)) {
+				String propertySubVersion = profile.getValues(
+					propertySubVersionName).toString();
+
+				versionableName.addVersion(propertySubVersion);
+			}
+
+			propertiesSet.add(versionableName);
+		}
+	}
+
 	@Reference(unbind = "-")
 	protected void setFiftyOneDegreesEngineProxy(
 		FiftyOneDegreesEngineProxy fiftyOneDegreesEngineProxy) {
 
 		_fiftyOneDegreesEngineProxy = fiftyOneDegreesEngineProxy;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FiftyOneDegreesKnownDevices.class);
 
 	private final Set<VersionableName> _brands = new TreeSet<>();
 	private final Set<VersionableName> _browswers = new TreeSet<>();
