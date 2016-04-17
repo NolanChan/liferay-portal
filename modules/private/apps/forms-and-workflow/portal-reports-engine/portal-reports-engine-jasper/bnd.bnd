@@ -1,5 +1,6 @@
 Bundle-ClassPath:\
 	.,\
+	lib/antlr.jar,\
 	lib/commons-collections.jar,\
 	lib/commons-dbcp2.jar,\
 	lib/commons-digester.jar,\
@@ -9,12 +10,19 @@ Bundle-ClassPath:\
 	lib/itext.jar,\
 	lib/jasperreports.jar,\
 	lib/jasperreports-fonts.jar,\
+	lib/jcommon.jar,\
+	lib/jfreechart.jar,\
 	lib/jxl.jar,\
 	lib/png-encoder.jar,\
+	lib/poi.jar,\
+	lib/poi-ooxml.jar,\
+	lib/poi-ooxml-schemas.jar,\
+	lib/xalan.jar,\
 	lib/xercesImpl.jar
 Bundle-Name: Liferay Portal Reports Engine Jasper
 Bundle-SymbolicName: com.liferay.portal.reports.engine.jasper
 Bundle-Version: 1.0.0
+DynamicImport-Package: *
 Import-Package:\
 	!antlr.*,\
 	\
@@ -28,7 +36,15 @@ Import-Package:\
 	\
 	!groovyjarjarasm.asm.tree.analysis.*,\
 	\
-	!javax.persistence.*,\
+	!javax.accessibility.*,\
+	\
+	!javax.crypto.*,\
+	\
+	!javax.imageio.*,\
+	\
+	!javax.print.*,\
+	\
+	!javax.swing.*,\
 	\
 	!jline.*,\
 	\
@@ -39,6 +55,7 @@ Import-Package:\
 	!net.sourceforge.barbecue.*,\
 	\
 	!org.apache.batik.*,\
+	!org.apache.bcel.*,\
 	!org.apache.bsf.*,\
 	!org.apache.commons.cli.*,\
 	!org.apache.commons.jci.*,\
@@ -46,12 +63,21 @@ Import-Package:\
 	!org.apache.ivy.*,\
 	!org.apache.log.*,\
 	!org.apache.oro.*,\
-	!org.apache.poi.*,\
+	!org.apache.poi.hdgf.*,\
+	!org.apache.poi.hpbf.*,\
+	!org.apache.poi.hslf.*,\
+	!org.apache.poi.hsmf.*,\
+	!org.apache.poi.hwpf.*,\
+	!org.apache.poi.sl.*,\
+	!org.apache.tools.*,\
 	!org.apache.velocity.*,\
 	!org.apache.xerces.utils.regex.*,\
 	!org.apache.xml.resolver.*,\
+	!org.apache.xmlbeans.*,\
 	\
 	!org.bouncycastle.*,\
+	\
+	!org.dom4j.*,\
 	\
 	!org.eclipse.*,\
 	\
@@ -59,7 +85,7 @@ Import-Package:\
 	\
 	!org.fusesource.*,\
 	\
-	!org.jfree.*,\
+	!org.jaxen.*,\
 	\
 	!org.junit.*,\
 	\
@@ -67,7 +93,16 @@ Import-Package:\
 	\
 	!org.mozilla.*,\
 	\
+	!org.openxmlformats.schemas.officeDocument.x2006.math,\
+	!org.openxmlformats.schemas.schemaLibrary.x2006.main,\
+	\
 	!org.osgi.service.prefs.*,\
+	\
+	!org.w3c.dom.svg.*,\
+	\
+	!schemasMicrosoftComOfficePowerpoint,\
+	\
+	!schemasMicrosoftComOfficeWord,\
 	\
 	!sun.*,\
 	*
@@ -75,6 +110,7 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Reports Engine
 -include: ../../../../../../modules/apps/forms-and-workflow/app.bnd
 -liferay-includeresource:\
+	lib/antlr.jar=antlr-*.jar,\
 	lib/commons-collections.jar=commons-collections-*.jar,\
 	lib/commons-dbcp2.jar=commons-dbcp2-*.jar,\
 	lib/commons-digester.jar=commons-digester-*.jar,\
@@ -84,6 +120,12 @@ Liferay-Releng-Module-Group-Title: Reports Engine
 	lib/itext.jar=itext-*.jar,\
 	lib/jasperreports.jar=jasperreports-*.jar,\
 	lib/jasperreports-fonts.jar=jasperreports-fonts-*.jar,\
+	lib/jcommon.jar=jcommon-*.jar,\
 	lib/jxl.jar=jxl-*.jar,\
+	lib/jfreechart.jar=jfreechart-*.jar,\
 	lib/png-encoder.jar=png-encoder-*.jar,\
+	lib/poi.jar=poi-*.jar,\
+	lib/poi-ooxml.jar=poi-ooxml-*.jar,\
+	lib/poi-ooxml-schemas.jar=poi-ooxml-schemas-*.jar,\
+	lib/xalan.jar=xalan-*.jar,\
 	lib/xercesImpl.jar=xercesImpl-*.jar
