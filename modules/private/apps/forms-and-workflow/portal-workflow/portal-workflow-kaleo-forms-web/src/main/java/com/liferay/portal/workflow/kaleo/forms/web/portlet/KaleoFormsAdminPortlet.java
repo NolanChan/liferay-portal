@@ -568,10 +568,10 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	protected long[] getDDLRecordIds(ActionRequest actionRequest) {
-		long recordId = ParamUtil.getLong(actionRequest, "ddlRecordId");
+		long ddlRecordId = ParamUtil.getLong(actionRequest, "ddlRecordId");
 
-		if (recordId > 0) {
-			return new long[] {recordId};
+		if (ddlRecordId > 0) {
+			return new long[] {ddlRecordId};
 		}
 
 		return StringUtil.split(
@@ -596,10 +596,11 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	protected long[] getKaleoProcessIds(ActionRequest actionRequest) {
-		long recordId = ParamUtil.getLong(actionRequest, "kaleoProcessId");
+		long kaleoProcessId = ParamUtil.getLong(
+			actionRequest, "kaleoProcessId");
 
-		if (recordId > 0) {
-			return new long[] {recordId};
+		if (kaleoProcessId > 0) {
+			return new long[] {kaleoProcessId};
 		}
 
 		return StringUtil.split(
@@ -881,22 +882,22 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	protected void updateAssetEntry(
-			long userId, DDLRecord record, KaleoProcess kaleoProcess,
+			long userId, DDLRecord ddlRecord, KaleoProcess kaleoProcess,
 			long[] assetCategoryIds, String[] assetTagNames, Locale locale,
 			Double priority)
 		throws PortalException {
 
-		DDLRecordSet recordSet = record.getRecordSet();
+		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
 
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
+		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
 		String ddmStructureName = ddmStructure.getName(locale);
 
-		String recordSetName = recordSet.getName(locale);
+		String ddlRecordSetName = ddlRecordSet.getName(locale);
 
 		String title = LanguageUtil.format(
 			locale, "new-x-for-list-x",
-			new Object[] {ddmStructureName, recordSetName}, false);
+			new Object[] {ddmStructureName, ddlRecordSetName}, false);
 
 		_assetEntryLocalService.updateEntry(
 			userId, kaleoProcess.getGroupId(), kaleoProcess.getCreateDate(),
@@ -918,19 +919,19 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 		Locale locale = serviceContext.getLocale();
 
-		DDLRecord record = _ddl.updateRecord(
+		DDLRecord ddlRecord = _ddl.updateRecord(
 			ddlRecordId, ddlRecordSetId, true, false, serviceContext);
 
 		KaleoProcess kaleoProcess = _kaleoProcessService.getKaleoProcess(
 			kaleoProcessId);
 
 		updateAssetEntry(
-			serviceContext.getUserId(), record, kaleoProcess,
+			serviceContext.getUserId(), ddlRecord, kaleoProcess,
 			serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(), locale,
 			serviceContext.getAssetPriority());
 
-		return record;
+		return ddlRecord;
 	}
 
 	protected StorageEngine storageEngine;
