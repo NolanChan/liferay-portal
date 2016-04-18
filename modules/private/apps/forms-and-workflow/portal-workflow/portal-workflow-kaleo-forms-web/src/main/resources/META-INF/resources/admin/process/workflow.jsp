@@ -17,10 +17,10 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
+String tabs1 = ParamUtil.getString(request, "tabs1", "published");
+
 String redirect = ParamUtil.getString(request, "redirect");
 String currentSectionURL = HttpUtil.setParameter(currentURL, renderResponse.getNamespace() + "historyKey", "workflow");
-
-String tabs1 = ParamUtil.getString(request, "tabs1", "published");
 
 KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS);
 
@@ -74,8 +74,8 @@ if (Validator.isNotNull(workflowDefinition)) {
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
 	<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="tabs1" value="<%= tabs1 %>" />
+	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="historyKey" value="workflow" />
 	<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
 </liferay-portlet:renderURL>
@@ -96,8 +96,8 @@ if (Validator.isNotNull(workflowDefinition)) {
 
 	<liferay-portlet:renderURL varImpl="portletURL">
 		<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
-		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="tabs1" value="<%= tabs1 %>" />
+		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="historyKey" value="workflow" />
 		<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
 	</liferay-portlet:renderURL>
@@ -106,8 +106,8 @@ if (Validator.isNotNull(workflowDefinition)) {
 		<aui:nav cssClass="nav-bar-workflow nav-tabs nav-tabs-default kaleo-process-workflow-nav-tabs">
 			<liferay-portlet:renderURL var="viewPublishedURL">
 				<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
 				<portlet:param name="tabs1" value="published" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
 				<portlet:param name="historyKey" value="workflow" />
 				<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
 			</liferay-portlet:renderURL>
@@ -120,8 +120,8 @@ if (Validator.isNotNull(workflowDefinition)) {
 
 			<liferay-portlet:renderURL var="viewUnpublishedURL">
 				<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
 				<portlet:param name="tabs1" value="unpublished" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
 				<portlet:param name="historyKey" value="workflow" />
 				<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
 			</liferay-portlet:renderURL>
