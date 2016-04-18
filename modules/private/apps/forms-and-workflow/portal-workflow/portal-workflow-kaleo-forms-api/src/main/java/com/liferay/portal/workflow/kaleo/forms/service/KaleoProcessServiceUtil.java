@@ -83,8 +83,8 @@ public class KaleoProcessServiceUtil {
 			workflowDefinitionVersion, kaleoTaskFormPairs, serviceContext);
 	}
 
-	public static int getKaleoProcessesCount(long groupId) {
-		return getService().getKaleoProcessesCount(groupId);
+	public static int searchCount(long groupId, java.lang.String keywords) {
+		return getService().searchCount(groupId, keywords);
 	}
 
 	/**
@@ -96,11 +96,11 @@ public class KaleoProcessServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
-		long groupId, int start, int end,
+	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> search(
+		long groupId, java.lang.String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
-				   .getKaleoProcesses(groupId, start, end, orderByComparator);
+				   .search(groupId, keywords, start, end, orderByComparator);
 	}
 
 	public static KaleoProcessService getService() {

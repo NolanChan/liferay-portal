@@ -129,13 +129,13 @@ public class KaleoProcessServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessSoap[] getKaleoProcesses(
-		long groupId, int start, int end,
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessSoap[] search(
+		long groupId, java.lang.String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> returnValue =
-				KaleoProcessServiceUtil.getKaleoProcesses(groupId, start, end,
+				KaleoProcessServiceUtil.search(groupId, keywords, start, end,
 					orderByComparator);
 
 			return com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessSoap.toSoapModels(returnValue);
@@ -147,10 +147,11 @@ public class KaleoProcessServiceSoap {
 		}
 	}
 
-	public static int getKaleoProcessesCount(long groupId)
+	public static int searchCount(long groupId, java.lang.String keywords)
 		throws RemoteException {
 		try {
-			int returnValue = KaleoProcessServiceUtil.getKaleoProcessesCount(groupId);
+			int returnValue = KaleoProcessServiceUtil.searchCount(groupId,
+					keywords);
 
 			return returnValue;
 		}

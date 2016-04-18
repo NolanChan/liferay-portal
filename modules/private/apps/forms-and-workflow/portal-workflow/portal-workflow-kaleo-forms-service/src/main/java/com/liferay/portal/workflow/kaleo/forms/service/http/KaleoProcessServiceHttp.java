@@ -158,15 +158,16 @@ public class KaleoProcessServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
-		HttpPrincipal httpPrincipal, long groupId, int start, int end,
+	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> search(
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String keywords,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(KaleoProcessServiceUtil.class,
-					"getKaleoProcesses", _getKaleoProcessesParameterTypes3);
+					"search", _searchParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					start, end, orderByComparator);
+					keywords, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -186,14 +187,14 @@ public class KaleoProcessServiceHttp {
 		}
 	}
 
-	public static int getKaleoProcessesCount(HttpPrincipal httpPrincipal,
-		long groupId) {
+	public static int searchCount(HttpPrincipal httpPrincipal, long groupId,
+		java.lang.String keywords) {
 		try {
 			MethodKey methodKey = new MethodKey(KaleoProcessServiceUtil.class,
-					"getKaleoProcessesCount",
-					_getKaleoProcessesCountParameterTypes4);
+					"searchCount", _searchCountParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					keywords);
 
 			Object returnObj = null;
 
@@ -267,12 +268,12 @@ public class KaleoProcessServiceHttp {
 	private static final Class<?>[] _getKaleoProcessParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getKaleoProcessesParameterTypes3 = new Class[] {
-			long.class, int.class, int.class,
+	private static final Class<?>[] _searchParameterTypes3 = new Class[] {
+			long.class, java.lang.String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getKaleoProcessesCountParameterTypes4 = new Class[] {
-			long.class
+	private static final Class<?>[] _searchCountParameterTypes4 = new Class[] {
+			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateKaleoProcessParameterTypes5 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,

@@ -1,4 +1,5 @@
 create table KaleoProcess (
+	uuid_ VARCHAR(75) null,
 	kaleoProcessId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

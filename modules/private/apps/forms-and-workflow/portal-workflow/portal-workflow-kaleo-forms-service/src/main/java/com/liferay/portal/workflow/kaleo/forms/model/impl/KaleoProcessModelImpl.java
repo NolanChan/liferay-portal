@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -69,6 +72,7 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 	 */
 	public static final String TABLE_NAME = "KaleoProcess";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "kaleoProcessId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -84,6 +88,7 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("kaleoProcessId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -97,7 +102,7 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 		TABLE_COLUMNS_MAP.put("workflowDefinitionVersion", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoProcess (kaleoProcessId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DDLRecordSetId LONG,DDMTemplateId LONG,workflowDefinitionName VARCHAR(75) null,workflowDefinitionVersion INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoProcess (uuid_ VARCHAR(75) null,kaleoProcessId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DDLRecordSetId LONG,DDMTemplateId LONG,workflowDefinitionName VARCHAR(75) null,workflowDefinitionVersion INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoProcess";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoProcess.kaleoProcessId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoProcess.kaleoProcessId ASC";
@@ -114,8 +119,10 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 				"value.object.column.bitmask.enabled.com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"),
 			true);
 	public static final long DDLRECORDSETID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long KALEOPROCESSID_COLUMN_BITMASK = 4L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long KALEOPROCESSID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -130,6 +137,7 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 
 		KaleoProcess model = new KaleoProcessImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setKaleoProcessId(soapModel.getKaleoProcessId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -205,6 +213,7 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("kaleoProcessId", getKaleoProcessId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -226,6 +235,12 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long kaleoProcessId = (Long)attributes.get("kaleoProcessId");
 
 		if (kaleoProcessId != null) {
@@ -297,6 +312,30 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 
 	@JSON
 	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
+	}
+
+	@JSON
+	@Override
 	public long getKaleoProcessId() {
 		return _kaleoProcessId;
 	}
@@ -337,7 +376,19 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -472,6 +523,12 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 		_workflowDefinitionVersion = workflowDefinitionVersion;
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				KaleoProcess.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -503,6 +560,7 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 	public Object clone() {
 		KaleoProcessImpl kaleoProcessImpl = new KaleoProcessImpl();
 
+		kaleoProcessImpl.setUuid(getUuid());
 		kaleoProcessImpl.setKaleoProcessId(getKaleoProcessId());
 		kaleoProcessImpl.setGroupId(getGroupId());
 		kaleoProcessImpl.setCompanyId(getCompanyId());
@@ -576,9 +634,15 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 	public void resetOriginalValues() {
 		KaleoProcessModelImpl kaleoProcessModelImpl = this;
 
+		kaleoProcessModelImpl._originalUuid = kaleoProcessModelImpl._uuid;
+
 		kaleoProcessModelImpl._originalGroupId = kaleoProcessModelImpl._groupId;
 
 		kaleoProcessModelImpl._setOriginalGroupId = false;
+
+		kaleoProcessModelImpl._originalCompanyId = kaleoProcessModelImpl._companyId;
+
+		kaleoProcessModelImpl._setOriginalCompanyId = false;
 
 		kaleoProcessModelImpl._setModifiedDate = false;
 
@@ -592,6 +656,14 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 	@Override
 	public CacheModel<KaleoProcess> toCacheModel() {
 		KaleoProcessCacheModel kaleoProcessCacheModel = new KaleoProcessCacheModel();
+
+		kaleoProcessCacheModel.uuid = getUuid();
+
+		String uuid = kaleoProcessCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			kaleoProcessCacheModel.uuid = null;
+		}
 
 		kaleoProcessCacheModel.kaleoProcessId = getKaleoProcessId();
 
@@ -647,9 +719,11 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{kaleoProcessId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", kaleoProcessId=");
 		sb.append(getKaleoProcessId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -678,12 +752,16 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>kaleoProcessId</column-name><column-value><![CDATA[");
 		sb.append(getKaleoProcessId());
@@ -738,11 +816,15 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			KaleoProcess.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _kaleoProcessId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;

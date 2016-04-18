@@ -19,6 +19,12 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence;
 
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -28,6 +34,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,6 +54,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalService;
+import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessFinder;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessLinkPersistence;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessPersistence;
 
@@ -220,6 +228,19 @@ public abstract class KaleoProcessLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the kaleo process matching the UUID and group.
+	 *
+	 * @param uuid the kaleo process's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
+	 */
+	@Override
+	public KaleoProcess fetchKaleoProcessByUuidAndGroupId(String uuid,
+		long groupId) {
+		return kaleoProcessPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the kaleo process with the primary key.
 	 *
 	 * @param kaleoProcessId the primary key of the kaleo process
@@ -268,6 +289,57 @@ public abstract class KaleoProcessLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("kaleoProcessId");
 	}
 
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
+
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
+
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(dynamicQuery,
+						"modifiedDate");
+				}
+			});
+
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoProcess>() {
+				@Override
+				public void performAction(KaleoProcess kaleoProcess)
+					throws PortalException {
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						kaleoProcess);
+				}
+			});
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
+				PortalUtil.getClassNameId(KaleoProcess.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -281,6 +353,51 @@ public abstract class KaleoProcessLocalServiceBaseImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return kaleoProcessPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns all the kaleo processes matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the kaleo processes
+	 * @param companyId the primary key of the company
+	 * @return the matching kaleo processes, or an empty list if no matches were found
+	 */
+	@Override
+	public List<KaleoProcess> getKaleoProcessesByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return kaleoProcessPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of kaleo processes matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the kaleo processes
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of kaleo processes
+	 * @param end the upper bound of the range of kaleo processes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching kaleo processes, or an empty list if no matches were found
+	 */
+	@Override
+	public List<KaleoProcess> getKaleoProcessesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<KaleoProcess> orderByComparator) {
+		return kaleoProcessPersistence.findByUuid_C(uuid, companyId, start,
+			end, orderByComparator);
+	}
+
+	/**
+	 * Returns the kaleo process matching the UUID and group.
+	 *
+	 * @param uuid the kaleo process's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching kaleo process
+	 * @throws PortalException if a matching kaleo process could not be found
+	 */
+	@Override
+	public KaleoProcess getKaleoProcessByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException {
+		return kaleoProcessPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -357,6 +474,24 @@ public abstract class KaleoProcessLocalServiceBaseImpl
 	public void setKaleoProcessPersistence(
 		KaleoProcessPersistence kaleoProcessPersistence) {
 		this.kaleoProcessPersistence = kaleoProcessPersistence;
+	}
+
+	/**
+	 * Returns the kaleo process finder.
+	 *
+	 * @return the kaleo process finder
+	 */
+	public KaleoProcessFinder getKaleoProcessFinder() {
+		return kaleoProcessFinder;
+	}
+
+	/**
+	 * Sets the kaleo process finder.
+	 *
+	 * @param kaleoProcessFinder the kaleo process finder
+	 */
+	public void setKaleoProcessFinder(KaleoProcessFinder kaleoProcessFinder) {
+		this.kaleoProcessFinder = kaleoProcessFinder;
 	}
 
 	/**
@@ -718,6 +853,8 @@ public abstract class KaleoProcessLocalServiceBaseImpl
 	protected KaleoProcessLocalService kaleoProcessLocalService;
 	@BeanReference(type = KaleoProcessPersistence.class)
 	protected KaleoProcessPersistence kaleoProcessPersistence;
+	@BeanReference(type = KaleoProcessFinder.class)
+	protected KaleoProcessFinder kaleoProcessFinder;
 	@BeanReference(type = com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalService.class)
 	protected com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalService kaleoProcessLinkLocalService;
 	@BeanReference(type = KaleoProcessLinkPersistence.class)

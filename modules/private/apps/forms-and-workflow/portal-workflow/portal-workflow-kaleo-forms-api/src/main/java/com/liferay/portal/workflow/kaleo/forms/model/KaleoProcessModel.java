@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -44,7 +45,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface KaleoProcessModel extends BaseModel<KaleoProcess>, GroupedModel,
-	ShardedModel {
+	ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +65,23 @@ public interface KaleoProcessModel extends BaseModel<KaleoProcess>, GroupedModel
 	 * @param primaryKey the primary key of this kaleo process
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this kaleo process.
+	 *
+	 * @return the uuid of this kaleo process
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this kaleo process.
+	 *
+	 * @param uuid the uuid of this kaleo process
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the kaleo process ID of this kaleo process.

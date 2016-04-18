@@ -41,6 +41,336 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	 */
 
 	/**
+	* Returns all the kaleo processes where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the matching kaleo processes
+	*/
+	public java.util.List<KaleoProcess> findByUuid(java.lang.String uuid);
+
+	/**
+	* Returns a range of all the kaleo processes where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoProcessModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of kaleo processes
+	* @param end the upper bound of the range of kaleo processes (not inclusive)
+	* @return the range of matching kaleo processes
+	*/
+	public java.util.List<KaleoProcess> findByUuid(java.lang.String uuid,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the kaleo processes where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoProcessModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of kaleo processes
+	* @param end the upper bound of the range of kaleo processes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching kaleo processes
+	*/
+	public java.util.List<KaleoProcess> findByUuid(java.lang.String uuid,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the kaleo processes where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoProcessModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of kaleo processes
+	* @param end the upper bound of the range of kaleo processes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching kaleo processes
+	*/
+	public java.util.List<KaleoProcess> findByUuid(java.lang.String uuid,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first kaleo process in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kaleo process
+	* @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
+	*/
+	public KaleoProcess findByUuid_First(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
+		throws NoSuchKaleoProcessException;
+
+	/**
+	* Returns the first kaleo process in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
+	*/
+	public KaleoProcess fetchByUuid_First(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator);
+
+	/**
+	* Returns the last kaleo process in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kaleo process
+	* @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
+	*/
+	public KaleoProcess findByUuid_Last(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
+		throws NoSuchKaleoProcessException;
+
+	/**
+	* Returns the last kaleo process in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
+	*/
+	public KaleoProcess fetchByUuid_Last(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator);
+
+	/**
+	* Returns the kaleo processes before and after the current kaleo process in the ordered set where uuid = &#63;.
+	*
+	* @param kaleoProcessId the primary key of the current kaleo process
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next kaleo process
+	* @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
+	*/
+	public KaleoProcess[] findByUuid_PrevAndNext(long kaleoProcessId,
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
+		throws NoSuchKaleoProcessException;
+
+	/**
+	* Removes all the kaleo processes where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	*/
+	public void removeByUuid(java.lang.String uuid);
+
+	/**
+	* Returns the number of kaleo processes where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching kaleo processes
+	*/
+	public int countByUuid(java.lang.String uuid);
+
+	/**
+	* Returns the kaleo process where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchKaleoProcessException} if it could not be found.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching kaleo process
+	* @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
+	*/
+	public KaleoProcess findByUUID_G(java.lang.String uuid, long groupId)
+		throws NoSuchKaleoProcessException;
+
+	/**
+	* Returns the kaleo process where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
+	*/
+	public KaleoProcess fetchByUUID_G(java.lang.String uuid, long groupId);
+
+	/**
+	* Returns the kaleo process where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
+	*/
+	public KaleoProcess fetchByUUID_G(java.lang.String uuid, long groupId,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the kaleo process where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the kaleo process that was removed
+	*/
+	public KaleoProcess removeByUUID_G(java.lang.String uuid, long groupId)
+		throws NoSuchKaleoProcessException;
+
+	/**
+	* Returns the number of kaleo processes where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching kaleo processes
+	*/
+	public int countByUUID_G(java.lang.String uuid, long groupId);
+
+	/**
+	* Returns all the kaleo processes where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the matching kaleo processes
+	*/
+	public java.util.List<KaleoProcess> findByUuid_C(java.lang.String uuid,
+		long companyId);
+
+	/**
+	* Returns a range of all the kaleo processes where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoProcessModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of kaleo processes
+	* @param end the upper bound of the range of kaleo processes (not inclusive)
+	* @return the range of matching kaleo processes
+	*/
+	public java.util.List<KaleoProcess> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the kaleo processes where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoProcessModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of kaleo processes
+	* @param end the upper bound of the range of kaleo processes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching kaleo processes
+	*/
+	public java.util.List<KaleoProcess> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the kaleo processes where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoProcessModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of kaleo processes
+	* @param end the upper bound of the range of kaleo processes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching kaleo processes
+	*/
+	public java.util.List<KaleoProcess> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first kaleo process in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kaleo process
+	* @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
+	*/
+	public KaleoProcess findByUuid_C_First(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
+		throws NoSuchKaleoProcessException;
+
+	/**
+	* Returns the first kaleo process in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
+	*/
+	public KaleoProcess fetchByUuid_C_First(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator);
+
+	/**
+	* Returns the last kaleo process in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kaleo process
+	* @throws NoSuchKaleoProcessException if a matching kaleo process could not be found
+	*/
+	public KaleoProcess findByUuid_C_Last(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
+		throws NoSuchKaleoProcessException;
+
+	/**
+	* Returns the last kaleo process in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
+	*/
+	public KaleoProcess fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator);
+
+	/**
+	* Returns the kaleo processes before and after the current kaleo process in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param kaleoProcessId the primary key of the current kaleo process
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next kaleo process
+	* @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
+	*/
+	public KaleoProcess[] findByUuid_C_PrevAndNext(long kaleoProcessId,
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess> orderByComparator)
+		throws NoSuchKaleoProcessException;
+
+	/**
+	* Removes all the kaleo processes where uuid = &#63; and companyId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	*/
+	public void removeByUuid_C(java.lang.String uuid, long companyId);
+
+	/**
+	* Returns the number of kaleo processes where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the number of matching kaleo processes
+	*/
+	public int countByUuid_C(java.lang.String uuid, long companyId);
+
+	/**
 	* Returns all the kaleo processes where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -398,4 +728,7 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	* @return the number of kaleo processes
 	*/
 	public int countAll();
+
+	@Override
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

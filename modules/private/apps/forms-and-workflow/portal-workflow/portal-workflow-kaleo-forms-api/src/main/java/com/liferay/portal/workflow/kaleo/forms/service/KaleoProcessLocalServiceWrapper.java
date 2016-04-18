@@ -44,6 +44,12 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _kaleoProcessLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return _kaleoProcessLocalService.getIndexableActionableDynamicQuery();
 	}
@@ -139,6 +145,20 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 		return _kaleoProcessLocalService.fetchKaleoProcess(kaleoProcessId);
 	}
 
+	/**
+	* Returns the kaleo process matching the UUID and group.
+	*
+	* @param uuid the kaleo process's UUID
+	* @param groupId the primary key of the group
+	* @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
+	*/
+	@Override
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess fetchKaleoProcessByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _kaleoProcessLocalService.fetchKaleoProcessByUuidAndGroupId(uuid,
+			groupId);
+	}
+
 	@Override
 	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getDDLRecordSetKaleoProcess(
 		long ddlRecordSetId)
@@ -158,6 +178,22 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 		long kaleoProcessId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoProcessLocalService.getKaleoProcess(kaleoProcessId);
+	}
+
+	/**
+	* Returns the kaleo process matching the UUID and group.
+	*
+	* @param uuid the kaleo process's UUID
+	* @param groupId the primary key of the group
+	* @return the matching kaleo process
+	* @throws PortalException if a matching kaleo process could not be found
+	*/
+	@Override
+	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getKaleoProcessByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoProcessLocalService.getKaleoProcessByUuidAndGroupId(uuid,
+			groupId);
 	}
 
 	/**
@@ -295,6 +331,38 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _kaleoProcessLocalService.getKaleoProcesses(groupId, start, end,
 			orderByComparator);
+	}
+
+	/**
+	* Returns all the kaleo processes matching the UUID and company.
+	*
+	* @param uuid the UUID of the kaleo processes
+	* @param companyId the primary key of the company
+	* @return the matching kaleo processes, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcessesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _kaleoProcessLocalService.getKaleoProcessesByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of kaleo processes matching the UUID and company.
+	*
+	* @param uuid the UUID of the kaleo processes
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of kaleo processes
+	* @param end the upper bound of the range of kaleo processes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching kaleo processes, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcessesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> orderByComparator) {
+		return _kaleoProcessLocalService.getKaleoProcessesByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	/**

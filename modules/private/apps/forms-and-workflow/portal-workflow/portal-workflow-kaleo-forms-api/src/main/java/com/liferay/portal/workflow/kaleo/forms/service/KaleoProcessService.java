@@ -80,7 +80,7 @@ public interface KaleoProcessService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoProcessesCount(long groupId);
+	public int searchCount(long groupId, java.lang.String keywords);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -90,6 +90,6 @@ public interface KaleoProcessService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoProcess> getKaleoProcesses(long groupId, int start,
-		int end, OrderByComparator orderByComparator);
+	public List<KaleoProcess> search(long groupId, java.lang.String keywords,
+		int start, int end, OrderByComparator orderByComparator);
 }

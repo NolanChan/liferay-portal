@@ -65,9 +65,11 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{kaleoProcessId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", kaleoProcessId=");
 		sb.append(kaleoProcessId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -97,6 +99,13 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 	@Override
 	public KaleoProcess toEntityModel() {
 		KaleoProcessImpl kaleoProcessImpl = new KaleoProcessImpl();
+
+		if (uuid == null) {
+			kaleoProcessImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			kaleoProcessImpl.setUuid(uuid);
+		}
 
 		kaleoProcessImpl.setKaleoProcessId(kaleoProcessId);
 		kaleoProcessImpl.setGroupId(groupId);
@@ -143,6 +152,8 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		kaleoProcessId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -165,6 +176,13 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(kaleoProcessId);
 
 		objectOutput.writeLong(groupId);
@@ -197,6 +215,7 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 		objectOutput.writeInt(workflowDefinitionVersion);
 	}
 
+	public String uuid;
 	public long kaleoProcessId;
 	public long groupId;
 	public long companyId;

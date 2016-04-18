@@ -78,8 +78,8 @@ public class KaleoProcessServiceWrapper implements KaleoProcessService,
 	}
 
 	@Override
-	public int getKaleoProcessesCount(long groupId) {
-		return _kaleoProcessService.getKaleoProcessesCount(groupId);
+	public int searchCount(long groupId, java.lang.String keywords) {
+		return _kaleoProcessService.searchCount(groupId, keywords);
 	}
 
 	/**
@@ -93,10 +93,10 @@ public class KaleoProcessServiceWrapper implements KaleoProcessService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
-		long groupId, int start, int end,
+	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> search(
+		long groupId, java.lang.String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		return _kaleoProcessService.getKaleoProcesses(groupId, start, end,
+		return _kaleoProcessService.search(groupId, keywords, start, end,
 			orderByComparator);
 	}
 

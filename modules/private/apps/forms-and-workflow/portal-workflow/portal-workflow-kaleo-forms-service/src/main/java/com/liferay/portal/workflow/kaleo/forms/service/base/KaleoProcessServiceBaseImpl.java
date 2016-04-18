@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessService;
+import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessFinder;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessLinkPersistence;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessPersistence;
 
@@ -112,6 +113,24 @@ public abstract class KaleoProcessServiceBaseImpl extends BaseServiceImpl
 	public void setKaleoProcessPersistence(
 		KaleoProcessPersistence kaleoProcessPersistence) {
 		this.kaleoProcessPersistence = kaleoProcessPersistence;
+	}
+
+	/**
+	 * Returns the kaleo process finder.
+	 *
+	 * @return the kaleo process finder
+	 */
+	public KaleoProcessFinder getKaleoProcessFinder() {
+		return kaleoProcessFinder;
+	}
+
+	/**
+	 * Sets the kaleo process finder.
+	 *
+	 * @param kaleoProcessFinder the kaleo process finder
+	 */
+	public void setKaleoProcessFinder(KaleoProcessFinder kaleoProcessFinder) {
+		this.kaleoProcessFinder = kaleoProcessFinder;
 	}
 
 	/**
@@ -547,6 +566,8 @@ public abstract class KaleoProcessServiceBaseImpl extends BaseServiceImpl
 	protected KaleoProcessService kaleoProcessService;
 	@BeanReference(type = KaleoProcessPersistence.class)
 	protected KaleoProcessPersistence kaleoProcessPersistence;
+	@BeanReference(type = KaleoProcessFinder.class)
+	protected KaleoProcessFinder kaleoProcessFinder;
 	@BeanReference(type = com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalService.class)
 	protected com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalService kaleoProcessLinkLocalService;
 	@BeanReference(type = KaleoProcessLinkPersistence.class)

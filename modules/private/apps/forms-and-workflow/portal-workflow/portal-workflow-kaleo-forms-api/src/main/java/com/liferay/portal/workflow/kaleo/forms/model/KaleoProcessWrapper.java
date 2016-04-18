@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
@@ -58,6 +60,7 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("kaleoProcessId", getKaleoProcessId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -76,6 +79,12 @@ public class KaleoProcessWrapper implements KaleoProcess,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long kaleoProcessId = (Long)attributes.get("kaleoProcessId");
 
 		if (kaleoProcessId != null) {
@@ -265,6 +274,16 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	@Override
 	public java.lang.String getUserUuid() {
 		return _kaleoProcess.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this kaleo process.
+	*
+	* @return the uuid of this kaleo process
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _kaleoProcess.getUuid();
 	}
 
 	@Override
@@ -534,6 +553,16 @@ public class KaleoProcessWrapper implements KaleoProcess,
 	}
 
 	/**
+	* Sets the uuid of this kaleo process.
+	*
+	* @param uuid the uuid of this kaleo process
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_kaleoProcess.setUuid(uuid);
+	}
+
+	/**
 	* Sets the workflow definition name of this kaleo process.
 	*
 	* @param workflowDefinitionName the workflow definition name of this kaleo process
@@ -571,6 +600,11 @@ public class KaleoProcessWrapper implements KaleoProcess,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _kaleoProcess.getStagedModelType();
 	}
 
 	@Override

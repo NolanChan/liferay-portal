@@ -34,6 +34,7 @@ public class KaleoProcessSoap implements Serializable {
 	public static KaleoProcessSoap toSoapModel(KaleoProcess model) {
 		KaleoProcessSoap soapModel = new KaleoProcessSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setKaleoProcessId(model.getKaleoProcessId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -95,6 +96,14 @@ public class KaleoProcessSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setKaleoProcessId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getKaleoProcessId() {
@@ -185,6 +194,7 @@ public class KaleoProcessSoap implements Serializable {
 		_workflowDefinitionVersion = workflowDefinitionVersion;
 	}
 
+	private String _uuid;
 	private long _kaleoProcessId;
 	private long _groupId;
 	private long _companyId;

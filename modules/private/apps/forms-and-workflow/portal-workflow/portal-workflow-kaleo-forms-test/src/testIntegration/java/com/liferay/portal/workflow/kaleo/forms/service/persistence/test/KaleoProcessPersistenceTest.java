@@ -30,7 +30,9 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
@@ -121,6 +123,8 @@ public class KaleoProcessPersistenceTest {
 
 		KaleoProcess newKaleoProcess = _persistence.create(pk);
 
+		newKaleoProcess.setUuid(RandomTestUtil.randomString());
+
 		newKaleoProcess.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoProcess.setCompanyId(RandomTestUtil.nextLong());
@@ -145,6 +149,8 @@ public class KaleoProcessPersistenceTest {
 
 		KaleoProcess existingKaleoProcess = _persistence.findByPrimaryKey(newKaleoProcess.getPrimaryKey());
 
+		Assert.assertEquals(existingKaleoProcess.getUuid(),
+			newKaleoProcess.getUuid());
 		Assert.assertEquals(existingKaleoProcess.getKaleoProcessId(),
 			newKaleoProcess.getKaleoProcessId());
 		Assert.assertEquals(existingKaleoProcess.getGroupId(),
@@ -169,6 +175,33 @@ public class KaleoProcessPersistenceTest {
 			newKaleoProcess.getWorkflowDefinitionName());
 		Assert.assertEquals(existingKaleoProcess.getWorkflowDefinitionVersion(),
 			newKaleoProcess.getWorkflowDefinitionVersion());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid(StringPool.BLANK);
+
+		_persistence.countByUuid(StringPool.NULL);
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G(StringPool.NULL, 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -214,8 +247,8 @@ public class KaleoProcessPersistenceTest {
 	}
 
 	protected OrderByComparator<KaleoProcess> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("KaleoProcess",
-			"kaleoProcessId", true, "groupId", true, "companyId", true,
+		return OrderByComparatorFactoryUtil.create("KaleoProcess", "uuid",
+			true, "kaleoProcessId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "DDLRecordSetId", true, "DDMTemplateId",
 			true, "workflowDefinitionName", true, "workflowDefinitionVersion",
@@ -424,6 +457,13 @@ public class KaleoProcessPersistenceTest {
 
 		KaleoProcess existingKaleoProcess = _persistence.findByPrimaryKey(newKaleoProcess.getPrimaryKey());
 
+		Assert.assertTrue(Validator.equals(existingKaleoProcess.getUuid(),
+				ReflectionTestUtil.invoke(existingKaleoProcess,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(existingKaleoProcess.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingKaleoProcess,
+				"getOriginalGroupId", new Class<?>[0]));
+
 		Assert.assertEquals(Long.valueOf(
 				existingKaleoProcess.getDDLRecordSetId()),
 			ReflectionTestUtil.<Long>invoke(existingKaleoProcess,
@@ -434,6 +474,8 @@ public class KaleoProcessPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		KaleoProcess kaleoProcess = _persistence.create(pk);
+
+		kaleoProcess.setUuid(RandomTestUtil.randomString());
 
 		kaleoProcess.setGroupId(RandomTestUtil.nextLong());
 

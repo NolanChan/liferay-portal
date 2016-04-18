@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess">
+		<field name="uuid" type="String" />
 		<field name="kaleoProcessId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

@@ -16,8 +16,11 @@ package com.liferay.portal.workflow.kaleo.forms.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -67,6 +70,10 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -132,6 +139,17 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoProcess fetchKaleoProcess(long kaleoProcessId);
 
+	/**
+	* Returns the kaleo process matching the UUID and group.
+	*
+	* @param uuid the kaleo process's UUID
+	* @param groupId the primary key of the group
+	* @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoProcess fetchKaleoProcessByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoProcess getDDLRecordSetKaleoProcess(long ddlRecordSetId)
 		throws PortalException;
@@ -146,6 +164,18 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoProcess getKaleoProcess(long kaleoProcessId)
 		throws PortalException;
+
+	/**
+	* Returns the kaleo process matching the UUID and group.
+	*
+	* @param uuid the kaleo process's UUID
+	* @param groupId the primary key of the group
+	* @return the matching kaleo process
+	* @throws PortalException if a matching kaleo process could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoProcess getKaleoProcessByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Updates the kaleo process in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -240,6 +270,32 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoProcess> getKaleoProcesses(long groupId, int start,
 		int end, OrderByComparator orderByComparator);
+
+	/**
+	* Returns all the kaleo processes matching the UUID and company.
+	*
+	* @param uuid the UUID of the kaleo processes
+	* @param companyId the primary key of the company
+	* @return the matching kaleo processes, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoProcess> getKaleoProcessesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of kaleo processes matching the UUID and company.
+	*
+	* @param uuid the UUID of the kaleo processes
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of kaleo processes
+	* @param end the upper bound of the range of kaleo processes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching kaleo processes, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoProcess> getKaleoProcessesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		OrderByComparator<KaleoProcess> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
