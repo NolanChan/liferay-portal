@@ -191,21 +191,21 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		final ThemeDisplay themeDisplay =
 			(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-		long[] recordIds = getRecordIds(actionRequest);
+		long[] ddlRecordIds = getDDLRecordIds(actionRequest);
 
-		for (final long recordId : recordIds) {
+		for (final long ddlRecordId : ddlRecordIds) {
 			try {
 				Callable<Void> callable = new Callable<Void>() {
 
 					@Override
 					public Void call() throws Exception {
-						_ddlRecordService.deleteRecord(recordId);
+						_ddlRecordService.deleteRecord(ddlRecordId);
 
 						_workflowInstanceLinkLocalService.
 							deleteWorkflowInstanceLinks(
 								themeDisplay.getCompanyId(),
 								themeDisplay.getScopeGroupId(),
-								KaleoProcess.class.getName(), recordId);
+								KaleoProcess.class.getName(), ddlRecordId);
 
 						return null;
 					}
@@ -377,31 +377,34 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			ddlRecord.getRecordId(), ddlRecord, serviceContext);
 	}
 
-	public void updateAsset(
-			long userId, DDLRecord record, KaleoProcess kaleoProcess,
-			long[] assetCategoryIds, String[] assetTagNames, Locale locale,
-			Double priority)
-		throws PortalException {
+	public void updateDDLRecord(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
 
-		DDLRecordSet recordSet = record.getRecordSet();
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
 
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDLRecord.class.getName(), uploadPortletRequest);
 
-		String ddmStructureName = ddmStructure.getName(locale);
+		checkKaleoProcessPermission(
+			serviceContext, KaleoFormsActionKeys.COMPLETE_FORM);
 
-		String recordSetName = recordSet.getName(locale);
+		updateDDLRecord(serviceContext);
 
-		String title = LanguageUtil.format(
-			locale, "new-x-for-list-x",
-			new Object[] {ddmStructureName, recordSetName}, false);
+		long workflowTaskId = ParamUtil.getLong(
+			uploadPortletRequest, "workflowTaskId");
 
-		_assetEntryLocalService.updateEntry(
-			userId, kaleoProcess.getGroupId(), kaleoProcess.getCreateDate(),
-			kaleoProcess.getModifiedDate(), KaleoProcess.class.getName(),
-			kaleoProcess.getKaleoProcessId(), kaleoProcess.getUuid(), 0,
-			assetCategoryIds, assetTagNames, true, true, null, null, null,
-			ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null, null,
-			0, 0, priority);
+		List<String> transitionNames =
+			WorkflowTaskManagerUtil.getNextTransitionNames(
+				serviceContext.getCompanyId(), serviceContext.getUserId(),
+				workflowTaskId);
+
+		if (transitionNames.size() == 1) {
+			WorkflowTaskManagerUtil.completeWorkflowTask(
+				serviceContext.getCompanyId(), serviceContext.getUserId(),
+				workflowTaskId, null, null, null);
+		}
 	}
 
 	public void updateKaleoDraftDefinition(
@@ -520,36 +523,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			workflowDefinition);
 	}
 
-	public void updateRecord(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(actionRequest);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecord.class.getName(), uploadPortletRequest);
-
-		checkKaleoProcessPermission(
-			serviceContext, KaleoFormsActionKeys.COMPLETE_FORM);
-
-		updateDDLRecord(serviceContext);
-
-		long workflowTaskId = ParamUtil.getLong(
-			uploadPortletRequest, "workflowTaskId");
-
-		List<String> transitionNames =
-			WorkflowTaskManagerUtil.getNextTransitionNames(
-				serviceContext.getCompanyId(), serviceContext.getUserId(),
-				workflowTaskId);
-
-		if (transitionNames.size() == 1) {
-			WorkflowTaskManagerUtil.completeWorkflowTask(
-				serviceContext.getCompanyId(), serviceContext.getUserId(),
-				workflowTaskId, null, null, null);
-		}
-	}
-
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -592,6 +565,17 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		else {
 			super.doDispatch(renderRequest, renderResponse);
 		}
+	}
+
+	protected long[] getDDLRecordIds(ActionRequest actionRequest) {
+		long recordId = ParamUtil.getLong(actionRequest, "ddlRecordId");
+
+		if (recordId > 0) {
+			return new long[] {recordId};
+		}
+
+		return StringUtil.split(
+			ParamUtil.getString(actionRequest, "ddlRecordIds"), 0L);
 	}
 
 	protected long getDDLRecordWorkfowInstanceLinkId(
@@ -637,17 +621,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		catch (DocumentException de) {
 			return defaultName;
 		}
-	}
-
-	protected long[] getRecordIds(ActionRequest actionRequest) {
-		long recordId = ParamUtil.getLong(actionRequest, "ddlRecordId");
-
-		if (recordId > 0) {
-			return new long[] {recordId};
-		}
-
-		return StringUtil.split(
-			ParamUtil.getString(actionRequest, "ddlRecordIds"), 0L);
 	}
 
 	@Override
@@ -907,6 +880,33 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		_workflowInstanceLinkLocalService = workflowInstanceLinkLocalService;
 	}
 
+	protected void updateAssetEntry(
+			long userId, DDLRecord record, KaleoProcess kaleoProcess,
+			long[] assetCategoryIds, String[] assetTagNames, Locale locale,
+			Double priority)
+		throws PortalException {
+
+		DDLRecordSet recordSet = record.getRecordSet();
+
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
+
+		String ddmStructureName = ddmStructure.getName(locale);
+
+		String recordSetName = recordSet.getName(locale);
+
+		String title = LanguageUtil.format(
+			locale, "new-x-for-list-x",
+			new Object[] {ddmStructureName, recordSetName}, false);
+
+		_assetEntryLocalService.updateEntry(
+			userId, kaleoProcess.getGroupId(), kaleoProcess.getCreateDate(),
+			kaleoProcess.getModifiedDate(), KaleoProcess.class.getName(),
+			kaleoProcess.getKaleoProcessId(), kaleoProcess.getUuid(), 0,
+			assetCategoryIds, assetTagNames, true, true, null, null, null,
+			ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null, null,
+			0, 0, priority);
+	}
+
 	protected DDLRecord updateDDLRecord(ServiceContext serviceContext)
 		throws Exception {
 
@@ -924,7 +924,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		KaleoProcess kaleoProcess = _kaleoProcessService.getKaleoProcess(
 			kaleoProcessId);
 
-		updateAsset(
+		updateAssetEntry(
 			serviceContext.getUserId(), record, kaleoProcess,
 			serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(), locale,

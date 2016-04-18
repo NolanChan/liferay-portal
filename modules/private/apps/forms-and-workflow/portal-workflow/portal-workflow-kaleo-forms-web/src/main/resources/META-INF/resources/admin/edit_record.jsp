@@ -41,14 +41,14 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle((ddlRecord != null) ? LanguageUtil.format(request, "edit-x", kaleoProcess.getName(locale), false) : LanguageUtil.format(request, "new-x", kaleoProcess.getName(locale), false));
 %>
 
-<portlet:actionURL name="updateRecord" var="updateRecordURL">
+<portlet:actionURL name="updateDDLRecord" var="updateDDLRecordURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="kaleoProcessId" value="<%= StringUtil.valueOf(kaleoProcessId) %>" />
 </portlet:actionURL>
 
 <div class="container-fluid-1280 sidenav-container sidenav-right">
 	<div class="sidenav-content">
-		<aui:form action="<%= updateRecordURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" onSubmit='<%= "event.preventDefault(); submitForm(event.target);" %>'>
+		<aui:form action="<%= updateDDLRecordURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" onSubmit='<%= "event.preventDefault(); submitForm(event.target);" %>'>
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 			<aui:input name="ddlRecordId" type="hidden" value="<%= String.valueOf(ddlRecordId) %>" />
