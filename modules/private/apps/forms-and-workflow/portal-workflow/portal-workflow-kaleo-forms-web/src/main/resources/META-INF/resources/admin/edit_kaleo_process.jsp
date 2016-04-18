@@ -33,6 +33,9 @@ if (kaleoProcess != null) {
 	kaleoProcessStarted = (DDLRecordLocalServiceUtil.getRecordsCount(kaleoProcess.getDDLRecordSetId(), WorkflowConstants.STATUS_ANY) > 0);
 }
 
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
 String title = null;
 
 if (Validator.isNull(kaleoProcessName)) {
@@ -43,9 +46,6 @@ else {
 }
 
 renderResponse.setTitle(title);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
 %>
 
 <c:if test="<%= kaleoProcessStarted %>">
