@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.forms.comparator;
+package com.liferay.portal.workflow.kaleo.forms.util.comparator;
 
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
