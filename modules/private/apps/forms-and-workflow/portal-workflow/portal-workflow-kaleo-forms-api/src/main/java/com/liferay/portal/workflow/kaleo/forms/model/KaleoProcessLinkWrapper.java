@@ -20,12 +20,12 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -312,7 +312,7 @@ public class KaleoProcessLinkWrapper implements KaleoProcessLink,
 
 		KaleoProcessLinkWrapper kaleoProcessLinkWrapper = (KaleoProcessLinkWrapper)obj;
 
-		if (Validator.equals(_kaleoProcessLink,
+		if (Objects.equals(_kaleoProcessLink,
 					kaleoProcessLinkWrapper._kaleoProcessLink)) {
 			return true;
 		}

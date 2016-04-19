@@ -56,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -199,7 +200,7 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoProcess kaleoProcess : list) {
-					if (!Validator.equals(uuid, kaleoProcess.getUuid())) {
+					if (!Objects.equals(uuid, kaleoProcess.getUuid())) {
 						list = null;
 
 						break;
@@ -717,7 +718,7 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 		if (result instanceof KaleoProcess) {
 			KaleoProcess kaleoProcess = (KaleoProcess)result;
 
-			if (!Validator.equals(uuid, kaleoProcess.getUuid()) ||
+			if (!Objects.equals(uuid, kaleoProcess.getUuid()) ||
 					(groupId != kaleoProcess.getGroupId())) {
 				result = null;
 			}
@@ -1008,7 +1009,7 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoProcess kaleoProcess : list) {
-					if (!Validator.equals(uuid, kaleoProcess.getUuid()) ||
+					if (!Objects.equals(uuid, kaleoProcess.getUuid()) ||
 							(companyId != kaleoProcess.getCompanyId())) {
 						list = null;
 
