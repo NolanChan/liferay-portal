@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 
-<service-builder package-path="com.liferay.portal.workflow.kaleo.designer" auto-namespace-tables="false">
+<service-builder auto-namespace-tables="false" package-path="com.liferay.portal.workflow.kaleo.designer">
 	<author>Eduardo Lundgren</author>
 	<namespace>KaleoDesigner</namespace>
-	<entity name="KaleoDraftDefinition" local-service="true" remote-service="true">
+	<entity local-service="true" name="KaleoDraftDefinition" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="kaleoDraftDefinitionId" type="long" primary="true" />
+		<column name="kaleoDraftDefinitionId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -25,7 +25,7 @@
 		<!-- Other fields -->
 
 		<column name="name" type="String" />
-		<column name="title" type="String" localized="true" />
+		<column localized="true" name="title" type="String" />
 		<column name="content" type="String" />
 		<column name="version" type="int" />
 		<column name="draftVersion" type="int" />
@@ -46,7 +46,7 @@
 			<finder-column name="name" />
 			<finder-column name="version" />
 		</finder>
-		<finder name="C_N_V_D" unique="true" return-type="WDDraft">
+		<finder name="C_N_V_D" return-type="WDDraft" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 			<finder-column name="version" />

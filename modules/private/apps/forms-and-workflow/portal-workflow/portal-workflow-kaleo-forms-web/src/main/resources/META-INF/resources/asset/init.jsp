@@ -24,9 +24,6 @@ page import="com.liferay.dynamic.data.lists.model.DDLRecordSet" %><%@
 page import="com.liferay.dynamic.data.lists.model.DDLRecordVersion" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.DDMFormValues" %><%@
-page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsWebKeys" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess" %>
+page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <liferay-theme:defineObjects />
