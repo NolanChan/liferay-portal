@@ -87,7 +87,7 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 							"' where kaleoProcessId = " + kaleoProcessId);
 				}
 
-				updateAsset(
+				updateAssetEntry(
 					kaleoProcessId, groupId, companyId, userId, createDate,
 					modifiedDate, ddlRecordSetId, uuid);
 			}
@@ -113,32 +113,29 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 		return LocaleUtil.fromLanguageId(locale);
 	}
 
-	protected void updateAsset(
+	protected void updateAssetEntry(
 			long kaleoProcessId, long groupId, long companyId, long userId,
 			Timestamp createDate, Timestamp modifiedDate, long ddlRecordSetId,
 			String uuid)
 		throws PortalException {
 
-		Locale locale = getDefaultLocale(companyId);
 		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getDDLRecordSet(
 			ddlRecordSetId);
 
-		boolean visible = true;
-
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
-		String ddmStructureName = ddmStructure.getName(locale);
-
-		String recordSetName = ddlRecordSet.getName(locale);
+		Locale locale = getDefaultLocale(companyId);
 
 		String title = LanguageUtil.format(
 			locale, "new-x-for-list-x",
-			new Object[] {ddmStructureName, recordSetName}, false);
+			new Object[] {
+				ddmStructure.getName(locale), ddlRecordSet.getName(locale)
+			}, false);
 
 		_assetEntryLocalService.updateEntry(
 			userId, groupId, createDate, modifiedDate,
 			KaleoProcess.class.getName(), kaleoProcessId, uuid, 0, null, null,
-			true, visible, null, null, null, ContentTypes.TEXT_HTML, title,
+			true, true, null, null, null, ContentTypes.TEXT_HTML, title,
 			null, StringPool.BLANK, null, null, 0, 0, null);
 	}
 
