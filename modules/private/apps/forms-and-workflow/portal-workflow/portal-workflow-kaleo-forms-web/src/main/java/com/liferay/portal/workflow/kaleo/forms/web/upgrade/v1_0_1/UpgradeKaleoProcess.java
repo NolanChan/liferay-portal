@@ -85,8 +85,8 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 				}
 
 				updateAssetEntry(
-					kaleoProcessId, groupId, companyId, userId, createDate,
-					modifiedDate, ddlRecordSetId, uuid);
+					groupId, companyId, userId, createDate, modifiedDate,
+					kaleoProcessId, uuid, ddlRecordSetId);
 			}
 		}
 		finally {
@@ -111,9 +111,9 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 	}
 
 	protected void updateAssetEntry(
-			long kaleoProcessId, long groupId, long companyId, long userId,
-			Timestamp createDate, Timestamp modifiedDate, long ddlRecordSetId,
-			String uuid)
+			long groupId, long companyId, long userId, Timestamp createDate,
+			Timestamp modifiedDate, long kaleoProcessId, String uuid,
+			long ddlRecordSetId)
 		throws PortalException {
 
 		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getDDLRecordSet(
