@@ -127,13 +127,14 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 			locale, "new-x-for-list-x",
 			new Object[] {
 				ddmStructure.getName(locale), ddlRecordSet.getName(locale)
-			}, false);
+			},
+			false);
 
 		_assetEntryLocalService.updateEntry(
 			userId, groupId, createDate, modifiedDate,
 			KaleoProcess.class.getName(), kaleoProcessId, uuid, 0, null, null,
-			true, true, null, null, null, ContentTypes.TEXT_HTML, title,
-			null, StringPool.BLANK, null, null, 0, 0, null);
+			true, true, null, null, null, ContentTypes.TEXT_HTML, title, null,
+			StringPool.BLANK, null, null, 0, 0, null);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
