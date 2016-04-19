@@ -14,9 +14,8 @@
 
 package com.liferay.portal.cache.multiple.internal;
 
-import com.liferay.portal.kernel.util.Validator;
-
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * @author Shuyang Zhou
@@ -35,15 +34,15 @@ public class PortalCacheClusterEventCoalesceComparator
 			return 1;
 		}
 
-		if (Validator.equals(
+		if (Objects.equals(
 				portalCacheClusterEvent1.getElementKey(),
 				portalCacheClusterEvent2.getElementKey()) &&
 			(portalCacheClusterEvent1.getEventType() ==
 				portalCacheClusterEvent2.getEventType()) &&
-			Validator.equals(
+			Objects.equals(
 				portalCacheClusterEvent1.getPortalCacheManagerName(),
 				portalCacheClusterEvent2.getPortalCacheManagerName()) &&
-			Validator.equals(
+			Objects.equals(
 				portalCacheClusterEvent1.getPortalCacheName(),
 				portalCacheClusterEvent2.getPortalCacheName())) {
 

@@ -100,7 +100,7 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 	}
 
 	public static void loadCachesFromCluster(
-			String portalCacheManagerName, String ... portalCacheNames)
+			String portalCacheManagerName, String... portalCacheNames)
 		throws Exception {
 
 		synchronized (ClusterLinkBootstrapLoaderHelperUtil.class) {

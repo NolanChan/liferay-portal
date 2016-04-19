@@ -18,9 +18,10 @@ import com.liferay.portal.cache.io.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
+
+import java.util.Objects;
 
 /**
  * @author Shuyang Zhou
@@ -87,17 +88,17 @@ public class PortalCacheClusterEvent implements Serializable {
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			(PortalCacheClusterEvent)obj;
 
-		if (Validator.equals(
+		if (Objects.equals(
 				_elementKey, portalCacheClusterEvent._elementKey) &&
-			Validator.equals(
+			Objects.equals(
 				_elementValue, portalCacheClusterEvent._elementValue) &&
-			Validator.equals(
+			Objects.equals(
 				_portalCacheClusterEventType,
 				portalCacheClusterEvent._portalCacheClusterEventType) &&
-			Validator.equals(
+			Objects.equals(
 				_portalCacheManagerName,
 				portalCacheClusterEvent._portalCacheManagerName) &&
-			Validator.equals(
+			Objects.equals(
 				_portalCacheName, portalCacheClusterEvent._portalCacheName)) {
 
 			return true;

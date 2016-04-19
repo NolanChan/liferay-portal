@@ -60,6 +60,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -695,8 +696,8 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 			ClusterNodeStatus clusterNodeStatus = (ClusterNodeStatus)obj;
 
-			if (Validator.equals(_address, clusterNodeStatus._address) &&
-				Validator.equals(
+			if (Objects.equals(_address, clusterNodeStatus._address) &&
+				Objects.equals(
 					_clusterNode, clusterNodeStatus._clusterNode)) {
 
 				return true;

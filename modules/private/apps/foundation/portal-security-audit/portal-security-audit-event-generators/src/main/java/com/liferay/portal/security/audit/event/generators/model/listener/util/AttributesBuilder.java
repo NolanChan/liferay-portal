@@ -15,10 +15,10 @@
 package com.liferay.portal.security.audit.event.generators.model.listener.util;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,7 +36,7 @@ public class AttributesBuilder {
 		String oldValue = String.valueOf(
 			BeanPropertiesUtil.getObject(_oldBean, name));
 
-		if (!Validator.equals(newValue, oldValue)) {
+		if (!Objects.equals(newValue, oldValue)) {
 			Attribute attribute = new Attribute(name, newValue, oldValue);
 
 			_attributes.add(attribute);
