@@ -24,6 +24,8 @@
 
 		String backURL = ParamUtil.getString(request, "backURL");
 
+		String closeRedirect = ParamUtil.getString(request, "closeRedirect");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(request);
 
 		KaleoDraftDefinition kaleoDraftDefinition = KaleoDesignerUtil.getKaleoDraftDefinition(request);
@@ -68,6 +70,7 @@
 		<aui:form cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault();">
 			<aui:model-context bean="<%= kaleoDraftDefinition %>" model="<%= KaleoDraftDefinition.class %>" />
 
+			<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 			<aui:input name="mvcPath" type="hidden" value="<%= mvcPath %>" />
 			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 			<aui:input name="kaleoDraftDefinitionId" type="hidden" />

@@ -32,10 +32,12 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -157,6 +159,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 			actionRequest.setAttribute(
 				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
 				kaleoDraftDefinition);
+
+			setCloseRedirect(actionRequest);
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {
@@ -272,6 +276,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 			actionRequest.setAttribute(
 				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
 				kaleoDraftDefinition);
+
+			setCloseRedirect(actionRequest);
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {
@@ -440,6 +446,21 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		}
 
 		writeJSON(resourceRequest, resourceResponse, jsonArray);
+	}
+
+	protected void setCloseRedirect(ActionRequest actionRequest) {
+		String closeRedirect = ParamUtil.getString(
+			actionRequest, "closeRedirect");
+
+		if (Validator.isNull(closeRedirect)) {
+			return;
+		}
+
+		SessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT,
+			closeRedirect);
 	}
 
 	@Reference(unbind = "-")
