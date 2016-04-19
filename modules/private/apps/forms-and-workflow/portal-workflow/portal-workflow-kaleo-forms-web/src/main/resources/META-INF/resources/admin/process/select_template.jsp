@@ -24,10 +24,10 @@ String workflowDefinition = ParamUtil.getString(request, "workflowDefinition");
 String workflowTaskName = ParamUtil.getString(request, "workflowTaskName");
 String mode = ParamUtil.getString(request, "mode");
 
-renderResponse.setTitle(LanguageUtil.format(request, "select-form-for-task-x", workflowTaskName, false));
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle(LanguageUtil.format(request, "select-form-for-task-x", workflowTaskName, false));
 %>
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
