@@ -85,12 +85,12 @@ if (Validator.isNotNull(workflowDefinition)) {
 	iteratorURL="<%= iteratorURL %>"
 	total='<%= tabs1.equals("published") ? WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitionCount(company.getCompanyId()) : KaleoDraftDefinitionLocalServiceUtil.getLatestKaleoDraftDefinitionsCount(company.getCompanyId(), 0) %>'
 >
-	<portlet:renderURL var="editWorkflowURL">
-		<portlet:param name="mvcPath" value="/admin/process/edit_workflow.jsp" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
-	</portlet:renderURL>
+	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="addURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcPath" value="/designer/edit_kaleo_draft_definition.jsp" />
+		<portlet:param name="closeRedirect" value="<%= backURL %>" />
+	</liferay-portlet:renderURL>
 
-	<aui:button href="<%= editWorkflowURL.toString() %>" primary="<%= true %>" value="add-workflow" />
+	<aui:button onClick='<%= "javascript:" + renderResponse.getNamespace() + "editWorkflow('" + addURL + "');" %>' primary="<%= true %>" value="add-workflow" />
 
 	<div class="separator"><!-- --></div>
 
@@ -263,5 +263,25 @@ if (Validator.isNotNull(workflowDefinition)) {
 			kaleoFormsAdmin.updateNavigationControls();
 		},
 		['aui-base']
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />editWorkflow',
+		function(uri) {
+			var A = AUI();
+
+			var WIN = A.config.win;
+
+			Liferay.Util.openWindow(
+				{
+					id: A.guid(),
+					refreshWindow: WIN,
+					title: '<liferay-ui:message key="workflow" />',
+					uri: uri
+				}
+			);
+		},
+		['liferay-util']
 	);
 </aui:script>
