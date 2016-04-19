@@ -24,23 +24,25 @@ DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
 DDLRecordVersion ddlRecordVersion = (DDLRecordVersion)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION);
 %>
 
-<aui:fieldset>
+<div class="container-fluid-1280 main-content-body">
+	<aui:fieldset>
 
-	<%
-	DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+		<%
+		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
-	DDMFormValues ddmFormValues = null;
+		DDMFormValues ddmFormValues = null;
 
-	if (ddlRecordVersion != null) {
-		ddmFormValues = ddlRecordVersion.getDDMFormValues();
-	}
-	%>
+		if (ddlRecordVersion != null) {
+			ddmFormValues = ddlRecordVersion.getDDMFormValues();
+		}
+		%>
 
-	<liferay-ddm:html
-		classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-		classPK="<%= ddmStructure.getStructureId() %>"
-		ddmFormValues="<%= ddmFormValues %>"
-		readOnly="<%= true %>"
-		requestedLocale="<%= locale %>"
-	/>
-</aui:fieldset>
+		<liferay-ddm:html
+			classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+			classPK="<%= ddmStructure.getStructureId() %>"
+			ddmFormValues="<%= ddmFormValues %>"
+			readOnly="<%= true %>"
+			requestedLocale="<%= locale %>"
+		/>
+	</aui:fieldset>
+</div>
