@@ -33,8 +33,9 @@ if (kaleoProcess != null) {
 	kaleoProcessStarted = (DDLRecordLocalServiceUtil.getRecordsCount(kaleoProcess.getDDLRecordSetId(), WorkflowConstants.STATUS_ANY) > 0);
 }
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+PortletURL backPortletURL = renderResponse.createRenderURL();
+
+backPortletURL.setParameter("mvcPath", "/admin/view.jsp");
 
 String title = null;
 
@@ -46,17 +47,20 @@ else {
 }
 
 renderResponse.setTitle(title);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backPortletURL.toString());
 %>
 
 <c:if test="<%= kaleoProcessStarted %>">
-	<div class="alert alert-info">
+	<div class="alert alert-info container-fluid-1280">
 		<liferay-ui:message key="updating-the-field-set-or-workflow-will-cause-loss-of-data" />
 	</div>
 </c:if>
 
 <portlet:actionURL name="updateKaleoProcess" var="editKaleoProcessURL">
 	<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
+	<portlet:param name="redirect" value="<%= backPortletURL.toString() %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editKaleoProcessURL %>" cssClass="container-fluid-1280" method="post" name="fm">
