@@ -51,6 +51,11 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 			cssClass="entry-display-style"
 			modelVar="taskFormsPair"
 		>
+			<liferay-ui:search-container-row-parameter
+				name="backURL"
+				value="<%= backURL %>"
+			/>
+
 			<liferay-ui:search-container-column-text
 				name="task"
 				value="<%= HtmlUtil.escape(taskFormsPair.getWorkflowTaskName()) %>"
@@ -85,22 +90,84 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 				value="<%= HtmlUtil.escape(formName) + taskInputBuffer %>"
 			/>
 
-			<portlet:renderURL var="selectFormURL">
-				<portlet:param name="mvcPath" value="/admin/process/select_template.jsp" />
-				<portlet:param name="backURL" value="<%= backURL %>" />
-				<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" />
-				<portlet:param name="workflowDefinition" value="<%= workflowDefinition %>" />
-				<portlet:param name="workflowTaskName" value="<%= taskFormsPair.getWorkflowTaskName() %>" />
-				<portlet:param name="mode" value="<%= taskFormsPair.getWorkflowTaskName().equals(initialStateName) ? DDMTemplateConstants.TEMPLATE_MODE_CREATE : DDMTemplateConstants.TEMPLATE_MODE_EDIT %>" />
-			</portlet:renderURL>
-
-			<liferay-ui:search-container-column-text
+			<liferay-ui:search-container-column-jsp
+				align="right"
 				cssClass="entry-action"
-			>
-				<aui:button href="<%= selectFormURL %>" value="assign-form" />
-			</liferay-ui:search-container-column-text>
+				path="/admin/process/task_template_action.jsp"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>
+
+<aui:script use="aui-base,aui-io-request,liferay-util">
+	Liferay.provide(
+		window,
+		'<portlet:namespace />selectFormTemplate',
+		function(classPK, mode, sessionParamName) {
+			Liferay.Util.openDDMPortlet(
+				{
+					basePortletURL: '<%= PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+					classNameId: <%= PortalUtil.getClassNameId(DDMStructure.class) %>,
+					classPK: classPK,
+					dialog: {
+						destroyOnHide: true
+					},
+					id: 'ddmDialog',
+					mode: mode,
+					mvcPath: '/select_template.jsp',
+					navigationStartsOn: '<%= DDMNavigationHelper.SELECT_TEMPLATE %>',
+					portletResourceNamespace: '<%= renderResponse.getNamespace() %>',
+					refererPortletName: '<%= portletDisplay.getId() %>',
+					showBackURL: false,
+					showHeader: false,
+					structureAvailableFields: '<%= renderResponse.getNamespace() + "getAvailableFields" %>',
+					resourceClassNameId: <%= scopeClassNameId %>,
+					title: '<liferay-ui:message key="form" />'
+				},
+				function(event) {
+					var A = AUI();
+
+					var data = {};
+
+					data[sessionParamName] = event.ddmtemplateid;
+
+					A.io.request(
+						'<portlet:resourceURL id="saveInPortletSession" />',
+						{
+							after: {
+								success: function() {
+									window.location = decodeURIComponent('<%= HtmlUtil.escapeURL(backURL) %>');
+								}
+							},
+							data: data
+						}
+					);
+
+				}
+			);
+		},
+		['aui-base', 'aui-io-request', 'liferay-util']
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />editFormTemplate',
+		function(uri) {
+			var A = AUI();
+
+			var WIN = A.config.win;
+
+			Liferay.Util.openWindow(
+				{
+					id: A.guid(),
+					refreshWindow: WIN,
+					title: '<liferay-ui:message key="forms" />',
+					uri: uri
+				}
+			);
+		},
+		['liferay-util']
+	);
+</aui:script>

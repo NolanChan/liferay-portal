@@ -17,8 +17,6 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS);
 
 long kaleoProcessId = BeanParamUtil.getLong(kaleoProcess, request, "kaleoProcessId");
@@ -41,16 +39,15 @@ String workflowDefinition = KaleoFormsUtil.getWorkflowDefinition(kaleoProcess, p
 	<aui:input name="kaleoTaskFormPairsData" type="hidden" value="<%= kaleoTaskFormPairs.toString() %>" />
 </aui:field-wrapper>
 
-<portlet:renderURL var="currentSectionURL">
+<portlet:renderURL var="backURL">
 	<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
 	<portlet:param name="historyKey" value="forms" />
 </portlet:renderURL>
 
 <div id="<portlet:namespace />resultsContainer">
 	<liferay-util:include page="/admin/process/task_template_search_container.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="backURL" value="<%= currentSectionURL %>" />
+		<liferay-util:param name="backURL" value="<%= backURL %>" />
 		<liferay-util:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
 		<liferay-util:param name="workflowDefinition" value="<%= workflowDefinition %>" />
 	</liferay-util:include>
