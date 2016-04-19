@@ -38,13 +38,9 @@ String backURL = (String)row.getParameter("backURL");
 		url="javascript:;"
 	/>
 
-	<%
-	String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "chooseWorkflow', {name: '" + HtmlUtil.escapeJS(workflowDefinition.getName()) + "', title: '" + HtmlUtil.escapeJS(workflowDefinition.getTitle(themeDisplay.getLanguageId())) + "', version: '" + workflowDefinition.getVersion() + "'});";
-	%>
-
 	<liferay-ui:icon
 		message="choose"
-		onClick="<%= taglibOnClick %>"
+		onClick='<%= "Liferay.fire('" + renderResponse.getNamespace() + "chooseWorkflow', {name: '" + HtmlUtil.escapeJS(workflowDefinition.getName()) + "', title: '" + HtmlUtil.escapeJS(workflowDefinition.getTitle(themeDisplay.getLanguageId())) + "', version: '" + workflowDefinition.getVersion() + "'});" %>'
 		url="javascript:;"
 	/>
 

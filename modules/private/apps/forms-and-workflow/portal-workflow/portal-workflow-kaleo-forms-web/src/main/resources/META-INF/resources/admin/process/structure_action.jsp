@@ -36,23 +36,15 @@ String backURL = (String)row.getParameter("backURL");
 		<portlet:param name="classPK" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
 	</liferay-portlet:renderURL>
 
-	<%
-	String taglibOnClick = "javascript:" + renderResponse.getNamespace() + "editStructure('" + editURL + "');";
-	%>
-
 	<liferay-ui:icon
 		message="edit"
-		onClick="<%= taglibOnClick %>"
+		onClick='<%= "javascript:" + renderResponse.getNamespace() + "editStructure('" + editURL + "');" %>'
 		url="javascript:;"
 	/>
 
-	<%
-	taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "chooseDefinition', {ddmStructureId: " + ddmStructure.getStructureId() + ", name: '" + HtmlUtil.escapeJS(ddmStructure.getName(locale)) + "', node: this});";
-	%>
-
 	<liferay-ui:icon
 		message="choose"
-		onClick="<%= taglibOnClick %>"
+		onClick='<%= "Liferay.fire('" + renderResponse.getNamespace() + "chooseDefinition', {ddmStructureId: " + ddmStructure.getStructureId() + ", name: '" + HtmlUtil.escapeJS(ddmStructure.getName(locale)) + "', node: this});" %>'
 		url="javascript:;"
 	/>
 
