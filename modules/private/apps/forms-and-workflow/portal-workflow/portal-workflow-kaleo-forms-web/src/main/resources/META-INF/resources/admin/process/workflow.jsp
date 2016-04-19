@@ -20,7 +20,7 @@
 String tabs1 = ParamUtil.getString(request, "tabs1", "published");
 
 String redirect = ParamUtil.getString(request, "redirect");
-String currentSectionURL = HttpUtil.setParameter(currentURL, renderResponse.getNamespace() + "historyKey", "workflow");
+String backURL = HttpUtil.setParameter(currentURL, renderResponse.getNamespace() + "historyKey", "workflow");
 
 KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS);
 
@@ -87,7 +87,7 @@ if (Validator.isNotNull(workflowDefinition)) {
 >
 	<portlet:renderURL var="editWorkflowURL">
 		<portlet:param name="mvcPath" value="/admin/process/edit_workflow.jsp" />
-		<portlet:param name="backURL" value="<%= currentSectionURL %>" />
+		<portlet:param name="backURL" value="<%= backURL %>" />
 	</portlet:renderURL>
 
 	<aui:button href="<%= editWorkflowURL.toString() %>" primary="<%= true %>" value="add-workflow" />
@@ -146,7 +146,7 @@ if (Validator.isNotNull(workflowDefinition)) {
 			>
 				<liferay-ui:search-container-row-parameter
 					name="backURL"
-					value="<%= currentSectionURL %>"
+					value="<%= backURL %>"
 				/>
 
 				<c:if test="<%= kaleoProcess != null %>">
@@ -185,7 +185,7 @@ if (Validator.isNotNull(workflowDefinition)) {
 			>
 				<liferay-ui:search-container-row-parameter
 					name="backURL"
-					value="<%= currentSectionURL %>"
+					value="<%= backURL %>"
 				/>
 
 				<c:if test="<%= kaleoProcess != null %>">
