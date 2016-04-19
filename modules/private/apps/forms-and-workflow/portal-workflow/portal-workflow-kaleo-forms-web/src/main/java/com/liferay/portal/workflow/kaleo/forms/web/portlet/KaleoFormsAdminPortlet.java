@@ -249,60 +249,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	public void publishKaleoDraftDefinition(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String content = null;
-
-		try {
-			String backURL = ParamUtil.getString(actionRequest, "backURL");
-
-			String name = ParamUtil.getString(actionRequest, "name");
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-				actionRequest, "title");
-			content = ParamUtil.getString(actionRequest, "content");
-
-			if (Validator.isNull(name)) {
-				name = getName(
-					content, titleMap.get(themeDisplay.getSiteDefaultLocale()));
-			}
-
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
-
-			KaleoDraftDefinition kaleoDraftDefinition =
-				_kaleoDraftDefinitionService.publishKaleoDraftDefinition(
-					themeDisplay.getUserId(), themeDisplay.getCompanyGroupId(),
-					name, titleMap, content, serviceContext);
-
-			actionRequest.setAttribute(
-				KaleoFormsWebKeys.KALEO_DRAFT_DEFINITION_ID,
-				kaleoDraftDefinition.getKaleoDraftDefinitionId());
-			actionRequest.setAttribute(WebKeys.REDIRECT, backURL);
-
-			saveInPortletSession(actionRequest, kaleoDraftDefinition);
-		}
-		catch (Exception e) {
-			if (isSessionErrorException(e)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-
-				SessionErrors.add(actionRequest, e.getClass(), e);
-
-				actionRequest.setAttribute(
-					KaleoFormsWebKeys.KALEO_DRAFT_DEFINITION_CONTENT, content);
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
 	@Override
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -404,69 +350,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			WorkflowTaskManagerUtil.completeWorkflowTask(
 				serviceContext.getCompanyId(), serviceContext.getUserId(),
 				workflowTaskId, null, null, null);
-		}
-	}
-
-	public void updateKaleoDraftDefinition(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String content = null;
-
-		try {
-			long kaleoDraftDefinitionId = ParamUtil.getLong(
-				actionRequest, "kaleoDraftDefinitionId");
-
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-				actionRequest, "title");
-			content = ParamUtil.getString(actionRequest, "content");
-			int version = ParamUtil.getInteger(actionRequest, "version");
-
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
-
-			KaleoDraftDefinition kaleoDraftDefinition = null;
-
-			if (kaleoDraftDefinitionId <= 0) {
-				String name = getName(
-					content, titleMap.get(themeDisplay.getSiteDefaultLocale()));
-
-				kaleoDraftDefinition =
-					_kaleoDraftDefinitionService.addKaleoDraftDefinition(
-						themeDisplay.getUserId(),
-						themeDisplay.getCompanyGroupId(), name, titleMap,
-						content, version, 1, serviceContext);
-			}
-			else {
-				String name = ParamUtil.getString(actionRequest, "name");
-
-				kaleoDraftDefinition =
-					_kaleoDraftDefinitionService.updateKaleoDraftDefinition(
-						themeDisplay.getUserId(), name, titleMap, content,
-						version, serviceContext);
-			}
-
-			actionRequest.setAttribute(
-				KaleoFormsWebKeys.KALEO_DRAFT_DEFINITION_ID,
-				kaleoDraftDefinition.getKaleoDraftDefinitionId());
-		}
-		catch (Exception e) {
-			if (isSessionErrorException(e)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-
-				SessionErrors.add(actionRequest, e.getClass(), e);
-
-				actionRequest.setAttribute(
-					KaleoFormsWebKeys.KALEO_DRAFT_DEFINITION_CONTENT, content);
-			}
-			else {
-				throw e;
-			}
 		}
 	}
 
