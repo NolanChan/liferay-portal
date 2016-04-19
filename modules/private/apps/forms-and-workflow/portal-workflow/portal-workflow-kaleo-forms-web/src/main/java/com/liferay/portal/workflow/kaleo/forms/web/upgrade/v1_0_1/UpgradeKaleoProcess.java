@@ -62,14 +62,12 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = con.prepareStatement(
-				"select kaleoProcessId, groupId, companyId, userId, " +
-					"createDate, modifiedDate, DDLRecordSetId, uuid_ from " +
-						"KaleoProcess");
+			ps = con.prepareStatement("select * from KaleoProcess");
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
+				String uuid = rs.getString("uuid_");
 				long kaleoProcessId = rs.getLong("kaleoProcessId");
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
@@ -77,7 +75,6 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 				Timestamp createDate = rs.getTimestamp("createDate");
 				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 				long ddlRecordSetId = rs.getLong("DDLRecordSetId");
-				String uuid = rs.getString("uuid_");
 
 				if (Validator.isNull(uuid)) {
 					uuid = PortalUUIDUtil.generate();
