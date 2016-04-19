@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * @author Shuyang Zhou
  */
-public class WebsphereDeploymentExtension implements DeploymentExtension {
+public class WebSphereDeploymentExtension implements DeploymentExtension {
 
 	@Override
 	public void copyXmls(BaseDeployer baseDeployer, File srcFile)
@@ -202,6 +202,6 @@ public class WebsphereDeploymentExtension implements DeploymentExtension {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		WebsphereDeploymentExtension.class);
+		WebSphereDeploymentExtension.class);
 
 }

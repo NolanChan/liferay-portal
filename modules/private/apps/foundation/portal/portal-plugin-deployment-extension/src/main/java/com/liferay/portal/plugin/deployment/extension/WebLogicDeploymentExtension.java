@@ -23,7 +23,7 @@ import java.io.File;
 /**
  * @author Shuyang Zhou
  */
-public class WeblogicDeploymentExtension implements DeploymentExtension {
+public class WebLogicDeploymentExtension implements DeploymentExtension {
 
 	@Override
 	public void copyXmls(BaseDeployer baseDeployer, File srcFile)
