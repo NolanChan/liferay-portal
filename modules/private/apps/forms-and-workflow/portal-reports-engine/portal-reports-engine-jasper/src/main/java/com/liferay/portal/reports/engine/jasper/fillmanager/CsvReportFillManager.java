@@ -59,7 +59,7 @@ public class CsvReportFillManager extends BaseReportFillManager {
 			jrCsvDataSource.setUseFirstRowAsHeader(true);
 		}
 
-		jrCsvDataSource.setRecordDelimiter(StringPool.RETURN_NEW_LINE);
+		jrCsvDataSource.setRecordDelimiter(StringPool.NEW_LINE);
 
 		return jrCsvDataSource;
 	}
