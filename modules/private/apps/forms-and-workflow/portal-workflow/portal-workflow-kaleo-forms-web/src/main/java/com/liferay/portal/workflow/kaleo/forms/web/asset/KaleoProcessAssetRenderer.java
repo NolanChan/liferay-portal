@@ -54,12 +54,12 @@ public class KaleoProcessAssetRenderer
 	extends BaseJSPAssetRenderer<KaleoProcess> {
 
 	public KaleoProcessAssetRenderer(
-		KaleoProcess kaleoProcess, DDLRecord record,
-		DDLRecordVersion recordVersion) {
+		KaleoProcess kaleoProcess, DDLRecord ddlRecord,
+		DDLRecordVersion ddlRecordVersion) {
 
 		_kaleoProcess = kaleoProcess;
-		_record = record;
-		_recordVersion = recordVersion;
+		_ddlRecord = ddlRecord;
+		_ddlRecordVersion = ddlRecordVersion;
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class KaleoProcessAssetRenderer
 
 	@Override
 	public int getStatus() {
-		return _recordVersion.getStatus();
+		return _ddlRecordVersion.getStatus();
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class KaleoProcessAssetRenderer
 			"kaleoProcessId",
 			String.valueOf(_kaleoProcess.getKaleoProcessId()));
 		portletURL.setParameter(
-			"ddlRecordId", String.valueOf(_record.getRecordId()));
+			"ddlRecordId", String.valueOf(_ddlRecord.getRecordId()));
 
 		return portletURL;
 	}
@@ -187,10 +187,10 @@ public class KaleoProcessAssetRenderer
 			portletURL.setParameter(
 				"assetEntryId", String.valueOf(assetEntry.getEntryId()));
 			portletURL.setParameter(
-				"assetEntryClassPK", String.valueOf(_record.getRecordId()));
+				"assetEntryClassPK", String.valueOf(_ddlRecord.getRecordId()));
 			portletURL.setParameter(
 				"assetEntryVersionId",
-				String.valueOf(_recordVersion.getRecordId()));
+				String.valueOf(_ddlRecordVersion.getRecordId()));
 			portletURL.setParameter("type", assetRendererFactory.getType());
 
 			return portletURL.toString();
@@ -239,9 +239,9 @@ public class KaleoProcessAssetRenderer
 			String template)
 		throws Exception {
 
-		request.setAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD, _record);
+		request.setAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD, _ddlRecord);
 		request.setAttribute(
-			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION, _recordVersion);
+			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION, _ddlRecordVersion);
 		request.setAttribute(KaleoFormsWebKeys.KALEO_PROCESS, _kaleoProcess);
 
 		return super.include(request, response, template);
@@ -255,8 +255,8 @@ public class KaleoProcessAssetRenderer
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoProcessAssetRenderer.class);
 
+	private final DDLRecord _ddlRecord;
+	private final DDLRecordVersion _ddlRecordVersion;
 	private final KaleoProcess _kaleoProcess;
-	private final DDLRecord _record;
-	private final DDLRecordVersion _recordVersion;
 
 }
