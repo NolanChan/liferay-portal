@@ -18,7 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
-String currentSectionURL = HttpUtil.setParameter(currentURL, renderResponse.getNamespace() + "historyKey", "fields");
+String backURL = HttpUtil.setParameter(currentURL, renderResponse.getNamespace() + "historyKey", "fields");
 
 KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS);
 
@@ -35,8 +35,6 @@ if (ddmStructureId > 0) {
 		ddmStructureName = ddmStructure.getName(locale);
 	}
 }
-
-long classNameId = ParamUtil.getLong(request, "classNameId");
 
 JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 %>
@@ -89,8 +87,18 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 	</liferay-ui:search-container-results>
 
 	<c:if test="<%= DDMStructurePermission.containsAddStruturePermission(permissionChecker, scopeGroupId, scopeClassNameId) %>">
+		<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT) %>" var="addURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+			<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_STRUCTURE %>" />
+			<portlet:param name="closeRedirect" value="<%= backURL %>" />
+			<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
+			<portlet:param name="refererPortletName" value="<%= KaleoFormsPortletKeys.KALEO_FORMS_ADMIN %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
+		</liferay-portlet:renderURL>
+
 		<aui:button-row>
-			<aui:button onClick='<%= "javascript:" + renderResponse.getNamespace() + "openDDMPortlet();" %>' primary="<%= true %>" value="add-field-set" />
+			<aui:button onClick='<%= "javascript:" + renderResponse.getNamespace() + "editStructure('" + addURL + "');" %>' primary="<%= true %>" value="add-field-set" />
 		</aui:button-row>
 	</c:if>
 
@@ -100,8 +108,8 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 		modelVar="structure"
 	>
 		<liferay-ui:search-container-row-parameter
-			name="redirect"
-			value="<%= currentSectionURL %>"
+			name="backURL"
+			value="<%= backURL %>"
 		/>
 
 		<liferay-util:buffer var="structureNameBuffer">
@@ -188,44 +196,6 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 					refreshWindow: WIN,
 					title: '<liferay-ui:message key="field-set" />',
 					uri: uri
-				}
-			);
-		},
-		['liferay-util']
-	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />openDDMPortlet',
-		function(ddmTemplateId) {
-			Liferay.Util.openDDMPortlet(
-				{
-					basePortletURL: '<%= PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
-					classNameId: '<%= classNameId %>',
-					classPK: document.<portlet:namespace />fm.<portlet:namespace />ddmStructureId.value,
-					dialog: {
-						destroyOnHide: true,
-						on: {
-							visibleChange: function(event) {
-								if (!event.newVal) {
-									Liferay.Portlet.refresh('#p_p_id_' + '<%= portletDisplay.getId() %>' + '_');
-								}
-							}
-						}
-					},
-					eventName: '<portlet:namespace />selectStructure',
-					groupId: <%= scopeGroupId %>,
-					hiddenWindow: false,
-					id: 'selectStructure',
-					mvcPath: '/select_structure.jsp',
-					redirect: '<%= currentSectionURL %>',
-					refererPortletName: '<%= portletDisplay.getId() %>',
-					showAncestorScopes: true,
-					structureAvailableFields: '<%= renderResponse.getNamespace() + "getAvailableFields" %>',
-					title: '<liferay-ui:message key="field-set" />'
-				},
-				function(event) {
-					Liferay.fire('<portlet:namespace />chooseDefinition', {ddmStructureId: event.ddmstructureid, dialogId: 'selectStructure', name: event.name , node: this});
 				}
 			);
 		},

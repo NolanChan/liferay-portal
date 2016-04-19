@@ -21,14 +21,14 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 DDMStructure ddmStructure = (DDMStructure)row.getObject();
 
-String redirect = (String)row.getParameter("redirect");
+String backURL = (String)row.getParameter("backURL");
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT) %>" var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcPath" value="/edit_structure.jsp" />
 		<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_STRUCTURE %>" />
-		<portlet:param name="closeRedirect" value="<%= currentURL %>" />
+		<portlet:param name="closeRedirect" value="<%= backURL %>" />
 		<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
 		<portlet:param name="refererPortletName" value="<%= KaleoFormsPortletKeys.KALEO_FORMS_ADMIN %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
@@ -57,7 +57,7 @@ String redirect = (String)row.getParameter("redirect");
 	/>
 
 	<liferay-portlet:actionURL name="deleteStructure" portletName="<%= DDMPortletKeys.DYNAMIC_DATA_MAPPING %>" var="deleteDDMStructureURL">
-		<portlet:param name="redirect" value="<%= redirect %>" />
+		<portlet:param name="redirect" value="<%= backURL %>" />
 		<portlet:param name="deleteStructureIds" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
 	</liferay-portlet:actionURL>
 
