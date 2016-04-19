@@ -914,13 +914,13 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		HttpServletRequest request = serviceContext.getRequest();
 
 		long ddlRecordId = ParamUtil.getLong(request, "ddlRecordId");
-		long ddlRecordSetId = ParamUtil.getLong(request, "ddlRecordSetId");
-		long kaleoProcessId = ParamUtil.getLong(request, "kaleoProcessId");
 
-		Locale locale = serviceContext.getLocale();
+		long ddlRecordSetId = ParamUtil.getLong(request, "ddlRecordSetId");
 
 		DDLRecord ddlRecord = _ddl.updateRecord(
 			ddlRecordId, ddlRecordSetId, true, false, serviceContext);
+
+		long kaleoProcessId = ParamUtil.getLong(request, "kaleoProcessId");
 
 		KaleoProcess kaleoProcess = _kaleoProcessService.getKaleoProcess(
 			kaleoProcessId);
@@ -928,7 +928,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		updateAssetEntry(
 			serviceContext.getUserId(), ddlRecord, kaleoProcess,
 			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(), locale,
+			serviceContext.getAssetTagNames(), serviceContext.getLocale(),
 			serviceContext.getAssetPriority());
 
 		return ddlRecord;
