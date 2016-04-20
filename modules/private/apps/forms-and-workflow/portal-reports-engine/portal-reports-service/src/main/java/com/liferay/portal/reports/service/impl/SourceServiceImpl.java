@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.reports.model.Source;
 import com.liferay.portal.reports.service.base.SourceServiceBaseImpl;
-import com.liferay.portal.reports.service.permission.AdminPermission;
+import com.liferay.portal.reports.service.permission.AdminResourcePermissionChecker;
 import com.liferay.portal.reports.service.permission.ReportsActionKeys;
 import com.liferay.portal.reports.service.permission.SourcePermission;
 
@@ -45,7 +45,7 @@ public class SourceServiceImpl extends SourceServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		AdminPermission.check(
+		AdminResourcePermissionChecker.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ReportsActionKeys.ADD_SOURCE);
 

@@ -25,8 +25,8 @@ portletURL.setParameter("tabs1", tabs1);
 
 String tabs1Names = "reports";
 
-boolean hasAddDefinitionPermission = AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_DEFINITION);
-boolean hasAddSourcePermission = AdminPermission.contains(permissionChecker, scopeGroupId, ReportsActionKeys.ADD_SOURCE);
+boolean hasAddDefinitionPermission = AdminResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_DEFINITION);
+boolean hasAddSourcePermission = AdminResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ReportsActionKeys.ADD_SOURCE);
 
 String portletId = portletDisplay.getId();
 

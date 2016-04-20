@@ -29,7 +29,7 @@ import com.liferay.portal.reports.model.Definition;
 import com.liferay.portal.reports.model.Source;
 import com.liferay.portal.reports.service.DefinitionLocalService;
 import com.liferay.portal.reports.service.SourceLocalService;
-import com.liferay.portal.reports.service.permission.AdminPermission;
+import com.liferay.portal.reports.service.permission.AdminResourcePermissionChecker;
 
 import java.util.List;
 
@@ -106,7 +106,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPortletPermissions(AdminPermission.RESOURCE_NAME);
+		portletDataContext.addPortletPermissions(AdminResourcePermissionChecker.RESOURCE_NAME);
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -139,7 +139,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPortletPermissions(
-			AdminPermission.RESOURCE_NAME);
+			AdminResourcePermissionChecker.RESOURCE_NAME);
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "sources")) {
 			Element sourcesElement =

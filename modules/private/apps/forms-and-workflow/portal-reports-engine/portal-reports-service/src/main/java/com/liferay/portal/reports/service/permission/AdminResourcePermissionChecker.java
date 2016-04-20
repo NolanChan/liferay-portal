@@ -40,14 +40,15 @@ public class AdminResourcePermissionChecker extends BaseResourcePermissionChecke
 		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, RESOURCE_NAME, groupId, actionId);
 		}
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		return contains(permissionChecker, RESOURCE_NAME, 0, actionId);
+		return contains(permissionChecker, RESOURCE_NAME, groupId, actionId);
 	}
 
 	@Override
