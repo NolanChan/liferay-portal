@@ -106,7 +106,8 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPortletPermissions(AdminResourcePermissionChecker.RESOURCE_NAME);
+		portletDataContext.addPortletPermissions(
+			AdminResourcePermissionChecker.RESOURCE_NAME);
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 

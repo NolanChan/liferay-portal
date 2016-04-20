@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.portal.reports" auto-namespace-tables="true">
+<service-builder auto-namespace-tables="true" package-path="com.liferay.portal.reports">
 	<namespace>Reports</namespace>
-	<entity name="Definition" uuid="true" local-service="true" remote-service="true">
+	<entity local-service="true" name="Definition" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="definitionId" type="long" primary="true" />
+		<column name="definitionId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -23,8 +23,8 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" localized="true" />
-		<column name="description" type="String" localized="true" />
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
 		<column name="sourceId" type="long" />
 		<column name="reportName" type="String" />
 		<column name="reportParameters" type="String" />
@@ -45,11 +45,11 @@
 			<finder-column name="companyId" />
 		</finder>
 	</entity>
-	<entity name="Entry" local-service="true" remote-service="true">
+	<entity local-service="true" name="Entry" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="entryId" type="long" primary="true" />
+		<column name="entryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -88,13 +88,13 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="PortletPreferences" />
+		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="Source" uuid="true" local-service="true" remote-service="true">
+	<entity local-service="true" name="Source" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="sourceId" type="long" primary="true" />
+		<column name="sourceId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -111,7 +111,7 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" localized="true" />
+		<column localized="true" name="name" type="String" />
 		<column name="driverClassName" type="String" />
 		<column name="driverUrl" type="String" />
 		<column name="driverUserName" type="String" />

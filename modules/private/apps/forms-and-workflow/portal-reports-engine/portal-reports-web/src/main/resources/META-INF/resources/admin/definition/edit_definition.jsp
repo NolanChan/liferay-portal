@@ -95,7 +95,7 @@ if (definition != null) {
 		</aui:select>
 
 		<aui:field-wrapper>
-			<span class="existing-report" style='<%= Validator.isNull(reportName) ? "display: none;" : "display: block;" %>'>
+			<span class="existing-report" style="<%= Validator.isNull(reportName) ? "display: none;" : "display: block;" %>">
 				<%= reportName %>
 
 				<img class="remove-existing-report" src="<%= themeDisplay.getPathThemeImages() %>/arrows/02_x.png" />

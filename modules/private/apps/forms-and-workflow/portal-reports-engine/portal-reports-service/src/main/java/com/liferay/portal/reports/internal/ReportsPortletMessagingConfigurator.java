@@ -63,9 +63,9 @@ public class ReportsPortletMessagingConfigurator {
 			ConfigurableUtil.createConfigurable(
 				ReportsPortletMessagingConfiguration.class, properties);
 
-		registerReportsAdminDestination();
+		_registerReportsAdminDestination();
 
-		registerReportsSchedulerEventDestination();
+		_registerReportsSchedulerEventDestination();
 	}
 
 	@Deactivate
@@ -103,7 +103,7 @@ public class ReportsPortletMessagingConfigurator {
 		activate(componentContext);
 	}
 
-	private void registerDestination(
+	private void _registerDestination(
 		MessageListener reportMessageListener, String destinationType,
 		String destinationName) {
 
@@ -160,20 +160,20 @@ public class ReportsPortletMessagingConfigurator {
 		destination.register(reportMessageListener);
 	}
 
-	private void registerReportsAdminDestination() {
+	private void _registerReportsAdminDestination() {
 		MessageListener adminMessageListener = new AdminMessageListener();
 
-		registerDestination(
+		_registerDestination(
 			adminMessageListener,
 			DestinationConfiguration.DESTINATION_TYPE_SERIAL,
 			DestinationNames.REPORTS_ADMIN);
 	}
 
-	private void registerReportsSchedulerEventDestination() {
+	private void _registerReportsSchedulerEventDestination() {
 		MessageListener schedulerEventMessageListener =
 			new SchedulerEventMessageListener();
 
-		registerDestination(
+		_registerDestination(
 			schedulerEventMessageListener,
 			DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 			DestinationNames.REPORTS_SCHEDULER_EVENT);

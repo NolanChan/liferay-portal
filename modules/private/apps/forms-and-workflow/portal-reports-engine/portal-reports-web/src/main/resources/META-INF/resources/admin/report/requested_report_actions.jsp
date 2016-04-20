@@ -81,5 +81,4 @@ Entry entry = (Entry)row.getObject();
 			url="<%= deleteURL %>"
 		/>
 	</c:if>
-
 </liferay-ui:icon-menu>

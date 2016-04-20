@@ -30,7 +30,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {"resource.name=" + AdminResourcePermissionChecker.RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )
-public class AdminResourcePermissionChecker extends BaseResourcePermissionChecker {
+public class AdminResourcePermissionChecker
+	extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =
 		"com.liferay.portal.reports.admin";

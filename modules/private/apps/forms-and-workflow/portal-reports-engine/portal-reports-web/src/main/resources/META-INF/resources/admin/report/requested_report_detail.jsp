@@ -90,34 +90,34 @@ String status = entry.getStatus();
 	<c:if test="<%= entry.isScheduleRequest() %>">
 		<aui:field-wrapper label="is-schedule-request">
 
-				<%
-				StringBundler sb = new StringBundler((entry.getEndDate() != null) ? 18 : 12);
+			<%
+			StringBundler sb = new StringBundler((entry.getEndDate() != null) ? 18 : 12);
 
+			sb.append("<br />");
+			sb.append(LanguageUtil.get(request, "scheduler-from"));
+			sb.append(StringPool.BLANK);
+			sb.append(StringPool.COLON);
+			sb.append(StringPool.BLANK);
+			sb.append(dateFormatDateTime.format(entry.getStartDate()));
+
+			if (entry.getEndDate() != null) {
 				sb.append("<br />");
-				sb.append(LanguageUtil.get(request, "scheduler-from"));
+				sb.append(LanguageUtil.get(request, "scheduler-to"));
 				sb.append(StringPool.BLANK);
 				sb.append(StringPool.COLON);
 				sb.append(StringPool.BLANK);
-				sb.append(dateFormatDateTime.format(entry.getStartDate()));
+				sb.append(dateFormatDateTime.format(entry.getEndDate()));
+			}
 
-				if (entry.getEndDate() != null) {
-					sb.append("<br />");
-					sb.append(LanguageUtil.get(request, "scheduler-to"));
-					sb.append(StringPool.BLANK);
-					sb.append(StringPool.COLON);
-					sb.append(StringPool.BLANK);
-					sb.append(dateFormatDateTime.format(entry.getEndDate()));
-				}
+			sb.append("<br />");
+			sb.append(LanguageUtil.get(request, "scheduler-crontext"));
+			sb.append(StringPool.BLANK);
+			sb.append(StringPool.COLON);
+			sb.append(StringPool.BLANK);
+			sb.append(entry.getRecurrence());
+			%>
 
-				sb.append("<br />");
-				sb.append(LanguageUtil.get(request, "scheduler-crontext"));
-				sb.append(StringPool.BLANK);
-				sb.append(StringPool.COLON);
-				sb.append(StringPool.BLANK);
-				sb.append(entry.getRecurrence());
-				%>
-
-				<%= sb.toString() %>
+			<%= sb.toString() %>
 		</aui:field-wrapper>
 	</c:if>
 
