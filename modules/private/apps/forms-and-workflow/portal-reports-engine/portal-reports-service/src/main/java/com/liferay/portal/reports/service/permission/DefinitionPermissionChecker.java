@@ -18,63 +18,68 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.reports.model.Source;
-import com.liferay.portal.reports.service.SourceLocalService;
+import com.liferay.portal.reports.model.Definition;
+import com.liferay.portal.reports.service.DefinitionLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
- * @author Gavin Wan
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.portal.reports.model.Source"},
+	property = {"model.class.name=com.portal.reports.model.Definition"},
 	service = BaseModelPermissionChecker.class
 )
-public class SourcePermission implements BaseModelPermissionChecker {
+public class DefinitionPermissionChecker implements BaseModelPermissionChecker {
 
 	public static void check(
-			PermissionChecker permissionChecker, long sourceId, String actionId)
+			PermissionChecker permissionChecker, Definition definition,
+			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, sourceId, actionId)) {
+		if (!contains(permissionChecker, definition, actionId)) {
 			throw new PrincipalException();
 		}
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker, Source source, String actionId)
+			PermissionChecker permissionChecker, long definitionId,
+			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, source, actionId)) {
+		if (!contains(permissionChecker, definitionId, actionId)) {
 			throw new PrincipalException();
 		}
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long sourceId, String actionId)
-		throws PortalException {
-
-		Source source = _sourceLocalService.getSource(sourceId);
-
-		return contains(permissionChecker, source, actionId);
-	}
-
-	public static boolean contains(
-		PermissionChecker permissionChecker, Source source, String actionId) {
+		PermissionChecker permissionChecker, Definition definition,
+		String actionId) {
 
 		if (permissionChecker.hasOwnerPermission(
-				source.getCompanyId(), Source.class.getName(),
-				source.getSourceId(), source.getUserId(), actionId)) {
+				definition.getCompanyId(), Definition.class.getName(),
+				definition.getDefinitionId(), definition.getUserId(),
+				actionId)) {
 
 			return true;
 		}
 
 		return permissionChecker.hasPermission(
-			source.getGroupId(), Source.class.getName(), source.getSourceId(),
-			actionId);
+			definition.getGroupId(), Definition.class.getName(),
+			definition.getDefinitionId(), actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long definitionId,
+			String actionId)
+		throws PortalException {
+
+		Definition definition = _definitionLocalService.getDefinition(
+			definitionId);
+
+		return contains(permissionChecker, definition, actionId);
 	}
 
 	@Override
@@ -87,12 +92,12 @@ public class SourcePermission implements BaseModelPermissionChecker {
 	}
 
 	@Reference(unbind = "-")
-	protected void setSourceLocalService(
-		SourceLocalService sourceLocalService) {
+	protected void setDefinitionLocalService(
+		DefinitionLocalService definitionLocalService) {
 
-		_sourceLocalService = sourceLocalService;
+		_definitionLocalService = definitionLocalService;
 	}
 
-	private static SourceLocalService _sourceLocalService;
+	private static DefinitionLocalService _definitionLocalService;
 
 }
