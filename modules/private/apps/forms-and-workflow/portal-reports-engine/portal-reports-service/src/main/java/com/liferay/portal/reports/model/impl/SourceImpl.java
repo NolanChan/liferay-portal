@@ -16,7 +16,6 @@ package com.liferay.portal.reports.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.document.library.kernel.exception.NoSuchDirectoryException;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -32,14 +31,8 @@ public class SourceImpl extends SourceBaseImpl {
 	}
 
 	public String[] getAttachmentsFiles() throws PortalException {
-		try {
-			return DLStoreUtil.getFileNames(
-				getCompanyId(), CompanyConstants.SYSTEM, getAttachmentsDir());
-		}
-		catch (NoSuchDirectoryException nsde) {
-		}
-
-		return new String[0];
+		return DLStoreUtil.getFileNames(
+			getCompanyId(), CompanyConstants.SYSTEM, getAttachmentsDir());
 	}
 
 }
