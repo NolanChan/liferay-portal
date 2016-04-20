@@ -70,9 +70,9 @@
 		<aui:form cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault();">
 			<aui:model-context bean="<%= kaleoDraftDefinition %>" model="<%= KaleoDraftDefinition.class %>" />
 
-			<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 			<aui:input name="mvcPath" type="hidden" value="<%= mvcPath %>" />
 			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+			<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 			<aui:input name="kaleoDraftDefinitionId" type="hidden" />
 			<aui:input name="name" type="hidden" />
 			<aui:input name="content" type="hidden" value="<%= content %>" />

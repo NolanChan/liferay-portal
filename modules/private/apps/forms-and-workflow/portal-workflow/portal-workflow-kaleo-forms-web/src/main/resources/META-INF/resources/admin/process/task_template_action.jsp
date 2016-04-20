@@ -17,6 +17,7 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
+long classNameId = ParamUtil.getLong(request, "classNameId");
 long kaleoProcessId = ParamUtil.getLong(request, "kaleoProcessId");
 String workflowDefinition = ParamUtil.getString(request, "workflowDefinition");
 
@@ -31,17 +32,12 @@ long ddmTemplateId = kaleoTaskFormPair.getDDMTemplateId();
 DDMTemplate ddmTemplate = null;
 
 if (ddmTemplateId > 0) {
-	try {
-		ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(ddmTemplateId);
-	}
-	catch (PortalException pe) {
-	}
+	ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(ddmTemplateId);
 }
 
-long classNameId = ParamUtil.getLong(request, "classNameId");
 long ddmStructureId = KaleoFormsUtil.getKaleoProcessDDMStructureId(kaleoProcessId, portletSession);
 String initialStateName = KaleoFormsUtil.getInitialStateName(company.getCompanyId(), workflowDefinition);
-String mode = kaleoTaskFormPair.getWorkflowTaskName().equals(initialStateName) ? DDMTemplateConstants.TEMPLATE_MODE_CREATE : DDMTemplateConstants.TEMPLATE_MODE_EDIT;
+String mode = initialStateName.equals(kaleoTaskFormPair.getWorkflowTaskName()) ? DDMTemplateConstants.TEMPLATE_MODE_CREATE : DDMTemplateConstants.TEMPLATE_MODE_EDIT;
 String paramName = HtmlUtil.escapeJS(renderResponse.getNamespace() + ddmStructureId + workflowDefinition + kaleoTaskFormPair.getWorkflowTaskName());
 %>
 
