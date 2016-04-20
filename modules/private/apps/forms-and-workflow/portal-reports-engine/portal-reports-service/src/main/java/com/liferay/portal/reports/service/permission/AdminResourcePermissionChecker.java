@@ -27,10 +27,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"resource.name=" + AdminPermission.RESOURCE_NAME},
+	property = {"resource.name=" + AdminResourcePermissionChecker.RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )
-public class AdminPermission extends BaseResourcePermissionChecker {
+public class AdminResourcePermissionChecker extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =
 		"com.liferay.portal.reports.admin";
@@ -47,7 +47,7 @@ public class AdminPermission extends BaseResourcePermissionChecker {
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		return contains(permissionChecker, RESOURCE_NAME, groupId, actionId);
+		return contains(permissionChecker, RESOURCE_NAME, 0, actionId);
 	}
 
 	@Override
