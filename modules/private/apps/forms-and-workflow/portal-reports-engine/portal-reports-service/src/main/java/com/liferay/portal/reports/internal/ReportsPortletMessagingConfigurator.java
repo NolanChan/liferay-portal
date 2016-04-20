@@ -29,6 +29,7 @@ import com.liferay.portal.reports.admin.messaging.AdminMessageListener;
 import com.liferay.portal.reports.configuration.ReportsPortletMessagingConfiguration;
 import com.liferay.portal.reports.messaging.DestinationNames;
 import com.liferay.portal.reports.messaging.SchedulerEventMessageListener;
+import com.liferay.portal.reports.service.EntryLocalService;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -161,7 +162,8 @@ public class ReportsPortletMessagingConfigurator {
 	}
 
 	private void _registerReportsAdminDestination() {
-		MessageListener adminMessageListener = new AdminMessageListener();
+		MessageListener adminMessageListener = new AdminMessageListener(
+			_entryLocalService);
 
 		_registerDestination(
 			adminMessageListener,
@@ -171,7 +173,7 @@ public class ReportsPortletMessagingConfigurator {
 
 	private void _registerReportsSchedulerEventDestination() {
 		MessageListener schedulerEventMessageListener =
-			new SchedulerEventMessageListener();
+			new SchedulerEventMessageListener(_entryLocalService);
 
 		_registerDestination(
 			schedulerEventMessageListener,
@@ -189,6 +191,10 @@ public class ReportsPortletMessagingConfigurator {
 
 	private final List<ServiceRegistration<Destination>>
 		_destinationServiceRegistrations = new ArrayList<>();
+
+	@Reference
+	private EntryLocalService _entryLocalService;
+
 	private List<ServiceRegistration<MessageListener>>
 		_messageListenerServiceRegistrations = new ArrayList<>();
 	private ReportsPortletMessagingConfiguration

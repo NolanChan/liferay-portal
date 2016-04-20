@@ -20,12 +20,16 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.reports.ReportStatus;
 import com.liferay.portal.reports.engine.ReportGenerationException;
 import com.liferay.portal.reports.engine.ReportResultContainer;
-import com.liferay.portal.reports.service.EntryLocalServiceUtil;
+import com.liferay.portal.reports.service.EntryLocalService;
 
 /**
  * @author Gavin Wan
  */
 public class AdminMessageListener extends BaseMessageListener {
+
+	public AdminMessageListener(EntryLocalService entryLocalService) {
+		_entryLocalService = entryLocalService;
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -38,15 +42,17 @@ public class AdminMessageListener extends BaseMessageListener {
 			ReportGenerationException reportGenerationException =
 				reportResultContainer.getReportGenerationException();
 
-			EntryLocalServiceUtil.updateEntryStatus(
+			_entryLocalService.updateEntryStatus(
 				entryId, ReportStatus.ERROR,
 				reportGenerationException.getMessage());
 		}
 		else {
-			EntryLocalServiceUtil.updateEntry(
+			_entryLocalService.updateEntry(
 				entryId, reportResultContainer.getReportName(),
 				reportResultContainer.getResults());
 		}
 	}
+
+	private EntryLocalService _entryLocalService;
 
 }

@@ -16,19 +16,25 @@ package com.liferay.portal.reports.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.reports.service.EntryLocalServiceUtil;
+import com.liferay.portal.reports.service.EntryLocalService;
 
 /**
  * @author Gavin Wan
  */
 public class SchedulerEventMessageListener extends BaseMessageListener {
 
+	public AdminMessageListener(EntryLocalService entryLocalService) {
+		_entryLocalService = entryLocalService;
+	}
+
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		long entryId = message.getLong("entryId");
 		String reportName = message.getString("reportName");
 
-		EntryLocalServiceUtil.generateReport(entryId, reportName);
+		_entryLocalService.generateReport(entryId, reportName);
 	}
+
+	private EntryLocalService _entryLocalService;
 
 }
