@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.reports.model.Definition;
 import com.liferay.portal.reports.service.base.DefinitionServiceBaseImpl;
 import com.liferay.portal.reports.service.permission.AdminResourcePermissionChecker;
-import com.liferay.portal.reports.service.permission.DefinitionPermission;
+import com.liferay.portal.reports.service.permission.DefinitionPermissionChecker;
 
 import java.io.InputStream;
 
@@ -59,14 +59,14 @@ public class DefinitionServiceImpl extends DefinitionServiceBaseImpl {
 	public Definition deleteDefinition(long definitionId)
 		throws PortalException {
 
-		DefinitionPermission.check(
+		DefinitionPermissionChecker.check(
 			getPermissionChecker(), definitionId, ActionKeys.DELETE);
 
 		return definitionLocalService.deleteDefinition(definitionId);
 	}
 
 	public Definition getDefinition(long definitionId) throws PortalException {
-		DefinitionPermission.check(
+		DefinitionPermissionChecker.check(
 			getPermissionChecker(), definitionId, ActionKeys.VIEW);
 
 		return definitionLocalService.getDefinition(definitionId);
@@ -101,7 +101,7 @@ public class DefinitionServiceImpl extends DefinitionServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DefinitionPermission.check(
+		DefinitionPermissionChecker.check(
 			getPermissionChecker(), definitionId, ActionKeys.UPDATE);
 
 		return definitionLocalService.updateDefinition(
@@ -117,7 +117,7 @@ public class DefinitionServiceImpl extends DefinitionServiceBaseImpl {
 		Iterator<Definition> itr = definitions.iterator();
 
 		while (itr.hasNext()) {
-			if (!DefinitionPermission.contains(
+			if (!DefinitionPermissionChecker.contains(
 					getPermissionChecker(), itr.next(), ActionKeys.VIEW)) {
 
 				itr.remove();

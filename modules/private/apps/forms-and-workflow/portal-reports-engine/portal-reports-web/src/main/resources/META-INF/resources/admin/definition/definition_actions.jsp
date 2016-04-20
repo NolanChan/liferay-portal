@@ -23,7 +23,7 @@ Definition definition = (Definition)row.getObject();
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-	<c:if test="<%= DefinitionPermission.contains(permissionChecker, definition, ActionKeys.UPDATE) %>">
+	<c:if test="<%= DefinitionPermissionChecker.contains(permissionChecker, definition, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcPath" value="/admin/definition/edit_definition.jsp" />
 			<portlet:param name="definitionId" value="<%= String.valueOf(definition.getDefinitionId()) %>" />
@@ -36,7 +36,7 @@ Definition definition = (Definition)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DefinitionPermission.contains(permissionChecker, definition, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= DefinitionPermissionChecker.contains(permissionChecker, definition, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= Definition.class.getName() %>"
 			modelResourceDescription="<%= definition.getName(locale) %>"
@@ -54,7 +54,7 @@ Definition definition = (Definition)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DefinitionPermission.contains(permissionChecker, definition, ReportsActionKeys.ADD_REPORT) %>">
+	<c:if test="<%= DefinitionPermissionChecker.contains(permissionChecker, definition, ReportsActionKeys.ADD_REPORT) %>">
 		<portlet:renderURL var="addReportURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcPath" value="/admin/report/generate_report.jsp" />
 			<portlet:param name="definitionId" value="<%= String.valueOf(definition.getDefinitionId()) %>" />
@@ -67,7 +67,7 @@ Definition definition = (Definition)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DefinitionPermission.contains(permissionChecker, definition, ReportsActionKeys.ADD_REPORT) %>">
+	<c:if test="<%= DefinitionPermissionChecker.contains(permissionChecker, definition, ReportsActionKeys.ADD_REPORT) %>">
 		<portlet:renderURL var="addScheduleURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcPath" value="/admin/report/edit_schedule.jsp" />
 			<portlet:param name="definitionId" value="<%= String.valueOf(definition.getDefinitionId()) %>" />
@@ -80,7 +80,7 @@ Definition definition = (Definition)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DefinitionPermission.contains(permissionChecker, definition, ActionKeys.DELETE) %>">
+	<c:if test="<%= DefinitionPermissionChecker.contains(permissionChecker, definition, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteDefinition" var="deleteURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="tabs1" value="definitions" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -73,10 +73,10 @@ page import="com.liferay.portal.reports.service.EntryServiceUtil" %><%@
 page import="com.liferay.portal.reports.service.SourceLocalServiceUtil" %><%@
 page import="com.liferay.portal.reports.service.SourceServiceUtil" %><%@
 page import="com.liferay.portal.reports.service.permission.AdminResourcePermissionChecker" %><%@
-page import="com.liferay.portal.reports.service.permission.DefinitionPermission" %><%@
-page import="com.liferay.portal.reports.service.permission.EntryPermission" %><%@
+page import="com.liferay.portal.reports.service.permission.DefinitionPermissionChecker" %><%@
+page import="com.liferay.portal.reports.service.permission.EntryPermissionChecker" %><%@
 page import="com.liferay.portal.reports.service.permission.ReportsActionKeys" %><%@
-page import="com.liferay.portal.reports.service.permission.SourcePermission" %><%@
+page import="com.liferay.portal.reports.service.permission.SourcePermissionChecker" %><%@
 page import="com.liferay.portal.reports.util.ReportsUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 

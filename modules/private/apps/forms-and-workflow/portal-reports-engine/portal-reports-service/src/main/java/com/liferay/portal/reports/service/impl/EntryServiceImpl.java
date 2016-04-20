@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.reports.model.Entry;
 import com.liferay.portal.reports.service.base.EntryServiceBaseImpl;
-import com.liferay.portal.reports.service.permission.DefinitionPermission;
-import com.liferay.portal.reports.service.permission.EntryPermission;
+import com.liferay.portal.reports.service.permission.DefinitionPermissionChecker;
+import com.liferay.portal.reports.service.permission.EntryPermissionChecker;
 import com.liferay.portal.reports.service.permission.ReportsActionKeys;
 
 import java.util.Date;
@@ -46,7 +46,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DefinitionPermission.check(
+		DefinitionPermissionChecker.check(
 			getPermissionChecker(), definitionId, ReportsActionKeys.ADD_REPORT);
 
 		return entryLocalService.addEntry(
@@ -59,14 +59,14 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 	public void deleteAttachment(long companyId, long entryId, String fileName)
 		throws PortalException {
 
-		EntryPermission.check(
+		EntryPermissionChecker.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
 
 		entryLocalService.deleteAttachment(companyId, fileName);
 	}
 
 	public Entry deleteEntry(long entryId) throws PortalException {
-		EntryPermission.check(
+		EntryPermissionChecker.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
 
 		return entryLocalService.deleteEntry(entryId);
@@ -99,14 +99,15 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 			boolean notification)
 		throws PortalException {
 
-		EntryPermission.check(getPermissionChecker(), entryId, ActionKeys.VIEW);
+		EntryPermissionChecker.check(
+			getPermissionChecker(), entryId, ActionKeys.VIEW);
 
 		entryLocalService.sendEmails(
 			entryId, fileName, emailAddresses, notification);
 	}
 
 	public void unscheduleEntry(long entryId) throws PortalException {
-		EntryPermission.check(
+		EntryPermissionChecker.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
 
 		entryLocalService.unscheduleEntry(entryId);
@@ -120,7 +121,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 		Iterator<Entry> itr = entries.iterator();
 
 		while (itr.hasNext()) {
-			if (!EntryPermission.contains(
+			if (!EntryPermissionChecker.contains(
 					getPermissionChecker(), itr.next(), ActionKeys.VIEW)) {
 
 				itr.remove();

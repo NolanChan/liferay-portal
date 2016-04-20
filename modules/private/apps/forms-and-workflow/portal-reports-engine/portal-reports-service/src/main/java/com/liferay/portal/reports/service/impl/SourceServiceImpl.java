@@ -25,7 +25,7 @@ import com.liferay.portal.reports.model.Source;
 import com.liferay.portal.reports.service.base.SourceServiceBaseImpl;
 import com.liferay.portal.reports.service.permission.AdminResourcePermissionChecker;
 import com.liferay.portal.reports.service.permission.ReportsActionKeys;
-import com.liferay.portal.reports.service.permission.SourcePermission;
+import com.liferay.portal.reports.service.permission.SourcePermissionChecker;
 
 import java.util.Iterator;
 import java.util.List;
@@ -55,14 +55,14 @@ public class SourceServiceImpl extends SourceServiceBaseImpl {
 	}
 
 	public Source deleteSource(long sourceId) throws PortalException {
-		SourcePermission.check(
+		SourcePermissionChecker.check(
 			getPermissionChecker(), sourceId, ActionKeys.DELETE);
 
 		return sourceLocalService.deleteSource(sourceId);
 	}
 
 	public Source getSource(long sourceId) throws PortalException {
-		SourcePermission.check(
+		SourcePermissionChecker.check(
 			getPermissionChecker(), sourceId, ActionKeys.VIEW);
 
 		return sourceLocalService.getSource(sourceId);
@@ -92,7 +92,7 @@ public class SourceServiceImpl extends SourceServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		SourcePermission.check(
+		SourcePermissionChecker.check(
 			getPermissionChecker(), sourceId, ActionKeys.UPDATE);
 
 		return sourceLocalService.updateSource(
@@ -108,7 +108,7 @@ public class SourceServiceImpl extends SourceServiceBaseImpl {
 		Iterator<Source> itr = sources.iterator();
 
 		while (itr.hasNext()) {
-			if (!SourcePermission.contains(
+			if (!SourcePermissionChecker.contains(
 					getPermissionChecker(), itr.next(), ActionKeys.VIEW)) {
 
 				itr.remove();

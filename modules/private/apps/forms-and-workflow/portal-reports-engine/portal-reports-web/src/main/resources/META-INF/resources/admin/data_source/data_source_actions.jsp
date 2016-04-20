@@ -23,7 +23,7 @@ Source source = (Source)row.getObject();
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-	<c:if test="<%= SourcePermission.contains(permissionChecker, source, ActionKeys.VIEW) %>">
+	<c:if test="<%= SourcePermissionChecker.contains(permissionChecker, source, ActionKeys.VIEW) %>">
 		<portlet:actionURL name="testDataSource" var="testConnectionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="tabs1" value="sources" />
 			<portlet:param name="sourceId" value="<%= String.valueOf(source.getSourceId()) %>" />
@@ -36,7 +36,7 @@ Source source = (Source)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= SourcePermission.contains(permissionChecker, source, ActionKeys.UPDATE) %>">
+	<c:if test="<%= SourcePermissionChecker.contains(permissionChecker, source, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcPath" value="/admin/data_source/edit_data_source.jsp" />
 			<portlet:param name="sourceId" value="<%= String.valueOf(source.getSourceId()) %>" />
@@ -49,7 +49,7 @@ Source source = (Source)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= SourcePermission.contains(permissionChecker, source, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= SourcePermissionChecker.contains(permissionChecker, source, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= Source.class.getName() %>"
 			modelResourceDescription="<%= source.getName(locale) %>"
@@ -67,7 +67,7 @@ Source source = (Source)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= SourcePermission.contains(permissionChecker, source, ActionKeys.DELETE) %>">
+	<c:if test="<%= SourcePermissionChecker.contains(permissionChecker, source, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteDataSource" var="deleteURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="tabs1" value="sources" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

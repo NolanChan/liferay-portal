@@ -49,7 +49,7 @@ String fileName = (String)row.getObject();
 		url="<%= downloadURL %>"
 	/>
 
-	<c:if test="<%= EntryPermission.contains(permissionChecker, entry.getEntryId(), ActionKeys.DELETE) %>">
+	<c:if test="<%= EntryPermissionChecker.contains(permissionChecker, entry.getEntryId(), ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteReport" var="deleteReportURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
