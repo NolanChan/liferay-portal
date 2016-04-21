@@ -34,19 +34,14 @@
 }
 
 .diagram-builder {
-	.tab-pane {
-		height: 100%;
-	}
+	.diagram-node {
+		transition: color 0.3s;
 
-	.property-builder-fields-container {
-		margin: 0;
-	}
+		&.diagram-node-selected {
+			border-width: 0;
+			color: #65B6F0;
+		}
 
-	.property-builder-canvas .diagram-node::before {
-		position: absolute;
-	}
-
-	.property-builder-canvas .diagram-node {
 		.diagram-node-content {
 			background: transparent;
 			font-size: 34px;
@@ -84,6 +79,35 @@
 			font-size: 14px;
 			margin-top: 5px;
 			width: auto;
+		}
+	}
+
+	.table-property-list {
+		margin-top: 0;
+	}
+
+	.tab-pane {
+		height: 100%;
+	}
+
+	.property-builder-fields-container {
+		margin: 0;
+	}
+
+	.property-builder-content-container .btn-toolbar-button {
+		background-color: #869CAD;
+		border-radius: 100%;
+		border-width: 0;
+		color: #FFF;
+		font-size: 10px;
+		line-height: normal;
+		padding: 4px 5px;
+		position: absolute;
+		right: -11px;
+		top: -10px;
+
+		&:hover {
+			background-color: #65B6F0;
 		}
 	}
 
