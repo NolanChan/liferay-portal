@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.reports.exception.SourceJDBCConnectionException;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -116,26 +115,16 @@ public class ReportsUtil {
 			String driverPassword)
 		throws PortalException {
 
-		Connection connection = null;
-
 		try {
 			DataSource dataSource = DataSourceFactoryUtil.initDataSource(
 				driverClassName, driverUrl, driverUserName, driverPassword,
 				StringPool.BLANK);
 
-			connection = dataSource.getConnection();
+			try (Connection connection = dataSource.getConnection()) {
+			}
 		}
 		catch (Exception e) {
-			throw new SourceJDBCConnectionException();
-		}
-		finally {
-			if (connection != null) {
-				try {
-					connection.close();
-				}
-				catch (SQLException sqle) {
-				}
-			}
+			throw new SourceJDBCConnectionException(e);
 		}
 	}
 
