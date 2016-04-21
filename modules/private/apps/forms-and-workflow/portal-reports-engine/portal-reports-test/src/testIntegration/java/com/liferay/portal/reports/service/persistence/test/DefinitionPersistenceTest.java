@@ -256,12 +256,11 @@ public class DefinitionPersistenceTest {
 	}
 
 	protected OrderByComparator<Definition> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Reports_Definition",
-			"uuid", true, "definitionId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true,
-			"sourceId", true, "reportName", true, "reportParameters", true,
-			"lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create("Definition", "uuid", true,
+			"definitionId", true, "groupId", true, "companyId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"name", true, "description", true, "sourceId", true, "reportName",
+			true, "reportParameters", true, "lastPublishDate", true);
 	}
 
 	@Test

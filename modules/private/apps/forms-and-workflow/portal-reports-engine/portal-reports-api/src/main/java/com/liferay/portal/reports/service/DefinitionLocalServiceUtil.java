@@ -41,6 +41,37 @@ public class DefinitionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.reports.service.impl.DefinitionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
 
 	/**
 	* Adds the definition to the database. Also notifies the appropriate model listeners.
@@ -103,28 +134,99 @@ public class DefinitionLocalServiceUtil {
 		return getService().deleteDefinition(definitionId);
 	}
 
-	public static void deleteDefinitionTemplates(long companyId,
-		java.lang.String attachmentsDirectory)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteDefinitionTemplates(companyId, attachmentsDirectory);
-	}
-
-	public static void deleteDefinitions(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteDefinitions(groupId);
+	public static com.liferay.portal.reports.model.Definition fetchDefinition(
+		long definitionId) {
+		return getService().fetchDefinition(definitionId);
 	}
 
 	/**
-	* @throws PortalException
+	* Returns the definition matching the UUID and group.
+	*
+	* @param uuid the definition's UUID
+	* @param groupId the primary key of the group
+	* @return the matching definition, or <code>null</code> if a matching definition could not be found
 	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
+	public static com.liferay.portal.reports.model.Definition fetchDefinitionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchDefinitionByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	/**
+	* Returns the definition with the primary key.
+	*
+	* @param definitionId the primary key of the definition
+	* @return the definition
+	* @throws PortalException if a definition with the primary key could not be found
+	*/
+	public static com.liferay.portal.reports.model.Definition getDefinition(
+		long definitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDefinition(definitionId);
+	}
+
+	/**
+	* Returns the definition matching the UUID and group.
+	*
+	* @param uuid the definition's UUID
+	* @param groupId the primary key of the group
+	* @return the matching definition
+	* @throws PortalException if a matching definition could not be found
+	*/
+	public static com.liferay.portal.reports.model.Definition getDefinitionByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDefinitionByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
+	* Updates the definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param definition the definition
+	* @return the definition that was updated
+	*/
+	public static com.liferay.portal.reports.model.Definition updateDefinition(
+		com.liferay.portal.reports.model.Definition definition) {
+		return getService().updateDefinition(definition);
+	}
+
+	public static com.liferay.portal.reports.model.Definition updateDefinition(
+		long definitionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long sourceId, java.lang.String reportParameters,
+		java.lang.String fileName, java.io.InputStream inputStream,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateDefinition(definitionId, nameMap, descriptionMap,
+			sourceId, reportParameters, fileName, inputStream, serviceContext);
+	}
+
+	/**
+	* Returns the number of definitions.
+	*
+	* @return the number of definitions
+	*/
+	public static int getDefinitionsCount() {
+		return getService().getDefinitionsCount();
+	}
+
+	public static int getDefinitionsCount(long groupId,
+		java.lang.String definitionName, java.lang.String description,
+		java.lang.String sourceId, java.lang.String reportName,
+		boolean andSearch) {
+		return getService()
+				   .getDefinitionsCount(groupId, definitionName, description,
+			sourceId, reportName, andSearch);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -178,88 +280,6 @@ public class DefinitionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.portal.reports.model.Definition fetchDefinition(
-		long definitionId) {
-		return getService().fetchDefinition(definitionId);
-	}
-
-	/**
-	* Returns the definition matching the UUID and group.
-	*
-	* @param uuid the definition's UUID
-	* @param groupId the primary key of the group
-	* @return the matching definition, or <code>null</code> if a matching definition could not be found
-	*/
-	public static com.liferay.portal.reports.model.Definition fetchDefinitionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchDefinitionByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the definition with the primary key.
-	*
-	* @param definitionId the primary key of the definition
-	* @return the definition
-	* @throws PortalException if a definition with the primary key could not be found
-	*/
-	public static com.liferay.portal.reports.model.Definition getDefinition(
-		long definitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDefinition(definitionId);
-	}
-
-	/**
-	* Returns the definition matching the UUID and group.
-	*
-	* @param uuid the definition's UUID
-	* @param groupId the primary key of the group
-	* @return the matching definition
-	* @throws PortalException if a matching definition could not be found
-	*/
-	public static com.liferay.portal.reports.model.Definition getDefinitionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDefinitionByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static java.util.List<com.liferay.portal.reports.model.Definition> getDefinitions(
-		long groupId, java.lang.String definitionName,
-		java.lang.String description, java.lang.String sourceId,
-		java.lang.String reportName, boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		return getService()
-				   .getDefinitions(groupId, definitionName, description,
-			sourceId, reportName, andSearch, start, end, orderByComparator);
-	}
-
-	/**
 	* Returns a range of all the definitions.
 	*
 	* <p>
@@ -273,6 +293,16 @@ public class DefinitionLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.reports.model.Definition> getDefinitions(
 		int start, int end) {
 		return getService().getDefinitions(start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.reports.model.Definition> getDefinitions(
+		long groupId, java.lang.String definitionName,
+		java.lang.String description, java.lang.String sourceId,
+		java.lang.String reportName, boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getDefinitions(groupId, definitionName, description,
+			sourceId, reportName, andSearch, start, end, orderByComparator);
 	}
 
 	/**
@@ -306,69 +336,38 @@ public class DefinitionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of definitions.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of definitions
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static int getDefinitionsCount() {
-		return getService().getDefinitionsCount();
-	}
-
-	public static int getDefinitionsCount(long groupId,
-		java.lang.String definitionName, java.lang.String description,
-		java.lang.String sourceId, java.lang.String reportName,
-		boolean andSearch) {
-		return getService()
-				   .getDefinitionsCount(groupId, definitionName, description,
-			sourceId, reportName, andSearch);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public static void deleteDefinitionTemplates(long companyId,
+		java.lang.String attachmentsDirectory)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
+		getService().deleteDefinitionTemplates(companyId, attachmentsDirectory);
 	}
 
-	/**
-	* Updates the definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param definition the definition
-	* @return the definition that was updated
-	*/
-	public static com.liferay.portal.reports.model.Definition updateDefinition(
-		com.liferay.portal.reports.model.Definition definition) {
-		return getService().updateDefinition(definition);
-	}
-
-	public static com.liferay.portal.reports.model.Definition updateDefinition(
-		long definitionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long sourceId, java.lang.String reportParameters,
-		java.lang.String fileName, java.io.InputStream inputStream,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static void deleteDefinitions(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateDefinition(definitionId, nameMap, descriptionMap,
-			sourceId, reportParameters, fileName, inputStream, serviceContext);
+		getService().deleteDefinitions(groupId);
 	}
 
 	public static void updateDefinitionResources(

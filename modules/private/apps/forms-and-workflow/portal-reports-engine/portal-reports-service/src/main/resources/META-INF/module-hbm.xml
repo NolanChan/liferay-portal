@@ -5,7 +5,7 @@
 	<import class="com.liferay.portal.reports.model.Definition" />
 	<import class="com.liferay.portal.reports.model.Entry" />
 	<import class="com.liferay.portal.reports.model.Source" />
-	<class name="com.liferay.portal.reports.model.impl.DefinitionImpl" table="Reports_Definition">
+	<class name="com.liferay.portal.reports.model.impl.DefinitionImpl" table="Definition">
 		<id name="definitionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -23,7 +23,7 @@
 		<property name="reportParameters" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.portal.reports.model.impl.EntryImpl" table="Reports_Entry">
+	<class name="com.liferay.portal.reports.model.impl.EntryImpl" table="Entry">
 		<id name="entryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -48,7 +48,7 @@
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="errorMessage" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.liferay.portal.reports.model.impl.SourceImpl" table="Reports_Source">
+	<class name="com.liferay.portal.reports.model.impl.SourceImpl" table="Source">
 		<id name="sourceId" type="long">
 			<generator class="assigned" />
 		</id>

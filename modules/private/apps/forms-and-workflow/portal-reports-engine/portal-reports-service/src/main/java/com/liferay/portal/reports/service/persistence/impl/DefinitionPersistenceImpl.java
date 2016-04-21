@@ -672,8 +672,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
 			}
 
 			throw new NoSuchDefinitionException(msg.toString());
@@ -3032,8 +3032,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 					primaryKey);
 
 			if (definition == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				if (_log.isDebugEnabled()) {
+					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchDefinitionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
@@ -3274,8 +3274,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		Definition definition = fetchByPrimaryKey(primaryKey);
 
 		if (definition == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			if (_log.isDebugEnabled()) {
+				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			throw new NoSuchDefinitionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
@@ -3673,16 +3673,16 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	private static final String _SQL_COUNT_DEFINITION = "SELECT COUNT(definition) FROM Definition definition";
 	private static final String _SQL_COUNT_DEFINITION_WHERE = "SELECT COUNT(definition) FROM Definition definition WHERE ";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "definition.definitionId";
-	private static final String _FILTER_SQL_SELECT_DEFINITION_WHERE = "SELECT DISTINCT {definition.*} FROM Reports_Definition definition WHERE ";
+	private static final String _FILTER_SQL_SELECT_DEFINITION_WHERE = "SELECT DISTINCT {definition.*} FROM Definition definition WHERE ";
 	private static final String _FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_1 =
-		"SELECT {Reports_Definition.*} FROM (SELECT DISTINCT definition.definitionId FROM Reports_Definition definition WHERE ";
+		"SELECT {Definition.*} FROM (SELECT DISTINCT definition.definitionId FROM Definition definition WHERE ";
 	private static final String _FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_2 =
-		") TEMP_TABLE INNER JOIN Reports_Definition ON TEMP_TABLE.definitionId = Reports_Definition.definitionId";
-	private static final String _FILTER_SQL_COUNT_DEFINITION_WHERE = "SELECT COUNT(DISTINCT definition.definitionId) AS COUNT_VALUE FROM Reports_Definition definition WHERE ";
+		") TEMP_TABLE INNER JOIN Definition ON TEMP_TABLE.definitionId = Definition.definitionId";
+	private static final String _FILTER_SQL_COUNT_DEFINITION_WHERE = "SELECT COUNT(DISTINCT definition.definitionId) AS COUNT_VALUE FROM Definition definition WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "definition";
-	private static final String _FILTER_ENTITY_TABLE = "Reports_Definition";
+	private static final String _FILTER_ENTITY_TABLE = "Definition";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "definition.";
-	private static final String _ORDER_BY_ENTITY_TABLE = "Reports_Definition.";
+	private static final String _ORDER_BY_ENTITY_TABLE = "Definition.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Definition exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Definition exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(DefinitionPersistenceImpl.class);

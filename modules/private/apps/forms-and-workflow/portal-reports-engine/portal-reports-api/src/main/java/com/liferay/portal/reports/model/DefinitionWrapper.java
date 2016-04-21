@@ -165,8 +165,38 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new DefinitionWrapper((Definition)_definition.clone());
+	public boolean isCachedModel() {
+		return _definition.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _definition.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _definition.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _definition.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.reports.model.Definition> toCacheModel() {
+		return _definition.toCacheModel();
+	}
+
+	@Override
+	public com.liferay.portal.reports.model.Definition toEscapedModel() {
+		return new DefinitionWrapper(_definition.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.reports.model.Definition toUnescapedModel() {
+		return new DefinitionWrapper(_definition.toUnescapedModel());
 	}
 
 	@Override
@@ -175,54 +205,28 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	}
 
 	@Override
+	public int hashCode() {
+		return _definition.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _definition.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new DefinitionWrapper((Definition)_definition.clone());
+	}
+
+	@Override
 	public java.lang.String getAttachmentsDir() {
 		return _definition.getAttachmentsDir();
 	}
 
 	@Override
-	public java.lang.String[] getAttachmentsFiles()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _definition.getAttachmentsFiles();
-	}
-
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _definition.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the company ID of this definition.
-	*
-	* @return the company ID of this definition
-	*/
-	@Override
-	public long getCompanyId() {
-		return _definition.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this definition.
-	*
-	* @return the create date of this definition
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _definition.getCreateDate();
-	}
-
-	@Override
 	public java.lang.String getDefaultLanguageId() {
 		return _definition.getDefaultLanguageId();
-	}
-
-	/**
-	* Returns the definition ID of this definition.
-	*
-	* @return the definition ID of this definition
-	*/
-	@Override
-	public long getDefinitionId() {
-		return _definition.getDefinitionId();
 	}
 
 	/**
@@ -294,51 +298,6 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	}
 
 	/**
-	* Returns a map of the locales and localized descriptions of this definition.
-	*
-	* @return the locales and localized descriptions of this definition
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _definition.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _definition.getExpandoBridge();
-	}
-
-	/**
-	* Returns the group ID of this definition.
-	*
-	* @return the group ID of this definition
-	*/
-	@Override
-	public long getGroupId() {
-		return _definition.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this definition.
-	*
-	* @return the last publish date of this definition
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _definition.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this definition.
-	*
-	* @return the modified date of this definition
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _definition.getModifiedDate();
-	}
-
-	/**
 	* Returns the name of this definition.
 	*
 	* @return the name of this definition
@@ -406,31 +365,6 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	}
 
 	/**
-	* Returns a map of the locales and localized names of this definition.
-	*
-	* @return the locales and localized names of this definition
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
-		return _definition.getNameMap();
-	}
-
-	/**
-	* Returns the primary key of this definition.
-	*
-	* @return the primary key of this definition
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _definition.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _definition.getPrimaryKeyObj();
-	}
-
-	/**
 	* Returns the report name of this definition.
 	*
 	* @return the report name of this definition
@@ -448,26 +382,6 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	@Override
 	public java.lang.String getReportParameters() {
 		return _definition.getReportParameters();
-	}
-
-	/**
-	* Returns the source ID of this definition.
-	*
-	* @return the source ID of this definition
-	*/
-	@Override
-	public long getSourceId() {
-		return _definition.getSourceId();
-	}
-
-	/**
-	* Returns the user ID of this definition.
-	*
-	* @return the user ID of this definition
-	*/
-	@Override
-	public long getUserId() {
-		return _definition.getUserId();
 	}
 
 	/**
@@ -501,23 +415,134 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	}
 
 	@Override
-	public int hashCode() {
-		return _definition.hashCode();
+	public java.lang.String toString() {
+		return _definition.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _definition.isCachedModel();
+	public java.lang.String toXmlString() {
+		return _definition.toXmlString();
 	}
 
 	@Override
-	public boolean isEscapedModel() {
-		return _definition.isEscapedModel();
+	public java.lang.String[] getAttachmentsFiles()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _definition.getAttachmentsFiles();
 	}
 
 	@Override
-	public boolean isNew() {
-		return _definition.isNew();
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _definition.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the create date of this definition.
+	*
+	* @return the create date of this definition
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _definition.getCreateDate();
+	}
+
+	/**
+	* Returns the last publish date of this definition.
+	*
+	* @return the last publish date of this definition
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _definition.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this definition.
+	*
+	* @return the modified date of this definition
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _definition.getModifiedDate();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this definition.
+	*
+	* @return the locales and localized descriptions of this definition
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _definition.getDescriptionMap();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this definition.
+	*
+	* @return the locales and localized names of this definition
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _definition.getNameMap();
+	}
+
+	/**
+	* Returns the company ID of this definition.
+	*
+	* @return the company ID of this definition
+	*/
+	@Override
+	public long getCompanyId() {
+		return _definition.getCompanyId();
+	}
+
+	/**
+	* Returns the definition ID of this definition.
+	*
+	* @return the definition ID of this definition
+	*/
+	@Override
+	public long getDefinitionId() {
+		return _definition.getDefinitionId();
+	}
+
+	/**
+	* Returns the group ID of this definition.
+	*
+	* @return the group ID of this definition
+	*/
+	@Override
+	public long getGroupId() {
+		return _definition.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this definition.
+	*
+	* @return the primary key of this definition
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _definition.getPrimaryKey();
+	}
+
+	/**
+	* Returns the source ID of this definition.
+	*
+	* @return the source ID of this definition
+	*/
+	@Override
+	public long getSourceId() {
+		return _definition.getSourceId();
+	}
+
+	/**
+	* Returns the user ID of this definition.
+	*
+	* @return the user ID of this definition
+	*/
+	@Override
+	public long getUserId() {
+		return _definition.getUserId();
 	}
 
 	@Override
@@ -638,14 +663,14 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_definition.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_definition.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_definition.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_definition.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -832,31 +857,6 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_definition.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.reports.model.Definition> toCacheModel() {
-		return _definition.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.reports.model.Definition toEscapedModel() {
-		return new DefinitionWrapper(_definition.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _definition.toString();
-	}
-
-	@Override
-	public com.liferay.portal.reports.model.Definition toUnescapedModel() {
-		return new DefinitionWrapper(_definition.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _definition.toXmlString();
 	}
 
 	@Override
