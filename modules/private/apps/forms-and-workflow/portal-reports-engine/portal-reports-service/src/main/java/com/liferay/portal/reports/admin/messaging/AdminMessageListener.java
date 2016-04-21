@@ -53,6 +53,6 @@ public class AdminMessageListener extends BaseMessageListener {
 		}
 	}
 
-	private EntryLocalService _entryLocalService;
+	private final EntryLocalService _entryLocalService;
 
 }

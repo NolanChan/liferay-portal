@@ -24,7 +24,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "forms-and-workflow")
 @Meta.OCD(
 	id = "com.liferay.portal.reports.configuration.ReportsPortletMessagingConfiguration",
-	localization = "content/Language", name = "reports.portlet.configuration.name"
+	localization = "content/Language",
+	name = "reports.portlet.configuration.name"
 )
 public interface ReportsPortletMessagingConfiguration {
 

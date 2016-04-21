@@ -35,6 +35,6 @@ public class SchedulerEventMessageListener extends BaseMessageListener {
 		_entryLocalService.generateReport(entryId, reportName);
 	}
 
-	private EntryLocalService _entryLocalService;
+	private final EntryLocalService _entryLocalService;
 
 }
