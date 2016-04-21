@@ -22,7 +22,7 @@ import com.liferay.portal.reports.upgrade.v1_0_0.UpgradeReportEntry;
  * @author Wesley Gong
  * @author Calvin Keum
  */
-public class UpgradeProcess_1_0_0 extends UpgradeProcess {
+public class ReportsServiceUpgrade extends UpgradeProcess {
 
 	@Override
 	public int getThreshold() {
