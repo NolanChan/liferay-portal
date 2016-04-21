@@ -21,19 +21,18 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class DefinitionFileException extends PortalException {
 
-	public DefinitionFileException() {
-	}
+	public static class InvalidDefinitionFile extends DefinitionFileException {
 
-	public DefinitionFileException(String msg) {
-		super(msg);
-	}
+		public InvalidDefinitionFile(
+			String fileName, boolean isInputStreamNull) {
 
-	public DefinitionFileException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
+			this.fileName = fileName;
+			this.isInputStreamNull = isInputStreamNull;
+		}
 
-	public DefinitionFileException(Throwable cause) {
-		super(cause);
+		public final String fileName;
+		public final boolean isInputStreamNull;
+
 	}
 
 }

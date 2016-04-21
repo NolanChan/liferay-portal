@@ -16,7 +16,6 @@ package com.liferay.portal.reports.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.document.library.kernel.exception.DuplicateDirectoryException;
 import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Junction;
@@ -87,6 +86,7 @@ import javax.portlet.PortletPreferences;
 @ProviderType
 public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
+	@Override
 	public Entry addEntry(
 			long userId, long groupId, long definitionId, String format,
 			boolean schedulerRequest, Date startDate, Date endDate,
@@ -158,6 +158,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		return entry;
 	}
 
+	@Override
 	public void addEntryResources(
 			Entry entry, boolean addCommunityPermissions,
 			boolean addGuestPermissions)
@@ -169,6 +170,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			addCommunityPermissions, addGuestPermissions);
 	}
 
+	@Override
 	public void addEntryResources(
 			Entry entry, String[] communityPermissions,
 			String[] guestPermissions)
@@ -180,6 +182,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			guestPermissions);
 	}
 
+	@Override
 	public void deleteAttachment(long companyId, String fileName)
 		throws PortalException {
 
@@ -223,6 +226,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		return deleteEntry(entry);
 	}
 
+	@Override
 	public void generateReport(long entryId) throws PortalException {
 		Entry entry = entryPersistence.findByPrimaryKey(entryId);
 
@@ -232,6 +236,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		generateReport(entryId, definition.getReportName());
 	}
 
+	@Override
 	public void generateReport(long entryId, String reportName)
 		throws PortalException {
 
@@ -303,6 +308,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		_messageBus.sendMessage(DestinationNames.REPORT_REQUEST, message);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Entry> getEntries(
 		long groupId, String definitionName, String userName, Date createDateGT,
@@ -316,6 +322,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		return dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	@Override
 	public int getEntriesCount(
 		long groupId, String definitionName, String userName, Date createDateGT,
 		Date createDateLT, boolean andSearch) {
@@ -327,6 +334,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		return (int)dynamicQueryCount(dynamicQuery);
 	}
 
+	@Override
 	public void sendEmails(
 			long entryId, String fileName, String[] emailAddresses,
 			boolean notification)
@@ -337,6 +345,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		String reportName = StringUtil.extractLast(
 			fileName, StringPool.FORWARD_SLASH);
 
+		File file = null;
 		InputStream inputStream = null;
 
 		try {
@@ -347,7 +356,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 				throw new IOException("Unable to open file " + fileName);
 			}
 
-			File file = FileUtil.createTempFile(inputStream);
+			file = FileUtil.createTempFile(inputStream);
 
 			notifySubscribers(
 				entry, emailAddresses, reportName, file, notification);
@@ -360,9 +369,14 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
+
+			if (file != null) {
+				file.delete();
+			}
 		}
 	}
 
+	@Override
 	public void unscheduleEntry(long entryId) throws PortalException {
 		Entry entry = entryPersistence.findByPrimaryKey(entryId);
 
@@ -376,6 +390,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			StorageType.PERSISTED);
 	}
 
+	@Override
 	public void updateEntry(
 			long entryId, String reportName, byte[] reportResults)
 		throws PortalException {
@@ -402,13 +417,9 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		String fileName =
 			entry.getAttachmentsDir() + StringPool.SLASH + reportName;
 
-		try {
-			_dlStore.addDirectory(
-				entry.getCompanyId(), CompanyConstants.SYSTEM,
-				entry.getAttachmentsDir());
-		}
-		catch (DuplicateDirectoryException dde) {
-		}
+		_dlStore.addDirectory(
+			entry.getCompanyId(), CompanyConstants.SYSTEM,
+			entry.getAttachmentsDir());
 
 		_dlStore.addFile(
 			entry.getCompanyId(), CompanyConstants.SYSTEM, fileName, false,
@@ -428,6 +439,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		entryPersistence.update(entry);
 	}
 
+	@Override
 	public void updateEntryStatus(
 			long entryId, ReportStatus status, String errorMessage)
 		throws PortalException {
@@ -592,13 +604,6 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		}
 
 		subscriptionSender.flushNotificationsAsync();
-	}
-
-	protected void scheduleEntry(Entry entry) throws PortalException {
-		Definition definition = definitionPersistence.findByPrimaryKey(
-			entry.getDefinitionId());
-
-		scheduleEntry(entry, definition.getReportName());
 	}
 
 	protected void scheduleEntry(Entry entry, String reportName)

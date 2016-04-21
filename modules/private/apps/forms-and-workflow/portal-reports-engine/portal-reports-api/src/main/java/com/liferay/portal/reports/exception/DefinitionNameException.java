@@ -21,19 +21,11 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class DefinitionNameException extends PortalException {
 
-	public DefinitionNameException() {
-	}
+	public static class NullDefinitionFileName extends DefinitionNameException {
 
-	public DefinitionNameException(String msg) {
-		super(msg);
-	}
+		public NullDefinitionFileName() {
+		}
 
-	public DefinitionNameException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public DefinitionNameException(Throwable cause) {
-		super(cause);
 	}
 
 }

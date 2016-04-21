@@ -37,6 +37,7 @@ import java.util.List;
 @ProviderType
 public class EntryServiceImpl extends EntryServiceBaseImpl {
 
+	@Override
 	public Entry addEntry(
 			long groupId, long definitionId, String format,
 			boolean schedulerRequest, Date startDate, Date endDate,
@@ -56,6 +57,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
 	public void deleteAttachment(long companyId, long entryId, String fileName)
 		throws PortalException {
 
@@ -65,6 +67,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 		entryLocalService.deleteAttachment(companyId, fileName);
 	}
 
+	@Override
 	public Entry deleteEntry(long entryId) throws PortalException {
 		EntryPermissionChecker.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
@@ -72,6 +75,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 		return entryLocalService.deleteEntry(entryId);
 	}
 
+	@Override
 	public List<Entry> getEntries(
 			long groupId, String definitionName, String userName,
 			Date createDateGT, Date createDateLT, boolean andSearch, int start,
@@ -85,6 +89,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 		return filterEntries(entries);
 	}
 
+	@Override
 	public int getEntriesCount(
 		long groupId, String definitionName, String userName, Date createDateGT,
 		Date createDateLT, boolean andSearch) {
@@ -94,6 +99,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 			andSearch);
 	}
 
+	@Override
 	public void sendEmails(
 			long entryId, String fileName, String[] emailAddresses,
 			boolean notification)
@@ -106,6 +112,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 			entryId, fileName, emailAddresses, notification);
 	}
 
+	@Override
 	public void unscheduleEntry(long entryId) throws PortalException {
 		EntryPermissionChecker.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);

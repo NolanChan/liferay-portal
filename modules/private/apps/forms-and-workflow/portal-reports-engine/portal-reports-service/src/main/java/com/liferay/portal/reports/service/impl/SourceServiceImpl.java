@@ -39,6 +39,7 @@ import java.util.Map;
 @ProviderType
 public class SourceServiceImpl extends SourceServiceBaseImpl {
 
+	@Override
 	public Source addSource(
 			long groupId, Map<Locale, String> nameMap, String driverClassName,
 			String driverUrl, String driverUserName, String driverPassword,
@@ -54,6 +55,7 @@ public class SourceServiceImpl extends SourceServiceBaseImpl {
 			driverUserName, driverPassword, serviceContext);
 	}
 
+	@Override
 	public Source deleteSource(long sourceId) throws PortalException {
 		SourcePermissionChecker.check(
 			getPermissionChecker(), sourceId, ActionKeys.DELETE);
@@ -61,6 +63,7 @@ public class SourceServiceImpl extends SourceServiceBaseImpl {
 		return sourceLocalService.deleteSource(sourceId);
 	}
 
+	@Override
 	public Source getSource(long sourceId) throws PortalException {
 		SourcePermissionChecker.check(
 			getPermissionChecker(), sourceId, ActionKeys.VIEW);
@@ -68,6 +71,7 @@ public class SourceServiceImpl extends SourceServiceBaseImpl {
 		return sourceLocalService.getSource(sourceId);
 	}
 
+	@Override
 	public List<Source> getSources(
 			long groupId, String name, String driverUrl, boolean andSearch,
 			int start, int end, OrderByComparator orderByComparator)
@@ -79,6 +83,7 @@ public class SourceServiceImpl extends SourceServiceBaseImpl {
 		return filterSources(sources);
 	}
 
+	@Override
 	public int getSourcesCount(
 		long groupId, String name, String driverUrl, boolean andSearch) {
 
@@ -86,6 +91,7 @@ public class SourceServiceImpl extends SourceServiceBaseImpl {
 			groupId, name, driverUrl, andSearch);
 	}
 
+	@Override
 	public Source updateSource(
 			long sourceId, Map<Locale, String> nameMap, String driverClassName,
 			String driverUrl, String driverUserName, String driverPassword,

@@ -16,7 +16,6 @@ package com.liferay.portal.reports.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.document.library.kernel.exception.DuplicateDirectoryException;
 import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Junction;
@@ -100,7 +99,8 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 				user.getCompanyId(), definition, fileName, inputStream);
 		}
 		else {
-			throw new DefinitionFileException();
+			throw new DefinitionFileException.InvalidDefinitionFile(
+				fileName, (inputStream == null));
 		}
 
 		return definition;
@@ -149,6 +149,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void deleteDefinitionTemplates(
 			long companyId, String attachmentsDirectory)
 		throws PortalException {
@@ -157,6 +158,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 			companyId, CompanyConstants.SYSTEM, attachmentsDirectory);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Definition> getDefinitions(
 		long groupId, String definitionName, String description,
@@ -170,6 +172,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 		return dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	@Override
 	public int getDefinitionsCount(
 		long groupId, String definitionName, String description,
 		String sourceId, String reportName, boolean andSearch) {
@@ -181,6 +184,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 		return (int)dynamicQueryCount(dynamicQuery);
 	}
 
+	@Override
 	public Definition updateDefinition(
 			long definitionId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, long sourceId,
@@ -234,6 +238,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 		return definition;
 	}
 
+	@Override
 	public void updateDefinitionResources(
 			Definition definition, String[] communityPermissions,
 			String[] guestPermissions)
@@ -252,12 +257,8 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 
 		String directoryName = definition.getAttachmentsDir();
 
-		try {
-			_dlStore.addDirectory(
-				companyId, CompanyConstants.SYSTEM, directoryName);
-		}
-		catch (DuplicateDirectoryException dde) {
-		}
+		_dlStore.addDirectory(
+			companyId, CompanyConstants.SYSTEM, directoryName);
 
 		String fileLocation = directoryName.concat(
 			StringPool.SLASH).concat(fileName);
@@ -333,7 +334,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 		String name = nameMap.get(locale);
 
 		if (Validator.isNull(name)) {
-			throw new DefinitionNameException();
+			throw new DefinitionNameException.NullDefinitionFileName();
 		}
 	}
 

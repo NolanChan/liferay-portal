@@ -48,6 +48,7 @@ import java.util.Map;
 @ProviderType
 public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 
+	@Override
 	public Source addSource(
 			long userId, long groupId, Map<Locale, String> nameMap,
 			String driverClassName, String driverUrl, String driverUserName,
@@ -125,6 +126,7 @@ public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 		return sourcePersistence.findByPrimaryKey(sourceId);
 	}
 
+	@Override
 	public List<Source> getSources(
 		long groupId, String name, String driverUrl, boolean andSearch,
 		int start, int end, OrderByComparator orderByComparator) {
@@ -135,6 +137,7 @@ public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 		return dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	@Override
 	public int getSourcesCount(
 		long groupId, String name, String driverUrl, boolean andSearch) {
 
@@ -144,6 +147,7 @@ public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 		return (int)dynamicQueryCount(dynamicQuery);
 	}
 
+	@Override
 	public Source updateSource(
 			long sourceId, Map<Locale, String> nameMap, String driverClassName,
 			String driverUrl, String driverUserName, String driverPassword,
@@ -223,7 +227,7 @@ public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 				driverClassName, true, PortalClassLoaderUtil.getClassLoader());
 		}
 		catch (ClassNotFoundException cnfe) {
-			throw new SourceDriverClassNameException();
+			throw new SourceDriverClassNameException(cnfe);
 		}
 
 		ReportsUtil.validateJDBCConnection(

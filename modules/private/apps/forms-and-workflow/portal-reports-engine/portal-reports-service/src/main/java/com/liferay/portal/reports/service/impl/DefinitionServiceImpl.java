@@ -40,6 +40,7 @@ import java.util.Map;
 @ProviderType
 public class DefinitionServiceImpl extends DefinitionServiceBaseImpl {
 
+	@Override
 	public Definition addDefinition(
 			long groupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, long sourceId,
@@ -56,6 +57,7 @@ public class DefinitionServiceImpl extends DefinitionServiceBaseImpl {
 			reportParameters, fileName, inputStream, serviceContext);
 	}
 
+	@Override
 	public Definition deleteDefinition(long definitionId)
 		throws PortalException {
 
@@ -65,6 +67,7 @@ public class DefinitionServiceImpl extends DefinitionServiceBaseImpl {
 		return definitionLocalService.deleteDefinition(definitionId);
 	}
 
+	@Override
 	public Definition getDefinition(long definitionId) throws PortalException {
 		DefinitionPermissionChecker.check(
 			getPermissionChecker(), definitionId, ActionKeys.VIEW);
@@ -72,6 +75,7 @@ public class DefinitionServiceImpl extends DefinitionServiceBaseImpl {
 		return definitionLocalService.getDefinition(definitionId);
 	}
 
+	@Override
 	public List<Definition> getDefinitions(
 			long groupId, String definitionName, String description,
 			String sourceId, String reportName, boolean andSearch, int start,
@@ -85,6 +89,7 @@ public class DefinitionServiceImpl extends DefinitionServiceBaseImpl {
 		return filterDefinitions(definitions);
 	}
 
+	@Override
 	public int getDefinitionsCount(
 		long groupId, String definitionName, String description,
 		String sourceId, String reportName, boolean andSearch) {
@@ -94,6 +99,7 @@ public class DefinitionServiceImpl extends DefinitionServiceBaseImpl {
 			andSearch);
 	}
 
+	@Override
 	public Definition updateDefinition(
 			long definitionId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, long sourceId,
