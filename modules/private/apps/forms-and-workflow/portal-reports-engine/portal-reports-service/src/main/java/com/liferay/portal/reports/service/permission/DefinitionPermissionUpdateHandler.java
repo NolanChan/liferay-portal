@@ -48,13 +48,7 @@ public class DefinitionPermissionUpdateHandler
 		_definitionLocalService.updateDefinition(definition);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDefinitionLocalService(
-		DefinitionLocalService definitionLocalService) {
-
-		_definitionLocalService = definitionLocalService;
-	}
-
-	private static DefinitionLocalService _definitionLocalService;
+	@Reference
+	private DefinitionLocalService _definitionLocalService;
 
 }

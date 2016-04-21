@@ -188,21 +188,10 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		definitionActionableDynamicQuery.performCount();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDefinitionLocalService(
-		DefinitionLocalService definitionLocalService) {
-
-		_definitionLocalService = definitionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSourceLocalService(
-		SourceLocalService sourceLocalService) {
-
-		_sourceLocalService = sourceLocalService;
-	}
-
+	@Reference
 	private DefinitionLocalService _definitionLocalService;
+
+	@Reference
 	private SourceLocalService _sourceLocalService;
 
 }

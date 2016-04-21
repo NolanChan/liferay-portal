@@ -47,13 +47,7 @@ public class SourcePermissionUpdateHandler implements PermissionUpdateHandler {
 		_sourceLocalService.updateSource(source);
 	}
 
-	@Reference(unbind = "-")
-	protected void setSourceLocalService(
-		SourceLocalService sourceLocalService) {
-
-		_sourceLocalService = sourceLocalService;
-	}
-
-	private static SourceLocalService _sourceLocalService;
+	@Reference
+	private SourceLocalService _sourceLocalService;
 
 }

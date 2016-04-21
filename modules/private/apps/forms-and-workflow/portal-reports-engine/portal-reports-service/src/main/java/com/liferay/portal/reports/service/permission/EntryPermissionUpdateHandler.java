@@ -47,11 +47,7 @@ public class EntryPermissionUpdateHandler implements PermissionUpdateHandler {
 		_entryLocalService.updateEntry(entry);
 	}
 
-	@Reference(unbind = "-")
-	protected void setEntryLocalService(EntryLocalService entryLocalService) {
-		_entryLocalService = entryLocalService;
-	}
-
-	private static EntryLocalService _entryLocalService;
+	@Reference
+	private EntryLocalService _entryLocalService;
 
 }
