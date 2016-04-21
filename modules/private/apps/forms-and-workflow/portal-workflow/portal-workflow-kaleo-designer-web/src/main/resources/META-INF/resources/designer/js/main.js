@@ -2983,7 +2983,7 @@ AUI.add(
 					actions: {
 					},
 
-					cssClass: {
+					iconClass: {
 						value: 'icon-db-state'
 					},
 
@@ -3020,6 +3020,16 @@ AUI.add(
 
 				prototype: {
 					SERIALIZABLE_ATTRS: A.DiagramNode.prototype.SERIALIZABLE_ATTRS.concat(['actions', 'notifications', 'initial', 'metadata', 'recipients', 'script', 'scriptLanguage', 'taskTimers', 'xmlType']),
+
+					initializer: function() {
+						var instance = this;
+
+						instance.after(
+							{
+								render: instance._afterNodeRender
+							}
+						);
+					},
 
 					getConnectionNode: function() {
 						var instance = this;
@@ -3094,6 +3104,12 @@ AUI.add(
 						instance.set('metadata', metadata);
 					},
 
+					_afterNodeRender: function() {
+						var instance = this;
+
+						instance.get('contentBox').addClass(instance.get('iconClass'));
+					},
+
 					_uiSetXY: function(val) {
 						var instance = this;
 
@@ -3110,12 +3126,12 @@ AUI.add(
 		var DiagramNodeCondition = A.Component.create(
 			{
 				ATTRS: {
-					cssClass: {
-						value: 'icon-db-condition'
-					},
-
 					height: {
 						value: 60
+					},
+
+					iconClass: {
+						value: 'icon-db-condition'
 					},
 
 					script: {
@@ -3216,12 +3232,12 @@ AUI.add(
 		var DiagramNodeJoin = A.Component.create(
 			{
 				ATTRS: {
-					cssClass: {
-						value: 'icon-db-join'
-					},
-
 					height: {
 						value: 60
+					},
+
+					iconClass: {
+						value: 'icon-db-join'
 					},
 
 					type: {
@@ -3258,7 +3274,7 @@ AUI.add(
 		var DiagramNodeJoinXOR = A.Component.create(
 			{
 				ATTRS: {
-					cssClass: {
+					iconClass: {
 						value: 'icon-db-joinxor'
 					},
 
@@ -3284,12 +3300,12 @@ AUI.add(
 		var DiagramNodeFork = A.Component.create(
 			{
 				ATTRS: {
-					cssClass: {
-						value: 'icon-db-fork'
-					},
-
 					height: {
 						value: 60
+					},
+
+					iconClass: {
+						value: 'icon-db-fork'
 					},
 
 					type: {
@@ -3338,7 +3354,7 @@ AUI.add(
 		var DiagramNodeStart = A.Component.create(
 			{
 				ATTRS: {
-					cssClass: {
+					iconClass: {
 						value: 'icon-db-start'
 					},
 
@@ -3382,7 +3398,7 @@ AUI.add(
 		var DiagramNodeEnd = A.Component.create(
 			{
 				ATTRS: {
-					cssClass: {
+					iconClass: {
 						value: 'icon-db-end'
 					},
 
@@ -3441,10 +3457,6 @@ AUI.add(
 						value: {}
 					},
 
-					cssClass: {
-						value: 'icon-db-task'
-					},
-
 					forms: {
 						value: {
 							templateId: [0],
@@ -3454,6 +3466,10 @@ AUI.add(
 
 					height: {
 						value: 70
+					},
+
+					iconClass: {
+						value: 'icon-db-task'
 					},
 
 					type: {

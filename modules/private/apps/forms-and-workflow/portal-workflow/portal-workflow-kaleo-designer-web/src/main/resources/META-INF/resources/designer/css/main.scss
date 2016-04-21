@@ -40,31 +40,41 @@
 		margin: 0;
 	}
 
+	.property-builder-canvas .diagram-node::before {
+		position: absolute;
+	}
+
 	.property-builder-canvas .diagram-node {
-		font-size: 34px;
-		padding-top: 2px;
-		text-align: center;
-
-		&.icon-db-condition, &.icon-db-fork, &.icon-db-join, &.icon-db-joinxor {
-			font-size: 62px;
-			padding-top: 0;
-		}
-
-		&.icon-db-task {
-			font-size: 60px;
-			padding-top: 1px;
-
-			.diagram-node-content .yui3-widget-bd {
-				display: inline-block;
-				margin-top: -4px;
-			}
-		}
-
 		.diagram-node-content {
 			background: transparent;
+			font-size: 34px;
+			padding-top: 2px;
+			text-align: center;
 
 			.yui3-widget-bd {
 				display: inline;
+			}
+
+			&.icon-db-start, &.icon-db-state, &.icon-db-end {
+				font-size: 33px;
+				padding-top: 4px;
+				text-align: center;
+			}
+
+			&.icon-db-condition, &.icon-db-fork, &.icon-db-join, &.icon-db-joinxor {
+				font-size: 62px;
+				padding-top: 0;
+			}
+
+			&.icon-db-task {
+				font-size: 59px;
+				padding-left: 2px;
+				padding-top: 6px;
+
+				.diagram-node-content .yui3-widget-bd {
+					display: inline-block;
+					margin-top: -4px;
+				}
 			}
 		}
 
