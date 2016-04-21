@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.reports.hook.upgrade.v1_0_0;
+package com.liferay.portal.reports.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;

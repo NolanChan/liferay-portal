@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.reports.hook.upgrade;
+package com.liferay.portal.reports.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.reports.hook.upgrade.v1_0_0.UpgradeReportDefinition;
-import com.liferay.portal.reports.hook.upgrade.v1_0_0.UpgradeReportEntry;
+import com.liferay.portal.reports.upgrade.v1_0_0.UpgradeReportDefinition;
+import com.liferay.portal.reports.upgrade.v1_0_0.UpgradeReportEntry;
 
 /**
  * @author Wesley Gong
