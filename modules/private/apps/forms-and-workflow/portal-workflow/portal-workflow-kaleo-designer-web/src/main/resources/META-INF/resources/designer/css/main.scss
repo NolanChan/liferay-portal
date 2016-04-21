@@ -34,7 +34,9 @@
 }
 
 .diagram-builder {
-	height: 600px;
+	.tab-pane {
+		height: 100%;
+	}
 
 	.property-builder-fields-container {
 		margin: 0;
