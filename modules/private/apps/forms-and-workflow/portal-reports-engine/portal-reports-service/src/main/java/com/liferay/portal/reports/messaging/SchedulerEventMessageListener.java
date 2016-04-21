@@ -23,7 +23,7 @@ import com.liferay.portal.reports.service.EntryLocalService;
  */
 public class SchedulerEventMessageListener extends BaseMessageListener {
 
-	public AdminMessageListener(EntryLocalService entryLocalService) {
+	public SchedulerEventMessageListener(EntryLocalService entryLocalService) {
 		_entryLocalService = entryLocalService;
 	}
 
