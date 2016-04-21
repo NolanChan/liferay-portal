@@ -15,6 +15,7 @@
 package com.liferay.portal.reports.web.display.portlet;
 
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.reports.constants.ReportsPortletKeys;
 import com.liferay.portal.reports.web.admin.portlet.AdminPortlet;
 
 import javax.portlet.ActionRequest;
@@ -40,6 +41,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.mvc-action-command-package-prefix=com.liferay.portal.reports.web.admin.portlet.action",
 		"javax.portlet.init-param.view-template=/display/reports_display.jsp",
+		"javax.portlet.name=" + ReportsPortletKeys.DISPLAY_REPORTS,
 		"javax.portlet.portlet-info.keywords=Reports Display",
 		"javax.portlet.portlet-info.short-title=Reports Display",
 		"javax.portlet.portlet-info.title=Reports Display",
