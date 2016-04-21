@@ -14,25 +14,24 @@
 
 package com.liferay.portal.reports.upgrade;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.reports.upgrade.v1_0_0.UpgradeReportDefinition;
 import com.liferay.portal.reports.upgrade.v1_0_0.UpgradeReportEntry;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Wesley Gong
  * @author Calvin Keum
  */
-public class ReportsServiceUpgrade extends UpgradeProcess {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class ReportsServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	public int getThreshold() {
-		return 100;
-	}
-
-	@Override
-	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeReportDefinition.class);
-		upgrade(UpgradeReportEntry.class);
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.portal.reports.service", "0.0.1", "1.0.0",
+			new UpgradeReportDefinition(), new UpgradeReportEntry());
 	}
 
 }
