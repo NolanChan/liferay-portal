@@ -16,7 +16,7 @@ package com.liferay.portal.reports.admin.util;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.reports.service.configuration.ReportsServiceConfigurationValues;
+import com.liferay.portal.reports.configuration.ReportsServiceConfigurationValues;
 import com.liferay.util.ContentUtil;
 
 import javax.portlet.PortletPreferences;

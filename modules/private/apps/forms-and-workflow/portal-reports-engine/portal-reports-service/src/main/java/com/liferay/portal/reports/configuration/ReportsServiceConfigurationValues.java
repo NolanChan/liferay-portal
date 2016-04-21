@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.reports.service.configuration;
+package com.liferay.portal.reports.configuration;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 
