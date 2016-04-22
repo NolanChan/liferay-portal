@@ -30,7 +30,7 @@ public interface ShieldConfiguration {
 	@Meta.AD(deflt = "liferay", required = false)
 	public String password();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "false", required = false)
 	public boolean requiresAuthentication();
 
 	@Meta.AD(deflt = "true", required = false)
