@@ -17,7 +17,7 @@ package com.liferay.portal.workflow.kaleo.forms.web.upgrade;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_1.UpgradePortletId;
+import com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_2.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,17 +33,19 @@ public class KaleoFormsWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.portal.workflow.kaleo.forms.web", "0.0.1", "1.0.0",
 			new com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_0.
-				UpgradeSchema(),
-			new com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_0.
-				UpgradeKaleoProcess());
+				UpgradeSchema());
 
 		registry.register(
 			"com.liferay.portal.workflow.kaleo.forms.web", "1.0.0", "1.0.1",
 			new com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_1.
-				UpgradeSchema(), new UpgradePortletId(),
-			new com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_1.
+				UpgradeKaleoProcess());
+
+		registry.register(
+			"com.liferay.portal.workflow.kaleo.forms.web", "1.0.1", "1.0.2",
+			new com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_2.
 				UpgradeKaleoProcess(
-					_assetEntryLocalService, _ddlRecordSetLocalService));
+					_assetEntryLocalService, _ddlRecordSetLocalService),
+			new UpgradePortletId());
 	}
 
 	@Reference(unbind = "-")

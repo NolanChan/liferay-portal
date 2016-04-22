@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_1;
+package com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_2;
 
 import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 

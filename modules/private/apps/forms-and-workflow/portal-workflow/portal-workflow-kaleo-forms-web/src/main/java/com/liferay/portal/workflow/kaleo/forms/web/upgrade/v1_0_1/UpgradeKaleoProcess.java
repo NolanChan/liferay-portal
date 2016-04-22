@@ -14,121 +14,65 @@
 
 package com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_1;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-
-import java.util.Locale;
 
 /**
- * @author Inácio Nery
+ * @author Marcellus Tavares
  */
 public class UpgradeKaleoProcess extends UpgradeProcess {
 
-	public UpgradeKaleoProcess(
-		AssetEntryLocalService assetEntryLocalService,
-		DDLRecordSetLocalService ddlRecordSetLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-		_ddlRecordSetLocalService = ddlRecordSetLocalService;
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
+		updateWorkflowDefinition();
+	}
+
+	protected void updateKaleoProcess(
+			long kaleoProcessId, String workflowDefinitioName,
+			int workflowDefinitionVersion)
+		throws Exception {
+
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select * from KaleoProcess");
-			ResultSet rs = ps.executeQuery()) {
+				"update KaleoProcess set workflowDefinitionName = ?, " +
+					"workflowDefinitionVersion = ? where kaleoProcessId = ?")) {
 
-			while (rs.next()) {
-				String uuid = rs.getString("uuid_");
-				long kaleoProcessId = rs.getLong("kaleoProcessId");
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				Timestamp createDate = rs.getTimestamp("createDate");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-				long ddlRecordSetId = rs.getLong("DDLRecordSetId");
+			ps.setString(1, workflowDefinitioName);
+			ps.setInt(2, workflowDefinitionVersion);
+			ps.setLong(3, kaleoProcessId);
 
-				if (Validator.isNull(uuid)) {
-					uuid = PortalUUIDUtil.generate();
+			ps.executeUpdate();
+		}
+	}
 
-					runSQL(
-						"update KaleoProcess set uuid_ = '" + uuid +
-							"' where kaleoProcessId = " + kaleoProcessId);
+	protected void updateWorkflowDefinition() throws Exception {
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select classPK, workflowDefinitionName, " +
+					"workflowDefinitionVersion from WorkflowDefinitionLink " +
+						"where classNameId = ?")) {
+
+			long kaleoProcessClassNameId = PortalUtil.getClassNameId(
+				KaleoProcess.class);
+
+			ps.setLong(1, kaleoProcessClassNameId);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long kaleoProcessId = rs.getLong("classPK");
+					String workflowDefinitioName = rs.getString(
+						"workflowDefinitionName");
+					int workflowDefinitionVersion = rs.getInt(
+						"workflowDefinitionVersion");
+
+					updateKaleoProcess(
+						kaleoProcessId, workflowDefinitioName,
+						workflowDefinitionVersion);
 				}
-
-				updateAssetEntry(
-					groupId, companyId, userId, createDate, modifiedDate,
-					kaleoProcessId, uuid, ddlRecordSetId);
 			}
 		}
 	}
-
-	protected Locale getDefaultLocale(long companyId) {
-		String locale = null;
-
-		try {
-			locale = UpgradeProcessUtil.getDefaultLanguageId(companyId);
-		}
-		catch (SQLException sqle) {
-			_log.error(
-				"Unable to get default locale for company " + companyId, sqle);
-
-			throw new RuntimeException(sqle);
-		}
-
-		return LocaleUtil.fromLanguageId(locale);
-	}
-
-	protected void updateAssetEntry(
-			long groupId, long companyId, long userId, Timestamp createDate,
-			Timestamp modifiedDate, long kaleoProcessId, String uuid,
-			long ddlRecordSetId)
-		throws PortalException {
-
-		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getDDLRecordSet(
-			ddlRecordSetId);
-
-		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
-
-		Locale locale = getDefaultLocale(companyId);
-
-		String title = LanguageUtil.format(
-			locale, "new-x-for-list-x",
-			new Object[] {
-				ddmStructure.getName(locale), ddlRecordSet.getName(locale)
-			},
-			false);
-
-		_assetEntryLocalService.updateEntry(
-			userId, groupId, createDate, modifiedDate,
-			KaleoProcess.class.getName(), kaleoProcessId, uuid, 0, null, null,
-			true, true, null, null, null, ContentTypes.TEXT_HTML, title, null,
-			StringPool.BLANK, null, null, 0, 0, null);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeKaleoProcess.class);
-
-	private final AssetEntryLocalService _assetEntryLocalService;
-	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
 
 }
