@@ -475,6 +475,8 @@ AUI.add(
 						instance.after('render', instance._afterRenderKaleoDesigner);
 
 						instance.after(instance._renderContentTabs, instance, '_renderTabs');
+
+						instance.after(instance._afterRenderSettings, instance, '_renderSettings');
 					},
 
 					connectDefinitionFields: function() {
@@ -517,6 +519,8 @@ AUI.add(
 						else {
 							instance.closeEditProperties();
 						}
+
+						instance._fixTableWidth();
 					},
 
 					forEachDefinitionField: function(fn) {
@@ -684,6 +688,20 @@ AUI.add(
 						instance.connectDefinitionFields();
 
 						instance.canvasRegion = instance.canvas.get('region');
+					},
+
+					_afterRenderSettings: function() {
+						var instance = this;
+
+						var dataTable = instance.propertyList;
+
+						dataTable.after(A.bind(instance._afterRenderSettingsTableBody, instance), dataTable, '_onUITriggerSort');
+					},
+
+					_afterRenderSettingsTableBody: function() {
+						var instance = this;
+
+						instance._fixTableWidth();
 					},
 
 					_afterSelectionChangeKaleoDesigner: function(event) {
@@ -955,6 +973,12 @@ AUI.add(
 
 							buffer.push(xmlTransitions.close);
 						}
+					},
+
+					_fixTableWidth: function() {
+						var instance = this;
+
+						instance.propertyList._tableNode.setStyle('width', '100%');
 					},
 
 					_getRandomXY: function() {
