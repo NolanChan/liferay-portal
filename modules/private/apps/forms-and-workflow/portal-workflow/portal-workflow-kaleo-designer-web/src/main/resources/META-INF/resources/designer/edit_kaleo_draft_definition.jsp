@@ -23,7 +23,6 @@
 		String mvcPath = ParamUtil.getString(request, "mvcPath", "/designer/edit_kaleo_draft_definition.jsp");
 
 		String backURL = ParamUtil.getString(request, "backURL");
-
 		String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(request);

@@ -33,9 +33,13 @@ if (kaleoProcess != null) {
 	kaleoProcessStarted = (DDLRecordLocalServiceUtil.getRecordsCount(kaleoProcess.getDDLRecordSetId(), WorkflowConstants.STATUS_ANY) > 0);
 }
 
+portletDisplay.setShowBackIcon(true);
+
 PortletURL backPortletURL = renderResponse.createRenderURL();
 
 backPortletURL.setParameter("mvcPath", "/admin/view.jsp");
+
+portletDisplay.setURLBack(backPortletURL.toString());
 
 String title = null;
 
@@ -47,9 +51,6 @@ else {
 }
 
 renderResponse.setTitle(title);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backPortletURL.toString());
 %>
 
 <c:if test="<%= kaleoProcessStarted %>">
