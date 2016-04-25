@@ -305,8 +305,7 @@ public class OracleDB extends BaseDB {
 
 		template = reword(template);
 		template = StringUtil.replace(
-			template,
-			new String[] {"\\\\", "\\'", "\\\""},
+			template, new String[] {"\\\\", "\\'", "\\\""},
 			new String[] {"\\", "''", "\""});
 
 		return template;

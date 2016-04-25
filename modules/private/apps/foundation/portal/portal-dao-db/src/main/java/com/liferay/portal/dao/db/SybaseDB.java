@@ -44,8 +44,7 @@ public class SybaseDB extends BaseDB {
 		template = StringUtil.replace(template, ");\n", ")\ngo\n");
 		template = StringUtil.replace(template, "\ngo;\n", "\ngo\n");
 		template = StringUtil.replace(
-			template,
-			new String[] {"\\\\", "\\'", "\\\"", "\\n", "\\r"},
+			template, new String[] {"\\\\", "\\'", "\\\"", "\\n", "\\r"},
 			new String[] {"\\", "''", "\"", "\n", "\r"});
 
 		return template;

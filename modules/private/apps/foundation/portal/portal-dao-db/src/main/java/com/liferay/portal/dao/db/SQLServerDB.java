@@ -53,8 +53,7 @@ public class SQLServerDB extends BaseDB {
 		template = reword(template);
 		template = StringUtil.replace(template, "\ngo;\n", "\ngo\n");
 		template = StringUtil.replace(
-			template,
-			new String[] {"\\\\", "\\'", "\\\"", "\\n", "\\r"},
+			template, new String[] {"\\\\", "\\'", "\\\"", "\\n", "\\r"},
 			new String[] {"\\", "''", "\"", "\n", "\r"});
 
 		return template;
