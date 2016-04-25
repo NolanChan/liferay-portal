@@ -337,8 +337,6 @@ AUI.add(
 			format: function(xml) {
 				var instance = this;
 
-				var i;
-
 				var formatted = STR_BLANK;
 				var inCDATA = false;
 				var pad = 0;
@@ -493,7 +491,7 @@ AUI.add(
 												connectors.push(
 													{
 														connector: {
-															'default': item2['default'],
+															'default': item2.default,
 															name: item2.name
 														},
 														source: item1.name,
@@ -947,7 +945,7 @@ AUI.add(
 
 							var pickDefault = data.transitions.some(
 								function(item, index, collection) {
-									return item.connector['default'] === true;
+									return item.connector.default === true;
 								}
 							);
 
@@ -955,7 +953,7 @@ AUI.add(
 
 							data.transitions.forEach(
 								function(item, index, collection) {
-									var defaultValue = item.connector['default'];
+									var defaultValue = item.connector.default;
 
 									if (pickDefault && index === 0) {
 										defaultValue = true;
@@ -2278,7 +2276,6 @@ AUI.add(
 						var formsViewTpl = instance.get('viewTemplate');
 
 						var inputTpl = Template.get('input');
-						var textareaTpl = Template.get('textarea');
 
 						var buffer = [];
 
@@ -2992,7 +2989,7 @@ AUI.add(
 											options: ['true', 'false']
 										}
 									),
-									name: KaleoDesignerStrings['default']
+									name: KaleoDesignerStrings.default
 								}
 							]
 						);
@@ -3048,11 +3045,7 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance.after(
-							{
-								render: instance._afterNodeRender
-							}
-						);
+						instance.after('render', instance._afterNodeRender);
 					},
 
 					getConnectionNode: function() {
