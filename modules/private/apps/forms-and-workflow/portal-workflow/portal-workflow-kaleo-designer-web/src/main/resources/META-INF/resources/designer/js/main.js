@@ -2233,6 +2233,14 @@ AUI.add(
 				NAME: 'notifications-cell-editor',
 
 				prototype: {
+					customizeToolbar: function() {
+						var instance = this;
+
+						instance.toolbar.clear();
+
+						NotificationsEditor.superclass.customizeToolbar.apply(this, arguments);
+					},
+
 					_valueAssignmentsType: function() {
 						var instance = this;
 
