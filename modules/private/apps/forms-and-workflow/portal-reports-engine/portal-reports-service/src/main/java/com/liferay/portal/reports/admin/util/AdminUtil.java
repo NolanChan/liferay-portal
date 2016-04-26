@@ -14,12 +14,20 @@
 
 package com.liferay.portal.reports.admin.util;
 
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.reports.configuration.ReportsServiceConfigurationValues;
-import com.liferay.util.ContentUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.PortletPreferences;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author Gavin Wan
@@ -27,73 +35,56 @@ import javax.portlet.PortletPreferences;
  */
 public class AdminUtil {
 
-	public static String getEmailDeliveryBody(PortletPreferences preferences) {
-		String emailDeliveryBody = preferences.getValue(
-			"emailDeliveryBody", StringPool.BLANK);
+	public static Map<String, String> getEmailDefinitionTerms(
+		PortletRequest portletRequest, String emailFromAddress,
+		String emailFromName) {
 
-		if (Validator.isNotNull(emailDeliveryBody)) {
-			return emailDeliveryBody;
-		}
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		return ContentUtil.get(
-			ReportsServiceConfigurationValues.ADMIN_EMAIL_DELIVERY_BODY);
+		Locale locale = themeDisplay.getLocale();
+
+		String fromAddress = HtmlUtil.escape(emailFromAddress);
+		String fromName = HtmlUtil.escape(emailFromName);
+
+		String toAddress = LanguageUtil.get(
+			locale, "the-address-of-the-email-recipient");
+		String toName = LanguageUtil.get(
+			locale, "the-name-of-the-email-recipient");
+
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		String pageURL = LanguageUtil.get(resourceBundle, "the-report-url");
+
+		String reportName = LanguageUtil.get(
+			resourceBundle, "the-name-of-the-report");
+
+		Map<String, String> definitionTerms = new LinkedHashMap<>();
+
+		definitionTerms.put("[$FROM_ADDRESS$]", fromAddress);
+		definitionTerms.put("[$FROM_NAME$]", fromName);
+
+		definitionTerms.put("[$TO_ADDRESS$]", toAddress);
+		definitionTerms.put("[$TO_NAME$]", toName);
+
+		definitionTerms.put("[$PAGE_URL$]", pageURL);
+		definitionTerms.put("[$REPORT_NAME$]", reportName);
+
+		Company company = themeDisplay.getCompany();
+
+		definitionTerms.put("[$PORTAL_URL$]", company.getVirtualHostname());
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		definitionTerms.put(
+			"[$PORTLET_NAME$]", HtmlUtil.escape(portletDisplay.getTitle()));
+
+		return definitionTerms;
 	}
 
-	public static String getEmailDeliverySubject(
-		PortletPreferences preferences) {
-
-		String emailDeliverySubject = preferences.getValue(
-			"emailDeliverySubject", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailDeliverySubject)) {
-			return emailDeliverySubject;
-		}
-
-		return ContentUtil.get(
-			ReportsServiceConfigurationValues.ADMIN_EMAIL_DELIVERY_SUBJECT);
-	}
-
-	public static String getEmailFromAddress(PortletPreferences preferences) {
-		String emailFromAddress =
-			ReportsServiceConfigurationValues.ADMIN_EMAIL_FROM_ADDRESS;
-
-		return preferences.getValue("emailFromAddress", emailFromAddress);
-	}
-
-	public static String getEmailFromName(PortletPreferences preferences) {
-		String emailFromName =
-			ReportsServiceConfigurationValues.ADMIN_EMAIL_FROM_NAME;
-
-		return preferences.getValue("emailFromName", emailFromName);
-	}
-
-	public static String getEmailNotificationsBody(
-		PortletPreferences preferences) {
-
-		String emailNotificationsBody = preferences.getValue(
-			"emailNotificationsBody", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailNotificationsBody)) {
-			return emailNotificationsBody;
-		}
-
-		return ContentUtil.get(
-			ReportsServiceConfigurationValues.ADMIN_EMAIL_NOTIFICATIONS_BODY);
-	}
-
-	public static String getEmailNotificationsSubject(
-		PortletPreferences preferences) {
-
-		String emailNotificationsSubject = preferences.getValue(
-			"emailNotificationsSubject", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailNotificationsSubject)) {
-			return emailNotificationsSubject;
-		}
-
-		return ContentUtil.get(
-			ReportsServiceConfigurationValues.
-				ADMIN_EMAIL_NOTIFICATIONS_SUBJECT);
+	public static ResourceBundle getResourceBundle(Locale locale) {
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, AdminUtil.class);
 	}
 
 }
