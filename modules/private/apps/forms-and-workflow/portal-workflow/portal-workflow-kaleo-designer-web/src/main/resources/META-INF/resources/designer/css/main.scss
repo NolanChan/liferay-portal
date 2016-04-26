@@ -2,11 +2,18 @@
 	display: none;
 }
 
-.celleditor-actions-view, .celleditor-notifications-view, .celleditor-assignment-view {
-	background: #EEE;
-	border: 1px solid #DBDCDC;
-	margin: 10px 0;
-	padding: 5px;
+.basecelleditor {
+	background-color: #FFF;
+	padding: 13px;
+
+	.basecelleditor {
+		border-width: 0;
+		padding: 0;
+	}
+
+	.form-control {
+		margin-bottom: 13px;
+	}
 }
 
 .celleditor-label {
@@ -16,21 +23,41 @@
 }
 
 .celleditor-label-checkbox {
+	font-size: 11px;
 	font-weight: bold;
 	padding-left: 3px;
 }
 
-.celleditor-textarea, .celleditor-textarea-small {
-	height: 100px;
-	width: 300px;
+.celleditor-notifications-view + .celleditor-notifications-view {
+	border-top: 1px solid #EFEFEF;
+	margin-top: 22px;
+	padding-top: 19px;
 }
 
-.celleditor-textarea-small {
+.celleditor-textarea, .celleditor-textarea-small {
 	height: 100px;
+}
+
+.celleditor-textarea-small.input-sm {
+	height: 50px;
+}
+
+.celleditor-view {
+	position: relative;
 }
 
 .celleditor-view-menu {
 	text-align: right;
+}
+
+.celleditor-view-menu-remove {
+	position: absolute;
+	right: -8px;
+	top: -3px;
+
+	.lexicon-icon-times {
+		width: 10px;
+	}
 }
 
 .diagram-builder {
@@ -147,15 +174,34 @@
 
 .notifications-editor {
 	max-height: 500px;
+	min-width: 364px;
 	overflow: auto;
-	width: 346px;
+
+	.yui3-widget-ft {
+		margin-top: 13px;
+	}
+
+	textarea {
+		width: 100%;
+	}
+
+	.checkbox label {
+		padding-left: 0;
+	}
 }
 
-.notifications-editor .basecelleditor {
-	background-color: transparent;
-	border-width: 0;
-	padding-left: 0;
-	padding-right: 0;
+.recipients-editor-container {
+	position: relative;
+}
+
+.recipients-editor-container,
+.recipients-editor-container .celleditor-assignment-view {
+	border: 1px solid #EFEFEF;
+	padding: 8px;
+}
+
+.recipients-editor-container .celleditor-assignment-view {
+	margin: 3px 0 8px 0;
 }
 
 .property-builder-disabled {

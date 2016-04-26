@@ -1782,7 +1782,7 @@ AUI.add(
 								'{content}',
 								'<tpl if="values.showMenu === true">',
 									'<div class="{$ans}celleditor-view-menu">',
-										'<a class="{$ans}celleditor-view-menu-remove" href="#">' + KaleoDesignerStrings.remove + '</a>',
+										'<a class="{$ans}celleditor-view-menu-remove btn btn-link btn-sm" href="#" title="' + KaleoDesignerStrings.remove + '">' + Liferay.Util.getLexiconIconTpl('times') + '</a>',
 									'</div>',
 								'</tpl>',
 							'</div>'
@@ -1826,6 +1826,7 @@ AUI.add(
 
 						var select = selectTpl.render(
 							{
+								auiCssClass: 'form-control input-sm',
 								auiLabelCssClass: 'celleditor-label',
 								label: strings.assignmentTypeLabel,
 								name: 'assignmentType',
@@ -1845,7 +1846,7 @@ AUI.add(
 
 						var resourceActionContent = textareaTpl.parse(
 							{
-								auiCssClass: 'celleditor-textarea-small',
+								auiCssClass: 'form-control input-sm celleditor-textarea-small',
 								auiLabelCssClass: 'celleditor-label',
 								id: A.guid(),
 								label: strings.resourceActions,
@@ -1865,7 +1866,7 @@ AUI.add(
 						var roleIdContent = [
 							inputTpl.parse(
 								{
-									auiCssClass: 'assignments-cell-editor-input',
+									auiCssClass: 'form-control input-sm assignments-cell-editor-input',
 									auiLabelCssClass: 'celleditor-label',
 									id: A.guid(),
 									label: strings.role,
@@ -1878,7 +1879,7 @@ AUI.add(
 
 							inputTpl.parse(
 								{
-									auiCssClass: 'assignments-cell-editor-input',
+									auiCssClass: 'form-control input-sm assignments-cell-editor-input',
 									auiLabelCssClass: 'celleditor-label',
 									disabled: true,
 									id: A.guid(),
@@ -1902,7 +1903,7 @@ AUI.add(
 						var scriptedAssignmentContent = [
 							textareaTpl.parse(
 								{
-									auiCssClass: 'celleditor-textarea',
+									auiCssClass: 'form-control input-sm celleditor-textarea-small',
 									auiLabelCssClass: 'celleditor-label',
 									id: A.guid(),
 									label: strings.script,
@@ -1912,6 +1913,7 @@ AUI.add(
 
 							selectTpl.parse(
 								{
+									auiCssClass: 'form-control input-sm',
 									auiLabelCssClass: 'celleditor-label',
 									id: A.guid(),
 									label: strings.scriptLanguage,
@@ -1952,7 +1954,7 @@ AUI.add(
 							var roleTypeContent = [
 								selectTpl.parse(
 									{
-										auiCssClass: 'assignments-cell-editor-input',
+										auiCssClass: 'form-control input-sm assignments-cell-editor-input',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.roleType,
@@ -1963,7 +1965,7 @@ AUI.add(
 
 								inputTpl.parse(
 									{
-										auiCssClass: 'assignments-cell-editor-input',
+										auiCssClass: 'form-control input-sm assignments-cell-editor-input',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.roleName,
@@ -1973,7 +1975,7 @@ AUI.add(
 									}
 								),
 
-								'<br/>',
+								'<div class="checkbox">',
 
 								checkboxTpl.parse(
 									{
@@ -1985,7 +1987,9 @@ AUI.add(
 										type: 'checkbox',
 										value: 'true'
 									}
-								)
+								),
+
+								'</div>'
 							].join(STR_BLANK);
 
 							buffer.push(
@@ -2019,7 +2023,7 @@ AUI.add(
 							var userContent = [
 								inputTpl.parse(
 									{
-										auiCssClass: 'assignments-cell-editor-input',
+										auiCssClass: 'form-control input-sm assignments-cell-editor-input',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.name,
@@ -2032,7 +2036,7 @@ AUI.add(
 
 								inputTpl.parse(
 									{
-										auiCssClass: 'assignments-cell-editor-input',
+										auiCssClass: 'form-control input-sm assignments-cell-editor-input',
 										auiLabelCssClass: 'celleditor-label',
 										disabled: true,
 										id: A.guid(),
@@ -2045,7 +2049,7 @@ AUI.add(
 
 								inputTpl.parse(
 									{
-										auiCssClass: 'assignments-cell-editor-input',
+										auiCssClass: 'form-control input-sm assignments-cell-editor-input',
 										auiLabelCssClass: 'celleditor-label',
 										disabled: true,
 										id: A.guid(),
@@ -2058,7 +2062,7 @@ AUI.add(
 
 								inputTpl.parse(
 									{
-										auiCssClass: 'assignments-cell-editor-input',
+										auiCssClass: 'form-control input-sm assignments-cell-editor-input',
 										auiLabelCssClass: 'celleditor-label',
 										disabled: true,
 										id: A.guid(),
@@ -2295,7 +2299,7 @@ AUI.add(
 						var formsContent = [
 							inputTpl.parse(
 								{
-									auiCssClass: 'forms-cell-editor-input',
+									auiCssClass: 'form-control input-sm forms-cell-editor-input',
 									auiLabelCssClass: 'celleditor-label',
 									id: A.guid(),
 									label: strings.formTemplate,
@@ -2308,7 +2312,7 @@ AUI.add(
 
 							inputTpl.parse(
 								{
-									auiCssClass: 'forms-cell-editor-input',
+									auiCssClass: 'form-control input-sm forms-cell-editor-input',
 									auiLabelCssClass: 'celleditor-label',
 									id: A.guid(),
 									name: 'templateId',
@@ -2437,7 +2441,7 @@ AUI.add(
 								'{content}',
 								'<div class="recipients-editor-container"></div>',
 								'<div class="{$ans}celleditor-view-menu">',
-									'<a class="{$ans}celleditor-view-menu-remove" href="#">' + KaleoDesignerStrings.remove + '</a>',
+									'<a class="{$ans}celleditor-view-menu-remove btn btn-link btn-sm" href="#" title="' + KaleoDesignerStrings.remove + '">' + Liferay.Util.getLexiconIconTpl('times') + '</a>',
 								'</div>',
 							'</div>'
 						]
@@ -2485,7 +2489,7 @@ AUI.add(
 							var notificationContent = [
 								inputTpl.parse(
 									{
-										auiCssClass: 'notifications-cell-editor-input',
+										auiCssClass: 'form-control input-sm notifications-cell-editor-input',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.name,
@@ -2497,7 +2501,7 @@ AUI.add(
 
 								textareaTpl.parse(
 									{
-										auiCssClass: 'celleditor-textarea-small',
+										auiCssClass: 'form-control input-sm celleditor-textarea-small',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.description,
@@ -2507,6 +2511,7 @@ AUI.add(
 
 								selectTpl.parse(
 									{
+										auiCssClass: 'form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.templateLanguage,
@@ -2517,7 +2522,7 @@ AUI.add(
 
 								textareaTpl.parse(
 									{
-										auiCssClass: 'celleditor-textarea',
+										auiCssClass: 'form-control input-sm celleditor-textarea-small',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.template,
@@ -2527,6 +2532,7 @@ AUI.add(
 
 								selectTpl.parse(
 									{
+										auiCssClass: 'form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.notificationType,
@@ -2537,6 +2543,7 @@ AUI.add(
 
 								selectTpl.parse(
 									{
+										auiCssClass: 'form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.executionType,
@@ -2781,7 +2788,7 @@ AUI.add(
 							'<div class="{$ans}celleditor-actions-view {$ans}celleditor-view {$ans}celleditor-view-type-{viewId}">',
 								'{content}',
 								'<div class="{$ans}celleditor-view-menu">',
-									'<a class="{$ans}celleditor-view-menu-remove" href="#">' + KaleoDesignerStrings.remove + '</a>',
+									'<a class="{$ans}celleditor-view-menu-remove btn btn-link btn-sm" href="#" title="' + KaleoDesignerStrings.remove + '">' + Liferay.Util.getLexiconIconTpl('times') + '</a>',
 								'</div>',
 							'</div>'
 						]
@@ -2812,7 +2819,7 @@ AUI.add(
 							var actionContent = [
 								inputTpl.parse(
 									{
-										auiCssClass: 'actions-cell-editor-input',
+										auiCssClass: 'form-control input-sm actions-cell-editor-input',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.name,
@@ -2824,7 +2831,7 @@ AUI.add(
 
 								textareaTpl.parse(
 									{
-										auiCssClass: 'celleditor-textarea-small',
+										auiCssClass: 'form-control input-sm celleditor-textarea-small',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.description,
@@ -2834,7 +2841,7 @@ AUI.add(
 
 								textareaTpl.parse(
 									{
-										auiCssClass: 'celleditor-textarea',
+										auiCssClass: 'form-control input-sm celleditor-textarea-small',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.script,
@@ -2844,6 +2851,7 @@ AUI.add(
 
 								selectTpl.parse(
 									{
+										auiCssClass: 'form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.scriptLanguage,
@@ -2854,6 +2862,7 @@ AUI.add(
 
 								selectTpl.parse(
 									{
+										auiCssClass: 'form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.executionType,
@@ -2864,7 +2873,7 @@ AUI.add(
 
 								inputTpl.parse(
 									{
-										auiCssClass: 'actions-cell-editor-input',
+										auiCssClass: 'form-control input-sm actions-cell-editor-input',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.priority,
