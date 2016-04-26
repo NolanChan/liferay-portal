@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
@@ -42,7 +43,6 @@ page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
@@ -86,12 +86,19 @@ page import="com.liferay.taglib.search.ResultRow" %>
 page import="java.util.Arrays" %><%@
 page import="java.util.Calendar" %><%@
 page import="java.util.Date" %><%@
-page import="java.util.List" %>
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
 <%@
 		page import="javax.portlet.WindowState" %>
+<%@ page
+		import="com.liferay.portal.reports.web.admin.util.ReportWebRequestHelper" %>
+<%@ page
+		import="com.liferay.portal.reports.configuration.ReportsPortletMessagingConfiguration" %>
+<%@ page
+		import="com.liferay.portal.reports.configuration.ReportsGroupServiceEmailConfiguration" %>
 
 <liferay-theme:defineObjects />
 
@@ -111,4 +118,8 @@ page import="java.util.List" %>
 
 	Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 	Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+
+	ReportWebRequestHelper reportWebRequestHelper = new ReportWebRequestHelper(request);
+
+	ReportsGroupServiceEmailConfiguration reportsGroupServiceEmailConfiguration = reportWebRequestHelper.getReportsGroupServiceEmailConfiguration();
 %>

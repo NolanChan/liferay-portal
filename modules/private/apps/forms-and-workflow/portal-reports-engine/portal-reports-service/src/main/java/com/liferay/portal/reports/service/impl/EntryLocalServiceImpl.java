@@ -33,14 +33,18 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -51,7 +55,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.ReportStatus;
-import com.liferay.portal.reports.admin.util.AdminUtil;
+import com.liferay.portal.reports.configuration.ReportsGroupServiceEmailConfiguration;
+import com.liferay.portal.reports.constants.ReportsPortletKeys;
 import com.liferay.portal.reports.engine.MemoryReportDesignRetriever;
 import com.liferay.portal.reports.engine.ReportDataSourceType;
 import com.liferay.portal.reports.engine.ReportDesignRetriever;
@@ -76,6 +81,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -359,7 +365,8 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			file = FileUtil.createTempFile(inputStream);
 
 			notifySubscribers(
-				entry, emailAddresses, reportName, file, notification);
+				entry, emailAddresses, reportName, file, notification,
+				new ServiceContext());
 		}
 		catch (IOException ioe) {
 			throw new PortalException(ioe.getMessage());
@@ -527,60 +534,56 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		return dynamicQuery;
 	}
 
+	protected ReportsGroupServiceEmailConfiguration
+			getReportsGroupServiceEmailConfiguration(
+				long groupId)
+		throws ConfigurationException {
+
+		return configurationProvider.getConfiguration(
+			ReportsGroupServiceEmailConfiguration.class,
+			new GroupServiceSettingsLocator(
+				groupId, ReportsPortletKeys.SERVICE_NAME));
+	}
+
 	protected void notifySubscribers(
 			Entry entry, String[] emailAddresses, String reportName, File file,
-			boolean notification)
+			boolean notification, ServiceContext serviceContext)
 		throws Exception {
 
 		if (emailAddresses.length == 0) {
 			return;
 		}
 
-		long ownerId = entry.getGroupId();
-		int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
-		long plid = PortletKeys.PREFS_PLID_SHARED;
+		long groupId = entry.getGroupId();
 		String portletId = entry.getPortletId();
-		String defaultPreferences = null;
 
-		PortletPreferences preferences =
-			portletPreferencesLocalService.getPreferences(
-				entry.getCompanyId(), ownerId, ownerType, plid, portletId,
-				defaultPreferences);
+		ReportsGroupServiceEmailConfiguration
+			reportsGroupServiceEmailConfiguration =
+				getReportsGroupServiceEmailConfiguration(groupId);
 
-		String fromName = AdminUtil.getEmailFromName(preferences);
-		String fromAddress = AdminUtil.getEmailFromAddress(preferences);
+		String fromName = reportsGroupServiceEmailConfiguration.emailFromName();
 
-		String subject = null;
-		String body = null;
+		String fromAddress =
+			reportsGroupServiceEmailConfiguration.emailFromAddress();
+
+		Map<Locale, String> localizedSubjectMap = null;
+		Map<Locale, String> localizedBodyMap = null;
 
 		if (notification) {
-			subject = AdminUtil.getEmailNotificationsSubject(preferences);
-			body = AdminUtil.getEmailNotificationsBody(preferences);
+			localizedBodyMap = LocalizationUtil.getMap(
+				reportsGroupServiceEmailConfiguration.emailNotificationsBody());
+
+			localizedSubjectMap = LocalizationUtil.getMap(
+				reportsGroupServiceEmailConfiguration.
+					emailNotificationsSubject());
 		}
 		else {
-			subject = AdminUtil.getEmailDeliverySubject(preferences);
-			body = AdminUtil.getEmailDeliveryBody(preferences);
+			localizedBodyMap = LocalizationUtil.getMap(
+				reportsGroupServiceEmailConfiguration.emailDeliveryBody());
+
+			localizedSubjectMap = LocalizationUtil.getMap(
+				reportsGroupServiceEmailConfiguration.emailDeliverySubject());
 		}
-
-		subject = StringUtil.replace(
-			subject,
-			new String[] {
-				"[$FROM_ADDRESS$]", "[$FROM_NAME$]", "[$PAGE_URL$]",
-				"[$REPORT_NAME$]"
-			},
-			new String[] {
-				fromAddress, fromName, entry.getPageURL(), reportName
-			});
-
-		body = StringUtil.replace(
-			body,
-			new String[] {
-				"[$FROM_ADDRESS$]", "[$FROM_NAME$]", "[$PAGE_URL$]",
-				"[$REPORT_NAME$]"
-			},
-			new String[] {
-				fromAddress, fromName, entry.getPageURL(), reportName
-			});
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
@@ -588,15 +591,23 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			subscriptionSender.addFileAttachment(file, reportName);
 		}
 
-		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(entry.getCompanyId());
+		subscriptionSender.setContextAttributes(
+			"[$FROM_ADDRESS$]", fromAddress, "[$FROM_NAME$]", fromName,
+			"[$PAGE_URL$]", entry.getPageURL(), "[$REPORT_NAME$]", reportName);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setGroupId(entry.getGroupId());
 		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
+		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("reports_entry", entry.getEntryId());
 		subscriptionSender.setReplyToAddress(fromAddress);
-		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(entry.getUserId());
+
+		subscriptionSender.setPortletId(portletId);
+
+		subscriptionSender.setScopeGroupId(entry.getGroupId());
+		subscriptionSender.setServiceContext(serviceContext);
 
 		for (String emailAddress : emailAddresses) {
 			subscriptionSender.addRuntimeSubscribers(
@@ -643,6 +654,9 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			throw new DefinitionNameException();
 		}
 	}
+
+	@ServiceReference(type = ConfigurationProvider.class)
+	protected ConfigurationProvider configurationProvider;
 
 	@ServiceReference(type = DLStore.class)
 	private DLStore _dlStore;

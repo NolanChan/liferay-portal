@@ -17,107 +17,76 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "email-from");
+boolean enabled = true;
+String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", reportsGroupServiceEmailConfiguration.emailFromName());
+String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", reportsGroupServiceEmailConfiguration.emailFromAddress());
 
-String emailFromName = ParamUtil.getString(request, "emailFromName", AdminUtil.getEmailFromName(portletPreferences));
-String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", AdminUtil.getEmailFromAddress(portletPreferences));
-
-String emailDeliverySubject = ParamUtil.getString(request, "emailDeliverySubject", AdminUtil.getEmailDeliverySubject(portletPreferences));
-String emailDeliveryBody = ParamUtil.getString(request, "emailDeliveryBody", AdminUtil.getEmailDeliveryBody(portletPreferences));
-
-String emailNotificationsSubject = ParamUtil.getString(request, "emailNotificationsSubject", AdminUtil.getEmailNotificationsSubject(portletPreferences));
-String emailNotificationsBody = ParamUtil.getString(request, "emailNotificationsBody", AdminUtil.getEmailNotificationsBody(portletPreferences));
-
-String editorParam = StringPool.BLANK;
-String editorBody = StringPool.BLANK;
-
-if (tabs2.equals("delivery-email")) {
-	editorParam = "emailDeliveryBody";
-	editorBody = emailDeliveryBody;
-}
-else if (tabs2.equals("notifications-email")) {
-	editorParam = "emailNotificationsBody";
-	editorBody = emailNotificationsBody;
-}
+Map<String, String> emailDefinitionTerms = AdminUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
 %>
 
-<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
+	<portlet:param name="serviceName" value="<%= ReportsPortletKeys.SERVICE_NAME %>" />
+	<portlet:param name="settingsScope" value="group" />
+</liferay-portlet:actionURL>
 
-<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL">
-	<portlet:param name="tabs2" value="<%= tabs2 %>" />
-</liferay-portlet:renderURL>
-
-<liferay-ui:tabs
-	names="email-from,delivery-email,notifications-email"
-	param="tabs2"
-	url="<%= configurationRenderURL %>"
-/>
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<liferay-ui:error key="emailDeliveryBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailDeliverySubject" message="please-enter-a-valid-subject" />
-	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
-	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
-	<liferay-ui:error key="emailNotificationsBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailNotificationsSubject" message="please-enter-a-valid-subject" />
+	<%
+	String tabs1Names = "email-from,delivery-email,notifications-email";
+	%>
 
-	<aui:fieldset>
-		<c:choose>
-			<c:when test='<%= tabs2.equals("email-from") %>'>
-				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" />
+	<liferay-ui:tabs
+		names="<%= tabs1Names %>"
+		refresh="<%= false %>"
+		type="tabs nav-tabs-default"
+	>
+		<liferay-ui:error key="emailDeliveryBody" message="please-enter-a-valid-body" />
+		<liferay-ui:error key="emailDeliverySubject" message="please-enter-a-valid-subject" />
+		<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
+		<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
+		<liferay-ui:error key="emailNotificationsBody" message="please-enter-a-valid-body" />
+		<liferay-ui:error key="emailNotificationsSubject" message="please-enter-a-valid-subject" />
 
-				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
-			</c:when>
-			<c:otherwise>
-				<c:choose>
-					<c:when test='<%= tabs2.equals("delivery-email") %>'>
-						<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailDeliverySubject--" value="<%= emailDeliverySubject %>" />
-					</c:when>
-					<c:when test='<%= tabs2.equals("notifications-email") %>'>
-						<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailNotificationsSubject--" value="<%= emailNotificationsSubject %>" />
-					</c:when>
-				</c:choose>
+		<liferay-ui:section>
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" type="text" value="<%= emailFromName %>" />
 
-				<aui:input cssClass="lfr-textarea-container" label="body" name='<%= "preferences--" + editorParam + "--" %>' type="textarea" value="<%= editorBody %>" />
+					<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" type="text" value="<%= emailFromAddress %>" />
+				</aui:fieldset>
+			</aui:fieldset-group>
+		</liferay-ui:section>
 
-				<div class="definition-of-terms">
-					<h4><liferay-ui:message key="definition-of-terms" /></h4>
+		<liferay-ui:section>
+			<aui:fieldset-group markupView="lexicon">
+				<liferay-frontend:email-notification-settings
+					emailBodyLocalizedValuesMap="<%= reportsGroupServiceEmailConfiguration.emailDeliveryBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= enabled %>"
+					emailParam="emailArticleAdded"
+					emailSubjectLocalizedValuesMap="<%= reportsGroupServiceEmailConfiguration.emailDeliverySubject() %>"
+				/>
+			</aui:fieldset-group>
+		</liferay-ui:section>
 
-					<dl>
-						<dt>
-							[$FROM_ADDRESS$]
-						</dt>
-						<dd>
-							<%= HtmlUtil.escape(emailFromAddress) %>
-						</dd>
-						<dt>
-							[$FROM_NAME$]
-						</dt>
-						<dd>
-							<%= HtmlUtil.escape(emailFromName) %>
-						</dd>
-						<dt>
-							[$PAGE_URL$]
-						</dt>
-						<dd>
-							<liferay-ui:message key="the-report-url" />
-						</dd>
-						<dt>
-							[$REPORT_NAME$]
-						</dt>
-						<dd>
-							<liferay-ui:message key="the-name-of-the-report" />
-						</dd>
-					</dl>
-				</div>
-			</c:otherwise>
-		</c:choose>
+		<liferay-ui:section>
+			<aui:fieldset-group markupView="lexicon">
+				<liferay-frontend:email-notification-settings
+					emailBodyLocalizedValuesMap="<%= reportsGroupServiceEmailConfiguration.emailNotificationsBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= enabled %>"
+					emailParam="emailArticleMovedFromFolder"
+					emailSubjectLocalizedValuesMap="<%= reportsGroupServiceEmailConfiguration.emailNotificationsSubject() %>"
+				/>
+			</aui:fieldset-group>
+		</liferay-ui:section>
+	</liferay-ui:tabs>
 
-		<aui:button-row>
-			<aui:button type="submit" />
-		</aui:button-row>
-	</aui:fieldset>
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
+	</aui:button-row>
 </aui:form>
