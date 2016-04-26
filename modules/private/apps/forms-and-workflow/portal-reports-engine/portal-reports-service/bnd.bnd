@@ -3,10 +3,10 @@ Bundle-SymbolicName: com.liferay.portal.reports.service
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.reports.admin.util,\
+	com.liferay.portal.reports.configuration,\
 	com.liferay.portal.reports.service.permission,\
 	com.liferay.portal.reports.util
 Include-Resource:\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Reports Console
