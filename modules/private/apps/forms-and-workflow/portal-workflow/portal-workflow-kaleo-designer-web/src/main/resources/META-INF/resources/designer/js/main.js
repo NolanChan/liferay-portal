@@ -153,7 +153,6 @@ AUI.add(
 			drl: Liferay.Language.get('drl'),
 			edit: Liferay.Language.get('edit'),
 			editMessage: Liferay.Language.get('edit'),
-			editRecipients: Liferay.Language.get('edit-recipients'),
 			email: Liferay.Language.get('email'),
 			emailAddress: Liferay.Language.get('email-address'),
 			executionType: Liferay.Language.get('execution-type'),
@@ -2432,8 +2431,8 @@ AUI.add(
 						value: [
 							'<div class="{$ans}celleditor-notifications-view {$ans}celleditor-view {$ans}celleditor-view-type-{viewId}">',
 								'{content}',
+								'<div class="recipients-editor-container"></div>',
 								'<div class="{$ans}celleditor-view-menu">',
-									'<a class="{$ans}celleditor-view-menu-edit-recipients" href="#">' + KaleoDesignerStrings.editRecipients + '</a> ',
 									'<a class="{$ans}celleditor-view-menu-remove" href="#">' + KaleoDesignerStrings.remove + '</a>',
 								'</div>',
 							'</div>'
@@ -2446,6 +2445,13 @@ AUI.add(
 				NAME: 'notifications-cell-editor',
 
 				prototype: {
+					initializer: function() {
+						var instance = this;
+
+						instance.after(instance._renderRecipientsEditor, instance, 'show');
+						instance.after(instance._appendRecipientsEditorToLastSection, instance, 'handleAddViewSection');
+					},
+
 					addDynamicViews: function(val) {
 						var instance = this;
 
@@ -2652,6 +2658,16 @@ AUI.add(
 						instance.showView('notification');
 					},
 
+					_appendRecipientsEditorToLastSection: function() {
+						var instance = this;
+
+						var bodyContent = instance.get('bodyContent');
+
+						var lastBodyContent = bodyContent.item(bodyContent._nodes.length - 1);
+
+						instance._showRecipientsEditor(lastBodyContent);
+					},
+
 					_countNotificationViews: function(val) {
 						var instance = this;
 
@@ -2675,9 +2691,7 @@ AUI.add(
 
 						var anchor = event.currentTarget;
 
-						var recipientsEditor = instance.getRecipientsEditor(anchor);
-
-						recipientsEditor.show().set('xy', anchor.getXY());
+						instance._showRecipientsEditor(anchor);
 					},
 
 					_onClickViewMenu: function(event) {
@@ -2690,6 +2704,29 @@ AUI.add(
 						}
 
 						event.halt();
+					},
+
+					_renderRecipientsEditor: function() {
+						var instance = this;
+
+						instance.get('bodyContent').each(
+							function(bodyContentNode, index) {
+								instance._showRecipientsEditor(bodyContentNode);
+							}
+						);
+					},
+
+					_showRecipientsEditor: function(bodyContentNode) {
+						var instance = this;
+
+						var recipientsEditor = instance.getRecipientsEditor(bodyContentNode);
+
+						recipientsEditor
+							.get('boundingBox')
+							.removeClass('yui3-overlay')
+							.appendTo(bodyContentNode.one('.recipients-editor-container'));
+
+						recipientsEditor.show();
 					},
 
 					_syncElementsFocus: function() {
