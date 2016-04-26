@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.reports.constants;
+package com.liferay.portal.reports.configuration.definition;
+
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.portal.reports.configuration.ReportsGroupServiceEmailConfiguration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Prathima Shreenath
  */
-public class ReportsPortletKeys {
+@Component
+public class ReportsGroupServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	public static final String DISPLAY_REPORTS =
-		"com_liferay_portal_reports_web_display_portlet_DisplayPortlet";
-
-	public static final String REPORTS_ADMIN =
-		"com_liferay_portal_reports_web_admin_portlet_AdminPortlet";
-
-	public static final String SERVICE_NAME = "com.liferay.portal.reports";
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return ReportsGroupServiceEmailConfiguration.class;
+	}
 
 }
