@@ -38,7 +38,9 @@ public class KaleoFormsWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.portal.workflow.kaleo.forms.web", "1.0.0", "1.0.1",
 			new com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_1.
-				UpgradeKaleoProcess());
+				UpgradeKaleoProcess(),
+			new com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_1.
+				UpgradeSchema());
 
 		registry.register(
 			"com.liferay.portal.workflow.kaleo.forms.web", "1.0.1", "1.0.2",
