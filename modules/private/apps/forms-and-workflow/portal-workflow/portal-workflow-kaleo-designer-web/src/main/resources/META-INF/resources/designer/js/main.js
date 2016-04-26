@@ -2367,6 +2367,10 @@ AUI.add(
 		var NotificationsEditor = A.Component.create(
 			{
 				ATTRS: {
+					cssClass: {
+						value: 'notifications-editor'
+					},
+
 					executionTypes: {
 						setter: executionTypesSetterFn,
 						value: []
@@ -2439,6 +2443,8 @@ AUI.add(
 						]
 					}
 				},
+
+				AUGMENTS: [A.WidgetCssClass],
 
 				EXTENDS: BaseAbstractEditor,
 

@@ -145,6 +145,19 @@
 	}
 }
 
+.notifications-editor {
+	max-height: 500px;
+	overflow: auto;
+	width: 346px;
+}
+
+.notifications-editor .basecelleditor {
+	background-color: transparent;
+	border-width: 0;
+	padding-left: 0;
+	padding-right: 0;
+}
+
 .property-builder-disabled {
 	.property-builder-controls {
 		display: none;
