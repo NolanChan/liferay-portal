@@ -2559,66 +2559,55 @@ AUI.add(
 						return instance.get('boundingBox').all('.celleditor-view-menu-edit-recipients');
 					},
 
-					getRecipientsEditor: function(anchor) {
+					getRecipientsEditor: function(bodyContentNode) {
 						var instance = this;
 
 						var recipients = instance.get('recipients');
-						var recipientsEditorIndex = instance.getEditRecipientsLinks().indexOf(anchor);
+						var recipientsEditor;
+						var recipientsEditorIndex = instance.get('bodyContent').indexOf(bodyContentNode);
+						var recipientsEditorNode = bodyContentNode.one('.recipients-editor-container .basecelleditor');
 						var recipientsEditorValue = recipients[recipientsEditorIndex];
 
-						if (instance._recipientsEditor) {
-							instance._recipientsEditor.setAttrs(
-								{
-									index: recipientsEditorIndex,
-									value: recipientsEditorValue
-								}
-							);
-						}
-						else {
-							instance._recipientsEditor = new NotificationRecipientsEditor(
+						if (!recipientsEditorNode) {
+							recipientsEditor = new NotificationRecipientsEditor(
 								{
 									builder: instance.get('builder'),
 									index: recipientsEditorIndex,
-									on: {
-										save: function(event) {
-											var editor = this;
-
-											var value = editor.getValue();
-
-											editor.set('value', value);
-
-											recipients[editor.get('index')] = value;
-
-											instance.set('recipients', recipients);
-										}
-									},
 									parentEditor: instance,
-									render: anchor.ancestor('.basecelleditor'),
-									value: recipientsEditorValue,
-									visible: false
+									render: bodyContentNode,
+									value: recipientsEditorValue
 								}
 							);
+
+							recipientsEditor.get('boundingBox').setData('recipients-instance', recipientsEditor);
+						}
+						else {
+							recipientsEditor = recipientsEditorNode.getData('recipients-instance');
 						}
 
-						return instance._recipientsEditor;
+						return recipientsEditor;
 					},
 
 					getValue: function() {
 						var instance = this;
 
-						var editRecipientsLinks = instance.getEditRecipientsLinks();
+						var localRecipients = instance.get('recipients');
 
 						var recipients = [];
 
-						editRecipientsLinks.each(
+						instance.get('bodyContent').each(
 							function(item, index, collection) {
 								var recipientsEditor = instance.getRecipientsEditor(item);
 
 								if (recipientsEditor) {
 									recipients.push(recipientsEditor.getValue());
 								}
+
+								localRecipients[index] = recipientsEditor.getValue();
 							}
 						);
+
+						instance.set('recipients', localRecipients);
 
 						return A.merge(
 							NotificationsEditor.superclass.getValue.apply(this, arguments),
