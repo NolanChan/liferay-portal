@@ -311,7 +311,7 @@ public abstract class KaleoDraftDefinitionServiceBaseImpl
 
 	@BeanReference(type = com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalService.class)
 	protected com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalService kaleoDraftDefinitionLocalService;
-	@BeanReference(type = com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionService.class)
+	@BeanReference(type = KaleoDraftDefinitionService.class)
 	protected KaleoDraftDefinitionService kaleoDraftDefinitionService;
 	@BeanReference(type = KaleoDraftDefinitionPersistence.class)
 	protected KaleoDraftDefinitionPersistence kaleoDraftDefinitionPersistence;

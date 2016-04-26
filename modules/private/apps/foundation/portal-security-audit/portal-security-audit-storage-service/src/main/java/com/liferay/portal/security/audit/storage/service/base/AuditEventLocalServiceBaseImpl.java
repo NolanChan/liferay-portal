@@ -516,7 +516,7 @@ public abstract class AuditEventLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.security.audit.storage.service.AuditEventLocalService.class)
+	@BeanReference(type = AuditEventLocalService.class)
 	protected AuditEventLocalService auditEventLocalService;
 	@BeanReference(type = AuditEventPersistence.class)
 	protected AuditEventPersistence auditEventPersistence;

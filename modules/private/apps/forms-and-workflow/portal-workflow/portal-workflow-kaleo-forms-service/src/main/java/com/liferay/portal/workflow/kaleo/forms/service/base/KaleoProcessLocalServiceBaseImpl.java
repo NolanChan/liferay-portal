@@ -849,7 +849,7 @@ public abstract class KaleoProcessLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalService.class)
+	@BeanReference(type = KaleoProcessLocalService.class)
 	protected KaleoProcessLocalService kaleoProcessLocalService;
 	@BeanReference(type = KaleoProcessPersistence.class)
 	protected KaleoProcessPersistence kaleoProcessPersistence;

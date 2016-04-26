@@ -304,20 +304,19 @@ public interface KaleoProcessModel extends BaseModel<KaleoProcess>, GroupedModel
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess kaleoProcess);
+	public int compareTo(KaleoProcess kaleoProcess);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> toCacheModel();
+	public CacheModel<KaleoProcess> toCacheModel();
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess toEscapedModel();
+	public KaleoProcess toEscapedModel();
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess toUnescapedModel();
+	public KaleoProcess toUnescapedModel();
 
 	@Override
 	public String toString();

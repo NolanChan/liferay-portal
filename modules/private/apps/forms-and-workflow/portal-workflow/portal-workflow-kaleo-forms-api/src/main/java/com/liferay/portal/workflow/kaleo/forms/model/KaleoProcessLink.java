@@ -55,6 +55,6 @@ public interface KaleoProcessLink extends KaleoProcessLinkModel, PersistedModel 
 			}
 		};
 
-	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getKaleoProcess()
+	public KaleoProcess getKaleoProcess()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

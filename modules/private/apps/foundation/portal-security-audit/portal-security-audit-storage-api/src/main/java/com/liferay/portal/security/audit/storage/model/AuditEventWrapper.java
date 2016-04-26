@@ -170,6 +170,16 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	}
 
 	@Override
+	public AuditEvent toEscapedModel() {
+		return new AuditEventWrapper(_auditEvent.toEscapedModel());
+	}
+
+	@Override
+	public AuditEvent toUnescapedModel() {
+		return new AuditEventWrapper(_auditEvent.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _auditEvent.isCachedModel();
 	}
@@ -190,23 +200,12 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.security.audit.storage.model.AuditEvent> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<AuditEvent> toCacheModel() {
 		return _auditEvent.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portal.security.audit.storage.model.AuditEvent toEscapedModel() {
-		return new AuditEventWrapper(_auditEvent.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.security.audit.storage.model.AuditEvent toUnescapedModel() {
-		return new AuditEventWrapper(_auditEvent.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.security.audit.storage.model.AuditEvent auditEvent) {
+	public int compareTo(AuditEvent auditEvent) {
 		return _auditEvent.compareTo(auditEvent);
 	}
 

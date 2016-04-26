@@ -336,20 +336,19 @@ public interface AuditEventModel extends BaseModel<AuditEvent>, ShardedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.security.audit.storage.model.AuditEvent auditEvent);
+	public int compareTo(AuditEvent auditEvent);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.security.audit.storage.model.AuditEvent> toCacheModel();
+	public CacheModel<AuditEvent> toCacheModel();
 
 	@Override
-	public com.liferay.portal.security.audit.storage.model.AuditEvent toEscapedModel();
+	public AuditEvent toEscapedModel();
 
 	@Override
-	public com.liferay.portal.security.audit.storage.model.AuditEvent toUnescapedModel();
+	public AuditEvent toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -152,6 +152,16 @@ public class KaleoDraftDefinitionWrapper implements KaleoDraftDefinition,
 	}
 
 	@Override
+	public KaleoDraftDefinition toEscapedModel() {
+		return new KaleoDraftDefinitionWrapper(_kaleoDraftDefinition.toEscapedModel());
+	}
+
+	@Override
+	public KaleoDraftDefinition toUnescapedModel() {
+		return new KaleoDraftDefinitionWrapper(_kaleoDraftDefinition.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _kaleoDraftDefinition.isCachedModel();
 	}
@@ -172,23 +182,12 @@ public class KaleoDraftDefinitionWrapper implements KaleoDraftDefinition,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<KaleoDraftDefinition> toCacheModel() {
 		return _kaleoDraftDefinition.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition toEscapedModel() {
-		return new KaleoDraftDefinitionWrapper(_kaleoDraftDefinition.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition toUnescapedModel() {
-		return new KaleoDraftDefinitionWrapper(_kaleoDraftDefinition.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition kaleoDraftDefinition) {
+	public int compareTo(KaleoDraftDefinition kaleoDraftDefinition) {
 		return _kaleoDraftDefinition.compareTo(kaleoDraftDefinition);
 	}
 

@@ -66,7 +66,7 @@ public interface KaleoProcess extends KaleoProcessModel, PersistedModel {
 	public java.lang.String getDescription(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink> getKaleoProcessLinks();
+	public java.util.List<KaleoProcessLink> getKaleoProcessLinks();
 
 	public java.lang.String getName()
 		throws com.liferay.portal.kernel.exception.PortalException;

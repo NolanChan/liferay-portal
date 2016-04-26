@@ -562,7 +562,7 @@ public abstract class KaleoProcessServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalService.class)
 	protected com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalService kaleoProcessLocalService;
-	@BeanReference(type = com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessService.class)
+	@BeanReference(type = KaleoProcessService.class)
 	protected KaleoProcessService kaleoProcessService;
 	@BeanReference(type = KaleoProcessPersistence.class)
 	protected KaleoProcessPersistence kaleoProcessPersistence;

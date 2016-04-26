@@ -93,6 +93,22 @@ public class KaleoProcessLinkWrapper implements KaleoProcessLink,
 	}
 
 	@Override
+	public KaleoProcess getKaleoProcess()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoProcessLink.getKaleoProcess();
+	}
+
+	@Override
+	public KaleoProcessLink toEscapedModel() {
+		return new KaleoProcessLinkWrapper(_kaleoProcessLink.toEscapedModel());
+	}
+
+	@Override
+	public KaleoProcessLink toUnescapedModel() {
+		return new KaleoProcessLinkWrapper(_kaleoProcessLink.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _kaleoProcessLink.isCachedModel();
 	}
@@ -113,29 +129,12 @@ public class KaleoProcessLinkWrapper implements KaleoProcessLink,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<KaleoProcessLink> toCacheModel() {
 		return _kaleoProcessLink.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getKaleoProcess()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoProcessLink.getKaleoProcess();
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink toEscapedModel() {
-		return new KaleoProcessLinkWrapper(_kaleoProcessLink.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink toUnescapedModel() {
-		return new KaleoProcessLinkWrapper(_kaleoProcessLink.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink kaleoProcessLink) {
+	public int compareTo(KaleoProcessLink kaleoProcessLink) {
 		return _kaleoProcessLink.compareTo(kaleoProcessLink);
 	}
 

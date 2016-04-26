@@ -583,7 +583,7 @@ public abstract class KaleoProcessLinkLocalServiceBaseImpl
 	protected KaleoProcessPersistence kaleoProcessPersistence;
 	@BeanReference(type = KaleoProcessFinder.class)
 	protected KaleoProcessFinder kaleoProcessFinder;
-	@BeanReference(type = com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalService.class)
+	@BeanReference(type = KaleoProcessLinkLocalService.class)
 	protected KaleoProcessLinkLocalService kaleoProcessLinkLocalService;
 	@BeanReference(type = KaleoProcessLinkPersistence.class)
 	protected KaleoProcessLinkPersistence kaleoProcessLinkPersistence;
