@@ -2219,6 +2219,12 @@ AUI.add(
 								}
 							);
 						}
+					},
+
+					visible: {
+						valueFn: function() {
+							return true;
+						}
 					}
 				},
 
