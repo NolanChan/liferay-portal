@@ -11,17 +11,17 @@
 
 	<!-- Destinations -->
 
-	<bean id="destination.kaleo_definition" class="com.liferay.portal.kernel.messaging.ParallelDestination">
+	<bean class="com.liferay.portal.kernel.messaging.ParallelDestination" id="destination.kaleo_definition">
 		<property name="name" value="liferay/kaleo_definition" />
 	</bean>
 
 	<!-- Listeners -->
 
-	<bean id="messageListener.kaleo_definition" class="com.liferay.portal.workflow.kaleo.designer.messaging.KaleoDefinitionMessageListener" />
+	<bean class="com.liferay.portal.workflow.kaleo.designer.messaging.KaleoDefinitionMessageListener" id="messageListener.kaleo_definition" />
 
 	<!-- Configurator -->
 
-	<bean id="messagingConfigurator" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
+	<bean class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator" id="messagingConfigurator">
 		<property name="destinations">
 			<list>
 				<ref bean="destination.kaleo_definition" />
@@ -30,7 +30,7 @@
 		<property name="messageListeners">
 			<map key-type="java.lang.String" value-type="java.util.List">
 				<entry key="liferay/kaleo_definition">
-					<list value-type= "com.liferay.portal.kernel.messaging.MessageListener">
+					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.kaleo_definition" />
 					</list>
 				</entry>
