@@ -267,7 +267,7 @@ public class SharepointConnectionTest {
 		Assert.assertEquals(
 			_SERVER_PROTOCOL + "://" + _SERVER_ADDRESS + StringPool.COLON +
 				_SERVER_PORT + _SITE_PATH + StringPool.SLASH + _LIBRARY_PATH +
-				_filePath1,
+					_filePath1,
 			String.valueOf(sharepointObject.getURL()));
 		Assert.assertTrue(sharepointObject.isFile());
 	}
@@ -303,7 +303,7 @@ public class SharepointConnectionTest {
 		Assert.assertEquals(
 			_SERVER_PROTOCOL + "://" + _SERVER_ADDRESS + StringPool.COLON +
 				_SERVER_PORT + _SITE_PATH + StringPool.SLASH + _LIBRARY_PATH +
-				_folderPath1,
+					_folderPath1,
 			String.valueOf(sharepointObject.getURL()));
 		Assert.assertTrue(sharepointObject.isFolder());
 	}
