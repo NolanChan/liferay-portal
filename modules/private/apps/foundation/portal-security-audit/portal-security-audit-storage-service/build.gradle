@@ -10,7 +10,3 @@ dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided project(":private:apps:foundation:portal-security-audit:portal-security-audit-storage-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

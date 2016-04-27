@@ -23,7 +23,3 @@ mergeLang {
 		"src/main/resources/content"
 	]
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
