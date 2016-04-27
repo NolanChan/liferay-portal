@@ -14,6 +14,7 @@
 
 package com.liferay.sharepoint.connector.schema;
 
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.sharepoint.connector.SharepointRuntimeException;
 
@@ -109,7 +110,7 @@ public class XMLHelper {
 	private Element _toElement(String xml) {
 		try {
 			DocumentBuilderFactory documentBuilderFactory =
-				DocumentBuilderFactory.newInstance();
+				SecureXMLFactoryProviderUtil.newDocumentBuilderFactory();
 
 			DocumentBuilder documentBuilder =
 				documentBuilderFactory.newDocumentBuilder();
