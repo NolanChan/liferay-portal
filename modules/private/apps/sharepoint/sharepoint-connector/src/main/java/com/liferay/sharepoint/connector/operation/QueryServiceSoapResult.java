@@ -99,7 +99,15 @@ public class QueryServiceSoapResult {
 		xmlReader.parse(new InputSource(new ByteArrayInputStream(bytes)));
 	}
 
-	private final String _debugErrorMessage;
+	private void _setDebugErrorMessage(String debugErrorMessage) {
+		_debugErrorMessage = debugErrorMessage;
+	}
+
+	private void _setStatus(String status) {
+		_status = status;
+	}
+
+	private String _debugErrorMessage;
 
 	private final DefaultHandler _defaultHandler = new DefaultHandler() {
 
@@ -111,13 +119,13 @@ public class QueryServiceSoapResult {
 		@Override
 		public void endElement(String uri, String localName, String qName) {
 			if (localName.equals("DebugErrorMessage")) {
-				_debugErrorMessage = _sb.toString();
+				_setDebugErrorMessage(_sb.toString());
 			}
 			else if (localName.equals("LinkUrl")) {
 				_linkURLs.add(_sb.toString());
 			}
 			else if (localName.equals("Status")) {
-				_status = _sb.toString();
+				_setStatus(_sb.toString());
 			}
 		}
 
@@ -133,6 +141,6 @@ public class QueryServiceSoapResult {
 	};
 
 	private final List<String> _linkURLs = new ArrayList<>();
-	private final String _status;
+	private String _status;
 
 }
