@@ -45,8 +45,8 @@ public class QueryFieldsList extends BaseNode {
 		}
 	}
 
-	private static QueryField[] _EMPTY_QUERY_FIELDS = new QueryField[0];
+	private static final QueryField[] _EMPTY_QUERY_FIELDS = new QueryField[0];
 
-	private QueryField[] _queryFields;
+	private final QueryField[] _queryFields;
 
 }

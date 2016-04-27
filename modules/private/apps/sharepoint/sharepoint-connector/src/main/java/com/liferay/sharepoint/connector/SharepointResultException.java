@@ -34,7 +34,7 @@ public class SharepointResultException extends SharepointException {
 		return _errorText;
 	}
 
-	private String _errorCode;
-	private String _errorText;
+	private final String _errorCode;
+	private final String _errorText;
 
 }

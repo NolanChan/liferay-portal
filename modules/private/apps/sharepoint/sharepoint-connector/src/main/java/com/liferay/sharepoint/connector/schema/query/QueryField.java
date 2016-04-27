@@ -38,6 +38,6 @@ public class QueryField extends BaseNode {
 		element.addAttribute("Name", _name);
 	}
 
-	private String _name;
+	private final String _name;
 
 }

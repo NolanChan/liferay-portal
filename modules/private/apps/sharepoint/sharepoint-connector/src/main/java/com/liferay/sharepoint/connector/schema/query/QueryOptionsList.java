@@ -64,9 +64,9 @@ public class QueryOptionsList extends BaseNode {
 		}
 	}
 
-	private static BaseQueryOption[] _EMPTY_BASE_QUERY_OPTIONS =
+	private static final BaseQueryOption[] _EMPTY_BASE_QUERY_OPTIONS =
 		new BaseQueryOption[0];
 
-	private BaseQueryOption[] _baseQueryOptions;
+	private final BaseQueryOption[] _baseQueryOptions;
 
 }

@@ -37,6 +37,6 @@ public abstract class BaseOperator extends BaseNode implements QueryClause {
 		_queryField.attach(element);
 	}
 
-	private QueryField _queryField;
+	private final QueryField _queryField;
 
 }

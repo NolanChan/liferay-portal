@@ -33,6 +33,6 @@ public class FolderQueryOption extends BaseQueryOption {
 		return _folderPath;
 	}
 
-	private String _folderPath;
+	private final String _folderPath;
 
 }

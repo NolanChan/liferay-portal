@@ -42,7 +42,7 @@ public abstract class BaseJoin extends BaseNode implements QueryClause {
 		_rightQueryClause.attach(element);
 	}
 
-	private QueryClause _leftQueryClause;
-	private QueryClause _rightQueryClause;
+	private final QueryClause _leftQueryClause;
+	private final QueryClause _rightQueryClause;
 
 }

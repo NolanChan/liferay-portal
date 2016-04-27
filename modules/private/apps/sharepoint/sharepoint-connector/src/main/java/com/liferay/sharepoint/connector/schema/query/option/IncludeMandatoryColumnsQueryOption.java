@@ -35,6 +35,6 @@ public class IncludeMandatoryColumnsQueryOption extends BaseQueryOption {
 		return StringUtil.toUpperCase(String.valueOf(_include));
 	}
 
-	private boolean _include;
+	private final boolean _include;
 
 }

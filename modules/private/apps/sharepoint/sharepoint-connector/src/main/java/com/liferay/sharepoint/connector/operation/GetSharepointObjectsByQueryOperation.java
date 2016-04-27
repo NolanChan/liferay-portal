@@ -301,7 +301,7 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 		return queryFields;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		GetSharepointObjectsByQueryOperation.class);
 
 	private int _pathPrefixToRemoveLength;

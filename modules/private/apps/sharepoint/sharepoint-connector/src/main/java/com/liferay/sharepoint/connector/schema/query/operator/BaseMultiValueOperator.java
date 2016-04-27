@@ -42,6 +42,6 @@ public abstract class BaseMultiValueOperator extends BaseOperator {
 		}
 	}
 
-	private QueryValue[] _queryValues;
+	private final QueryValue[] _queryValues;
 
 }

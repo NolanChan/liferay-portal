@@ -147,7 +147,7 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 		return version;
 	}
 
-	private static Comparator<SharepointVersion> _comparator =
+	private static final Comparator<SharepointVersion> _comparator =
 		new SharepointVersionComparator();
 
 	private GetSharepointObjectByPathOperation

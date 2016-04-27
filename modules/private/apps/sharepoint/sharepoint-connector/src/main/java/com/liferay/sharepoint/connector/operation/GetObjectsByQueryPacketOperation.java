@@ -102,12 +102,12 @@ public class GetObjectsByQueryPacketOperation extends BaseOperation {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		GetObjectsByQueryPacketOperation.class);
 
 	private GetSharepointObjectByPathOperation
 		_getSharepointObjectByPathOperation;
-	private QueryServiceSoap _queryServiceSoap;
+	private final QueryServiceSoap _queryServiceSoap;
 	private String _searchPrefix;
 	private int _searchPrefixLength;
 

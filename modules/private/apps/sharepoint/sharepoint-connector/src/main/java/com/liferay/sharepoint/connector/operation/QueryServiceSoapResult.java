@@ -99,9 +99,9 @@ public class QueryServiceSoapResult {
 		xmlReader.parse(new InputSource(new ByteArrayInputStream(bytes)));
 	}
 
-	private String _debugErrorMessage;
+	private final String _debugErrorMessage;
 
-	private DefaultHandler _defaultHandler = new DefaultHandler() {
+	private final DefaultHandler _defaultHandler = new DefaultHandler() {
 
 		@Override
 		public void characters(char[] chars, int start, int length) {
@@ -132,7 +132,7 @@ public class QueryServiceSoapResult {
 
 	};
 
-	private List<String> _linkURLs = new ArrayList<>();
-	private String _status;
+	private final List<String> _linkURLs = new ArrayList<>();
+	private final String _status;
 
 }

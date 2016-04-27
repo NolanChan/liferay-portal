@@ -429,8 +429,8 @@ public class SharepointConnectionImpl implements SharepointConnection {
 		}
 	}
 
-	private static PathHelper _pathHelper = new PathHelper();
-	private static URLHelper _urlHelper = new URLHelper();
+	private static final PathHelper _pathHelper = new PathHelper();
+	private static final URLHelper _urlHelper = new URLHelper();
 
 	private AddFolderOperation _addFolderOperation;
 	private AddOrUpdateFileOperation _addOrUpdateFileOperation;
@@ -454,8 +454,8 @@ public class SharepointConnectionImpl implements SharepointConnection {
 	private GetSharepointVersionsOperation _getSharepointVersionsOperation;
 	private ListsSoap _listsSoap;
 	private MoveSharepointObjectOperation _moveSharepointObjectOperation;
-	private Map<Class<?>, Operation> _operations = new HashMap<>();
-	private SharepointConnectionInfo _sharepointConnectionInfo;
+	private final Map<Class<?>, Operation> _operations = new HashMap<>();
+	private final SharepointConnectionInfo _sharepointConnectionInfo;
 	private SharepointObject _sharepointRootFolder;
 	private VersionsSoap _versionsSoap;
 

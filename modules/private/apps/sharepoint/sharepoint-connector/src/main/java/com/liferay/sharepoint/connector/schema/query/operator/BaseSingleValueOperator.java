@@ -42,6 +42,6 @@ public abstract class BaseSingleValueOperator extends BaseOperator {
 		_queryValue.attach(element);
 	}
 
-	private QueryValue _queryValue;
+	private final QueryValue _queryValue;
 
 }

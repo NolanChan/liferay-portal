@@ -54,8 +54,8 @@ public class Batch extends BaseNode {
 		}
 	}
 
-	private BatchMethod[] _batchMethods;
-	private String _folderPath;
-	private OnError _onError;
+	private final BatchMethod[] _batchMethods;
+	private final String _folderPath;
+	private final OnError _onError;
 
 }

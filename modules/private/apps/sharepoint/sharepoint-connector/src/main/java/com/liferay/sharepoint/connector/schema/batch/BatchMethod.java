@@ -42,7 +42,7 @@ public class BatchMethod extends BaseNode {
 			_protocolValue = protocolValue;
 		}
 
-		private String _protocolValue;
+		private final String _protocolValue;
 
 	}
 
@@ -61,8 +61,8 @@ public class BatchMethod extends BaseNode {
 		}
 	}
 
-	private BatchField[] _batchFields;
-	private int _batchMethodId;
-	private Command _command;
+	private final BatchField[] _batchFields;
+	private final int _batchMethodId;
+	private final Command _command;
 
 }

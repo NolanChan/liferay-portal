@@ -83,7 +83,7 @@ public class SharepointVersionComparatorTest {
 		return new SharepointVersion(null, null, null, null, 0, null, version);
 	}
 
-	private SharepointVersionComparator _sharepointVersionComparator =
+	private final SharepointVersionComparator _sharepointVersionComparator =
 		new SharepointVersionComparator();
 
 }

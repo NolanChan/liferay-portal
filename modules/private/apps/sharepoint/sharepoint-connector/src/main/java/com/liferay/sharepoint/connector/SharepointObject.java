@@ -178,7 +178,7 @@ public class SharepointObject {
 			_mask = mask;
 		}
 
-		private long _mask;
+		private final long _mask;
 
 	}
 
@@ -212,18 +212,18 @@ public class SharepointObject {
 		return path.substring(index + 1);
 	}
 
-	private String _author;
-	private String _checkedOutBy;
-	private Date _createdDate;
-	private String _extension;
-	private boolean _folder;
-	private String _folderPath;
-	private Date _lastModifiedDate;
-	private String _name;
-	private String _path;
-	private Set<Permission> _permissions;
-	private long _sharepointObjectId;
-	private long _size;
-	private URL _url;
+	private final String _author;
+	private final String _checkedOutBy;
+	private final Date _createdDate;
+	private final String _extension;
+	private final boolean _folder;
+	private final String _folderPath;
+	private final Date _lastModifiedDate;
+	private final String _name;
+	private final String _path;
+	private final Set<Permission> _permissions;
+	private final long _sharepointObjectId;
+	private final long _size;
+	private final URL _url;
 
 }

@@ -46,6 +46,6 @@ public class Query extends BaseNode {
 		}
 	}
 
-	private QueryClause _queryClause;
+	private final QueryClause _queryClause;
 
 }

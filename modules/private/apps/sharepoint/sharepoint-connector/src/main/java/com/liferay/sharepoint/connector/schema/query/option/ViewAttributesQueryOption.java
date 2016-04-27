@@ -39,6 +39,6 @@ public class ViewAttributesQueryOption extends BaseQueryOption {
 		}
 	}
 
-	private boolean _recursive;
+	private final boolean _recursive;
 
 }

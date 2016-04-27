@@ -54,7 +54,7 @@ public class QueryValue extends BaseNode {
 		element.addAttribute("Type", _type.name());
 	}
 
-	private Type _type;
-	private String _value;
+	private final Type _type;
+	private final String _value;
 
 }

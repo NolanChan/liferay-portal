@@ -27,57 +27,58 @@ public class PathHelperTest {
 	@Test
 	public void testBuildPathWithNonrootFolder() {
 		Assert.assertEquals(
-			"/folderPath/name", pathHelper.buildPath("/folderPath", "name"));
+			"/folderPath/name", _pathHelper.buildPath("/folderPath", "name"));
 	}
 
 	@Test
 	public void testBuildPathWithRootFolder() {
 		Assert.assertEquals(
-			"/name", pathHelper.buildPath(StringPool.SLASH, "name"));
+			"/name", _pathHelper.buildPath(StringPool.SLASH, "name"));
 	}
 
 	@Test
 	public void testGetExtensionWhithMissingExtension() {
 		Assert.assertEquals(
-			StringPool.BLANK, pathHelper.getExtension("/name."));
-		Assert.assertEquals(StringPool.BLANK, pathHelper.getExtension("/name"));
+			StringPool.BLANK, _pathHelper.getExtension("/name."));
+		Assert.assertEquals(
+			StringPool.BLANK, _pathHelper.getExtension("/name"));
 	}
 
 	@Test
 	public void testGetExtensionWithExtension() {
-		Assert.assertEquals("ext", pathHelper.getExtension("/name.ext"));
+		Assert.assertEquals("ext", _pathHelper.getExtension("/name.ext"));
 	}
 
 	@Test
 	public void testGetName() {
-		Assert.assertEquals("name.ext", pathHelper.getName("/name.ext"));
+		Assert.assertEquals("name.ext", _pathHelper.getName("/name.ext"));
 	}
 
 	@Test
 	public void testGetNameWithoutExtensionWithExtension() {
 		Assert.assertEquals(
-			"name", pathHelper.getNameWithoutExtension("/name.ext"));
+			"name", _pathHelper.getNameWithoutExtension("/name.ext"));
 	}
 
 	@Test
 	public void testGetNameWithoutExtensionWithMissingExtension() {
 		Assert.assertEquals(
-			"name", pathHelper.getNameWithoutExtension("/name."));
+			"name", _pathHelper.getNameWithoutExtension("/name."));
 		Assert.assertEquals(
-			"name", pathHelper.getNameWithoutExtension("/name"));
+			"name", _pathHelper.getNameWithoutExtension("/name"));
 	}
 
 	@Test
 	public void testGetParentFolderPathWithNonrootFolder() {
 		Assert.assertEquals(
-			"/folder", pathHelper.getParentFolderPath("/folder/name"));
+			"/folder", _pathHelper.getParentFolderPath("/folder/name"));
 	}
 
 	@Test
 	public void testGetParentFolderPathWithRootFolder() {
-		Assert.assertEquals("/", pathHelper.getParentFolderPath("/name"));
+		Assert.assertEquals("/", _pathHelper.getParentFolderPath("/name"));
 	}
 
-	private PathHelper pathHelper = new PathHelper();
+	private final PathHelper _pathHelper = new PathHelper();
 
 }

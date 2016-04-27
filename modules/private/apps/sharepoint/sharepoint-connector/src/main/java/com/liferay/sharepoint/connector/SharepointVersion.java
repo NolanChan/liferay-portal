@@ -89,12 +89,12 @@ public class SharepointVersion {
 		return sb.toString();
 	}
 
-	private String _comments;
-	private String _createdBy;
-	private Date _createdDate;
-	private String _sharepointVersionId;
-	private long _size;
-	private URL _url;
-	private String _version;
+	private final String _comments;
+	private final String _createdBy;
+	private final Date _createdDate;
+	private final String _sharepointVersionId;
+	private final long _size;
+	private final URL _url;
+	private final String _version;
 
 }

@@ -117,17 +117,17 @@ public class SharepointConnectionInfo {
 		}
 	}
 
-	private static URLHelper _urlHelper = new URLHelper();
+	private static final URLHelper _urlHelper = new URLHelper();
 
-	private String _libraryName;
-	private String _libraryPath;
-	private String _password;
-	private String _serverAddress;
-	private int _serverPort;
-	private String _serverProtocol;
-	private SharepointConnection.ServerVersion _serverVersion;
-	private URL _serviceURL;
-	private String _sitePath;
-	private String _username;
+	private final String _libraryName;
+	private final String _libraryPath;
+	private final String _password;
+	private final String _serverAddress;
+	private final int _serverPort;
+	private final String _serverProtocol;
+	private final SharepointConnection.ServerVersion _serverVersion;
+	private final URL _serviceURL;
+	private final String _sitePath;
+	private final String _username;
 
 }

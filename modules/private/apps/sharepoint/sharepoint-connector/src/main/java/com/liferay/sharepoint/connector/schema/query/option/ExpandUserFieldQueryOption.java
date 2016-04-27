@@ -35,6 +35,6 @@ public class ExpandUserFieldQueryOption extends BaseQueryOption {
 		return StringUtil.toUpperCase(String.valueOf(_expand));
 	}
 
-	private boolean _expand;
+	private final boolean _expand;
 
 }

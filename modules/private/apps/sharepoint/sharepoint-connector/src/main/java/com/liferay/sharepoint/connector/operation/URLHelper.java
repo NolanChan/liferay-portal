@@ -33,9 +33,9 @@ public class URLHelper {
 		try {
 			return new URL(escapedURLString);
 		}
-		catch (MalformedURLException mue) {
+		catch (MalformedURLException murle) {
 			throw new SharepointRuntimeException(
-				"Unable to parse escaped URL " + escapedURLString, mue);
+				"Unable to parse escaped URL " + escapedURLString, murle);
 		}
 	}
 
