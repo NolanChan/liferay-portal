@@ -42,32 +42,31 @@ public class ReportWebRequestHelper {
 	public ReportsGroupServiceEmailConfiguration
 		getReportsGroupServiceEmailConfiguration() {
 
+		if (_reportsGroupServiceEmailConfiguration != null) {
+			return _reportsGroupServiceEmailConfiguration;
+		}
+
 		try {
-			if (_reportsGroupServiceEmailConfiguration == null) {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay) _request.getAttribute(WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay) _request.getAttribute(WebKeys.THEME_DISPLAY);
 
-				long siteGroupId = themeDisplay.getSiteGroupId();
+			long siteGroupId = themeDisplay.getSiteGroupId();
 
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
+			PortletDisplay portletDisplay =
+				themeDisplay.getPortletDisplay();
 
-				GroupServiceSettingsLocator groupServiceSettingsLocator =
-					new GroupServiceSettingsLocator(
-						siteGroupId, ReportsPortletKeys.SERVICE_NAME);
+			SettingsLocator settingsLocator = new GroupServiceSettingsLocator(
+				siteGroupId, ReportsPortletKeys.SERVICE_NAME);
 
-				if (Validator.isNotNull(portletDisplay.getPortletResource())) {
-					ParameterMapSettingsLocator parameterMapSettingsLocator =
-						new ParameterMapSettingsLocator(
-							_request.getParameterMap(),
-							groupServiceSettingsLocator);
-
-					getConfiguratiom(parameterMapSettingsLocator);
-				}
-				else {
-					getConfiguratiom(groupServiceSettingsLocator);
-				}
+			if (Validator.isNotNull(portletDisplay.getPortletResource())) {
+				settingsLocator = new ParameterMapSettingsLocator(
+					_request.getParameterMap(), settingsLocator);
 			}
+
+			_reportsGroupServiceEmailConfiguration =
+				ConfigurationProviderUtil.getConfiguration(
+					ReportsGroupServiceEmailConfiguration.class,
+					settingsLocator);
 
 			return _reportsGroupServiceEmailConfiguration;
 		}
@@ -76,16 +75,9 @@ public class ReportWebRequestHelper {
 		}
 	}
 
-	protected void getConfiguratiom(SettingsLocator settingsLocator)
-		throws ConfigurationException {
-
-		_reportsGroupServiceEmailConfiguration =
-			ConfigurationProviderUtil.getConfiguration(
-				ReportsGroupServiceEmailConfiguration.class, settingsLocator);
-	}
-
-	private ReportsGroupServiceEmailConfiguration
+	private volatile ReportsGroupServiceEmailConfiguration
 		_reportsGroupServiceEmailConfiguration;
+
 	private final HttpServletRequest _request;
 
 }
