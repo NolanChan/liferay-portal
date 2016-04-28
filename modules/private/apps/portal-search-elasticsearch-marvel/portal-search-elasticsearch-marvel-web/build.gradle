@@ -9,7 +9,3 @@ dependencies {
 	provided group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.1"
 	provided group: "org.mitre.dsmiley.httpproxy", name: "smiley-http-proxy-servlet", version: "1.7"
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}
