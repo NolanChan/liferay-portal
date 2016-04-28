@@ -2663,7 +2663,7 @@ AUI.add(
 
 						var bodyContent = instance.get('bodyContent');
 
-						var lastBodyContent = bodyContent.item(bodyContent._nodes.length - 1);
+						var lastBodyContent = bodyContent.item(bodyContent.size() - 1);
 
 						instance._showRecipientsEditor(lastBodyContent);
 					},
