@@ -41,9 +41,9 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPid = "com.liferay.portal.search.elasticsearch.marvel.web.configuration.MarvelWebConfiguration",
 	immediate = true,
 	property = {
-		"osgi.http.whiteboard.context.select=elasticsearch-marvel-web",
 		"osgi.http.whiteboard.servlet.name=com.liferay.portal.search.elasticsearch.marvel.web.servlet.MarvelProxyServlet",
-		"osgi.http.whiteboard.servlet.pattern=/marvel-proxy/*"
+		"osgi.http.whiteboard.servlet.pattern=/marvel-proxy/*",
+		"osgi.http.whiteboard.context.select=elasticsearch-marvel-web"
 	},
 	service = Servlet.class
 )
