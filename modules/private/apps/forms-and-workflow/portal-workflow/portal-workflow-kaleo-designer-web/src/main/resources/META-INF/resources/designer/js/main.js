@@ -2225,9 +2225,7 @@ AUI.add(
 					},
 
 					visible: {
-						valueFn: function() {
-							return true;
-						}
+						value: true
 					}
 				},
 
@@ -2711,11 +2709,7 @@ AUI.add(
 					_renderRecipientsEditor: function() {
 						var instance = this;
 
-						instance.get('bodyContent').each(
-							function(bodyContentNode, index) {
-								instance._showRecipientsEditor(bodyContentNode);
-							}
-						);
+						instance.get('bodyContent').each(A.bind(instance._showRecipientsEditor, instance));
 					},
 
 					_showRecipientsEditor: function(bodyContentNode) {
