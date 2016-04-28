@@ -53,6 +53,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.reports.ReportStatus" %><%@
 page import="com.liferay.portal.reports.admin.util.AdminUtil" %><%@
+page import="com.liferay.portal.reports.configuration.ReportsGroupServiceEmailConfiguration" %><%@
 page import="com.liferay.portal.reports.constants.ReportsPortletKeys" %><%@
 page import="com.liferay.portal.reports.engine.ReportDataSourceType" %><%@
 page import="com.liferay.portal.reports.engine.ReportFormat" %><%@
@@ -78,6 +79,7 @@ page import="com.liferay.portal.reports.service.permission.EntryPermissionChecke
 page import="com.liferay.portal.reports.service.permission.ReportsActionKeys" %><%@
 page import="com.liferay.portal.reports.service.permission.SourcePermissionChecker" %><%@
 page import="com.liferay.portal.reports.util.ReportsUtil" %><%@
+page import="com.liferay.portal.reports.web.admin.util.ReportWebRequestHelper" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.text.Format" %>
@@ -89,16 +91,8 @@ page import="java.util.Date" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
-
-<%@
-		page import="javax.portlet.WindowState" %>
-<%@ page
-		import="com.liferay.portal.reports.web.admin.util.ReportWebRequestHelper" %>
-<%@ page
-		import="com.liferay.portal.reports.configuration.ReportsPortletMessagingConfiguration" %>
-<%@ page
-		import="com.liferay.portal.reports.configuration.ReportsGroupServiceEmailConfiguration" %>
+<%@ page import="javax.portlet.PortletURL" %><%@
+page import="javax.portlet.WindowState" %>
 
 <liferay-frontend:defineObjects />
 

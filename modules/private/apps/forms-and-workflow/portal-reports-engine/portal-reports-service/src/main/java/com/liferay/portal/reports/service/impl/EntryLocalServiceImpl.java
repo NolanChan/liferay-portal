@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -83,8 +82,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.portlet.PortletPreferences;
 
 /**
  * @author Gavin Wan
@@ -365,8 +362,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			file = FileUtil.createTempFile(inputStream);
 
 			notifySubscribers(
-				entry, emailAddresses, reportName, file, notification,
-				new ServiceContext());
+				entry, emailAddresses, reportName, file, notification);
 		}
 		catch (IOException ioe) {
 			throw new PortalException(ioe.getMessage());
@@ -547,7 +543,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 	protected void notifySubscribers(
 			Entry entry, String[] emailAddresses, String reportName, File file,
-			boolean notification, ServiceContext serviceContext)
+			boolean notification)
 		throws Exception {
 
 		if (emailAddresses.length == 0) {
@@ -595,6 +591,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		subscriptionSender.setContextAttributes(
 			"[$FROM_ADDRESS$]", fromAddress, "[$FROM_NAME$]", fromName,
 			"[$PAGE_URL$]", entry.getPageURL(), "[$REPORT_NAME$]", reportName);
+		subscriptionSender.setCurrentUserId(entry.getUserId());
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setGroupId(entry.getGroupId());
 		subscriptionSender.setHtmlFormat(true);
@@ -602,11 +599,16 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("reports_entry", entry.getEntryId());
 		subscriptionSender.setReplyToAddress(fromAddress);
-		subscriptionSender.setUserId(entry.getUserId());
 
 		subscriptionSender.setPortletId(portletId);
 
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(entry.getCompanyId());
+		serviceContext.setScopeGroupId(entry.getGroupId());
+
 		subscriptionSender.setServiceContext(serviceContext);
 
 		for (String emailAddress : emailAddresses) {
