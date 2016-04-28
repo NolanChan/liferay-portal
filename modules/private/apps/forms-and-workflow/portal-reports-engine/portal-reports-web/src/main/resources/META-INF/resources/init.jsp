@@ -100,26 +100,16 @@ page import="java.util.Map" %>
 <%@ page
 		import="com.liferay.portal.reports.configuration.ReportsGroupServiceEmailConfiguration" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-	String currentURL = PortalUtil.getCurrentURL(request);
+Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
+Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
-	WindowState windowState = WindowState.NORMAL;
-
-	if (renderRequest != null) {
-		windowState = renderRequest.getWindowState();
-	}
-	else if (resourceRequest != null) {
-		windowState = resourceRequest.getWindowState();
-	}
-
-	Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
-	Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-
-	ReportWebRequestHelper reportWebRequestHelper = new ReportWebRequestHelper(request);
-
-	ReportsGroupServiceEmailConfiguration reportsGroupServiceEmailConfiguration = reportWebRequestHelper.getReportsGroupServiceEmailConfiguration();
+ReportsGroupServiceEmailConfiguration reportsGroupServiceEmailConfiguration =
+	ReportWebRequestHelper.getReportsGroupServiceEmailConfiguration(request);
 %>

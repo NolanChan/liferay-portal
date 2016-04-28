@@ -16,7 +16,6 @@ package com.liferay.portal.reports.web.admin.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
@@ -35,49 +34,33 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ReportWebRequestHelper {
 
-	public ReportWebRequestHelper(HttpServletRequest request) {
-		_request = request;
-	}
-
-	public ReportsGroupServiceEmailConfiguration
-		getReportsGroupServiceEmailConfiguration() {
-
-		if (_reportsGroupServiceEmailConfiguration != null) {
-			return _reportsGroupServiceEmailConfiguration;
-		}
+	public static ReportsGroupServiceEmailConfiguration
+		getReportsGroupServiceEmailConfiguration(
+			HttpServletRequest httpServletRequest) {
 
 		try {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay) _request.getAttribute(WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			long siteGroupId = themeDisplay.getSiteGroupId();
 
-			PortletDisplay portletDisplay =
-				themeDisplay.getPortletDisplay();
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			SettingsLocator settingsLocator = new GroupServiceSettingsLocator(
 				siteGroupId, ReportsPortletKeys.SERVICE_NAME);
 
 			if (Validator.isNotNull(portletDisplay.getPortletResource())) {
 				settingsLocator = new ParameterMapSettingsLocator(
-					_request.getParameterMap(), settingsLocator);
+					httpServletRequest.getParameterMap(), settingsLocator);
 			}
 
-			_reportsGroupServiceEmailConfiguration =
-				ConfigurationProviderUtil.getConfiguration(
-					ReportsGroupServiceEmailConfiguration.class,
-					settingsLocator);
-
-			return _reportsGroupServiceEmailConfiguration;
+			return ConfigurationProviderUtil.getConfiguration(
+				ReportsGroupServiceEmailConfiguration.class, settingsLocator);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
 		}
 	}
-
-	private volatile ReportsGroupServiceEmailConfiguration
-		_reportsGroupServiceEmailConfiguration;
-
-	private final HttpServletRequest _request;
 
 }
