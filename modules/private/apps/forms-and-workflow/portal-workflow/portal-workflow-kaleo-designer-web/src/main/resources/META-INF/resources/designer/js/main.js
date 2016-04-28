@@ -2717,10 +2717,10 @@ AUI.add(
 
 						var recipientsEditor = instance.getRecipientsEditor(bodyContentNode);
 
-						recipientsEditor
-							.get('boundingBox')
-							.removeClass('yui3-overlay')
-							.appendTo(bodyContentNode.one('.recipients-editor-container'));
+						var boundingBox = recipientsEditor.get('boundingBox');
+
+						boundingBox.removeClass('yui3-overlay')
+						boundingBox.appendTo(bodyContentNode.one('.recipients-editor-container'));
 
 						recipientsEditor.show();
 					},
