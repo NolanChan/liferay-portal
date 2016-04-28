@@ -16,10 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
-<iframe src="<%= application.getContextPath() %>/marvel-proxy/app/marvel"
-		scrolling="yes"
-		style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:relative;top:0px;left:0px;right:0px;bottom:0px"
-		id="<portlet:namespace />iframe"></iframe>
+<iframe
+	id="<portlet:namespace />iframe"
+	scrolling="yes"
+	src="<%= application.getContextPath() %>/marvel-proxy/app/marvel"
+	style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:relative;top:0px;left:0px;right:0px;bottom:0px"
+></iframe>
 
 <aui:script use="aui-autosize-iframe">
 	var iframe = A.one('#<portlet:namespace />iframe');
