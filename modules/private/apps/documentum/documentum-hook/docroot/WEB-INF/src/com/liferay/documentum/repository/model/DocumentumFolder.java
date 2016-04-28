@@ -17,8 +17,8 @@ package com.liferay.documentum.repository.model;
 import com.documentum.fc.client.IDfFolder;
 import com.documentum.fc.common.DfException;
 
+import com.liferay.document.library.repository.external.ExtRepositoryFolder;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.repository.external.ExtRepositoryFolder;
 
 /**
  * @author Iván Zaera

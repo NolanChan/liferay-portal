@@ -22,11 +22,11 @@ import com.documentum.fc.client.IDfSysObject;
 import com.documentum.fc.common.DfException;
 import com.documentum.fc.common.IDfId;
 
+import com.liferay.document.library.repository.external.ExtRepositoryObjectType;
 import com.liferay.documentum.repository.model.Constants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryException;
-import com.liferay.repository.external.ExtRepositoryObjectType;
 
 import java.util.ArrayList;
 import java.util.List;

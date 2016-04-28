@@ -14,6 +14,7 @@
 
 package com.liferay.documentum.repository.search;
 
+import com.liferay.document.library.repository.external.search.ExtRepositoryQueryMapper;
 import com.liferay.documentum.repository.model.Constants;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.repository.external.search.ExtRepositoryQueryMapper;
 
 import java.util.Date;
 import java.util.HashMap;

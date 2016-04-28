@@ -19,11 +19,11 @@ import com.documentum.fc.common.DfException;
 import com.documentum.fc.common.IDfId;
 import com.documentum.fc.common.IDfTime;
 
+import com.liferay.document.library.repository.external.ExtRepositoryModel;
+import com.liferay.document.library.repository.external.ExtRepositoryObject;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.repository.external.ExtRepositoryModel;
-import com.liferay.repository.external.ExtRepositoryObject;
 
 import java.util.Date;
 import java.util.EnumSet;

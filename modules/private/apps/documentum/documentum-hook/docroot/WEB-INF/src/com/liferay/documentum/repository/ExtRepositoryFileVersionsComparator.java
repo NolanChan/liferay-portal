@@ -14,8 +14,8 @@
 
 package com.liferay.documentum.repository;
 
+import com.liferay.document.library.repository.external.ExtRepositoryFileVersion;
 import com.liferay.documentum.repository.model.DocumentumVersionNumber;
-import com.liferay.repository.external.ExtRepositoryFileVersion;
 
 import java.util.Comparator;
 
