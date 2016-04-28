@@ -180,7 +180,8 @@ public class DocumentumQuery {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DocumentumQuery.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DocumentumQuery.class);
 
 	private final IDfClientX _idfClientX;
 	private final IDfSession _idfSession;

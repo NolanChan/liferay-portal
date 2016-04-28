@@ -94,7 +94,7 @@ public class DQLParameterValueUtil {
 	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
 		PropsKeys.INDEX_DATE_FORMAT_PATTERN);
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DQLParameterValueUtil.class);
 
 }

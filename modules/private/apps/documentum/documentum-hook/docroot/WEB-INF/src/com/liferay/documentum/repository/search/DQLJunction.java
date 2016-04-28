@@ -41,6 +41,6 @@ public abstract class DQLJunction implements DQLCriterion {
 	@Override
 	public abstract String toQueryFragment();
 
-	private List<DQLCriterion> _dqlCriterions;
+	private final List<DQLCriterion> _dqlCriterions;
 
 }

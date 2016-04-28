@@ -1435,12 +1435,13 @@ public class DocumentumRepository
 		new String[] {_REPOSITORY, _CABINET}
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(DocumentumRepository.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DocumentumRepository.class);
 
 	private String _cabinet;
 	private ConnectionCache<IDfSessionManager> _connectionCache;
 	private CredentialsProvider _credentialsProvider;
-	private Comparator<ExtRepositoryFileVersion>
+	private final Comparator<ExtRepositoryFileVersion>
 		_extRepositoryFileVersionsComparator =
 			new ExtRepositoryFileVersionsComparator();
 	private IDfClientX _idfClientX;

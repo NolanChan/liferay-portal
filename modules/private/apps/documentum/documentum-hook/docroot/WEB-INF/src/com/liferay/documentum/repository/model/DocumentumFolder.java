@@ -53,6 +53,6 @@ public class DocumentumFolder
 	}
 
 	private final IDfFolder _idfFolder;
-	private boolean _root;
+	private final boolean _root;
 
 }

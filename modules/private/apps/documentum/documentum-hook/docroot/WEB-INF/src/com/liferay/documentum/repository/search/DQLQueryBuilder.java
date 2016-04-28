@@ -285,8 +285,8 @@ public class DQLQueryBuilder {
 		}
 	}
 
-	private static Map<String, String> _dqlFields;
-	private static Set<String> _supportedFields;
+	private static final Map<String, String> _dqlFields;
+	private static final Set<String> _supportedFields;
 
 	static {
 		_dqlFields = new HashMap<>();

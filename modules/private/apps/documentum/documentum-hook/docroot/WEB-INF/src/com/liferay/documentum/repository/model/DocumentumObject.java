@@ -140,9 +140,9 @@ public abstract class DocumentumObject
 		}
 	}
 
-	private static Map<ExtRepositoryPermission, Integer> _permits =
+	private static final Map<ExtRepositoryPermission, Integer> _permits =
 		new HashMap<>();
-	private static Set<ExtRepositoryPermission>
+	private static final Set<ExtRepositoryPermission>
 		_unsupportedExtRepositoryPermissions = EnumSet.of(
 			ExtRepositoryPermission.ADD_DISCUSSION,
 			ExtRepositoryPermission.ADD_SHORTCUT,

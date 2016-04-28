@@ -28,6 +28,6 @@ public class DQLNotExpression implements DQLCriterion {
 		return "NOT(".concat(_dqlCriterion.toQueryFragment()).concat(")");
 	}
 
-	private DQLCriterion _dqlCriterion;
+	private final DQLCriterion _dqlCriterion;
 
 }

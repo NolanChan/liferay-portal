@@ -58,8 +58,8 @@ public class DQLSimpleExpression implements DQLCriterion {
 		return sb.toString();
 	}
 
-	private DQLSimpleExpressionOperator _dqlSimpleExpressionOperator;
-	private String _field;
-	private String _value;
+	private final DQLSimpleExpressionOperator _dqlSimpleExpressionOperator;
+	private final String _field;
+	private final String _value;
 
 }
