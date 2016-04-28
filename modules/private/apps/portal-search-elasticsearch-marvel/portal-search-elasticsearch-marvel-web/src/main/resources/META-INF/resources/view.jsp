@@ -20,7 +20,7 @@
 	id="<portlet:namespace />iframe"
 	scrolling="yes"
 	src="<%= application.getContextPath() %>/marvel-proxy/app/marvel"
-	style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:relative;top:0px;left:0px;right:0px;bottom:0px"
+	style="bottom: 0px; height: 100%; left: 0px; overflow-x: hidden; overflow-y: hidden; overflow: hidden; position: relative; right: 0px; top: 0px; width: 100%;"
 ></iframe>
 
 <aui:script use="aui-autosize-iframe">
