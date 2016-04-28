@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.css-class-wrapper=portlet-marvel",
+		"com.liferay.portlet.css-class-wrapper=portlet-elasticsearch-marvel",
 		"com.liferay.portlet.display-category=category.tools",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.maximize-edit=true",
