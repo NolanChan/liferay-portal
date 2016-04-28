@@ -1846,7 +1846,7 @@ AUI.add(
 
 						var resourceActionContent = textareaTpl.parse(
 							{
-								auiCssClass: 'form-control input-sm celleditor-textarea-small',
+								auiCssClass: 'celleditor-textarea-small form-control input-sm',
 								auiLabelCssClass: 'celleditor-label',
 								id: A.guid(),
 								label: strings.resourceActions,
@@ -1866,7 +1866,7 @@ AUI.add(
 						var roleIdContent = [
 							inputTpl.parse(
 								{
-									auiCssClass: 'form-control input-sm assignments-cell-editor-input',
+									auiCssClass: 'assignments-cell-editor-input form-control input-sm',
 									auiLabelCssClass: 'celleditor-label',
 									id: A.guid(),
 									label: strings.role,
@@ -1879,7 +1879,7 @@ AUI.add(
 
 							inputTpl.parse(
 								{
-									auiCssClass: 'form-control input-sm assignments-cell-editor-input',
+									auiCssClass: 'assignments-cell-editor-input form-control input-sm',
 									auiLabelCssClass: 'celleditor-label',
 									disabled: true,
 									id: A.guid(),
@@ -1903,7 +1903,7 @@ AUI.add(
 						var scriptedAssignmentContent = [
 							textareaTpl.parse(
 								{
-									auiCssClass: 'form-control input-sm celleditor-textarea-small',
+									auiCssClass: 'celleditor-textarea-small form-control input-sm',
 									auiLabelCssClass: 'celleditor-label',
 									id: A.guid(),
 									label: strings.script,
@@ -1954,7 +1954,7 @@ AUI.add(
 							var roleTypeContent = [
 								selectTpl.parse(
 									{
-										auiCssClass: 'form-control input-sm assignments-cell-editor-input',
+										auiCssClass: 'assignments-cell-editor-input form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.roleType,
@@ -1965,7 +1965,7 @@ AUI.add(
 
 								inputTpl.parse(
 									{
-										auiCssClass: 'form-control input-sm assignments-cell-editor-input',
+										auiCssClass: 'assignments-cell-editor-input form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.roleName,
@@ -2023,7 +2023,7 @@ AUI.add(
 							var userContent = [
 								inputTpl.parse(
 									{
-										auiCssClass: 'form-control input-sm assignments-cell-editor-input',
+										auiCssClass: 'assignments-cell-editor-input form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.name,
@@ -2036,7 +2036,7 @@ AUI.add(
 
 								inputTpl.parse(
 									{
-										auiCssClass: 'form-control input-sm assignments-cell-editor-input',
+										auiCssClass: 'assignments-cell-editor-input form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										disabled: true,
 										id: A.guid(),
@@ -2049,7 +2049,7 @@ AUI.add(
 
 								inputTpl.parse(
 									{
-										auiCssClass: 'form-control input-sm assignments-cell-editor-input',
+										auiCssClass: 'assignments-cell-editor-input form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										disabled: true,
 										id: A.guid(),
@@ -2062,7 +2062,7 @@ AUI.add(
 
 								inputTpl.parse(
 									{
-										auiCssClass: 'form-control input-sm assignments-cell-editor-input',
+										auiCssClass: 'assignments-cell-editor-input form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										disabled: true,
 										id: A.guid(),
@@ -2299,7 +2299,7 @@ AUI.add(
 						var formsContent = [
 							inputTpl.parse(
 								{
-									auiCssClass: 'form-control input-sm forms-cell-editor-input',
+									auiCssClass: 'form-control forms-cell-editor-input input-sm',
 									auiLabelCssClass: 'celleditor-label',
 									id: A.guid(),
 									label: strings.formTemplate,
@@ -2312,7 +2312,7 @@ AUI.add(
 
 							inputTpl.parse(
 								{
-									auiCssClass: 'form-control input-sm forms-cell-editor-input',
+									auiCssClass: 'form-control forms-cell-editor-input input-sm',
 									auiLabelCssClass: 'celleditor-label',
 									id: A.guid(),
 									name: 'templateId',
@@ -2501,7 +2501,7 @@ AUI.add(
 
 								textareaTpl.parse(
 									{
-										auiCssClass: 'form-control input-sm celleditor-textarea-small',
+										auiCssClass: 'celleditor-textarea-small form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.description,
@@ -2522,7 +2522,7 @@ AUI.add(
 
 								textareaTpl.parse(
 									{
-										auiCssClass: 'form-control input-sm celleditor-textarea-small',
+										auiCssClass: 'celleditor-textarea-small form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.template,
@@ -2819,7 +2819,7 @@ AUI.add(
 							var actionContent = [
 								inputTpl.parse(
 									{
-										auiCssClass: 'form-control input-sm actions-cell-editor-input',
+										auiCssClass: 'actions-cell-editor-input form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.name,
@@ -2831,7 +2831,7 @@ AUI.add(
 
 								textareaTpl.parse(
 									{
-										auiCssClass: 'form-control input-sm celleditor-textarea-small',
+										auiCssClass: 'celleditor-textarea-small form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.description,
@@ -2841,7 +2841,7 @@ AUI.add(
 
 								textareaTpl.parse(
 									{
-										auiCssClass: 'form-control input-sm celleditor-textarea-small',
+										auiCssClass: 'celleditor-textarea-small form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.script,
@@ -2873,7 +2873,7 @@ AUI.add(
 
 								inputTpl.parse(
 									{
-										auiCssClass: 'form-control input-sm actions-cell-editor-input',
+										auiCssClass: 'actions-cell-editor-input form-control input-sm',
 										auiLabelCssClass: 'celleditor-label',
 										id: A.guid(),
 										label: strings.priority,
