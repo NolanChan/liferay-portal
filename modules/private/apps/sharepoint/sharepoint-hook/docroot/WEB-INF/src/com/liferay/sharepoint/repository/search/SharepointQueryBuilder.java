@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -173,7 +174,7 @@ public class SharepointQueryBuilder {
 		throws SearchException {
 
 		QueryValue queryValue = new QueryValue(
-			StringUtil.replace(fieldValue, StringPool.STAR, StringPool.BLANK));
+			StringUtil.replace(fieldValue, CharPool.STAR, StringPool.BLANK));
 
 		if (fieldValue.startsWith(StringPool.STAR) &&
 			fieldValue.endsWith(StringPool.STAR)) {
