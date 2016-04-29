@@ -14,7 +14,7 @@
 
 package com.liferay.sharepoint.repository.model;
 
-import com.liferay.repository.external.ExtRepositoryFileVersion;
+import com.liferay.document.library.repository.external.ExtRepositoryFileVersion;
 import com.liferay.sharepoint.connector.SharepointVersion;
 
 import java.util.Date;

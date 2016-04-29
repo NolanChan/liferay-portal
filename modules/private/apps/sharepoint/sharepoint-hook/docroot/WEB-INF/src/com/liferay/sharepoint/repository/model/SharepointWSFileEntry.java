@@ -14,7 +14,7 @@
 
 package com.liferay.sharepoint.repository.model;
 
-import com.liferay.repository.external.ExtRepositoryFileEntry;
+import com.liferay.document.library.repository.external.ExtRepositoryFileEntry;
 import com.liferay.sharepoint.connector.SharepointObject;
 
 /**

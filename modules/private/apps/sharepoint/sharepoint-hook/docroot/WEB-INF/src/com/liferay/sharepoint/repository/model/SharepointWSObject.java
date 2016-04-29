@@ -14,9 +14,9 @@
 
 package com.liferay.sharepoint.repository.model;
 
+import com.liferay.document.library.repository.external.ExtRepositoryModel;
+import com.liferay.document.library.repository.external.ExtRepositoryObject;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.repository.external.ExtRepositoryModel;
-import com.liferay.repository.external.ExtRepositoryObject;
 import com.liferay.sharepoint.connector.SharepointObject;
 import com.liferay.sharepoint.connector.SharepointObject.Permission;
 

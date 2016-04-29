@@ -14,6 +14,8 @@
 
 package com.liferay.sharepoint.repository.search;
 
+import com.liferay.document.library.repository.external.ExtRepositoryObjectType;
+import com.liferay.document.library.repository.external.search.ExtRepositoryQueryMapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -33,8 +35,6 @@ import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.repository.external.ExtRepositoryObjectType;
-import com.liferay.repository.external.search.ExtRepositoryQueryMapper;
 import com.liferay.sharepoint.connector.SharepointConnection;
 import com.liferay.sharepoint.connector.SharepointConnectionInfo;
 import com.liferay.sharepoint.connector.SharepointObject;
