@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.reports;
+package com.liferay.portal.reports.status;
 
 /**
  * @author Gavin Wan
