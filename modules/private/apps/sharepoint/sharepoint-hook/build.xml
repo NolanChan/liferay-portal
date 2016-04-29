@@ -4,5 +4,5 @@
 <project name="sharepoint-hook" basedir="." default="deploy">
 	<property name="import.shared" value="dl-repository-shared,sharepoint-connector-shared" />
 
-	<import file="../build-common-hook.xml" />
+	<import file="../../../../../tools/sdk/hooks/build-common-hook.xml" />
 </project>
