@@ -15,15 +15,9 @@
 package com.liferay.portal.reports.engine.console.constants;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
-public class ReportsPortletKeys {
-
-	public static final String DISPLAY_REPORTS =
-		"com_liferay_portal_reports_engine_console_web_display_portlet_DisplayPortlet";
-
-	public static final String REPORTS_ADMIN =
-		"com_liferay_portal_reports_engine_console_web_admin_portlet_AdminPortlet";
+public class ReportsEngineConsoleConstants {
 
 	public static final String SERVICE_NAME = "com.liferay.portal.reports";
 
