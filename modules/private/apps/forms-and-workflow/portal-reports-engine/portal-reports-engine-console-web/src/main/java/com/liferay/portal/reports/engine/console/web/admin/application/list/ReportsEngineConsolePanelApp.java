@@ -18,7 +18,7 @@ import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.reports.engine.console.constants.ReportsPortletKeys;
+import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,12 +39,12 @@ public class ReportsEngineConsolePanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return ReportsPortletKeys.REPORTS_ADMIN;
+		return ReportsEngineConsolePortletKeys.REPORTS_ADMIN;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + ReportsPortletKeys.REPORTS_ADMIN + ")",
+		target = "(javax.portlet.name=" + ReportsEngineConsolePortletKeys.REPORTS_ADMIN + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

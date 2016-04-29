@@ -59,7 +59,7 @@ import com.liferay.portal.reports.engine.ReportDesignRetriever;
 import com.liferay.portal.reports.engine.ReportRequest;
 import com.liferay.portal.reports.engine.ReportRequestContext;
 import com.liferay.portal.reports.engine.console.configuration.ReportsGroupServiceEmailConfiguration;
-import com.liferay.portal.reports.engine.console.constants.ReportsPortletKeys;
+import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleConstants;
 import com.liferay.portal.reports.engine.console.exception.DefinitionNameException;
 import com.liferay.portal.reports.engine.console.exception.EntryEmailDeliveryException;
 import com.liferay.portal.reports.engine.console.exception.EntryEmailNotificationsException;
@@ -538,7 +538,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		return configurationProvider.getConfiguration(
 			ReportsGroupServiceEmailConfiguration.class,
 			new GroupServiceSettingsLocator(
-				groupId, ReportsPortletKeys.SERVICE_NAME));
+				groupId, ReportsEngineConsoleConstants.SERVICE_NAME));
 	}
 
 	protected void notifySubscribers(

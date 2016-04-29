@@ -16,7 +16,7 @@ package com.liferay.portal.reports.engine.console.internal.configuration.definit
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.reports.engine.console.configuration.ReportsGroupServiceEmailConfiguration;
-import com.liferay.portal.reports.engine.console.constants.ReportsPortletKeys;
+import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,7 +34,7 @@ public class ReportsGroupServiceConfigurationPidMapping
 
 	@Override
 	public String getConfigurationPid() {
-		return ReportsPortletKeys.SERVICE_NAME;
+		return ReportsEngineConsoleConstants.SERVICE_NAME;
 	}
 
 }

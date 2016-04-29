@@ -30,7 +30,7 @@ boolean hasAddSourcePermission = AdminResourcePermissionChecker.contains(permiss
 
 String portletId = portletDisplay.getId();
 
-if (portletId.equals(ReportsPortletKeys.REPORTS_ADMIN)) {
+if (portletId.equals(ReportsEngineConsolePortletKeys.REPORTS_ADMIN)) {
 	if (hasAddDefinitionPermission) {
 		tabs1Names += ",definitions";
 	}

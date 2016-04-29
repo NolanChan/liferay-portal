@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.reports.engine.console.configuration.ReportsGroupServiceEmailConfiguration;
-import com.liferay.portal.reports.engine.console.constants.ReportsPortletKeys;
+import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
 import com.liferay.portal.reports.engine.console.web.admin.util.ReportWebRequestHelper;
 
 import javax.portlet.PortletRequest;
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
  */
 @Component(
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	property = {"javax.portlet.name=" + ReportsPortletKeys.REPORTS_ADMIN},
+	property = {"javax.portlet.name=" + ReportsEngineConsolePortletKeys.REPORTS_ADMIN},
 	service = ConfigurationAction.class
 )
 public class ReportsConfigurationAction

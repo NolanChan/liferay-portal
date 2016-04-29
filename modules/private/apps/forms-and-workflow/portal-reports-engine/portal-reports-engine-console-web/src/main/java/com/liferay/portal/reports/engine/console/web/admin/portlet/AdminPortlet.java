@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.reports.engine.console.constants.ReportsPortletKeys;
+import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.mvc-action-command-package-prefix=com.liferay.portal.reports.web.admin.portlet.action",
 		"javax.portlet.init-param.view-template=/admin/view.jsp",
-		"javax.portlet.name=" + ReportsPortletKeys.REPORTS_ADMIN,
+		"javax.portlet.name=" + ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
 		"javax.portlet.portlet-info.keywords=Reports Admin",
 		"javax.portlet.portlet-info.short-title=Reports Admin",
 		"javax.portlet.portlet-info.title=Reports Admin",

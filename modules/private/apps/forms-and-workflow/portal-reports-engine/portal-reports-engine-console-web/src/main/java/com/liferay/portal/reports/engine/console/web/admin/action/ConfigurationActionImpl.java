@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.reports.engine.console.constants.ReportsPortletKeys;
+import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + ReportsPortletKeys.REPORTS_ADMIN},
+	property = {"javax.portlet.name=" + ReportsEngineConsolePortletKeys.REPORTS_ADMIN},
 	service = ConfigurationAction.class
 )
 public class ConfigurationActionImpl extends DefaultConfigurationAction {

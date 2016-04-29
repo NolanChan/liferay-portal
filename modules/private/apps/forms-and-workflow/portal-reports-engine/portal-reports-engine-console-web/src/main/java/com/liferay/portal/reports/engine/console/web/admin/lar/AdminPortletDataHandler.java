@@ -24,7 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.reports.engine.console.constants.ReportsPortletKeys;
+import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.DefinitionLocalService;
@@ -46,8 +46,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + ReportsPortletKeys.DISPLAY_REPORTS,
-		"javax.portlet.name=" + ReportsPortletKeys.REPORTS_ADMIN
+		"javax.portlet.name=" + ReportsEngineConsolePortletKeys.DISPLAY_REPORTS,
+		"javax.portlet.name=" + ReportsEngineConsolePortletKeys.REPORTS_ADMIN
 	},
 	service = PortletDataHandler.class
 )

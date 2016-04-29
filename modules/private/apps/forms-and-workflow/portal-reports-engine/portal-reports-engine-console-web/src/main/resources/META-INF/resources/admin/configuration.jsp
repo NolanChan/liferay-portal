@@ -25,7 +25,7 @@ Map<String, String> emailDefinitionTerms = EmailConfigurationUtil.getEmailDefini
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
-	<portlet:param name="serviceName" value="<%= ReportsPortletKeys.SERVICE_NAME %>" />
+	<portlet:param name="serviceName" value="<%= ReportsEngineConsoleConstants.SERVICE_NAME %>" />
 	<portlet:param name="settingsScope" value="group" />
 </liferay-portlet:actionURL>
 

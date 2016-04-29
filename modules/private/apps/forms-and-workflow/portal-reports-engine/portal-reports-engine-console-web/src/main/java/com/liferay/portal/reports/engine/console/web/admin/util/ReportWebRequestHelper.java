@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.reports.engine.console.configuration.ReportsGroupServiceEmailConfiguration;
-import com.liferay.portal.reports.engine.console.constants.ReportsPortletKeys;
+import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleConstants;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,7 +48,7 @@ public class ReportWebRequestHelper {
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			SettingsLocator settingsLocator = new GroupServiceSettingsLocator(
-				siteGroupId, ReportsPortletKeys.SERVICE_NAME);
+				siteGroupId, ReportsEngineConsoleConstants.SERVICE_NAME);
 
 			if (Validator.isNotNull(portletDisplay.getPortletResource())) {
 				settingsLocator = new ParameterMapSettingsLocator(
