@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-	<bean class="com.liferay.portal.reports.service.impl.DefinitionLocalServiceImpl" id="com.liferay.portal.reports.service.DefinitionLocalService" />
-	<bean class="com.liferay.portal.reports.service.impl.DefinitionServiceImpl" id="com.liferay.portal.reports.service.DefinitionService" />
-	<bean class="com.liferay.portal.reports.service.persistence.impl.DefinitionPersistenceImpl" id="com.liferay.portal.reports.service.persistence.DefinitionPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portal.reports.service.impl.EntryLocalServiceImpl" id="com.liferay.portal.reports.service.EntryLocalService" />
-	<bean class="com.liferay.portal.reports.service.impl.EntryServiceImpl" id="com.liferay.portal.reports.service.EntryService" />
-	<bean class="com.liferay.portal.reports.service.persistence.impl.EntryPersistenceImpl" id="com.liferay.portal.reports.service.persistence.EntryPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portal.reports.service.impl.SourceLocalServiceImpl" id="com.liferay.portal.reports.service.SourceLocalService" />
-	<bean class="com.liferay.portal.reports.service.impl.SourceServiceImpl" id="com.liferay.portal.reports.service.SourceService" />
-	<bean class="com.liferay.portal.reports.service.persistence.impl.SourcePersistenceImpl" id="com.liferay.portal.reports.service.persistence.SourcePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.reports.engine.console.service.impl.DefinitionLocalServiceImpl" id="com.liferay.portal.reports.service.DefinitionLocalService" />
+	<bean class="com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl" id="com.liferay.portal.reports.service.DefinitionService" />
+	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.DefinitionPersistenceImpl" id="com.liferay.portal.reports.service.persistence.DefinitionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.reports.engine.console.service.impl.EntryLocalServiceImpl" id="com.liferay.portal.reports.service.EntryLocalService" />
+	<bean class="com.liferay.portal.reports.engine.console.service.impl.EntryServiceImpl" id="com.liferay.portal.reports.service.EntryService" />
+	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.EntryPersistenceImpl" id="com.liferay.portal.reports.service.persistence.EntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.reports.engine.console.service.impl.SourceLocalServiceImpl" id="com.liferay.portal.reports.service.SourceLocalService" />
+	<bean class="com.liferay.portal.reports.engine.console.service.impl.SourceServiceImpl" id="com.liferay.portal.reports.service.SourceService" />
+	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.SourcePersistenceImpl" id="com.liferay.portal.reports.service.persistence.SourcePersistence" parent="basePersistence" />
 </beans>

@@ -35,7 +35,7 @@ if (Validator.isNull(driverPassword)) {
 boolean validJDBCConnection = true;
 
 try {
-	ReportsUtil.validateJDBCConnection(driverClassName, driverUrl, driverUserName, driverPassword);
+	ReportsEngineConsoleUtil.validateJDBCConnection(driverClassName, driverUrl, driverUserName, driverPassword);
 }
 catch (SourceJDBCConnectionException sjdbcce) {
 	validJDBCConnection = false;

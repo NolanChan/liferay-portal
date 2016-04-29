@@ -86,7 +86,7 @@
 		%>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.reports.model.Entry"
+			className="com.liferay.portal.reports.engine.console.model.Entry"
 			keyProperty="entryId"
 			modelVar="entry"
 		>

@@ -3,9 +3,9 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.portal.reports.admin</model-name>
+		<model-name>com.liferay.portal.reports.engine.console.admin</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_portal_reports_web_admin_portlet_AdminPortlet</portlet-name>
+			<portlet-name>com_liferay_portal_reports_engine_console_web_admin_portlet_AdminPortlet</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -21,9 +21,9 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portal.reports.model.Definition</model-name>
+		<model-name>com.liferay.portal.reports.engine.console.model.Definition</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_portal_reports_web_admin_portlet_AdminPortlet</portlet-name>
+			<portlet-name>com_liferay_portal_reports_engine_console_web_admin_portlet_AdminPortlet</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -48,9 +48,9 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portal.reports.model.Entry</model-name>
+		<model-name>com.liferay.portal.reports.engine.console.model.Entry</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_portal_reports_web_admin_portlet_AdminPortlet</portlet-name>
+			<portlet-name>com_liferay_portal_reports_engine_console_web_admin_portlet_AdminPortlet</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -71,9 +71,9 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portal.reports.model.Source</model-name>
+		<model-name>com.liferay.portal.reports.engine.console.model.Source</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_portal_reports_web_admin_portlet_AdminPortlet</portlet-name>
+			<portlet-name>com_liferay_portal_reports_engine_console_web_admin_portlet_AdminPortlet</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>

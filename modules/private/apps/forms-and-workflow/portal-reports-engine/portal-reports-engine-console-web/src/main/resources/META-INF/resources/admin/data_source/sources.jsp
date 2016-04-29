@@ -68,7 +68,7 @@ String driverUrl = ParamUtil.getString(request, "driverUrl");
 		%>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.reports.model.Source"
+			className="com.liferay.portal.reports.engine.console.model.Source"
 			keyProperty="sourceId"
 			modelVar="source"
 		>

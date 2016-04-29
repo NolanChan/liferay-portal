@@ -1,6 +1,6 @@
 buildService {
-	apiDir = "../portal-reports-api/src/main/java"
-	testDir = "../portal-reports-test/src/testIntegration/java"
+	apiDir = "../portal-reports-engine-console-api/src/main/java"
+	testDir = "../portal-reports-engine-console-test/src/testIntegration/java"
 }
 
 dependencies {
@@ -15,7 +15,7 @@ dependencies {
 	provided project(":apps:forms-and-workflow:portal-reports-engine:portal-reports-engine-api")
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided project(":apps:foundation:portal:portal-spring-extender")
-	provided project(":private:apps:forms-and-workflow:portal-reports-engine:portal-reports-api")
+	provided project(":private:apps:forms-and-workflow:portal-reports-engine:portal-reports-engine-console-api")
 }
 
 liferay {

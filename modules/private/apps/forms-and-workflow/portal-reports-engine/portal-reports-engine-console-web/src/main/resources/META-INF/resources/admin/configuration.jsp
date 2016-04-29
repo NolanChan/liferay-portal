@@ -21,7 +21,7 @@ boolean enabled = true;
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", reportsGroupServiceEmailConfiguration.emailFromName());
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", reportsGroupServiceEmailConfiguration.emailFromAddress());
 
-Map<String, String> emailDefinitionTerms = AdminUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
+Map<String, String> emailDefinitionTerms = EmailConfigurationUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">

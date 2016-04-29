@@ -2,10 +2,10 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
-	<import class="com.liferay.portal.reports.model.Definition" />
-	<import class="com.liferay.portal.reports.model.Entry" />
-	<import class="com.liferay.portal.reports.model.Source" />
-	<class name="com.liferay.portal.reports.model.impl.DefinitionImpl" table="Definition">
+	<import class="com.liferay.portal.reports.engine.console.model.Definition" />
+	<import class="com.liferay.portal.reports.engine.console.model.Entry" />
+	<import class="com.liferay.portal.reports.engine.console.model.Source" />
+	<class name="com.liferay.portal.reports.engine.console.model.impl.DefinitionImpl" table="Definition">
 		<id name="definitionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -23,7 +23,7 @@
 		<property name="reportParameters" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.portal.reports.model.impl.EntryImpl" table="Entry">
+	<class name="com.liferay.portal.reports.engine.console.model.impl.EntryImpl" table="Entry">
 		<id name="entryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -48,7 +48,7 @@
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="errorMessage" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.liferay.portal.reports.model.impl.SourceImpl" table="Source">
+	<class name="com.liferay.portal.reports.engine.console.model.impl.SourceImpl" table="Source">
 		<id name="sourceId" type="long">
 			<generator class="assigned" />
 		</id>

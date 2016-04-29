@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_portal_reports_web_admin_portlet_AdminPortlet</portlet-name>
+		<portlet-name>com_liferay_portal_reports_engine_console_web_admin_portlet_AdminPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>

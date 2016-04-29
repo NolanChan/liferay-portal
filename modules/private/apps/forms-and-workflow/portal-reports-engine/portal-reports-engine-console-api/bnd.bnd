@@ -1,13 +1,13 @@
-Bundle-Name: Liferay Portal Reports API
-Bundle-SymbolicName: com.liferay.portal.reports.api
+Bundle-Name: Liferay Portal Reports Engine Console API
+Bundle-SymbolicName: com.liferay.portal.reports.engine.console.api
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.portal.reports,\
-	com.liferay.portal.reports.constants,\
-	com.liferay.portal.reports.exception,\
-	com.liferay.portal.reports.model,\
-	com.liferay.portal.reports.service,\
-	com.liferay.portal.reports.service.persistence
+	com.liferay.portal.reports.engine.console.constants,\
+	com.liferay.portal.reports.engine.console.exception,\
+	com.liferay.portal.reports.engine.console.model,\
+	com.liferay.portal.reports.engine.console.service,\
+	com.liferay.portal.reports.engine.console.service.persistence,\
+	com.liferay.portal.reports.engine.console.service.status
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Reports Console
+Liferay-Releng-Module-Group-Title: Reports Engine Console
 -include: ../../../../../../modules/apps/forms-and-workflow/app.bnd

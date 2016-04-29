@@ -72,7 +72,7 @@ String reportName = ParamUtil.getString(request, "reportName");
 		%>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.reports.model.Definition"
+			className="com.liferay.portal.reports.engine.console.model.Definition"
 			keyProperty="definitionId"
 			modelVar="definition"
 		>

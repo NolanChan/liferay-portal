@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.portal.reports.model.Definition">
+	<model name="com.liferay.portal.reports.engine.console.model.Definition">
 		<field name="uuid" type="String" />
 		<field name="definitionId" type="long" />
 		<field name="groupId" type="long" />
@@ -19,7 +19,7 @@
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.portal.reports.model.Entry">
+	<model name="com.liferay.portal.reports.engine.console.model.Entry">
 		<field name="entryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -50,7 +50,7 @@
 		<field name="status" type="String" />
 		<field name="errorMessage" type="String" />
 	</model>
-	<model name="com.liferay.portal.reports.model.Source">
+	<model name="com.liferay.portal.reports.engine.console.model.Source">
 		<field name="uuid" type="String" />
 		<field name="sourceId" type="long" />
 		<field name="groupId" type="long" />
