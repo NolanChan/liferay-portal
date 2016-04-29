@@ -922,8 +922,7 @@ public class SharepointWSRepository
 				sharepointConnection.getSharepointObjects(
 					path, ObjectTypeFilter.FOLDERS);
 
-			for (
-				SharepointObject folderSharepointObject :
+			for (SharepointObject folderSharepointObject :
 					folderSharepointObjects) {
 
 				String extRepositoryFolderKey = String.valueOf(
@@ -965,7 +964,7 @@ public class SharepointWSRepository
 				throw new DuplicateFileException(name);
 			}
 		}
-		catch (SharepointException se1) {
+		catch (SharepointException se) {
 
 			// The Sharepoint object does not exist
 

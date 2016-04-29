@@ -657,13 +657,14 @@ public class SharepointQueryBuilder {
 	private static final String _SHAREPOINT_DATE_FORMAT_PATTERN =
 		"yyyy-MM-dd' 'HH:mm:ss";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SharepointQueryBuilder.class);
 
-	private static LiferayQueryExplainer _liferayQueryExplainer =
+	private static final LiferayQueryExplainer _liferayQueryExplainer =
 		new LiferayQueryExplainer();
-	private static Map<String, String> _sharepointFields = new HashMap<>();
-	private static Set<String> _supportedFields = new HashSet<>();
+	private static final Map<String, String> _sharepointFields =
+		new HashMap<>();
+	private static final Set<String> _supportedFields = new HashSet<>();
 
 	static {
 		_sharepointFields.put(Field.CREATE_DATE, SharepointField.CREATE_DATE);
@@ -684,10 +685,10 @@ public class SharepointQueryBuilder {
 		_supportedFields.add(Field.USER_NAME);
 	}
 
-	private ExtRepositoryQueryMapper _extRepositoryQueryMapper;
-	private com.liferay.sharepoint.connector.schema.query.Query _query;
-	private QueryOptionsList _queryOptionsList;
-	private SharepointConnectionInfo _sharepointConnectionInfo;
-	private SharepointWSRepository _sharepointWSRepository;
+	private final ExtRepositoryQueryMapper _extRepositoryQueryMapper;
+	private final com.liferay.sharepoint.connector.schema.query.Query _query;
+	private final QueryOptionsList _queryOptionsList;
+	private final SharepointConnectionInfo _sharepointConnectionInfo;
+	private final SharepointWSRepository _sharepointWSRepository;
 
 }
