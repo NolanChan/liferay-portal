@@ -940,7 +940,8 @@ public class SharepointWSRepository
 	}
 
 	protected void processSharepointObjectException(
-			SharepointException se, boolean folder, String path, String name)
+			SharepointException sharepointException, boolean folder,
+			String path, String name)
 		throws PortalException {
 
 		if (path == null) {
