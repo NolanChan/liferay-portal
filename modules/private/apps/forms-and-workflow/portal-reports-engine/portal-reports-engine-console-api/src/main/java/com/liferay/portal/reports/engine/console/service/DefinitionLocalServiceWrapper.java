@@ -17,8 +17,6 @@ package com.liferay.portal.reports.engine.console.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.reports.engine.console.model.Definition;
-import com.liferay.portal.reports.engine.console.model.impl.DefinitionModelImpl;
 
 /**
  * Provides a wrapper for {@link DefinitionLocalService}.
@@ -80,13 +78,13 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* @return the definition that was added
 	*/
 	@Override
-	public Definition addDefinition(
-		Definition definition) {
+	public com.liferay.portal.reports.engine.console.model.Definition addDefinition(
+		com.liferay.portal.reports.engine.console.model.Definition definition) {
 		return _definitionLocalService.addDefinition(definition);
 	}
 
 	@Override
-	public Definition addDefinition(
+	public com.liferay.portal.reports.engine.console.model.Definition addDefinition(
 		long userId, long groupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -106,7 +104,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* @return the new definition
 	*/
 	@Override
-	public Definition createDefinition(
+	public com.liferay.portal.reports.engine.console.model.Definition createDefinition(
 		long definitionId) {
 		return _definitionLocalService.createDefinition(definitionId);
 	}
@@ -119,8 +117,8 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public Definition deleteDefinition(
-		Definition definition)
+	public com.liferay.portal.reports.engine.console.model.Definition deleteDefinition(
+		com.liferay.portal.reports.engine.console.model.Definition definition)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definitionLocalService.deleteDefinition(definition);
 	}
@@ -133,14 +131,14 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* @throws PortalException if a definition with the primary key could not be found
 	*/
 	@Override
-	public Definition deleteDefinition(
+	public com.liferay.portal.reports.engine.console.model.Definition deleteDefinition(
 		long definitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definitionLocalService.deleteDefinition(definitionId);
 	}
 
 	@Override
-	public Definition fetchDefinition(
+	public com.liferay.portal.reports.engine.console.model.Definition fetchDefinition(
 		long definitionId) {
 		return _definitionLocalService.fetchDefinition(definitionId);
 	}
@@ -153,7 +151,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* @return the matching definition, or <code>null</code> if a matching definition could not be found
 	*/
 	@Override
-	public Definition fetchDefinitionByUuidAndGroupId(
+	public com.liferay.portal.reports.engine.console.model.Definition fetchDefinitionByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
 		return _definitionLocalService.fetchDefinitionByUuidAndGroupId(uuid,
 			groupId);
@@ -167,7 +165,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* @throws PortalException if a definition with the primary key could not be found
 	*/
 	@Override
-	public Definition getDefinition(
+	public com.liferay.portal.reports.engine.console.model.Definition getDefinition(
 		long definitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definitionLocalService.getDefinition(definitionId);
@@ -182,7 +180,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* @throws PortalException if a matching definition could not be found
 	*/
 	@Override
-	public Definition getDefinitionByUuidAndGroupId(
+	public com.liferay.portal.reports.engine.console.model.Definition getDefinitionByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definitionLocalService.getDefinitionByUuidAndGroupId(uuid,
@@ -196,13 +194,13 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* @return the definition that was updated
 	*/
 	@Override
-	public Definition updateDefinition(
-		Definition definition) {
+	public com.liferay.portal.reports.engine.console.model.Definition updateDefinition(
+		com.liferay.portal.reports.engine.console.model.Definition definition) {
 		return _definitionLocalService.updateDefinition(definition);
 	}
 
 	@Override
-	public Definition updateDefinition(
+	public com.liferay.portal.reports.engine.console.model.Definition updateDefinition(
 		long definitionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -260,7 +258,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.reports.engine.console.model.impl.DefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -279,7 +277,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.reports.engine.console.model.impl.DefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -301,7 +299,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* Returns a range of all the definitions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.reports.engine.console.model.impl.DefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of definitions
@@ -309,13 +307,13 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* @return the range of definitions
 	*/
 	@Override
-	public java.util.List<Definition> getDefinitions(
+	public java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitions(
 		int start, int end) {
 		return _definitionLocalService.getDefinitions(start, end);
 	}
 
 	@Override
-	public java.util.List<Definition> getDefinitions(
+	public java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitions(
 		long groupId, java.lang.String definitionName,
 		java.lang.String description, java.lang.String sourceId,
 		java.lang.String reportName, boolean andSearch, int start, int end,
@@ -333,7 +331,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* @return the matching definitions, or an empty list if no matches were found
 	*/
 	@Override
-	public java.util.List<Definition> getDefinitionsByUuidAndCompanyId(
+	public java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitionsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
 		return _definitionLocalService.getDefinitionsByUuidAndCompanyId(uuid,
 			companyId);
@@ -350,9 +348,9 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 	* @return the range of matching definitions, or an empty list if no matches were found
 	*/
 	@Override
-	public java.util.List<Definition> getDefinitionsByUuidAndCompanyId(
+	public java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitionsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Definition> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.reports.engine.console.model.Definition> orderByComparator) {
 		return _definitionLocalService.getDefinitionsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
 	}
@@ -400,7 +398,7 @@ public class DefinitionLocalServiceWrapper implements DefinitionLocalService,
 
 	@Override
 	public void updateDefinitionResources(
-		Definition definition,
+		com.liferay.portal.reports.engine.console.model.Definition definition,
 		java.lang.String[] communityPermissions,
 		java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {

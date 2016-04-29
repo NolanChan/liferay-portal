@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.reports.engine.console.model.Definition;
-import com.liferay.portal.reports.engine.console.model.DefinitionSoap;
 import com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil;
 
 import java.rmi.RemoteException;
@@ -34,10 +32,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link DefinitionSoap}.
+ * is translated to an array of {@link com.liferay.portal.reports.engine.console.model.DefinitionSoap}.
  * If the method in the service utility returns a
- * {@link Definition}, that is translated to a
- * {@link DefinitionSoap}. Methods that SOAP cannot
+ * {@link com.liferay.portal.reports.engine.console.model.Definition}, that is translated to a
+ * {@link com.liferay.portal.reports.engine.console.model.DefinitionSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -60,18 +58,19 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see DefinitionServiceHttp
- * @see DefinitionSoap
+ * @see com.liferay.portal.reports.engine.console.model.DefinitionSoap
  * @see DefinitionServiceUtil
  * @generated
  */
 @ProviderType
 public class DefinitionServiceSoap {
-	public static DefinitionSoap deleteDefinition(
+	public static com.liferay.portal.reports.engine.console.model.DefinitionSoap deleteDefinition(
 		long definitionId) throws RemoteException {
 		try {
-			Definition returnValue = DefinitionServiceUtil.deleteDefinition(definitionId);
+			com.liferay.portal.reports.engine.console.model.Definition returnValue =
+				DefinitionServiceUtil.deleteDefinition(definitionId);
 
-			return DefinitionSoap.toSoapModel(returnValue);
+			return com.liferay.portal.reports.engine.console.model.DefinitionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -80,12 +79,13 @@ public class DefinitionServiceSoap {
 		}
 	}
 
-	public static DefinitionSoap getDefinition(
+	public static com.liferay.portal.reports.engine.console.model.DefinitionSoap getDefinition(
 		long definitionId) throws RemoteException {
 		try {
-			Definition returnValue = DefinitionServiceUtil.getDefinition(definitionId);
+			com.liferay.portal.reports.engine.console.model.Definition returnValue =
+				DefinitionServiceUtil.getDefinition(definitionId);
 
-			return DefinitionSoap.toSoapModel(returnValue);
+			return com.liferay.portal.reports.engine.console.model.DefinitionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -94,19 +94,19 @@ public class DefinitionServiceSoap {
 		}
 	}
 
-	public static DefinitionSoap[] getDefinitions(
+	public static com.liferay.portal.reports.engine.console.model.DefinitionSoap[] getDefinitions(
 		long groupId, java.lang.String definitionName,
 		java.lang.String description, java.lang.String sourceId,
 		java.lang.String reportName, boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws RemoteException {
 		try {
-			java.util.List<Definition> returnValue =
+			java.util.List<com.liferay.portal.reports.engine.console.model.Definition> returnValue =
 				DefinitionServiceUtil.getDefinitions(groupId, definitionName,
 					description, sourceId, reportName, andSearch, start, end,
 					orderByComparator);
 
-			return DefinitionSoap.toSoapModels(returnValue);
+			return com.liferay.portal.reports.engine.console.model.DefinitionSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

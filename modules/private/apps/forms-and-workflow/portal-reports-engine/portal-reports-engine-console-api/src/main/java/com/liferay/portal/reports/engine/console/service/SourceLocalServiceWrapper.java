@@ -17,8 +17,6 @@ package com.liferay.portal.reports.engine.console.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.reports.engine.console.model.Source;
-import com.liferay.portal.reports.engine.console.model.impl.SourceModelImpl;
 
 /**
  * Provides a wrapper for {@link SourceLocalService}.
@@ -79,18 +77,18 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	* @return the source that was added
 	*/
 	@Override
-	public Source addSource(
-		Source source) {
+	public com.liferay.portal.reports.engine.console.model.Source addSource(
+		com.liferay.portal.reports.engine.console.model.Source source) {
 		return _sourceLocalService.addSource(source);
 	}
 
 	@Override
-	public Source addSource(long userId,
-	                        long groupId,
-	                        java.util.Map<java.util.Locale, java.lang.String> nameMap,
-	                        java.lang.String driverClassName, java.lang.String driverUrl,
-	                        java.lang.String driverUserName, java.lang.String driverPassword,
-	                        com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.portal.reports.engine.console.model.Source addSource(
+		long userId, long groupId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.lang.String driverClassName, java.lang.String driverUrl,
+		java.lang.String driverUserName, java.lang.String driverPassword,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceLocalService.addSource(userId, groupId, nameMap,
 			driverClassName, driverUrl, driverUserName, driverPassword,
@@ -104,7 +102,8 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	* @return the new source
 	*/
 	@Override
-	public Source createSource(long sourceId) {
+	public com.liferay.portal.reports.engine.console.model.Source createSource(
+		long sourceId) {
 		return _sourceLocalService.createSource(sourceId);
 	}
 
@@ -116,8 +115,8 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public Source deleteSource(
-		Source source)
+	public com.liferay.portal.reports.engine.console.model.Source deleteSource(
+		com.liferay.portal.reports.engine.console.model.Source source)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceLocalService.deleteSource(source);
 	}
@@ -130,13 +129,15 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	* @throws PortalException if a source with the primary key could not be found
 	*/
 	@Override
-	public Source deleteSource(long sourceId)
+	public com.liferay.portal.reports.engine.console.model.Source deleteSource(
+		long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceLocalService.deleteSource(sourceId);
 	}
 
 	@Override
-	public Source fetchSource(long sourceId) {
+	public com.liferay.portal.reports.engine.console.model.Source fetchSource(
+		long sourceId) {
 		return _sourceLocalService.fetchSource(sourceId);
 	}
 
@@ -148,7 +149,7 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	* @return the matching source, or <code>null</code> if a matching source could not be found
 	*/
 	@Override
-	public Source fetchSourceByUuidAndGroupId(
+	public com.liferay.portal.reports.engine.console.model.Source fetchSourceByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
 		return _sourceLocalService.fetchSourceByUuidAndGroupId(uuid, groupId);
 	}
@@ -161,7 +162,8 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	* @throws PortalException if a source with the primary key could not be found
 	*/
 	@Override
-	public Source getSource(long sourceId)
+	public com.liferay.portal.reports.engine.console.model.Source getSource(
+		long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceLocalService.getSource(sourceId);
 	}
@@ -175,7 +177,7 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	* @throws PortalException if a matching source could not be found
 	*/
 	@Override
-	public Source getSourceByUuidAndGroupId(
+	public com.liferay.portal.reports.engine.console.model.Source getSourceByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceLocalService.getSourceByUuidAndGroupId(uuid, groupId);
@@ -188,17 +190,18 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	* @return the source that was updated
 	*/
 	@Override
-	public Source updateSource(
-		Source source) {
+	public com.liferay.portal.reports.engine.console.model.Source updateSource(
+		com.liferay.portal.reports.engine.console.model.Source source) {
 		return _sourceLocalService.updateSource(source);
 	}
 
 	@Override
-	public Source updateSource(long sourceId,
-	                           java.util.Map<java.util.Locale, java.lang.String> nameMap,
-	                           java.lang.String driverClassName, java.lang.String driverUrl,
-	                           java.lang.String driverUserName, java.lang.String driverPassword,
-	                           com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.portal.reports.engine.console.model.Source updateSource(
+		long sourceId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.lang.String driverClassName, java.lang.String driverUrl,
+		java.lang.String driverUserName, java.lang.String driverPassword,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceLocalService.updateSource(sourceId, nameMap,
 			driverClassName, driverUrl, driverUserName, driverPassword,
@@ -248,7 +251,7 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.reports.engine.console.model.impl.SourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -267,7 +270,7 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.reports.engine.console.model.impl.SourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -289,7 +292,7 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	* Returns a range of all the sources.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.reports.engine.console.model.impl.SourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of sources
@@ -297,13 +300,13 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	* @return the range of sources
 	*/
 	@Override
-	public java.util.List<Source> getSources(
+	public java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSources(
 		int start, int end) {
 		return _sourceLocalService.getSources(start, end);
 	}
 
 	@Override
-	public java.util.List<Source> getSources(
+	public java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSources(
 		long groupId, java.lang.String name, java.lang.String driverUrl,
 		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
@@ -319,7 +322,7 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	* @return the matching sources, or an empty list if no matches were found
 	*/
 	@Override
-	public java.util.List<Source> getSourcesByUuidAndCompanyId(
+	public java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSourcesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
 		return _sourceLocalService.getSourcesByUuidAndCompanyId(uuid, companyId);
 	}
@@ -335,9 +338,9 @@ public class SourceLocalServiceWrapper implements SourceLocalService,
 	* @return the range of matching sources, or an empty list if no matches were found
 	*/
 	@Override
-	public java.util.List<Source> getSourcesByUuidAndCompanyId(
+	public java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSourcesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Source> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.reports.engine.console.model.Source> orderByComparator) {
 		return _sourceLocalService.getSourcesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
 	}

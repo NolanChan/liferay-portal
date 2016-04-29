@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException;
 import com.liferay.portal.reports.engine.console.model.Definition;
-import com.liferay.portal.reports.engine.console.service.persistence.DefinitionUtil;
 import com.liferay.portal.reports.engine.console.model.impl.DefinitionImpl;
 import com.liferay.portal.reports.engine.console.model.impl.DefinitionModelImpl;
 import com.liferay.portal.reports.engine.console.service.persistence.DefinitionPersistence;
@@ -56,6 +55,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -67,7 +67,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see DefinitionPersistence
- * @see DefinitionUtil
+ * @see com.liferay.portal.reports.engine.console.service.persistence.DefinitionUtil
  * @generated
  */
 @ProviderType
@@ -200,7 +200,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Definition definition : list) {
-					if (!Validator.equals(uuid, definition.getUuid())) {
+					if (!Objects.equals(uuid, definition.getUuid())) {
 						list = null;
 
 						break;
@@ -718,7 +718,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		if (result instanceof Definition) {
 			Definition definition = (Definition)result;
 
-			if (!Validator.equals(uuid, definition.getUuid()) ||
+			if (!Objects.equals(uuid, definition.getUuid()) ||
 					(groupId != definition.getGroupId())) {
 				result = null;
 			}
@@ -1010,7 +1010,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Definition definition : list) {
-					if (!Validator.equals(uuid, definition.getUuid()) ||
+					if (!Objects.equals(uuid, definition.getUuid()) ||
 							(companyId != definition.getCompanyId())) {
 						list = null;
 

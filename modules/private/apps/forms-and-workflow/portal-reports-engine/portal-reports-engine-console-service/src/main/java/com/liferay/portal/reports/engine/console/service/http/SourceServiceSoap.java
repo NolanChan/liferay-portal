@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.reports.engine.console.model.Source;
-import com.liferay.portal.reports.engine.console.model.SourceSoap;
 import com.liferay.portal.reports.engine.console.service.SourceServiceUtil;
 
 import java.rmi.RemoteException;
@@ -38,10 +36,10 @@ import java.util.Map;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link SourceSoap}.
+ * is translated to an array of {@link com.liferay.portal.reports.engine.console.model.SourceSoap}.
  * If the method in the service utility returns a
- * {@link Source}, that is translated to a
- * {@link SourceSoap}. Methods that SOAP cannot
+ * {@link com.liferay.portal.reports.engine.console.model.Source}, that is translated to a
+ * {@link com.liferay.portal.reports.engine.console.model.SourceSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -64,13 +62,13 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see SourceServiceHttp
- * @see SourceSoap
+ * @see com.liferay.portal.reports.engine.console.model.SourceSoap
  * @see SourceServiceUtil
  * @generated
  */
 @ProviderType
 public class SourceServiceSoap {
-	public static SourceSoap addSource(
+	public static com.liferay.portal.reports.engine.console.model.SourceSoap addSource(
 		long groupId, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues, java.lang.String driverClassName,
 		java.lang.String driverUrl, java.lang.String driverUserName,
@@ -81,11 +79,11 @@ public class SourceServiceSoap {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
 					nameMapValues);
 
-			Source returnValue = SourceServiceUtil.addSource(groupId,
+			com.liferay.portal.reports.engine.console.model.Source returnValue = SourceServiceUtil.addSource(groupId,
 					nameMap, driverClassName, driverUrl, driverUserName,
 					driverPassword, serviceContext);
 
-			return SourceSoap.toSoapModel(returnValue);
+			return com.liferay.portal.reports.engine.console.model.SourceSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -94,12 +92,12 @@ public class SourceServiceSoap {
 		}
 	}
 
-	public static SourceSoap deleteSource(
+	public static com.liferay.portal.reports.engine.console.model.SourceSoap deleteSource(
 		long sourceId) throws RemoteException {
 		try {
-			Source returnValue = SourceServiceUtil.deleteSource(sourceId);
+			com.liferay.portal.reports.engine.console.model.Source returnValue = SourceServiceUtil.deleteSource(sourceId);
 
-			return SourceSoap.toSoapModel(returnValue);
+			return com.liferay.portal.reports.engine.console.model.SourceSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -108,12 +106,12 @@ public class SourceServiceSoap {
 		}
 	}
 
-	public static SourceSoap getSource(
+	public static com.liferay.portal.reports.engine.console.model.SourceSoap getSource(
 		long sourceId) throws RemoteException {
 		try {
-			Source returnValue = SourceServiceUtil.getSource(sourceId);
+			com.liferay.portal.reports.engine.console.model.Source returnValue = SourceServiceUtil.getSource(sourceId);
 
-			return SourceSoap.toSoapModel(returnValue);
+			return com.liferay.portal.reports.engine.console.model.SourceSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -122,16 +120,17 @@ public class SourceServiceSoap {
 		}
 	}
 
-	public static SourceSoap[] getSources(
+	public static com.liferay.portal.reports.engine.console.model.SourceSoap[] getSources(
 		long groupId, java.lang.String name, java.lang.String driverUrl,
 		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws RemoteException {
 		try {
-			java.util.List<Source> returnValue = SourceServiceUtil.getSources(groupId,
-					name, driverUrl, andSearch, start, end, orderByComparator);
+			java.util.List<com.liferay.portal.reports.engine.console.model.Source> returnValue =
+				SourceServiceUtil.getSources(groupId, name, driverUrl,
+					andSearch, start, end, orderByComparator);
 
-			return SourceSoap.toSoapModels(returnValue);
+			return com.liferay.portal.reports.engine.console.model.SourceSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -156,7 +155,7 @@ public class SourceServiceSoap {
 		}
 	}
 
-	public static SourceSoap updateSource(
+	public static com.liferay.portal.reports.engine.console.model.SourceSoap updateSource(
 		long sourceId, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues, java.lang.String driverClassName,
 		java.lang.String driverUrl, java.lang.String driverUserName,
@@ -167,11 +166,11 @@ public class SourceServiceSoap {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
 					nameMapValues);
 
-			Source returnValue = SourceServiceUtil.updateSource(sourceId,
+			com.liferay.portal.reports.engine.console.model.Source returnValue = SourceServiceUtil.updateSource(sourceId,
 					nameMap, driverClassName, driverUrl, driverUserName,
 					driverPassword, serviceContext);
 
-			return SourceSoap.toSoapModel(returnValue);
+			return com.liferay.portal.reports.engine.console.model.SourceSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

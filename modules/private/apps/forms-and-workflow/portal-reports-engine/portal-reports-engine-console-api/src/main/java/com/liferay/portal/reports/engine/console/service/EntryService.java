@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.reports.engine.console.model.Entry;
-import com.liferay.portal.reports.engine.console.service.base.EntryServiceBaseImpl;
-import com.liferay.portal.reports.engine.console.service.impl.EntryServiceImpl;
 
 import java.util.Date;
 import java.util.List;
@@ -41,8 +39,8 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see EntryServiceUtil
- * @see EntryServiceBaseImpl
- * @see EntryServiceImpl
+ * @see com.liferay.portal.reports.engine.console.service.base.EntryServiceBaseImpl
+ * @see com.liferay.portal.reports.engine.console.service.impl.EntryServiceImpl
  * @generated
  */
 @AccessControlled

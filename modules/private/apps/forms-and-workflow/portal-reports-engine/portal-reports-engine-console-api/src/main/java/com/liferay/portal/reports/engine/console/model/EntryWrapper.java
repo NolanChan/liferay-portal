@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -211,6 +211,16 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 		}
 	}
 
+	@Override
+	public Entry toEscapedModel() {
+		return new EntryWrapper(_entry.toEscapedModel());
+	}
+
+	@Override
+	public Entry toUnescapedModel() {
+		return new EntryWrapper(_entry.toUnescapedModel());
+	}
+
 	/**
 	* Returns the repeating of this entry.
 	*
@@ -279,16 +289,6 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<Entry> toCacheModel() {
 		return _entry.toCacheModel();
-	}
-
-	@Override
-	public Entry toEscapedModel() {
-		return new EntryWrapper(_entry.toEscapedModel());
-	}
-
-	@Override
-	public Entry toUnescapedModel() {
-		return new EntryWrapper(_entry.toUnescapedModel());
 	}
 
 	@Override
@@ -830,7 +830,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 
 		EntryWrapper entryWrapper = (EntryWrapper)obj;
 
-		if (Validator.equals(_entry, entryWrapper._entry)) {
+		if (Objects.equals(_entry, entryWrapper._entry)) {
 			return true;
 		}
 

@@ -21,16 +21,14 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.reports.engine.console.exception.NoSuchEntryException;
 import com.liferay.portal.reports.engine.console.model.Entry;
 
-import com.liferay.portal.reports.engine.console.service.persistence.impl.EntryPersistenceImpl;
 import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
 /**
- * The persistence utility for the entry service. This utility wraps {@link EntryPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the entry service. This utility wraps {@link com.liferay.portal.reports.engine.console.service.persistence.impl.EntryPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -38,7 +36,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see EntryPersistence
- * @see EntryPersistenceImpl
+ * @see com.liferay.portal.reports.engine.console.service.persistence.impl.EntryPersistenceImpl
  * @generated
  */
 @ProviderType
@@ -145,7 +143,7 @@ public class EntryUtil {
 	* @throws NoSuchEntryException if a entry with the primary key could not be found
 	*/
 	public static Entry remove(long entryId)
-		throws NoSuchEntryException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchEntryException {
 		return getPersistence().remove(entryId);
 	}
 
@@ -161,7 +159,7 @@ public class EntryUtil {
 	* @throws NoSuchEntryException if a entry with the primary key could not be found
 	*/
 	public static Entry findByPrimaryKey(long entryId)
-		throws NoSuchEntryException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchEntryException {
 		return getPersistence().findByPrimaryKey(entryId);
 	}
 

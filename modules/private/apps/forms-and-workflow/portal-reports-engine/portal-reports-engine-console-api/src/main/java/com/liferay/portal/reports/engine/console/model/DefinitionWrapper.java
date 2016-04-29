@@ -22,13 +22,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -165,6 +165,16 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	}
 
 	@Override
+	public Definition toEscapedModel() {
+		return new DefinitionWrapper(_definition.toEscapedModel());
+	}
+
+	@Override
+	public Definition toUnescapedModel() {
+		return new DefinitionWrapper(_definition.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _definition.isCachedModel();
 	}
@@ -187,16 +197,6 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<Definition> toCacheModel() {
 		return _definition.toCacheModel();
-	}
-
-	@Override
-	public Definition toEscapedModel() {
-		return new DefinitionWrapper(_definition.toEscapedModel());
-	}
-
-	@Override
-	public Definition toUnescapedModel() {
-		return new DefinitionWrapper(_definition.toUnescapedModel());
 	}
 
 	@Override
@@ -871,7 +871,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 
 		DefinitionWrapper definitionWrapper = (DefinitionWrapper)obj;
 
-		if (Validator.equals(_definition, definitionWrapper._definition)) {
+		if (Objects.equals(_definition, definitionWrapper._definition)) {
 			return true;
 		}
 

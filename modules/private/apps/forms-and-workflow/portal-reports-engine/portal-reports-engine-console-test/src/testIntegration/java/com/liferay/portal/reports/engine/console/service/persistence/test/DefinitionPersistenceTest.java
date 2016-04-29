@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.service.DefinitionLocalServiceUtil;
@@ -57,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -465,7 +465,7 @@ public class DefinitionPersistenceTest {
 
 		Definition existingDefinition = _persistence.findByPrimaryKey(newDefinition.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(existingDefinition.getUuid(),
+		Assert.assertTrue(Objects.equals(existingDefinition.getUuid(),
 				ReflectionTestUtil.invoke(existingDefinition,
 					"getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(Long.valueOf(existingDefinition.getGroupId()),

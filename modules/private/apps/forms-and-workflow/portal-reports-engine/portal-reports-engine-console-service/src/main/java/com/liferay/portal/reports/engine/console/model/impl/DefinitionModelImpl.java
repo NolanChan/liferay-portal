@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.model.DefinitionModel;
 import com.liferay.portal.reports.engine.console.model.DefinitionSoap;
-import com.liferay.portal.reports.engine.console.service.util.ServiceProps;
 
 import java.io.Serializable;
 
@@ -122,13 +121,13 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(ServiceProps.get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.reports.engine.console.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.portal.reports.engine.console.model.Definition"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(ServiceProps.get(
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.reports.engine.console.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.reports.engine.console.model.Definition"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(ServiceProps.get(
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.reports.engine.console.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.reports.engine.console.model.Definition"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
@@ -187,7 +186,7 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(ServiceProps.get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.reports.engine.console.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.portal.reports.engine.console.model.Definition"));
 
 	public DefinitionModelImpl() {

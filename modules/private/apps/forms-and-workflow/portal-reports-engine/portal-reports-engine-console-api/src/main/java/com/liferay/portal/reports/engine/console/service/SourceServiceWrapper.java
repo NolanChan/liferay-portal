@@ -17,7 +17,6 @@ package com.liferay.portal.reports.engine.console.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.reports.engine.console.model.Source;
 
 /**
  * Provides a wrapper for {@link SourceService}.
@@ -34,34 +33,38 @@ public class SourceServiceWrapper implements SourceService,
 	}
 
 	@Override
-	public Source addSource(long groupId,
-	                        java.util.Map<java.util.Locale, java.lang.String> nameMap,
-	                        java.lang.String driverClassName, java.lang.String driverUrl,
-	                        java.lang.String driverUserName, java.lang.String driverPassword,
-	                        com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.portal.reports.engine.console.model.Source addSource(
+		long groupId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.lang.String driverClassName, java.lang.String driverUrl,
+		java.lang.String driverUserName, java.lang.String driverPassword,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceService.addSource(groupId, nameMap, driverClassName,
 			driverUrl, driverUserName, driverPassword, serviceContext);
 	}
 
 	@Override
-	public Source deleteSource(long sourceId)
+	public com.liferay.portal.reports.engine.console.model.Source deleteSource(
+		long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceService.deleteSource(sourceId);
 	}
 
 	@Override
-	public Source getSource(long sourceId)
+	public com.liferay.portal.reports.engine.console.model.Source getSource(
+		long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceService.getSource(sourceId);
 	}
 
 	@Override
-	public Source updateSource(long sourceId,
-	                           java.util.Map<java.util.Locale, java.lang.String> nameMap,
-	                           java.lang.String driverClassName, java.lang.String driverUrl,
-	                           java.lang.String driverUserName, java.lang.String driverPassword,
-	                           com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.portal.reports.engine.console.model.Source updateSource(
+		long sourceId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.lang.String driverClassName, java.lang.String driverUrl,
+		java.lang.String driverUserName, java.lang.String driverPassword,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sourceService.updateSource(sourceId, nameMap, driverClassName,
 			driverUrl, driverUserName, driverPassword, serviceContext);
@@ -85,7 +88,7 @@ public class SourceServiceWrapper implements SourceService,
 	}
 
 	@Override
-	public java.util.List<Source> getSources(
+	public java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSources(
 		long groupId, java.lang.String name, java.lang.String driverUrl,
 		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)

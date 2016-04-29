@@ -17,7 +17,6 @@ package com.liferay.portal.reports.engine.console.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.reports.engine.console.model.Entry;
 
 /**
  * Provides a wrapper for {@link EntryService}.
@@ -34,14 +33,14 @@ public class EntryServiceWrapper implements EntryService,
 	}
 
 	@Override
-	public Entry addEntry(long groupId,
-	                      long definitionId, java.lang.String format, boolean schedulerRequest,
-	                      java.util.Date startDate, java.util.Date endDate, boolean repeating,
-	                      java.lang.String recurrence, java.lang.String emailNotifications,
-	                      java.lang.String emailDelivery, java.lang.String portletId,
-	                      java.lang.String pageURL, java.lang.String reportName,
-	                      java.lang.String reportParameters,
-	                      com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.portal.reports.engine.console.model.Entry addEntry(
+		long groupId, long definitionId, java.lang.String format,
+		boolean schedulerRequest, java.util.Date startDate,
+		java.util.Date endDate, boolean repeating, java.lang.String recurrence,
+		java.lang.String emailNotifications, java.lang.String emailDelivery,
+		java.lang.String portletId, java.lang.String pageURL,
+		java.lang.String reportName, java.lang.String reportParameters,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _entryService.addEntry(groupId, definitionId, format,
 			schedulerRequest, startDate, endDate, repeating, recurrence,
@@ -50,7 +49,8 @@ public class EntryServiceWrapper implements EntryService,
 	}
 
 	@Override
-	public Entry deleteEntry(long entryId)
+	public com.liferay.portal.reports.engine.console.model.Entry deleteEntry(
+		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _entryService.deleteEntry(entryId);
 	}
@@ -74,7 +74,7 @@ public class EntryServiceWrapper implements EntryService,
 	}
 
 	@Override
-	public java.util.List<Entry> getEntries(
+	public java.util.List<com.liferay.portal.reports.engine.console.model.Entry> getEntries(
 		long groupId, java.lang.String definitionName,
 		java.lang.String userName, java.util.Date createDateGT,
 		java.util.Date createDateLT, boolean andSearch, int start, int end,

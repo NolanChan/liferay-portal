@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.reports.engine.console.exception.NoSuchSourceException;
 import com.liferay.portal.reports.engine.console.model.Source;
-import com.liferay.portal.reports.engine.console.service.persistence.impl.SourcePersistenceImpl;
 
 /**
  * The persistence interface for the source service.
@@ -29,7 +28,7 @@ import com.liferay.portal.reports.engine.console.service.persistence.impl.Source
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see SourcePersistenceImpl
+ * @see com.liferay.portal.reports.engine.console.service.persistence.impl.SourcePersistenceImpl
  * @see SourceUtil
  * @generated
  */

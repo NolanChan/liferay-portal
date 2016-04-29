@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.reports.engine.console.exception.NoSuchEntryException;
 import com.liferay.portal.reports.engine.console.model.Entry;
-import com.liferay.portal.reports.engine.console.service.persistence.EntryUtil;
 import com.liferay.portal.reports.engine.console.model.impl.EntryImpl;
 import com.liferay.portal.reports.engine.console.model.impl.EntryModelImpl;
 import com.liferay.portal.reports.engine.console.service.persistence.EntryPersistence;
@@ -61,7 +60,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see EntryPersistence
- * @see EntryUtil
+ * @see com.liferay.portal.reports.engine.console.service.persistence.EntryUtil
  * @generated
  */
 @ProviderType

@@ -19,16 +19,14 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
-import com.liferay.portal.reports.engine.console.model.impl.DefinitionImpl;
-import com.liferay.portal.reports.engine.console.model.impl.DefinitionModelImpl;
 
 /**
  * The extended model interface for the Definition service. Represents a row in the &quot;Definition&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see DefinitionModel
- * @see DefinitionImpl
- * @see DefinitionModelImpl
+ * @see com.liferay.portal.reports.engine.console.model.impl.DefinitionImpl
+ * @see com.liferay.portal.reports.engine.console.model.impl.DefinitionModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.portal.reports.engine.console.model.impl.DefinitionImpl")

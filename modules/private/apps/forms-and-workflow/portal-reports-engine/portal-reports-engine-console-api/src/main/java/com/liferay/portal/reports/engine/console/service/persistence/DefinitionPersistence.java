@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException;
 import com.liferay.portal.reports.engine.console.model.Definition;
-import com.liferay.portal.reports.engine.console.service.persistence.impl.DefinitionPersistenceImpl;
 
 /**
  * The persistence interface for the definition service.
@@ -29,7 +28,7 @@ import com.liferay.portal.reports.engine.console.service.persistence.impl.Defini
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see DefinitionPersistenceImpl
+ * @see com.liferay.portal.reports.engine.console.service.persistence.impl.DefinitionPersistenceImpl
  * @see DefinitionUtil
  * @generated
  */

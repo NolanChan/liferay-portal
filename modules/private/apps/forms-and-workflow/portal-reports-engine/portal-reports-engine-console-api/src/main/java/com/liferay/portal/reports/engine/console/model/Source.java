@@ -19,16 +19,14 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
-import com.liferay.portal.reports.engine.console.model.impl.SourceImpl;
-import com.liferay.portal.reports.engine.console.model.impl.SourceModelImpl;
 
 /**
  * The extended model interface for the Source service. Represents a row in the &quot;Source&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see SourceModel
- * @see SourceImpl
- * @see SourceModelImpl
+ * @see com.liferay.portal.reports.engine.console.model.impl.SourceImpl
+ * @see com.liferay.portal.reports.engine.console.model.impl.SourceModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.portal.reports.engine.console.model.impl.SourceImpl")

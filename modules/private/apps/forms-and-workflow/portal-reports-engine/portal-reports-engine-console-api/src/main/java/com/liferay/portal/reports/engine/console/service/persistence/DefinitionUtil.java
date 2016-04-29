@@ -21,16 +21,14 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException;
 import com.liferay.portal.reports.engine.console.model.Definition;
 
-import com.liferay.portal.reports.engine.console.service.persistence.impl.DefinitionPersistenceImpl;
 import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
 /**
- * The persistence utility for the definition service. This utility wraps {@link DefinitionPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the definition service. This utility wraps {@link com.liferay.portal.reports.engine.console.service.persistence.impl.DefinitionPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -38,7 +36,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see DefinitionPersistence
- * @see DefinitionPersistenceImpl
+ * @see com.liferay.portal.reports.engine.console.service.persistence.impl.DefinitionPersistenceImpl
  * @generated
  */
 @ProviderType
@@ -189,7 +187,7 @@ public class DefinitionUtil {
 	*/
 	public static Definition findByUuid_First(java.lang.String uuid,
 		OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -215,7 +213,7 @@ public class DefinitionUtil {
 	*/
 	public static Definition findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -242,7 +240,7 @@ public class DefinitionUtil {
 	*/
 	public static Definition[] findByUuid_PrevAndNext(long definitionId,
 		java.lang.String uuid, OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(definitionId, uuid, orderByComparator);
 	}
@@ -275,7 +273,7 @@ public class DefinitionUtil {
 	* @throws NoSuchDefinitionException if a matching definition could not be found
 	*/
 	public static Definition findByUUID_G(java.lang.String uuid, long groupId)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -311,7 +309,7 @@ public class DefinitionUtil {
 	* @return the definition that was removed
 	*/
 	public static Definition removeByUUID_G(java.lang.String uuid, long groupId)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -412,7 +410,7 @@ public class DefinitionUtil {
 	*/
 	public static Definition findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -442,7 +440,7 @@ public class DefinitionUtil {
 	*/
 	public static Definition findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -474,7 +472,7 @@ public class DefinitionUtil {
 	public static Definition[] findByUuid_C_PrevAndNext(long definitionId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(definitionId, uuid, companyId,
 			orderByComparator);
@@ -579,7 +577,7 @@ public class DefinitionUtil {
 	*/
 	public static Definition findByGroupId_First(long groupId,
 		OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -605,7 +603,7 @@ public class DefinitionUtil {
 	*/
 	public static Definition findByGroupId_Last(long groupId,
 		OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -632,7 +630,7 @@ public class DefinitionUtil {
 	*/
 	public static Definition[] findByGroupId_PrevAndNext(long definitionId,
 		long groupId, OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(definitionId, groupId,
 			orderByComparator);
@@ -696,7 +694,7 @@ public class DefinitionUtil {
 	public static Definition[] filterFindByGroupId_PrevAndNext(
 		long definitionId, long groupId,
 		OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(definitionId, groupId,
 			orderByComparator);
@@ -809,7 +807,7 @@ public class DefinitionUtil {
 	*/
 	public static Definition findByCompanyId_First(long companyId,
 		OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -837,7 +835,7 @@ public class DefinitionUtil {
 	*/
 	public static Definition findByCompanyId_Last(long companyId,
 		OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -866,7 +864,7 @@ public class DefinitionUtil {
 	*/
 	public static Definition[] findByCompanyId_PrevAndNext(long definitionId,
 		long companyId, OrderByComparator<Definition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(definitionId, companyId,
 			orderByComparator);
@@ -927,7 +925,7 @@ public class DefinitionUtil {
 	* @throws NoSuchDefinitionException if a definition with the primary key could not be found
 	*/
 	public static Definition remove(long definitionId)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence().remove(definitionId);
 	}
 
@@ -943,7 +941,7 @@ public class DefinitionUtil {
 	* @throws NoSuchDefinitionException if a definition with the primary key could not be found
 	*/
 	public static Definition findByPrimaryKey(long definitionId)
-		throws NoSuchDefinitionException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException {
 		return getPersistence().findByPrimaryKey(definitionId);
 	}
 

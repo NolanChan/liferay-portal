@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.reports.engine.console.model.Entry;
-import com.liferay.portal.reports.engine.console.model.EntrySoap;
 import com.liferay.portal.reports.engine.console.service.EntryServiceUtil;
 
 import java.rmi.RemoteException;
@@ -34,10 +32,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link EntrySoap}.
+ * is translated to an array of {@link com.liferay.portal.reports.engine.console.model.EntrySoap}.
  * If the method in the service utility returns a
- * {@link Entry}, that is translated to a
- * {@link EntrySoap}. Methods that SOAP cannot
+ * {@link com.liferay.portal.reports.engine.console.model.Entry}, that is translated to a
+ * {@link com.liferay.portal.reports.engine.console.model.EntrySoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -60,13 +58,13 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see EntryServiceHttp
- * @see EntrySoap
+ * @see com.liferay.portal.reports.engine.console.model.EntrySoap
  * @see EntryServiceUtil
  * @generated
  */
 @ProviderType
 public class EntryServiceSoap {
-	public static EntrySoap addEntry(
+	public static com.liferay.portal.reports.engine.console.model.EntrySoap addEntry(
 		long groupId, long definitionId, java.lang.String format,
 		boolean schedulerRequest, java.util.Date startDate,
 		java.util.Date endDate, boolean repeating, java.lang.String recurrence,
@@ -76,13 +74,13 @@ public class EntryServiceSoap {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			Entry returnValue = EntryServiceUtil.addEntry(groupId,
+			com.liferay.portal.reports.engine.console.model.Entry returnValue = EntryServiceUtil.addEntry(groupId,
 					definitionId, format, schedulerRequest, startDate, endDate,
 					repeating, recurrence, emailNotifications, emailDelivery,
 					portletId, pageURL, reportName, reportParameters,
 					serviceContext);
 
-			return EntrySoap.toSoapModel(returnValue);
+			return com.liferay.portal.reports.engine.console.model.EntrySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -103,12 +101,12 @@ public class EntryServiceSoap {
 		}
 	}
 
-	public static EntrySoap deleteEntry(
+	public static com.liferay.portal.reports.engine.console.model.EntrySoap deleteEntry(
 		long entryId) throws RemoteException {
 		try {
-			Entry returnValue = EntryServiceUtil.deleteEntry(entryId);
+			com.liferay.portal.reports.engine.console.model.Entry returnValue = EntryServiceUtil.deleteEntry(entryId);
 
-			return EntrySoap.toSoapModel(returnValue);
+			return com.liferay.portal.reports.engine.console.model.EntrySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -117,18 +115,19 @@ public class EntryServiceSoap {
 		}
 	}
 
-	public static EntrySoap[] getEntries(
+	public static com.liferay.portal.reports.engine.console.model.EntrySoap[] getEntries(
 		long groupId, java.lang.String definitionName,
 		java.lang.String userName, java.util.Date createDateGT,
 		java.util.Date createDateLT, boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws RemoteException {
 		try {
-			java.util.List<Entry> returnValue = EntryServiceUtil.getEntries(groupId,
-					definitionName, userName, createDateGT, createDateLT,
-					andSearch, start, end, orderByComparator);
+			java.util.List<com.liferay.portal.reports.engine.console.model.Entry> returnValue =
+				EntryServiceUtil.getEntries(groupId, definitionName, userName,
+					createDateGT, createDateLT, andSearch, start, end,
+					orderByComparator);
 
-			return EntrySoap.toSoapModels(returnValue);
+			return com.liferay.portal.reports.engine.console.model.EntrySoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.reports.engine.console.exception.NoSuchEntryException;
 import com.liferay.portal.reports.engine.console.model.Entry;
-import com.liferay.portal.reports.engine.console.service.persistence.impl.EntryPersistenceImpl;
 
 /**
  * The persistence interface for the entry service.
@@ -29,7 +28,7 @@ import com.liferay.portal.reports.engine.console.service.persistence.impl.EntryP
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see EntryPersistenceImpl
+ * @see com.liferay.portal.reports.engine.console.service.persistence.impl.EntryPersistenceImpl
  * @see EntryUtil
  * @generated
  */

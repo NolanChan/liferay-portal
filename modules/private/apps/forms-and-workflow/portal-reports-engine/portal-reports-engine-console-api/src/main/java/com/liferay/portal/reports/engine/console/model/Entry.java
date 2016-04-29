@@ -19,16 +19,14 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
-import com.liferay.portal.reports.engine.console.model.impl.EntryImpl;
-import com.liferay.portal.reports.engine.console.model.impl.EntryModelImpl;
 
 /**
  * The extended model interface for the Entry service. Represents a row in the &quot;Entry&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see EntryModel
- * @see EntryImpl
- * @see EntryModelImpl
+ * @see com.liferay.portal.reports.engine.console.model.impl.EntryImpl
+ * @see com.liferay.portal.reports.engine.console.model.impl.EntryModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.portal.reports.engine.console.model.impl.EntryImpl")

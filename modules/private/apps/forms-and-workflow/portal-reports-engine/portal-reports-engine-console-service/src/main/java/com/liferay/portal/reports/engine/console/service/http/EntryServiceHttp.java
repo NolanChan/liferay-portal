@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.reports.engine.console.model.Entry;
 import com.liferay.portal.reports.engine.console.service.EntryServiceUtil;
 
 /**
@@ -55,7 +54,7 @@ import com.liferay.portal.reports.engine.console.service.EntryServiceUtil;
  */
 @ProviderType
 public class EntryServiceHttp {
-	public static Entry addEntry(
+	public static com.liferay.portal.reports.engine.console.model.Entry addEntry(
 		HttpPrincipal httpPrincipal, long groupId, long definitionId,
 		java.lang.String format, boolean schedulerRequest,
 		java.util.Date startDate, java.util.Date endDate, boolean repeating,
@@ -88,7 +87,7 @@ public class EntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (Entry)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Entry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -125,7 +124,7 @@ public class EntryServiceHttp {
 		}
 	}
 
-	public static Entry deleteEntry(
+	public static com.liferay.portal.reports.engine.console.model.Entry deleteEntry(
 		HttpPrincipal httpPrincipal, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -147,7 +146,7 @@ public class EntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (Entry)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Entry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -156,7 +155,7 @@ public class EntryServiceHttp {
 		}
 	}
 
-	public static java.util.List<Entry> getEntries(
+	public static java.util.List<com.liferay.portal.reports.engine.console.model.Entry> getEntries(
 		HttpPrincipal httpPrincipal, long groupId,
 		java.lang.String definitionName, java.lang.String userName,
 		java.util.Date createDateGT, java.util.Date createDateLT,
@@ -184,7 +183,7 @@ public class EntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<Entry>)returnObj;
+			return (java.util.List<com.liferay.portal.reports.engine.console.model.Entry>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

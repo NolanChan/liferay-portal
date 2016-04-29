@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.engine.console.exception.NoSuchSourceException;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.SourceLocalServiceUtil;
@@ -57,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -455,7 +455,7 @@ public class SourcePersistenceTest {
 
 		Source existingSource = _persistence.findByPrimaryKey(newSource.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(existingSource.getUuid(),
+		Assert.assertTrue(Objects.equals(existingSource.getUuid(),
 				ReflectionTestUtil.invoke(existingSource, "getOriginalUuid",
 					new Class<?>[0])));
 		Assert.assertEquals(Long.valueOf(existingSource.getGroupId()),

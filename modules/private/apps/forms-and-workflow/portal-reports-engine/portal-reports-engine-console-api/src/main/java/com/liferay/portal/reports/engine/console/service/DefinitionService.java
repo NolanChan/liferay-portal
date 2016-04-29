@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.reports.engine.console.model.Definition;
-import com.liferay.portal.reports.engine.console.service.base.DefinitionServiceBaseImpl;
-import com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl;
 
 import java.io.InputStream;
 
@@ -44,8 +42,8 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see DefinitionServiceUtil
- * @see DefinitionServiceBaseImpl
- * @see DefinitionServiceImpl
+ * @see com.liferay.portal.reports.engine.console.service.base.DefinitionServiceBaseImpl
+ * @see com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl
  * @generated
  */
 @AccessControlled

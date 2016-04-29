@@ -21,16 +21,14 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.reports.engine.console.exception.NoSuchSourceException;
 import com.liferay.portal.reports.engine.console.model.Source;
 
-import com.liferay.portal.reports.engine.console.service.persistence.impl.SourcePersistenceImpl;
 import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
 /**
- * The persistence utility for the source service. This utility wraps {@link SourcePersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the source service. This utility wraps {@link com.liferay.portal.reports.engine.console.service.persistence.impl.SourcePersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -38,7 +36,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see SourcePersistence
- * @see SourcePersistenceImpl
+ * @see com.liferay.portal.reports.engine.console.service.persistence.impl.SourcePersistenceImpl
  * @generated
  */
 @ProviderType
@@ -186,7 +184,7 @@ public class SourceUtil {
 	*/
 	public static Source findByUuid_First(java.lang.String uuid,
 		OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -212,7 +210,7 @@ public class SourceUtil {
 	*/
 	public static Source findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -239,7 +237,7 @@ public class SourceUtil {
 	*/
 	public static Source[] findByUuid_PrevAndNext(long sourceId,
 		java.lang.String uuid, OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(sourceId, uuid, orderByComparator);
 	}
@@ -272,7 +270,7 @@ public class SourceUtil {
 	* @throws NoSuchSourceException if a matching source could not be found
 	*/
 	public static Source findByUUID_G(java.lang.String uuid, long groupId)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -308,7 +306,7 @@ public class SourceUtil {
 	* @return the source that was removed
 	*/
 	public static Source removeByUUID_G(java.lang.String uuid, long groupId)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -408,7 +406,7 @@ public class SourceUtil {
 	*/
 	public static Source findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -438,7 +436,7 @@ public class SourceUtil {
 	*/
 	public static Source findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -470,7 +468,7 @@ public class SourceUtil {
 	public static Source[] findByUuid_C_PrevAndNext(long sourceId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(sourceId, uuid, companyId,
 			orderByComparator);
@@ -573,7 +571,7 @@ public class SourceUtil {
 	*/
 	public static Source findByGroupId_First(long groupId,
 		OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -599,7 +597,7 @@ public class SourceUtil {
 	*/
 	public static Source findByGroupId_Last(long groupId,
 		OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -626,7 +624,7 @@ public class SourceUtil {
 	*/
 	public static Source[] findByGroupId_PrevAndNext(long sourceId,
 		long groupId, OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(sourceId, groupId,
 			orderByComparator);
@@ -689,7 +687,7 @@ public class SourceUtil {
 	*/
 	public static Source[] filterFindByGroupId_PrevAndNext(long sourceId,
 		long groupId, OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(sourceId, groupId,
 			orderByComparator);
@@ -802,7 +800,7 @@ public class SourceUtil {
 	*/
 	public static Source findByCompanyId_First(long companyId,
 		OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -830,7 +828,7 @@ public class SourceUtil {
 	*/
 	public static Source findByCompanyId_Last(long companyId,
 		OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -859,7 +857,7 @@ public class SourceUtil {
 	*/
 	public static Source[] findByCompanyId_PrevAndNext(long sourceId,
 		long companyId, OrderByComparator<Source> orderByComparator)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(sourceId, companyId,
 			orderByComparator);
@@ -920,7 +918,7 @@ public class SourceUtil {
 	* @throws NoSuchSourceException if a source with the primary key could not be found
 	*/
 	public static Source remove(long sourceId)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence().remove(sourceId);
 	}
 
@@ -936,7 +934,7 @@ public class SourceUtil {
 	* @throws NoSuchSourceException if a source with the primary key could not be found
 	*/
 	public static Source findByPrimaryKey(long sourceId)
-		throws NoSuchSourceException {
+		throws com.liferay.portal.reports.engine.console.exception.NoSuchSourceException {
 		return getPersistence().findByPrimaryKey(sourceId);
 	}
 

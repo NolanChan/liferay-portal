@@ -17,7 +17,6 @@ package com.liferay.portal.reports.engine.console.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.reports.engine.console.model.Definition;
 
 /**
  * Provides a wrapper for {@link DefinitionService}.
@@ -34,7 +33,7 @@ public class DefinitionServiceWrapper implements DefinitionService,
 	}
 
 	@Override
-	public Definition addDefinition(
+	public com.liferay.portal.reports.engine.console.model.Definition addDefinition(
 		long groupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -48,21 +47,21 @@ public class DefinitionServiceWrapper implements DefinitionService,
 	}
 
 	@Override
-	public Definition deleteDefinition(
+	public com.liferay.portal.reports.engine.console.model.Definition deleteDefinition(
 		long definitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definitionService.deleteDefinition(definitionId);
 	}
 
 	@Override
-	public Definition getDefinition(
+	public com.liferay.portal.reports.engine.console.model.Definition getDefinition(
 		long definitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _definitionService.getDefinition(definitionId);
 	}
 
 	@Override
-	public Definition updateDefinition(
+	public com.liferay.portal.reports.engine.console.model.Definition updateDefinition(
 		long definitionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -95,7 +94,7 @@ public class DefinitionServiceWrapper implements DefinitionService,
 	}
 
 	@Override
-	public java.util.List<Definition> getDefinitions(
+	public java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitions(
 		long groupId, java.lang.String definitionName,
 		java.lang.String description, java.lang.String sourceId,
 		java.lang.String reportName, boolean andSearch, int start, int end,

@@ -18,14 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 
-import com.liferay.portal.reports.engine.console.model.Source;
-import com.liferay.portal.reports.engine.console.service.base.SourceServiceBaseImpl;
-import com.liferay.portal.reports.engine.console.service.impl.SourceServiceImpl;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for Source. This utility wraps
- * {@link SourceServiceImpl} and is the
+ * {@link com.liferay.portal.reports.engine.console.service.impl.SourceServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on a remote server. Methods of this service are expected to have security
  * checks based on the propagated JAAS credentials because this service can be
@@ -33,8 +30,8 @@ import org.osgi.util.tracker.ServiceTracker;
  *
  * @author Brian Wing Shun Chan
  * @see SourceService
- * @see SourceServiceBaseImpl
- * @see SourceServiceImpl
+ * @see com.liferay.portal.reports.engine.console.service.base.SourceServiceBaseImpl
+ * @see com.liferay.portal.reports.engine.console.service.impl.SourceServiceImpl
  * @generated
  */
 @ProviderType
@@ -44,7 +41,7 @@ public class SourceServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.reports.engine.console.service.impl.SourceServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static Source addSource(
+	public static com.liferay.portal.reports.engine.console.model.Source addSource(
 		long groupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String driverClassName, java.lang.String driverUrl,
@@ -56,19 +53,19 @@ public class SourceServiceUtil {
 			driverUserName, driverPassword, serviceContext);
 	}
 
-	public static Source deleteSource(
+	public static com.liferay.portal.reports.engine.console.model.Source deleteSource(
 		long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSource(sourceId);
 	}
 
-	public static Source getSource(
+	public static com.liferay.portal.reports.engine.console.model.Source getSource(
 		long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSource(sourceId);
 	}
 
-	public static Source updateSource(
+	public static com.liferay.portal.reports.engine.console.model.Source updateSource(
 		long sourceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String driverClassName, java.lang.String driverUrl,
@@ -94,7 +91,7 @@ public class SourceServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<Source> getSources(
+	public static java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSources(
 		long groupId, java.lang.String name, java.lang.String driverUrl,
 		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)

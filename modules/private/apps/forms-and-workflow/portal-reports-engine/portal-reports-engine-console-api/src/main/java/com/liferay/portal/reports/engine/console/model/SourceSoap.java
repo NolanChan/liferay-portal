@@ -15,7 +15,6 @@
 package com.liferay.portal.reports.engine.console.model;
 
 import aQute.bnd.annotation.ProviderType;
-import com.liferay.portal.reports.engine.console.service.http.SourceServiceSoap;
 
 import java.io.Serializable;
 
@@ -24,10 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link SourceServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.portal.reports.engine.console.service.http.SourceServiceSoap}.
  *
  * @author Brian Wing Shun Chan
- * @see SourceServiceSoap
+ * @see com.liferay.portal.reports.engine.console.service.http.SourceServiceSoap
  * @generated
  */
 @ProviderType

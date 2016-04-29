@@ -18,14 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 
-import com.liferay.portal.reports.engine.console.model.Entry;
-import com.liferay.portal.reports.engine.console.service.base.EntryServiceBaseImpl;
-import com.liferay.portal.reports.engine.console.service.impl.EntryServiceImpl;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for Entry. This utility wraps
- * {@link EntryServiceImpl} and is the
+ * {@link com.liferay.portal.reports.engine.console.service.impl.EntryServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on a remote server. Methods of this service are expected to have security
  * checks based on the propagated JAAS credentials because this service can be
@@ -33,8 +30,8 @@ import org.osgi.util.tracker.ServiceTracker;
  *
  * @author Brian Wing Shun Chan
  * @see EntryService
- * @see EntryServiceBaseImpl
- * @see EntryServiceImpl
+ * @see com.liferay.portal.reports.engine.console.service.base.EntryServiceBaseImpl
+ * @see com.liferay.portal.reports.engine.console.service.impl.EntryServiceImpl
  * @generated
  */
 @ProviderType
@@ -44,7 +41,7 @@ public class EntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.reports.engine.console.service.impl.EntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static Entry addEntry(
+	public static com.liferay.portal.reports.engine.console.model.Entry addEntry(
 		long groupId, long definitionId, java.lang.String format,
 		boolean schedulerRequest, java.util.Date startDate,
 		java.util.Date endDate, boolean repeating, java.lang.String recurrence,
@@ -60,7 +57,7 @@ public class EntryServiceUtil {
 			serviceContext);
 	}
 
-	public static Entry deleteEntry(
+	public static com.liferay.portal.reports.engine.console.model.Entry deleteEntry(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteEntry(entryId);
@@ -84,7 +81,7 @@ public class EntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<Entry> getEntries(
+	public static java.util.List<com.liferay.portal.reports.engine.console.model.Entry> getEntries(
 		long groupId, java.lang.String definitionName,
 		java.lang.String userName, java.util.Date createDateGT,
 		java.util.Date createDateLT, boolean andSearch, int start, int end,

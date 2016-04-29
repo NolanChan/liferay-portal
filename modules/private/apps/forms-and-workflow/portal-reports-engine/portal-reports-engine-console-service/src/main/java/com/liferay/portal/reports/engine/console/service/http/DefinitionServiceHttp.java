@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil;
 
 /**
@@ -55,7 +54,7 @@ import com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil;
  */
 @ProviderType
 public class DefinitionServiceHttp {
-	public static Definition addDefinition(
+	public static com.liferay.portal.reports.engine.console.model.Definition addDefinition(
 		HttpPrincipal httpPrincipal, long groupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -84,7 +83,7 @@ public class DefinitionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (Definition)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Definition)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -93,7 +92,7 @@ public class DefinitionServiceHttp {
 		}
 	}
 
-	public static Definition deleteDefinition(
+	public static com.liferay.portal.reports.engine.console.model.Definition deleteDefinition(
 		HttpPrincipal httpPrincipal, long definitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -116,7 +115,7 @@ public class DefinitionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (Definition)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Definition)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -125,7 +124,7 @@ public class DefinitionServiceHttp {
 		}
 	}
 
-	public static Definition getDefinition(
+	public static com.liferay.portal.reports.engine.console.model.Definition getDefinition(
 		HttpPrincipal httpPrincipal, long definitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -148,7 +147,7 @@ public class DefinitionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (Definition)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Definition)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -157,7 +156,7 @@ public class DefinitionServiceHttp {
 		}
 	}
 
-	public static java.util.List<Definition> getDefinitions(
+	public static java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitions(
 		HttpPrincipal httpPrincipal, long groupId,
 		java.lang.String definitionName, java.lang.String description,
 		java.lang.String sourceId, java.lang.String reportName,
@@ -185,7 +184,7 @@ public class DefinitionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<Definition>)returnObj;
+			return (java.util.List<com.liferay.portal.reports.engine.console.model.Definition>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -223,7 +222,7 @@ public class DefinitionServiceHttp {
 		}
 	}
 
-	public static Definition updateDefinition(
+	public static com.liferay.portal.reports.engine.console.model.Definition updateDefinition(
 		HttpPrincipal httpPrincipal, long definitionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -252,7 +251,7 @@ public class DefinitionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (Definition)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Definition)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

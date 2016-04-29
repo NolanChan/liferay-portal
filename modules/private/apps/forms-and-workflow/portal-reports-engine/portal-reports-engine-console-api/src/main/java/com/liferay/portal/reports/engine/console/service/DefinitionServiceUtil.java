@@ -18,14 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 
-import com.liferay.portal.reports.engine.console.model.Definition;
-import com.liferay.portal.reports.engine.console.service.base.DefinitionServiceBaseImpl;
-import com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for Definition. This utility wraps
- * {@link DefinitionServiceImpl} and is the
+ * {@link com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on a remote server. Methods of this service are expected to have security
  * checks based on the propagated JAAS credentials because this service can be
@@ -33,8 +30,8 @@ import org.osgi.util.tracker.ServiceTracker;
  *
  * @author Brian Wing Shun Chan
  * @see DefinitionService
- * @see DefinitionServiceBaseImpl
- * @see DefinitionServiceImpl
+ * @see com.liferay.portal.reports.engine.console.service.base.DefinitionServiceBaseImpl
+ * @see com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl
  * @generated
  */
 @ProviderType
@@ -44,7 +41,7 @@ public class DefinitionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static Definition addDefinition(
+	public static com.liferay.portal.reports.engine.console.model.Definition addDefinition(
 		long groupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -57,19 +54,19 @@ public class DefinitionServiceUtil {
 			reportParameters, fileName, inputStream, serviceContext);
 	}
 
-	public static Definition deleteDefinition(
+	public static com.liferay.portal.reports.engine.console.model.Definition deleteDefinition(
 		long definitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteDefinition(definitionId);
 	}
 
-	public static Definition getDefinition(
+	public static com.liferay.portal.reports.engine.console.model.Definition getDefinition(
 		long definitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDefinition(definitionId);
 	}
 
-	public static Definition updateDefinition(
+	public static com.liferay.portal.reports.engine.console.model.Definition updateDefinition(
 		long definitionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -100,7 +97,7 @@ public class DefinitionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<Definition> getDefinitions(
+	public static java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitions(
 		long groupId, java.lang.String definitionName,
 		java.lang.String description, java.lang.String sourceId,
 		java.lang.String reportName, boolean andSearch, int start, int end,

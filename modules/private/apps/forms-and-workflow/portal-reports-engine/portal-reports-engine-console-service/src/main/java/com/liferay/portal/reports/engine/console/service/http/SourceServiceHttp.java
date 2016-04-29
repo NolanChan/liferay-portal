@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.SourceServiceUtil;
 
 /**
@@ -55,7 +54,7 @@ import com.liferay.portal.reports.engine.console.service.SourceServiceUtil;
  */
 @ProviderType
 public class SourceServiceHttp {
-	public static Source addSource(
+	public static com.liferay.portal.reports.engine.console.model.Source addSource(
 		HttpPrincipal httpPrincipal, long groupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String driverClassName, java.lang.String driverUrl,
@@ -83,7 +82,7 @@ public class SourceServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (Source)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Source)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -92,7 +91,7 @@ public class SourceServiceHttp {
 		}
 	}
 
-	public static Source deleteSource(
+	public static com.liferay.portal.reports.engine.console.model.Source deleteSource(
 		HttpPrincipal httpPrincipal, long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -114,7 +113,7 @@ public class SourceServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (Source)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Source)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -123,7 +122,7 @@ public class SourceServiceHttp {
 		}
 	}
 
-	public static Source getSource(
+	public static com.liferay.portal.reports.engine.console.model.Source getSource(
 		HttpPrincipal httpPrincipal, long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -145,7 +144,7 @@ public class SourceServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (Source)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Source)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -154,7 +153,7 @@ public class SourceServiceHttp {
 		}
 	}
 
-	public static java.util.List<Source> getSources(
+	public static java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSources(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
 		java.lang.String driverUrl, boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -179,7 +178,7 @@ public class SourceServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<Source>)returnObj;
+			return (java.util.List<com.liferay.portal.reports.engine.console.model.Source>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -216,7 +215,7 @@ public class SourceServiceHttp {
 		}
 	}
 
-	public static Source updateSource(
+	public static com.liferay.portal.reports.engine.console.model.Source updateSource(
 		HttpPrincipal httpPrincipal, long sourceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String driverClassName, java.lang.String driverUrl,
@@ -244,7 +243,7 @@ public class SourceServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (Source)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Source)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

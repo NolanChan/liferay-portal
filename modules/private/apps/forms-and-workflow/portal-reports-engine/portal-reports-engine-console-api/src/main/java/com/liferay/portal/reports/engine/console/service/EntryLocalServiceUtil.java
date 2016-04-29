@@ -18,16 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 
-import com.liferay.portal.reports.engine.console.model.Entry;
-import com.liferay.portal.reports.engine.console.model.impl.EntryModelImpl;
-import com.liferay.portal.reports.engine.console.service.base.EntryLocalServiceBaseImpl;
-import com.liferay.portal.reports.engine.console.service.impl.EntryLocalServiceImpl;
-import com.liferay.portal.reports.engine.console.status.ReportStatus;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for Entry. This utility wraps
- * {@link EntryLocalServiceImpl} and is the
+ * {@link com.liferay.portal.reports.engine.console.service.impl.EntryLocalServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on the local server. Methods of this service will not have security checks
  * based on the propagated JAAS credentials because this service can only be
@@ -35,8 +30,8 @@ import org.osgi.util.tracker.ServiceTracker;
  *
  * @author Brian Wing Shun Chan
  * @see EntryLocalService
- * @see EntryLocalServiceBaseImpl
- * @see EntryLocalServiceImpl
+ * @see com.liferay.portal.reports.engine.console.service.base.EntryLocalServiceBaseImpl
+ * @see com.liferay.portal.reports.engine.console.service.impl.EntryLocalServiceImpl
  * @generated
  */
 @ProviderType
@@ -79,19 +74,19 @@ public class EntryLocalServiceUtil {
 	* @param entry the entry
 	* @return the entry that was added
 	*/
-	public static Entry addEntry(
-		Entry entry) {
+	public static com.liferay.portal.reports.engine.console.model.Entry addEntry(
+		com.liferay.portal.reports.engine.console.model.Entry entry) {
 		return getService().addEntry(entry);
 	}
 
-	public static Entry addEntry(long userId,
-	                             long groupId, long definitionId, java.lang.String format,
-	                             boolean schedulerRequest, java.util.Date startDate,
-	                             java.util.Date endDate, boolean repeating, java.lang.String recurrence,
-	                             java.lang.String emailNotifications, java.lang.String emailDelivery,
-	                             java.lang.String portletId, java.lang.String pageURL,
-	                             java.lang.String reportName, java.lang.String reportParameters,
-	                             com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.portal.reports.engine.console.model.Entry addEntry(
+		long userId, long groupId, long definitionId, java.lang.String format,
+		boolean schedulerRequest, java.util.Date startDate,
+		java.util.Date endDate, boolean repeating, java.lang.String recurrence,
+		java.lang.String emailNotifications, java.lang.String emailDelivery,
+		java.lang.String portletId, java.lang.String pageURL,
+		java.lang.String reportName, java.lang.String reportParameters,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addEntry(userId, groupId, definitionId, format,
@@ -106,7 +101,7 @@ public class EntryLocalServiceUtil {
 	* @param entryId the primary key for the new entry
 	* @return the new entry
 	*/
-	public static Entry createEntry(
+	public static com.liferay.portal.reports.engine.console.model.Entry createEntry(
 		long entryId) {
 		return getService().createEntry(entryId);
 	}
@@ -118,8 +113,8 @@ public class EntryLocalServiceUtil {
 	* @return the entry that was removed
 	* @throws PortalException
 	*/
-	public static Entry deleteEntry(
-		Entry entry)
+	public static com.liferay.portal.reports.engine.console.model.Entry deleteEntry(
+		com.liferay.portal.reports.engine.console.model.Entry entry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteEntry(entry);
 	}
@@ -131,13 +126,13 @@ public class EntryLocalServiceUtil {
 	* @return the entry that was removed
 	* @throws PortalException if a entry with the primary key could not be found
 	*/
-	public static Entry deleteEntry(
+	public static com.liferay.portal.reports.engine.console.model.Entry deleteEntry(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteEntry(entryId);
 	}
 
-	public static Entry fetchEntry(
+	public static com.liferay.portal.reports.engine.console.model.Entry fetchEntry(
 		long entryId) {
 		return getService().fetchEntry(entryId);
 	}
@@ -149,7 +144,8 @@ public class EntryLocalServiceUtil {
 	* @return the entry
 	* @throws PortalException if a entry with the primary key could not be found
 	*/
-	public static Entry getEntry(long entryId)
+	public static com.liferay.portal.reports.engine.console.model.Entry getEntry(
+		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getEntry(entryId);
 	}
@@ -160,8 +156,8 @@ public class EntryLocalServiceUtil {
 	* @param entry the entry
 	* @return the entry that was updated
 	*/
-	public static Entry updateEntry(
-		Entry entry) {
+	public static com.liferay.portal.reports.engine.console.model.Entry updateEntry(
+		com.liferay.portal.reports.engine.console.model.Entry entry) {
 		return getService().updateEntry(entry);
 	}
 
@@ -207,7 +203,7 @@ public class EntryLocalServiceUtil {
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link EntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.reports.engine.console.model.impl.EntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -225,7 +221,7 @@ public class EntryLocalServiceUtil {
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link EntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.reports.engine.console.model.impl.EntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -246,19 +242,19 @@ public class EntryLocalServiceUtil {
 	* Returns a range of all the entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link EntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.reports.engine.console.model.impl.EntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of entries
 	* @param end the upper bound of the range of entries (not inclusive)
 	* @return the range of entries
 	*/
-	public static java.util.List<Entry> getEntries(
+	public static java.util.List<com.liferay.portal.reports.engine.console.model.Entry> getEntries(
 		int start, int end) {
 		return getService().getEntries(start, end);
 	}
 
-	public static java.util.List<Entry> getEntries(
+	public static java.util.List<com.liferay.portal.reports.engine.console.model.Entry> getEntries(
 		long groupId, java.lang.String definitionName,
 		java.lang.String userName, java.util.Date createDateGT,
 		java.util.Date createDateLT, boolean andSearch, int start, int end,
@@ -293,7 +289,7 @@ public class EntryLocalServiceUtil {
 	}
 
 	public static void addEntryResources(
-		Entry entry,
+		com.liferay.portal.reports.engine.console.model.Entry entry,
 		boolean addCommunityPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
@@ -302,7 +298,7 @@ public class EntryLocalServiceUtil {
 	}
 
 	public static void addEntryResources(
-		Entry entry,
+		com.liferay.portal.reports.engine.console.model.Entry entry,
 		java.lang.String[] communityPermissions,
 		java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -344,7 +340,7 @@ public class EntryLocalServiceUtil {
 	}
 
 	public static void updateEntryStatus(long entryId,
-		ReportStatus status,
+		com.liferay.portal.reports.engine.console.status.ReportStatus status,
 		java.lang.String errorMessage)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateEntryStatus(entryId, status, errorMessage);
