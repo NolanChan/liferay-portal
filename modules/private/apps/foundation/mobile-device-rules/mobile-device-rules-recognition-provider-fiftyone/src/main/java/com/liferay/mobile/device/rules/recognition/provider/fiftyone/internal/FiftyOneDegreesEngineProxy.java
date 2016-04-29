@@ -15,6 +15,7 @@
 package com.liferay.mobile.device.rules.recognition.provider.fiftyone.internal;
 
 import com.liferay.mobile.device.rules.recognition.provider.fiftyone.configuration.FiftyOneDegreesConfiguration;
+import com.liferay.mobile.device.rules.recognition.provider.fiftyone.internal.constants.FiftyOneDegreesConstants;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.recognition.provider.fiftyone.internal;
+package com.liferay.mobile.device.rules.recognition.provider.fiftyone.internal.constants;
 
 /**
  * @author Brian Greenwald
  * @author Prathima Shreenath
  */
-public class FiftyOneDegreesConstants {
+public class FiftyOneDegreesPropertyConstants {
 
 	public static final String BROWSER_NAME = "BrowserName";
 
@@ -52,9 +52,5 @@ public class FiftyOneDegreesConstants {
 		"HasClickWheel", "HasKeypad", "HasQwertyPad", "HasTouchScreen",
 		"HasTrackPad"
 	};
-
-	public static final String UNKNOWN = "unknown";
-
-	public static final String USER_AGENT = "User-Agent";
 
 }

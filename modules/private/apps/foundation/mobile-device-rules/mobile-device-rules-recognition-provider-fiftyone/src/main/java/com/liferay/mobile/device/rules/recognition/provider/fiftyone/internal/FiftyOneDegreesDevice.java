@@ -14,6 +14,8 @@
 
 package com.liferay.mobile.device.rules.recognition.provider.fiftyone.internal;
 
+import com.liferay.mobile.device.rules.recognition.provider.fiftyone.internal.constants.FiftyOneDegreesConstants;
+import com.liferay.mobile.device.rules.recognition.provider.fiftyone.internal.constants.FiftyOneDegreesPropertyConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.AbstractDevice;
@@ -40,17 +42,17 @@ public class FiftyOneDegreesDevice extends AbstractDevice {
 
 	@Override
 	public String getBrand() {
-		return getValue(FiftyOneDegreesConstants.HARDWARE_VENDOR);
+		return getValue(FiftyOneDegreesPropertyConstants.HARDWARE_VENDOR);
 	}
 
 	@Override
 	public String getBrowser() {
-		return getValue(FiftyOneDegreesConstants.BROWSER_NAME);
+		return getValue(FiftyOneDegreesPropertyConstants.BROWSER_NAME);
 	}
 
 	@Override
 	public String getBrowserVersion() {
-		return getValue(FiftyOneDegreesConstants.BROWSER_VERSION);
+		return getValue(FiftyOneDegreesPropertyConstants.BROWSER_VERSION);
 	}
 
 	/**
@@ -73,22 +75,24 @@ public class FiftyOneDegreesDevice extends AbstractDevice {
 
 	@Override
 	public String getModel() {
-		return getValue(FiftyOneDegreesConstants.HARDWARE_MODEL);
+		return getValue(FiftyOneDegreesPropertyConstants.HARDWARE_MODEL);
 	}
 
 	@Override
 	public String getOS() {
-		return getValue(FiftyOneDegreesConstants.PLATFORM_NAME);
+		return getValue(FiftyOneDegreesPropertyConstants.PLATFORM_NAME);
 	}
 
 	@Override
 	public String getOSVersion() {
-		return getValue(FiftyOneDegreesConstants.PLATFORM_VERSION);
+		return getValue(FiftyOneDegreesPropertyConstants.PLATFORM_VERSION);
 	}
 
 	@Override
 	public String getPointingMethod() {
-		for (String pointingMethod : FiftyOneDegreesConstants.TOUCH_EVENTS) {
+		for (String pointingMethod :
+				FiftyOneDegreesPropertyConstants.TOUCH_EVENTS) {
+
 			boolean hasPointingMethod = getBoolean(pointingMethod);
 
 			if (hasPointingMethod) {
@@ -102,30 +106,30 @@ public class FiftyOneDegreesDevice extends AbstractDevice {
 	@Override
 	public Dimensions getScreenPhysicalSize() {
 		return getDimensions(
-			FiftyOneDegreesConstants.SCREEN_MM_HEIGHT,
-			FiftyOneDegreesConstants.SCREEN_MM_WIDTH);
+			FiftyOneDegreesPropertyConstants.SCREEN_MM_HEIGHT,
+			FiftyOneDegreesPropertyConstants.SCREEN_MM_WIDTH);
 	}
 
 	@Override
 	public Dimensions getScreenResolution() {
 		return getDimensions(
-			FiftyOneDegreesConstants.SCREEN_PIXELS_HEIGHT,
-			FiftyOneDegreesConstants.SCREEN_PIXELS_WIDTH);
+			FiftyOneDegreesPropertyConstants.SCREEN_PIXELS_HEIGHT,
+			FiftyOneDegreesPropertyConstants.SCREEN_PIXELS_WIDTH);
 	}
 
 	@Override
 	public boolean hasQwertyKeyboard() {
 		boolean hasPhysicalQwerty = getBoolean(
-			FiftyOneDegreesConstants.HAS_QWERTY_PAD);
+			FiftyOneDegreesPropertyConstants.HAS_QWERTY_PAD);
 		boolean hasVirtualQwerty = getBoolean(
-			FiftyOneDegreesConstants.HAS_VIRTUAL_QWERTY);
+			FiftyOneDegreesPropertyConstants.HAS_VIRTUAL_QWERTY);
 
 		return (hasPhysicalQwerty || hasVirtualQwerty);
 	}
 
 	@Override
 	public boolean isTablet() {
-		return getBoolean(FiftyOneDegreesConstants.IS_TABLET);
+		return getBoolean(FiftyOneDegreesPropertyConstants.IS_TABLET);
 	}
 
 	protected boolean getBoolean(String property) {
