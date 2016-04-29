@@ -43,11 +43,11 @@ public class KaleoDraftDefinitionCreateDateComparator
 	@Override
 	public int compare(
 		KaleoDraftDefinition kaleoDraftDefinition1,
-		KaleoDraftDefinition KaleoDraftDefinition2) {
+		KaleoDraftDefinition kaleoDraftDefinition2) {
 
 		int value = DateUtil.compareTo(
 			kaleoDraftDefinition1.getCreateDate(),
-			KaleoDraftDefinition2.getCreateDate());
+			kaleoDraftDefinition2.getCreateDate());
 
 		if (_ascending) {
 			return value;

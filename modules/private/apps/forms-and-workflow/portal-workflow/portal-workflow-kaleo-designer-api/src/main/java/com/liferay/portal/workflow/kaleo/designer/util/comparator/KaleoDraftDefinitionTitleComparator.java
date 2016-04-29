@@ -42,12 +42,12 @@ public class KaleoDraftDefinitionTitleComparator
 	@Override
 	public int compare(
 		KaleoDraftDefinition kaleoDraftDefinition1,
-		KaleoDraftDefinition KaleoDraftDefinition2) {
+		KaleoDraftDefinition kaleoDraftDefinition2) {
 
 		String title1 = StringUtil.toLowerCase(
 			kaleoDraftDefinition1.getTitle());
 		String title2 = StringUtil.toLowerCase(
-			KaleoDraftDefinition2.getTitle());
+			kaleoDraftDefinition2.getTitle());
 
 		int value = title1.compareTo(title2);
 
