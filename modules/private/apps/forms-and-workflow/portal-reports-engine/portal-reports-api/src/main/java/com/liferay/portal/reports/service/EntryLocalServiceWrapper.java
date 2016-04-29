@@ -17,6 +17,7 @@ package com.liferay.portal.reports.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.reports.status.ReportStatus;
 
 /**
  * Provides a wrapper for {@link EntryLocalService}.
@@ -354,7 +355,7 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 
 	@Override
 	public void updateEntryStatus(long entryId,
-		com.liferay.portal.reports.ReportStatus status,
+		ReportStatus status,
 		java.lang.String errorMessage)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_entryLocalService.updateEntryStatus(entryId, status, errorMessage);

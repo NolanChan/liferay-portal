@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.reports.ReportStatus;
+import com.liferay.portal.reports.status.ReportStatus;
 import com.liferay.portal.reports.model.Entry;
 
 import java.io.Serializable;

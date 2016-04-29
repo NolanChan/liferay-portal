@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 
+import com.liferay.portal.reports.status.ReportStatus;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -339,7 +340,7 @@ public class EntryLocalServiceUtil {
 	}
 
 	public static void updateEntryStatus(long entryId,
-		com.liferay.portal.reports.ReportStatus status,
+		ReportStatus status,
 		java.lang.String errorMessage)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateEntryStatus(entryId, status, errorMessage);

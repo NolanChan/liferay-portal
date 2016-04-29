@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.reports.ReportStatus;
 import com.liferay.portal.reports.configuration.ReportsGroupServiceEmailConfiguration;
 import com.liferay.portal.reports.constants.ReportsPortletKeys;
 import com.liferay.portal.reports.engine.MemoryReportDesignRetriever;
@@ -69,6 +68,7 @@ import com.liferay.portal.reports.model.Definition;
 import com.liferay.portal.reports.model.Entry;
 import com.liferay.portal.reports.model.Source;
 import com.liferay.portal.reports.service.base.EntryLocalServiceBaseImpl;
+import com.liferay.portal.reports.status.ReportStatus;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.File;

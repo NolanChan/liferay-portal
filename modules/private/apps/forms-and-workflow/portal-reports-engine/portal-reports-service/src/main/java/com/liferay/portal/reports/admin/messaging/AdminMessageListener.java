@@ -17,10 +17,10 @@ package com.liferay.portal.reports.admin.messaging;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.reports.ReportStatus;
 import com.liferay.portal.reports.engine.ReportGenerationException;
 import com.liferay.portal.reports.engine.ReportResultContainer;
 import com.liferay.portal.reports.service.EntryLocalService;
+import com.liferay.portal.reports.status.ReportStatus;
 
 /**
  * @author Gavin Wan
