@@ -242,6 +242,9 @@ public class LCSHotDeployMessageListener extends HotDeployMessageListener {
 
 	@Override
 	protected void onUndeploy(Message message) throws Exception {
+		LCSUtil.sendServiceAvailabilityNotification(
+			LCSPortletState.PLUGIN_ABSENT);
+
 		SigarNativeLoader.unload();
 
 		_scheduledExecutorService.shutdown();
