@@ -19,9 +19,25 @@ package com.liferay.lcs.messaging;
  */
 public class LCSSubscriptionEntryMessage extends Message {
 
-	public static final String KEY_CORP_PROJECT_ID = "corpProjectId";
+	public long getCorpProjectId() {
+		return _corpProjectId;
+	}
 
-	public static final String KEY_LCS_SUBSCRIPTION_ENTRIES =
-		"lcsSubscriptionEntries";
+	public String getLcsSubscriptionEntriesJSON() {
+		return _lcsSubscriptionEntriesJSON;
+	}
+
+	public void setCorpProjectId(long corpProjectId) {
+		_corpProjectId = corpProjectId;
+	}
+
+	public void setLcsSubscriptionEntriesJSON(
+		String lcsSubscriptionEntriesJSON) {
+
+		_lcsSubscriptionEntriesJSON = lcsSubscriptionEntriesJSON;
+	}
+
+	private long _corpProjectId;
+	private String _lcsSubscriptionEntriesJSON;
 
 }
