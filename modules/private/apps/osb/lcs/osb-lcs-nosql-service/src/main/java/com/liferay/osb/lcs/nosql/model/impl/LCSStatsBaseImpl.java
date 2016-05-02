@@ -74,8 +74,8 @@ public abstract class LCSStatsBaseImpl implements LCSStats {
 	}
 
 	@Override
-	public void setNew(boolean new_) {
-		_new = new_;
+	public void setNew(boolean n) {
+		_new = n;
 	}
 
 	@Override
