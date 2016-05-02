@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 6.2.0//EN" "http://www.liferay.com/dtd/liferay-hook_6_2_0.dtd">
+
+<hook>
+	<portal-properties>portal.properties</portal-properties>
+	<servlet-filter-mapping>
+		<servlet-filter-name>Auto Login Filter</servlet-filter-name>
+		<url-pattern>/c/portal/oauth/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</servlet-filter-mapping>
+	<struts-action>
+		<struts-action-path>/portal/oauth/access_token</struts-action-path>
+		<struts-action-impl>com.liferay.oauth.hook.action.OAuthAccessTokenAction</struts-action-impl>
+	</struts-action>
+	<struts-action>
+		<struts-action-path>/portal/oauth/authorize</struts-action-path>
+		<struts-action-impl>com.liferay.oauth.hook.action.OAuthAuthorizeAction</struts-action-impl>
+	</struts-action>
+	<struts-action>
+		<struts-action-path>/portal/oauth/request_token</struts-action-path>
+		<struts-action-impl>com.liferay.oauth.hook.action.OAuthRequestTokenAction</struts-action-impl>
+	</struts-action>
+</hook>
