@@ -1,0 +1,1 @@
+create keyspace [$OSB_LCS_KEYSPACE$] with replication = {'class': 'SimpleStrategy', 'replication_factor': 1};

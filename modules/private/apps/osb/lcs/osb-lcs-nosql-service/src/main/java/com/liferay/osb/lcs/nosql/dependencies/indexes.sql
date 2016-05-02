@@ -1,0 +1,3 @@
+create index LCSClusterNodeDetails_status on LCSClusterNodeDetails(status);
+
+create index LCSClusterNodeScript_correlationKey on LCSClusterNodeScript(correlationKey);
