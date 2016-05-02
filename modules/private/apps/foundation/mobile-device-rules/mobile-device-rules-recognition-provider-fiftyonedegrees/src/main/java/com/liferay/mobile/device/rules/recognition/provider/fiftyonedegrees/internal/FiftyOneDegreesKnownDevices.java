@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.recognition.provider.fiftyone.internal;
+package com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.internal;
 
-import com.liferay.mobile.device.rules.recognition.provider.fiftyone.internal.constants.FiftyOneDegreesPropertyConstants;
+import com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.internal.constants.FiftyOneDegreesPropertyConstants;
 import com.liferay.portal.kernel.mobile.device.Capability;
 import com.liferay.portal.kernel.mobile.device.KnownDevices;
 import com.liferay.portal.kernel.mobile.device.NoKnownDevices;

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.recognition.provider.fiftyone.internal;
+package com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.internal;
 
-import com.liferay.mobile.device.rules.recognition.provider.fiftyone.configuration.FiftyOneDegreesConfiguration;
-import com.liferay.mobile.device.rules.recognition.provider.fiftyone.internal.constants.FiftyOneDegreesConstants;
+import com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration;
+import com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.internal.constants.FiftyOneDegreesConstants;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Prathima Shreenath
  */
 @Component(
-	configurationPid = "com.liferay.mobile.device.rules.recognition.provider.fiftyone.configuration.FiftyOneDegreesConfiguration",
+	configurationPid = "com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration",
 	immediate = true, service = FiftyOneDegreesEngineProxy.class
 )
 public class FiftyOneDegreesEngineProxy {

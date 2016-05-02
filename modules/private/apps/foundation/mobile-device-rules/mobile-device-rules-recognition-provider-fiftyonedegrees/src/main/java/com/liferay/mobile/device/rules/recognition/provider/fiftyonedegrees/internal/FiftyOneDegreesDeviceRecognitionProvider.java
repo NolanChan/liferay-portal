@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.recognition.provider.fiftyone.internal;
+package com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.internal;
 
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.DeviceCapabilityFilter;

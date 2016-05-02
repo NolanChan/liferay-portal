@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.recognition.provider.fiftyone.internal.constants;
+package com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.internal.constants;
 
 /**
  * @author Brian Greenwald

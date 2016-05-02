@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.recognition.provider.fiftyone.configuration;
+package com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.mobile.device.rules.recognition.provider.fiftyone.configuration.FiftyOneDegreesConfiguration",
+	id = "com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration",
 	localization = "content/Language",
 	name = "51.degrees.device.detection.configuration.name"
 )
