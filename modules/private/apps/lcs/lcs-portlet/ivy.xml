@@ -11,7 +11,6 @@
 	</info>
 
 	<dependencies defaultconf="default">
-		<dependency name="com.liferay.lcs.api" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="com.liferay.petra.json.web.service.client" org="com.liferay" rev="1.0.1" />
 		<dependency name="httpclient" org="org.apache.httpcomponents" rev="4.3.3" />
 		<dependency name="jackson-databind" org="com.fasterxml.jackson.core" rev="2.4.2" />
