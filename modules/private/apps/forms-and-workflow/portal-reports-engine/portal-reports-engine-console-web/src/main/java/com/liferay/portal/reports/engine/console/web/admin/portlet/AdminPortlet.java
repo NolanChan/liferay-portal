@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.config-template=/admin/configuration.jsp",
 		"javax.portlet.init-param.copy-request-parameters=true",
-		"javax.portlet.init-param.mvc-action-command-package-prefix=com.liferay.portal.reports.web.admin.portlet.action",
+		"javax.portlet.init-param.mvc-action-command-package-prefix=com.liferay.portal.reports.engine.console.web.admin.portlet.action",
 		"javax.portlet.init-param.view-template=/admin/view.jsp",
 		"javax.portlet.name=" + ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
 		"javax.portlet.portlet-info.keywords=Reports Admin",

@@ -34,7 +34,7 @@ public class AdminResourcePermissionChecker
 	extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =
-		"com.liferay.portal.reports.admin";
+		"com.liferay.portal.reports.engine.console.admin";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)

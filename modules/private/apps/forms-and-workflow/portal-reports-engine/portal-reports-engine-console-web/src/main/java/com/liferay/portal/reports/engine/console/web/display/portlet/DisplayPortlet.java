@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=Report Display",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.copy-request-parameters=true",
-		"javax.portlet.init-param.mvc-action-command-package-prefix=com.liferay.portal.reports.web.admin.portlet.action",
+		"javax.portlet.init-param.mvc-action-command-package-prefix=com.liferay.portal.reports.engine.console.web.admin.portlet.action",
 		"javax.portlet.init-param.view-template=/display/reports_display.jsp",
 		"javax.portlet.name=" + ReportsEngineConsolePortletKeys.DISPLAY_REPORTS,
 		"javax.portlet.portlet-info.keywords=Reports Display",
