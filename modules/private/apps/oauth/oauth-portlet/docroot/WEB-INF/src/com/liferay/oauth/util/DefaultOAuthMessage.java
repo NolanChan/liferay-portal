@@ -45,6 +45,6 @@ public class DefaultOAuthMessage implements OAuthMessage {
 		return _oAuthMessage;
 	}
 
-	private net.oauth.OAuthMessage _oAuthMessage;
+	private final net.oauth.OAuthMessage _oAuthMessage;
 
 }

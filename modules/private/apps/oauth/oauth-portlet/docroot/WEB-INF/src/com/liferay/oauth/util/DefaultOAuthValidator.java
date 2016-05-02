@@ -37,7 +37,7 @@ public class DefaultOAuthValidator implements OAuthValidator {
 		}
 	}
 
-	private net.oauth.OAuthValidator _oAuthValidator =
+	private final net.oauth.OAuthValidator _oAuthValidator =
 		new net.oauth.SimpleOAuthValidator();
 
 }

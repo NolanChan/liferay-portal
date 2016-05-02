@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 
-<service-builder package-path="com.liferay.oauth" auto-namespace-tables="true">
+<service-builder auto-namespace-tables="true" package-path="com.liferay.oauth">
 	<author>Ivica Cardic</author>
 	<namespace>OAuth</namespace>
-	<entity name="OAuthApplication" local-service="true" remote-service="true">
+	<entity local-service="true" name="OAuthApplication" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="oAuthApplicationId" type="long" primary="true" />
+		<column name="oAuthApplicationId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -43,22 +43,22 @@
 		</finder>
 		<finder name="C_N" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="name" case-sensitive="false" comparator="LIKE" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 		</finder>
 		<finder name="U_N" return-type="Collection">
 			<finder-column name="userId" />
-			<finder-column name="name" case-sensitive="false" comparator="LIKE" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 		</finder>
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Image" />
+		<reference entity="Image" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="OAuthUser" local-service="true" remote-service="true">
+	<entity local-service="true" name="OAuthUser" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="oAuthUserId" type="long" primary="true" />
+		<column name="oAuthUserId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 

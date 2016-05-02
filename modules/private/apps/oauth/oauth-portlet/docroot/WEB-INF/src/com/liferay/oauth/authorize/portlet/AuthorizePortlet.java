@@ -112,6 +112,7 @@ public class AuthorizePortlet extends MVCPortlet {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AuthorizePortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		AuthorizePortlet.class);
 
 }

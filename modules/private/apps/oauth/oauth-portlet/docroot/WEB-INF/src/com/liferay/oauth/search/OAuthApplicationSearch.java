@@ -110,7 +110,7 @@ public class OAuthApplicationSearch extends SearchContainer<OAuthApplication> {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		OAuthApplicationSearch.class);
 
 }

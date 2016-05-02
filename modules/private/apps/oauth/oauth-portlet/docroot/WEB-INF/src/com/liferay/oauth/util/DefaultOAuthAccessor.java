@@ -86,7 +86,7 @@ public class DefaultOAuthAccessor implements OAuthAccessor, Serializable {
 		_oAuthAccessor.tokenSecret = tokenSecret;
 	}
 
-	private net.oauth.OAuthAccessor _oAuthAccessor;
-	private OAuthConsumer _oAuthConsumer;
+	private final net.oauth.OAuthAccessor _oAuthAccessor;
+	private final OAuthConsumer _oAuthConsumer;
 
 }

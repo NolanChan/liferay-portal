@@ -62,7 +62,7 @@ public class DefaultOAuthConsumer implements OAuthConsumer, Serializable {
 		_oAuthConsumer = (net.oauth.OAuthConsumer)oAuthConsumer;
 	}
 
-	private OAuthApplication _oAuthApplication;
+	private final OAuthApplication _oAuthApplication;
 	private net.oauth.OAuthConsumer _oAuthConsumer;
 
 }

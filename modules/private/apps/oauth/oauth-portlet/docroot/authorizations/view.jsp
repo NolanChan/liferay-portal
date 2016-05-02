@@ -60,16 +60,16 @@
 		/>
 
 		<c:if test="<%= OAuthUserPermission.contains(permissionChecker, oAuthUser, ActionKeys.DELETE) %>">
-				<liferay-portlet:actionURL name="deleteOAuthUser" var="revokeURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="oAuthApplicationId" value="<%= String.valueOf(oAuthApplication.getOAuthApplicationId()) %>" />
-				</liferay-portlet:actionURL>
+			<liferay-portlet:actionURL name="deleteOAuthUser" var="revokeURL">
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="oAuthApplicationId" value="<%= String.valueOf(oAuthApplication.getOAuthApplicationId()) %>" />
+			</liferay-portlet:actionURL>
 
-				<liferay-ui:search-container-column-text
-					href="<%= revokeURL %>"
-					translate="<%= true %>"
-					value="revoke"
-				/>
+			<liferay-ui:search-container-column-text
+				href="<%= revokeURL %>"
+				translate="<%= true %>"
+				value="revoke"
+			/>
 		</c:if>
 	</liferay-ui:search-container-row>
 

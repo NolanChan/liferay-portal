@@ -106,7 +106,7 @@ public class V10aOAuthDebugCacheListener<K extends Serializable, V>
 		_log.debug(sb.toString());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		V10aOAuthDebugCacheListener.class);
 
 }

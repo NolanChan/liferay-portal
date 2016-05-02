@@ -378,13 +378,13 @@ public class V10aOAuth implements OAuth {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(V10aOAuth.class);
+	private static final Log _log = LogFactoryUtil.getLog(V10aOAuth.class);
 
-	private static PortalCache<Serializable, Object> _portalCache =
+	private static final PortalCache<Serializable, Object> _portalCache =
 		SingleVMPoolUtil.getPortalCache(V10aOAuth.class.getName());
-	private static MethodKey _putMethodKey = new MethodKey(
+	private static final MethodKey _putMethodKey = new MethodKey(
 		V10aOAuth.class, "_put", String.class, byte[].class);
 
-	private OAuthValidator _oAuthValidator;
+	private final OAuthValidator _oAuthValidator;
 
 }
