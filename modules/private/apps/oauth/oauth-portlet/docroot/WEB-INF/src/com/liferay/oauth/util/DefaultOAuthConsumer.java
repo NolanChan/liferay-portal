@@ -24,17 +24,16 @@ import java.io.Serializable;
 public class DefaultOAuthConsumer implements OAuthConsumer, Serializable {
 
 	public DefaultOAuthConsumer(net.oauth.OAuthConsumer oAuthConsumer) {
+		_oAuthApplication = null;
 		_oAuthConsumer = oAuthConsumer;
 	}
 
 	public DefaultOAuthConsumer(OAuthApplication oAuthApplication) {
-		this(
-			new net.oauth.OAuthConsumer(
-				oAuthApplication.getCallbackURI(),
-				oAuthApplication.getConsumerKey(),
-				oAuthApplication.getConsumerSecret(), null));
-
 		_oAuthApplication = oAuthApplication;
+		_oAuthConsumer = new net.oauth.OAuthConsumer(
+			oAuthApplication.getCallbackURI(),
+			oAuthApplication.getConsumerKey(),
+			oAuthApplication.getConsumerSecret(), null);
 	}
 
 	@Override
