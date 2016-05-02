@@ -1,0 +1,6 @@
+Bundle-Name: Liferay OSB LCS NOSQL Service
+Bundle-SymbolicName: com.liferay.osb.lcs.nosql.service
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.osb.lcs.nosql.*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: OSB LCS NOSQL
