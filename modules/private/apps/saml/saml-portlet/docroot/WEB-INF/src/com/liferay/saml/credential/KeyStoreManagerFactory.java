@@ -47,7 +47,7 @@ public class KeyStoreManagerFactory {
 		return _keyStoreManager;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		KeyStoreManagerFactory.class);
 
 	private static KeyStoreManager _keyStoreManager;

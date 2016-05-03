@@ -808,7 +808,7 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 	}
 
 	private BeanProperties _beanProperties;
-	private DefaultAttributeResolver _defaultAttributeResolver =
+	private final DefaultAttributeResolver _defaultAttributeResolver =
 		new DefaultAttributeResolver();
 	private ExpandoBridge _expandoBridge;
 	private MetadataManager _metadataManager;

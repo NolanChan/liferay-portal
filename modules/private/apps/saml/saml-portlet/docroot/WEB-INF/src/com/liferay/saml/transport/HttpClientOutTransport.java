@@ -212,6 +212,6 @@ public class HttpClientOutTransport implements HTTPOutTransport {
 		}
 	}
 
-	private PostMethod _postMethod;
+	private final PostMethod _postMethod;
 
 }

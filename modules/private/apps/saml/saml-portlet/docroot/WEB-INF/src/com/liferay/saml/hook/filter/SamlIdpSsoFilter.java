@@ -103,6 +103,7 @@ public class SamlIdpSsoFilter extends BaseFilter {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SamlIdpSsoFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SamlIdpSsoFilter.class);
 
 }

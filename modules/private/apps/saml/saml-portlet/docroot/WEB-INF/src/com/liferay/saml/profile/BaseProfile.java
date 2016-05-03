@@ -432,7 +432,7 @@ public abstract class BaseProfile {
 		response.addCookie(cookie);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BaseProfile.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseProfile.class);
 
 	private IdentifierGenerator _identifierGenerator;
 	private List<SamlBinding> _samlBindings;

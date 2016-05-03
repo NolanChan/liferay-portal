@@ -82,6 +82,7 @@ public class WebSsoAutoLoginHook extends BaseAutoLogin {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WebSsoAutoLoginHook.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WebSsoAutoLoginHook.class);
 
 }

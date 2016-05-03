@@ -48,8 +48,8 @@ public class ReinitializingTimerTask extends TimerTask {
 		}
 	}
 
-	private AbstractReloadingMetadataProvider
+	private final AbstractReloadingMetadataProvider
 		_abstractReloadingMetadataProvider;
-	private Timer _timer;
+	private final Timer _timer;
 
 }

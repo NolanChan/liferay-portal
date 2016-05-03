@@ -71,6 +71,7 @@ public class SamlSpAutoLoginHook extends BaseAutoLogin {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SamlSpAutoLoginHook.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SamlSpAutoLoginHook.class);
 
 }

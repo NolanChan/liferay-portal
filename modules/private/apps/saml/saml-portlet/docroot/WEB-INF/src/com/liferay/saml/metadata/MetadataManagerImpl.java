@@ -621,15 +621,16 @@ public class MetadataManagerImpl implements MetadataManager {
 		_timer.cancel();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MetadataManagerImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		MetadataManagerImpl.class);
 
 	private CredentialResolver _credentialResolver;
 	private HttpClient _httpClient;
-	private ConcurrentHashMap<Long, MetadataProvider> _metadataProviders =
+	private final ConcurrentHashMap<Long, MetadataProvider> _metadataProviders =
 		new ConcurrentHashMap<>();
 	private ParserPool _parserPool;
-	private ReadWriteLockRegistry _readWriteLockRegistry =
+	private final ReadWriteLockRegistry _readWriteLockRegistry =
 		new ReadWriteLockRegistry();
-	private Timer _timer = new Timer(true);
+	private final Timer _timer = new Timer(true);
 
 }

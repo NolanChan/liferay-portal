@@ -58,13 +58,13 @@ String nameIdFormat = ParamUtil.getString(request, "nameIdFormat", PortletPrefsP
 	<aui:input name="samlIdpSpConnectionId" type="hidden" />
 
 	<aui:fieldset label="general">
-		<aui:input name="name" required="true" />
+		<aui:input name="name" required="<%= true %>" />
 
-		<aui:input helpMessage="service-provider-connection-entity-id-help" label="entity-id" name="samlSpEntityId" required="true" />
+		<aui:input helpMessage="service-provider-connection-entity-id-help" label="entity-id" name="samlSpEntityId" required="<%= true %>" />
 
 		<aui:input name="enabled" />
 
-		<aui:input helpMessage="assertion-lifetime-help" name="assertionLifetime" required="true" value="<%= String.valueOf(assertionLifetime) %>" />
+		<aui:input helpMessage="assertion-lifetime-help" name="assertionLifetime" required="<%= true %>" value="<%= String.valueOf(assertionLifetime) %>" />
 	</aui:fieldset>
 
 	<aui:fieldset helpMessage="service-provider-metadata-help" label="metadata">
@@ -92,7 +92,7 @@ String nameIdFormat = ParamUtil.getString(request, "nameIdFormat", PortletPrefsP
 			<aui:option label="x509-subject-name" selected="<%= nameIdFormat.equals(NameIDType.X509_SUBJECT) %>" value="<%= NameIDType.X509_SUBJECT %>" />
 		</aui:select>
 
-		<aui:input helpMessage="name-identifier-attribute-name-help" label="name-identifier-attribute-name" name="nameIdAttribute" required="true" value="<%= nameIdAttribute %>" />
+		<aui:input helpMessage="name-identifier-attribute-name-help" label="name-identifier-attribute-name" name="nameIdAttribute" required="<%= true %>" value="<%= nameIdAttribute %>" />
 	</aui:fieldset>
 
 	<aui:fieldset label="attributes">

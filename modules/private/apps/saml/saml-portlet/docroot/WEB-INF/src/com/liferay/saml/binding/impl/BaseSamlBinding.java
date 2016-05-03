@@ -41,7 +41,7 @@ public abstract class BaseSamlBinding implements SamlBinding {
 		return _messageEncoder;
 	}
 
-	private MessageDecoder _messageDecoder;
-	private MessageEncoder _messageEncoder;
+	private final MessageDecoder _messageDecoder;
+	private final MessageEncoder _messageEncoder;
 
 }

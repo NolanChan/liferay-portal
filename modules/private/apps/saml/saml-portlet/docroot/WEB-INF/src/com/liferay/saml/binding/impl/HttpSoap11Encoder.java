@@ -61,6 +61,6 @@ public class HttpSoap11Encoder extends HTTPSOAP11Encoder {
 		}
 	}
 
-	private HttpClient _httpClient;
+	private final HttpClient _httpClient;
 
 }

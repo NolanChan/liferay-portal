@@ -825,7 +825,7 @@ public class OpenSamlUtil {
 		return _xmlObjectBuilderFactory.getBuilder(qName);
 	}
 
-	private static XMLObjectBuilderFactory _xmlObjectBuilderFactory =
+	private static final XMLObjectBuilderFactory _xmlObjectBuilderFactory =
 		Configuration.getBuilderFactory();
 
 }

@@ -65,6 +65,6 @@ public class ReinitializingFilesystemMetadataProvider
 		_timer.schedule(timerTask, getMinRefreshDelay());
 	}
 
-	private Timer _timer;
+	private final Timer _timer;
 
 }

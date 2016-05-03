@@ -175,11 +175,11 @@ public class SamlSloContext implements Serializable {
 		return jsonObject;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SamlSloContext.class);
+	private static final Log _log = LogFactoryUtil.getLog(SamlSloContext.class);
 
-	private SAMLMessageContext<LogoutRequest, LogoutResponse, NameID>
+	private final SAMLMessageContext<LogoutRequest, LogoutResponse, NameID>
 		_samlMessageContext;
-	private Map<String, SamlSloRequestInfo> _samlRequestInfos =
+	private final Map<String, SamlSloRequestInfo> _samlRequestInfos =
 		new ConcurrentHashMap<>();
 	private String _samlSsoSessionId;
 	private long _userId;

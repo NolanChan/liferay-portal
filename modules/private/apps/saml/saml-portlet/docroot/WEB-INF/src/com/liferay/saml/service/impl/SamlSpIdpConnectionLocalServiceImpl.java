@@ -278,7 +278,7 @@ public class SamlSpIdpConnectionLocalServiceImpl
 		return metadataXml;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SamlSpIdpConnectionLocalServiceImpl.class);
 
 }

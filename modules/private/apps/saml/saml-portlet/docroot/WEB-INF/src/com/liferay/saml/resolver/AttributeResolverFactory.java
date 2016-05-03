@@ -84,12 +84,12 @@ public class AttributeResolverFactory {
 		return attributeResolver;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AttributeResolverFactory.class);
 
-	private static AttributeResolver _attributeResolver =
+	private static final AttributeResolver _attributeResolver =
 		new DefaultAttributeResolver();
-	private static Map<String, AttributeResolver> _attributeResolvers =
+	private static final Map<String, AttributeResolver> _attributeResolvers =
 		new ConcurrentHashMap<>();
 
 }

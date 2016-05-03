@@ -650,7 +650,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	private static final String _SALESFORCE_ENTITY_ID =
 		"https://saml.salesforce.com";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultAttributeResolver.class);
 
 }

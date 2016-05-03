@@ -81,7 +81,7 @@ public class OpenSamlBootstrap extends DefaultBootstrap {
 		Configuration.setParserPool(parserPool);
 	}
 
-	private static String[] _xmlToolingConfigs = {
+	private static final String[] _xmlToolingConfigs = {
 		"/default-config.xml", "/encryption-config.xml",
 		"/encryption-validation-config.xml", "/saml1-metadata-config.xml",
 		"/saml2-assertion-config.xml",

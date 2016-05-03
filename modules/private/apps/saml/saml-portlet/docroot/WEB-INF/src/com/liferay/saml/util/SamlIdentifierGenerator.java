@@ -39,6 +39,6 @@ public class SamlIdentifierGenerator implements IdentifierGenerator {
 		return StringPool.UNDERLINE.concat(UnicodeFormatter.bytesToHex(bytes));
 	}
 
-	private SecureRandom _secureRandom = new SecureRandom();
+	private final SecureRandom _secureRandom = new SecureRandom();
 
 }

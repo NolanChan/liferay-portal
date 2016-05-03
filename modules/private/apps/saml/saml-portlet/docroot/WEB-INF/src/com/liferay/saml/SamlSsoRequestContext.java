@@ -117,10 +117,10 @@ public class SamlSsoRequestContext implements Serializable {
 		_userId = userId;
 	}
 
-	private String _authnRequestXml;
+	private final String _authnRequestXml;
 	private boolean _isNewSession;
-	private String _peerEntityId;
-	private String _relayState;
+	private final String _peerEntityId;
+	private final String _relayState;
 	private volatile SAMLMessageContext<AuthnRequest, Response, NameID>
 		_samlMessageContext;
 	private String _samlSsoSessionId;

@@ -191,7 +191,7 @@ public class DefaultNameIdResolverTest extends BaseSamlTestCase {
 	}
 
 	private BeanProperties _beanProperties;
-	private DefaultNameIdResolver _defaultNameIdResolver =
+	private final DefaultNameIdResolver _defaultNameIdResolver =
 		new DefaultNameIdResolver();
 	private ExpandoBridge _expandoBridge;
 	private MetadataManager _metadataManager;

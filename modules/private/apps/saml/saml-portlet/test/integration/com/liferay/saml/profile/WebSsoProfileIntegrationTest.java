@@ -853,6 +853,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	}
 
 	private SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;
-	private WebSsoProfileImpl _webSsoProfileImpl = new WebSsoProfileImpl();
+	private final WebSsoProfileImpl _webSsoProfileImpl =
+		new WebSsoProfileImpl();
 
 }

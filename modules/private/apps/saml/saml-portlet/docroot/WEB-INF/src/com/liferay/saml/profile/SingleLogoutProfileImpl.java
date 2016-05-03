@@ -52,6 +52,7 @@ import com.liferay.saml.util.SamlUtil;
 import java.io.Writer;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -466,8 +467,8 @@ public class SingleLogoutProfileImpl
 		if (samlSloRequestInfo == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Received logout request for service provider " +
-						entityId + " that the user is not logged into");
+					"Received logout request for service provider " + entityId +
+						" that the user is not logged into");
 			}
 
 			JspUtil.dispatch(
@@ -732,9 +733,9 @@ public class SingleLogoutProfileImpl
 				continue;
 			}
 
-			if (Validator.equals(
+			if (Objects.equals(
 					samlSpSession.getNameIdValue(), nameId.getValue()) &&
-				Validator.equals(
+				Objects.equals(
 					samlSpSession.getNameIdFormat(), nameId.getFormat())) {
 
 				samlSpSession.setTerminated(true);
@@ -1130,7 +1131,7 @@ public class SingleLogoutProfileImpl
 		return statusCode.getValue();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SingleLogoutProfileImpl.class);
 
 }

@@ -162,6 +162,7 @@ public class SamlSpSsoFilter extends BaseFilter {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SamlSpSsoFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SamlSpSsoFilter.class);
 
 }

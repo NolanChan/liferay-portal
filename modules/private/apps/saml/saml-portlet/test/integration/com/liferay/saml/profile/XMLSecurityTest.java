@@ -308,6 +308,7 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 		return mockHttpServletResponse.getRedirectedUrl();
 	}
 
-	private WebSsoProfileImpl _webSsoProfileImpl = new WebSsoProfileImpl();
+	private final WebSsoProfileImpl _webSsoProfileImpl =
+		new WebSsoProfileImpl();
 
 }

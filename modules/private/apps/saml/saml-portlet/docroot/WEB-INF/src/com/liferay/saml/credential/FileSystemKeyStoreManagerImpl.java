@@ -125,7 +125,7 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		FileSystemKeyStoreManagerImpl.class);
 
 	private KeyStore _keyStore;

@@ -342,14 +342,15 @@ public class CachingChainingMetadataProvider extends BaseMetadataProvider {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CachingChainingMetadataProvider.class);
 
-	private List<MetadataProvider> _metadataProviders =
+	private final List<MetadataProvider> _metadataProviders =
 		new CopyOnWriteArrayList<>();
-	private Map<String, MetadataProvider> _metadataProvidersMap =
+	private final Map<String, MetadataProvider> _metadataProvidersMap =
 		new ConcurrentHashMap<>();
-	private ReadWriteLock _readWriteLock = new ReentrantReadWriteLock(true);
+	private final ReadWriteLock _readWriteLock = new ReentrantReadWriteLock(
+		true);
 
 	private class ChainingEntitiesDescriptor implements EntitiesDescriptor {
 
@@ -639,7 +640,7 @@ public class CachingChainingMetadataProvider extends BaseMetadataProvider {
 		public void validate(boolean validateDescendants) {
 		}
 
-		private List<XMLObject> _xmlObjects;
+		private final List<XMLObject> _xmlObjects;
 
 	}
 

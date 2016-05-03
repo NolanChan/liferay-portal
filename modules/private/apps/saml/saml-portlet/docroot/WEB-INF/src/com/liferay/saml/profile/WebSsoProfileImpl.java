@@ -1233,6 +1233,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		}
 
 		Issuer issuer = samlResponse.getIssuer();
+
 		String issuerEntityId = issuer.getValue();
 		String inResponseTo = samlResponse.getInResponseTo();
 
@@ -1289,6 +1290,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		throws PortalException {
 
 		Issuer issuer = assertion.getIssuer();
+
 		String idpEntityId = issuer.getValue();
 		String messageKey = assertion.getID();
 
@@ -1403,9 +1405,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		throw new SubjectException("Unable to verify subject");
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WebSsoProfileImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WebSsoProfileImpl.class);
 
-	private static SAMLSignatureProfileValidator
+	private static final SAMLSignatureProfileValidator
 		_samlSignatureProfileValidator = new SAMLSignatureProfileValidator();
 
 }

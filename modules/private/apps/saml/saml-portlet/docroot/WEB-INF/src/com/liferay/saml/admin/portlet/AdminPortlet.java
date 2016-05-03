@@ -433,6 +433,6 @@ public class AdminPortlet extends MVCPortlet {
 			themeDisplay.getCompanyId(), properties);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AdminPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(AdminPortlet.class);
 
 }

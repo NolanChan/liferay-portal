@@ -122,7 +122,7 @@ public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 	private static final String _SAML_KEYSTORE_PATH = "/saml/keystore.jks";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DLKeyStoreManagerImpl.class);
 
 }

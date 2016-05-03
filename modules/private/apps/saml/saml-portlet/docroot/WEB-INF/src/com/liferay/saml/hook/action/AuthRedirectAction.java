@@ -32,7 +32,11 @@ public class AuthRedirectAction extends BaseSamlStrutsAction {
 
 	@Override
 	public boolean isEnabled() {
-		return SamlUtil.isEnabled() && SamlUtil.isRoleSp();
+		if (SamlUtil.isEnabled() && SamlUtil.isRoleSp()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

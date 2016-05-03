@@ -58,7 +58,7 @@ public class OutputStreamRequestEntity implements RequestEntity {
 		_byteArrayOutputStream.writeTo(outputStream);
 	}
 
-	private ByteArrayOutputStream _byteArrayOutputStream;
-	private String _contentType;
+	private final ByteArrayOutputStream _byteArrayOutputStream;
+	private final String _contentType;
 
 }

@@ -69,6 +69,7 @@ public abstract class BaseSamlStrutsAction extends BaseStrutsAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception;
 
-	private static Log _log = LogFactoryUtil.getLog(BaseSamlStrutsAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseSamlStrutsAction.class);
 
 }

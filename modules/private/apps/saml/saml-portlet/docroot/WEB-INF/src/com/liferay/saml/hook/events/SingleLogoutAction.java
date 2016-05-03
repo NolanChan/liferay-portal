@@ -42,6 +42,7 @@ public class SingleLogoutAction extends Action {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SingleLogoutAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SingleLogoutAction.class);
 
 }

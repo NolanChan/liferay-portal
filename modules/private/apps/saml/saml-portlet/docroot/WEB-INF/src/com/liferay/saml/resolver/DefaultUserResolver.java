@@ -44,6 +44,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 import org.joda.time.DateTime;
@@ -188,8 +189,7 @@ public class DefaultUserResolver implements UserResolver {
 
 	protected List<Attribute> getAttributes(
 		Assertion assertion,
-		SAMLMessageContext<Response, SAMLObject, NameID>
-			samlMessageContext) {
+		SAMLMessageContext<Response, SAMLObject, NameID> samlMessageContext) {
 
 		List<Attribute> attributes = new ArrayList<>();
 
@@ -452,10 +452,10 @@ public class DefaultUserResolver implements UserResolver {
 				user.getUserId(), true);
 		}
 
-		if (!Validator.equals(user.getFirstName(), firstName) ||
-			!Validator.equals(user.getLastName(), lastName) ||
-			!Validator.equals(user.getScreenName(), screenName) ||
-			!Validator.equals(user.getModifiedDate(), modifiedDate)) {
+		if (!Objects.equals(user.getFirstName(), firstName) ||
+			!Objects.equals(user.getLastName(), lastName) ||
+			!Objects.equals(user.getScreenName(), screenName) ||
+			!Objects.equals(user.getModifiedDate(), modifiedDate)) {
 
 			Date oldModifiedDate = user.getModifiedDate();
 
@@ -479,7 +479,7 @@ public class DefaultUserResolver implements UserResolver {
 				contact.getJobTitle(), null, null, null, null, null,
 				serviceContext);
 
-			if (!Validator.equals(oldModifiedDate, modifiedDate)) {
+			if (!Objects.equals(oldModifiedDate, modifiedDate)) {
 				user = UserLocalServiceUtil.updateModifiedDate(
 					user.getUserId(), modifiedDate);
 			}
@@ -495,7 +495,8 @@ public class DefaultUserResolver implements UserResolver {
 
 	private static final String _SUBJECT_NAME_TYPE_UUID = "uuid";
 
-	private static Log _log = LogFactoryUtil.getLog(DefaultUserResolver.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultUserResolver.class);
 
 	private BundleContext _bundleContext;
 	private ServiceReference<UserImporter> _serviceReference;

@@ -126,7 +126,7 @@ public class MetadataUtil {
 		_parserPool = parserPool;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MetadataUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(MetadataUtil.class);
 
 	private static HttpClient _httpClient;
 	private static ParserPool _parserPool;

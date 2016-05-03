@@ -83,11 +83,12 @@ public class NameIdResolverFactory {
 		return nameIdResolver;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		NameIdResolverFactory.class);
 
-	private static NameIdResolver _nameIdResolver = new DefaultNameIdResolver();
-	private static Map<String, NameIdResolver> _nameIdResolvers =
+	private static final NameIdResolver _nameIdResolver =
+		new DefaultNameIdResolver();
+	private static final Map<String, NameIdResolver> _nameIdResolvers =
 		new ConcurrentHashMap<>();
 
 }

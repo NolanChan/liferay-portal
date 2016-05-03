@@ -149,7 +149,7 @@ public class HttpClientInTransport implements HTTPInTransport {
 	public void setIntegrityProtected(boolean integrityProtected) {
 	}
 
-	private String _location;
-	private PostMethod _postMethod;
+	private final String _location;
+	private final PostMethod _postMethod;
 
 }
