@@ -269,9 +269,7 @@ public class RoleBuilderTest extends BaseVLDAPTestCase {
 	}
 
 	protected void setUpUsers() {
-		_user = mock(
-			User.class
-		);
+		_user = mock(User.class);
 
 		when(
 			_user.getScreenName()

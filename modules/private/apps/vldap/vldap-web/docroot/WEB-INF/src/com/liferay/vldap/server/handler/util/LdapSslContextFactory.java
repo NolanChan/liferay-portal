@@ -126,7 +126,7 @@ public class LdapSslContextFactory {
 	private static final LdapSslContextFactory _instance =
 		new LdapSslContextFactory();
 
-	private SSLContext _clientSSLContext;
-	private SSLContext _serverSSLContext;
+	private final SSLContext _clientSSLContext;
+	private final SSLContext _serverSSLContext;
 
 }

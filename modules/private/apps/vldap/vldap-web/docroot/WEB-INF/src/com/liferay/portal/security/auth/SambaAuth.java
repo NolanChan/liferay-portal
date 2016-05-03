@@ -50,7 +50,7 @@ public class SambaAuth implements Authenticator {
 			}
 		}
 		else {
-			setSambaPasswords(user, password);
+			_setSambaPasswords(user, password);
 		}
 
 		return SUCCESS;
@@ -72,7 +72,7 @@ public class SambaAuth implements Authenticator {
 			}
 		}
 		else {
-			setSambaPasswords(user, password);
+			_setSambaPasswords(user, password);
 		}
 
 		return SUCCESS;
@@ -91,13 +91,13 @@ public class SambaAuth implements Authenticator {
 			}
 		}
 		else {
-			setSambaPasswords(user, password);
+			_setSambaPasswords(user, password);
 		}
 
 		return SUCCESS;
 	}
 
-	private static void setSambaPasswords(User user, String password) {
+	private static void _setSambaPasswords(User user, String password) {
 		try {
 			PortalSambaUtil.setSambaLMPassword(user, password);
 			PortalSambaUtil.setSambaNTPassword(user, password);

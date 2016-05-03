@@ -164,15 +164,15 @@ public class SearchBase {
 
 	private static final Log _log = LogFactoryUtil.getLog(SearchBase.class);
 
-	private Group _community;
+	private final Group _community;
 	private Company _company;
 	private final Directory _directory;
 	private final DirectoryBuilder _directoryBuilder;
-	private Organization _organization;
-	private Role _role;
+	private final Organization _organization;
+	private final Role _role;
 	private long _sizeLimit;
-	private String _top;
-	private User _user;
-	private UserGroup _userGroup;
+	private final String _top;
+	private final User _user;
+	private final UserGroup _userGroup;
 
 }

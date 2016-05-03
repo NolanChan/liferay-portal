@@ -328,8 +328,7 @@ public class CommunityBuilderTest extends BaseVLDAPTestCase {
 				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
 				Mockito.anyInt(), Mockito.any(LinkedHashMap.class),
 				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.any(UserScreenNameComparator.class)
-			)
+				Mockito.any(UserScreenNameComparator.class))
 		).thenReturn(
 			users
 		);
