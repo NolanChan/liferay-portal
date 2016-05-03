@@ -114,7 +114,8 @@ public class TomcatRemoteSPI extends RemoteSPI {
 				catch (Exception e) {
 					throw new RemoteException(
 						"Unable to convert " + contextXMLFile +
-							" to disable JAR locking and resource locking", e);
+							" to disable JAR locking and resource locking",
+						e);
 				}
 
 				URI uri = contextXMLFile.toURI();
