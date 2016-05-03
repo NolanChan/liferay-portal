@@ -77,8 +77,7 @@ List<SPIDefinition> spiDefinitions = SPIDefinitionServiceUtil.getSPIDefinitions(
 		String portletIds = spiDefinition.getPortletIds();
 
 		for (String portletId : StringUtil.split(portletIds)) {
-			applicationNamesSB.append(
-					PortalUtil.getPortletTitle(portletId, locale));
+			applicationNamesSB.append(PortalUtil.getPortletTitle(portletId, locale));
 			applicationNamesSB.append(StringPool.COMMA_AND_SPACE);
 		}
 

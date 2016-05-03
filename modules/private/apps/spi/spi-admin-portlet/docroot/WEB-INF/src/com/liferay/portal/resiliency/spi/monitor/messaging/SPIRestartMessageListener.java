@@ -56,7 +56,7 @@ public class SPIRestartMessageListener extends BaseSPIStatusMessageListener {
 
 		if (maxRestartAttempts < 0) {
 			maxRestartAttempts = GetterUtil.getInteger(
-				portletPreferences.getValue("maxRestartAttempts", null), 0);
+				portletPreferences.getValue("maxRestartAttempts", null));
 		}
 
 		int restartAttempts = spiDefinition.getRestartAttempts();
