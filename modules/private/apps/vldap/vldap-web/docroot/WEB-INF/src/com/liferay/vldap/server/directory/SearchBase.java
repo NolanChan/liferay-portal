@@ -14,8 +14,6 @@
 
 package com.liferay.vldap.server.directory;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -161,8 +159,6 @@ public class SearchBase {
 	public void setSizeLimit(long sizeLimit) {
 		_sizeLimit = sizeLimit;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(SearchBase.class);
 
 	private final Group _community;
 	private Company _company;
