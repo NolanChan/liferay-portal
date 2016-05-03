@@ -161,7 +161,7 @@ public class SearchBase {
 	}
 
 	private final Group _community;
-	private Company _company;
+	private final Company _company;
 	private final Directory _directory;
 	private final DirectoryBuilder _directoryBuilder;
 	private final Organization _organization;
