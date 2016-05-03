@@ -18,7 +18,7 @@ package com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.int
  * @author Brian Greenwald
  * @author Prathima Shreenath
  */
-public class FiftyOneDegreesPropertyConstants {
+public class FiftyOneDegreesPropertyNames {
 
 	public static final String BROWSER_NAME = "BrowserName";
 
