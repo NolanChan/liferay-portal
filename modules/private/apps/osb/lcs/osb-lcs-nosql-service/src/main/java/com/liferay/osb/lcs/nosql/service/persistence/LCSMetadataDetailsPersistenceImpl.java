@@ -76,7 +76,7 @@ public class LCSMetadataDetailsPersistenceImpl
 					lcsMetadataDetails.getPortalProperties()));
 			assignments.and(
 				QueryBuilder.set(
-					"properties",lcsMetadataDetails.getProperties()));
+					"properties", lcsMetadataDetails.getProperties()));
 
 			Update.Where where = update.where();
 

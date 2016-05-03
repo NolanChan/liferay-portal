@@ -70,7 +70,7 @@ public class LCSClusterNodePatchesServiceImpl
 		List<String> keys) {
 
 		List<LCSClusterNodePatches> lcsClusterNodePatchesList =
-			new ArrayList<LCSClusterNodePatches>();
+			new ArrayList<>();
 
 		for (String key : keys) {
 			LCSClusterNodePatches lcsClusterNodePatches =
@@ -182,7 +182,7 @@ public class LCSClusterNodePatchesServiceImpl
 		Map<String, Map<String, Integer>> keysPatchIdsStatuses) {
 
 		List<LCSClusterNodePatches> lcsClusterNodePatchesList =
-			new ArrayList<LCSClusterNodePatches>();
+			new ArrayList<>();
 
 		Set<String> keys = keysPatchIdsStatuses.keySet();
 

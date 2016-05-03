@@ -54,9 +54,8 @@ public class LCSClusterNodeHibernateMetricsServiceImpl
 	public LCSClusterNodeHibernateMetrics fetchLCSClusterNodeHibernateMetrics(
 		String key) {
 
-		LCSClusterNodeHibernateMetrics
-			lcsClusterNodeHibernateMetrics =
-				_lcsClusterNodeHibernateMetricsPersistence.fetchByKey(key);
+		LCSClusterNodeHibernateMetrics lcsClusterNodeHibernateMetrics =
+			_lcsClusterNodeHibernateMetricsPersistence.fetchByKey(key);
 
 		return lcsClusterNodeHibernateMetrics;
 	}

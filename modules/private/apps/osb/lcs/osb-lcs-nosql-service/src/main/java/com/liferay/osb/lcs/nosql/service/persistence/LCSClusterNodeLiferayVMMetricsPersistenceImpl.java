@@ -89,8 +89,7 @@ public class LCSClusterNodeLiferayVMMetricsPersistenceImpl
 		Iterator<Row> iterator = resultSet.iterator();
 
 		List<LCSClusterNodeLiferayVMMetrics>
-			lcsClusterNodeLiferayVMMetricsList =
-				new ArrayList<LCSClusterNodeLiferayVMMetrics>();
+			lcsClusterNodeLiferayVMMetricsList = new ArrayList<>();
 
 		while (iterator.hasNext()) {
 			Row row = iterator.next();

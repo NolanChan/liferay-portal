@@ -72,8 +72,7 @@ public class LCSStatsPortletMetricsSummaryEventsPersistenceImpl
 
 		Iterator<Row> iterator = resultSet.iterator();
 
-		List<LCSStatsPortletMetricsEvents> entities =
-			new ArrayList<LCSStatsPortletMetricsEvents>();
+		List<LCSStatsPortletMetricsEvents> entities = new ArrayList<>();
 
 		while (iterator.hasNext()) {
 			Row row = iterator.next();

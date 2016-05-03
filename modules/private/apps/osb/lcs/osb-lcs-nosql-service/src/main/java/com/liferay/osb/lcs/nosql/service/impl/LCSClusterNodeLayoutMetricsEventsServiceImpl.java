@@ -28,7 +28,7 @@ import java.util.Date;
  * @author Riccardo Ferrari
  */
 public class LCSClusterNodeLayoutMetricsEventsServiceImpl
-		implements LCSClusterNodeLayoutMetricsEventsService {
+	implements LCSClusterNodeLayoutMetricsEventsService {
 
 	@Override
 	public LCSClusterNodeLayoutMetricsEvents

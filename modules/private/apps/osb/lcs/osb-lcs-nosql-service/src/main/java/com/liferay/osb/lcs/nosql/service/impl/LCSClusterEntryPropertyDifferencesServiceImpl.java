@@ -41,9 +41,8 @@ public class LCSClusterEntryPropertyDifferencesServiceImpl
 		lcsClusterEntryPropertyDifferences.setPropertyName(propertyName);
 		lcsClusterEntryPropertyDifferences.setPropertyValues(propertyValues);
 
-		return
-			_lcsClusterEntryPropertyDifferencesPersistence.update(
-				lcsClusterEntryPropertyDifferences);
+		return _lcsClusterEntryPropertyDifferencesPersistence.update(
+			lcsClusterEntryPropertyDifferences);
 	}
 
 	@Override
@@ -51,9 +50,8 @@ public class LCSClusterEntryPropertyDifferencesServiceImpl
 		fetchLCSClusterEntryPropertyDifferences(
 			long lcsClusterEntryId, String propertyName) {
 
-		return
-			_lcsClusterEntryPropertyDifferencesPersistence.fetchByLCEI_PN(
-				lcsClusterEntryId, propertyName);
+		return _lcsClusterEntryPropertyDifferencesPersistence.fetchByLCEI_PN(
+			lcsClusterEntryId, propertyName);
 	}
 
 	@Override

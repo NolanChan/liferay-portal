@@ -131,11 +131,11 @@ public class LCSClusterEntryPropertyDifferencesPersistenceImpl
 		return _TABLE_NAME;
 	}
 
-	private static final String _TABLE_NAME =
-		"LCSClusterEntryPropertyDifferences";
-
-	private static String[] _COLUMN_NAMES = {
+	private static final String[] _COLUMN_NAMES = {
 		"lcsClusterEntryId", "propertyName", "propertyValues"
 	};
+
+	private static final String _TABLE_NAME =
+		"LCSClusterEntryPropertyDifferences";
 
 }

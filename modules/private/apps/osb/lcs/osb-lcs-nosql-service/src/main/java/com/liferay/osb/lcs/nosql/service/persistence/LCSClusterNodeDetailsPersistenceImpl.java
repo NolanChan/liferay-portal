@@ -63,7 +63,7 @@ public class LCSClusterNodeDetailsPersistenceImpl
 		Iterator<Row> iterator = resultSet.iterator();
 
 		List<LCSClusterNodeDetails> lcsClusterNodeDetailsList =
-			new ArrayList<LCSClusterNodeDetails>();
+			new ArrayList<>();
 
 		while (iterator.hasNext()) {
 			Row row = iterator.next();
@@ -93,7 +93,7 @@ public class LCSClusterNodeDetailsPersistenceImpl
 		Iterator<Row> iterator = resultSet.iterator();
 
 		List<LCSClusterNodeDetails> lcsClusterNodeDetailsList =
-			new ArrayList<LCSClusterNodeDetails>();
+			new ArrayList<>();
 
 		while (iterator.hasNext()) {
 			Row row = iterator.next();

@@ -32,7 +32,6 @@ public interface LCSClusterEntryPropertyDifferencesPersistence {
 		long lcsClusterEntryId);
 
 	public LCSClusterEntryPropertyDifferences update(
-		LCSClusterEntryPropertyDifferences
-			lcsClusterEntryPropertiesDifference);
+		LCSClusterEntryPropertyDifferences lcsClusterEntryPropertiesDifference);
 
 }

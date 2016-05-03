@@ -63,7 +63,7 @@ public class LCSClusterNodeSitePersistenceImpl
 	@Override
 	public LCSClusterNodeSite update(LCSClusterNodeSite lcsClusterNodeSite) {
 		DMLStatementExecutor dmlStatementExecutor = new DMLStatementExecutor(
-				lcsClusterNodeSite, _TABLE_NAME);
+			lcsClusterNodeSite, _TABLE_NAME);
 
 		dmlStatementExecutor.addColumns(
 			"friendlyURL", lcsClusterNodeSite.getFriendlyURL(), "groupUUID",

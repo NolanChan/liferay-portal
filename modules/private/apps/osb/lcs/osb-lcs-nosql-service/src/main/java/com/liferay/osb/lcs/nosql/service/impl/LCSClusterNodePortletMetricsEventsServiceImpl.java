@@ -67,7 +67,7 @@ public class LCSClusterNodePortletMetricsEventsServiceImpl
 			lcsClusterNodePortletMetricsEventsPersistence) {
 
 		_lcsClusterNodePortletMetricsEventsPersistence =
-				lcsClusterNodePortletMetricsEventsPersistence;
+			lcsClusterNodePortletMetricsEventsPersistence;
 	}
 
 	protected String getPartitionKey(Date modifiedDate) {

@@ -57,7 +57,8 @@ public class LCSClusterNodePortletMetricsEventsPersistenceImpl
 
 		dmlStatementExecutor.addPrimaryKeys(
 			"partitionKey",
-			lcsClusterNodePortletMetricsEvents.getPartitionKey(),"modifiedDate",
+			lcsClusterNodePortletMetricsEvents.getPartitionKey(),
+			"modifiedDate",
 			lcsClusterNodePortletMetricsEvents.getModifiedDate(), "key_",
 			lcsClusterNodePortletMetricsEvents.getKey(), "companyId",
 			lcsClusterNodePortletMetricsEvents.getCompanyId(), "groupId",

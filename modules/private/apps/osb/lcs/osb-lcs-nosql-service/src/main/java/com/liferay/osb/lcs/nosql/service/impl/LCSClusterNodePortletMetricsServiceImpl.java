@@ -113,12 +113,11 @@ public class LCSClusterNodePortletMetricsServiceImpl
 			String layoutName, String orderByCol, String orderByType,
 			String requestType, int start) {
 
-		List<LCSClusterNodePortletMetrics>
-			lcsClusterNodePortletMetricsList = null;
+		List<LCSClusterNodePortletMetrics> lcsClusterNodePortletMetricsList =
+			null;
 
 		if (companyId == 0) {
-			lcsClusterNodePortletMetricsList =
-				new ArrayList<LCSClusterNodePortletMetrics>();
+			lcsClusterNodePortletMetricsList = new ArrayList<>();
 
 			LCSClusterNodeDetails lcsClusterNodeDetails =
 				_lcsClusterNodeDetailsPersistence.fetchByKey(key);

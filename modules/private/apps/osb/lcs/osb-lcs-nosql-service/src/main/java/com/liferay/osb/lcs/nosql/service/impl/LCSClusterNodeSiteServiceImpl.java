@@ -79,7 +79,6 @@ public class LCSClusterNodeSiteServiceImpl
 		_lcsClusterNodeSitePersistence = lcsClusterNodeSitePersistence;
 	}
 
-	private LCSClusterNodeSitePersistence
-		_lcsClusterNodeSitePersistence;
+	private LCSClusterNodeSitePersistence _lcsClusterNodeSitePersistence;
 
 }

@@ -56,7 +56,7 @@ public abstract class BaseLCSStatsPersistenceImpl<E>
 			return new String[] {startPartitionKey};
 		}
 
-		Set<String> partitionKeys = new LinkedHashSet<String>();
+		Set<String> partitionKeys = new LinkedHashSet<>();
 
 		Calendar calendar = Calendar.getInstance();
 
@@ -116,7 +116,7 @@ public abstract class BaseLCSStatsPersistenceImpl<E>
 	}
 
 	private static final ThreadLocal<SimpleDateFormat>
-		_simpleDateFormatThreadLocal = new ThreadLocal<SimpleDateFormat>();
+		_simpleDateFormatThreadLocal = new ThreadLocal<>();
 
 	private String _tableName;
 	private int _timeSlotMinutes;

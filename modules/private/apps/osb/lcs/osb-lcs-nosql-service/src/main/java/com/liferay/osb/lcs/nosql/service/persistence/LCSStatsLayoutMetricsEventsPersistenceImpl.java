@@ -74,8 +74,7 @@ public class LCSStatsLayoutMetricsEventsPersistenceImpl
 
 		Iterator<Row> iterator = resultSet.iterator();
 
-		List<LCSStatsLayoutMetricsEvents> entities =
-			new ArrayList<LCSStatsLayoutMetricsEvents>();
+		List<LCSStatsLayoutMetricsEvents> entities = new ArrayList<>();
 
 		while (iterator.hasNext()) {
 			Row row = iterator.next();

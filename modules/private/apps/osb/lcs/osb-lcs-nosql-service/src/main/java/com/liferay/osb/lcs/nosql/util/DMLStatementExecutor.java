@@ -115,9 +115,9 @@ public class DMLStatementExecutor {
 		_primaryKeys.clear();
 	}
 
-	private List<Object> _columns = new ArrayList<Object>();
-	private LCSClusterNode _lcsClusterNode;
-	private List<Object> _primaryKeys = new ArrayList<Object>();
-	private String _tableName;
+	private final List<Object> _columns = new ArrayList<>();
+	private final LCSClusterNode _lcsClusterNode;
+	private final List<Object> _primaryKeys = new ArrayList<>();
+	private final String _tableName;
 
 }

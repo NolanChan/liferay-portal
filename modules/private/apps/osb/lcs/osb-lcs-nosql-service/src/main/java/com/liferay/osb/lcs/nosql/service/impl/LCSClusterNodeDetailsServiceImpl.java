@@ -113,7 +113,7 @@ public class LCSClusterNodeDetailsServiceImpl
 		List<String> keys) {
 
 		List<LCSClusterNodeDetails> lcsClusterNodeDetailsList =
-			new ArrayList<LCSClusterNodeDetails>();
+			new ArrayList<>();
 
 		for (String key : keys) {
 			LCSClusterNodeDetails lcsClusterNodeDetails =

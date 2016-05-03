@@ -139,12 +139,12 @@ public class LCSClusterNodeCurrentThreadsMetricsPersistenceImpl
 		return _TABLE_NAME;
 	}
 
-	private static final String _TABLE_NAME =
-		"LCSClusterNodeCurrentThreadsMetrics";
-
-	private static String[] _COLUMN_NAMES = {
+	private static final String[] _COLUMN_NAMES = {
 		"currentThreadCount", "currentThreadsBusy", "key_", "modifiedDate",
 		"name", "uuid"
 	};
+
+	private static final String _TABLE_NAME =
+		"LCSClusterNodeCurrentThreadsMetrics";
 
 }

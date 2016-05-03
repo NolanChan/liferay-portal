@@ -118,7 +118,7 @@ public class SQLImporter {
 			}
 		}
 
-		List<String> sqls = new ArrayList<String>();
+		List<String> sqls = new ArrayList<>();
 
 		String content = new String(bytes);
 

@@ -90,7 +90,7 @@ public abstract class BaseLCSClusterNodePersistenceImpl<E> {
 
 		Iterator<Row> iterator = resultSet.iterator();
 
-		List<E> entities = new ArrayList<E>();
+		List<E> entities = new ArrayList<>();
 
 		while (iterator.hasNext()) {
 			Row row = iterator.next();
@@ -175,7 +175,7 @@ public abstract class BaseLCSClusterNodePersistenceImpl<E> {
 	protected <T> Map<String, String> convertGenericsMapToJSONMap(
 		Map<String, Map<String, T>> genericsMap) {
 
-		Map<String, String> jsonMap = new HashMap<String, String>();
+		Map<String, String> jsonMap = new HashMap<>();
 
 		Set<String> keys = genericsMap.keySet();
 
@@ -192,8 +192,7 @@ public abstract class BaseLCSClusterNodePersistenceImpl<E> {
 		convertJSONMapToGenericsMap(
 			Map<String, String> jsonMap, Class<T> clazz) {
 
-		Map<String, Map<String, T>> genericsMap =
-			new HashMap<String, Map<String, T>>();
+		Map<String, Map<String, T>> genericsMap = new HashMap<>();
 
 		Set<String> keys = jsonMap.keySet();
 
@@ -202,7 +201,7 @@ public abstract class BaseLCSClusterNodePersistenceImpl<E> {
 
 			Set<String> valueKeys = oldValueMap.keySet();
 
-			Map<String, T> newValueMap = new HashMap<String, T>();
+			Map<String, T> newValueMap = new HashMap<>();
 
 			for (String valueKey : valueKeys) {
 				Number value = oldValueMap.get(valueKey);
@@ -294,14 +293,14 @@ public abstract class BaseLCSClusterNodePersistenceImpl<E> {
 		try {
 			return _objectMapper.writeValueAsString(map);
 		}
-		catch (IOException e) {
-			throw new RuntimeException(e);
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
 		}
 	}
 
 	protected Session session;
 	protected int timeToLive;
 
-	private ObjectMapper _objectMapper = new ObjectMapper();
+	private final ObjectMapper _objectMapper = new ObjectMapper();
 
 }
