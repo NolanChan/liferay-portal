@@ -14,7 +14,7 @@
 
 package com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.internal;
 
-import com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.internal.constants.FiftyOneDegreesPropertyConstants;
+import com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.internal.constants.FiftyOneDegreesPropertyNames;
 import com.liferay.portal.kernel.mobile.device.Capability;
 import com.liferay.portal.kernel.mobile.device.KnownDevices;
 import com.liferay.portal.kernel.mobile.device.NoKnownDevices;
@@ -103,28 +103,28 @@ public class FiftyOneDegreesKnownDevices implements KnownDevices {
 
 		addProperties(
 			_browswers, browsersComponent,
-			FiftyOneDegreesPropertyConstants.BROWSER_NAME,
-			FiftyOneDegreesPropertyConstants.BROWSER_VERSION, null);
+			FiftyOneDegreesPropertyNames.BROWSER_NAME,
+			FiftyOneDegreesPropertyNames.BROWSER_VERSION, null);
 
 		fiftyone.mobile.detection.entities.Component softwareComponent =
 			dataset.getSoftware();
 
 		addProperties(
 			_operatingSystems, softwareComponent,
-			FiftyOneDegreesPropertyConstants.PLATFORM_NAME,
-			FiftyOneDegreesPropertyConstants.PLATFORM_VERSION, null);
+			FiftyOneDegreesPropertyNames.PLATFORM_NAME,
+			FiftyOneDegreesPropertyNames.PLATFORM_VERSION, null);
 
 		fiftyone.mobile.detection.entities.Component hardwareComponent =
 			dataset.getHardware();
 
 		addProperties(
 			_brands, hardwareComponent,
-			FiftyOneDegreesPropertyConstants.HARDWARE_VENDOR,
-			FiftyOneDegreesPropertyConstants.HARDWARE_MODEL,
-			FiftyOneDegreesPropertyConstants.HARDWARE_NAME);
+			FiftyOneDegreesPropertyNames.HARDWARE_VENDOR,
+			FiftyOneDegreesPropertyNames.HARDWARE_MODEL,
+			FiftyOneDegreesPropertyNames.HARDWARE_NAME);
 
 		List<String> pointingMethodsList = Arrays.asList(
-			FiftyOneDegreesPropertyConstants.TOUCH_EVENTS);
+			FiftyOneDegreesPropertyNames.TOUCH_EVENTS);
 
 		_pointingMethods = new TreeSet<>(pointingMethodsList);
 
