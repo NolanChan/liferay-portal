@@ -1,0 +1,4 @@
+dependencies {
+	provided group: "org.bouncycastle", name: "bcpkix-jdk15on", version: "1.47"
+	provided group: "org.bouncycastle", name: "bcprov-jdk15on", version: "1.47"
+}
