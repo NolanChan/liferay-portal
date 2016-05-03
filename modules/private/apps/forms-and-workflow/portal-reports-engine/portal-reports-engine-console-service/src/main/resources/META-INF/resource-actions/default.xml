@@ -7,6 +7,8 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_portal_reports_engine_console_web_admin_portlet_AdminPortlet</portlet-name>
 		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_DEFINITION</action-key>
@@ -25,6 +27,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_portal_reports_engine_console_web_admin_portlet_AdminPortlet</portlet-name>
 		</portlet-ref>
+		<weight>2</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_REPORT</action-key>
@@ -52,6 +55,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_portal_reports_engine_console_web_admin_portlet_AdminPortlet</portlet-name>
 		</portlet-ref>
+		<weight>3</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
@@ -75,6 +79,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_portal_reports_engine_console_web_admin_portlet_AdminPortlet</portlet-name>
 		</portlet-ref>
+		<weight>4</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>

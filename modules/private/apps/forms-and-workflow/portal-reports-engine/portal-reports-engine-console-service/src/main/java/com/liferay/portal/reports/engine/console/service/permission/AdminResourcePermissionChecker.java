@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
+import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -47,9 +48,11 @@ public class AdminResourcePermissionChecker
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, long groupId, String actionId) {
+		PermissionChecker permissionChecker, long classPK, String actionId) {
 
-		return contains(permissionChecker, RESOURCE_NAME, groupId, actionId);
+		return contains(
+			permissionChecker, RESOURCE_NAME,
+			ReportsEngineConsolePortletKeys.REPORTS_ADMIN, classPK, actionId);
 	}
 
 	@Override
