@@ -74,6 +74,6 @@ public abstract class BaseSPIStatusMessageListener extends BaseMessageListener {
 			int status)
 		throws Exception;
 
-	private Set<Integer> _interestedStatuses = new HashSet<>();
+	private final Set<Integer> _interestedStatuses = new HashSet<>();
 
 }

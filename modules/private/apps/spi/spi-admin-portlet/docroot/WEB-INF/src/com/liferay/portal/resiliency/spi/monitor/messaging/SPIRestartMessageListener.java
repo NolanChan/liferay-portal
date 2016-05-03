@@ -92,7 +92,7 @@ public class SPIRestartMessageListener extends BaseSPIStatusMessageListener {
 			userId, spiDefinition.getSpiDefinitionId(), true);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SPIRestartMessageListener.class);
 
 }

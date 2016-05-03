@@ -94,8 +94,7 @@ public class SPIStatusStoppedNotificationMessageListener
 			new String[] {
 				spiDefinition.getName(),
 				String.valueOf(spiDefinition.getRestartAttempts())
-			}
-		);
+			});
 
 		String body = NotificationUtil.getNotificationEmailBody(
 			portletPreferences);
@@ -121,8 +120,7 @@ public class SPIStatusStoppedNotificationMessageListener
 			new String[] {
 				"[$FROM_ADDRESS$]", "[$FROM_NAME$]", "[$SANDBOX_DETAILS$]"
 			},
-			new String[] {fromName, fromAddress, sb.toString()}
-		);
+			new String[] {fromName, fromAddress, sb.toString()});
 
 		MailMessage mailMessage = new MailMessage(
 			fromInternetAddress, subject, body, true);
@@ -147,7 +145,7 @@ public class SPIStatusStoppedNotificationMessageListener
 		MailServiceUtil.sendEmail(mailMessage);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SPIStatusStoppedNotificationMessageListener.class);
 
 }

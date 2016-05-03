@@ -184,12 +184,12 @@ public class SPIDefinitionImpl extends SPIDefinitionBaseImpl {
 		try {
 			return spi.isAlive();
 		}
-		catch (RemoteException e) {
+		catch (RemoteException re) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Unable to determine whether " + getName() +
 						" is alive or not",
-					e);
+					re);
 			}
 
 			return false;
@@ -272,9 +272,10 @@ public class SPIDefinitionImpl extends SPIDefinitionBaseImpl {
 			getSpiDefinitionId();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SPIDefinitionImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SPIDefinitionImpl.class);
 
-	private UnicodeProperties _recoveryOptionsProperties;
+	private final UnicodeProperties _recoveryOptionsProperties;
 	private SPI _spi;
 	private UnicodeProperties _typeSettingsProperties;
 

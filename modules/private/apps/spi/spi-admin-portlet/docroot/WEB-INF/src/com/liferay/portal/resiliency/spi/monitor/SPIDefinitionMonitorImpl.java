@@ -153,8 +153,8 @@ public class SPIDefinitionMonitorImpl implements SPIDefinitionMonitor {
 
 	private long _interval = 60000;
 	private Thread _monitorThread;
-	private ReadWriteLock _readWriteLock = new ReentrantReadWriteLock();
-	private Map<Long, SPIDefinition> _spiDefinitions = new HashMap<>();
+	private final ReadWriteLock _readWriteLock = new ReentrantReadWriteLock();
+	private final Map<Long, SPIDefinition> _spiDefinitions = new HashMap<>();
 	private boolean _stopped;
 
 	private class _SPIMonitor implements Runnable {
@@ -165,7 +165,7 @@ public class SPIDefinitionMonitorImpl implements SPIDefinitionMonitor {
 				try {
 					Thread.sleep(_interval);
 				}
-				catch (InterruptedException e) {
+				catch (InterruptedException ie) {
 				}
 
 				performHealthCheck();

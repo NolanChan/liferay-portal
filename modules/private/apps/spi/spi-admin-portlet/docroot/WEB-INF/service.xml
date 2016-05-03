@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 
-<service-builder package-path="com.liferay.portal.resiliency.spi" auto-namespace-tables="false">
+<service-builder auto-namespace-tables="false" package-path="com.liferay.portal.resiliency.spi">
 	<author>Michael C. Han</author>
 	<namespace>SPI</namespace>
-	<entity name="SPIDefinition" local-service="true" remote-service="true">
+	<entity local-service="true" name="SPIDefinition" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="spiDefinitionId" type="long" primary="true" />
+		<column name="spiDefinitionId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -48,7 +48,7 @@
 		</finder>
 		<finder name="C_S" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="status" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" name="status" />
 		</finder>
 		<finder name="CA_CP" return-type="SPIDefinition">
 			<finder-column name="connectorAddress" />
@@ -57,7 +57,7 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<exceptions>
 		<exception>DuplicateSPIDefinition</exception>

@@ -376,12 +376,12 @@ public class SPIDefinitionLocalServiceImpl
 
 			spiDefinition.setStatusMessage(null);
 		}
-		catch (RemoteException e) {
+		catch (RemoteException re) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to stop SPI " + spiDefinitionId, e);
+				_log.warn("Unable to stop SPI " + spiDefinitionId, re);
 			}
 
-			spiDefinition.setStatusMessage(StackTraceUtil.getStackTrace(e));
+			spiDefinition.setStatusMessage(StackTraceUtil.getStackTrace(re));
 		}
 		finally {
 			spiDefinition.setStatus(SPIAdminConstants.STATUS_STOPPED);
@@ -402,6 +402,7 @@ public class SPIDefinitionLocalServiceImpl
 		taskContextMap.put("spiDefinitionId", spiDefinitionId);
 
 		StringBundler taskName = new StringBundler(4);
+
 		taskName.append("stop_");
 		taskName.append(spiDefinition.getName());
 		taskName.append("_");
@@ -716,7 +717,7 @@ public class SPIDefinitionLocalServiceImpl
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SPIDefinitionLocalServiceImpl.class);
 
 }

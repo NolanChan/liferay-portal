@@ -60,7 +60,7 @@ public abstract class BaseSPIBackgroundTaskExecutor
 		return errorMessage;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSPIBackgroundTaskExecutor.class);
 
 }
