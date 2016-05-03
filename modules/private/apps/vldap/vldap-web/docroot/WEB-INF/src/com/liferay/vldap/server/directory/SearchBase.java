@@ -33,70 +33,71 @@ import java.util.List;
 public class SearchBase {
 
 	public SearchBase(Directory directory, DirectoryBuilder directoryBuilder) {
-		_directory = directory;
-		_directoryBuilder = directoryBuilder;
+		this(
+			directory, directoryBuilder, null, null, null, null, null, null,
+			null);
 	}
 
 	public SearchBase(
 		Directory directory, DirectoryBuilder directoryBuilder, String top) {
 
-		this(directory, directoryBuilder);
-
-		_top = top;
+		this(
+			directory, directoryBuilder, top, null, null, null, null, null,
+			null);
 	}
 
 	public SearchBase(
 		Directory directory, DirectoryBuilder directoryBuilder, String top,
 		Company company) {
 
-		this(directory, directoryBuilder, top);
-
-		_company = company;
+		this(
+			directory, directoryBuilder, top, company, null, null, null, null,
+			null);
 	}
 
 	public SearchBase(
 		Directory directory, DirectoryBuilder directoryBuilder, String top,
 		Company company, Group community) {
 
-		this(directory, directoryBuilder, top, company);
-
-		_community = community;
+		this(
+			directory, directoryBuilder, top, company, community, null, null,
+			null, null);
 	}
 
 	public SearchBase(
 		Directory directory, DirectoryBuilder directoryBuilder, String top,
 		Company company, Organization organization) {
 
-		this(directory, directoryBuilder, top, company);
-
-		_organization = organization;
+		this(
+			directory, directoryBuilder, top, company, null, organization, null,
+			null, null);
 	}
 
 	public SearchBase(
 		Directory directory, DirectoryBuilder directoryBuilder, String top,
 		Company company, Role role) {
 
-		this(directory, directoryBuilder, top, company);
-
-		_role = role;
+		this(
+			directory, directoryBuilder, top, company, null, null, role, null,
+			null);
 	}
 
 	public SearchBase(
 		Directory directory, DirectoryBuilder directoryBuilder, String top,
 		Company company, User user) {
 
-		this(directory, directoryBuilder, top, company);
-
-		_user = user;
+		this(
+			directory, directoryBuilder, top, company, null, null, null, user,
+			null);
 	}
 
 	public SearchBase(
 		Directory directory, DirectoryBuilder directoryBuilder, String top,
 		Company company, UserGroup userGroup) {
 
-		this(directory, directoryBuilder, top, company);
-
-		_userGroup = userGroup;
+		this(
+			directory, directoryBuilder, top, company, null, null, null, null,
+			userGroup);
 	}
 
 	public Group getCommunity() {
@@ -158,6 +159,22 @@ public class SearchBase {
 
 	public void setSizeLimit(long sizeLimit) {
 		_sizeLimit = sizeLimit;
+	}
+
+	private SearchBase(
+		Directory directory, DirectoryBuilder directoryBuilder, String top,
+		Company company, Group community, Organization organization, Role role,
+		User user, UserGroup userGroup) {
+
+		_directory = directory;
+		_directoryBuilder = directoryBuilder;
+		_top = top;
+		_company = company;
+		_community = community;
+		_organization = organization;
+		_role = role;
+		_user = user;
+		_userGroup = userGroup;
 	}
 
 	private final Group _community;

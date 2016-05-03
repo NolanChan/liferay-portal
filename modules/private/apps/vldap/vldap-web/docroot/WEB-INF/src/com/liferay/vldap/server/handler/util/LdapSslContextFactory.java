@@ -40,13 +40,19 @@ public class LdapSslContextFactory {
 	}
 
 	private LdapSslContextFactory() {
+		SSLContext clientSSLContext = null;
+		SSLContext serverSSLContext = null;
+
 		try {
-			_clientSSLContext = _createClientSSLContext();
-			_serverSSLContext = _createServerSSLContext();
+			clientSSLContext = _createClientSSLContext();
+			serverSSLContext = _createServerSSLContext();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_clientSSLContext = clientSSLContext;
+		_serverSSLContext = serverSSLContext;
 	}
 
 	private SSLContext _createClientSSLContext() throws Exception {
