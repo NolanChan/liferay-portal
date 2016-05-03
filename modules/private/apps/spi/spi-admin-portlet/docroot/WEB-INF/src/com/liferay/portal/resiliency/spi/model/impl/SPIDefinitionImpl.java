@@ -275,7 +275,6 @@ public class SPIDefinitionImpl extends SPIDefinitionBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SPIDefinitionImpl.class);
 
-	private final UnicodeProperties _recoveryOptionsProperties;
 	private SPI _spi;
 	private UnicodeProperties _typeSettingsProperties;
 
