@@ -45,7 +45,9 @@ public abstract class BaseSamlStrutsAction extends BaseStrutsAction {
 		catch (Exception e) {
 			_log.error(e, e);
 
-			SessionErrors.add(request, e.getClass().getName());
+			Class<?> clazz = e.getClass();
+
+			SessionErrors.add(request, clazz.getName());
 
 			if (e instanceof StatusException) {
 				StatusException statusException = (StatusException)e;

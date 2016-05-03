@@ -17,7 +17,7 @@
 <%@ include file="/html/portal/init.jsp" %>
 
 <c:choose>
-	<c:when test='<%= Validator.equals(SessionErrors.get(request, "statusCodeURI"), "urn:oasis:names:tc:SAML:2.0:status:AuthnFailed") %>'>
+	<c:when test='<%= Objects.equals(SessionErrors.get(request, "statusCodeURI"), "urn:oasis:names:tc:SAML:2.0:status:AuthnFailed") %>'>
 		<h3 class="portlet-msg-error">
 			<liferay-ui:message key="authentication-failed" />
 		</h3>
