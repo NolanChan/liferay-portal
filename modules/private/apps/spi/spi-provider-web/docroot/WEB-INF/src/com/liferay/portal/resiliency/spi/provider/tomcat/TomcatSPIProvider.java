@@ -43,7 +43,7 @@ public class TomcatSPIProvider extends BaseSPIProvider {
 
 	@Override
 	public RemoteSPI createRemoteSPI(SPIConfiguration spiConfiguration) {
-		List<URL> urls = new ArrayList<URL>();
+		List<URL> urls = new ArrayList<>();
 
 		String[] paths = StringUtil.split(
 			getClassPath(), File.pathSeparatorChar);
@@ -92,6 +92,7 @@ public class TomcatSPIProvider extends BaseSPIProvider {
 		return NAME;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(TomcatSPIProvider.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		TomcatSPIProvider.class);
 
 }
