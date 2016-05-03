@@ -1,0 +1,6 @@
+Bundle-Name: Liferay OSB LCS Cache
+Bundle-SymbolicName: com.liferay.osb.lcs.cache
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.osb.lcs.cache
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: OSB LCS Cache
