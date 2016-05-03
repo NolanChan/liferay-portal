@@ -427,7 +427,7 @@ public class DBMetadataProvider extends BaseMetadataProvider {
 		public void validate(boolean validateDescendants) {
 		}
 
-		private final List<XMLObject> _xmlObjects;
+		private final List<XMLObject> _xmlObjects = new ArrayList<>();
 
 	}
 

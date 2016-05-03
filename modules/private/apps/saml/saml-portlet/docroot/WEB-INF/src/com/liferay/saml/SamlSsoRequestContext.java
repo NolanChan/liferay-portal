@@ -37,9 +37,7 @@ public class SamlSsoRequestContext implements Serializable {
 		String peerEntityId, String relayState,
 		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext) {
 
-		_peerEntityId = peerEntityId;
-		_relayState = relayState;
-		_samlMessageContext = samlMessageContext;
+		this(null, peerEntityId, relayState, samlMessageContext);
 	}
 
 	public SamlSsoRequestContext(
