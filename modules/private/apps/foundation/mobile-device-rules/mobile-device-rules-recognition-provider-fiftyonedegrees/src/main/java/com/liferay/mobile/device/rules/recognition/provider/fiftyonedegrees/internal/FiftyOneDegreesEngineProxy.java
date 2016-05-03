@@ -15,7 +15,6 @@
 package com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.internal;
 
 import com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration;
-import com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.internal.constants.FiftyOneDegreesConstants;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -64,15 +63,14 @@ public class FiftyOneDegreesEngineProxy {
 	}
 
 	public Device getDeviceForRequest(HttpServletRequest request) {
-		String userAgent = request.getHeader(
-			FiftyOneDegreesConstants.USER_AGENT);
-
-		Device device = UnknownDevice.getInstance();
+		String userAgent = request.getHeader(_USER_AGENT);
 
 		try {
 			Match match = _provider.match(userAgent);
 
-			device = new FiftyOneDegreesDevice(match);
+			Device device = new FiftyOneDegreesDevice(match);
+
+			return device;
 		}
 		catch (IOException ioe) {
 			if (_log.isDebugEnabled()) {
@@ -80,9 +78,9 @@ public class FiftyOneDegreesEngineProxy {
 					"No Match found from provider for user agent " + userAgent +
 						": " + ioe);
 			}
-		}
 
-		return device;
+			return UnknownDevice.getInstance();
+		}
 	}
 
 	@Activate
@@ -143,6 +141,8 @@ public class FiftyOneDegreesEngineProxy {
 		_fiftyOneDegreesConfiguration = null;
 		_provider = null;
 	}
+
+	private static final String _USER_AGENT = "User-Agent";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FiftyOneDegreesEngineProxy.class);

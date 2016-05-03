@@ -14,7 +14,6 @@
 
 package com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.internal;
 
-import com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.internal.constants.FiftyOneDegreesConstants;
 import com.liferay.mobile.device.rules.recognition.provider.fiftyonedegrees.internal.constants.FiftyOneDegreesPropertyNames;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -100,7 +99,7 @@ public class FiftyOneDegreesDevice extends AbstractDevice {
 			}
 		}
 
-		return FiftyOneDegreesConstants.UNKNOWN;
+		return _UNKNOWN;
 	}
 
 	@Override
@@ -181,7 +180,7 @@ public class FiftyOneDegreesDevice extends AbstractDevice {
 			String matchValue = _match.getValues(property).toString();
 
 			if (!StringUtil.equalsIgnoreCase(
-					matchValue, FiftyOneDegreesConstants.UNKNOWN)) {
+					matchValue, _UNKNOWN)) {
 
 				value = matchValue;
 			}
@@ -198,7 +197,7 @@ public class FiftyOneDegreesDevice extends AbstractDevice {
 		return value;
 	}
 
-
+	private static final String _UNKNOWN = "unknown";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FiftyOneDegreesDevice.class);
