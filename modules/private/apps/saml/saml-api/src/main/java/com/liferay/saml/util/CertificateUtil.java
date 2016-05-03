@@ -225,6 +225,7 @@ public class CertificateUtil {
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CertificateUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CertificateUtil.class);
 
 }
