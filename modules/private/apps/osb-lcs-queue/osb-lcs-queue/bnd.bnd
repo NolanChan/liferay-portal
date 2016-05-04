@@ -1,0 +1,6 @@
+Bundle-Name: Liferay OSB LCS Queue
+Bundle-SymbolicName: com.liferay.osb.lcs.queue
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.osb.lcs.queue
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: OSB LCS Queue
