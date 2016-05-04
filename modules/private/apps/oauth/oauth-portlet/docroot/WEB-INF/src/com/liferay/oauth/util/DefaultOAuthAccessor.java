@@ -23,13 +23,15 @@ public class DefaultOAuthAccessor implements OAuthAccessor, Serializable {
 
 	public DefaultOAuthAccessor(net.oauth.OAuthAccessor oAuthAccessor) {
 		_oAuthAccessor = oAuthAccessor;
+
 		_oAuthConsumer = null;
 	}
 
 	public DefaultOAuthAccessor(OAuthConsumer oAuthConsumer) {
+		_oAuthConsumer = oAuthConsumer;
+
 		_oAuthAccessor = new net.oauth.OAuthAccessor(
 			(net.oauth.OAuthConsumer)oAuthConsumer.getWrappedOAuthConsumer());
-		_oAuthConsumer = oAuthConsumer;
 	}
 
 	@Override
