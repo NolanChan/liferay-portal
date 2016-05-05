@@ -54,7 +54,7 @@ Map<String, Boolean> lcsServicesPreferences = LCSUtil.getLCSServicesPreferences(
 				<liferay-ui:message key="by-enabling-portal-analytics-you-will-be-able-to-see-metrics-data-of-your-portal-for-example-page-and-portlet-load-times-and-analyze-portal-performance" />
 			</p>
 
-			<aui:input disabled="<%= Validator.equals(LCSUtil.getPortalEdition(), LCSConstants.PORTAL_EDITION_CE) %>" label="fix-packs-management" name="<%= LCSConstants.PATCHES_LCS_SERVICE_ENABLED %>" type="checkbox" value="<%= lcsServicesPreferences.get(LCSConstants.PATCHES_LCS_SERVICE_ENABLED) && Validator.equals(LCSUtil.getPortalEdition(), LCSConstants.PORTAL_EDITION_EE) %>" />
+			<aui:input disabled="<%= Objects.equals(LCSUtil.getPortalEdition(), LCSConstants.PORTAL_EDITION_CE) %>" label="fix-packs-management" name="<%= LCSConstants.PATCHES_LCS_SERVICE_ENABLED %>" type="checkbox" value="<%= lcsServicesPreferences.get(LCSConstants.PATCHES_LCS_SERVICE_ENABLED) && Objects.equals(LCSUtil.getPortalEdition(), LCSConstants.PORTAL_EDITION_EE) %>" />
 
 			<p>
 				<liferay-ui:message key="by-enabling-fix-packs-management-you-will-be-able-to-see-if-there-are-updates-for-your-fix-packs-and-download-updates-to-your-portal" />
