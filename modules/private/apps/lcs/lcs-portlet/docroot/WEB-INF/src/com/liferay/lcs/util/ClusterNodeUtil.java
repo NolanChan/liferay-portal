@@ -293,7 +293,7 @@ public class ClusterNodeUtil {
 			return;
 		}
 
-		invokeOnSiblingClusterNodes(_startPostsMethodKey);
+		_invokeOnSiblingClusterNodes(_startPostsMethodKey);
 	}
 
 	public static void stopPosts(boolean applyToSiblingClusterNodes)
@@ -305,52 +305,7 @@ public class ClusterNodeUtil {
 			return;
 		}
 
-		invokeOnSiblingClusterNodes(_stopPostsMethodKey);
-	}
-
-	protected static void invokeOnSiblingClusterNodes(MethodKey remoteMethodKey)
-		throws Exception {
-
-		ClusterNode localClusterNode =
-			ClusterExecutorUtil.getLocalClusterNode();
-
-		String localClusterNodeId = localClusterNode.getClusterNodeId();
-
-		List<String> registeredClusterNodeIds = new ArrayList<>();
-
-		List<ClusterNode> clusterNodes = ClusterExecutorUtil.getClusterNodes();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Filter registered cluster nodes");
-		}
-
-		for (ClusterNode clusterNode : clusterNodes) {
-			String clusterNodeId = clusterNode.getClusterNodeId();
-
-			if (!clusterNodeId.equals(localClusterNodeId)) {
-				Map<String, Object> clusterNodeInfo = _getClusterNodeInfo(
-					clusterNodeId);
-
-				if ((Boolean)clusterNodeInfo.get("registered")) {
-					registeredClusterNodeIds.add(clusterNodeId);
-				}
-			}
-		}
-
-		MethodHandler remoteMethodHandler = new MethodHandler(remoteMethodKey);
-
-		for (String clusterNodeId : registeredClusterNodeIds) {
-			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
-				remoteMethodHandler, clusterNodeId);
-
-			ClusterExecutorUtil.execute(clusterRequest);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Invoked " + remoteMethodKey.getMethodName() +
-						" on cluster node " + clusterNodeId);
-			}
-		}
+		_invokeOnSiblingClusterNodes(_stopPostsMethodKey);
 	}
 
 	private static String _generateLCSClusterNodeName() {
@@ -439,6 +394,51 @@ public class ClusterNodeUtil {
 			clusterNodeResponses.getClusterResponse(clusterNodeId);
 
 		return (Boolean)clusterNodeResponse.getResult();
+	}
+
+	private static void _invokeOnSiblingClusterNodes(MethodKey remoteMethodKey)
+		throws Exception {
+
+		ClusterNode localClusterNode =
+			ClusterExecutorUtil.getLocalClusterNode();
+
+		String localClusterNodeId = localClusterNode.getClusterNodeId();
+
+		List<String> registeredClusterNodeIds = new ArrayList<>();
+
+		List<ClusterNode> clusterNodes = ClusterExecutorUtil.getClusterNodes();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Filter registered cluster nodes");
+		}
+
+		for (ClusterNode clusterNode : clusterNodes) {
+			String clusterNodeId = clusterNode.getClusterNodeId();
+
+			if (!clusterNodeId.equals(localClusterNodeId)) {
+				Map<String, Object> clusterNodeInfo = _getClusterNodeInfo(
+					clusterNodeId);
+
+				if ((Boolean)clusterNodeInfo.get("registered")) {
+					registeredClusterNodeIds.add(clusterNodeId);
+				}
+			}
+		}
+
+		MethodHandler remoteMethodHandler = new MethodHandler(remoteMethodKey);
+
+		for (String clusterNodeId : registeredClusterNodeIds) {
+			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
+				remoteMethodHandler, clusterNodeId);
+
+			ClusterExecutorUtil.execute(clusterRequest);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Invoked " + remoteMethodKey.getMethodName() +
+						" on cluster node " + clusterNodeId);
+			}
+		}
 	}
 
 	@SuppressWarnings("unused")
