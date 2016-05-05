@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -330,14 +329,6 @@ public class ClusterNodeUtil {
 			clusterNodeResponses.getClusterResponse(clusterNodeId);
 
 		return (Map<String, Object>)clusterNodeResponse.getResult();
-	}
-
-	private static String _getServletContextName() {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		return ClassLoaderPool.getContextName(classLoader);
 	}
 
 	private static String _getSiblingKey() throws Exception {
