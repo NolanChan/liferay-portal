@@ -183,7 +183,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 	@Override
 	public Future<?> restart() {
-		Future future = stop(false, false);
+		Future<?> future = stop(false, false);
 
 		try {
 			if (future != null) {
@@ -384,7 +384,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 	private LCSExceptionSender _lcsExceptionSender;
 	private boolean _lcsGatewayAvailable;
 	private LCSGatewayService _lcsGatewayService;
-	private Future _lcsGatewayUnavailableFuture;
+	private Future<?> _lcsGatewayUnavailableFuture;
 	private int _lcsGatewayUnavailableWaitTime;
 	private boolean _pending;
 	private boolean _ready;

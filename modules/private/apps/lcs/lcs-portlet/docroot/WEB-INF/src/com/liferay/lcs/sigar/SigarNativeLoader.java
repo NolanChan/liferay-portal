@@ -99,7 +99,7 @@ public class SigarNativeLoader {
 		String libraryName = sigarLoader.getLibraryName();
 
 		for (Object nativeLibrary : nativeLibraries) {
-			Class nativeLibraryClass = nativeLibrary.getClass();
+			Class<?> nativeLibraryClass = nativeLibrary.getClass();
 
 			Field nameField = nativeLibraryClass.getDeclaredField("name");
 
