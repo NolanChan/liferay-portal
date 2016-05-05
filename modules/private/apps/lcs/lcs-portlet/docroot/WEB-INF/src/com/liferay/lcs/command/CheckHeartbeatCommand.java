@@ -48,7 +48,8 @@ public class CheckHeartbeatCommand implements Command {
 		_heartbeatTask = heartbeatTask;
 	}
 
-	private ExecutorService _executorService = Executors.newCachedThreadPool();
+	private final ExecutorService _executorService =
+		Executors.newCachedThreadPool();
 	private HeartbeatTask _heartbeatTask;
 
 }

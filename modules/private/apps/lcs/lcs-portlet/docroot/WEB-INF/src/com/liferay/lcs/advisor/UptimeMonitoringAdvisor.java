@@ -177,7 +177,7 @@ public class UptimeMonitoringAdvisor {
 		portletPreferences.store();
 	}
 
-	private static RuntimeMXBean _runtimeMXBean =
+	private static final RuntimeMXBean _runtimeMXBean =
 		ManagementFactory.getRuntimeMXBean();
 
 	private KeyGenerator _keyGenerator;

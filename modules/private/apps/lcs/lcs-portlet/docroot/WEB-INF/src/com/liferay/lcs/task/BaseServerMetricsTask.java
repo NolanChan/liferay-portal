@@ -61,7 +61,7 @@ public abstract class BaseServerMetricsTask implements ServerMetricsTask {
 			for (ServiceReference<ConnectionPoolMetrics> serviceReference :
 					serviceReferences) {
 
-				connectionPoolMetrics.add(
+				_connectionPoolMetrics.add(
 					bundleContext.getService(serviceReference));
 			}
 		}
@@ -235,7 +235,7 @@ public abstract class BaseServerMetricsTask implements ServerMetricsTask {
 			jdbcConnectionPoolsMetrics = new HashMap<>();
 
 			for (ConnectionPoolMetrics connectionPoolMetric :
-					connectionPoolMetrics) {
+					_connectionPoolMetrics) {
 
 				Map<String, Object> values = new HashMap<>();
 
@@ -293,16 +293,16 @@ public abstract class BaseServerMetricsTask implements ServerMetricsTask {
 	protected LCSConnectionManager lcsConnectionManager;
 	protected MBeanServerService mBeanServerService;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseServerMetricsTask.class);
 
+	private final Collection<ConnectionPoolMetrics> _connectionPoolMetrics =
+		new ArrayList<>();
 	private boolean _currentThreadsMetricsEnabled = true;
 	private Set<ObjectName> _currentThreadsObjectNames = Collections.emptySet();
 	private boolean _jdbcConnectionPoolsMetricsEnabled = true;
 	private Set<ObjectName> _jndiJDBCConnectionPoolsObjectNames =
 		Collections.emptySet();
 	private Properties _properties;
-	private Collection<ConnectionPoolMetrics> connectionPoolMetrics =
-		new ArrayList<>();
 
 }

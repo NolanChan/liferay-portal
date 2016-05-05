@@ -47,7 +47,7 @@ public class CacheMetricsTask implements ScheduledTask {
 	@Override
 	public void run() {
 		try {
-			doRun();
+			_doRun();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -164,7 +164,7 @@ public class CacheMetricsTask implements ScheduledTask {
 		return payload;
 	}
 
-	private void doRun() throws Exception {
+	private void _doRun() throws Exception {
 		if (!_lcsConnectionManager.isReady()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Waiting for LCS connection manager");
@@ -183,7 +183,8 @@ public class CacheMetricsTask implements ScheduledTask {
 		_lcsConnectionManager.sendMessage(metricsMessage);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CacheMetricsTask.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CacheMetricsTask.class);
 
 	private KeyGenerator _keyGenerator;
 	private LCSConnectionManager _lcsConnectionManager;

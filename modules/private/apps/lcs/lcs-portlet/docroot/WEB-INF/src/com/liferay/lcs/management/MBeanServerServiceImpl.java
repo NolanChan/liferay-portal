@@ -171,7 +171,7 @@ public class MBeanServerServiceImpl implements MBeanServerService {
 		return objectNames;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		MBeanServerServiceImpl.class);
 
 	private MBeanServer _mBeanServer;

@@ -37,7 +37,7 @@ portletSession.setAttribute(Token.class.getName(), requestToken);
 <c:if test="<%= requestToken != null %>">
 	<aui:button-row>
 		<liferay-portlet:renderURL var="configureLCSServicesURL">
-			<liferay-portlet:param name="configureLCSServices" value="true" />
+			<liferay-portlet:param name="configureLCSServices" value="<%= Boolean.TRUE.toString() %>" />
 		</liferay-portlet:renderURL>
 
 		<aui:button href="<%= configureLCSServicesURL.toString() %>" name="back" value="back" />

@@ -58,7 +58,7 @@ public class SendInstallationEnvironmentCommand implements Command {
 		_lcsConnectionManager = lcsConnectionManager;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SendInstallationEnvironmentCommand.class);
 
 	private LCSConnectionManager _lcsConnectionManager;

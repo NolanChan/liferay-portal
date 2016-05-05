@@ -30,6 +30,6 @@ public class ObjectNameKeyPropertyMapKeyStrategy implements MapKeyStrategy {
 		return objectName.getKeyProperty(_keyPropertyName);
 	}
 
-	private String _keyPropertyName;
+	private final String _keyPropertyName;
 
 }

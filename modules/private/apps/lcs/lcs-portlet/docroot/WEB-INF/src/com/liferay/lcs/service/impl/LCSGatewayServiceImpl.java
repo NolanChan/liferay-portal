@@ -136,13 +136,13 @@ public class LCSGatewayServiceImpl
 
 		headers.put("HASH_CODE", String.valueOf(key.hashCode()));
 		headers.put("KEY", key);
-		headers.put("MESSAGE_TYPE_CODE", getMessageNameHashCode(message));
+		headers.put("MESSAGE_TYPE_CODE", _getMessageNameHashCode(message));
 		headers.put("PROTOCOL_VERSION", LCSConstants.PROTOCOL_VERSION_CURRENT);
 
 		doPost(_URL_LCS_GATEWAY_SEND_MESSAGE, parameters, headers);
 	}
 
-	private String getMessageNameHashCode(Message message) {
+	private String _getMessageNameHashCode(Message message) {
 		Class<? extends Message> messageClass = message.getClass();
 
 		String name = messageClass.getName();
@@ -165,7 +165,7 @@ public class LCSGatewayServiceImpl
 	private static final String _URL_LCS_GATEWAY_SEND_MESSAGE =
 		LCSGatewayServiceImpl._URL_LCS_GATEWAY + "/send-message";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LCSGatewayServiceImpl.class);
 
 }

@@ -84,7 +84,8 @@ public class ExecuteScriptCommand implements Command {
 		_lcsConnectionManager = lcsConnectionManager;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ExecuteScriptCommand.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExecuteScriptCommand.class);
 
 	private LCSConnectionManager _lcsConnectionManager;
 

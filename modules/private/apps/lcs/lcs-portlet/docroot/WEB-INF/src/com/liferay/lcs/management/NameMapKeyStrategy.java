@@ -30,6 +30,6 @@ public class NameMapKeyStrategy implements MapKeyStrategy {
 		return _name;
 	}
 
-	private String _name;
+	private final String _name;
 
 }

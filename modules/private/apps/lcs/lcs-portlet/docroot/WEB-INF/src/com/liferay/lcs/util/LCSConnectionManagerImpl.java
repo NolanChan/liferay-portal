@@ -367,10 +367,10 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 			new LCSGatewayUnavailableRunnable(jsonwste));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LCSConnectionManagerImpl.class);
 
-	private static ScheduledExecutorService _scheduledExecutorService =
+	private static final ScheduledExecutorService _scheduledExecutorService =
 		Executors.newScheduledThreadPool(10);
 
 	private boolean _cancelRunnable;
@@ -380,7 +380,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 	private long _heartbeatInterval;
 	private HeartbeatTask _heartbeatTask;
 	private LCSClusterEntryTokenAdvisor _lcsClusterEntryTokenAdvisor;
-	private Map<String, String> _lcsConnectionMetadata = new HashMap<>();
+	private final Map<String, String> _lcsConnectionMetadata = new HashMap<>();
 	private LCSExceptionSender _lcsExceptionSender;
 	private boolean _lcsGatewayAvailable;
 	private LCSGatewayService _lcsGatewayService;
@@ -388,7 +388,8 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 	private int _lcsGatewayUnavailableWaitTime;
 	private boolean _pending;
 	private boolean _ready;
-	private List<ScheduledFuture<?>> _scheduledFutures = new ArrayList<>();
+	private final List<ScheduledFuture<?>> _scheduledFutures =
+		new ArrayList<>();
 	private SignOffTask _signOffTask;
 
 	private class LCSGatewayUnavailableRunnable implements Runnable {

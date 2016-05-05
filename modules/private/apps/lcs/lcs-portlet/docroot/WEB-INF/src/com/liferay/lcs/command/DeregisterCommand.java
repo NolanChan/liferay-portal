@@ -39,7 +39,8 @@ public class DeregisterCommand implements Command {
 		_lcsConnectionManager = lcsConnectionManager;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DeregisterCommand.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeregisterCommand.class);
 
 	private LCSConnectionManager _lcsConnectionManager;
 

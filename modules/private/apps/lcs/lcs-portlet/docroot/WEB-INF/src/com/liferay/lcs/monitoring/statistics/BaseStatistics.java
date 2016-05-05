@@ -114,7 +114,7 @@ public class BaseStatistics implements Statistics {
 	private long _lowerBound;
 	private long _maxTime;
 	private long _minTime;
-	private String _name;
+	private final String _name;
 	private long _startTime;
 	private long _upperBound;
 

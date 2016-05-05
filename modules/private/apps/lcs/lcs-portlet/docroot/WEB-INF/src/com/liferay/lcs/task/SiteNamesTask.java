@@ -170,7 +170,7 @@ public class SiteNamesTask implements ScheduledTask {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SiteNamesTask.class);
+	private static final Log _log = LogFactoryUtil.getLog(SiteNamesTask.class);
 
 	private KeyGenerator _keyGenerator;
 	private LCSConnectionManager _lcsConnectionManager;

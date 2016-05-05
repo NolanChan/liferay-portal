@@ -10,21 +10,21 @@
 
 	<!-- Destinations -->
 
-	<bean id="destination.lcs_commands" class="com.liferay.portal.kernel.messaging.ParallelDestination">
+	<bean class="com.liferay.portal.kernel.messaging.ParallelDestination" id="destination.lcs_commands">
 		<property name="name" value="liferay/lcs_commands" />
 	</bean>
-	<bean id="destination.lcs_request" class="com.liferay.portal.kernel.messaging.ParallelDestination">
+	<bean class="com.liferay.portal.kernel.messaging.ParallelDestination" id="destination.lcs_request">
 		<property name="name" value="#{T(com.liferay.portal.kernel.license.messaging.LicenseManagerMessageType).MESSAGE_BUS_DESTINATION_REQUEST}" />
 		<property name="workersCoreSize" value="1" />
 		<property name="workersMaxSize" value="1" />
 	</bean>
-	<bean id="destination.lcs_scheduler" class="com.liferay.portal.kernel.messaging.ParallelDestination">
+	<bean class="com.liferay.portal.kernel.messaging.ParallelDestination" id="destination.lcs_scheduler">
 		<property name="name" value="liferay/lcs_scheduler" />
 	</bean>
 
 	<!-- Listeners -->
 
-	<bean id="messageListener.lcs_commands" class="com.liferay.lcs.messaging.CommandMessageListener">
+	<bean class="com.liferay.lcs.messaging.CommandMessageListener" id="messageListener.lcs_commands">
 		<property name="commands">
 			<map>
 				<entry key="#{T(com.liferay.lcs.messaging.CommandMessage).COMMAND_TYPE_CHECK_HEARTBEAT}" value-ref="com.liferay.lcs.command.CheckHeartbeatCommand" />
@@ -41,23 +41,23 @@
 		<property name="digitalSignature" ref="com.liferay.lcs.security.DigitalSignature" />
 		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
 	</bean>
-	<bean id="messageListener.lcs_hot_deploy" class="com.liferay.lcs.messaging.LCSHotDeployMessageListener">
+	<bean class="com.liferay.lcs.messaging.LCSHotDeployMessageListener" id="messageListener.lcs_hot_deploy">
 		<property name="LCSClusterEntryTokenAdvisor" ref="com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor" />
 		<property name="uptimeMonitoringAdvisor" ref="com.liferay.lcs.advisor.UptimeMonitoringAdvisor" />
 	</bean>
-	<bean id="messageListener.lcs_scheduler" class="com.liferay.lcs.task.scheduler.messaging.TaskSchedulerReceiverMessageListener" >
+	<bean class="com.liferay.lcs.task.scheduler.messaging.TaskSchedulerReceiverMessageListener" id="messageListener.lcs_scheduler" >
 		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
 	</bean>
-	<bean id="messageListener.license_manager_validate_lcs" class="com.liferay.lcs.license.messaging.LicenseManagerValidateLCSMessageListener" />
-	<bean id="messageListener.license_manager_validate_subscription" class="com.liferay.lcs.license.messaging.LicenseManagerValidateSubscriptionMessageListener" />
-	<bean id="messageListener.monitoring" class="com.liferay.lcs.messaging.PortalMetricsMessageListener">
+	<bean class="com.liferay.lcs.license.messaging.LicenseManagerValidateLCSMessageListener" id="messageListener.license_manager_validate_lcs" />
+	<bean class="com.liferay.lcs.license.messaging.LicenseManagerValidateSubscriptionMessageListener" id="messageListener.license_manager_validate_subscription" />
+	<bean class="com.liferay.lcs.messaging.PortalMetricsMessageListener" id="messageListener.monitoring">
 		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
 		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
 	</bean>
 
 	<!-- Configurator -->
 
-	<bean id="messagingConfigurator" class="com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator">
+	<bean class="com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator" id="messagingConfigurator">
 		<property name="messageListeners">
 			<map key-type="java.lang.String" value-type="java.util.List">
 				<entry key="#{T(com.liferay.portal.kernel.license.messaging.LicenseManagerMessageType).MESSAGE_BUS_DESTINATION_REQUEST}">
@@ -94,5 +94,5 @@
 
 	<!-- Scheduler -->
 
-	<bean id="com.liferay.lcs.messaging.scheduler.impl.MessageListenerSchedulerService" class="com.liferay.lcs.messaging.scheduler.impl.MessageListenerSchedulerServiceImpl" />
+	<bean class="com.liferay.lcs.messaging.scheduler.impl.MessageListenerSchedulerServiceImpl" id="com.liferay.lcs.messaging.scheduler.impl.MessageListenerSchedulerService" />
 </beans>

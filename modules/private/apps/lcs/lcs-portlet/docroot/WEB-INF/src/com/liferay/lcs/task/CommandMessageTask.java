@@ -80,7 +80,8 @@ public class CommandMessageTask implements Task {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CommandMessageTask.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommandMessageTask.class);
 
 	private KeyGenerator _keyGenerator;
 	private LCSConnectionManager _lcsConnectionManager;

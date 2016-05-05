@@ -454,19 +454,19 @@ public class PortalMetricsMessageListener implements MessageListener, Runnable {
 	private static final String _MONITORING_CONFIGURATION_PID =
 		"com.liferay.portal.monitoring.configuration.MonitoringConfiguration";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalMetricsMessageListener.class);
 
-	private Map<String, AverageStatistics> _averageStatisticsMap =
+	private final Map<String, AverageStatistics> _averageStatisticsMap =
 		new ConcurrentHashMap<>();
 	private KeyGenerator _keyGenerator;
 	private LCSConnectionManager _lcsConnectionManager;
 	private boolean _locked;
 	private Condition _notLockedCondition;
-	private Map<String, Map<String, Object>> _performanceMetricsMap =
+	private final Map<String, Map<String, Object>> _performanceMetricsMap =
 		new ConcurrentHashMap<>();
-	private ReentrantLock _reentrantLock = new ReentrantLock();
-	private ScheduledExecutorService _scheduledExecutorService =
+	private final ReentrantLock _reentrantLock = new ReentrantLock();
+	private final ScheduledExecutorService _scheduledExecutorService =
 		Executors.newSingleThreadScheduledExecutor();
 
 }

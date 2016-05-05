@@ -14,10 +14,10 @@
 
 package com.liferay.lcs.messaging;
 
-import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
-import com.liferay.lcs.advisor.UptimeMonitoringAdvisor;
 import com.liferay.lcs.InvalidLCSClusterEntryTokenException;
 import com.liferay.lcs.NoLCSClusterEntryTokenException;
+import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
+import com.liferay.lcs.advisor.UptimeMonitoringAdvisor;
 import com.liferay.lcs.oauth.OAuthUtil;
 import com.liferay.lcs.rest.LCSClusterEntryToken;
 import com.liferay.lcs.rest.NoSuchLCSSubscriptionEntryException;
@@ -250,11 +250,11 @@ public class LCSHotDeployMessageListener extends HotDeployMessageListener {
 		_scheduledExecutorService.shutdown();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LCSHotDeployMessageListener.class);
 
 	private LCSClusterEntryTokenAdvisor _lcsClusterEntryTokenAdvisor;
-	private ScheduledExecutorService _scheduledExecutorService =
+	private final ScheduledExecutorService _scheduledExecutorService =
 		Executors.newSingleThreadScheduledExecutor();
 	private UptimeMonitoringAdvisor _uptimeMonitoringAdvisor;
 

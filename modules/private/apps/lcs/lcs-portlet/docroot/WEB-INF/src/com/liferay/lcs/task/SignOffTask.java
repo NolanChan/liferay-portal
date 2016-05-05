@@ -116,7 +116,7 @@ public class SignOffTask implements Task {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SignOffTask.class);
+	private static final Log _log = LogFactoryUtil.getLog(SignOffTask.class);
 
 	private boolean _deregister;
 	private long _heartbeatInterval;

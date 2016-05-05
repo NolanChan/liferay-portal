@@ -85,7 +85,7 @@ public class TaskSchedulerServiceImpl implements TaskSchedulerService {
 			scheduleLocalScheduledTask(schedulerContext);
 		}
 		else if (scheduledTask.getType() == Type.MEMORY_CLUSTERED) {
-			scheduleClusteredScheduledTask(schedulerContext);
+			_scheduleClusteredScheduledTask(schedulerContext);
 		}
 	}
 
@@ -233,7 +233,7 @@ public class TaskSchedulerServiceImpl implements TaskSchedulerService {
 		_scheduledFuturesMap.clear();
 	}
 
-	private void scheduleClusteredScheduledTask(
+	private void _scheduleClusteredScheduledTask(
 		Map<String, String> schedulerContext) {
 
 		try {
@@ -293,15 +293,15 @@ public class TaskSchedulerServiceImpl implements TaskSchedulerService {
 
 	private static final String _LCS_SCHEDULE_GROUP_NAME = "com.liferay.lcs";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		TaskSchedulerServiceImpl.class);
 
-	private static ScheduledExecutorService _scheduledExecutorService =
+	private static final ScheduledExecutorService _scheduledExecutorService =
 		Executors.newScheduledThreadPool(10);
 
 	private int _defaultInterval;
 	private int _scheduleDelayMax;
-	private Map<String, ScheduledFuture<?>> _scheduledFuturesMap =
+	private final Map<String, ScheduledFuture<?>> _scheduledFuturesMap =
 		new HashMap<>();
 
 }

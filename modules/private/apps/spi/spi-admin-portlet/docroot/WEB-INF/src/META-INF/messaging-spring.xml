@@ -10,26 +10,26 @@
 
 	<!-- Destinations -->
 
-	<bean id="destination.spi_status" class="com.liferay.portal.kernel.messaging.ParallelDestination">
+	<bean class="com.liferay.portal.kernel.messaging.ParallelDestination" id="destination.spi_status">
 		<property name="name" value="liferay/spi_status" />
 	</bean>
 
 	<!-- Listeners -->
 
-	<bean id="messageListener.hot_deploy" class="com.liferay.portal.resiliency.spi.messaging.SPIAdminHotDeployMessageListener">
+	<bean class="com.liferay.portal.resiliency.spi.messaging.SPIAdminHotDeployMessageListener" id="messageListener.hot_deploy">
 		<constructor-arg name="servletContextNames">
 			<array>
 				<bean class="com.liferay.portal.resiliency.spi.service.ClpSerializer" factory-method="getServletContextName" />
 			</array>
 		</constructor-arg>
 	</bean>
-	<bean id="messageListener.spi_background_task_status" class="com.liferay.portal.resiliency.spi.backgroundtask.messaging.SPIBackgroundTaskStatusMessageListener" />
-	<bean id="messageListener.spi_restart" class="com.liferay.portal.resiliency.spi.monitor.messaging.SPIRestartMessageListener" />
-	<bean id="messageListener.spi_status_stopped_notification" class="com.liferay.portal.resiliency.spi.monitor.messaging.SPIStatusStoppedNotificationMessageListener" />
+	<bean class="com.liferay.portal.resiliency.spi.backgroundtask.messaging.SPIBackgroundTaskStatusMessageListener" id="messageListener.spi_background_task_status" />
+	<bean class="com.liferay.portal.resiliency.spi.monitor.messaging.SPIRestartMessageListener" id="messageListener.spi_restart" />
+	<bean class="com.liferay.portal.resiliency.spi.monitor.messaging.SPIStatusStoppedNotificationMessageListener" id="messageListener.spi_status_stopped_notification" />
 
 	<!-- Configurator -->
 
-	<bean id="messagingConfigurator" class="com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator">
+	<bean class="com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator" id="messagingConfigurator">
 		<property name="destinations">
 			<list>
 				<ref bean="destination.spi_status" />

@@ -56,8 +56,7 @@ public class KeyGeneratorImplTest extends PowerMockito {
 	public void setUp() throws Exception {
 		mockStatic(
 			DigesterUtil.class, LCSClusterNodeServiceUtil.class,
-			LicenseManagerUtil.class, PropsUtil.class
-		);
+			LicenseManagerUtil.class, PropsUtil.class);
 
 		when(
 			LicenseManagerUtil.getHostName()

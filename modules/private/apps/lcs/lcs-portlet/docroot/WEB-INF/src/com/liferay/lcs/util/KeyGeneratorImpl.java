@@ -273,16 +273,19 @@ public class KeyGeneratorImpl implements KeyGenerator {
 	private static final String _LICENSE_REPOSITORY_DIR =
 		PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/data/license";
 
-	private static Log _log = LogFactoryUtil.getLog(KeyGeneratorImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		KeyGeneratorImpl.class);
 
-	private static Pattern _hostNamePattern = Pattern.compile(
+	private static final Pattern _hostNamePattern = Pattern.compile(
 		"hostName=(.*)(\\s?)");
-	private static Pattern _ipAddressesPattern = Pattern.compile(
+	private static final Pattern _ipAddressesPattern = Pattern.compile(
 		"ipAddresses=(.*)(\\s?)");
-	private static Pattern _ipAddressPattern = Pattern.compile("(([^,]*),?)");
-	private static Pattern _macAddressesPattern = Pattern.compile(
+	private static final Pattern _ipAddressPattern = Pattern.compile(
+		"(([^,]*),?)");
+	private static final Pattern _macAddressesPattern = Pattern.compile(
 		"macAddresses=(.*)(\\s?)");
-	private static Pattern _macAddressPattern = Pattern.compile("(([^,]*),?)");
+	private static final Pattern _macAddressPattern = Pattern.compile(
+		"(([^,]*),?)");
 
 	private String _key;
 

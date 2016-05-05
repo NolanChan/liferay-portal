@@ -306,7 +306,7 @@ catch (Exception e) {
 		</div>
 
 		<liferay-portlet:renderURL var="configureLCSServicesURL">
-			<liferay-portlet:param name="configureLCSServices" value="true" />
+			<liferay-portlet:param name="configureLCSServices" value="<%= Boolean.TRUE.toString() %>" />
 		</liferay-portlet:renderURL>
 
 		<aui:a href="<%= configureLCSServicesURL %>" label="configure-services" />

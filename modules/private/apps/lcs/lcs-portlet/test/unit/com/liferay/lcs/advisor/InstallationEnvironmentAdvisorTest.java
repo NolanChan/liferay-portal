@@ -39,7 +39,7 @@ public class InstallationEnvironmentAdvisorTest {
 		Assert.assertNotNull(hardwareMetadata.get("swap.total"));
 	}
 
-	private InstallationEnvironmentAdvisor _installationEnvironmentAdvisor =
+	private final InstallationEnvironmentAdvisor _installationEnvironmentAdvisor =
 		InstallationEnvironmentAdvisorFactory.getInstance();
 
 }

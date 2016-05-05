@@ -14,13 +14,13 @@
 
 package com.liferay.lcs.util;
 
+import com.liferay.lcs.InvalidLCSClusterEntryException;
 import com.liferay.lcs.advisor.InstallationEnvironmentAdvisor;
 import com.liferay.lcs.advisor.InstallationEnvironmentAdvisorFactory;
 import com.liferay.lcs.advisor.LCSAlertAdvisor;
 import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.lcs.exception.InitializationException;
 import com.liferay.lcs.exception.MissingLCSCredentialsException;
-import com.liferay.lcs.InvalidLCSClusterEntryException;
 import com.liferay.lcs.jsonwebserviceclient.OAuthJSONWebServiceClientImpl;
 import com.liferay.lcs.oauth.OAuthUtil;
 import com.liferay.lcs.rest.LCSClusterEntry;
@@ -68,6 +68,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -306,9 +307,7 @@ public class LCSUtil {
 			publicRenderParameters);
 	}
 
-	public static Set<LCSAlert>
-		getLCSClusterEntryTokenAlerts() {
-
+	public static Set<LCSAlert> getLCSClusterEntryTokenAlerts() {
 		return _lcsClusterEntryTokenAdvisor.getLCSClusterEntryTokenAlerts();
 	}
 
@@ -394,7 +393,7 @@ public class LCSUtil {
 
 		String patchesServiceEnabledDefault = StringPool.FALSE;
 
-		if (Validator.equals(portalEdition, LCSConstants.PORTAL_EDITION_EE)) {
+		if (Objects.equals(portalEdition, LCSConstants.PORTAL_EDITION_EE)) {
 			patchesServiceEnabledDefault = StringPool.TRUE;
 		}
 
@@ -405,7 +404,7 @@ public class LCSUtil {
 
 		Boolean enableAllLCSServices =
 			metricsServiceEnabled && portalPropertiesServiceEnabled &&
-			(Validator.equals(portalEdition, LCSConstants.PORTAL_EDITION_CE) ||
+			(Objects.equals(portalEdition, LCSConstants.PORTAL_EDITION_CE) ||
 			patchesServiceEnabled);
 
 		Map<String, Boolean> preferences = new HashMap<>();
@@ -874,7 +873,7 @@ public class LCSUtil {
 		return sb.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LCSUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(LCSUtil.class);
 
 	private static JSONWebServiceClient _jsonWebServiceClient;
 	private static LCSAlertAdvisor _lcsAlertAdviser;

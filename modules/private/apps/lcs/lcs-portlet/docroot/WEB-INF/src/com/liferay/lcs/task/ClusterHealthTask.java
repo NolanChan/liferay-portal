@@ -77,7 +77,8 @@ public class ClusterHealthTask implements ScheduledTask {
 		_lcsConnectionManager.sendMessage(healthMessage);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ClusterHealthTask.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClusterHealthTask.class);
 
 	private KeyGenerator _keyGenerator;
 	private LCSConnectionManager _lcsConnectionManager;

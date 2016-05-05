@@ -103,7 +103,7 @@ public class LCSClusterEntryTokenAdvisor {
 			LCSClusterEntryToken lcsClusterEntryToken)
 		throws Exception {
 
-		javax.portlet.PortletPreferences jxPortletPreferences =
+		PortletPreferences jxPortletPreferences =
 			LCSUtil.fetchJxPortletPreferences();
 
 		if (jxPortletPreferences == null) {
@@ -367,7 +367,7 @@ public class LCSClusterEntryTokenAdvisor {
 		return sb.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LCSClusterEntryTokenAdvisor.class);
 
 	private KeyGenerator _keyGenerator;

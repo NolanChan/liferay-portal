@@ -101,7 +101,7 @@ public class TomcatServerMetricsTask extends BaseServerMetricsTask {
 
 	private String[] _attributeNames = new String[0];
 	private MapKeyStrategy _mapKeyStrategy;
-	private Properties _properties = PropsUtil.getProperties(
+	private final Properties _properties = PropsUtil.getProperties(
 		"jdbc.default.", true);
 
 }

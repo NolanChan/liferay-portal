@@ -102,6 +102,6 @@ public class SendPortalPropertiesCommandTest extends PowerMockito {
 		}
 	}
 
-	private Properties _properties = new Properties();
+	private final Properties _properties = new Properties();
 
 }

@@ -33,6 +33,6 @@ public enum OAuthExceptionType {
 		_key = key;
 	}
 
-	private String _key;
+	private final String _key;
 
 }

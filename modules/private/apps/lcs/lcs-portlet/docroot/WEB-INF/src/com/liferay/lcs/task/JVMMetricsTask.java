@@ -172,9 +172,9 @@ public class JVMMetricsTask implements ScheduledTask {
 		return payload;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(JVMMetricsTask.class);
+	private static final Log _log = LogFactoryUtil.getLog(JVMMetricsTask.class);
 
-	private static VirtualMachineMetrics _virtualMachineMetrics =
+	private static final VirtualMachineMetrics _virtualMachineMetrics =
 		VirtualMachineMetrics.getInstance();
 
 	private KeyGenerator _keyGenerator;

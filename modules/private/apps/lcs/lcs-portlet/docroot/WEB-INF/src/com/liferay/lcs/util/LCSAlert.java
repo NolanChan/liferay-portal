@@ -54,7 +54,7 @@ public enum LCSAlert {
 		_label = label;
 	}
 
-	private String _label;
-	private String _type;
+	private final String _label;
+	private final String _type;
 
 }

@@ -70,6 +70,7 @@ public class LCSExceptionHandler {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LCSExceptionHandler.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LCSExceptionHandler.class);
 
 }

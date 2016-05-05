@@ -73,7 +73,8 @@ public class LCSExceptionSender {
 		_keyGenerator = keyGenerator;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LCSExceptionSender.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LCSExceptionSender.class);
 
 	private JSONWebServiceClient _jsonWebServiceClient;
 	private String _key;

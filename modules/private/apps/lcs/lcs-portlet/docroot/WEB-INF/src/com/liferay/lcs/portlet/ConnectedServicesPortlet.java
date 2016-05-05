@@ -44,13 +44,13 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -180,7 +180,7 @@ public class ConnectedServicesPortlet extends MVCPortlet {
 
 		String portalEdition = LCSUtil.getPortalEdition();
 
-		if (Validator.equals(portalEdition, LCSConstants.PORTAL_EDITION_EE)) {
+		if (Objects.equals(portalEdition, LCSConstants.PORTAL_EDITION_EE)) {
 			portletPreferences.setValue(
 				LCSConstants.PATCHES_LCS_SERVICE_ENABLED,
 				String.valueOf(patchesServiceEnabled));
@@ -462,7 +462,7 @@ public class ConnectedServicesPortlet extends MVCPortlet {
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ConnectedServicesPortlet.class);
 
 }

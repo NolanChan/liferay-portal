@@ -105,7 +105,7 @@ public class DownloadPatchesCommand implements Command {
 				return;
 			}
 
-			if (!isValidZipFile(file)) {
+			if (!_isValidZipFile(file)) {
 				responsePayload.clear();
 
 				responsePayload.put(fileName, LCSConstants.PATCHES_ERROR);
@@ -140,7 +140,7 @@ public class DownloadPatchesCommand implements Command {
 		_lcsConnectionManager = lcsConnectionManager;
 	}
 
-	private boolean isValidZipFile(File file) {
+	private boolean _isValidZipFile(File file) {
 		ZipFile zipfile = null;
 		ZipInputStream zipInputStream = null;
 
@@ -190,7 +190,7 @@ public class DownloadPatchesCommand implements Command {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DownloadPatchesCommand.class);
 
 	private LCSConnectionManager _lcsConnectionManager;

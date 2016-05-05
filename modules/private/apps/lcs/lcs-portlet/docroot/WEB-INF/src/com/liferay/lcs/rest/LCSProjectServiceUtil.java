@@ -63,7 +63,7 @@ public class LCSProjectServiceUtil {
 		_lcsProjectService = lcsProjectService;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LCSProjectServiceUtil.class);
 
 	private static LCSProjectService _lcsProjectService;

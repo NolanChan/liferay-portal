@@ -108,7 +108,7 @@ public class ClusterNodeUtil {
 
 				Map<String, Object> clusterNodeInfo = new HashMap<>();
 
-				if (hasClusterNodeLCSPortletServletContext(clusterNodeId)) {
+				if (_hasClusterNodeLCSPortletServletContext(clusterNodeId)) {
 					clusterNodeInfo = _getClusterNodeInfo(clusterNodeId);
 				}
 				else {
@@ -176,7 +176,7 @@ public class ClusterNodeUtil {
 
 		LCSClusterNode lcsClusterNode =
 			LCSClusterNodeServiceUtil.addLCSClusterNode(
-				siblingKey, generateLCSClusterNodeName(), StringPool.BLANK,
+				siblingKey, _generateLCSClusterNodeName(), StringPool.BLANK,
 				KeyGeneratorUtil.getKey(),
 				StringUtil.merge(LicenseManagerUtil.getIpAddresses()),
 				installationEnvironmentAdvisor.getProcessorCoresTotal());
@@ -191,7 +191,7 @@ public class ClusterNodeUtil {
 		throws Exception {
 
 		return registerClusterNode(
-			lcsClusterEntryId, generateLCSClusterNodeName(), StringPool.BLANK,
+			lcsClusterEntryId, _generateLCSClusterNodeName(), StringPool.BLANK,
 			StringPool.BLANK);
 	}
 
@@ -365,6 +365,12 @@ public class ClusterNodeUtil {
 		}
 	}
 
+	private static String _generateLCSClusterNodeName() {
+		return
+			LicenseManagerUtil.getHostName() + StringPool.DASH +
+				System.currentTimeMillis();
+	}
+
 	private static Map<String, Object> _getClusterNodeInfo(String clusterNodeId)
 		throws Exception {
 
@@ -416,6 +422,25 @@ public class ClusterNodeUtil {
 		return unregisteredClusterNodeIds;
 	}
 
+	private static boolean _hasClusterNodeLCSPortletServletContext(
+			String clusterNodeId)
+		throws Exception {
+
+		ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
+			_containsKeyMethodHandler, clusterNodeId);
+
+		FutureClusterResponses futureClusterResponses =
+			ClusterExecutorUtil.execute(clusterRequest);
+
+		ClusterNodeResponses clusterNodeResponses = futureClusterResponses.get(
+			20000, TimeUnit.MILLISECONDS);
+
+		ClusterNodeResponse clusterNodeResponse =
+			clusterNodeResponses.getClusterResponse(clusterNodeId);
+
+		return (Boolean)clusterNodeResponse.getResult();
+	}
+
 	@SuppressWarnings("unused")
 	private static Map<String, Object> _registerClusterNode(String siblingKey) {
 		if (_log.isDebugEnabled()) {
@@ -433,8 +458,8 @@ public class ClusterNodeUtil {
 				InstallationEnvironmentAdvisorFactory.getInstance();
 
 			LCSClusterNodeServiceUtil.addLCSClusterNode(
-				siblingKey, generateLCSClusterNodeName(), StringPool.BLANK, key,
-				StringUtil.merge(LicenseManagerUtil.getIpAddresses()),
+				siblingKey, _generateLCSClusterNodeName(), StringPool.BLANK,
+				key, StringUtil.merge(LicenseManagerUtil.getIpAddresses()),
 				installationEnvironmentAdvisor.getProcessorCoresTotal());
 
 			LCSUtil.sendServiceAvailabilityNotification(
@@ -514,48 +539,26 @@ public class ClusterNodeUtil {
 		}
 	}
 
-	private static String generateLCSClusterNodeName() {
-		return
-			LicenseManagerUtil.getHostName() + StringPool.DASH +
-				System.currentTimeMillis();
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClusterNodeUtil.class);
 
-	private static boolean hasClusterNodeLCSPortletServletContext(
-			String clusterNodeId)
-		throws Exception {
-
-		ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
-			_containsKeyMethodHandler, clusterNodeId);
-
-		FutureClusterResponses futureClusterResponses =
-			ClusterExecutorUtil.execute(clusterRequest);
-
-		ClusterNodeResponses clusterNodeResponses = futureClusterResponses.get(
-			20000, TimeUnit.MILLISECONDS);
-
-		ClusterNodeResponse clusterNodeResponse =
-			clusterNodeResponses.getClusterResponse(clusterNodeId);
-
-		return (Boolean)clusterNodeResponse.getResult();
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(ClusterNodeUtil.class);
-
-	private static MethodHandler _containsKeyMethodHandler = new MethodHandler(
-		new MethodKey(
+	private static final MethodHandler _containsKeyMethodHandler =
+		new MethodHandler(
+			new MethodKey(
 			ServletContextPool.class.getName(), "containsKey",
 			String.class),
 		"lcs-portlet");
-	private static MethodHandler _getClusterNodeInfoMethodHandler =
+	private static final MethodHandler _getClusterNodeInfoMethodHandler =
 		new MethodHandler(
 			new MethodKey(ClusterNodeUtil.class, "getClusterNodeInfo"));
-	private static MethodKey _registerClusterNodeMethodKey = new MethodKey(
-		ClusterNodeUtil.class, "_registerClusterNode", String.class);
-	private static MethodKey _restartPostsMethodKey = new MethodKey(
+	private static final MethodKey _registerClusterNodeMethodKey =
+		new MethodKey(
+			ClusterNodeUtil.class, "_registerClusterNode", String.class);
+	private static final MethodKey _restartPostsMethodKey = new MethodKey(
 		ClusterNodeUtil.class, "_restartPosts");
-	private static MethodKey _startPostsMethodKey = new MethodKey(
+	private static final MethodKey _startPostsMethodKey = new MethodKey(
 		ClusterNodeUtil.class, "_startPosts");
-	private static MethodKey _stopPostsMethodKey = new MethodKey(
+	private static final MethodKey _stopPostsMethodKey = new MethodKey(
 		ClusterNodeUtil.class, "_stopPosts");
 
 }

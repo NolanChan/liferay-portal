@@ -44,7 +44,7 @@ public class ObjectNameAttributeMapKeyStrategy implements MapKeyStrategy {
 		return mapKey;
 	}
 
-	private String _attributeName;
-	private MBeanServer _mBeanServer;
+	private final String _attributeName;
+	private final MBeanServer _mBeanServer;
 
 }

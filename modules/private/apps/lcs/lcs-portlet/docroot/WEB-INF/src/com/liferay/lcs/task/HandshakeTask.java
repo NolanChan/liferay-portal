@@ -365,7 +365,7 @@ public class HandshakeTask implements Task {
 		return receivedHandshakeResponse;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(HandshakeTask.class);
+	private static final Log _log = LogFactoryUtil.getLog(HandshakeTask.class);
 
 	private int _handshakeReplyReads;
 	private long _handshakeWaitTime;

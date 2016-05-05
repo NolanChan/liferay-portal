@@ -62,7 +62,7 @@ public class HeartbeatTask implements Task {
 		_lcsConnectionManager.sendMessage(heartbeatMessage);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(HeartbeatTask.class);
+	private static final Log _log = LogFactoryUtil.getLog(HeartbeatTask.class);
 
 	private KeyGenerator _keyGenerator;
 	private LCSConnectionManager _lcsConnectionManager;

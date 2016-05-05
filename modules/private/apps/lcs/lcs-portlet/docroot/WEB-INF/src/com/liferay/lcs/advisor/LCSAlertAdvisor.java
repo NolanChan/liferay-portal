@@ -40,6 +40,6 @@ public class LCSAlertAdvisor {
 		return _lcsAlerts.remove(lcsAlert);
 	}
 
-	private Set<LCSAlert> _lcsAlerts = new HashSet<>();
+	private final Set<LCSAlert> _lcsAlerts = new HashSet<>();
 
 }

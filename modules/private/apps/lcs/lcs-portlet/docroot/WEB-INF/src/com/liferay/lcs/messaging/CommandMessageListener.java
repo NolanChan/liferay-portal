@@ -86,7 +86,7 @@ public class CommandMessageListener implements MessageListener {
 		_lcsConnectionManager = lcsConnectionManager;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CommandMessageListener.class);
 
 	private Map<String, Command> _commands;
