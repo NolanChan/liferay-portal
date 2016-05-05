@@ -308,18 +308,6 @@ public class ClusterNodeUtil {
 		invokeOnSiblingClusterNodes(_stopPostsMethodKey);
 	}
 
-	protected static String _getSiblingKey() throws Exception {
-		List<Map<String, Object>> clusterNodeInfos = getClusterNodeInfos();
-
-		for (Map<String, Object> clusterNodeInfo : clusterNodeInfos) {
-			if (GetterUtil.getBoolean(clusterNodeInfo.get("registered"))) {
-				return (String)clusterNodeInfo.get("key");
-			}
-		}
-
-		return null;
-	}
-
 	protected static void invokeOnSiblingClusterNodes(MethodKey remoteMethodKey)
 		throws Exception {
 
@@ -395,6 +383,18 @@ public class ClusterNodeUtil {
 		ClassLoader classLoader = currentThread.getContextClassLoader();
 
 		return ClassLoaderPool.getContextName(classLoader);
+	}
+
+	private static String _getSiblingKey() throws Exception {
+		List<Map<String, Object>> clusterNodeInfos = getClusterNodeInfos();
+
+		for (Map<String, Object> clusterNodeInfo : clusterNodeInfos) {
+			if (GetterUtil.getBoolean(clusterNodeInfo.get("registered"))) {
+				return (String)clusterNodeInfo.get("key");
+			}
+		}
+
+		return null;
 	}
 
 	private static List<String> _getUnregisteredClusterNodeIds()
@@ -545,9 +545,9 @@ public class ClusterNodeUtil {
 	private static final MethodHandler _containsKeyMethodHandler =
 		new MethodHandler(
 			new MethodKey(
-			ServletContextPool.class.getName(), "containsKey",
-			String.class),
-		"lcs-portlet");
+				ServletContextPool.class.getName(), "containsKey",
+				String.class),
+			"lcs-portlet");
 	private static final MethodHandler _getClusterNodeInfoMethodHandler =
 		new MethodHandler(
 			new MethodKey(ClusterNodeUtil.class, "getClusterNodeInfo"));

@@ -35,15 +35,11 @@ public class LCSExceptionHandler {
 	}
 
 	public static void error(String message, Throwable t) {
-		if (_log.isErrorEnabled()) {
-			_log.error(message, t);
-		}
+		_log.error(message, t);
 	}
 
 	public static void error(Throwable t) {
-		if (_log.isErrorEnabled()) {
-			_log.error(t);
-		}
+		_log.error(t);
 	}
 
 	public static void info(String message, Throwable t) {

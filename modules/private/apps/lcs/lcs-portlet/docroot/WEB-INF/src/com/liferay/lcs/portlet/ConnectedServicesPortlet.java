@@ -280,9 +280,7 @@ public class ConnectedServicesPortlet extends MVCPortlet {
 				return;
 			}
 
-			if (_log.isErrorEnabled()) {
-				_log.error("OAuth authorization failed", oae);
-			}
+			_log.error("OAuth authorization failed", oae);
 		}
 
 		if (!LCSUtil.storeLCSPortletCredentials(

@@ -939,8 +939,8 @@ public class DocumentumRepository
 							idfCollection.next();
 						}
 
-						for (int i = start;
-								(i < end) && idfCollection.next(); i++) {
+						for (int i = start; (i < end) && idfCollection.next();
+							i++) {
 
 							IDfId idfId = idfCollection.getId(
 								Constants.R_OBJECT_ID);

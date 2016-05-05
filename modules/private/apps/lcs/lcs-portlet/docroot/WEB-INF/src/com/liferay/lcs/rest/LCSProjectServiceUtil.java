@@ -44,9 +44,7 @@ public class LCSProjectServiceUtil {
 			return _lcsProjectService.getUserManageableLCSProjects();
 		}
 		catch (Exception e) {
-			if (_log.isErrorEnabled()) {
-				_log.error("LCS project discovery failed", e);
-			}
+			_log.error("LCS project discovery failed", e);
 
 			if (OAuthUtil.hasOAuthException(e)) {
 				OAuthUtil.processOAuthException(portletRequest, e);

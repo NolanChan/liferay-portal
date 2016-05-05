@@ -170,12 +170,12 @@ public class DefaultInstallationEnvironmentAdvisor
 		return false;
 	}
 
-	protected static final String[] _SYSTEM_PROPERTIES_SOFTWARE_KEYS = {
+	private static final String[] _SYSTEM_PROPERTIES_SOFTWARE_KEYS = {
 		"file.encoding", "java.vendor", "java.version", "java.vm.name",
 		"os.arch", "os.name", "os.version", "user.timezone"
 	};
 
-	protected static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultInstallationEnvironmentAdvisor.class);
 
 }
