@@ -46,30 +46,47 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 public class VLDAPServer {
 
 	public void destroy() {
-		destroyIoAcceptor();
+		destroyIoAcceptor(_ldapSocketAcceptor);
+		destroyIoAcceptor(_ldapsSocketAcceptor);
+
+		_ldapSocketAcceptor = null;
+		_ldapsSocketAcceptor = null;
 	}
 
 	public void init() throws IOException {
-		initIoAcceptor();
-	}
+		_ldapSocketAcceptor = new NioSocketAcceptor();
+		_ldapsSocketAcceptor = new NioSocketAcceptor();
 
-	protected void destroyIoAcceptor() {
-		if (_nioSocketAcceptor != null) {
-			Map<Long, IoSession> managedSessions =
-				_nioSocketAcceptor.getManagedSessions();
+		if (PortletPropsValues.LDAP_BIND_PORT > 0) {
+			initIoAcceptor(
+				_ldapSocketAcceptor, PortletPropsValues.LDAP_BIND_PORT, false);
+		}
 
-			for (IoSession ioSession : managedSessions.values()) {
-				ioSession.close(true);
-			}
-
-			_nioSocketAcceptor.unbind();
-			_nioSocketAcceptor.dispose();
+		if (PortletPropsValues.LDAPS_BIND_PORT > 0) {
+			initIoAcceptor(
+				_ldapsSocketAcceptor, PortletPropsValues.LDAPS_BIND_PORT, true);
 		}
 	}
 
-	protected void initCodec() {
+	protected void destroyIoAcceptor(NioSocketAcceptor nioSocketAcceptor) {
+		if (nioSocketAcceptor == null) {
+			return;
+		}
+
+		Map<Long, IoSession> managedSessions =
+			nioSocketAcceptor.getManagedSessions();
+
+		for (IoSession ioSession : managedSessions.values()) {
+			ioSession.close(true);
+		}
+
+		nioSocketAcceptor.unbind();
+		nioSocketAcceptor.dispose();
+	}
+
+	protected void initCodec(NioSocketAcceptor nioSocketAcceptor) {
 		DefaultIoFilterChainBuilder defaultIoFilterChainBuilder =
-			_nioSocketAcceptor.getFilterChain();
+			nioSocketAcceptor.getFilterChain();
 
 		ProtocolCodecFactory protocolCodecFactory =
 			new LdapProtocolCodecFactory();
@@ -80,43 +97,43 @@ public class VLDAPServer {
 		defaultIoFilterChainBuilder.addLast("codec", ioFilterAdapter);
 	}
 
-	protected void initIoAcceptor() throws IOException {
-		_nioSocketAcceptor = new NioSocketAcceptor();
+	protected void initIoAcceptor(
+			NioSocketAcceptor nioSocketAcceptor, int bindPort, boolean useSSL)
+		throws IOException {
 
-		_nioSocketAcceptor.setReuseAddress(true);
+		nioSocketAcceptor.setReuseAddress(true);
 
-		if (PortletPropsValues.LDAPS_SSL_REQUIRED) {
-			initSslFilter();
+		if (useSSL) {
+			initSslFilter(nioSocketAcceptor);
 		}
 
-		initIoHandler();
-		initCodec();
-		initLogging();
+		initIoHandler(nioSocketAcceptor);
+		initCodec(nioSocketAcceptor);
+		initLogging(nioSocketAcceptor);
 
-		SocketAddress socketAddress = new InetSocketAddress(
-			PortletPropsValues.BIND_PORT);
+		SocketAddress socketAddress = new InetSocketAddress(bindPort);
 
-		_nioSocketAcceptor.bind(socketAddress);
+		nioSocketAcceptor.bind(socketAddress);
 	}
 
-	protected void initIoHandler() {
+	protected void initIoHandler(NioSocketAcceptor nioSocketAcceptor) {
 		DispatchIoHandler dispatchIoHandler = new DispatchIoHandler();
 
-		_nioSocketAcceptor.setHandler(dispatchIoHandler);
+		nioSocketAcceptor.setHandler(dispatchIoHandler);
 	}
 
-	protected void initLogging() {
+	protected void initLogging(NioSocketAcceptor nioSocketAcceptor) {
 		DefaultIoFilterChainBuilder defaultIoFilterChainBuilder =
-			_nioSocketAcceptor.getFilterChain();
+			nioSocketAcceptor.getFilterChain();
 
 		if (_log.isDebugEnabled()) {
 			defaultIoFilterChainBuilder.addLast("logger", new LoggingFilter());
 		}
 	}
 
-	protected void initSslFilter() {
+	protected void initSslFilter(NioSocketAcceptor nioSocketAcceptor) {
 		DefaultIoFilterChainBuilder defaultIoFilterChainBuilder =
-			_nioSocketAcceptor.getFilterChain();
+			nioSocketAcceptor.getFilterChain();
 
 		SSLContext sslContext = LdapSslContextFactory.getSSLContext(true);
 
@@ -127,6 +144,7 @@ public class VLDAPServer {
 
 	private static final Log _log = LogFactoryUtil.getLog(VLDAPServer.class);
 
-	private NioSocketAcceptor _nioSocketAcceptor;
+	private NioSocketAcceptor _ldapSocketAcceptor;
+	private NioSocketAcceptor _ldapsSocketAcceptor;
 
 }

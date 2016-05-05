@@ -19,8 +19,6 @@ package com.liferay.vldap.util;
  */
 public class PortletPropsKeys {
 
-	public static final String BIND_PORT = "bind.port";
-
 	public static final String BIND_SASL_HOSTNAME = "bind.sasl.hostname";
 
 	public static final String EMAIL_ADDRESSES_WHITELIST =
@@ -28,7 +26,9 @@ public class PortletPropsKeys {
 
 	public static final String HOSTS_ALLOWED = "hosts.allowed";
 
-	public static final String LDAPS_SSL_REQUIRED = "ldap.ssl.required";
+	public static final String LDAP_BIND_PORT = "ldap.bind.port";
+
+	public static final String LDAPS_BIND_PORT = "ldaps.bind.port";
 
 	public static final String POSIX_GROUP_ID = "posix.group.id";
 

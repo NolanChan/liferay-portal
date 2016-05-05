@@ -22,9 +22,6 @@ import com.liferay.util.portlet.PortletProps;
  */
 public class PortletPropsValues {
 
-	public static final int BIND_PORT = GetterUtil.getInteger(
-		PortletProps.get(PortletPropsKeys.BIND_PORT));
-
 	public static final String BIND_SASL_HOSTNAME = GetterUtil.getString(
 		PortletProps.get(PortletPropsKeys.BIND_SASL_HOSTNAME));
 
@@ -34,8 +31,11 @@ public class PortletPropsValues {
 	public static final String[] HOSTS_ALLOWED = PortletProps.getArray(
 		PortletPropsKeys.HOSTS_ALLOWED);
 
-	public static final boolean LDAPS_SSL_REQUIRED = GetterUtil.getBoolean(
-		PortletProps.get(PortletPropsKeys.LDAPS_SSL_REQUIRED));
+	public static final int LDAP_BIND_PORT = GetterUtil.getInteger(
+		PortletProps.get(PortletPropsKeys.LDAP_BIND_PORT));
+
+	public static final int LDAPS_BIND_PORT = GetterUtil.getInteger(
+		PortletProps.get(PortletPropsKeys.LDAPS_BIND_PORT));
 
 	public static final String POSIX_GROUP_ID = GetterUtil.getString(
 		PortletProps.get(PortletPropsKeys.POSIX_GROUP_ID));
