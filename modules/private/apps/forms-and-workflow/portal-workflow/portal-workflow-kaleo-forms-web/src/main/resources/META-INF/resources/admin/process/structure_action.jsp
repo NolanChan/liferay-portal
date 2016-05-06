@@ -47,11 +47,4 @@ String backURL = (String)row.getParameter("backURL");
 		onClick='<%= "Liferay.fire('" + renderResponse.getNamespace() + "chooseDefinition', {ddmStructureId: " + ddmStructure.getStructureId() + ", name: '" + HtmlUtil.escapeJS(ddmStructure.getName(locale)) + "', node: this});" %>'
 		url="javascript:;"
 	/>
-
-	<liferay-portlet:actionURL name="deleteStructure" portletName="<%= DDMPortletKeys.DYNAMIC_DATA_MAPPING %>" var="deleteDDMStructureURL">
-		<portlet:param name="redirect" value="<%= backURL %>" />
-		<portlet:param name="deleteStructureIds" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
-	</liferay-portlet:actionURL>
-
-	<liferay-ui:icon-delete url="<%= deleteDDMStructureURL %>" />
 </liferay-ui:icon-menu>

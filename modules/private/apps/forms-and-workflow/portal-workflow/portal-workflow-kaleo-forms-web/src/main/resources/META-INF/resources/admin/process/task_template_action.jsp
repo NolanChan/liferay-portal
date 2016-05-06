@@ -78,15 +78,5 @@ String backURL = (String)row.getParameter("backURL");
 			onClick='<%= "javascript:" + renderResponse.getNamespace() + "editFormTemplate('" + editFormTemplateURL + "');" %>'
 			url="javascript:;"
 		/>
-
-		<liferay-portlet:actionURL name="deleteTemplate" portletName="<%= DDMPortletKeys.DYNAMIC_DATA_MAPPING %>" var="deleteURL">
-			<portlet:param name="redirect" value="<%= backURL %>" />
-			<portlet:param name="templateId" value="<%= String.valueOf(ddmTemplate.getTemplateId()) %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-ui:icon-delete
-			message="delete-form"
-			url="<%= deleteURL %>"
-		/>
 	</c:if>
 </liferay-ui:icon-menu>
