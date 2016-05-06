@@ -21,6 +21,7 @@ import com.liferay.oauth.util.OAuthMessage;
 import com.liferay.oauth.util.OAuthUtil;
 import com.liferay.oauth.util.WebServerUtil;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.io.OutputStream;
@@ -28,10 +29,16 @@ import java.io.OutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
+@Component(
+	immediate = true, property = "path=/portal/oauth/request_token",
+	service = StrutsAction.class
+)
 public class OAuthRequestTokenAction extends BaseStrutsAction {
 
 	@Override
