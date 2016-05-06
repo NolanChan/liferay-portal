@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -65,10 +66,12 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 	public String getEditTemplateTitle(
 		DDMStructure structure, DDMTemplate template, Locale locale) {
 
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
 		if ((structure != null) && (template == null)) {
 			return LanguageUtil.format(
-				locale, "new-form-for-field-set-x", structure.getName(locale),
-				false);
+				resourceBundle, "new-form-for-field-set-x",
+				structure.getName(locale), false);
 		}
 
 		return super.getEditTemplateTitle(structure, template, locale);
@@ -95,13 +98,15 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
-	public String getTemplateMode() {
-		return DDMTemplateConstants.TEMPLATE_MODE_CREATE;
+	public String getTemplateType() {
+		return DDMTemplateConstants.TEMPLATE_TYPE_FORM;
 	}
 
 	@Override
-	public String getTemplateType() {
-		return DDMTemplateConstants.TEMPLATE_TYPE_FORM;
+	public String getTitle(Locale locale) {
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		return LanguageUtil.get(resourceBundle, "field-sets");
 	}
 
 	@Override
@@ -110,7 +115,43 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 			LiferayPortletResponse liferayPortletResponse, long classPK)
 		throws Exception {
 
-		return StringPool.BLANK;
+		DDMNavigationHelper ddmNavigationHelper = getDDMNavigationHelper();
+
+		if (ddmNavigationHelper.isNavigationStartsOnEditStructure(
+				liferayPortletRequest)) {
+
+			return StringPool.BLANK;
+		}
+
+		return super.getViewTemplatesBackURL(
+			liferayPortletRequest, liferayPortletResponse, classPK);
+	}
+
+	@Override
+	public String getViewTemplatesTitle(
+		DDMStructure structure, boolean controlPanel, boolean search,
+		Locale locale) {
+
+		if (structure != null) {
+			ResourceBundle resourceBundle = getResourceBundle(locale);
+
+			return LanguageUtil.format(
+				resourceBundle, "forms-for-field-set-x",
+				structure.getName(locale), false);
+		}
+
+		return getDefaultViewTemplateTitle(locale);
+	}
+
+	@Override
+	public boolean isShowBackURLInTitleBar() {
+		return true;
+	}
+
+	protected String getDefaultViewTemplateTitle(Locale locale) {
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		return LanguageUtil.get(resourceBundle, "forms");
 	}
 
 }
