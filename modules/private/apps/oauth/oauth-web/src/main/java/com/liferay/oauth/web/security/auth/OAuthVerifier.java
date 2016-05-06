@@ -40,11 +40,20 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  * @author Tomas Polesovsky
  */
+@Component(
+	immediate = true,
+	property = {
+		"auth.verifier.OAuthVerifier.send.body=true",
+		"auth.verifier.OAuthVerifier.urls.includes=/api/*"
+	}
+)
 public class OAuthVerifier implements AuthVerifier {
 
 	@Override
