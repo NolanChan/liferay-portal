@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth.hook.action;
+package com.liferay.oauth.web.action;
 
 import com.liferay.oauth.util.PortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth.search;
+package com.liferay.oauth.web.search;
 
 import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.model.impl.OAuthApplicationModelImpl;

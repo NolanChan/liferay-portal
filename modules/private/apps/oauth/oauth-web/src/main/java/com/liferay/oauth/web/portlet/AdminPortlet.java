@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth.admin.portlet;
+package com.liferay.oauth.web.portlet;
 
 import com.liferay.oauth.service.OAuthApplicationServiceUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;

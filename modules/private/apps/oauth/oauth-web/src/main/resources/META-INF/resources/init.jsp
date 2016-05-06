@@ -26,8 +26,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.oauth.model.OAuthApplication" %><%@
 page import="com.liferay.oauth.model.OAuthApplicationConstants" %><%@
-page import="com.liferay.oauth.search.OAuthApplicationDisplayTerms" %><%@
-page import="com.liferay.oauth.search.OAuthApplicationSearch" %><%@
 page import="com.liferay.oauth.service.OAuthApplicationLocalServiceUtil" %><%@
 page import="com.liferay.oauth.service.OAuthUserLocalServiceUtil" %><%@
 page import="com.liferay.oauth.service.permission.OAuthApplicationPermission" %><%@
@@ -38,6 +36,8 @@ page import="com.liferay.oauth.util.OAuthAccessor" %><%@
 page import="com.liferay.oauth.util.OAuthConsumer" %><%@
 page import="com.liferay.oauth.util.OAuthMessage" %><%@
 page import="com.liferay.oauth.util.OAuthUtil" %><%@
+page import="com.liferay.oauth.web.search.OAuthApplicationDisplayTerms" %><%@
+page import="com.liferay.oauth.web.search.OAuthApplicationSearch" %><%@
 page import="com.liferay.portal.kernel.exception.ImageTypeException" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredFieldException" %><%@
 page import="com.liferay.portal.kernel.oauth.OAuthException" %><%@
