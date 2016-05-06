@@ -14,12 +14,12 @@
 
 package com.liferay.oauth.util;
 
+import com.liferay.oauth.configuration.OAuthConfigurationValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.oauth.OAuthException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.util.portlet.PortletProps;
 
 import java.io.OutputStream;
 
@@ -89,10 +89,10 @@ public class OAuthUtil {
 	public static OAuth getOAuth() {
 		if (_oAuth == null) {
 			try {
-				Class oauthClassName = Class.forName(
-					PortletProps.get("oauth.class.name"));
+				Class<?> clazz = Class.forName(
+					OAuthConfigurationValues.OAUTH_CLASS_NAME);
 
-				Constructor oauthConstructor = oauthClassName.getConstructor(
+				Constructor oauthConstructor = clazz.getConstructor(
 					OAuthValidator.class);
 
 				_oAuth = (OAuth)oauthConstructor.newInstance(

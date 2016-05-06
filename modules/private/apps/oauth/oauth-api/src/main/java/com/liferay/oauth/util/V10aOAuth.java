@@ -14,6 +14,7 @@
 
 package com.liferay.oauth.util;
 
+import com.liferay.oauth.configuration.OAuthConfigurationValues;
 import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.model.OAuthUser;
 import com.liferay.oauth.service.OAuthApplicationLocalServiceUtil;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.portlet.PortletProps;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -282,10 +282,10 @@ public class V10aOAuth implements OAuth {
 			exception = (Exception)exception.getCause();
 		}
 
-		String realm = PortletProps.get("oauth.realm");
-
 		try {
-			OAuthServlet.handleException(response, exception, realm, sendBody);
+			OAuthServlet.handleException(
+				response, exception, OAuthConfigurationValues.OAUTH_REALM,
+				sendBody);
 		}
 		catch (Exception e) {
 			throw new OAuthException(e);
