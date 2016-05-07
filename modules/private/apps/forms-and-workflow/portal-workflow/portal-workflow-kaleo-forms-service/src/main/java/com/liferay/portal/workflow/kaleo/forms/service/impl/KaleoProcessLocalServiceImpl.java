@@ -17,12 +17,14 @@ package com.liferay.portal.workflow.kaleo.forms.service.impl;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPair;
@@ -80,6 +82,12 @@ public class KaleoProcessLocalServiceImpl
 
 		kaleoProcessPersistence.update(kaleoProcess);
 
+		//DDM template links
+
+		ddmTemplateLinkLocalService.addTemplateLink(
+			classNameLocalService.getClassNameId(KaleoProcess.class),
+			kaleoProcessId, ddmTemplateId);
+
 		// Resources
 
 		resourceLocalService.addModelResources(kaleoProcess, serviceContext);
@@ -98,6 +106,12 @@ public class KaleoProcessLocalServiceImpl
 		// Kaleo process
 
 		kaleoProcessPersistence.remove(kaleoProcess);
+
+		// DDM template links
+
+		ddmTemplateLinkLocalService.deleteTemplateLink(
+			classNameLocalService.getClassNameId(KaleoProcess.class),
+			kaleoProcess.getKaleoProcessId());
 
 		// Kaleo process links
 
@@ -180,6 +194,12 @@ public class KaleoProcessLocalServiceImpl
 		kaleoProcess.setWorkflowDefinitionVersion(workflowDefinitionVersion);
 
 		kaleoProcessPersistence.update(kaleoProcess);
+
+		// DDM template links
+
+		ddmTemplateLinkLocalService.updateTemplateLink(
+			classNameLocalService.getClassNameId(KaleoProcess.class),
+			kaleoProcessId, ddmTemplateId);
 
 		// Kaleo process links
 
@@ -278,5 +298,8 @@ public class KaleoProcessLocalServiceImpl
 			throw new KaleoProcessDDMTemplateIdException();
 		}
 	}
+
+	@ServiceReference(type = DDMTemplateLinkLocalService.class)
+	protected DDMTemplateLinkLocalService ddmTemplateLinkLocalService;
 
 }
