@@ -117,6 +117,11 @@ public class FilterConstraint {
 		return _map.get(attributeId);
 	}
 
+	@Override
+	public int hashCode() {
+		return _map.hashCode();
+	}
+
 	public boolean isEmpty() {
 		return _map.isEmpty();
 	}
