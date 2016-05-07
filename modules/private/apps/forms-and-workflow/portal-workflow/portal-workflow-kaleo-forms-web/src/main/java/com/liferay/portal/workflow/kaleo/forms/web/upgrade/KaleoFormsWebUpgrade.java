@@ -16,7 +16,10 @@ package com.liferay.portal.workflow.kaleo.forms.web.upgrade;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_2.UpgradeKaleoProcessTemplateLink;
 import com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_2.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
@@ -47,6 +50,8 @@ public class KaleoFormsWebUpgrade implements UpgradeStepRegistrator {
 			new com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_2.
 				UpgradeKaleoProcess(
 					_assetEntryLocalService, _ddlRecordSetLocalService),
+			new UpgradeKaleoProcessTemplateLink(
+				_classNameLocalService, _ddmTemplateLinkLocalService),
 			new UpgradePortletId());
 	}
 
@@ -64,7 +69,23 @@ public class KaleoFormsWebUpgrade implements UpgradeStepRegistrator {
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 	}
 
+	@Reference(unbind = "-")
+	public void setDDMTemplateLinkLocalService(
+		DDMTemplateLinkLocalService ddmTemplateLinkLocalService) {
+
+		_ddmTemplateLinkLocalService = ddmTemplateLinkLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+	}
+
 	private AssetEntryLocalService _assetEntryLocalService;
+	private ClassNameLocalService _classNameLocalService;
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 
 }
