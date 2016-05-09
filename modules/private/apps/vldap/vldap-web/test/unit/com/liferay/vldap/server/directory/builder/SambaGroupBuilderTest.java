@@ -14,6 +14,7 @@
 
 package com.liferay.vldap.server.directory.builder;
 
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.vldap.BaseVLDAPTestCase;
 import com.liferay.vldap.server.directory.FilterConstraint;
@@ -26,6 +27,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.mockito.Mockito;
 
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -47,25 +50,13 @@ public class SambaGroupBuilderTest extends BaseVLDAPTestCase {
 			company
 		);
 
-		Organization organization = mock(Organization.class);
-
-		when(
-			organization.getName()
-		).thenReturn(
-			"testName"
-		);
-
-		when(
-			searchBase.getOrganization()
-		).thenReturn(
-			organization
-		);
-
 		_sambaGroupBuilder = new SambaGroupBuilder();
 	}
 
 	@Test
 	public void testBuildDirectoriesNoGIDNumber() throws Exception {
+		setUpOrganization();
+
 		List<FilterConstraint> filterConstraints = new ArrayList<>();
 
 		FilterConstraint filterConstraint = new FilterConstraint();
@@ -85,6 +76,8 @@ public class SambaGroupBuilderTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testBuildDirectoriesValidDisplayName() throws Exception {
+		setUpOrganization();
+
 		List<FilterConstraint> filterConstraints = new ArrayList<>();
 
 		FilterConstraint filterConstraint = new FilterConstraint();
@@ -107,6 +100,8 @@ public class SambaGroupBuilderTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testBuildDirectoriesValidGIDNumber() throws Exception {
+		setUpOrganization();
+
 		List<FilterConstraint> filterConstraints = new ArrayList<>();
 
 		FilterConstraint filterConstraint = new FilterConstraint();
@@ -129,6 +124,8 @@ public class SambaGroupBuilderTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testBuildDirectoriesValidSambaSIDList() throws Exception {
+		setUpOrganization();
+
 		List<FilterConstraint> filterConstraints = new ArrayList<>();
 
 		FilterConstraint filterConstraint = new FilterConstraint();
@@ -153,6 +150,8 @@ public class SambaGroupBuilderTest extends BaseVLDAPTestCase {
 	public void testBuildDirectoriesWithInvalidFilterConstraints()
 		throws Exception {
 
+		setUpOrganization();
+
 		List<FilterConstraint> filterConstraints = new ArrayList<>();
 
 		FilterConstraint filterConstraint = new FilterConstraint();
@@ -165,6 +164,56 @@ public class SambaGroupBuilderTest extends BaseVLDAPTestCase {
 			searchBase, filterConstraints);
 
 		Assert.assertTrue(directories.isEmpty());
+	}
+
+	@Test
+	public void testBuildDirectoriesWithNullFilterConstraints()
+		throws Exception {
+
+		List<FilterConstraint> filterConstraints = new ArrayList<>();
+
+		List<Directory> directories = _sambaGroupBuilder.buildDirectories(
+			searchBase, filterConstraints);
+
+		Assert.assertTrue(directories.isEmpty());
+	}
+
+	@Test
+	public void testBuildDirectoriesWithNullOrganization() throws Exception {
+		Organization organization = mock(Organization.class);
+
+		when(
+			organization.getName()
+		).thenReturn(
+			"testName"
+		);
+
+		List organizations = new ArrayList<>();
+
+		organizations.add(organization);
+
+		when(
+			organizationLocalService.dynamicQuery(
+				Mockito.any(DynamicQuery.class))
+		).thenReturn(
+			organizations
+		);
+
+		List<FilterConstraint> filterConstraints = new ArrayList<>();
+
+		FilterConstraint filterConstraint = new FilterConstraint();
+
+		filterConstraint.addAttribute("cn", "network");
+		filterConstraint.addAttribute("sambaSID", "S-1-5-2");
+
+		filterConstraints.add(filterConstraint);
+
+		List<Directory> directories = _sambaGroupBuilder.buildDirectories(
+			searchBase, filterConstraints);
+
+		Directory directory = directories.get(0);
+
+		assertDirectory(directory, false, false, false);
 	}
 
 	@Test
@@ -205,6 +254,22 @@ public class SambaGroupBuilderTest extends BaseVLDAPTestCase {
 		Assert.assertTrue(
 			directory.hasAttribute("objectclass", "sambaGroupMapping"));
 		Assert.assertTrue(directory.hasAttribute("sambaGroupType", "4"));
+	}
+
+	protected void setUpOrganization() throws Exception {
+		Organization organization = mock(Organization.class);
+
+		when(
+			organization.getName()
+		).thenReturn(
+			"testName"
+		);
+
+		when(
+			searchBase.getOrganization()
+		).thenReturn(
+			organization
+		);
 	}
 
 	private SambaGroupBuilder _sambaGroupBuilder;
