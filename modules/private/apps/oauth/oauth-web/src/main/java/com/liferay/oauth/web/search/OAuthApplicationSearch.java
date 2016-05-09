@@ -14,9 +14,9 @@
 
 package com.liferay.oauth.web.search;
 
+import com.liferay.oauth.constants.OAuthPortletKeys;
 import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.model.impl.OAuthApplicationModelImpl;
-import com.liferay.oauth.util.PortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -69,18 +69,19 @@ public class OAuthApplicationSearch extends SearchContainer<OAuthApplication> {
 				Validator.isNotNull(orderByType)) {
 
 				preferences.setValue(
-					PortletKeys.ADMIN, "oauth-applications-order-by-col",
-					orderByCol);
+					OAuthPortletKeys.OAUTH_ADMIN,
+					"oauth-applications-order-by-col", orderByCol);
 				preferences.setValue(
-					PortletKeys.ADMIN, "oauth-applications-order-by-type",
-					orderByType);
+					OAuthPortletKeys.OAUTH_ADMIN,
+					"oauth-applications-order-by-type", orderByType);
 			}
 			else {
 				orderByCol = preferences.getValue(
-					PortletKeys.ADMIN, "oauth-applications-order-by-col", "id");
+					OAuthPortletKeys.OAUTH_ADMIN,
+					"oauth-applications-order-by-col", "id");
 				orderByType = preferences.getValue(
-					PortletKeys.ADMIN, "oauth-applications-order-by-type",
-					"desc");
+					OAuthPortletKeys.OAUTH_ADMIN,
+					"oauth-applications-order-by-type", "desc");
 			}
 
 			OrderByComparator<OAuthApplication> orderByComparator = null;

@@ -14,7 +14,7 @@
 
 package com.liferay.oauth.web.action;
 
-import com.liferay.oauth.util.PortletKeys;
+import com.liferay.oauth.constants.OAuthPortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
@@ -64,7 +64,7 @@ public class OAuthAuthorizeAction extends BaseStrutsAction {
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.AUTHORIZE, themeDisplay.getPlid(),
+			request, OAuthPortletKeys.OAUTH_AUTHORIZE, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("saveLastPath", "0");
