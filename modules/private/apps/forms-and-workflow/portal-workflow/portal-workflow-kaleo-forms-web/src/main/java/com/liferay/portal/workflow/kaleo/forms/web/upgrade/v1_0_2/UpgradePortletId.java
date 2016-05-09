@@ -16,7 +16,6 @@ package com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_2;
 
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -92,13 +91,11 @@ public class UpgradePortletId
 	protected void removePortletFromLayouts(String oldRootPortletId)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(2);
+		String sql =
+			"select plid, typeSettings from Layout where " +
+				getTypeSettingsCriteria(oldRootPortletId);
 
-		sb.append("select plid, typeSettings from Layout where ");
-
-		sb.append(getTypeSettingsCriteria(oldRootPortletId));
-
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
+		try (PreparedStatement ps = connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
