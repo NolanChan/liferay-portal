@@ -15,7 +15,7 @@
 package com.liferay.oauth.web.portlet;
 
 import com.liferay.oauth.constants.OAuthPortletKeys;
-import com.liferay.oauth.service.OAuthUserServiceUtil;
+import com.liferay.oauth.service.OAuthUserService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -24,6 +24,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -55,7 +56,14 @@ public class AuthorizationsPortlet extends MVCPortlet {
 		long oAuthApplicationId = ParamUtil.getLong(
 			actionRequest, "oAuthApplicationId");
 
-		OAuthUserServiceUtil.deleteOAuthUser(oAuthApplicationId);
+		_oAuthUserService.deleteOAuthUser(oAuthApplicationId);
 	}
+
+	@Reference(unbind = "-")
+	protected void setOAuthUserService(OAuthUserService oAuthUserService) {
+		_oAuthUserService = oAuthUserService;
+	}
+
+	private OAuthUserService _oAuthUserService;
 
 }

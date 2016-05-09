@@ -15,7 +15,7 @@
 package com.liferay.oauth.web.security.auth;
 
 import com.liferay.oauth.model.OAuthUser;
-import com.liferay.oauth.service.OAuthUserLocalServiceUtil;
+import com.liferay.oauth.service.OAuthUserLocalService;
 import com.liferay.oauth.util.DefaultOAuthAccessor;
 import com.liferay.oauth.util.OAuthAccessor;
 import com.liferay.oauth.util.OAuthConsumer;
@@ -41,6 +41,7 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
@@ -136,7 +137,7 @@ public class OAuthVerifier implements AuthVerifier {
 			throw new OAuthException(oAuthException);
 		}
 
-		OAuthUser oAuthUser = OAuthUserLocalServiceUtil.fetchOAuthUser(
+		OAuthUser oAuthUser = _oAuthUserLocalService.fetchOAuthUser(
 			oAuthMessage.getToken());
 
 		if (oAuthUser == null) {
@@ -172,6 +173,15 @@ public class OAuthVerifier implements AuthVerifier {
 		return false;
 	}
 
+	@Reference(unbind = "-")
+	protected void setOAuthUserLocalService(
+		OAuthUserLocalService oAuthUserLocalService) {
+
+		_oAuthUserLocalService = oAuthUserLocalService;
+	}
+
 	private static final String _OAUTH = "OAuth";
+
+	private OAuthUserLocalService _oAuthUserLocalService;
 
 }

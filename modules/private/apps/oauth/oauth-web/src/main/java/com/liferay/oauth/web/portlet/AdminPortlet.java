@@ -15,7 +15,7 @@
 package com.liferay.oauth.web.portlet;
 
 import com.liferay.oauth.constants.OAuthPortletKeys;
-import com.liferay.oauth.service.OAuthApplicationServiceUtil;
+import com.liferay.oauth.service.OAuthApplicationService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -32,6 +32,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -75,7 +76,7 @@ public class AdminPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		OAuthApplicationServiceUtil.addOAuthApplication(
+		_oAuthApplicationService.addOAuthApplication(
 			name, description, accessLevel, shareableAccessToken, callbackURI,
 			websiteURL, serviceContext);
 	}
@@ -87,7 +88,7 @@ public class AdminPortlet extends MVCPortlet {
 		long oAuthApplicationId = ParamUtil.getLong(
 			actionRequest, "oAuthApplicationId");
 
-		OAuthApplicationServiceUtil.deleteOAuthApplication(oAuthApplicationId);
+		_oAuthApplicationService.deleteOAuthApplication(oAuthApplicationId);
 	}
 
 	public void updateLogo(
@@ -109,7 +110,7 @@ public class AdminPortlet extends MVCPortlet {
 				throw new UploadException();
 			}
 
-			OAuthApplicationServiceUtil.updateLogo(
+			_oAuthApplicationService.updateLogo(
 				oAuthApplicationId, inputStream);
 		}
 		finally {
@@ -134,15 +135,24 @@ public class AdminPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		OAuthApplicationServiceUtil.updateOAuthApplication(
+		_oAuthApplicationService.updateOAuthApplication(
 			oAuthApplicationId, name, description, shareableAccessToken,
 			callbackURI, websiteURL, serviceContext);
 
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
 
 		if (deleteLogo) {
-			OAuthApplicationServiceUtil.deleteLogo(oAuthApplicationId);
+			_oAuthApplicationService.deleteLogo(oAuthApplicationId);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setOAuthApplicationService(
+		OAuthApplicationService oAuthApplicationService) {
+
+		_oAuthApplicationService = oAuthApplicationService;
+	}
+
+	private OAuthApplicationService _oAuthApplicationService;
 
 }
