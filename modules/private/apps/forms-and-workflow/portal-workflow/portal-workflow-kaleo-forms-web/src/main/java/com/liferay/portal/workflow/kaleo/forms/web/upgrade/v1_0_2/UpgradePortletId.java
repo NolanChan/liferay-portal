@@ -42,7 +42,7 @@ public class UpgradePortletId
 		runSQL(
 			"delete from ResourcePermission where name = '" + portletId + "'");
 
-		removePortletFromLayouts(portletId);
+		removePortletIdFromLayouts(portletId);
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class UpgradePortletId
 		};
 	}
 
-	protected void removePortletFromLayouts(String oldRootPortletId)
+	protected void removePortletIdFromLayouts(String oldRootPortletId)
 		throws Exception {
 
 		String sql =
