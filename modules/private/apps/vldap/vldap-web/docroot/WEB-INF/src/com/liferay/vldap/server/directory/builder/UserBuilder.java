@@ -99,7 +99,7 @@ public class UserBuilder extends DirectoryBuilder {
 			List<FilterConstraint> filterConstraints)
 		throws Exception {
 
-		if (filterConstraints == null) {
+		if (filterConstraints.isEmpty()) {
 			return UserLocalServiceUtil.getCompanyUsers(
 				company.getCompanyId(), 0, (int)searchBase.getSizeLimit());
 		}

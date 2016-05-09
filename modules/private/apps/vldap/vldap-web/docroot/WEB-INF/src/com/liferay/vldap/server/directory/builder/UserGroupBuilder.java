@@ -80,7 +80,7 @@ public class UserGroupBuilder extends DirectoryBuilder {
 			int sizeLimit)
 		throws LdapInvalidDnException {
 
-		if (filterConstraints == null) {
+		if (filterConstraints.isEmpty()) {
 			return getUserGroups(company.getCompanyId(), null, null, sizeLimit);
 		}
 

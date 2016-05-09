@@ -42,7 +42,7 @@ public class OrganizationsBuilder extends DirectoryBuilder {
 		List<Directory> directories = new ArrayList<>();
 
 		for (Company company : searchBase.getCompanies()) {
-			if (filterConstraints == null) {
+			if (filterConstraints.isEmpty()) {
 				Directory directory = new OrganizationsDirectory(
 					searchBase.getTop(), company);
 

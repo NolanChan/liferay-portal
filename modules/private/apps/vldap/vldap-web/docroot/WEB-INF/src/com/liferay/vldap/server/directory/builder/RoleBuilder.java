@@ -81,7 +81,7 @@ public class RoleBuilder extends DirectoryBuilder {
 			int sizeLimit)
 		throws LdapInvalidDnException {
 
-		if (filterConstraints == null) {
+		if (filterConstraints.isEmpty()) {
 			return getRoles(company.getCompanyId(), null, null, sizeLimit);
 		}
 

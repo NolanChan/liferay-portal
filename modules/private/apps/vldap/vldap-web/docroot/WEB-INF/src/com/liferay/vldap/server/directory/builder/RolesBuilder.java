@@ -42,7 +42,7 @@ public class RolesBuilder extends DirectoryBuilder {
 		List<Directory> directories = new ArrayList<>();
 
 		for (Company company : searchBase.getCompanies()) {
-			if (filterConstraints == null) {
+			if (filterConstraints.isEmpty()) {
 				Directory directory = new RolesDirectory(
 					searchBase.getTop(), company);
 

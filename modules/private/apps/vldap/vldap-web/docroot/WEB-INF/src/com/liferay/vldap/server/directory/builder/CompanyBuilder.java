@@ -62,7 +62,7 @@ public class CompanyBuilder extends DirectoryBuilder {
 			List<FilterConstraint> filterConstraints)
 		throws PortalException {
 
-		if (filterConstraints == null) {
+		if (filterConstraints.isEmpty()) {
 			return CompanyLocalServiceUtil.getCompanies();
 		}
 

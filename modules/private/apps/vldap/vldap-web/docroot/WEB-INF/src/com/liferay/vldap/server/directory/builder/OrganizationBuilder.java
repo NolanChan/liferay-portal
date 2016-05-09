@@ -78,7 +78,7 @@ public class OrganizationBuilder extends DirectoryBuilder {
 			int sizeLimit)
 		throws Exception {
 
-		if (filterConstraints == null) {
+		if (filterConstraints.isEmpty()) {
 			return getOrganizations(company.getCompanyId(), null, sizeLimit);
 		}
 

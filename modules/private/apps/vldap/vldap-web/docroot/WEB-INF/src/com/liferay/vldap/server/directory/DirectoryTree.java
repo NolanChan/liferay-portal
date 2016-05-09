@@ -543,14 +543,14 @@ public class DirectoryTree {
 	protected List<FilterConstraint> toFilterConstraintsFromBranchNode(
 		BranchNode branchNode) {
 
-		if (branchNode instanceof AndNode) {
-			List<FilterConstraint> filterConstraints = new ArrayList<>();
+		List<FilterConstraint> filterConstraints = new ArrayList<>();
 
+		if (branchNode instanceof AndNode) {
 			for (ExprNode exprNode : branchNode.getChildren()) {
 				List<FilterConstraint> childFilterConstraints =
 					toFilterConstraints(exprNode);
 
-				if (childFilterConstraints == null) {
+				if (childFilterConstraints.isEmpty()) {
 					continue;
 				}
 
@@ -563,13 +563,11 @@ public class DirectoryTree {
 		else if (branchNode instanceof NotNode) {
 		}
 		else if (branchNode instanceof OrNode) {
-			List<FilterConstraint> filterConstraints = new ArrayList<>();
-
 			for (ExprNode exprNode : branchNode.getChildren()) {
 				List<FilterConstraint> childFilterConstraints =
 					toFilterConstraints(exprNode);
 
-				if (childFilterConstraints == null) {
+				if (childFilterConstraints.isEmpty()) {
 					continue;
 				}
 
@@ -583,16 +581,16 @@ public class DirectoryTree {
 			_log.warn("Unsupported expression " + branchNode);
 		}
 
-		return null;
+		return filterConstraints;
 	}
 
 	protected List<FilterConstraint> toFilterConstraintsFromLeafNode(
 		LeafNode leafNode) {
 
+		List<FilterConstraint> filterConstraints = new ArrayList<>();
+
 		if (leafNode instanceof EqualityNode<?>) {
 			EqualityNode<?> equalityNode = (EqualityNode<?>)leafNode;
-
-			List<FilterConstraint> filterConstraints = new ArrayList<>();
 
 			FilterConstraint filterConstraint = new FilterConstraint();
 
@@ -612,8 +610,6 @@ public class DirectoryTree {
 		else if (leafNode instanceof PresenceNode) {
 			PresenceNode presenceNode = (PresenceNode)leafNode;
 
-			List<FilterConstraint> filterConstraints = new ArrayList<>();
-
 			FilterConstraint filterConstraint = new FilterConstraint();
 
 			filterConstraint.addAttribute(presenceNode.getAttribute(), "*");
@@ -629,7 +625,7 @@ public class DirectoryTree {
 			_log.warn("Unsupported expression " + leafNode);
 		}
 
-		return null;
+		return filterConstraints;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DirectoryTree.class);

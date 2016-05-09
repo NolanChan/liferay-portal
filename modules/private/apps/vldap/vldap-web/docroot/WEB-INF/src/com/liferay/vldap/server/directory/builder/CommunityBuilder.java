@@ -77,7 +77,7 @@ public class CommunityBuilder extends DirectoryBuilder {
 			int sizeLimit)
 		throws LdapInvalidDnException {
 
-		if (filterConstraints == null) {
+		if (filterConstraints.isEmpty()) {
 			return GroupLocalServiceUtil.getCompanyGroups(
 				company.getCompanyId(), 0, sizeLimit);
 		}
