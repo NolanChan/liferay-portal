@@ -55,7 +55,7 @@ public class CompanyBuilderTest extends BaseVLDAPTestCase {
 	@Test
 	public void testBuildDirectoriesNullFilterConstraints() throws Exception {
 		List<Directory> directories = _companyBuilder.buildDirectories(
-			searchBase, null);
+			searchBase, new ArrayList<FilterConstraint>());
 
 		Directory directory = directories.get(0);
 

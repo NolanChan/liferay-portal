@@ -126,7 +126,7 @@ public class RoleBuilderTest extends BaseVLDAPTestCase {
 		setUpRoles();
 
 		List<Directory> directories = _roleBuilder.buildDirectories(
-			searchBase, null);
+			searchBase, new ArrayList<FilterConstraint>());
 
 		Directory directory = directories.get(0);
 

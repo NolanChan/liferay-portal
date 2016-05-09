@@ -101,7 +101,7 @@ public class OrganizationBuilderTest extends BaseVLDAPTestCase {
 		setUpOrganizations();
 
 		List<Directory> directories = _organizationBuilder.buildDirectories(
-			searchBase, null);
+			searchBase, new ArrayList<FilterConstraint>());
 
 		Directory directory = directories.get(0);
 

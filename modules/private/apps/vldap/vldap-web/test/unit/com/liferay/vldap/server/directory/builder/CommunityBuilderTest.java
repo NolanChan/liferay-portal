@@ -178,7 +178,7 @@ public class CommunityBuilderTest extends BaseVLDAPTestCase {
 		);
 
 		List<Directory> directories = _communityBuilder.buildDirectories(
-			searchBase, null);
+			searchBase, new ArrayList<FilterConstraint>());
 
 		Directory directory = directories.get(0);
 

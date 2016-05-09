@@ -240,7 +240,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 	@Test
 	public void testBuildDirectoriesNoFilter() throws Exception {
 		List<Directory> directories = _userBuilder.buildDirectories(
-			searchBase, null);
+			searchBase, new ArrayList<FilterConstraint>());
 
 		Directory directory = directories.get(0);
 

@@ -74,7 +74,7 @@ public abstract class BaseDirectoryBuilderTestCase extends BaseVLDAPTestCase {
 		throws Exception {
 
 		List<Directory> directories = directoryBuilder.buildDirectories(
-			searchBase, null);
+			searchBase, new ArrayList<FilterConstraint>());
 
 		Directory directory = directories.get(0);
 

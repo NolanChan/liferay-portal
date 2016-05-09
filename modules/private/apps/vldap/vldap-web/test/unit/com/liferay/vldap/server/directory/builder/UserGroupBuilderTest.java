@@ -106,7 +106,7 @@ public class UserGroupBuilderTest extends BaseVLDAPTestCase {
 	@Test
 	public void testBuildDirectoriesNoFilter() throws Exception {
 		List<Directory> directories = _userGroupBuilder.buildDirectories(
-			searchBase, null);
+			searchBase, new ArrayList<FilterConstraint>());
 
 		Directory directory = directories.get(0);
 
