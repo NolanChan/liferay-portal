@@ -14,6 +14,7 @@
 
 package com.liferay.vldap.server.directory.builder;
 
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.vldap.BaseVLDAPTestCase;
 import com.liferay.vldap.server.directory.FilterConstraint;
@@ -26,6 +27,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.mockito.Mockito;
 
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -46,25 +49,13 @@ public class SambaMachineBuilderTest extends BaseVLDAPTestCase {
 		).thenReturn(
 			company
 		);
-
-		_organization = mock(Organization.class);
-
-		when(
-			_organization.getName()
-		).thenReturn(
-			"testName"
-		);
-
-		when(
-			searchBase.getOrganization()
-		).thenReturn(
-			_organization
-		);
 	}
 
 	@Test
 	public void testBuildDirectoriesDefaultFilterConstraints()
 		throws Exception {
+
+		setUpOrganization();
 
 		List<FilterConstraint> filterConstraints = new ArrayList<>();
 
@@ -86,6 +77,8 @@ public class SambaMachineBuilderTest extends BaseVLDAPTestCase {
 	public void testBuildDirectoriesInvalidFilterConstraints()
 		throws Exception {
 
+		setUpOrganization();
+
 		List<FilterConstraint> filterConstraints = new ArrayList<>();
 
 		FilterConstraint filterConstraint = new FilterConstraint();
@@ -102,6 +95,8 @@ public class SambaMachineBuilderTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testBuildDirectoriesInvalidSambaDomain() throws Exception {
+		setUpOrganization();
+
 		List<FilterConstraint> filterConstraints = new ArrayList<>();
 
 		FilterConstraint filterConstraint = new FilterConstraint();
@@ -118,8 +113,59 @@ public class SambaMachineBuilderTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testBuildDirectoriesValidOrganizationDomain() throws Exception {
+		setUpOrganization();
+
 		List<Directory> directories = _sambaMachineBuilder.buildDirectories(
 			searchBase.getTop(), company, _organization, "testDomainName");
+
+		Directory directory = directories.get(0);
+
+		assertDirectory(directory);
+	}
+
+	@Test
+	public void testBuildDirectoriesWithNullFilterConstraints()
+		throws Exception {
+
+		List<FilterConstraint> filterConstraints = new ArrayList<>();
+
+		List<Directory> directories = _sambaMachineBuilder.buildDirectories(
+			searchBase, filterConstraints);
+
+		Assert.assertTrue(directories.isEmpty());
+	}
+
+	@Test
+	public void testBuildDirectoriesWithNullOrganization() throws Exception {
+		Organization organization = mock(Organization.class);
+
+		when(
+			organization.getName()
+		).thenReturn(
+			"testName"
+		);
+
+		List organizations = new ArrayList<>();
+
+		organizations.add(organization);
+
+		when(
+			organizationLocalService.dynamicQuery(
+				Mockito.any(DynamicQuery.class))
+		).thenReturn(
+			organizations
+		);
+
+		List<FilterConstraint> filterConstraints = new ArrayList<>();
+
+		FilterConstraint filterConstraint = new FilterConstraint();
+
+		filterConstraint.addAttribute("sambaDomainName", "testDomainName");
+
+		filterConstraints.add(filterConstraint);
+
+		List<Directory> directories = _sambaMachineBuilder.buildDirectories(
+			searchBase, filterConstraints);
 
 		Directory directory = directories.get(0);
 
@@ -142,6 +188,22 @@ public class SambaMachineBuilderTest extends BaseVLDAPTestCase {
 		Assert.assertTrue(
 			directory.hasAttribute(
 				"sambaSID", "S-1-5-21-" + company.getCompanyId()));
+	}
+
+	protected void setUpOrganization() throws Exception {
+		_organization = mock(Organization.class);
+
+		when(
+			_organization.getName()
+		).thenReturn(
+			"testName"
+		);
+
+		when(
+			searchBase.getOrganization()
+		).thenReturn(
+			_organization
+		);
 	}
 
 	private Organization _organization;
