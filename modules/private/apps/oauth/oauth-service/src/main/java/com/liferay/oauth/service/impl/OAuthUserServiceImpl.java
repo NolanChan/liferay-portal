@@ -18,10 +18,10 @@ import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.model.OAuthUser;
 import com.liferay.oauth.service.base.OAuthUserServiceBaseImpl;
 import com.liferay.oauth.service.permission.OAuthUserPermission;
+import com.liferay.oauth.util.OAuthActionKeys;
 import com.liferay.oauth.util.OAuthUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
@@ -65,7 +65,7 @@ public class OAuthUserServiceImpl extends OAuthUserServiceBaseImpl {
 			getUserId(), oAuthApplicationId);
 
 		OAuthUserPermission.check(
-			getPermissionChecker(), oAuthUser, ActionKeys.DELETE);
+			getPermissionChecker(), oAuthUser, OAuthActionKeys.DELETE);
 
 		return oAuthUserLocalService.deleteOAuthUser(
 			getUserId(), oAuthApplicationId);

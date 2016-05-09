@@ -59,7 +59,7 @@
 			value="<%= oAuthApplication.getAccessLevelLabel() %>"
 		/>
 
-		<c:if test="<%= OAuthUserPermission.contains(permissionChecker, oAuthUser, ActionKeys.DELETE) %>">
+		<c:if test="<%= OAuthUserPermission.contains(permissionChecker, oAuthUser, OAuthActionKeys.DELETE) %>">
 			<liferay-portlet:actionURL name="deleteOAuthUser" var="revokeURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="oAuthApplicationId" value="<%= String.valueOf(oAuthApplication.getOAuthApplicationId()) %>" />

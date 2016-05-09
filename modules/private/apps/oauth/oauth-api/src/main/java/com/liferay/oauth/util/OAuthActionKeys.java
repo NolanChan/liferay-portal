@@ -17,7 +17,7 @@ package com.liferay.oauth.util;
 /**
  * @author Ivica Cardic
  */
-public class ActionKeys
+public class OAuthActionKeys
 	extends com.liferay.portal.kernel.security.permission.ActionKeys {
 
 	public static final String ADD_APPLICATION = "ADD_APPLICATION";

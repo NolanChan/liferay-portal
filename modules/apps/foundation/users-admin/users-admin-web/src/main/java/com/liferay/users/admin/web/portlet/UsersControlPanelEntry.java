@@ -88,7 +88,7 @@ public class UsersControlPanelEntry extends BaseControlPanelEntry {
 
 			/*if (OrganizationPermissionUtil.contains(
 					permissionChecker, organization.getOrganizationId(),
-					ActionKeys.VIEW)) {
+					OAuthActionKeys.VIEW)) {
 
 				return true;
 			}*/

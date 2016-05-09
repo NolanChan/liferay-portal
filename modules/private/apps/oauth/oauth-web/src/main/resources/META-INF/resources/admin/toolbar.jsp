@@ -29,7 +29,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbar-item", "view-all");
 		<aui:a href="<%= viewApplicationsURL %>" label='<%= permissionChecker.isCompanyAdmin() ? "view-all" : "my-applications" %>' />
 	</span>
 
-	<c:if test="<%= OAuthPermission.contains(permissionChecker, ActionKeys.ADD_APPLICATION) %>">
+	<c:if test="<%= OAuthPermission.contains(permissionChecker, OAuthActionKeys.ADD_APPLICATION) %>">
 		<portlet:renderURL var="addApplicationURL">
 			<portlet:param name="mvcPath" value="/admin/edit_application.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

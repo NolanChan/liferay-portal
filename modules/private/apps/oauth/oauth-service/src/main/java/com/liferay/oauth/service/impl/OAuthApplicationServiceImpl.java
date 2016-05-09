@@ -18,7 +18,7 @@ import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.service.base.OAuthApplicationServiceBaseImpl;
 import com.liferay.oauth.service.permission.OAuthApplicationPermission;
 import com.liferay.oauth.service.permission.OAuthPermission;
-import com.liferay.oauth.util.ActionKeys;
+import com.liferay.oauth.util.OAuthActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -39,7 +39,7 @@ public class OAuthApplicationServiceImpl
 		throws PortalException {
 
 		OAuthPermission.check(
-			getPermissionChecker(), ActionKeys.ADD_APPLICATION);
+			getPermissionChecker(), OAuthActionKeys.ADD_APPLICATION);
 
 		return oAuthApplicationLocalService.addOAuthApplication(
 			getUserId(), name, description, accessLevel, shareableAccessToken,
@@ -49,7 +49,7 @@ public class OAuthApplicationServiceImpl
 	@Override
 	public void deleteLogo(long oAuthApplicationId) throws PortalException {
 		OAuthApplicationPermission.check(
-			getPermissionChecker(), oAuthApplicationId, ActionKeys.UPDATE);
+			getPermissionChecker(), oAuthApplicationId, OAuthActionKeys.UPDATE);
 
 		oAuthApplicationLocalService.deleteLogo(oAuthApplicationId);
 	}
@@ -62,7 +62,7 @@ public class OAuthApplicationServiceImpl
 			oAuthApplicationPersistence.findByPrimaryKey(oAuthApplicationId);
 
 		OAuthApplicationPermission.check(
-			getPermissionChecker(), oAuthApplication, ActionKeys.DELETE);
+			getPermissionChecker(), oAuthApplication, OAuthActionKeys.DELETE);
 
 		return oAuthApplicationLocalService.deleteOAuthApplication(
 			oAuthApplication);
@@ -74,7 +74,7 @@ public class OAuthApplicationServiceImpl
 		throws PortalException {
 
 		OAuthApplicationPermission.check(
-			getPermissionChecker(), oAuthApplicationId, ActionKeys.UPDATE);
+			getPermissionChecker(), oAuthApplicationId, OAuthActionKeys.UPDATE);
 
 		return oAuthApplicationLocalService.updateLogo(
 			oAuthApplicationId, inputStream);
@@ -88,7 +88,7 @@ public class OAuthApplicationServiceImpl
 		throws PortalException {
 
 		OAuthApplicationPermission.check(
-			getPermissionChecker(), oAuthApplicationId, ActionKeys.UPDATE);
+			getPermissionChecker(), oAuthApplicationId, OAuthActionKeys.UPDATE);
 
 		return oAuthApplicationLocalService.updateOAuthApplication(
 			oAuthApplicationId, name, description, shareableAccessToken,

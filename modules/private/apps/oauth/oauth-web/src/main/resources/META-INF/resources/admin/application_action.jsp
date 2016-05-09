@@ -36,7 +36,7 @@ OAuthApplication oAuthApplication = (OAuthApplication)row.getObject();
 		url="<%= viewURL %>"
 	/>
 
-	<c:if test="<%= OAuthApplicationPermission.contains(permissionChecker, oAuthApplication, ActionKeys.UPDATE) %>">
+	<c:if test="<%= OAuthApplicationPermission.contains(permissionChecker, oAuthApplication, OAuthActionKeys.UPDATE) %>">
 		<liferay-portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/admin/edit_application.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -51,7 +51,7 @@ OAuthApplication oAuthApplication = (OAuthApplication)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= OAuthApplicationPermission.contains(permissionChecker, oAuthApplication, ActionKeys.DELETE) %>">
+	<c:if test="<%= OAuthApplicationPermission.contains(permissionChecker, oAuthApplication, OAuthActionKeys.DELETE) %>">
 		<liferay-portlet:actionURL name="deleteOAuthApplication" var="deleteURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="oAuthApplicationId" value="<%= String.valueOf(oAuthApplication.getOAuthApplicationId()) %>" />
