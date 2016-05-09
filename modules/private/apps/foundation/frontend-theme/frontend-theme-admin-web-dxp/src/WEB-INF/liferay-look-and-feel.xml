@@ -5,7 +5,7 @@
 	<compatibility>
 		<version>7.0.0+</version>
 	</compatibility>
-	<theme id="admin-dxp-theme" name="Admin DXP theme">
+	<theme id="admin-dxp" name="Admin DXP">
 		<template-extension>ftl</template-extension>
 		<control-panel-theme>true</control-panel-theme>
 		<page-theme>false</page-theme>
