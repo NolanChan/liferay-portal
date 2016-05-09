@@ -41,6 +41,12 @@ public class SambaMachineBuilderTest extends BaseVLDAPTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		when(
+			searchBase.getCompany()
+		).thenReturn(
+			company
+		);
+
 		_organization = mock(Organization.class);
 
 		when(

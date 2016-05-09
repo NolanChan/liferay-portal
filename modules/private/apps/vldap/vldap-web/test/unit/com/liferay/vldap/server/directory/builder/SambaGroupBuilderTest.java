@@ -41,6 +41,12 @@ public class SambaGroupBuilderTest extends BaseVLDAPTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		when(
+			searchBase.getCompany()
+		).thenReturn(
+			company
+		);
+
 		Organization organization = mock(Organization.class);
 
 		when(
