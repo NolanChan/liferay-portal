@@ -287,9 +287,11 @@ public class KaleoProcessLocalServiceImpl
 		long kaleoProcessId, KaleoTaskFormPairs kaleoTaskFormPairs) {
 
 		for (KaleoTaskFormPair kaleoTaskFormPair : kaleoTaskFormPairs) {
-			kaleoProcessLinkLocalService.addKaleoProcessLink(
-				kaleoProcessId, kaleoTaskFormPair.getWorkflowTaskName(),
-				kaleoTaskFormPair.getDDMTemplateId());
+			if (Validator.isNotNull(kaleoTaskFormPair.getDDMTemplateId())) {
+				kaleoProcessLinkLocalService.addKaleoProcessLink(
+					kaleoProcessId, kaleoTaskFormPair.getWorkflowTaskName(),
+					kaleoTaskFormPair.getDDMTemplateId());
+			}
 		}
 	}
 
