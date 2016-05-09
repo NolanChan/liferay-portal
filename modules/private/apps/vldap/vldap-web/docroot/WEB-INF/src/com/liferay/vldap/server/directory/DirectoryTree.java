@@ -554,8 +554,13 @@ public class DirectoryTree {
 					continue;
 				}
 
-				filterConstraints = FilterConstraint.getCombinations(
-					filterConstraints, childFilterConstraints);
+				if (filterConstraints.isEmpty()) {
+					filterConstraints = childFilterConstraints;
+				}
+				else {
+					filterConstraints = FilterConstraint.getCombinations(
+						filterConstraints, childFilterConstraints);
+				}
 			}
 
 			return filterConstraints;

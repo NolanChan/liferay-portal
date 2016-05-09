@@ -30,10 +30,6 @@ public class FilterConstraint {
 		List<FilterConstraint> leftFilterConstraints,
 		List<FilterConstraint> rightFilterConstraints) {
 
-		if (leftFilterConstraints.isEmpty()) {
-			return rightFilterConstraints;
-		}
-
 		List<FilterConstraint> filterConstraints = new ArrayList<>();
 
 		for (FilterConstraint leftFilterConstraint : leftFilterConstraints) {
@@ -89,10 +85,6 @@ public class FilterConstraint {
 		}
 
 		_map.put(attributeId, value);
-	}
-
-	public boolean contains(String attributeId) {
-		return _map.containsKey(attributeId);
 	}
 
 	@Override
