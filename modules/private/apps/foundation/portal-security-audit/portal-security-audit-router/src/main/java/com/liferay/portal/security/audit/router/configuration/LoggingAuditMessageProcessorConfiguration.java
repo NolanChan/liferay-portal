@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Brian Greenwald
  * @author Prathima Shreenath
  */
-@ExtendedObjectClassDefinition(category = "platform")
+@ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
 	id = "com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration",
 	localization = "content/Language",
