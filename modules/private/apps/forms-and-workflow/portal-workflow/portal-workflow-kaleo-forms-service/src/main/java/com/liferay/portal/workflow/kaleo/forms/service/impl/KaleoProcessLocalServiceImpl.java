@@ -92,7 +92,7 @@ public class KaleoProcessLocalServiceImpl
 
 		// Dynamic data mapping template link
 
-		ddmTemplateLinkLocalService.addTemplateLink(
+		_ddmTemplateLinkLocalService.addTemplateLink(
 			classNameLocalService.getClassNameId(KaleoProcess.class),
 			kaleoProcessId, ddmTemplateId);
 
@@ -118,7 +118,7 @@ public class KaleoProcessLocalServiceImpl
 
 		// Dynamic data mapping template link
 
-		ddmTemplateLinkLocalService.deleteTemplateLink(
+		_ddmTemplateLinkLocalService.deleteTemplateLink(
 			classNameLocalService.getClassNameId(KaleoProcess.class),
 			kaleoProcess.getKaleoProcessId());
 
@@ -209,7 +209,7 @@ public class KaleoProcessLocalServiceImpl
 
 		// Dynamic data mapping template link
 
-		ddmTemplateLinkLocalService.updateTemplateLink(
+		_ddmTemplateLinkLocalService.updateTemplateLink(
 			classNameLocalService.getClassNameId(KaleoProcess.class),
 			kaleoProcessId, ddmTemplateId);
 
@@ -302,6 +302,6 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	@ServiceReference(type = DDMTemplateLinkLocalService.class)
-	protected DDMTemplateLinkLocalService ddmTemplateLinkLocalService;
+	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 
 }
