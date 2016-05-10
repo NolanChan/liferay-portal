@@ -82,12 +82,6 @@ public class KaleoProcessLocalServiceImpl
 
 		kaleoProcessPersistence.update(kaleoProcess);
 
-		//DDM template links
-
-		ddmTemplateLinkLocalService.addTemplateLink(
-			classNameLocalService.getClassNameId(KaleoProcess.class),
-			kaleoProcessId, ddmTemplateId);
-
 		// Resources
 
 		resourceLocalService.addModelResources(kaleoProcess, serviceContext);
@@ -95,6 +89,12 @@ public class KaleoProcessLocalServiceImpl
 		// Kaleo process links
 
 		updateKaleoProcessLinks(kaleoProcessId, kaleoTaskFormPairs);
+
+		// Dynamic data mapping template link
+
+		ddmTemplateLinkLocalService.addTemplateLink(
+			classNameLocalService.getClassNameId(KaleoProcess.class),
+			kaleoProcessId, ddmTemplateId);
 
 		return kaleoProcess;
 	}
@@ -107,12 +107,6 @@ public class KaleoProcessLocalServiceImpl
 
 		kaleoProcessPersistence.remove(kaleoProcess);
 
-		// DDM template links
-
-		ddmTemplateLinkLocalService.deleteTemplateLink(
-			classNameLocalService.getClassNameId(KaleoProcess.class),
-			kaleoProcess.getKaleoProcessId());
-
 		// Kaleo process links
 
 		kaleoProcessLinkLocalService.deleteKaleoProcessLinks(
@@ -121,6 +115,12 @@ public class KaleoProcessLocalServiceImpl
 		// Workflow
 
 		deleteKaleoProcessData(kaleoProcess);
+
+		// Dynamic data mapping template link
+
+		ddmTemplateLinkLocalService.deleteTemplateLink(
+			classNameLocalService.getClassNameId(KaleoProcess.class),
+			kaleoProcess.getKaleoProcessId());
 
 		// Dynamic data lists record set
 
