@@ -112,7 +112,7 @@ public class KaleoProcessLocalServiceImpl
 		kaleoProcessLinkLocalService.deleteKaleoProcessLinks(
 			kaleoProcess.getPrimaryKey());
 
-		// Workflow
+		// Kaleo process data
 
 		deleteKaleoProcessData(kaleoProcess);
 
@@ -195,12 +195,6 @@ public class KaleoProcessLocalServiceImpl
 
 		kaleoProcessPersistence.update(kaleoProcess);
 
-		// DDM template links
-
-		ddmTemplateLinkLocalService.updateTemplateLink(
-			classNameLocalService.getClassNameId(KaleoProcess.class),
-			kaleoProcessId, ddmTemplateId);
-
 		// Kaleo process links
 
 		kaleoProcessLinkLocalService.deleteKaleoProcessLinks(kaleoProcessId);
@@ -212,6 +206,12 @@ public class KaleoProcessLocalServiceImpl
 		if (kaleoProcessDataStale) {
 			deleteKaleoProcessData(kaleoProcess);
 		}
+
+		// Dynamic data mapping template link
+
+		ddmTemplateLinkLocalService.updateTemplateLink(
+			classNameLocalService.getClassNameId(KaleoProcess.class),
+			kaleoProcessId, ddmTemplateId);
 
 		// Dynamic data lists record set
 
