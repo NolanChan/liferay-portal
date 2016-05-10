@@ -40,11 +40,11 @@ public class KaleoProcessLinkLocalServiceImpl
 		kaleoProcessLink.setWorkflowTaskName(workflowTaskName);
 		kaleoProcessLink.setDDMTemplateId(ddmTemplateId);
 
+		kaleoProcessLinkPersistence.update(kaleoProcessLink);
+
 		ddmTemplateLinkLocalService.addTemplateLink(
 			classNameLocalService.getClassNameId(KaleoProcessLink.class),
 			kaleoProcessLinkId, ddmTemplateId);
-
-		kaleoProcessLinkPersistence.update(kaleoProcessLink);
 
 		return kaleoProcessLink;
 	}
