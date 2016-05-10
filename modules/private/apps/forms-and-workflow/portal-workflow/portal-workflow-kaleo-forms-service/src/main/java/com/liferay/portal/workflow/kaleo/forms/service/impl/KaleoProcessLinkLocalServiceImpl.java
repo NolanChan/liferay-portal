@@ -54,11 +54,11 @@ public class KaleoProcessLinkLocalServiceImpl
 			kaleoProcessLinkPersistence.findByKaleoProcessId(kaleoProcessId);
 
 		for (KaleoProcessLink kaleoProcessLink : kaleoProcessLinks) {
+			deleteKaleoProcessLink(kaleoProcessLink);
+
 			ddmTemplateLinkLocalService.deleteTemplateLink(
 				classNameLocalService.getClassNameId(KaleoProcessLink.class),
 				kaleoProcessLink.getKaleoProcessLinkId());
-
-			deleteKaleoProcessLink(kaleoProcessLink);
 		}
 	}
 
@@ -99,11 +99,11 @@ public class KaleoProcessLinkLocalServiceImpl
 		kaleoProcessLink.setWorkflowTaskName(workflowTaskName);
 		kaleoProcessLink.setDDMTemplateId(ddmTemplateId);
 
+		kaleoProcessLinkPersistence.update(kaleoProcessLink);
+
 		ddmTemplateLinkLocalService.updateTemplateLink(
 			classNameLocalService.getClassNameId(KaleoProcessLink.class),
 			kaleoProcessLink.getKaleoProcessLinkId(), ddmTemplateId);
-
-		kaleoProcessLinkPersistence.update(kaleoProcessLink);
 
 		return kaleoProcessLink;
 	}
@@ -122,11 +122,11 @@ public class KaleoProcessLinkLocalServiceImpl
 
 		kaleoProcessLink.setDDMTemplateId(ddmTemplateId);
 
+		kaleoProcessLinkPersistence.update(kaleoProcessLink);
+
 		ddmTemplateLinkLocalService.updateTemplateLink(
 			classNameLocalService.getClassNameId(KaleoProcessLink.class),
 			kaleoProcessLink.getKaleoProcessLinkId(), ddmTemplateId);
-
-		kaleoProcessLinkPersistence.update(kaleoProcessLink);
 
 		return kaleoProcessLink;
 	}
