@@ -126,6 +126,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 		_kaleoDraftDefinitionService.deleteKaleoDraftDefinitions(
 			name, version, serviceContext);
+
+		addSuccessMessage(actionRequest, actionResponse);
 	}
 
 	public void publishKaleoDraftDefinition(
@@ -159,6 +161,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 			actionRequest.setAttribute(
 				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
 				kaleoDraftDefinition);
+
+			addSuccessMessage(actionRequest, actionResponse);
 
 			setCloseRedirect(actionRequest);
 		}
@@ -276,6 +280,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 			actionRequest.setAttribute(
 				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
 				kaleoDraftDefinition);
+
+			addSuccessMessage(actionRequest, actionResponse);
 
 			setCloseRedirect(actionRequest);
 		}
