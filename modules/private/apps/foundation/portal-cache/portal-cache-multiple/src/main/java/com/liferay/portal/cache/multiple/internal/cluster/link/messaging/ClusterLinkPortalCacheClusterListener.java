@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.multiple.internal.cluster.link.messaging;
 
-import com.liferay.portal.cache.multiple.internal.DestinationNames;
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterEvent;
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterEventType;
+import com.liferay.portal.cache.multiple.internal.constants.PortalCacheDestinationNames;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"destination.name=" + DestinationNames.CACHE_REPLICATION},
+	property = {"destination.name=" + PortalCacheDestinationNames.CACHE_REPLICATION},
 	service = MessageListener.class
 )
 public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
@@ -110,7 +110,7 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 	}
 
 	@Reference(
-		target = "(destination.name=" + DestinationNames.CACHE_REPLICATION + ")",
+		target = "(destination.name=" + PortalCacheDestinationNames.CACHE_REPLICATION + ")",
 		unbind = "-"
 	)
 	protected void setDestination(Destination destination) {

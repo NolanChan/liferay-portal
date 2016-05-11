@@ -14,8 +14,8 @@
 
 package com.liferay.portal.cache.multiple.internal.cluster.link;
 
-import com.liferay.portal.cache.multiple.internal.DestinationNames;
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterException;
+import com.liferay.portal.cache.multiple.internal.constants.PortalCacheDestinationNames;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.Priority;
 
@@ -35,7 +35,8 @@ public class ClusterLinkPortalCacheClusterChannelFactory
 		throws PortalCacheClusterException {
 
 		return new ClusterLinkPortalCacheClusterChannel(
-			_clusterLink, DestinationNames.CACHE_REPLICATION, priority);
+			_clusterLink, PortalCacheDestinationNames.CACHE_REPLICATION,
+			priority);
 	}
 
 	@Reference(unbind = "-")

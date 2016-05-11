@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.cache.multiple.internal;
+package com.liferay.portal.cache.multiple.internal.constants;
 
 /**
  * @author Michael C. Han
  */
-public class DestinationNames {
+public class PortalCacheDestinationNames {
 
 	public static final String CACHE_REPLICATION = "liferay/cache_replication";
 

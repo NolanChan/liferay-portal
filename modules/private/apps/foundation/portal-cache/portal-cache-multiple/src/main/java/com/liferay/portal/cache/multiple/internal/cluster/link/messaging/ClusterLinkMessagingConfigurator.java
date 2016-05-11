@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.multiple.internal.cluster.link.messaging;
 
-import com.liferay.portal.cache.multiple.internal.DestinationNames;
+import com.liferay.portal.cache.multiple.internal.constants.PortalCacheDestinationNames;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
@@ -45,7 +45,7 @@ public class ClusterLinkMessagingConfigurator {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-				DestinationNames.CACHE_REPLICATION);
+				PortalCacheDestinationNames.CACHE_REPLICATION);
 
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);
