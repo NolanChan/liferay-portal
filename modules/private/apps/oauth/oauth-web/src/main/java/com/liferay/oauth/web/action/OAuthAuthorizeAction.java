@@ -14,6 +14,7 @@
 
 package com.liferay.oauth.web.action;
 
+import com.liferay.oauth.constants.OAuthConstants;
 import com.liferay.oauth.constants.OAuthPortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -46,7 +47,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Ivica Cardic
  */
 @Component(
-	immediate = true, property = "path=/portal/oauth/authorize",
+	immediate = true, property = "path=" + OAuthConstants.PUBLIC_PATH_AUTHORIZE,
 	service = StrutsAction.class
 )
 public class OAuthAuthorizeAction extends BaseStrutsAction {

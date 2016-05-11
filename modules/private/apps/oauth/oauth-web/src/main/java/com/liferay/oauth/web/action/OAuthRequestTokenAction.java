@@ -14,6 +14,7 @@
 
 package com.liferay.oauth.web.action;
 
+import com.liferay.oauth.constants.OAuthConstants;
 import com.liferay.oauth.util.DefaultOAuthAccessor;
 import com.liferay.oauth.util.OAuthAccessor;
 import com.liferay.oauth.util.OAuthConsumer;
@@ -36,7 +37,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Igor Beslic
  */
 @Component(
-	immediate = true, property = "path=/portal/oauth/request_token",
+	immediate = true,
+	property = "path=" + OAuthConstants.PUBLIC_PATH_REQUEST_TOKEN,
 	service = StrutsAction.class
 )
 public class OAuthRequestTokenAction extends BaseStrutsAction {

@@ -14,6 +14,8 @@
 
 package com.liferay.oauth.web.portlet.path;
 
+import com.liferay.oauth.constants.OAuthConstants;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -22,9 +24,9 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"auth.public.path=/portal/oauth/access_token",
-		"auth.public.path=/portal/oauth/authorize",
-		"auth.public.path=/portal/oauth/request_token"
+		"auth.public.path=" + OAuthConstants.PUBLIC_PATH_ACCESS_TOKEN,
+		"auth.public.path=" + OAuthConstants.PUBLIC_PATH_AUTHORIZE,
+		"auth.public.path=" + OAuthConstants.PUBLIC_PATH_REQUEST_TOKEN
 	},
 	service = Object.class
 )

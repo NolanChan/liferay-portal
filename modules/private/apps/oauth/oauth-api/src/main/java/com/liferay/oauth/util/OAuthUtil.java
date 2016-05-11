@@ -15,10 +15,10 @@
 package com.liferay.oauth.util;
 
 import com.liferay.oauth.configuration.OAuthConfigurationValues;
+import com.liferay.oauth.constants.OAuthConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.oauth.OAuthException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.OutputStream;
@@ -168,7 +168,7 @@ public class OAuthUtil {
 	private static String _getOAuthURI(String uriSuffix) {
 		String oauthPublicPath = null;
 
-		for (String publicPath : PropsUtil.getArray("auth.public.paths")) {
+		for (String publicPath : OAuthConstants.PUBLIC_PATHS) {
 			if (publicPath.endsWith(uriSuffix)) {
 				oauthPublicPath = publicPath;
 
