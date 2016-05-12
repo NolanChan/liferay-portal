@@ -582,7 +582,7 @@ public abstract class SPIDefinitionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalService.class)
+	@BeanReference(type = SPIDefinitionLocalService.class)
 	protected SPIDefinitionLocalService spiDefinitionLocalService;
 	@BeanReference(type = SPIDefinitionPersistence.class)
 	protected SPIDefinitionPersistence spiDefinitionPersistence;

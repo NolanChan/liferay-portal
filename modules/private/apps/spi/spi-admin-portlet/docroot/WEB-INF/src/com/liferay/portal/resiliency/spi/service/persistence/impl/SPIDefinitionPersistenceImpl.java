@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.resiliency.spi.exception.NoSuchDefinitionException;
 import com.liferay.portal.resiliency.spi.model.SPIDefinition;
 import com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionImpl;
@@ -58,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -1046,7 +1046,7 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			SPIDefinition spiDefinition = (SPIDefinition)result;
 
 			if ((companyId != spiDefinition.getCompanyId()) ||
-					!Validator.equals(name, spiDefinition.getName())) {
+					!Objects.equals(name, spiDefinition.getName())) {
 				result = null;
 			}
 		}
@@ -2727,7 +2727,7 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		if (result instanceof SPIDefinition) {
 			SPIDefinition spiDefinition = (SPIDefinition)result;
 
-			if (!Validator.equals(connectorAddress,
+			if (!Objects.equals(connectorAddress,
 						spiDefinition.getConnectorAddress()) ||
 					(connectorPort != spiDefinition.getConnectorPort())) {
 				result = null;

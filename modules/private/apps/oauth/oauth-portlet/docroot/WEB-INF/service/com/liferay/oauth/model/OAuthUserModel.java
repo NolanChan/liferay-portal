@@ -271,19 +271,19 @@ public interface OAuthUserModel extends AuditedModel, BaseModel<OAuthUser>,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.oauth.model.OAuthUser oAuthUser);
+	public int compareTo(OAuthUser oAuthUser);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.oauth.model.OAuthUser> toCacheModel();
+	public CacheModel<OAuthUser> toCacheModel();
 
 	@Override
-	public com.liferay.oauth.model.OAuthUser toEscapedModel();
+	public OAuthUser toEscapedModel();
 
 	@Override
-	public com.liferay.oauth.model.OAuthUser toUnescapedModel();
+	public OAuthUser toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -179,6 +179,16 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
+	public SPIDefinition toEscapedModel() {
+		return new SPIDefinitionWrapper(_spiDefinition.toEscapedModel());
+	}
+
+	@Override
+	public SPIDefinition toUnescapedModel() {
+		return new SPIDefinitionWrapper(_spiDefinition.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isAlive() {
 		return _spiDefinition.isAlive();
 	}
@@ -204,7 +214,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.resiliency.spi.model.SPIDefinition> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<SPIDefinition> toCacheModel() {
 		return _spiDefinition.toCacheModel();
 	}
 
@@ -219,18 +229,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
-	public com.liferay.portal.resiliency.spi.model.SPIDefinition toEscapedModel() {
-		return new SPIDefinitionWrapper(_spiDefinition.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.resiliency.spi.model.SPIDefinition toUnescapedModel() {
-		return new SPIDefinitionWrapper(_spiDefinition.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition) {
+	public int compareTo(SPIDefinition spiDefinition) {
 		return _spiDefinition.compareTo(spiDefinition);
 	}
 
@@ -775,7 +774,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 
 		SPIDefinitionWrapper spiDefinitionWrapper = (SPIDefinitionWrapper)obj;
 
-		if (Validator.equals(_spiDefinition, spiDefinitionWrapper._spiDefinition)) {
+		if (Objects.equals(_spiDefinition, spiDefinitionWrapper._spiDefinition)) {
 			return true;
 		}
 

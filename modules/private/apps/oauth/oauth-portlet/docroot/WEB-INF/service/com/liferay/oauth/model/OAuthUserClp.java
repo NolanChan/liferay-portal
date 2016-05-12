@@ -621,7 +621,7 @@ public class OAuthUserClp extends BaseModelImpl<OAuthUser> implements OAuthUser 
 	private String _accessToken;
 	private String _accessSecret;
 	private BaseModel<?> _oAuthUserRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.oauth.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 }

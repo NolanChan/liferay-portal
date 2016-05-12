@@ -622,7 +622,7 @@ public abstract class OAuthApplicationLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.oauth.service.OAuthApplicationLocalService.class)
+	@BeanReference(type = OAuthApplicationLocalService.class)
 	protected OAuthApplicationLocalService oAuthApplicationLocalService;
 	@BeanReference(type = OAuthApplicationPersistence.class)
 	protected OAuthApplicationPersistence oAuthApplicationPersistence;

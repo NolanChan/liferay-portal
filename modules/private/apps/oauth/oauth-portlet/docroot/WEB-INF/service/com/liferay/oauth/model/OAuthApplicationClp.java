@@ -863,7 +863,7 @@ public class OAuthApplicationClp extends BaseModelImpl<OAuthApplication>
 	private String _callbackURI;
 	private String _websiteURL;
 	private BaseModel<?> _oAuthApplicationRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.oauth.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 }

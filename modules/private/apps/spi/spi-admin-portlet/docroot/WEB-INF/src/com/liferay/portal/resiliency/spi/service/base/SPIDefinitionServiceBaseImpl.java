@@ -373,7 +373,7 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalService.class)
 	protected com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalService spiDefinitionLocalService;
-	@BeanReference(type = com.liferay.portal.resiliency.spi.service.SPIDefinitionService.class)
+	@BeanReference(type = SPIDefinitionService.class)
 	protected SPIDefinitionService spiDefinitionService;
 	@BeanReference(type = SPIDefinitionPersistence.class)
 	protected SPIDefinitionPersistence spiDefinitionPersistence;

@@ -352,20 +352,19 @@ public interface OAuthApplicationModel extends AuditedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.oauth.model.OAuthApplication oAuthApplication);
+	public int compareTo(OAuthApplication oAuthApplication);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.oauth.model.OAuthApplication> toCacheModel();
+	public CacheModel<OAuthApplication> toCacheModel();
 
 	@Override
-	public com.liferay.oauth.model.OAuthApplication toEscapedModel();
+	public OAuthApplication toEscapedModel();
 
 	@Override
-	public com.liferay.oauth.model.OAuthApplication toUnescapedModel();
+	public OAuthApplication toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -361,20 +361,19 @@ public interface SPIDefinitionModel extends AuditedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.resiliency.spi.model.SPIDefinition spiDefinition);
+	public int compareTo(SPIDefinition spiDefinition);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.resiliency.spi.model.SPIDefinition> toCacheModel();
+	public CacheModel<SPIDefinition> toCacheModel();
 
 	@Override
-	public com.liferay.portal.resiliency.spi.model.SPIDefinition toEscapedModel();
+	public SPIDefinition toEscapedModel();
 
 	@Override
-	public com.liferay.portal.resiliency.spi.model.SPIDefinition toUnescapedModel();
+	public SPIDefinition toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -171,6 +171,16 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 		}
 	}
 
+	@Override
+	public OAuthApplication toEscapedModel() {
+		return new OAuthApplicationWrapper(_oAuthApplication.toEscapedModel());
+	}
+
+	@Override
+	public OAuthApplication toUnescapedModel() {
+		return new OAuthApplicationWrapper(_oAuthApplication.toUnescapedModel());
+	}
+
 	/**
 	* Returns the shareable access token of this o auth application.
 	*
@@ -212,23 +222,12 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	}
 
 	@Override
-	public com.liferay.oauth.model.OAuthApplication toEscapedModel() {
-		return new OAuthApplicationWrapper(_oAuthApplication.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.oauth.model.OAuthApplication toUnescapedModel() {
-		return new OAuthApplicationWrapper(_oAuthApplication.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.oauth.model.OAuthApplication> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<OAuthApplication> toCacheModel() {
 		return _oAuthApplication.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.oauth.model.OAuthApplication oAuthApplication) {
+	public int compareTo(OAuthApplication oAuthApplication) {
 		return _oAuthApplication.compareTo(oAuthApplication);
 	}
 
@@ -640,7 +639,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 
 		OAuthApplicationWrapper oAuthApplicationWrapper = (OAuthApplicationWrapper)obj;
 
-		if (Validator.equals(_oAuthApplication,
+		if (Objects.equals(_oAuthApplication,
 					oAuthApplicationWrapper._oAuthApplication)) {
 			return true;
 		}

@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -128,6 +128,16 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	}
 
 	@Override
+	public OAuthUser toEscapedModel() {
+		return new OAuthUserWrapper(_oAuthUser.toEscapedModel());
+	}
+
+	@Override
+	public OAuthUser toUnescapedModel() {
+		return new OAuthUserWrapper(_oAuthUser.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _oAuthUser.isCachedModel();
 	}
@@ -148,22 +158,12 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	}
 
 	@Override
-	public com.liferay.oauth.model.OAuthUser toEscapedModel() {
-		return new OAuthUserWrapper(_oAuthUser.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.oauth.model.OAuthUser toUnescapedModel() {
-		return new OAuthUserWrapper(_oAuthUser.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.oauth.model.OAuthUser> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<OAuthUser> toCacheModel() {
 		return _oAuthUser.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.oauth.model.OAuthUser oAuthUser) {
+	public int compareTo(OAuthUser oAuthUser) {
 		return _oAuthUser.compareTo(oAuthUser);
 	}
 
@@ -480,7 +480,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 
 		OAuthUserWrapper oAuthUserWrapper = (OAuthUserWrapper)obj;
 
-		if (Validator.equals(_oAuthUser, oAuthUserWrapper._oAuthUser)) {
+		if (Objects.equals(_oAuthUser, oAuthUserWrapper._oAuthUser)) {
 			return true;
 		}
 
