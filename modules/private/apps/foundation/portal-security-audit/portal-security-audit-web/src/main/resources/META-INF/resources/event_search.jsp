@@ -33,7 +33,7 @@ DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
 	<aui:input label="resource-id" name="classPK" value="<%= classPK %>" />
 
-	<aui:input label="resource-name" name="className" value="<%= className %>" />
+	<aui:input label="class-name" name="className" value="<%= className %>" />
 
 	<aui:input label="resource-action" name="eventType" value="<%= eventType %>" />
 
