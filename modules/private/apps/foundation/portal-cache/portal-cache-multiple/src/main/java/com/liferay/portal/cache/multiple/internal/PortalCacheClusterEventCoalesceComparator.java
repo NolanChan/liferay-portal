@@ -34,21 +34,7 @@ public class PortalCacheClusterEventCoalesceComparator
 			return 1;
 		}
 
-		// Check the event type first for 2 reasons:
-		// 1) Enum checking is faster, so it can shortcut earlier and cheaper.
-		// 2) This is a hacky way to avoid null element key equals checking.
-
-		//	When the event type is REMOVE_ALL, the element key is always null.
-		//	For other event types, the key is never null.
-
-		//	Since we switched from Validator#equals() to Objects#equals(), we lost
-		//	the null value comparing to non-null value shortcut. A lot of cache
-		//	key types are private, and have a special optimization for equals()
-		//	by doing a direct cast without null or type checking. Without
-		//	Objects.equals()'s shortcut, we will run into NPE.
-
-		//	By checking event type first, we will never run into this null value
-		//	comparing to non-null value situation.
+		// Check event type first. See LPS-65443 for more information.
 
 		if (portalCacheClusterEvent1.getEventType() !=
 				portalCacheClusterEvent2.getEventType()) {
