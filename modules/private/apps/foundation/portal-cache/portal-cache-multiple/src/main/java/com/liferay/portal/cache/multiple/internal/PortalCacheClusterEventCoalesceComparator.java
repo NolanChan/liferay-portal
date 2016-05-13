@@ -41,7 +41,7 @@ public class PortalCacheClusterEventCoalesceComparator
 		//	When the event type is REMOVE_ALL, the element key is always null.
 		//	For other event types, the key is never null.
 
-		//	Since we switched from Objects.equals() to Objects.equals(), we lost
+		//	Since we switched from Validator#equals() to Objects#equals(), we lost
 		//	the null value comparing to non-null value shortcut. A lot of cache
 		//	key types are private, and have a special optimization for equals()
 		//	by doing a direct cast without null or type checking. Without
