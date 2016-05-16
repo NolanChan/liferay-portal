@@ -1,6 +1,12 @@
 Bundle-Name: Liferay LCS API
 Bundle-SymbolicName: com.liferay.lcs.api
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.lcs.*
+Export-Package:\
+	com.liferay.lcs.messaging,\
+	com.liferay.lcs.notification,\
+	com.liferay.lcs.rest,\
+	com.liferay.lcs.security,\
+	com.liferay.lcs.subscription,\
+	com.liferay.lcs.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: LCS
