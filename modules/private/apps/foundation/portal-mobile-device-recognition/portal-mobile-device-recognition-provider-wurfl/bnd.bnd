@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Mobile Device Rules Recognition Provider WURFL
-Bundle-SymbolicName: com.liferay.mobile.device.rules.recognition.provider.wurfl
+Bundle-Name: Liferay Portal Mobile Device Recognition Provider WURFL
+Bundle-SymbolicName: com.liferay.portal.mobile.device.recognition.provider.wurfl
 Bundle-Version: 1.0.0
 Import-Package:\
 	!com.liferay.util.portlet,\
