@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.mobile.device.rules.recognition.provider.wurfl.configuration.WURFLEngineConfiguration",
+	configurationPid = "com.liferay.portal.mobile.device.recognition.provider.wurfl.configuration.WURFLEngineConfiguration",
 	immediate = true, service = WURFLEngineProxy.class
 )
 public class WURFLEngineProxy {

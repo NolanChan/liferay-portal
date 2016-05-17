@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.mobile.device.rules.recognition.provider.wurfl.configuration.WURFLEngineConfiguration"
+	id = "com.liferay.portal.mobile.device.recognition.provider.wurfl.configuration.WURFLEngineConfiguration"
 )
 public interface WURFLEngineConfiguration {
 
