@@ -70,6 +70,10 @@ body.open-admin-panel, body.sidenav-transition {
 		.form-control {
 			background-color: $product-menu-panel-title-active-bg;
 		}
+
+		.nav > li > a:hover {
+			color: $control-menu-level-1-bg;
+		}
 	}
 }
 
