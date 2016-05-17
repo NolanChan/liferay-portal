@@ -11,9 +11,9 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.recognition.provider.wurfl.internal.jmx;
+package com.liferay.portal.mobile.device.recognition.provider.wurfl.internal.jmx;
 
-import com.liferay.mobile.device.rules.recognition.provider.wurfl.internal.WURFLDeviceRecognitionProvider;
+import com.liferay.portal.mobile.device.recognition.provider.wurfl.internal.WURFLDeviceRecognitionProvider;
 
 import javax.management.DynamicMBean;
 import javax.management.NotCompliantMBeanException;

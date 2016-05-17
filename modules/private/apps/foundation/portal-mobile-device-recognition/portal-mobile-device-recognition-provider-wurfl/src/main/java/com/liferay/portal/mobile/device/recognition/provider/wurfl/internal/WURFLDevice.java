@@ -11,7 +11,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.recognition.provider.wurfl.internal;
+package com.liferay.portal.mobile.device.recognition.provider.wurfl.internal;
 
 import com.liferay.portal.kernel.mobile.device.AbstractDevice;
 import com.liferay.portal.kernel.mobile.device.Capability;

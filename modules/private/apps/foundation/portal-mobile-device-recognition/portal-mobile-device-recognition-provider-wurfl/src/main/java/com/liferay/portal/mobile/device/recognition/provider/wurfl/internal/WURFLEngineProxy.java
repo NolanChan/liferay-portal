@@ -11,14 +11,14 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.recognition.provider.wurfl.internal;
+package com.liferay.portal.mobile.device.recognition.provider.wurfl.internal;
 
-import com.liferay.mobile.device.rules.recognition.provider.wurfl.configuration.WURFLEngineConfiguration;
-import com.liferay.mobile.device.rules.recognition.provider.wurfl.internal.util.WURFLUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.mobile.device.recognition.provider.wurfl.configuration.WURFLEngineConfiguration;
+import com.liferay.portal.mobile.device.recognition.provider.wurfl.internal.util.WURFLUtil;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -11,7 +11,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.recognition.provider.wurfl.internal.cache;
+package com.liferay.portal.mobile.device.recognition.provider.wurfl.internal.cache;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;

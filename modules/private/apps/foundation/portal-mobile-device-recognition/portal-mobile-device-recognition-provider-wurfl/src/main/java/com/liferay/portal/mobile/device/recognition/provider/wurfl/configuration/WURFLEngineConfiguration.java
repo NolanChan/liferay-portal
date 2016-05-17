@@ -11,7 +11,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.recognition.provider.wurfl.configuration;
+package com.liferay.portal.mobile.device.recognition.provider.wurfl.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 

@@ -11,23 +11,13 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.recognition.provider.wurfl.internal.util;
-
-import com.liferay.mobile.device.rules.recognition.provider.wurfl.configuration.WURFLEngineConfiguration;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
+package com.liferay.portal.mobile.device.recognition.provider.wurfl.internal.jmx;
 
 /**
  * @author Michael C. Han
  */
-public class WURFLUtil {
+public interface WURFLDeviceRecognitionProviderMBean {
 
-	public static String getWURFLDatabasePatchDirName(
-		WURFLEngineConfiguration wurflEngineConfiguration, Props props) {
-
-		return
-			props.get(PropsKeys.LIFERAY_HOME) +
-				wurflEngineConfiguration.wurflDatabasePatchDirName();
-	}
+	public void reload() throws Exception;
 
 }
