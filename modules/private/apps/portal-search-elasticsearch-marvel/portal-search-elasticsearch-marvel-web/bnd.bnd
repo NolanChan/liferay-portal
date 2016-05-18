@@ -1,7 +1,7 @@
 Bundle-ClassPath:\
 	.,\
-	lib/httpcore.jar,\
 	lib/httpclient.jar,\
+	lib/httpcore.jar,\
 	lib/smiley-http-proxy-servlet.jar
 Bundle-Name: Liferay Portal Search Elasticsearch Marvel Web
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch.marvel.web
