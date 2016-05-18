@@ -83,7 +83,7 @@ if (Validator.isNotNull(workflowDefinition)) {
 <liferay-ui:search-container
 	emptyResultsMessage='<%= tabs1.equals("published") ? "there-are-no-published-definitions" : "there-are-no-unpublished-definitions" %>'
 	iteratorURL="<%= iteratorURL %>"
-	total='<%= tabs1.equals("published") ? WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitionCount(company.getCompanyId()) : KaleoDraftDefinitionLocalServiceUtil.getLatestKaleoDraftDefinitionsCount(company.getCompanyId(), 0) %>'
+	total='<%= tabs1.equals("published") ? WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitionCount(company.getCompanyId()) : 0 %>'
 >
 	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="addURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcPath" value="/designer/edit_kaleo_draft_definition.jsp" />
@@ -174,8 +174,19 @@ if (Validator.isNotNull(workflowDefinition)) {
 			</liferay-ui:search-container-row>
 		</c:when>
 		<c:otherwise>
+
+			<%
+			List<KaleoDraftDefinition> latestKaleoDraftDefinitions = KaleoDraftDefinitionServiceUtil.getLatestKaleoDraftDefinitions(company.getCompanyId(), 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			searchContainer.setTotal(latestKaleoDraftDefinitions.size());
+			%>
+
 			<liferay-ui:search-container-results
-				results="<%= KaleoDraftDefinitionLocalServiceUtil.getLatestKaleoDraftDefinitions(company.getCompanyId(), 0, searchContainer.getStart(), searchContainer.getEnd(), null) %>"
+				results="<%= ListUtil.subList(latestKaleoDraftDefinitions, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			/>
+
+			<liferay-ui:search-container-results
+				results="<%= KaleoDraftDefinitionServiceUtil.getLatestKaleoDraftDefinitions(company.getCompanyId(), 0, searchContainer.getStart(), searchContainer.getEnd(), null) %>"
 			/>
 
 			<liferay-ui:search-container-row
