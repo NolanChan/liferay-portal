@@ -32,13 +32,11 @@ public class DefaultCompanyLogoSwapper {
 	public void activate(BundleContext bundleContext) {
 		Bundle bundle = bundleContext.getBundle();
 
-		String bundleIdString = String.valueOf(bundle.getBundleId());
-
 		PropsUtil.set(
 			PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO,
-			bundleIdString +
-				";com/liferay/portal/properties/swapper/internal/" +
-					"company_dxp_logo.png");
+			bundle.getBundleId() +
+				";com/liferay/portal/properties/swapper/internal" +
+					"/company_dxp_logo.png");
 	}
 
 }
