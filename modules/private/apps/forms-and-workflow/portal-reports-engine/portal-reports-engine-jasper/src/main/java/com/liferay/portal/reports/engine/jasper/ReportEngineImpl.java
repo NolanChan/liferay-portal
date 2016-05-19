@@ -33,10 +33,10 @@ import com.liferay.portal.reports.engine.ReportGenerationException;
 import com.liferay.portal.reports.engine.ReportRequest;
 import com.liferay.portal.reports.engine.ReportRequestContext;
 import com.liferay.portal.reports.engine.ReportResultContainer;
+import com.liferay.portal.reports.engine.constants.ReportsEngineDestinationNames;
 import com.liferay.portal.reports.engine.jasper.compiler.ReportCompiler;
 import com.liferay.portal.reports.engine.jasper.fillmanager.ReportFillManager;
 import com.liferay.portal.reports.engine.jasper.fillmanager.ReportFillManagerRegistry;
-import com.liferay.portal.reports.engine.messaging.DestinationNames;
 import com.liferay.portal.reports.engine.messaging.ReportCompilerRequestMessageListener;
 import com.liferay.portal.reports.engine.messaging.ReportRequestMessageListener;
 
@@ -144,7 +144,7 @@ public class ReportEngineImpl implements ReportEngine {
 				this, new ByteArrayReportResultContainer());
 
 		_messageListeners.put(
-			DestinationNames.REPORT_COMPILER,
+			ReportsEngineDestinationNames.REPORT_COMPILER,
 			reportCompilerRequestMessageListener);
 
 		MessageListener reportRequestMessageListener =
@@ -152,7 +152,8 @@ public class ReportEngineImpl implements ReportEngine {
 				this, new ByteArrayReportResultContainer());
 
 		_messageListeners.put(
-			DestinationNames.REPORT_REQUEST, reportRequestMessageListener);
+			ReportsEngineDestinationNames.REPORT_REQUEST,
+			reportRequestMessageListener);
 
 		for (String destinationName : _messageListeners.keySet()) {
 			registerDestination(destinationName);
