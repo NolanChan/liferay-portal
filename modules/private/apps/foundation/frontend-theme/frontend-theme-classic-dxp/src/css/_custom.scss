@@ -39,14 +39,8 @@ body {
 
 	#heading .site-name {
 		color: $solid-color;
-		font-size: 150%;
-		margin-left: 8px;
+		font-size: 180%;
 		vertical-align: middle;
-
-		@include sm {
-			letter-spacing: 2px;
-			margin-left: 20px;
-		}
 	}
 
 	#navigationCollapse {
