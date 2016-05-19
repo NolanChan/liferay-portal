@@ -154,7 +154,7 @@ public class ReleaseInfo {
 
 	private static final String _CODE_NAME = "Wilberforce";
 
-	private static final String _DATE = "May 13, 2016";
+	private static final String _DATE = "May 23, 2016";
 
 	private static final String _NAME = "Liferay DXP Digital Enterprise";
 
@@ -170,7 +170,7 @@ public class ReleaseInfo {
 
 	private static final String _VERSION = "7.0.10";
 
-	private static final String _VERSION_DISPLAY_NAME = "7.0.10 B5";
+	private static final String _VERSION_DISPLAY_NAME = "7.0.10 RC1";
 
 	private static String _releaseInfo;
 	private static String _serverInfo;
