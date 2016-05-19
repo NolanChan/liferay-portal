@@ -30,7 +30,7 @@ public class DefaultCompanyLogoSwapper {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		if (PropsHelperUtil.checkOverwritten(
+		if (PropsHelperUtil.isCustomized(
 				PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO)) {
 
 			return;

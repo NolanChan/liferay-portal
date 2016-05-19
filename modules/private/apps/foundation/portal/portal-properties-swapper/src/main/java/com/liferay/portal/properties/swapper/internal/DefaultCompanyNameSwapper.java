@@ -28,7 +28,7 @@ public class DefaultCompanyNameSwapper {
 
 	@Activate
 	public void activate() {
-		if (PropsHelperUtil.checkOverwritten(PropsKeys.COMPANY_DEFAULT_NAME)) {
+		if (PropsHelperUtil.isCustomized(PropsKeys.COMPANY_DEFAULT_NAME)) {
 			return;
 		}
 

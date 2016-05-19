@@ -35,14 +35,14 @@ import java.util.Properties;
  */
 public class PropsHelperUtil {
 
-	public static boolean checkOverwritten(String key) {
+	public static boolean isCustomized(String key) {
 		for (Map.Entry<String, Properties> entry : _propertiesMap.entrySet()) {
 			Properties properties = entry.getValue();
 
 			if (properties.containsKey(key)) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Found overwritten value for key " + key + " in " +
+						"Found customized value for key " + key + " in " +
 							entry.getKey());
 				}
 
