@@ -68,7 +68,7 @@ import com.liferay.portal.reports.engine.console.model.Entry;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.base.EntryLocalServiceBaseImpl;
 import com.liferay.portal.reports.engine.console.status.ReportStatus;
-import com.liferay.portal.reports.engine.messaging.DestinationNames;
+import com.liferay.portal.reports.engine.constants.ReportsEngineDestinationNames;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.File;
@@ -308,7 +308,8 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		message.setResponseId(String.valueOf(entry.getEntryId()));
 		message.setResponseDestinationName("liferay/reports_admin");
 
-		_messageBus.sendMessage(DestinationNames.REPORT_REQUEST, message);
+		_messageBus.sendMessage(
+			ReportsEngineDestinationNames.REPORT_REQUEST, message);
 	}
 
 	@Override

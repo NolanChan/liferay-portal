@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.reports.engine.console.service.permission.ReportsActionKeys;
-import com.liferay.portal.reports.engine.messaging.DestinationNames;
+import com.liferay.portal.reports.engine.constants.ReportsEngineDestinationNames;
 
 /**
  * @author Brian Wing Shun Chan
@@ -54,8 +54,8 @@ public class EntryImpl extends EntryBaseImpl {
 	}
 
 	public String getSchedulerRequestName() {
-		return DestinationNames.REPORT_REQUEST.concat(StringPool.SLASH).concat(
-			String.valueOf(getEntryId()));
+		return ReportsEngineDestinationNames.REPORT_REQUEST.concat(
+			StringPool.SLASH).concat(String.valueOf(getEntryId()));
 	}
 
 }
