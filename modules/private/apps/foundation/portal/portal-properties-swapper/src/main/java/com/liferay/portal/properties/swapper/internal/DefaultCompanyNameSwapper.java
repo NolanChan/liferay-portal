@@ -14,6 +14,7 @@
 
 package com.liferay.portal.properties.swapper.internal;
 
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsValues;
 
 import org.osgi.service.component.annotations.Activate;
@@ -27,6 +28,10 @@ public class DefaultCompanyNameSwapper {
 
 	@Activate
 	public void activate() {
+		if (PropsHelperUtil.checkOverwritten(PropsKeys.COMPANY_DEFAULT_NAME)) {
+			return;
+		}
+
 		PropsValues.COMPANY_DEFAULT_NAME = "Liferay DXP";
 	}
 
