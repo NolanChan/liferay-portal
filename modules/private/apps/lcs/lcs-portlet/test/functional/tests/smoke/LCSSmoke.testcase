@@ -3,7 +3,28 @@
 	<property name="portlet.plugins.includes" value="lcs-portlet" />
 	<property name="testray.main.component.name" value="Liferay Connected Services" />
 
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="SignIn#signInTestSetup" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+		</if>
+	</tear-down>
+
 	<command name="Smoke" priority="5">
-		<execute function="Open" locator1="http://localhost:8080/" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Liferay Connected Services" />
+		</execute>
+
+		<execute function="AssertTextPresent" value1="Connected Services" />
 	</command>
 </definition>
