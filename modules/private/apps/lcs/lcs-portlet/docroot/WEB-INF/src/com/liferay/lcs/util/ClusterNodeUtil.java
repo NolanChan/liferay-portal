@@ -308,9 +308,8 @@ public class ClusterNodeUtil {
 	}
 
 	private static String _generateLCSClusterNodeName() {
-		return
-			LicenseManagerUtil.getHostName() + StringPool.DASH +
-				System.currentTimeMillis();
+		return LicenseManagerUtil.getHostName() + StringPool.DASH +
+			System.currentTimeMillis();
 	}
 
 	private static Map<String, Object> _getClusterNodeInfo(String clusterNodeId)
