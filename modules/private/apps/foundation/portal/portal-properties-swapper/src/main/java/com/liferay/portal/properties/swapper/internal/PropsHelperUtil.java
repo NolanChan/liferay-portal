@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 
 import java.util.LinkedHashMap;
@@ -68,35 +69,45 @@ public class PropsHelperUtil {
 		for (int i = propertiesLocations.length - 1; i >= 0; i--) {
 			String propertiesLocation = propertiesLocations[i];
 
-			if (Files.exists(Paths.get(propertiesLocation))) {
-				try (InputStream inputStream = new FileInputStream(
-						propertiesLocation)) {
+			try {
+				if (Files.exists(Paths.get(propertiesLocation))) {
+					try (InputStream inputStream = new FileInputStream(
+							propertiesLocation)) {
 
-					Properties properties = new Properties();
-
-					properties.load(inputStream);
-
-					_propertiesMap.put(propertiesLocation, properties);
-				}
-				catch (IOException ioe) {
-					_log.error("Unable to read " + propertiesLocation, ioe);
-				}
-			}
-			else {
-				try (InputStream inputStream =
-						classLoader.getResourceAsStream(propertiesLocation)) {
-
-					if (inputStream != null) {
 						Properties properties = new Properties();
 
 						properties.load(inputStream);
 
 						_propertiesMap.put(propertiesLocation, properties);
 					}
+					catch (IOException ioe) {
+						_log.error("Unable to read " + propertiesLocation, ioe);
+					}
+
+					continue;
 				}
-				catch (IOException ioe) {
-					_log.error("Unable to read " + propertiesLocation, ioe);
+			}
+			catch (InvalidPathException ipe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to parse " + propertiesLocation + " as Path",
+						ipe);
 				}
+			}
+
+			try (InputStream inputStream =
+					classLoader.getResourceAsStream(propertiesLocation)) {
+
+				if (inputStream != null) {
+					Properties properties = new Properties();
+
+					properties.load(inputStream);
+
+					_propertiesMap.put(propertiesLocation, properties);
+				}
+			}
+			catch (IOException ioe) {
+				_log.error("Unable to read " + propertiesLocation, ioe);
 			}
 		}
 	}
