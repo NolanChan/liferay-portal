@@ -61,6 +61,12 @@ String backURL = (String)row.getParameter("backURL");
 		long classNameId = ParamUtil.getLong(request, "classNameId");
 		%>
 
+		<liferay-ui:icon
+			message="unassign-form"
+			onClick='<%= "Liferay.fire('" + renderResponse.getNamespace() + "unassignForm', {taskFormPairsParamName: '" + paramName + "', node: this});" %>'
+			url="javascript:;"
+		/>
+
 		<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.EDIT) %>" var="editFormTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/edit_template.jsp" />
 			<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_TEMPLATE %>" />
