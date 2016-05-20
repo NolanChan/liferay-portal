@@ -21,6 +21,7 @@ import com.liferay.portal.properties.swapper.internal.DefaultCompanyNameSwapper;
 
 import java.util.Collections;
 
+import com.liferay.portal.properties.swapper.internal.DefaultGuestGroupLogoSwapper;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -37,7 +38,8 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 			componentContext,
 			Collections.singleton(PortalProfile.PORTAL_PROFILE_NAME_DXP),
 			DefaultCompanyLogoSwapper.class.getName(),
-			DefaultCompanyNameSwapper.class.getName());
+			DefaultCompanyNameSwapper.class.getName(),
+			DefaultGuestGroupLogoSwapper.class.getName());
 	}
 
 }
