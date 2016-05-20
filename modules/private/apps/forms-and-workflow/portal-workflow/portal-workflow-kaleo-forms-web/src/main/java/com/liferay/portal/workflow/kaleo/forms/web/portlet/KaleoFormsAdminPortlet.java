@@ -785,7 +785,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		_assetEntryLocalService.updateEntry(
 			userId, kaleoProcess.getGroupId(), kaleoProcess.getCreateDate(),
 			kaleoProcess.getModifiedDate(), KaleoProcess.class.getName(),
-			kaleoProcess.getKaleoProcessId(), kaleoProcess.getUuid(), 0,
+			ddlRecord.getRecordId(), kaleoProcess.getUuid(), 0,
 			assetCategoryIds, assetTagNames, true, true, null, null, null,
 			ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null, null,
 			0, 0, priority);

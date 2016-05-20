@@ -74,12 +74,12 @@ public class KaleoProcessAssetRenderer
 
 	@Override
 	public String getClassName() {
-		return KaleoProcess.class.getName();
+		return DDLRecord.class.getName();
 	}
 
 	@Override
 	public long getClassPK() {
-		return _kaleoProcess.getKaleoProcessId();
+		return _ddlRecord.getRecordId();
 	}
 
 	@Override
