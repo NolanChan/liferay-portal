@@ -51,6 +51,12 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 
 		DDMNavigationHelper ddmNavigationHelper = getDDMNavigationHelper();
 
+		if (ddmNavigationHelper.isNavigationStartsOnEditTemplate(
+				liferayPortletRequest)) {
+
+			return StringPool.BLANK;
+		}
+
 		if (ddmNavigationHelper.isNavigationStartsOnSelectTemplate(
 				liferayPortletRequest)) {
 
