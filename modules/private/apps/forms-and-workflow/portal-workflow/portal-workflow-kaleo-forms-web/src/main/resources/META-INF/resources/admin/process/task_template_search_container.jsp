@@ -170,4 +170,32 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 		},
 		['liferay-util']
 	);
+
+	Liferay.on(
+		'<portlet:namespace />unassignForm',
+		function(event) {
+			var A = AUI();
+
+			var taskFormPairsParamName = event.taskFormPairsParamName;
+
+			var data = {};
+
+			data[taskFormPairsParamName] = 0;
+
+			A.io.request(
+				'<portlet:resourceURL id="saveInPortletSession" />',
+				{
+					after: {
+						success: function() {
+							window.location = decodeURIComponent('<%= HtmlUtil.escapeURL(backURL) %>');
+						}
+					},
+					data: data
+				}
+			);
+
+		},
+		['aui-base']
+	);
+
 </aui:script>
