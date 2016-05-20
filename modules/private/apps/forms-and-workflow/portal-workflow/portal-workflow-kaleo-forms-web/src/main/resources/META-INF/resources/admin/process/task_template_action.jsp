@@ -66,11 +66,13 @@ String backURL = (String)row.getParameter("backURL");
 			<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_TEMPLATE %>" />
 			<portlet:param name="closeRedirect" value="<%= backURL %>" />
 			<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
+			<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
 			<portlet:param name="refererPortletName" value="<%= KaleoFormsPortletKeys.KALEO_FORMS_ADMIN %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 			<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 			<portlet:param name="templateId" value="<%= String.valueOf(ddmTemplate.getTemplateId()) %>" />
 			<portlet:param name="showCacheableInput" value="<%= Boolean.TRUE.toString() %>" />
+			<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "getAvailableFields" %>' />
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
