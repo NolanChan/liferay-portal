@@ -89,9 +89,7 @@ public class PropsHelperUtil {
 			}
 			catch (InvalidPathException ipe) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to parse " + propertiesLocation + " as Path",
-						ipe);
+					_log.debug("Unable to parse " + propertiesLocation, ipe);
 				}
 			}
 
