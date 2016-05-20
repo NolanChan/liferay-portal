@@ -68,10 +68,13 @@ public class KaleoFormsUtil {
 		String taskSessionKey = _getTaskSessionKey(
 			ddmStructureId, workflowDefinition, initialStateName);
 
-		long ddmTemplateId = GetterUtil.getLong(
-			portletSession.getAttribute(taskSessionKey));
+		long ddmTemplateId = 0;
 
-		if ((ddmTemplateId == 0) && (kaleoProcessId > 0)) {
+		if (portletSession.getAttribute(taskSessionKey) != null) {
+			ddmTemplateId = GetterUtil.getLong(
+				portletSession.getAttribute(taskSessionKey));
+		}
+		else if (kaleoProcessId > 0) {
 			KaleoProcess kaleoProcess = KaleoProcessServiceUtil.getKaleoProcess(
 				kaleoProcessId);
 
@@ -321,14 +324,13 @@ public class KaleoFormsUtil {
 		String taskSessionKey = _getTaskSessionKey(
 			ddmStructureId, workflowDefinition, taskName);
 
-		long ddmTemplateId = GetterUtil.getLong(
-			portletSession.getAttribute(taskSessionKey));
+		long ddmTemplateId = 0;
 
-		if (ddmTemplateId > 0) {
-			return ddmTemplateId;
+		if (portletSession.getAttribute(taskSessionKey) != null) {
+			ddmTemplateId = GetterUtil.getLong(
+				portletSession.getAttribute(taskSessionKey));
 		}
-
-		if (kaleoProcessId > 0) {
+		else if (kaleoProcessId > 0) {
 			KaleoProcess kaleoProcess = KaleoProcessServiceUtil.getKaleoProcess(
 				kaleoProcessId);
 
@@ -337,22 +339,20 @@ public class KaleoFormsUtil {
 			String kaleoProcessWorkflowDefinition =
 				kaleoProcess.getWorkflowDefinition();
 
-			if ((ddlRecordSet.getDDMStructureId() != ddmStructureId) ||
-				!kaleoProcessWorkflowDefinition.equals(workflowDefinition)) {
+			if ((ddlRecordSet.getDDMStructureId() == ddmStructureId) &&
+				kaleoProcessWorkflowDefinition.equals(workflowDefinition)) {
 
-				return 0;
+				KaleoProcessLink kaleoProcessLink =
+					KaleoProcessLinkLocalServiceUtil.fetchKaleoProcessLink(
+						kaleoProcessId, taskName);
+
+				if (kaleoProcessLink != null) {
+					ddmTemplateId = kaleoProcessLink.getDDMTemplateId();
+				}
 			}
 		}
 
-		KaleoProcessLink kaleoProcessLink =
-			KaleoProcessLinkLocalServiceUtil.fetchKaleoProcessLink(
-				kaleoProcessId, taskName);
-
-		if (kaleoProcessLink != null) {
-			return kaleoProcessLink.getDDMTemplateId();
-		}
-
-		return 0;
+		return ddmTemplateId;
 	}
 
 	private static String _getDefaultLanguageId() {
