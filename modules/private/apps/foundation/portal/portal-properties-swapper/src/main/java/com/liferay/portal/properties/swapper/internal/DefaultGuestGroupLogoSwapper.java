@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -83,6 +84,11 @@ public class DefaultGuestGroupLogoSwapper {
 		LayoutSetLocalService layoutSetLocalService) {
 
 		_layoutSetLocalService = layoutSetLocalService;
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	private static final String _SITE_LOGO_FILE_NAME =
