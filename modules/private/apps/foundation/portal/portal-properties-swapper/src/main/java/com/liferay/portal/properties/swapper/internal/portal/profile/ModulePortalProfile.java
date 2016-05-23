@@ -18,10 +18,10 @@ import com.liferay.portal.profile.BaseDSModulePortalProfile;
 import com.liferay.portal.profile.PortalProfile;
 import com.liferay.portal.properties.swapper.internal.DefaultCompanyLogoSwapper;
 import com.liferay.portal.properties.swapper.internal.DefaultCompanyNameSwapper;
+import com.liferay.portal.properties.swapper.internal.DefaultGuestGroupLogoSwapper;
 
 import java.util.Collections;
 
-import com.liferay.portal.properties.swapper.internal.DefaultGuestGroupLogoSwapper;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
