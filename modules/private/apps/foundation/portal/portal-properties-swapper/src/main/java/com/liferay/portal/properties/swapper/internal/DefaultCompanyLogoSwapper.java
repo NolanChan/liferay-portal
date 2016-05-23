@@ -42,7 +42,7 @@ public class DefaultCompanyLogoSwapper {
 			PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO,
 			bundle.getBundleId() +
 				";com/liferay/portal/properties/swapper/internal" +
-					"/company_dxp_logo.png");
+					"/default_company_logo.png");
 	}
 
 }
