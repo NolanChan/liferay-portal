@@ -21,11 +21,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 long kaleoProcessId = ParamUtil.getLong(request, "kaleoProcessId");
 
-long workflowTaskId = ParamUtil.getLong(request, "workflowTaskId");
-
 KaleoProcess kaleoProcess = KaleoProcessServiceUtil.getKaleoProcess(kaleoProcessId);
 
 long groupId = BeanParamUtil.getLong(kaleoProcess, request, "groupId", scopeGroupId);
+
+long workflowTaskId = ParamUtil.getLong(request, "workflowTaskId");
 
 WorkflowTask workflowTask = WorkflowTaskManagerUtil.getWorkflowTask(company.getCompanyId(), workflowTaskId);
 

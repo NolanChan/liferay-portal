@@ -197,5 +197,4 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 		},
 		['aui-base']
 	);
-
 </aui:script>
