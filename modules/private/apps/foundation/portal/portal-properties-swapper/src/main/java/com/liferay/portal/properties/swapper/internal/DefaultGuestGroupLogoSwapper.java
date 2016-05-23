@@ -59,7 +59,8 @@ public class DefaultGuestGroupLogoSwapper {
 
 		Bundle bundle = bundleContext.getBundle();
 
-		URL url = bundle.getResource(_SITE_LOGO_FILE_NAME);
+		URL url = bundle.getResource(
+			"com/liferay/portal/properties/swapper/internal/site_dxp_logo.png");
 
 		try (InputStream inputStream = url.openStream()) {
 			_layoutSetLocalService.updateLogo(
@@ -90,9 +91,6 @@ public class DefaultGuestGroupLogoSwapper {
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	private static final String _SITE_LOGO_FILE_NAME =
-		"com/liferay/portal/properties/swapper/internal/site_dxp_logo.png";
 
 	private CompanyLocalService _companyLocalService;
 	private GroupLocalService _groupLocalService;
