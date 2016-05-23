@@ -19,17 +19,27 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+long kaleoProcessId = ParamUtil.getLong(request, "kaleoProcessId");
+
 long workflowTaskId = ParamUtil.getLong(request, "workflowTaskId");
 
-long kaleoProcessId = ParamUtil.getLong(request, "kaleoProcessId");
+KaleoProcess kaleoProcess = KaleoProcessServiceUtil.getKaleoProcess(kaleoProcessId);
+
+long groupId = BeanParamUtil.getLong(kaleoProcess, request, "groupId", scopeGroupId);
 
 WorkflowTask workflowTask = WorkflowTaskManagerUtil.getWorkflowTask(company.getCompanyId(), workflowTaskId);
 
 KaleoProcessLink kaleoProcessLink = KaleoProcessLinkLocalServiceUtil.fetchKaleoProcessLink(kaleoProcessId, workflowTask.getName());
 
-KaleoProcess kaleoProcess = kaleoProcessLink.getKaleoProcess();
+long ddmTemplateId = 0;
 
-long groupId = BeanParamUtil.getLong(kaleoProcess, request, "groupId", scopeGroupId);
+if (kaleoProcessLink != null) {
+	DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(kaleoProcessLink.getDDMTemplateId());
+
+	if (ddmTemplate != null) {
+		ddmTemplateId = ddmTemplate.getTemplateId();
+	}
+}
 
 long ddlRecordId = ParamUtil.getLong(request, "ddlRecordId");
 
@@ -53,7 +63,7 @@ renderResponse.setTitle((ddlRecord != null) ? LanguageUtil.format(request, "edit
 			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 			<aui:input name="ddlRecordId" type="hidden" value="<%= String.valueOf(ddlRecordId) %>" />
 			<aui:input name="ddlRecordSetId" type="hidden" value="<%= String.valueOf(kaleoProcess.getDDLRecordSetId()) %>" />
-			<aui:input name="ddmTemplateId" type="hidden" value="<%= String.valueOf(kaleoProcessLink.getDDMTemplateId()) %>" />
+			<aui:input name="ddmTemplateId" type="hidden" value="<%= String.valueOf(ddmTemplateId) %>" />
 			<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 			<aui:input name="workflowTaskId" type="hidden" value="<%= String.valueOf(workflowTaskId) %>" />
 
@@ -61,18 +71,14 @@ renderResponse.setTitle((ddlRecord != null) ? LanguageUtil.format(request, "edit
 				<aui:fieldset>
 
 					<%
-					DDMFormValues ddmFormValues = kaleoFormsAdminDisplayContext.getDDMFormValues(ddlRecord.getDDMStorageId());
-
 					long classNameId = 0;
 					long classPK = 0;
 
-					try {
-						DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(kaleoProcessLink.getDDMTemplateId());
-
+					if (ddmTemplateId > 0) {
 						classNameId = PortalUtil.getClassNameId(DDMTemplate.class);
-						classPK = ddmTemplate.getTemplateId();
+						classPK = ddmTemplateId;
 					}
-					catch (NoSuchTemplateException nste) {
+					else {
 						DDLRecordSet ddlRecordSet = kaleoProcess.getDDLRecordSet();
 
 						DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
@@ -85,7 +91,7 @@ renderResponse.setTitle((ddlRecord != null) ? LanguageUtil.format(request, "edit
 					<liferay-ddm:html
 						classNameId="<%= classNameId %>"
 						classPK="<%= classPK %>"
-						ddmFormValues="<%= ddmFormValues %>"
+						ddmFormValues="<%= kaleoFormsAdminDisplayContext.getDDMFormValues(ddlRecord.getDDMStorageId()) %>"
 						requestedLocale="<%= locale %>"
 					/>
 				</aui:fieldset>
