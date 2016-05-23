@@ -15,9 +15,15 @@
 package com.liferay.portal.workflow.kaleo.forms.web.upgrade.v1_0_2;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -45,9 +51,11 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 
 	public UpgradeKaleoProcess(
 		AssetEntryLocalService assetEntryLocalService,
+		DDLRecordLocalService ddlRecordLocalService,
 		DDLRecordSetLocalService ddlRecordSetLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
+		_ddlRecordLocalService = ddlRecordLocalService;
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 	}
 
@@ -82,6 +90,24 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 		}
 	}
 
+	protected String getAssetEntryTitle(long companyId, long ddlRecordSetId)
+		throws PortalException {
+
+		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getDDLRecordSet(
+			ddlRecordSetId);
+
+		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+
+		Locale locale = getDefaultLocale(companyId);
+
+		return LanguageUtil.format(
+			locale, "new-x-for-list-x",
+			new Object[] {
+				ddmStructure.getName(locale), ddlRecordSet.getName(locale)
+			},
+			false);
+	}
+
 	protected Locale getDefaultLocale(long companyId) {
 		String locale = null;
 
@@ -99,36 +125,52 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 	}
 
 	protected void updateAssetEntry(
-			long groupId, long companyId, long userId, Timestamp createDate,
-			Timestamp modifiedDate, long kaleoProcessId, String uuid,
-			long ddlRecordSetId)
+			final long groupId, final long companyId, final long userId,
+			final Timestamp createDate, final Timestamp modifiedDate,
+			long kaleoProcessId, final String uuid, final long ddlRecordSetId)
 		throws PortalException {
 
-		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getDDLRecordSet(
-			ddlRecordSetId);
+		final String title = getAssetEntryTitle(companyId, ddlRecordSetId);
 
-		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+		ActionableDynamicQuery actionableDynamicQuery =
+			_ddlRecordLocalService.getActionableDynamicQuery();
 
-		Locale locale = getDefaultLocale(companyId);
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-		String title = LanguageUtil.format(
-			locale, "new-x-for-list-x",
-			new Object[] {
-				ddmStructure.getName(locale), ddlRecordSet.getName(locale)
-			},
-			false);
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property recordSetIdProperty = PropertyFactoryUtil.forName(
+						"recordSetId");
 
-		_assetEntryLocalService.updateEntry(
-			userId, groupId, createDate, modifiedDate,
-			KaleoProcess.class.getName(), kaleoProcessId, uuid, 0, null, null,
-			true, true, null, null, null, ContentTypes.TEXT_HTML, title, null,
-			StringPool.BLANK, null, null, 0, 0, null);
+					dynamicQuery.add(recordSetIdProperty.eq(ddlRecordSetId));
+				}
+
+			});
+		actionableDynamicQuery.setParallel(true);
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<DDLRecord>() {
+
+				@Override
+				public void performAction(DDLRecord ddlRecord)
+					throws PortalException {
+
+					_assetEntryLocalService.updateEntry(
+						userId, groupId, createDate, modifiedDate,
+						KaleoProcess.class.getName(), ddlRecord.getRecordId(),
+						uuid, 0, null, null, true, true, null, null, null,
+						ContentTypes.TEXT_HTML, title, null, StringPool.BLANK,
+						null, null, 0, 0, null);
+				}
+
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeKaleoProcess.class);
 
 	private final AssetEntryLocalService _assetEntryLocalService;
+	private final DDLRecordLocalService _ddlRecordLocalService;
 	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
 
 }
