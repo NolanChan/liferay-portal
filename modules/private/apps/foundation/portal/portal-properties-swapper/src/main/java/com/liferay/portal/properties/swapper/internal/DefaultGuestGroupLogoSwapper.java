@@ -47,11 +47,11 @@ public class DefaultGuestGroupLogoSwapper {
 
 		Company company = companies.get(0);
 
-		Group guestGroup = _groupLocalService.getGroup(
+		Group group = _groupLocalService.getGroup(
 			company.getCompanyId(), GroupConstants.GUEST);
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			guestGroup.getGroupId(), false);
+			group.getGroupId(), false);
 
 		if (layoutSet.getLogoId() != 0) {
 			return;
@@ -65,7 +65,7 @@ public class DefaultGuestGroupLogoSwapper {
 
 		try (InputStream inputStream = url.openStream()) {
 			_layoutSetLocalService.updateLogo(
-				guestGroup.getGroupId(), false, true, inputStream);
+				group.getGroupId(), false, true, inputStream);
 		}
 	}
 
