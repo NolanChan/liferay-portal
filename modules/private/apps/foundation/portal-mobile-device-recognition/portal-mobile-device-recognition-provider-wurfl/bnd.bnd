@@ -10,6 +10,6 @@ Import-Package:\
 	!org.joda.time.*,\
 	*
 -includeresource: @lib-ee/wurfl-1.6.0.jar
--liferay-includeresource:\
-	@jackson-core-asl-*.jar,\
-	@jackson-mapper-asl-*.jar
+-includeresource:\
+	@jackson-core-asl-[0-9]*.jar,\
+	@jackson-mapper-asl-[0-9]*.jar

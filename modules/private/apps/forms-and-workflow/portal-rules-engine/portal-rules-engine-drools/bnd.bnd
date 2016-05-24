@@ -42,13 +42,13 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -include: ../../../../../../modules/apps/forms-and-workflow/app.bnd
--liferay-includeresource:\
-	lib/antlr-runtime.jar=antlr-runtime-*.jar,\
-	lib/drools-compiler.jar=drools-compiler-*.jar,\
-	lib/drools-core.jar=drools-core-*.jar,\
-	lib/ecj.jar=ecj-*.jar,\
-	lib/knowledge-api.jar=knowledge-api-*.jar,\
-	lib/knowledge-internal-api.jar=knowledge-internal-api-*.jar,\
-	lib/mvel2.jar=mvel2-*.jar,\
-	lib/protobuf.jar=protobuf-java-*.jar,\
-	lib/xstream.jar=xstream-*.jar
+-includeresource:\
+	lib/antlr-runtime.jar=antlr-runtime-[0-9]*.jar,\
+	lib/drools-compiler.jar=drools-compiler-[0-9]*.jar,\
+	lib/drools-core.jar=drools-core-[0-9]*.jar,\
+	lib/ecj.jar=ecj-[0-9]*.jar,\
+	lib/knowledge-api.jar=knowledge-api-[0-9]*.jar,\
+	lib/knowledge-internal-api.jar=knowledge-internal-api-[0-9]*.jar,\
+	lib/mvel2.jar=mvel2-[0-9]*.jar,\
+	lib/protobuf.jar=protobuf-java-[0-9]*.jar,\
+	lib/xstream.jar=xstream-[0-9]*.jar

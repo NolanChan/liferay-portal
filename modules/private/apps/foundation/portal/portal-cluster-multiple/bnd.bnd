@@ -18,4 +18,4 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Clustering
 -include: ../../../../../../modules/apps/foundation/app.bnd
--liferay-includeresource: @jgroups-*.jar
+-includeresource: @jgroups-[0-9]*.jar

@@ -7,7 +7,7 @@ Bundle-Name: Liferay Portal Search Elasticsearch Marvel Web
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch.marvel.web
 Bundle-Version: 1.0.0
 Web-ContextPath: /elasticsearch-marvel-web
--liferay-includeresource:\
-	lib/httpclient.jar=httpclient-*.jar,\
-	lib/httpcore.jar=httpcore-*.jar,\
-	lib/smiley-http-proxy-servlet.jar=smiley-http-proxy-servlet-*.jar
+-includeresource:\
+	lib/httpclient.jar=httpclient-[0-9]*.jar,\
+	lib/httpcore.jar=httpcore-[0-9]*.jar,\
+	lib/smiley-http-proxy-servlet.jar=smiley-http-proxy-servlet-[0-9]*.jar
