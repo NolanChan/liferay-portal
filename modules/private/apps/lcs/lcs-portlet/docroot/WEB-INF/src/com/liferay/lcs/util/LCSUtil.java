@@ -622,6 +622,10 @@ public class LCSUtil {
 					JSONWebServiceTransportException.CommunicationFailure) {
 
 				addSessionErrors(portletRequest, "noConnection");
+
+				if (portletRequest == null) {
+					throw jsonwste;
+				}
 			}
 
 			return false;
