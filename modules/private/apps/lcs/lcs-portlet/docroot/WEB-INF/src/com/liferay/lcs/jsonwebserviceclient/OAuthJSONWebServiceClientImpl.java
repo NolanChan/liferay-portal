@@ -161,11 +161,10 @@ public class OAuthJSONWebServiceClientImpl extends JSONWebServiceClientImpl {
 				response = oAuthRequest.send();
 			}
 			catch (OAuthConnectionException oace) {
-				String value =
-					"Unable to establish connection to remote service";
-
 				throw new JSONWebServiceTransportException.
-					CommunicationFailure(value, oace);
+					CommunicationFailure(
+						"Unable to establish connection to remote service",
+						oace);
 			}
 
 			if (response.getCode() == HttpServletResponse.SC_UNAUTHORIZED) {
