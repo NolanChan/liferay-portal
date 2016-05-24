@@ -164,6 +164,8 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 				}
 
 			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
