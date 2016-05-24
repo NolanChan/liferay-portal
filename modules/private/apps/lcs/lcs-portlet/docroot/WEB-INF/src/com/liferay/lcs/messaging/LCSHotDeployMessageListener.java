@@ -129,7 +129,7 @@ public class LCSHotDeployMessageListener extends HotDeployMessageListener {
 			}
 
 			if (!LCSUtil.isLCSClusterNodeRegistered()) {
-				if (!hasStoredCredentials || hasLCSClusterEntryToken) {
+				if (hasLCSClusterEntryToken || !hasStoredCredentials) {
 					String siblingKey = ClusterNodeUtil.registerClusterNode(
 						lcsClusterEntryToken.getLcsClusterEntryId());
 
