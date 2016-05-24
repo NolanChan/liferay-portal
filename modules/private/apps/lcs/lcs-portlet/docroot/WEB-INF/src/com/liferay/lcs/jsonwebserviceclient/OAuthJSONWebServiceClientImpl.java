@@ -35,6 +35,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 
+import org.scribe.exceptions.OAuthConnectionException;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
 import org.scribe.model.Token;
@@ -154,7 +155,18 @@ public class OAuthJSONWebServiceClientImpl extends JSONWebServiceClientImpl {
 			oAuthService.signRequest(
 				new Token(_accessToken, _accessSecret), oAuthRequest);
 
-			Response response = oAuthRequest.send();
+			Response response = null;
+
+			try {
+				response = oAuthRequest.send();
+			}
+			catch (OAuthConnectionException oace) {
+				String value =
+					"Unable to establish connection to remote service";
+
+				throw new JSONWebServiceTransportException.
+					CommunicationFailure(value, oace);
+			}
 
 			if (response.getCode() == HttpServletResponse.SC_UNAUTHORIZED) {
 				String value = response.getHeader("WWW-Authenticate");
