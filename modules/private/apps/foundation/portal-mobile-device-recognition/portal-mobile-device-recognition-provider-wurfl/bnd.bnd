@@ -9,7 +9,7 @@ Import-Package:\
 	\
 	!org.joda.time.*,\
 	*
--includeresource: @lib-ee/wurfl-1.6.0.jar
 -includeresource:\
 	@jackson-core-asl-[0-9]*.jar,\
-	@jackson-mapper-asl-[0-9]*.jar
+	@jackson-mapper-asl-[0-9]*.jar,\
+	@lib-ee/wurfl-1.6.0.jar
