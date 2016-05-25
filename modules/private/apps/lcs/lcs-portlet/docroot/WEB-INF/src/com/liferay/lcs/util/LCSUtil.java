@@ -68,7 +68,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -384,28 +383,19 @@ public class LCSUtil {
 				LCSConstants.METRICS_LCS_SERVICE_ENABLED,
 				Boolean.TRUE.toString()));
 
+		Boolean patchesServiceEnabled = Boolean.valueOf(
+			jxPortletPreferences.getValue(
+				LCSConstants.PATCHES_LCS_SERVICE_ENABLED,
+				Boolean.TRUE.toString()));
+
 		Boolean portalPropertiesServiceEnabled = Boolean.valueOf(
 			jxPortletPreferences.getValue(
 				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED,
 				Boolean.TRUE.toString()));
 
-		String portalEdition = LCSUtil.getPortalEdition();
-
-		String patchesServiceEnabledDefault = StringPool.FALSE;
-
-		if (Objects.equals(portalEdition, LCSConstants.PORTAL_EDITION_EE)) {
-			patchesServiceEnabledDefault = StringPool.TRUE;
-		}
-
-		Boolean patchesServiceEnabled = Boolean.valueOf(
-			jxPortletPreferences.getValue(
-				LCSConstants.PATCHES_LCS_SERVICE_ENABLED,
-				patchesServiceEnabledDefault));
-
 		Boolean enableAllLCSServices =
 			metricsServiceEnabled && portalPropertiesServiceEnabled &&
-			(Objects.equals(portalEdition, LCSConstants.PORTAL_EDITION_CE) ||
-			patchesServiceEnabled);
+				patchesServiceEnabled;
 
 		Map<String, Boolean> preferences = new HashMap<>();
 
