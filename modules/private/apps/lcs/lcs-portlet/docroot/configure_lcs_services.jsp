@@ -20,16 +20,22 @@
 Map<String, Boolean> lcsServicesPreferences = LCSUtil.getLCSServicesPreferences();
 %>
 
-<h3>
-	<c:choose>
-		<c:when test="<%= LCSUtil.hasLCSServicesPreferences() && LCSUtil.isLCSPortletAuthorized(liferayPortletRequest) %>">
+<c:choose>
+	<c:when test="<%= LCSUtil.hasLCSServicesPreferences() && LCSUtil.isLCSPortletAuthorized(liferayPortletRequest) %>">
+		<h3>
 			<liferay-ui:message key="enable-services" />
-		</c:when>
-		<c:otherwise>
+		</h3>
+	</c:when>
+	<c:otherwise>
+		<div class="alert alert-info">
+			<liferay-ui:message arguments="<%= new Object[] {PortletPropsValues.LRDCOM_PRODUCT_PAGE_URL, PortletPropsValues.LRDCOM_USER_DOCUMENTATION_URL} %>" key="liferay-connected-services-is-a-set-of-online-tools-and-services-that-lets-you-manage-and-monitor-your-liferay-installations" />
+		</div>
+
+		<h3>
 			<liferay-ui:message arguments="1" key="registration-step-x-3" /> - <liferay-ui:message key="enable-services" />
-		</c:otherwise>
-	</c:choose>
-</h3>
+		</h3>
+	</c:otherwise>
+</c:choose>
 
 <c:if test='<%= SessionErrors.contains(liferayPortletRequest, "generalPluginAccess") %>'>
 	<div class="alert alert-danger lcs-alert">
@@ -79,10 +85,10 @@ Map<String, Boolean> lcsServicesPreferences = LCSUtil.getLCSServicesPreferences(
 
 				<aui:button href="<%= lcsPortletHomeURL.toString() %>" name="back" value="back" />
 
-				<aui:button cssClass="btn-success" name="nextPage" type="submit" value="save" />
+				<aui:button cssClass="btn-success" name="save" type="submit" value="save" />
 			</c:when>
 			<c:otherwise>
-				<aui:button cssClass="btn-success" name="nextPage" type="submit" value="next" />
+				<aui:button cssClass="btn-success" name="nextPage" value="next" />
 			</c:otherwise>
 		</c:choose>
 	</aui:button-row>
@@ -98,6 +104,7 @@ Map<String, Boolean> lcsServicesPreferences = LCSUtil.getLCSServicesPreferences(
 	lcsPortlet.initializeConfigureLCSServicesPage(
 		{
 			metricsLCSServiceEnabled: '<%= LCSConstants.METRICS_LCS_SERVICE_ENABLED %>',
+			msgConfirmManualRegistration: '<%= UnicodeLanguageUtil.get(request, "you-are-about-to-start-manual-registration-to-liferay-connected-services") + UnicodeLanguageUtil.get(request, StringPool.NEW_LINE + StringPool.NEW_LINE) + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-continue") %>',
 			patchesLCSServiceEnabled: '<%= LCSConstants.PATCHES_LCS_SERVICE_ENABLED %>',
 			portalPropertiesLCSServiceEnabled: '<%= LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED %>',
 			portalPropertiesSecuritySensitive: '<%= StringUtil.merge(LCSConstants.PORTAL_PROPERTIES_SECURITY_SENSITIVE, "<br />") %>'

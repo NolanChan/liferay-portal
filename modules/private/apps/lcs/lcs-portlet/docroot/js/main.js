@@ -90,6 +90,21 @@ AUI.add(
 								propertiesPanel.toggle(val);
 							}
 						);
+
+						var nextPageButton = instance.byId('nextPage');
+
+						if (nextPageButton) {
+							nextPageButton.on(
+								STR_CLICK,
+								function(event) {
+									if (confirm(config.msgConfirmManualRegistration)) {
+										var form = instance.byId('fm');
+
+										form.submit();
+									}
+								}
+							);
+						}
 					},
 
 					initializeLCSClusterNodePage: function(config) {

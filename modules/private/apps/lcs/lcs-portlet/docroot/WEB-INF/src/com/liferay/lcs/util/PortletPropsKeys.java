@@ -83,6 +83,12 @@ public interface PortletPropsKeys {
 	public static final String KEY_GENERATOR_KEY_STORE_TYPE =
 		"key.generator.key.store.type";
 
+	public static final String LRDCOM_PRODUCT_PAGE_URL =
+		"lrdcom.product.page.url";
+
+	public static final String LRDCOM_USER_DOCUMENTATION_URL =
+		"lrdcom.user.documentation.url";
+
 	public static final String METRICS_LCS_SERVICE_ENABLED =
 		"metrics.lcs.service.enabled";
 
