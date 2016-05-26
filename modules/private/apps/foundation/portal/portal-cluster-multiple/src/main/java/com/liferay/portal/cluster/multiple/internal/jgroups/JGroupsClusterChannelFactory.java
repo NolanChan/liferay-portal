@@ -43,7 +43,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = ClusterChannelFactory.class)
+@Component(
+	enabled = false, immediate = true, service = ClusterChannelFactory.class
+)
 public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 
 	@Override
