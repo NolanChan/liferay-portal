@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Shuyang Zhou
  * @author Sherry Yang
  */
-@Component(immediate = true)
+@Component(enabled = false, immediate = true)
 public class ClusterLinkBootstrapLoaderHelperUtil {
 
 	public static SocketAddress createServerSocketFromCluster(

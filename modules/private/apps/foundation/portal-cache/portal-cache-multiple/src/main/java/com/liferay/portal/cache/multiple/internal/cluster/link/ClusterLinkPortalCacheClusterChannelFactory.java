@@ -25,7 +25,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = PortalCacheClusterChannelFactory.class)
+@Component(
+	enabled = false, immediate = true,
+	service = PortalCacheClusterChannelFactory.class
+)
 public class ClusterLinkPortalCacheClusterChannelFactory
 	implements PortalCacheClusterChannelFactory {
 
