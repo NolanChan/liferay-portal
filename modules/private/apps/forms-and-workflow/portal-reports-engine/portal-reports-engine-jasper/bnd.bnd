@@ -8,15 +8,15 @@ Bundle-ClassPath:\
 	lib/core.jar,\
 	lib/groovy-all.jar,\
 	lib/itext.jar,\
-	lib/jasperreports.jar,\
 	lib/jasperreports-fonts.jar,\
+	lib/jasperreports.jar,\
 	lib/jcommon.jar,\
 	lib/jfreechart.jar,\
 	lib/jxl.jar,\
 	lib/png-encoder.jar,\
-	lib/poi.jar,\
-	lib/poi-ooxml.jar,\
 	lib/poi-ooxml-schemas.jar,\
+	lib/poi-ooxml.jar,\
+	lib/poi.jar,\
 	lib/xalan.jar,\
 	lib/xercesImpl.jar
 Bundle-Name: Liferay Portal Reports Engine Jasper
@@ -67,8 +67,12 @@ Import-Package:\
 	!org.apache.poi.hpbf.*,\
 	!org.apache.poi.hslf.*,\
 	!org.apache.poi.hsmf.*,\
+	!org.apache.poi.hssf.*,\
 	!org.apache.poi.hwpf.*,\
+	!org.apache.poi.poifs.*,\
 	!org.apache.poi.sl.*,\
+	!org.apache.poi.ss.*,\
+	!org.apache.poi.xssf.*,\
 	!org.apache.tools.*,\
 	!org.apache.velocity.*,\
 	!org.apache.xerces.utils.regex.*,\
@@ -109,7 +113,7 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Reports Engine
 -include: ../../../../../../modules/apps/forms-and-workflow/app.bnd
--liferay-includeresource:\
+-includeresource:\
 	lib/antlr.jar=antlr-*.jar,\
 	lib/commons-collections.jar=commons-collections-*.jar,\
 	lib/commons-dbcp2.jar=commons-dbcp2-*.jar,\
@@ -118,7 +122,7 @@ Liferay-Releng-Module-Group-Title: Reports Engine
 	lib/core.jar=core-*.jar,\
 	lib/groovy-all.jar=groovy-all-*.jar,\
 	lib/itext.jar=itext-*.jar,\
-	lib/jasperreports.jar=jasperreports-*.jar,\
+	lib/jasperreports.jar=jasperreports-5*.jar,\
 	lib/jasperreports-fonts.jar=jasperreports-fonts-*.jar,\
 	lib/jcommon.jar=jcommon-*.jar,\
 	lib/jxl.jar=jxl-*.jar,\
