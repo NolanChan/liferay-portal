@@ -351,10 +351,10 @@ public class LCSClusterEntryTokenAdvisor {
 
 							sb.append("LCS token file name ");
 							sb.append(name);
-							sb.append(" is deprecated and won't be ");
-							sb.append("supported in next version. Please ");
-							sb.append("download LCS token file again and ");
-							sb.append("replace old file with new one.");
+							sb.append(" is deprecated and will not be ");
+							sb.append("supported in the next version. Please ");
+							sb.append("download the LCS token file again and ");
+							sb.append("replace the old file with the new one.");
 
 							_log.warn(sb.toString());
 						}
