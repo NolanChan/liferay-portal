@@ -5,7 +5,7 @@ Export-Package:\
 	com.liferay.portal.reports.engine.console.configuration,\
 	com.liferay.portal.reports.engine.console.service.permission,\
 	com.liferay.portal.reports.engine.console.util
-Include-Resource: @${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class
+-includeresource: @${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Reports Engine Console
 Liferay-Require-SchemaVersion: 1.0.0
