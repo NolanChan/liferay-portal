@@ -346,6 +346,23 @@ public class LCSClusterEntryTokenAdvisor {
 				@Override
 				public boolean accept(File dir, String name) {
 					if (name.startsWith("lcs-cluster-entry-token")) {
+						if (_log.isWarnEnabled()) {
+							StringBundler sb = new StringBundler();
+
+							sb.append("LCS token file name ");
+							sb.append(name);
+							sb.append(" is deprecated and won't be ");
+							sb.append("supported in next version. Please ");
+							sb.append("download LCS token file again and ");
+							sb.append("replace old file with new one.");
+
+							_log.warn(sb.toString());
+						}
+
+						return true;
+					}
+
+					if (name.startsWith("lcs-aatf")) {
 						return true;
 					}
 
