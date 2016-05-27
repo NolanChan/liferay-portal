@@ -98,7 +98,6 @@ import com.liferay.portal.workflow.kaleo.forms.web.display.context.KaleoFormsAdm
 import java.io.IOException;
 
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -337,20 +336,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			serviceContext, KaleoFormsActionKeys.COMPLETE_FORM);
 
 		updateDDLRecord(serviceContext);
-
-		long workflowTaskId = ParamUtil.getLong(
-			uploadPortletRequest, "workflowTaskId");
-
-		List<String> transitionNames =
-			WorkflowTaskManagerUtil.getNextTransitionNames(
-				serviceContext.getCompanyId(), serviceContext.getUserId(),
-				workflowTaskId);
-
-		if (transitionNames.size() == 1) {
-			WorkflowTaskManagerUtil.completeWorkflowTask(
-				serviceContext.getCompanyId(), serviceContext.getUserId(),
-				workflowTaskId, null, null, null);
-		}
 	}
 
 	public void updateKaleoProcess(
