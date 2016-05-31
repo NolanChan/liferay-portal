@@ -2,7 +2,9 @@
 @import "mixins";
 
 body.open-admin-panel {
-	padding-right: $admin-panel-width;
+	@include sm() {
+		padding-right: $admin-panel-width;
+	}
 
 	.control-menu {
 		@include sm() {
@@ -27,7 +29,7 @@ body.open-admin-panel, body.sidenav-transition {
 .lfr-admin-panel.sidenav-menu-slider {
 	z-index: 501;
 
-	&, .product-menu {
+	.product-menu {
 		width: $admin-panel-width;
 	}
 }
