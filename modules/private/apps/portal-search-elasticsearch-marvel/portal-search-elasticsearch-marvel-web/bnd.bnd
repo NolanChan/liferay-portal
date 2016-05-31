@@ -6,7 +6,7 @@ Bundle-ClassPath:\
 Bundle-Name: Liferay Portal Search Elasticsearch Marvel Web
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch.marvel.web
 Bundle-Version: 1.0.0
-Web-ContextPath: /elasticsearch-marvel-web
+Web-ContextPath: /portal-search-elasticsearch-marvel-web
 -includeresource:\
 	lib/httpclient.jar=httpclient-[0-9]*.jar,\
 	lib/httpcore.jar=httpcore-[0-9]*.jar,\
