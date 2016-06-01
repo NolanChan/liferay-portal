@@ -57,7 +57,7 @@ if (Validator.isNotNull(workflowDefinition)) {
 		WorkflowDefinition kaleoWorkflowDefinition = KaleoFormsUtil.getWorkflowDefinition(themeDisplay.getCompanyId(), workflowDefinitionName, workflowDefinitionVersion);
 
 		if (kaleoWorkflowDefinition != null) {
-			workflowDefinitionDisplay = kaleoWorkflowDefinition.getTitle(themeDisplay.getLanguageId()) + " (" + LanguageUtil.get(locale, "version") + " " + workflowDefinitionVersion + ")";
+			workflowDefinitionDisplay = kaleoWorkflowDefinition.getTitle(themeDisplay.getLanguageId()) + " (" + LanguageUtil.get(request, "version") + " " + workflowDefinitionVersion + ")";
 		}
 	}
 	%>

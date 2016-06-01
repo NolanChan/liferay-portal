@@ -89,9 +89,13 @@ public abstract class Directory {
 		// According to RFC 2251 Section 4.5.1 we need to return all attributes
 		// if the requested attributes are empty or contain a wildcard
 
-		boolean returnAllAttributes =
-			searchRequestAttributes.isEmpty() ||
-			searchRequestAttributes.contains(StringPool.STAR);
+		boolean returnAllAttributes = false;
+
+		if (searchRequestAttributes.isEmpty() ||
+			searchRequestAttributes.contains(StringPool.STAR)) {
+
+			returnAllAttributes = true;
+		}
 
 		for (Attribute attribute : getAttributes()) {
 			if (returnAllAttributes ||

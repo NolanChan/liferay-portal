@@ -88,8 +88,7 @@ public class PortalCacheClusterEvent implements Serializable {
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			(PortalCacheClusterEvent)obj;
 
-		if (Objects.equals(
-				_elementKey, portalCacheClusterEvent._elementKey) &&
+		if (Objects.equals(_elementKey, portalCacheClusterEvent._elementKey) &&
 			Objects.equals(
 				_elementValue, portalCacheClusterEvent._elementValue) &&
 			Objects.equals(
