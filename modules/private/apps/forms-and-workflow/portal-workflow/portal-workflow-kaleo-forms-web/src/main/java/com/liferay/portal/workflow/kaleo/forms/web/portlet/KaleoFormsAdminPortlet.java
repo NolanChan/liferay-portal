@@ -20,16 +20,20 @@ import com.liferay.dynamic.data.lists.exception.RecordSetNameException;
 import com.liferay.dynamic.data.lists.exporter.DDLExporter;
 import com.liferay.dynamic.data.lists.exporter.DDLExporterFactory;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordService;
-import com.liferay.dynamic.data.lists.util.DDL;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -673,11 +677,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDL(DDL ddl) {
-		_ddl = ddl;
-	}
-
-	@Reference(unbind = "-")
 	protected void setDDLExporterFactory(
 		DDLExporterFactory ddlExporterFactory) {
 
@@ -685,8 +684,20 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDLRecordLocalService(
+		DDLRecordLocalService ddlRecordLocalService) {
+
+		_ddlRecordLocalService = ddlRecordLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDLRecordService(DDLRecordService ddlRecordService) {
 		_ddlRecordService = ddlRecordService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDM(DDM ddm) {
+		_ddm = ddm;
 	}
 
 	@Reference(unbind = "-")
@@ -701,6 +712,13 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
 
 		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormValuesMerger(
+		DDMFormValuesMerger ddmFormValuesMerger) {
+
+		_ddmFormValuesMerger = ddmFormValuesMerger;
 	}
 
 	protected void setDisplayContext(
@@ -785,13 +803,37 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 		long ddlRecordSetId = ParamUtil.getLong(request, "ddlRecordSetId");
 
-		DDLRecord ddlRecord = _ddl.updateRecord(
-			ddlRecordId, ddlRecordSetId, true, false, serviceContext);
-
 		long kaleoProcessId = ParamUtil.getLong(request, "kaleoProcessId");
 
 		KaleoProcess kaleoProcess = _kaleoProcessService.getKaleoProcess(
 			kaleoProcessId);
+
+		DDLRecord ddlRecord = _ddlRecordLocalService.fetchDDLRecord(
+			ddlRecordId);
+
+		DDLRecordSet ddlRecordSet = kaleoProcess.getDDLRecordSet();
+
+		DDMFormValues ddmFormValues = _ddm.getDDMFormValues(
+			ddlRecordSet.getDDMStructureId(), StringPool.BLANK, serviceContext);
+
+		if (ddlRecord == null) {
+			ddlRecord = _ddlRecordLocalService.addRecord(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				ddlRecordSetId, DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
+				ddmFormValues, serviceContext);
+		}
+		else {
+			boolean majorVersion = ParamUtil.getBoolean(
+				serviceContext, "majorVersion");
+
+			ddmFormValues = _ddmFormValuesMerger.merge(
+				ddmFormValues, ddlRecord.getDDMFormValues());
+
+			ddlRecord = _ddlRecordLocalService.updateRecord(
+				serviceContext.getUserId(), ddlRecordId, majorVersion,
+				DDLRecordConstants.DISPLAY_INDEX_DEFAULT, ddmFormValues,
+				serviceContext);
+		}
 
 		updateAssetEntry(
 			serviceContext.getUserId(), ddlRecord, kaleoProcess,
@@ -812,11 +854,13 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 	private AssetEntryLocalService _assetEntryLocalService;
-	private DDL _ddl;
 	private DDLExporterFactory _ddlExporterFactory;
+	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordService _ddlRecordService;
+	private DDM _ddm;
 	private DDMDisplayRegistry _ddmDisplayRegistry;
 	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private DDMFormValuesMerger _ddmFormValuesMerger;
 	private KaleoDraftDefinitionService _kaleoDraftDefinitionService;
 	private volatile KaleoFormsWebConfiguration _kaleoFormsWebConfiguration;
 	private KaleoProcessService _kaleoProcessService;
