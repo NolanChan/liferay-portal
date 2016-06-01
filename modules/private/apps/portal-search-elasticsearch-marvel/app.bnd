@@ -1,10 +1,10 @@
 Liferay-Releng-App-Description: This app provides integration with Elasticsearch Marvel.
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Elasticsearch Marvel
-Liferay-Releng-Bundle: true
+Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Deprecated: false
-Liferay-Releng-Labs: true
+Liferay-Releng-Labs: false
 Liferay-Releng-Marketplace: true
 Liferay-Releng-Public: ${liferay.releng.public}
 Liferay-Releng-Restart-Required: true
