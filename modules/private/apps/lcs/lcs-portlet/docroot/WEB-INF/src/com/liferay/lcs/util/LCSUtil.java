@@ -766,6 +766,37 @@ public class LCSUtil {
 			lcsClusterEntryTokenId);
 	}
 
+	public static void storeLCSServicesConfiguration(
+			Map<String, String> lcsServicesConfiguration)
+		throws Exception {
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			fetchJxPortletPreferences();
+
+		if (lcsServicesConfiguration.containsKey(
+				LCSConstants.METRICS_LCS_SERVICE_ENABLED)) {
+
+			jxPortletPreferences.setValue(
+				LCSConstants.METRICS_LCS_SERVICE_ENABLED, StringPool.TRUE);
+		}
+
+		if (lcsServicesConfiguration.containsKey(
+				LCSConstants.PATCHES_LCS_SERVICE_ENABLED)) {
+
+			jxPortletPreferences.setValue(
+				LCSConstants.PATCHES_LCS_SERVICE_ENABLED, StringPool.TRUE);
+		}
+
+		if (lcsServicesConfiguration.containsKey(
+				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED)) {
+
+			jxPortletPreferences.setValue(
+				LCSConstants.PORTAL_PROPERTIES_BLACKLIST,
+				lcsServicesConfiguration.get(
+					LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED));
+		}
+	}
+
 	public static void validateLCSClusterNodeLCSClusterEntry()
 		throws PortalException {
 

@@ -26,6 +26,7 @@ import com.liferay.lcs.rest.LCSClusterNodeServiceUtil;
 import com.liferay.lcs.security.KeyStoreFactory;
 import com.liferay.lcs.util.KeyGenerator;
 import com.liferay.lcs.util.LCSAlert;
+import com.liferay.lcs.util.LCSConstants;
 import com.liferay.lcs.util.LCSUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,6 +46,8 @@ import java.io.IOException;
 import java.security.Key;
 import java.security.KeyStore;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletPreferences;
@@ -197,6 +200,9 @@ public class LCSClusterEntryTokenAdvisor {
 				"Unable to find LCS cluster entry token");
 		}
 
+		LCSUtil.storeLCSServicesConfiguration(
+			extractLCSServicesConfiguration(lcsClusterEntryToken));
+
 		return lcsClusterEntryToken;
 	}
 
@@ -328,6 +334,41 @@ public class LCSClusterEntryTokenAdvisor {
 		String[] tokens = content.split(StringPool.DOUBLE_DASH);
 
 		return tokens[0];
+	}
+
+	protected Map<String, String> extractLCSServicesConfiguration(
+		LCSClusterEntryToken lcsClusterEntryToken) {
+
+		String content = lcsClusterEntryToken.getContent();
+
+		Map<String, String> lcsServicesConfiguration = new HashMap<>();
+
+		if (content.contains(LCSConstants.METRICS_LCS_SERVICE_ENABLED)) {
+			lcsServicesConfiguration.put(
+				LCSConstants.METRICS_LCS_SERVICE_ENABLED, StringPool.TRUE);
+		}
+
+		if (content.contains(LCSConstants.PATCHES_LCS_SERVICE_ENABLED)) {
+			lcsServicesConfiguration.put(
+				LCSConstants.PATCHES_LCS_SERVICE_ENABLED, StringPool.TRUE);
+		}
+
+		if (content.contains(
+				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED)) {
+
+			int propertiesStartIndex = content.indexOf(
+				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED);
+
+			String portalPropertiesBlacklist = content.substring(
+				content.indexOf(StringPool.DOUBLE_DASH, propertiesStartIndex) +
+					2);
+
+			lcsServicesConfiguration.put(
+				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED,
+				portalPropertiesBlacklist);
+		}
+
+		return lcsServicesConfiguration;
 	}
 
 	protected String getLCSClusterEntryTokenFileName()
