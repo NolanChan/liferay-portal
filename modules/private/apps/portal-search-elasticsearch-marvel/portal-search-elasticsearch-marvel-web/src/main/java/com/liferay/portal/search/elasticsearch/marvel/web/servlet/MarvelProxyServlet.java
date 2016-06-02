@@ -15,14 +15,27 @@
 package com.liferay.portal.search.elasticsearch.marvel.web.servlet;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.elasticsearch.marvel.web.configuration.MarvelWebConfiguration;
+import com.liferay.portal.search.elasticsearch.marvel.web.constants.MarvelPortletKeys;
+
+import java.io.IOException;
 
 import java.util.Map;
 
 import javax.servlet.Servlet;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -33,6 +46,7 @@ import org.mitre.dsmiley.httpproxy.ProxyServlet;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -60,6 +74,30 @@ public class MarvelProxyServlet extends ProxyServlet {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		replaceConfiguration(properties);
+	}
+
+	protected void checkPermission(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		User user = portal.getUser(httpServletRequest);
+
+		if (user == null) {
+			throw new PrincipalException.MustBeAuthenticated(StringPool.BLANK);
+		}
+
+		PermissionChecker permissionChecker = permissionCheckerFactory.create(
+			user);
+
+		String actionKey = ActionKeys.VIEW;
+		String portletKey = MarvelPortletKeys.MARVEL_PORTLET;
+
+		boolean hasPermission = permissionChecker.hasPermission(
+			GroupThreadLocal.getGroupId(), portletKey, portletKey, actionKey);
+
+		if (!hasPermission) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, actionKey);
+		}
 	}
 
 	@Override
@@ -114,6 +152,44 @@ public class MarvelProxyServlet extends ProxyServlet {
 		_marvelWebConfiguration = ConfigurableUtil.createConfigurable(
 			MarvelWebConfiguration.class, properties);
 	}
+
+	protected void sendError(
+			Exception e, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		int status = HttpServletResponse.SC_BAD_REQUEST;
+
+		if (e instanceof PrincipalException) {
+			status = HttpServletResponse.SC_FORBIDDEN;
+		}
+
+		httpServletResponse.sendError(status, e.getMessage());
+	}
+
+	@Override
+	protected void service(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException, ServletException {
+
+		try {
+			checkPermission(httpServletRequest);
+		}
+		catch (Exception e) {
+			sendError(e, httpServletRequest, httpServletResponse);
+
+			return;
+		}
+
+		super.service(httpServletRequest, httpServletResponse);
+	}
+
+	@Reference
+	protected PermissionCheckerFactory permissionCheckerFactory;
+
+	@Reference
+	protected Portal portal;
 
 	private MarvelWebConfiguration _marvelWebConfiguration;
 
