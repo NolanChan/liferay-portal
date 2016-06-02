@@ -14,30 +14,19 @@
 
 package com.liferay.sync.encryptor.util;
 
-import com.liferay.portal.kernel.io.ProtectedObjectInputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 /**
  * @author Brian Wing Shun Chan
  */
 public class Base64 {
 
 	public static byte[] decode(String base64) {
-		if (Validator.isNull(base64)) {
+		if ((base64 == null) || base64.isEmpty()) {
 			return new byte[0];
 		}
 
 		int pad = 0;
 
-		for (int i = base64.length() - 1; base64.charAt(i) == CharPool.EQUAL;
-		     i--) {
-
+		for (int i = base64.length() - 1; base64.charAt(i) == '='; i--) {
 			pad++;
 		}
 
@@ -79,55 +68,6 @@ public class Base64 {
 		return sb.toString();
 	}
 
-	public static String fromURLSafe(String base64) {
-		return StringUtil.replace(
-			base64,
-			new char[] {CharPool.MINUS, CharPool.STAR, CharPool.UNDERLINE},
-			new char[] {CharPool.PLUS, CharPool.EQUAL, CharPool.SLASH});
-	}
-
-	public static String objectToString(Object o) {
-		if (o == null) {
-			return null;
-		}
-
-		UnsyncByteArrayOutputStream ubaos = new UnsyncByteArrayOutputStream(
-			32000);
-
-		try (ObjectOutputStream os = new ObjectOutputStream(ubaos)) {
-			os.writeObject(o);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return encode(ubaos.unsafeGetByteArray(), 0, ubaos.size());
-	}
-
-	public static Object stringToObject(String s) {
-		return _stringToObject(s, null, false);
-	}
-
-	public static Object stringToObject(String s, ClassLoader classLoader) {
-		return _stringToObject(s, classLoader, false);
-	}
-
-	public static Object stringToObjectSilent(String s) {
-		return _stringToObject(s, null, true);
-	}
-
-	public static Object stringToObjectSilent(
-		String s, ClassLoader classLoader) {
-
-		return _stringToObject(s, classLoader, true);
-	}
-
-	public static String toURLSafe(String base64) {
-		return StringUtil.replace(
-			base64, new char[] {CharPool.PLUS, CharPool.EQUAL, CharPool.SLASH},
-			new char[] {CharPool.MINUS, CharPool.STAR, CharPool.UNDERLINE});
-	}
-
 	protected static char[] encodeBlock(byte[] raw, int offset, int lastIndex) {
 		int block = 0;
 		int slack = lastIndex - offset - 1;
@@ -148,11 +88,11 @@ public class Base64 {
 		}
 
 		if (slack < 1) {
-			base64[2] = CharPool.EQUAL;
+			base64[2] = '=';
 		}
 
 		if (slack < 2) {
-			base64[3] = CharPool.EQUAL;
+			base64[3] = '=';
 		}
 
 		return base64;
@@ -172,78 +112,42 @@ public class Base64 {
 		}
 
 		if (sixbit == 62) {
-			return CharPool.PLUS;
+			return '+';
 		}
 
 		if (sixbit != 63) {
-			return CharPool.QUESTION;
+			return '?';
 		}
 
-		return CharPool.SLASH;
+		return '/';
 	}
 
 	protected static int getValue(char c) {
-		if ((c >= CharPool.UPPER_CASE_A) && (c <= CharPool.UPPER_CASE_Z)) {
+		if ((c >= 'A') && (c <= 'Z')) {
 			return c - 65;
 		}
 
-		if ((c >= CharPool.LOWER_CASE_A) && (c <= CharPool.LOWER_CASE_Z)) {
+		if ((c >= 'a') && (c <= 'z')) {
 			return (c - 97) + 26;
 		}
 
-		if ((c >= CharPool.NUMBER_0) && (c <= CharPool.NUMBER_9)) {
+		if ((c >= '0') && (c <= '9')) {
 			return (c - 48) + 52;
 		}
 
-		if (c == CharPool.PLUS) {
+		if (c == '+') {
 			return 62;
 		}
 
-		if (c == CharPool.SLASH) {
+		if (c == '/') {
 			return 63;
 		}
 
-		if (c != CharPool.EQUAL) {
+		if (c != '=') {
 			return -1;
 		}
 
 		return 0;
 	}
-
-	private static Object _stringToObject(
-		String s, ClassLoader classLoader, boolean silent) {
-
-		if (s == null) {
-			return null;
-		}
-
-		byte[] bytes = decode(s);
-
-		UnsyncByteArrayInputStream ubais = new UnsyncByteArrayInputStream(
-			bytes);
-
-		try {
-			ObjectInputStream is = null;
-
-			if (classLoader == null) {
-				is = new ProtectedObjectInputStream(ubais);
-			}
-			else {
-				is = new ProtectedClassLoaderObjectInputStream(
-					ubais, classLoader);
-			}
-
-			return is.readObject();
-		}
-		catch (Exception e) {
-			if (!silent) {
-				_log.error(e, e);
-			}
-		}
-
-		return null;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(Base64.class);
 
 }

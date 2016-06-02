@@ -14,9 +14,9 @@
 
 package com.liferay.sync.encryptor;
 
-import java.nio.charset.Charset;
+import com.liferay.sync.encryptor.util.Base64;
 
-import java.util.Base64;
+import java.nio.charset.Charset;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -39,7 +39,7 @@ public class SyncEncryptor {
 		cipher.init(Cipher.DECRYPT_MODE, secretKey);
 
 		for (int i = 0; i < _ITERATIONS; i++) {
-			byte[] decodedBytes = _decoder.decode(value);
+			byte[] decodedBytes = Base64.decode(value);
 			byte[] decryptedBytes = cipher.doFinal(decodedBytes);
 
 			value = new String(decryptedBytes, _UTF8_CHARSET);
@@ -63,7 +63,7 @@ public class SyncEncryptor {
 			byte[] encryptedBytes = cipher.doFinal(
 				value.getBytes(_UTF8_CHARSET));
 
-			value = _encoder.encodeToString(encryptedBytes);
+			value = Base64.encode(encryptedBytes);
 		}
 
 		return value;
@@ -80,8 +80,5 @@ public class SyncEncryptor {
 	};
 
 	private static final Charset _UTF8_CHARSET = Charset.forName("UTF-8");
-
-	private static final Base64.Decoder _decoder = Base64.getDecoder();
-	private static final Base64.Encoder _encoder = Base64.getEncoder();
 
 }
