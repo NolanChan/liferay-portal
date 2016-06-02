@@ -14,7 +14,7 @@
 
 package com.liferay.sync.encryptor;
 
-import com.liferay.sync.encryptor.util.Base64;
+import com.liferay.sync.encryptor.internal.util.Base64;
 
 import java.nio.charset.Charset;
 

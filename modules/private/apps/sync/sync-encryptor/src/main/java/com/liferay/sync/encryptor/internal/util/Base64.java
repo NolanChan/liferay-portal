@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.encryptor.util;
+package com.liferay.sync.encryptor.internal.util;
 
 /**
  * @author Brian Wing Shun Chan
