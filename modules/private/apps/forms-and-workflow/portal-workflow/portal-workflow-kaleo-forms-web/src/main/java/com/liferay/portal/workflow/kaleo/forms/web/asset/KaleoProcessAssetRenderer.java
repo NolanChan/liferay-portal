@@ -28,13 +28,17 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsWebKeys;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
+import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalService;
 import com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
 import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 
@@ -244,6 +248,11 @@ public class KaleoProcessAssetRenderer
 			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION, _ddlRecordVersion);
 		request.setAttribute(KaleoFormsWebKeys.KALEO_PROCESS, _kaleoProcess);
 
+		KaleoProcessLink kaleoProcessLink = fetchKaleoProcessLink(request);
+
+		request.setAttribute(
+			KaleoFormsWebKeys.KALEO_PROCESS_LINK, kaleoProcessLink);
+
 		return super.include(request, response, template);
 	}
 
@@ -252,11 +261,39 @@ public class KaleoProcessAssetRenderer
 		return true;
 	}
 
+	protected KaleoProcessLink fetchKaleoProcessLink(HttpServletRequest request)
+		throws Exception {
+
+		WorkflowTask workflowTask = getWorkflowTask(request);
+
+		return _kaKaleoProcessLinkLocalService.fetchKaleoProcessLink(
+			_kaleoProcess.getKaleoProcessId(), workflowTask.getName());
+	}
+
+	protected WorkflowTask getWorkflowTask(HttpServletRequest request)
+		throws Exception {
+
+		long workflowTaskId = ParamUtil.getLong(request, "workflowTaskId");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return WorkflowTaskManagerUtil.getWorkflowTask(
+			themeDisplay.getCompanyId(), workflowTaskId);
+	}
+
+	protected void setKaleoProcessLinkLocalService(
+		KaleoProcessLinkLocalService kaleoProcessLinkLocalService) {
+
+		_kaKaleoProcessLinkLocalService = kaleoProcessLinkLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoProcessAssetRenderer.class);
 
 	private final DDLRecord _ddlRecord;
 	private final DDLRecordVersion _ddlRecordVersion;
+	private KaleoProcessLinkLocalService _kaKaleoProcessLinkLocalService;
 	private final KaleoProcess _kaleoProcess;
 
 }

@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalService;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalService;
 import com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
 import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
@@ -80,6 +81,8 @@ public class KaleoProcessAssetRendererFactory
 			new KaleoProcessAssetRenderer(kaleoProcess, record, recordVersion);
 
 		kaleoProcessAssetRenderer.setAssetRendererType(type);
+		kaleoProcessAssetRenderer.setKaleoProcessLinkLocalService(
+			_kaleoProcessLinkLocalService);
 		kaleoProcessAssetRenderer.setServletContext(_servletContext);
 
 		return kaleoProcessAssetRenderer;
@@ -125,6 +128,13 @@ public class KaleoProcessAssetRendererFactory
 	}
 
 	@Reference(unbind = "-")
+	protected void setKaleoProcessLinkLocalService(
+		KaleoProcessLinkLocalService kaleoProcessLinkLocalService) {
+
+		_kaleoProcessLinkLocalService = kaleoProcessLinkLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setKaleoProcessLocalService(
 		KaleoProcessLocalService kaleoProcessLocalService) {
 
@@ -132,6 +142,7 @@ public class KaleoProcessAssetRendererFactory
 	}
 
 	private DDLRecordLocalService _ddlRecordLocalService;
+	private KaleoProcessLinkLocalService _kaleoProcessLinkLocalService;
 	private KaleoProcessLocalService _kaleoProcessLocalService;
 	private ServletContext _servletContext;
 
