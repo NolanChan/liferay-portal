@@ -17,6 +17,10 @@
 <%@ include file="/asset/init.jsp" %>
 
 <%
+KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS);
+
+KaleoProcessLink kaleoProcessLink = (KaleoProcessLink)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS_LINK);
+
 DDLRecord ddlRecord = (DDLRecord)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
 DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
@@ -28,7 +32,13 @@ DDLRecordVersion ddlRecordVersion = (DDLRecordVersion)request.getAttribute(DDLWe
 	<aui:fieldset>
 
 		<%
-		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+		long classPK = ddlRecordSet.getDDMStructureId();
+
+		if (kaleoProcessLink != null) {
+			classNameId = PortalUtil.getClassNameId(DDMTemplate.class);
+			classPK = kaleoProcessLink.getDDMTemplateId();
+		}
 
 		DDMFormValues ddmFormValues = null;
 
@@ -38,8 +48,8 @@ DDLRecordVersion ddlRecordVersion = (DDLRecordVersion)request.getAttribute(DDLWe
 		%>
 
 		<liferay-ddm:html
-			classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-			classPK="<%= ddmStructure.getStructureId() %>"
+			classNameId="<%= classNameId %>"
+			classPK="<%= classPK %>"
 			ddmFormValues="<%= ddmFormValues %>"
 			readOnly="<%= true %>"
 			requestedLocale="<%= locale %>"
