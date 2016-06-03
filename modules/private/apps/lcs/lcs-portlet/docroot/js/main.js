@@ -9,37 +9,23 @@ AUI.add(
 
 		var CSS_DISCONNECTED = 'disconnected';
 
-		var CSS_LCS_CLUSTER_ENTRY_DIALOG = 'lcs-cluster-entry-dialog';
-
 		var CSS_SYNCHRONIZING = 'synchronizing';
+
+		var EVENT_CHANGE = 'change';
+
+		var EVENT_CHECKED = 'checked';
+
+		var EVENT_CLICK = 'click';
 
 		var STR_BLANK = '';
 
-		var STR_CHANGE = 'change';
-
 		var STR_CHECKED = 'checked';
 
-		var STR_CLICK = 'click';
-
 		var STR_DOUBLE_ZERO = '00';
-
-		var STR_INPUT = 'input';
 
 		var STR_REPONSE_DATA = 'responseData';
 
 		var STR_SUCCESS = 'success';
-
-		var TPL_OPTION = '<option value="{0}">{1}</option>';
-
-		var TPL_SELECT_LCS_CLUSTER_ENTRY = '<div class="control-group">' +
-				'<select class="aui-field-select" id="{portletNamespace}lcsClusterEntryId" name="{portletNamespace}lcsClusterEntryId">' +
-					'{options}' +
-				'</select>' +
-			'</div>';
-
-		var TYPE_ADD_LCS_CLUSTER_ENTRY = 0;
-
-		var TYPE_SERVE_LCS_PROJECT = 1;
 
 		var LCS = A.Component.create(
 			{
@@ -68,7 +54,7 @@ AUI.add(
 						var lcsServicesCheckboxes = lcsServicesPanel.all('input:checkbox:not(:disabled)');
 
 						enableAllServicesCheckbox.on(
-							STR_CHANGE,
+							EVENT_CHANGE,
 							function(event) {
 								var enableAllLCSServices = enableAllServicesCheckbox.attr(STR_CHECKED);
 
@@ -83,28 +69,13 @@ AUI.add(
 						var portalPropertiesLCSServiceEnabledCheckbox = instance.byId(config.portalPropertiesLCSServiceEnabled);
 
 						portalPropertiesLCSServiceEnabledCheckbox.on(
-							STR_CHANGE,
+							EVENT_CHANGE,
 							function(event) {
 								var val = portalPropertiesLCSServiceEnabledCheckbox.attr(STR_CHECKED);
 
 								propertiesPanel.toggle(val);
 							}
 						);
-
-						var nextPageButton = instance.byId('nextPage');
-
-						if (nextPageButton) {
-							nextPageButton.on(
-								STR_CLICK,
-								function(event) {
-									if (confirm(config.msgConfirmManualRegistration)) {
-										var form = instance.byId('fm');
-
-										form.submit();
-									}
-								}
-							);
-						}
 					},
 
 					initializeLCSClusterNodePage: function(config) {
@@ -137,7 +108,7 @@ AUI.add(
 						var getConnectionStatus = A.bind('_getConnectionStatus', instance);
 
 						connectButton.on(
-							STR_CLICK,
+							EVENT_CLICK,
 							function(event) {
 								A.io.request(
 									connectURL,
@@ -145,7 +116,7 @@ AUI.add(
 										data: Liferay.Util.ns(
 											instance.NS,
 											{
-												applyToSiblingClusterNodes: applyToSiblingClusterNodesCheckbox.attr(STR_CHECKED)
+												applyToSiblingClusterNodes: applyToSiblingClusterNodesCheckbox.attr(EVENT_CHECKED)
 											}
 										),
 										dataType: 'JSON',
@@ -167,7 +138,7 @@ AUI.add(
 						);
 
 						disconnectButton.on(
-							STR_CLICK,
+							EVENT_CLICK,
 							function(event) {
 								A.io.request(
 									disconnectURL,
@@ -175,7 +146,7 @@ AUI.add(
 										data: Liferay.Util.ns(
 											instance.NS,
 											{
-												applyToSiblingClusterNodes: applyToSiblingClusterNodesCheckbox.attr(STR_CHECKED)
+												applyToSiblingClusterNodes: applyToSiblingClusterNodesCheckbox.attr(EVENT_CHECKED)
 											}
 										),
 										dataType: 'JSON',
@@ -240,114 +211,6 @@ AUI.add(
 						}
 					},
 
-					initializeRegisterPage: function(config) {
-						var instance = this;
-
-						var urlMap = {};
-
-						urlMap[TYPE_ADD_LCS_CLUSTER_ENTRY] = config.addLCSClusterEntryURL;
-						urlMap[TYPE_SERVE_LCS_PROJECT] = config.serveLCSProjectURL;
-
-						instance._labelAddNewEnvironment = config.labelAddNewEnvironment;
-						instance._labelEditNewEnvironment = config.labelEditNewEnvironment;
-						instance._labelNewEnvironment = config.labelNewEnvironment;
-						instance._msgNoEnvironmentsCreated = config.msgNoEnvironmentsCreated;
-
-						instance._urlMap = urlMap;
-
-						var addEnvironmentButton = instance.byId('addEnvironmentButton');
-						var addLCSClusterEntry = instance.byId('addLCSClusterEntry');
-						var lcsClusterEntryIdNode = instance.byId('lcsClusterEntryId');
-						var lcsClusterEntryInputWrapper = instance.byId('lcsClusterEntryInputWrapper');
-						var lcsProjectSelect = instance.byId('lcsProjectId');
-						var registrationForm = instance.byId('registrationFm');
-						var serverNameInput = instance.byId('lcsClusterNodeName');
-
-						addEnvironmentButton.on(STR_CLICK, instance._createLCSClusterEntryPanel, instance);
-						serverNameInput.on(STR_INPUT, A.bind('_refreshSubmitDisabled', instance));
-
-						if (!config.cluster) {
-							lcsProjectSelect.on(STR_CHANGE, instance._getLCSClusterEntries, instance);
-						}
-
-						instance._addEnvironmentButton = addEnvironmentButton;
-						instance._addLCSClusterEntry = addLCSClusterEntry;
-						instance._lcsClusterEntryIdNode = lcsClusterEntryIdNode;
-						instance._lcsClusterEntryInputWrapper = lcsClusterEntryInputWrapper;
-						instance._lcsClusterNewEntry = false;
-						instance._lcsProjectSelect = lcsProjectSelect;
-						instance._registrationForm = registrationForm;
-						instance._serverNameInput = serverNameInput;
-
-						instance._portletContentBox = registrationForm.ancestor('.portlet-content');
-					},
-
-					_createLCSClusterEntryPanel: function() {
-						var instance = this;
-
-						var lcsClusterEntryPanel = instance._lcsClusterEntryPanel;
-
-						var lcsClusterEntryPanelRenderURL = instance._urlMap[TYPE_ADD_LCS_CLUSTER_ENTRY];
-
-						if (!lcsClusterEntryPanel) {
-							lcsClusterEntryPanel = Liferay.Util.Window.getWindow(
-								{
-									dialog: {
-										centered: true,
-										cssClass: CSS_LCS_CLUSTER_ENTRY_DIALOG,
-										height: 560,
-										modal: true,
-										resizable: false,
-										width: 550
-									},
-									title: instance._labelNewEnvironment
-								}
-							).render(instance._portletContentBox);
-
-							lcsClusterEntryPanel.plug(
-								A.Plugin.IO,
-								{
-									autoLoad: false,
-									data: Liferay.Util.ns(
-										instance.NS,
-										{
-											lcsProjectId: instance._lcsProjectSelect.val()
-										}
-									),
-									uri: lcsClusterEntryPanelRenderURL
-								}
-							);
-
-							instance._lcsClusterEntryPanel = lcsClusterEntryPanel;
-
-							lcsClusterEntryPanel.io.after(STR_SUCCESS, instance._initializeLCSClusterEntryPanel, instance);
-
-							lcsClusterEntryPanel.io.start();
-						}
-						else {
-							lcsClusterEntryPanel.show();
-						}
-					},
-
-					_createSelectLCSClusterEntryHTML: function(optionsArray) {
-						var instance = this;
-
-						var options = A.Array.map(
-							optionsArray,
-							function(item, index, collection) {
-								return Lang.sub(TPL_OPTION, [item.lcsClusterEntryId, item.name]);
-							}
-						).join('');
-
-						return Lang.sub(
-							TPL_SELECT_LCS_CLUSTER_ENTRY,
-							{
-								options: options,
-								portletNamespace: instance.NS
-							}
-						);
-					},
-
 					_getConnectionStatus: function() {
 						var instance = this;
 
@@ -394,124 +257,6 @@ AUI.add(
 						);
 					},
 
-					_getLCSClusterEntries: function(event) {
-						var instance = this;
-
-						var lcsClusterEntryInputWrapper = instance._lcsClusterEntryInputWrapper;
-
-						lcsClusterEntryInputWrapper.empty();
-
-						lcsClusterEntryInputWrapper.plug(A.LoadingMask);
-
-						lcsClusterEntryInputWrapper.loadingmask.show();
-
-						A.io.request(
-							instance._urlMap[TYPE_SERVE_LCS_PROJECT],
-							{
-								data: Liferay.Util.ns(
-									instance.NS,
-									{
-										lcsProjectId: instance._lcsProjectSelect.val()
-									}
-								),
-								dataType: 'JSON',
-								on: {
-									success: function(event, id, obj) {
-										var responseData = this.get(STR_REPONSE_DATA);
-
-										var lcsClusterEntries = responseData.lcsClusterEntries;
-
-										if (lcsClusterEntries.length) {
-											var selectLCSClusterEntryHTML = instance._createSelectLCSClusterEntryHTML(lcsClusterEntries);
-
-											lcsClusterEntryInputWrapper.html(selectLCSClusterEntryHTML);
-
-											var lcsClusterEntryIdNode = lcsClusterEntryInputWrapper.one('#' + instance.NS + 'lcsClusterEntryId');
-
-											if (instance._lcsClusterNewEntry) {
-												var lastIndex = lcsClusterEntryIdNode.attr('length') - 1;
-
-												lcsClusterEntryIdNode.set('selectedIndex', lastIndex);
-
-												instance._lcsClusterNewEntry = false;
-											}
-
-											instance._lcsClusterEntryIdNode = lcsClusterEntryIdNode;
-										}
-										else {
-											lcsClusterEntryInputWrapper.html(instance._msgNoEnvironmentsCreated);
-
-											instance._lcsClusterEntryIdNode = null;
-										}
-
-										var addEnvironmentButton = instance._addEnvironmentButton;
-
-										addEnvironmentButton.text(instance._labelAddNewEnvironment);
-										addEnvironmentButton.toggle(responseData.lcsAdministratorLCSRole);
-
-										instance._addLCSClusterEntry.val(false);
-
-										lcsClusterEntryInputWrapper.unplug(A.LoadingMask);
-
-										instance._refreshSubmitDisabled();
-									}
-								}
-							}
-						);
-					},
-
-					_initializeLCSClusterEntryPanel: function() {
-						var instance = this;
-
-						var lcsClusterEntryPanel = instance._lcsClusterEntryPanel;
-
-						var lcsClusterEntryNameInput = instance.byId('lcsClusterEntryName', lcsClusterEntryPanel);
-						var saveLCSClusterEntryButton = instance.byId('saveLCSClusterEntry', lcsClusterEntryPanel);
-
-						lcsClusterEntryNameInput.on(STR_INPUT, A.bind('_onLCSClusterEntryNameInput', instance));
-
-						saveLCSClusterEntryButton.on(
-							STR_CLICK,
-							function(event) {
-								var registrationForm = instance._registrationForm;
-
-								var lcsClusterEntryDescription = instance.byId('lcsClusterEntryDescription', lcsClusterEntryPanel);
-								var lcsClusterEntryLocation = instance.byId('lcsClusterEntryLocation', lcsClusterEntryPanel);
-								var newLCSClusterEntryDescription = instance.byId('newLCSClusterEntryDescription', registrationForm);
-								var newLCSClusterEntryLocation = instance.byId('newLCSClusterEntryLocation', registrationForm);
-								var newLCSClusterEntryName = instance.byId('newLCSClusterEntryName', registrationForm);
-
-								var description = lcsClusterEntryDescription.val();
-								var location = lcsClusterEntryLocation.val();
-								var name = lcsClusterEntryNameInput.val();
-
-								instance._addLCSClusterEntry.val(true);
-
-								if (newLCSClusterEntryDescription) {
-									newLCSClusterEntryDescription.val(description);
-								}
-
-								if (newLCSClusterEntryLocation) {
-									newLCSClusterEntryLocation.val(location);
-								}
-
-								if (newLCSClusterEntryName) {
-									newLCSClusterEntryName.val(name);
-								}
-
-								instance._lcsClusterEntryInputWrapper.html(name);
-
-								instance._addEnvironmentButton.text(instance._labelEditNewEnvironment);
-
-								instance._refreshSubmitDisabled();
-
-								lcsClusterEntryPanel.hide();
-							}
-						);
-
-						lcsClusterEntryPanel.show();
-					},
-
 					_initializeTooltip: function(trigger, bodyContent) {
 						var instance = this;
 
@@ -523,14 +268,6 @@ AUI.add(
 								}
 							);
 						}
-					},
-
-					_onLCSClusterEntryNameInput: function(event) {
-						var instance = this;
-
-						var disabled = !(Lang.trim(event.currentTarget.val()));
-
-						Liferay.Util.toggleDisabled(instance.byId('saveLCSClusterEntry'), disabled);
 					},
 
 					_refreshConnectionControls: function(pending, ready) {
@@ -612,18 +349,6 @@ AUI.add(
 								tooltip.addClass('tooltip-hidden');
 							}
 						}
-					},
-
-					_refreshSubmitDisabled: function(event) {
-						var instance = this;
-
-						var registrationForm = instance._registrationForm;
-
-						var addLCSClusterEntry = (instance._addLCSClusterEntry.val() == 'true');
-
-						var disabled = !instance._lcsClusterEntryIdNode && !addLCSClusterEntry || !instance._serverNameInput.val();
-
-						Liferay.Util.toggleDisabled(instance.one('#register', registrationForm), disabled);
 					},
 
 					_updateDuration: function() {

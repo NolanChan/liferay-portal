@@ -647,16 +647,6 @@ public class LCSUtil {
 		return true;
 	}
 
-	public static boolean isMetricsServiceEnabled() {
-		javax.portlet.PortletPreferences jxPortletPreferences =
-			fetchJxPortletPreferences();
-
-		return GetterUtil.getBoolean(
-			jxPortletPreferences.getValue(
-				LCSConstants.METRICS_LCS_SERVICE_ENABLED,
-				Boolean.TRUE.toString()));
-	}
-
 	public static void removeCredentials() {
 		javax.portlet.PortletPreferences jxPortletPreferences =
 			fetchJxPortletPreferences();
