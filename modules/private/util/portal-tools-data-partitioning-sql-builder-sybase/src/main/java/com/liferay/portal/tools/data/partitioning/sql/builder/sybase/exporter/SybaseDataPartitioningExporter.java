@@ -78,7 +78,7 @@ public class SybaseDataPartitioningExporter
 		else if (field instanceof String) {
 			String value = (String)field;
 
-			value = value.replace("'", "\\'");
+			value = value.replace("'", "''");
 
 			sb.append("'");
 			sb.append(value);

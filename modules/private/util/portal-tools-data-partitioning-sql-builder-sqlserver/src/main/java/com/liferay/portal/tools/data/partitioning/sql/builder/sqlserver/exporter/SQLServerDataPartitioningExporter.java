@@ -80,7 +80,7 @@ public class SQLServerDataPartitioningExporter
 		else if (field instanceof String) {
 			String value = (String)field;
 
-			value = value.replace("'", "\\'");
+			value = value.replace("'", "''");
 
 			sb.append("'");
 			sb.append(value);
