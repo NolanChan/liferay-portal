@@ -1,3 +1,4 @@
+$blue: #1C75B9;
 $darkgray: #656565;
 $gray: #8D8D8D;
 $indent-width: 16px;
@@ -11,10 +12,6 @@ span.lcs-alert {
 }
 
 .lcs-portlet {
-	color: $darkgray;
-	display: table;
-	padding: 12px 10px 10px;
-
 	dl {
 		margin: 0;
 
@@ -107,6 +104,10 @@ span.lcs-alert {
 	}
 
 	.content {
+		margin: 0 auto;
+		max-width: 1280px;
+		padding: 0 16px;
+
 		.button-holder {
 			margin-bottom: 30px;
 
@@ -115,16 +116,45 @@ span.lcs-alert {
 			}
 		}
 
+		.info-panel {
+			margin: 0 auto;
+			max-width: 960px;
+			padding: 6em 4em;
+
+			p {
+				margin: 2em 0;
+			}
+
+			.btn {
+				border-color: $blue;
+				color: $blue;
+			}
+		}
+
 		.lcs-synchronizing-alert {
 			display: inline-block;
 			margin: 0 0 30px 0;
 			position: relative;
 		}
+
+		.logo {
+			height: 5em;
+			margin-right: 30px;
+		}
+
+		.title {
+			color: $blue;
+			font-size: 3em;
+			font-weight: lighter;
+			vertical-align: middle;
+		}
 	}
 
 	.footer {
 		border-top: 1px solid $gray;
-		padding-top: 6px;
+		margin: 0 auto;
+		max-width: 1280px;
+		padding: 8px 16px;
 	}
 
 	.lcs-info {
