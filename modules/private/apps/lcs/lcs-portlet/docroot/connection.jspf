@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
-
 <%
 String lcsClusterEntryLayoutURL = StringPool.BLANK;
 String lcsClusterNodeLayoutURL = StringPool.BLANK;
@@ -64,6 +62,26 @@ catch (Exception e) {
 <div class="alert alert-danger hide lcs-alert" id="<portlet:namespace />heartbeatExpired">
 	<liferay-ui:message key="the-connection-to-liferay-connected-services-has-expired" />
 </div>
+
+<%
+Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts();
+%>
+
+<c:if test="<%= (lcsClusterEntryTokenAlerts.size() > 1) || !lcsClusterEntryTokenAlerts.contains(LCSAlert.WARNING_MISSING_TOKEN) %>">
+
+	<%
+	for (LCSAlert lcsAlert : lcsClusterEntryTokenAlerts) {
+	%>
+
+		<div class="<%= lcsAlert.getCSSClass() %>">
+			<liferay-ui:message key="<%= lcsAlert.getLabel() %>" />
+		</div>
+
+	<%
+	}
+	%>
+
+</c:if>
 
 <c:choose>
 	<c:when test="<%= ((lcsClusterNode == null) || (lcsClusterEntry == null)) %>">
@@ -305,11 +323,11 @@ catch (Exception e) {
 			<aui:input checked="<%= true %>" id="applyToSiblingClusterNodes" label="apply-to-all-nodes-of-this-cluster" name="applyToSiblingClusterNodes" type="checkbox" />
 		</div>
 
-		<liferay-portlet:renderURL var="configureLCSServicesURL">
-			<liferay-portlet:param name="configureLCSServices" value="<%= Boolean.TRUE.toString() %>" />
+		<liferay-portlet:renderURL var="lcsServicesURL">
+			<liferay-portlet:param name="lcsPage" value="lcsServices" />
 		</liferay-portlet:renderURL>
 
-		<aui:a href="<%= configureLCSServicesURL %>" label="configure-services" />
+		<aui:a href="<%= lcsServicesURL %>" label="configure-services" />
 
 		<aui:button-row>
 			<aui:button cssClass='<%= "btn-success " + (ready ? "hide" : StringPool.BLANK) %>' disabled="<%= pending %>" name="connect" value="connect" />
