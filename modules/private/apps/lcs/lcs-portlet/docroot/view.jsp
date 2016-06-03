@@ -44,10 +44,10 @@ if (LCSUtil.isLCSPortletAuthorized(liferayPortletRequest)) {
 		<c:when test="<%= !lcsPortletAuthorized || !lcsClusterNodeRegistered %>">
 			<%@ include file="/info.jspf" %>
 		</c:when>
-		<c:when test='<%= Validator.equals(lcsPage, "connection") %>'>
+		<c:when test='<%= lcsPage.equals("connection") %>'>
 			<%@ include file="/connection.jspf" %>
 		</c:when>
-		<c:when test='<%= Validator.equals(lcsPage, "lcsServices") %>'>
+		<c:when test='<%= lcsPage.equals("lcsServices") %>'>
 			<%@ include file="/lcs_services.jspf" %>
 		</c:when>
 	</c:choose>
