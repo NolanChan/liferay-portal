@@ -13,8 +13,6 @@ AUI.add(
 
 		var EVENT_CHANGE = 'change';
 
-		var EVENT_CHECKED = 'checked';
-
 		var EVENT_CLICK = 'click';
 
 		var STR_BLANK = '';
@@ -116,7 +114,7 @@ AUI.add(
 										data: Liferay.Util.ns(
 											instance.NS,
 											{
-												applyToSiblingClusterNodes: applyToSiblingClusterNodesCheckbox.attr(EVENT_CHECKED)
+												applyToSiblingClusterNodes: applyToSiblingClusterNodesCheckbox.attr(STR_CHECKED)
 											}
 										),
 										dataType: 'JSON',
@@ -146,7 +144,7 @@ AUI.add(
 										data: Liferay.Util.ns(
 											instance.NS,
 											{
-												applyToSiblingClusterNodes: applyToSiblingClusterNodesCheckbox.attr(EVENT_CHECKED)
+												applyToSiblingClusterNodes: applyToSiblingClusterNodesCheckbox.attr(STR_CHECKED)
 											}
 										),
 										dataType: 'JSON',
