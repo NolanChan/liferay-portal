@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -102,6 +102,16 @@ public class SamlSpAuthRequestWrapper implements SamlSpAuthRequest,
 	}
 
 	@Override
+	public SamlSpAuthRequest toEscapedModel() {
+		return new SamlSpAuthRequestWrapper(_samlSpAuthRequest.toEscapedModel());
+	}
+
+	@Override
+	public SamlSpAuthRequest toUnescapedModel() {
+		return new SamlSpAuthRequestWrapper(_samlSpAuthRequest.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _samlSpAuthRequest.isCachedModel();
 	}
@@ -122,23 +132,12 @@ public class SamlSpAuthRequestWrapper implements SamlSpAuthRequest,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.saml.model.SamlSpAuthRequest> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<SamlSpAuthRequest> toCacheModel() {
 		return _samlSpAuthRequest.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.saml.model.SamlSpAuthRequest toEscapedModel() {
-		return new SamlSpAuthRequestWrapper(_samlSpAuthRequest.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.saml.model.SamlSpAuthRequest toUnescapedModel() {
-		return new SamlSpAuthRequestWrapper(_samlSpAuthRequest.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.saml.model.SamlSpAuthRequest samlSpAuthRequest) {
+	public int compareTo(SamlSpAuthRequest samlSpAuthRequest) {
 		return _samlSpAuthRequest.compareTo(samlSpAuthRequest);
 	}
 
@@ -335,7 +334,7 @@ public class SamlSpAuthRequestWrapper implements SamlSpAuthRequest,
 
 		SamlSpAuthRequestWrapper samlSpAuthRequestWrapper = (SamlSpAuthRequestWrapper)obj;
 
-		if (Validator.equals(_samlSpAuthRequest,
+		if (Objects.equals(_samlSpAuthRequest,
 					samlSpAuthRequestWrapper._samlSpAuthRequest)) {
 			return true;
 		}

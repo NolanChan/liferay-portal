@@ -441,7 +441,7 @@ public class SamlSpAuthRequestClp extends BaseModelImpl<SamlSpAuthRequest>
 	private String _samlIdpEntityId;
 	private String _samlSpAuthRequestKey;
 	private BaseModel<?> _samlSpAuthRequestRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.saml.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 }

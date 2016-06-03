@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -202,6 +202,16 @@ public class SamlSpIdpConnectionWrapper implements SamlSpIdpConnection,
 		}
 	}
 
+	@Override
+	public SamlSpIdpConnection toEscapedModel() {
+		return new SamlSpIdpConnectionWrapper(_samlSpIdpConnection.toEscapedModel());
+	}
+
+	@Override
+	public SamlSpIdpConnection toUnescapedModel() {
+		return new SamlSpIdpConnectionWrapper(_samlSpIdpConnection.toUnescapedModel());
+	}
+
 	/**
 	* Returns the assertion signature required of this saml sp idp connection.
 	*
@@ -323,23 +333,12 @@ public class SamlSpIdpConnectionWrapper implements SamlSpIdpConnection,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.saml.model.SamlSpIdpConnection> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<SamlSpIdpConnection> toCacheModel() {
 		return _samlSpIdpConnection.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.saml.model.SamlSpIdpConnection toEscapedModel() {
-		return new SamlSpIdpConnectionWrapper(_samlSpIdpConnection.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.saml.model.SamlSpIdpConnection toUnescapedModel() {
-		return new SamlSpIdpConnectionWrapper(_samlSpIdpConnection.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.saml.model.SamlSpIdpConnection samlSpIdpConnection) {
+	public int compareTo(SamlSpIdpConnection samlSpIdpConnection) {
 		return _samlSpIdpConnection.compareTo(samlSpIdpConnection);
 	}
 
@@ -787,7 +786,7 @@ public class SamlSpIdpConnectionWrapper implements SamlSpIdpConnection,
 
 		SamlSpIdpConnectionWrapper samlSpIdpConnectionWrapper = (SamlSpIdpConnectionWrapper)obj;
 
-		if (Validator.equals(_samlSpIdpConnection,
+		if (Objects.equals(_samlSpIdpConnection,
 					samlSpIdpConnectionWrapper._samlSpIdpConnection)) {
 			return true;
 		}

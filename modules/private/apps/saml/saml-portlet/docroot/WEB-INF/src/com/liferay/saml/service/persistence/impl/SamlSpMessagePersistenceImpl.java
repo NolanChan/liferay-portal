@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.saml.exception.NoSuchSpMessageException;
 import com.liferay.saml.model.SamlSpMessage;
@@ -55,6 +53,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -709,9 +708,9 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 		if (result instanceof SamlSpMessage) {
 			SamlSpMessage samlSpMessage = (SamlSpMessage)result;
 
-			if (!Validator.equals(samlIdpEntityId,
+			if (!Objects.equals(samlIdpEntityId,
 						samlSpMessage.getSamlIdpEntityId()) ||
-					!Validator.equals(samlIdpResponseKey,
+					!Objects.equals(samlIdpResponseKey,
 						samlSpMessage.getSamlIdpResponseKey())) {
 				result = null;
 			}
@@ -1283,12 +1282,14 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 	 */
 	@Override
 	public SamlSpMessage fetchByPrimaryKey(Serializable primaryKey) {
-		SamlSpMessage samlSpMessage = (SamlSpMessage)entityCache.getResult(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
 				SamlSpMessageImpl.class, primaryKey);
 
-		if (samlSpMessage == _nullSamlSpMessage) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		SamlSpMessage samlSpMessage = (SamlSpMessage)serializable;
 
 		if (samlSpMessage == null) {
 			Session session = null;
@@ -1304,7 +1305,7 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 				}
 				else {
 					entityCache.putResult(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
-						SamlSpMessageImpl.class, primaryKey, _nullSamlSpMessage);
+						SamlSpMessageImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1358,18 +1359,20 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			SamlSpMessage samlSpMessage = (SamlSpMessage)entityCache.getResult(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
 					SamlSpMessageImpl.class, primaryKey);
 
-			if (samlSpMessage == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, samlSpMessage);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (SamlSpMessage)serializable);
+				}
 			}
 		}
 
@@ -1411,7 +1414,7 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(SamlSpMessageModelImpl.ENTITY_CACHE_ENABLED,
-					SamlSpMessageImpl.class, primaryKey, _nullSamlSpMessage);
+					SamlSpMessageImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1646,22 +1649,4 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SamlSpMessage exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SamlSpMessage exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(SamlSpMessagePersistenceImpl.class);
-	private static final SamlSpMessage _nullSamlSpMessage = new SamlSpMessageImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<SamlSpMessage> toCacheModel() {
-				return _nullSamlSpMessageCacheModel;
-			}
-		};
-
-	private static final CacheModel<SamlSpMessage> _nullSamlSpMessageCacheModel = new CacheModel<SamlSpMessage>() {
-			@Override
-			public SamlSpMessage toEntityModel() {
-				return _nullSamlSpMessage;
-			}
-		};
 }

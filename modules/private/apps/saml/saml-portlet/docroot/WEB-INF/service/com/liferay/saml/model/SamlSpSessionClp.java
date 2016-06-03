@@ -844,7 +844,7 @@ public class SamlSpSessionClp extends BaseModelImpl<SamlSpSession>
 	private String _sessionIndex;
 	private boolean _terminated;
 	private BaseModel<?> _samlSpSessionRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.saml.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 }

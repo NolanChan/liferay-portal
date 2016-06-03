@@ -493,7 +493,7 @@ public class SamlSpMessageClp extends BaseModelImpl<SamlSpMessage>
 	private String _samlIdpResponseKey;
 	private Date _expirationDate;
 	private BaseModel<?> _samlSpMessageRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.saml.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 }

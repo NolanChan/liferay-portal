@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -172,6 +172,16 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 		}
 	}
 
+	@Override
+	public SamlSpSession toEscapedModel() {
+		return new SamlSpSessionWrapper(_samlSpSession.toEscapedModel());
+	}
+
+	@Override
+	public SamlSpSession toUnescapedModel() {
+		return new SamlSpSessionWrapper(_samlSpSession.toUnescapedModel());
+	}
+
 	/**
 	* Returns the terminated of this saml sp session.
 	*
@@ -213,22 +223,12 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.saml.model.SamlSpSession> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<SamlSpSession> toCacheModel() {
 		return _samlSpSession.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.saml.model.SamlSpSession toEscapedModel() {
-		return new SamlSpSessionWrapper(_samlSpSession.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.saml.model.SamlSpSession toUnescapedModel() {
-		return new SamlSpSessionWrapper(_samlSpSession.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.saml.model.SamlSpSession samlSpSession) {
+	public int compareTo(SamlSpSession samlSpSession) {
 		return _samlSpSession.compareTo(samlSpSession);
 	}
 
@@ -635,7 +635,7 @@ public class SamlSpSessionWrapper implements SamlSpSession,
 
 		SamlSpSessionWrapper samlSpSessionWrapper = (SamlSpSessionWrapper)obj;
 
-		if (Validator.equals(_samlSpSession, samlSpSessionWrapper._samlSpSession)) {
+		if (Objects.equals(_samlSpSession, samlSpSessionWrapper._samlSpSession)) {
 			return true;
 		}
 

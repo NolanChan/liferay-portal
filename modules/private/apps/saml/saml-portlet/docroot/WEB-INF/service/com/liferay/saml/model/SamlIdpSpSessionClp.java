@@ -648,7 +648,7 @@ public class SamlIdpSpSessionClp extends BaseModelImpl<SamlIdpSpSession>
 	private String _nameIdFormat;
 	private String _nameIdValue;
 	private BaseModel<?> _samlIdpSpSessionRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.saml.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 }

@@ -979,7 +979,7 @@ public class SamlIdpSpConnectionClp extends BaseModelImpl<SamlIdpSpConnection>
 	private String _nameIdAttribute;
 	private String _nameIdFormat;
 	private BaseModel<?> _samlIdpSpConnectionRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.saml.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 }

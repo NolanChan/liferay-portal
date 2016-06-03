@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.saml.exception.NoSuchIdpSpConnectionException;
 import com.liferay.saml.model.SamlIdpSpConnection;
@@ -55,6 +53,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -689,7 +688,7 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 			SamlIdpSpConnection samlIdpSpConnection = (SamlIdpSpConnection)result;
 
 			if ((companyId != samlIdpSpConnection.getCompanyId()) ||
-					!Validator.equals(samlSpEntityId,
+					!Objects.equals(samlSpEntityId,
 						samlIdpSpConnection.getSamlSpEntityId())) {
 				result = null;
 			}
@@ -1287,12 +1286,14 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	 */
 	@Override
 	public SamlIdpSpConnection fetchByPrimaryKey(Serializable primaryKey) {
-		SamlIdpSpConnection samlIdpSpConnection = (SamlIdpSpConnection)entityCache.getResult(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
 				SamlIdpSpConnectionImpl.class, primaryKey);
 
-		if (samlIdpSpConnection == _nullSamlIdpSpConnection) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		SamlIdpSpConnection samlIdpSpConnection = (SamlIdpSpConnection)serializable;
 
 		if (samlIdpSpConnection == null) {
 			Session session = null;
@@ -1308,8 +1309,7 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 				}
 				else {
 					entityCache.putResult(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
-						SamlIdpSpConnectionImpl.class, primaryKey,
-						_nullSamlIdpSpConnection);
+						SamlIdpSpConnectionImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1363,18 +1363,20 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			SamlIdpSpConnection samlIdpSpConnection = (SamlIdpSpConnection)entityCache.getResult(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
 					SamlIdpSpConnectionImpl.class, primaryKey);
 
-			if (samlIdpSpConnection == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, samlIdpSpConnection);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (SamlIdpSpConnection)serializable);
+				}
 			}
 		}
 
@@ -1417,8 +1419,7 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
-					SamlIdpSpConnectionImpl.class, primaryKey,
-					_nullSamlIdpSpConnection);
+					SamlIdpSpConnectionImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1653,23 +1654,4 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SamlIdpSpConnection exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SamlIdpSpConnection exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(SamlIdpSpConnectionPersistenceImpl.class);
-	private static final SamlIdpSpConnection _nullSamlIdpSpConnection = new SamlIdpSpConnectionImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<SamlIdpSpConnection> toCacheModel() {
-				return _nullSamlIdpSpConnectionCacheModel;
-			}
-		};
-
-	private static final CacheModel<SamlIdpSpConnection> _nullSamlIdpSpConnectionCacheModel =
-		new CacheModel<SamlIdpSpConnection>() {
-			@Override
-			public SamlIdpSpConnection toEntityModel() {
-				return _nullSamlIdpSpConnection;
-			}
-		};
 }

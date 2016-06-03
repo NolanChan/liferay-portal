@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.saml.exception.NoSuchIdpSsoSessionException;
 import com.liferay.saml.model.SamlIdpSsoSession;
@@ -57,6 +55,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -703,7 +702,7 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 		if (result instanceof SamlIdpSsoSession) {
 			SamlIdpSsoSession samlIdpSsoSession = (SamlIdpSsoSession)result;
 
-			if (!Validator.equals(samlIdpSsoSessionKey,
+			if (!Objects.equals(samlIdpSsoSessionKey,
 						samlIdpSsoSession.getSamlIdpSsoSessionKey())) {
 				result = null;
 			}
@@ -1255,12 +1254,14 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 	 */
 	@Override
 	public SamlIdpSsoSession fetchByPrimaryKey(Serializable primaryKey) {
-		SamlIdpSsoSession samlIdpSsoSession = (SamlIdpSsoSession)entityCache.getResult(SamlIdpSsoSessionModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(SamlIdpSsoSessionModelImpl.ENTITY_CACHE_ENABLED,
 				SamlIdpSsoSessionImpl.class, primaryKey);
 
-		if (samlIdpSsoSession == _nullSamlIdpSsoSession) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		SamlIdpSsoSession samlIdpSsoSession = (SamlIdpSsoSession)serializable;
 
 		if (samlIdpSsoSession == null) {
 			Session session = null;
@@ -1276,8 +1277,7 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 				}
 				else {
 					entityCache.putResult(SamlIdpSsoSessionModelImpl.ENTITY_CACHE_ENABLED,
-						SamlIdpSsoSessionImpl.class, primaryKey,
-						_nullSamlIdpSsoSession);
+						SamlIdpSsoSessionImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1331,18 +1331,20 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			SamlIdpSsoSession samlIdpSsoSession = (SamlIdpSsoSession)entityCache.getResult(SamlIdpSsoSessionModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(SamlIdpSsoSessionModelImpl.ENTITY_CACHE_ENABLED,
 					SamlIdpSsoSessionImpl.class, primaryKey);
 
-			if (samlIdpSsoSession == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, samlIdpSsoSession);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (SamlIdpSsoSession)serializable);
+				}
 			}
 		}
 
@@ -1384,8 +1386,7 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(SamlIdpSsoSessionModelImpl.ENTITY_CACHE_ENABLED,
-					SamlIdpSsoSessionImpl.class, primaryKey,
-					_nullSamlIdpSsoSession);
+					SamlIdpSsoSessionImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1620,23 +1621,4 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SamlIdpSsoSession exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SamlIdpSsoSession exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(SamlIdpSsoSessionPersistenceImpl.class);
-	private static final SamlIdpSsoSession _nullSamlIdpSsoSession = new SamlIdpSsoSessionImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<SamlIdpSsoSession> toCacheModel() {
-				return _nullSamlIdpSsoSessionCacheModel;
-			}
-		};
-
-	private static final CacheModel<SamlIdpSsoSession> _nullSamlIdpSsoSessionCacheModel =
-		new CacheModel<SamlIdpSsoSession>() {
-			@Override
-			public SamlIdpSsoSession toEntityModel() {
-				return _nullSamlIdpSsoSession;
-			}
-		};
 }

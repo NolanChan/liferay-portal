@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.saml.exception.NoSuchSpSessionException;
 import com.liferay.saml.model.SamlSpSession;
@@ -56,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -169,7 +168,7 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 		if (result instanceof SamlSpSession) {
 			SamlSpSession samlSpSession = (SamlSpSession)result;
 
-			if (!Validator.equals(samlSpSessionKey,
+			if (!Objects.equals(samlSpSessionKey,
 						samlSpSession.getSamlSpSessionKey())) {
 				result = null;
 			}
@@ -409,7 +408,7 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 		if (result instanceof SamlSpSession) {
 			SamlSpSession samlSpSession = (SamlSpSession)result;
 
-			if (!Validator.equals(jSessionId, samlSpSession.getJSessionId())) {
+			if (!Objects.equals(jSessionId, samlSpSession.getJSessionId())) {
 				result = null;
 			}
 		}
@@ -689,7 +688,7 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SamlSpSession samlSpSession : list) {
-					if (!Validator.equals(nameIdValue,
+					if (!Objects.equals(nameIdValue,
 								samlSpSession.getNameIdValue())) {
 						list = null;
 
@@ -1204,7 +1203,7 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 		if (result instanceof SamlSpSession) {
 			SamlSpSession samlSpSession = (SamlSpSession)result;
 
-			if (!Validator.equals(sessionIndex, samlSpSession.getSessionIndex())) {
+			if (!Objects.equals(sessionIndex, samlSpSession.getSessionIndex())) {
 				result = null;
 			}
 		}
@@ -1842,12 +1841,14 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 	 */
 	@Override
 	public SamlSpSession fetchByPrimaryKey(Serializable primaryKey) {
-		SamlSpSession samlSpSession = (SamlSpSession)entityCache.getResult(SamlSpSessionModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(SamlSpSessionModelImpl.ENTITY_CACHE_ENABLED,
 				SamlSpSessionImpl.class, primaryKey);
 
-		if (samlSpSession == _nullSamlSpSession) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		SamlSpSession samlSpSession = (SamlSpSession)serializable;
 
 		if (samlSpSession == null) {
 			Session session = null;
@@ -1863,7 +1864,7 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 				}
 				else {
 					entityCache.putResult(SamlSpSessionModelImpl.ENTITY_CACHE_ENABLED,
-						SamlSpSessionImpl.class, primaryKey, _nullSamlSpSession);
+						SamlSpSessionImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1917,18 +1918,20 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			SamlSpSession samlSpSession = (SamlSpSession)entityCache.getResult(SamlSpSessionModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(SamlSpSessionModelImpl.ENTITY_CACHE_ENABLED,
 					SamlSpSessionImpl.class, primaryKey);
 
-			if (samlSpSession == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, samlSpSession);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (SamlSpSession)serializable);
+				}
 			}
 		}
 
@@ -1970,7 +1973,7 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(SamlSpSessionModelImpl.ENTITY_CACHE_ENABLED,
-					SamlSpSessionImpl.class, primaryKey, _nullSamlSpSession);
+					SamlSpSessionImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2213,22 +2216,4 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"terminated"
 			});
-	private static final SamlSpSession _nullSamlSpSession = new SamlSpSessionImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<SamlSpSession> toCacheModel() {
-				return _nullSamlSpSessionCacheModel;
-			}
-		};
-
-	private static final CacheModel<SamlSpSession> _nullSamlSpSessionCacheModel = new CacheModel<SamlSpSession>() {
-			@Override
-			public SamlSpSession toEntityModel() {
-				return _nullSamlSpSession;
-			}
-		};
 }

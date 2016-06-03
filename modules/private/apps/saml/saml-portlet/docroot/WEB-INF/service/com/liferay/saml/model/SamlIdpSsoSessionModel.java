@@ -228,20 +228,19 @@ public interface SamlIdpSsoSessionModel extends AuditedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.saml.model.SamlIdpSsoSession samlIdpSsoSession);
+	public int compareTo(SamlIdpSsoSession samlIdpSsoSession);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.saml.model.SamlIdpSsoSession> toCacheModel();
+	public CacheModel<SamlIdpSsoSession> toCacheModel();
 
 	@Override
-	public com.liferay.saml.model.SamlIdpSsoSession toEscapedModel();
+	public SamlIdpSsoSession toEscapedModel();
 
 	@Override
-	public com.liferay.saml.model.SamlIdpSsoSession toUnescapedModel();
+	public SamlIdpSsoSession toUnescapedModel();
 
 	@Override
 	public String toString();

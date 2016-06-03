@@ -1028,7 +1028,7 @@ public class SamlSpIdpConnectionClp extends BaseModelImpl<SamlSpIdpConnection>
 	private boolean _signAuthnRequest;
 	private String _userAttributeMappings;
 	private BaseModel<?> _samlSpIdpConnectionRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.saml.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 }

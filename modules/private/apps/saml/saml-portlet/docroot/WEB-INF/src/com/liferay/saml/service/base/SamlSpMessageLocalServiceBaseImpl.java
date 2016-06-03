@@ -795,7 +795,7 @@ public abstract class SamlSpMessageLocalServiceBaseImpl
 	protected com.liferay.saml.service.SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService;
 	@BeanReference(type = SamlSpIdpConnectionPersistence.class)
 	protected SamlSpIdpConnectionPersistence samlSpIdpConnectionPersistence;
-	@BeanReference(type = com.liferay.saml.service.SamlSpMessageLocalService.class)
+	@BeanReference(type = SamlSpMessageLocalService.class)
 	protected SamlSpMessageLocalService samlSpMessageLocalService;
 	@BeanReference(type = SamlSpMessagePersistence.class)
 	protected SamlSpMessagePersistence samlSpMessagePersistence;

@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -136,6 +136,16 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 	}
 
 	@Override
+	public SamlIdpSpSession toEscapedModel() {
+		return new SamlIdpSpSessionWrapper(_samlIdpSpSession.toEscapedModel());
+	}
+
+	@Override
+	public SamlIdpSpSession toUnescapedModel() {
+		return new SamlIdpSpSessionWrapper(_samlIdpSpSession.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _samlIdpSpSession.isCachedModel();
 	}
@@ -156,23 +166,12 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.saml.model.SamlIdpSpSession> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<SamlIdpSpSession> toCacheModel() {
 		return _samlIdpSpSession.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.saml.model.SamlIdpSpSession toEscapedModel() {
-		return new SamlIdpSpSessionWrapper(_samlIdpSpSession.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.saml.model.SamlIdpSpSession toUnescapedModel() {
-		return new SamlIdpSpSessionWrapper(_samlIdpSpSession.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.saml.model.SamlIdpSpSession samlIdpSpSession) {
+	public int compareTo(SamlIdpSpSession samlIdpSpSession) {
 		return _samlIdpSpSession.compareTo(samlIdpSpSession);
 	}
 
@@ -489,7 +488,7 @@ public class SamlIdpSpSessionWrapper implements SamlIdpSpSession,
 
 		SamlIdpSpSessionWrapper samlIdpSpSessionWrapper = (SamlIdpSpSessionWrapper)obj;
 
-		if (Validator.equals(_samlIdpSpSession,
+		if (Objects.equals(_samlIdpSpSession,
 					samlIdpSpSessionWrapper._samlIdpSpSession)) {
 			return true;
 		}

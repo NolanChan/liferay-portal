@@ -554,7 +554,7 @@ public class SamlIdpSsoSessionClp extends BaseModelImpl<SamlIdpSsoSession>
 	private Date _modifiedDate;
 	private String _samlIdpSsoSessionKey;
 	private BaseModel<?> _samlIdpSsoSessionRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.saml.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 }

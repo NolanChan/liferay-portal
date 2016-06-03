@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -116,6 +116,16 @@ public class SamlIdpSsoSessionWrapper implements SamlIdpSsoSession,
 	}
 
 	@Override
+	public SamlIdpSsoSession toEscapedModel() {
+		return new SamlIdpSsoSessionWrapper(_samlIdpSsoSession.toEscapedModel());
+	}
+
+	@Override
+	public SamlIdpSsoSession toUnescapedModel() {
+		return new SamlIdpSsoSessionWrapper(_samlIdpSsoSession.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _samlIdpSsoSession.isCachedModel();
 	}
@@ -141,23 +151,12 @@ public class SamlIdpSsoSessionWrapper implements SamlIdpSsoSession,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.saml.model.SamlIdpSsoSession> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<SamlIdpSsoSession> toCacheModel() {
 		return _samlIdpSsoSession.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.saml.model.SamlIdpSsoSession toEscapedModel() {
-		return new SamlIdpSsoSessionWrapper(_samlIdpSsoSession.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.saml.model.SamlIdpSsoSession toUnescapedModel() {
-		return new SamlIdpSsoSessionWrapper(_samlIdpSsoSession.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.saml.model.SamlIdpSsoSession samlIdpSsoSession) {
+	public int compareTo(SamlIdpSsoSession samlIdpSsoSession) {
 		return _samlIdpSsoSession.compareTo(samlIdpSsoSession);
 	}
 
@@ -414,7 +413,7 @@ public class SamlIdpSsoSessionWrapper implements SamlIdpSsoSession,
 
 		SamlIdpSsoSessionWrapper samlIdpSsoSessionWrapper = (SamlIdpSsoSessionWrapper)obj;
 
-		if (Validator.equals(_samlIdpSsoSession,
+		if (Objects.equals(_samlIdpSsoSession,
 					samlIdpSsoSessionWrapper._samlIdpSsoSession)) {
 			return true;
 		}

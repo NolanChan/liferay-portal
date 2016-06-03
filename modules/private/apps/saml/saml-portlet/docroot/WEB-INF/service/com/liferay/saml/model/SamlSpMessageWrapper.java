@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -108,6 +108,16 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	}
 
 	@Override
+	public SamlSpMessage toEscapedModel() {
+		return new SamlSpMessageWrapper(_samlSpMessage.toEscapedModel());
+	}
+
+	@Override
+	public SamlSpMessage toUnescapedModel() {
+		return new SamlSpMessageWrapper(_samlSpMessage.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _samlSpMessage.isCachedModel();
 	}
@@ -133,22 +143,12 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.saml.model.SamlSpMessage> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<SamlSpMessage> toCacheModel() {
 		return _samlSpMessage.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.saml.model.SamlSpMessage toEscapedModel() {
-		return new SamlSpMessageWrapper(_samlSpMessage.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.saml.model.SamlSpMessage toUnescapedModel() {
-		return new SamlSpMessageWrapper(_samlSpMessage.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.saml.model.SamlSpMessage samlSpMessage) {
+	public int compareTo(SamlSpMessage samlSpMessage) {
 		return _samlSpMessage.compareTo(samlSpMessage);
 	}
 
@@ -365,7 +365,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 
 		SamlSpMessageWrapper samlSpMessageWrapper = (SamlSpMessageWrapper)obj;
 
-		if (Validator.equals(_samlSpMessage, samlSpMessageWrapper._samlSpMessage)) {
+		if (Objects.equals(_samlSpMessage, samlSpMessageWrapper._samlSpMessage)) {
 			return true;
 		}
 
