@@ -75,8 +75,6 @@ public class LCSClusterEntryTokenAdvisor {
 
 		_lcsAlertAdvisor.add(LCSAlert.ERROR_ENVIRONMENT_MISMATCH);
 
-		_lcsAlertAdvisor.remove(LCSAlert.SUCCESS_VALID_TOKEN);
-
 		deleteLCSCLusterEntryTokenFile();
 
 		throw new InvalidLCSClusterEntryTokenException(
@@ -92,8 +90,6 @@ public class LCSClusterEntryTokenAdvisor {
 				lcsClusterEntryTokenId);
 
 		if (lcsClusterEntryToken != null) {
-			_lcsAlertAdvisor.add(LCSAlert.SUCCESS_VALID_TOKEN);
-
 			return;
 		}
 
@@ -126,8 +122,6 @@ public class LCSClusterEntryTokenAdvisor {
 
 			_lcsAlertAdvisor.add(LCSAlert.ERROR_ENVIRONMENT_MISMATCH);
 
-			_lcsAlertAdvisor.remove(LCSAlert.SUCCESS_VALID_TOKEN);
-
 			deleteLCSCLusterEntryTokenFile();
 
 			throw new InvalidLCSClusterEntryTokenException(
@@ -147,8 +141,6 @@ public class LCSClusterEntryTokenAdvisor {
 				cachedLCSClusterEntryTokenId)) {
 
 			_lcsAlertAdvisor.add(LCSAlert.ERROR_ENVIRONMENT_MISMATCH);
-
-			_lcsAlertAdvisor.remove(LCSAlert.SUCCESS_VALID_TOKEN);
 
 			deleteLCSCLusterEntryTokenFile();
 
