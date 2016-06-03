@@ -30,6 +30,8 @@ public class KaleoFormsWebKeys {
 
 	public static final String KALEO_PROCESS = "KALEO_PROCESS";
 
+	public static final String KALEO_PROCESS_LINK = "KALEO_PROCESS_LINK";
+
 	public static final String WORKFLOW_INSTANCE = "WORKFLOW_INSTANCE";
 
 	public static final String WORKFLOW_TASK = "WORKFLOW_TASK";
