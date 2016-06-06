@@ -98,7 +98,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 		</liferay-portlet:renderURL>
 
 		<aui:button-row>
-			<aui:button onClick='<%= "javascript:" + renderResponse.getNamespace() + "editStructure('" + addURL + "');" %>' primary="<%= true %>" value="add-field-set" />
+			<aui:button onClick='<%= "javascript:" + renderResponse.getNamespace() + "editStructure('" + LanguageUtil.format(request, "new-x", LanguageUtil.get(request, "field-set"), false) + "','" + addURL + "');" %>' primary="<%= true %>" value="add-field-set" />
 		</aui:button-row>
 	</c:if>
 
@@ -185,7 +185,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 	Liferay.provide(
 		window,
 		'<portlet:namespace />editStructure',
-		function(uri) {
+		function(title, uri) {
 			var A = AUI();
 
 			var WIN = A.config.win;
@@ -194,7 +194,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 				{
 					id: A.guid(),
 					refreshWindow: WIN,
-					title: '<liferay-ui:message key="field-set" />',
+					title: title,
 					uri: uri
 				}
 			);

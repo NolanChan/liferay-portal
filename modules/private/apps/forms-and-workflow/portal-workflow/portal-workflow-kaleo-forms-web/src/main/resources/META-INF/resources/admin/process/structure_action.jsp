@@ -38,7 +38,7 @@ String backURL = (String)row.getParameter("backURL");
 
 	<liferay-ui:icon
 		message="edit"
-		onClick='<%= "javascript:" + renderResponse.getNamespace() + "editStructure('" + editURL + "');" %>'
+		onClick='<%= "javascript:" + renderResponse.getNamespace() + "editStructure('" + LanguageUtil.format(request, "edit-x", LanguageUtil.get(request, "field-set"), false) + "','" + editURL + "');" %>'
 		url="javascript:;"
 	/>
 
