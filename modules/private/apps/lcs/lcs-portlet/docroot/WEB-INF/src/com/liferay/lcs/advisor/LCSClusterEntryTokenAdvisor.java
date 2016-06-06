@@ -30,6 +30,7 @@ import com.liferay.lcs.util.LCSConstants;
 import com.liferay.lcs.util.LCSUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -49,6 +50,8 @@ import java.security.KeyStore;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import javax.crypto.spec.SecretKeySpec;
 
 import javax.portlet.PortletPreferences;
 
@@ -313,7 +316,15 @@ public class LCSClusterEntryTokenAdvisor {
 
 		Key key = keyStore.getCertificate(keyName).getPublicKey();
 
-		return Encryptor.decryptUnencodedAsString(key, bytes);
+		byte[] symmetricKeyEncrypted = ArrayUtil.subset(bytes, 0, 256);
+
+		byte[] symmetricKeyBytes = Encryptor.decryptUnencodedAsBytes(
+			key, symmetricKeyEncrypted);
+
+		Key symmetricKey = new SecretKeySpec(symmetricKeyBytes, "AES");
+
+		return Encryptor.decryptUnencodedAsString(
+			symmetricKey, ArrayUtil.subset(bytes, 256, bytes.length));
 	}
 
 	protected String extractAccessSecret(
