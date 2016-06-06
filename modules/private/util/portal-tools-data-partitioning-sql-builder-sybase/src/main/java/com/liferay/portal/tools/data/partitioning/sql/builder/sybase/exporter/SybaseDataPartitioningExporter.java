@@ -62,7 +62,7 @@ public class SybaseDataPartitioningExporter
 
 	@Override
 	public String getTableNameFieldName() {
-		return "table_name";
+		return "name";
 	}
 
 	@Override
