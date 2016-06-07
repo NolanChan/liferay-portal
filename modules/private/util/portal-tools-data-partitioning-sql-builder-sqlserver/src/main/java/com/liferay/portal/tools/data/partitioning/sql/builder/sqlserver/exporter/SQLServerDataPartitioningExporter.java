@@ -69,7 +69,10 @@ public class SQLServerDataPartitioningExporter
 	public String serializeTableField(Object field) {
 		StringBuilder sb = new StringBuilder();
 
-		if (field instanceof Number) {
+		if (field == null) {
+			sb.append("null");
+		}
+		else if (field instanceof Number) {
 			sb.append(field);
 		}
 		else if (field instanceof Date) {
