@@ -566,6 +566,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 		return _shareableAccessToken;
 	}
 
+	@JSON
 	@Override
 	public boolean isShareableAccessToken() {
 		return _shareableAccessToken;

@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -4472,12 +4471,14 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 	 */
 	@Override
 	public OAuthApplication fetchByPrimaryKey(Serializable primaryKey) {
-		OAuthApplication oAuthApplication = (OAuthApplication)entityCache.getResult(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
 				OAuthApplicationImpl.class, primaryKey);
 
-		if (oAuthApplication == _nullOAuthApplication) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		OAuthApplication oAuthApplication = (OAuthApplication)serializable;
 
 		if (oAuthApplication == null) {
 			Session session = null;
@@ -4493,8 +4494,7 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 				}
 				else {
 					entityCache.putResult(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-						OAuthApplicationImpl.class, primaryKey,
-						_nullOAuthApplication);
+						OAuthApplicationImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -4548,18 +4548,20 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			OAuthApplication oAuthApplication = (OAuthApplication)entityCache.getResult(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
 					OAuthApplicationImpl.class, primaryKey);
 
-			if (oAuthApplication == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, oAuthApplication);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (OAuthApplication)serializable);
+				}
 			}
 		}
 
@@ -4601,8 +4603,7 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(OAuthApplicationModelImpl.ENTITY_CACHE_ENABLED,
-					OAuthApplicationImpl.class, primaryKey,
-					_nullOAuthApplication);
+					OAuthApplicationImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -4847,23 +4848,4 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No OAuthApplication exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No OAuthApplication exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(OAuthApplicationPersistenceImpl.class);
-	private static final OAuthApplication _nullOAuthApplication = new OAuthApplicationImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<OAuthApplication> toCacheModel() {
-				return _nullOAuthApplicationCacheModel;
-			}
-		};
-
-	private static final CacheModel<OAuthApplication> _nullOAuthApplicationCacheModel =
-		new CacheModel<OAuthApplication>() {
-			@Override
-			public OAuthApplication toEntityModel() {
-				return _nullOAuthApplication;
-			}
-		};
 }

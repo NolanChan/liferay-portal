@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -3385,12 +3384,14 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 */
 	@Override
 	public SPIDefinition fetchByPrimaryKey(Serializable primaryKey) {
-		SPIDefinition spiDefinition = (SPIDefinition)entityCache.getResult(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 				SPIDefinitionImpl.class, primaryKey);
 
-		if (spiDefinition == _nullSPIDefinition) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		SPIDefinition spiDefinition = (SPIDefinition)serializable;
 
 		if (spiDefinition == null) {
 			Session session = null;
@@ -3406,7 +3407,7 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 				}
 				else {
 					entityCache.putResult(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-						SPIDefinitionImpl.class, primaryKey, _nullSPIDefinition);
+						SPIDefinitionImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3460,18 +3461,20 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			SPIDefinition spiDefinition = (SPIDefinition)entityCache.getResult(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 					SPIDefinitionImpl.class, primaryKey);
 
-			if (spiDefinition == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, spiDefinition);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (SPIDefinition)serializable);
+				}
 			}
 		}
 
@@ -3513,7 +3516,7 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-					SPIDefinitionImpl.class, primaryKey, _nullSPIDefinition);
+					SPIDefinitionImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3758,22 +3761,4 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SPIDefinition exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SPIDefinition exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(SPIDefinitionPersistenceImpl.class);
-	private static final SPIDefinition _nullSPIDefinition = new SPIDefinitionImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<SPIDefinition> toCacheModel() {
-				return _nullSPIDefinitionCacheModel;
-			}
-		};
-
-	private static final CacheModel<SPIDefinition> _nullSPIDefinitionCacheModel = new CacheModel<SPIDefinition>() {
-			@Override
-			public SPIDefinition toEntityModel() {
-				return _nullSPIDefinition;
-			}
-		};
 }

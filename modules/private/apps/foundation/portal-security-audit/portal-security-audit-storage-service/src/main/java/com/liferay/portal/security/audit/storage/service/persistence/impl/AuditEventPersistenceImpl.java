@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -907,12 +906,14 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 	 */
 	@Override
 	public AuditEvent fetchByPrimaryKey(Serializable primaryKey) {
-		AuditEvent auditEvent = (AuditEvent)entityCache.getResult(AuditEventModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(AuditEventModelImpl.ENTITY_CACHE_ENABLED,
 				AuditEventImpl.class, primaryKey);
 
-		if (auditEvent == _nullAuditEvent) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		AuditEvent auditEvent = (AuditEvent)serializable;
 
 		if (auditEvent == null) {
 			Session session = null;
@@ -928,7 +929,7 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 				}
 				else {
 					entityCache.putResult(AuditEventModelImpl.ENTITY_CACHE_ENABLED,
-						AuditEventImpl.class, primaryKey, _nullAuditEvent);
+						AuditEventImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -982,18 +983,20 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			AuditEvent auditEvent = (AuditEvent)entityCache.getResult(AuditEventModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(AuditEventModelImpl.ENTITY_CACHE_ENABLED,
 					AuditEventImpl.class, primaryKey);
 
-			if (auditEvent == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, auditEvent);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (AuditEvent)serializable);
+				}
 			}
 		}
 
@@ -1035,7 +1038,7 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(AuditEventModelImpl.ENTITY_CACHE_ENABLED,
-					AuditEventImpl.class, primaryKey, _nullAuditEvent);
+					AuditEventImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1272,22 +1275,4 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AuditEvent exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AuditEvent exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(AuditEventPersistenceImpl.class);
-	private static final AuditEvent _nullAuditEvent = new AuditEventImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<AuditEvent> toCacheModel() {
-				return _nullAuditEventCacheModel;
-			}
-		};
-
-	private static final CacheModel<AuditEvent> _nullAuditEventCacheModel = new CacheModel<AuditEvent>() {
-			@Override
-			public AuditEvent toEntityModel() {
-				return _nullAuditEvent;
-			}
-		};
 }

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -1992,12 +1991,14 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	 */
 	@Override
 	public KaleoDraftDefinition fetchByPrimaryKey(Serializable primaryKey) {
-		KaleoDraftDefinition kaleoDraftDefinition = (KaleoDraftDefinition)entityCache.getResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 				KaleoDraftDefinitionImpl.class, primaryKey);
 
-		if (kaleoDraftDefinition == _nullKaleoDraftDefinition) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		KaleoDraftDefinition kaleoDraftDefinition = (KaleoDraftDefinition)serializable;
 
 		if (kaleoDraftDefinition == null) {
 			Session session = null;
@@ -2013,8 +2014,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 				}
 				else {
 					entityCache.putResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-						KaleoDraftDefinitionImpl.class, primaryKey,
-						_nullKaleoDraftDefinition);
+						KaleoDraftDefinitionImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2068,18 +2068,20 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			KaleoDraftDefinition kaleoDraftDefinition = (KaleoDraftDefinition)entityCache.getResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoDraftDefinitionImpl.class, primaryKey);
 
-			if (kaleoDraftDefinition == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, kaleoDraftDefinition);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (KaleoDraftDefinition)serializable);
+				}
 			}
 		}
 
@@ -2122,8 +2124,7 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(KaleoDraftDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoDraftDefinitionImpl.class, primaryKey,
-					_nullKaleoDraftDefinition);
+					KaleoDraftDefinitionImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2360,23 +2361,4 @@ public class KaleoDraftDefinitionPersistenceImpl extends BasePersistenceImpl<Kal
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No KaleoDraftDefinition exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No KaleoDraftDefinition exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(KaleoDraftDefinitionPersistenceImpl.class);
-	private static final KaleoDraftDefinition _nullKaleoDraftDefinition = new KaleoDraftDefinitionImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<KaleoDraftDefinition> toCacheModel() {
-				return _nullKaleoDraftDefinitionCacheModel;
-			}
-		};
-
-	private static final CacheModel<KaleoDraftDefinition> _nullKaleoDraftDefinitionCacheModel =
-		new CacheModel<KaleoDraftDefinition>() {
-			@Override
-			public KaleoDraftDefinition toEntityModel() {
-				return _nullKaleoDraftDefinition;
-			}
-		};
 }

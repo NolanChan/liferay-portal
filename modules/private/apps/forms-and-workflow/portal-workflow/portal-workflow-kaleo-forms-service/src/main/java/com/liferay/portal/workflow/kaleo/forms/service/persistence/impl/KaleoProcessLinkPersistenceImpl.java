@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -1240,12 +1239,14 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	 */
 	@Override
 	public KaleoProcessLink fetchByPrimaryKey(Serializable primaryKey) {
-		KaleoProcessLink kaleoProcessLink = (KaleoProcessLink)entityCache.getResult(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
 				KaleoProcessLinkImpl.class, primaryKey);
 
-		if (kaleoProcessLink == _nullKaleoProcessLink) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		KaleoProcessLink kaleoProcessLink = (KaleoProcessLink)serializable;
 
 		if (kaleoProcessLink == null) {
 			Session session = null;
@@ -1261,8 +1262,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 				}
 				else {
 					entityCache.putResult(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
-						KaleoProcessLinkImpl.class, primaryKey,
-						_nullKaleoProcessLink);
+						KaleoProcessLinkImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1316,18 +1316,20 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			KaleoProcessLink kaleoProcessLink = (KaleoProcessLink)entityCache.getResult(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoProcessLinkImpl.class, primaryKey);
 
-			if (kaleoProcessLink == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, kaleoProcessLink);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (KaleoProcessLink)serializable);
+				}
 			}
 		}
 
@@ -1369,8 +1371,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(KaleoProcessLinkModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoProcessLinkImpl.class, primaryKey,
-					_nullKaleoProcessLink);
+					KaleoProcessLinkImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1605,23 +1606,4 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No KaleoProcessLink exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No KaleoProcessLink exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(KaleoProcessLinkPersistenceImpl.class);
-	private static final KaleoProcessLink _nullKaleoProcessLink = new KaleoProcessLinkImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<KaleoProcessLink> toCacheModel() {
-				return _nullKaleoProcessLinkCacheModel;
-			}
-		};
-
-	private static final CacheModel<KaleoProcessLink> _nullKaleoProcessLinkCacheModel =
-		new CacheModel<KaleoProcessLink>() {
-			@Override
-			public KaleoProcessLink toEntityModel() {
-				return _nullKaleoProcessLink;
-			}
-		};
 }
