@@ -17,6 +17,7 @@ package com.liferay.portal.tools.data.partitioning.sql.builder.sqlserver.exporte
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataPartitioningExporter;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author Manuel de la Peña
@@ -75,10 +76,11 @@ public class SQLServerDataPartitioningExporter
 		else if (field instanceof Number) {
 			sb.append(field);
 		}
-		else if (field instanceof Date) {
+		else if ((field instanceof Date) || (field instanceof Timestamp)) {
+			sb.append("CONVERT(");
 			sb.append("'");
 			sb.append(formatDateTime(field));
-			sb.append("'");
+			sb.append("' AS datetime)");
 		}
 		else if (field instanceof String) {
 			String value = (String)field;
