@@ -61,7 +61,7 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 
 	@Override
 	public String getTableNameFieldName() {
-		return "table_name";
+		return "tabname";
 	}
 
 }
