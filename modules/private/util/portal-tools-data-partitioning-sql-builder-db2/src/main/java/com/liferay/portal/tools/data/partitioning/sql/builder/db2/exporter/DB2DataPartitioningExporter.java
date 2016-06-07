@@ -30,7 +30,7 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 		sb.append(
 			" from syscat.columns c1, syscat.tables t1 where t1.tabschema = '");
 		sb.append(schema);
-		sb.append("' and t.tabschema = c1.tabschema and c1.");
+		sb.append("' and t1.tabschema = c1.tabschema and c1.");
 		sb.append(getTableNameFieldName());
 		sb.append(" not in (");
 		sb.append(getPartitionedTableNamesSQL(schema));
