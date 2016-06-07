@@ -256,11 +256,6 @@ public class KaleoProcessAssetRenderer
 		return super.include(request, response, template);
 	}
 
-	@Override
-	public boolean isPreviewInContext() {
-		return true;
-	}
-
 	protected KaleoProcessLink fetchKaleoProcessLink(HttpServletRequest request)
 		throws Exception {
 
