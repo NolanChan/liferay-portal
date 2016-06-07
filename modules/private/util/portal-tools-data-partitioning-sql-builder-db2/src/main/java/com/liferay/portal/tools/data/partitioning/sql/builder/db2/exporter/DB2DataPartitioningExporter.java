@@ -29,11 +29,11 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 		sb.append(getTableNameFieldName());
 		sb.append(
 			" from syscat.columns c1, syscat.tables t1 where t1.tabschema = '");
-		sb.append(schema);
+		sb.append(schema.toUpperCase());
 		sb.append("' and t1.tabschema = c1.tabschema and c1.");
 		sb.append(getTableNameFieldName());
 		sb.append(" not in (");
-		sb.append(getPartitionedTableNamesSQL(schema));
+		sb.append(getPartitionedTableNamesSQL(schema.toUpperCase()));
 		sb.append(") group by c1.");
 		sb.append(getTableNameFieldName());
 		sb.append(" order by c1.");
@@ -50,7 +50,7 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 		sb.append(getTableNameFieldName());
 		sb.append(" from syscat.columns c2, syscat.tables t2 where ");
 		sb.append("t2.tabschema = c2.tabschema and t2.tabschema = '");
-		sb.append(schema);
+		sb.append(schema.toUpperCase());
 		sb.append("' and c2.colname = 'COMPANYID' group by c2.");
 		sb.append(getTableNameFieldName());
 		sb.append(" order by c2.");

@@ -29,7 +29,8 @@ Here are the tool's arguments:
 * The properties file with your database configuration, following the same
   structure as in the sample files. **(Required)**
     
-* The name of the schema you want to export. **(Required)**
+* The name of the schema you want to export. **(Required)**. For DB2 databases,
+  the schema name is the JDBC username.
 
 * The IDs of the companies/shards you want to export. A company's ID is in the
   `companyId` field. **(Required)**
