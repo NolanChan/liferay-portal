@@ -17,8 +17,6 @@
 <%@ include file="/asset/init.jsp" %>
 
 <%
-KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS);
-
 KaleoProcessLink kaleoProcessLink = (KaleoProcessLink)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS_LINK);
 
 DDLRecord ddlRecord = (DDLRecord)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
