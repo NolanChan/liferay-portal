@@ -16,9 +16,9 @@ package com.liferay.oauth.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableLocalService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for OAuthApplication. This utility wraps
@@ -204,12 +204,6 @@ public class OAuthApplicationLocalServiceUtil {
 		return getService().searchCount(companyId, keywords, params);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -332,28 +326,10 @@ public class OAuthApplicationLocalServiceUtil {
 		getService().deleteLogo(oAuthApplicationId);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static OAuthApplicationLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					OAuthApplicationLocalService.class.getName());
-
-			if (invokableLocalService instanceof OAuthApplicationLocalService) {
-				_service = (OAuthApplicationLocalService)invokableLocalService;
-			}
-			else {
-				_service = new OAuthApplicationLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(OAuthApplicationLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static OAuthApplicationLocalService _service;
+	private static ServiceTracker<OAuthApplicationLocalService, OAuthApplicationLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(OAuthApplicationLocalService.class);
 }

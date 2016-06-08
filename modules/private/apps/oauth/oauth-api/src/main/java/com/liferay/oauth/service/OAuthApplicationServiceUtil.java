@@ -16,9 +16,9 @@ package com.liferay.oauth.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for OAuthApplication. This utility wraps
@@ -76,12 +76,6 @@ public class OAuthApplicationServiceUtil {
 			serviceContext);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -96,28 +90,10 @@ public class OAuthApplicationServiceUtil {
 		getService().deleteLogo(oAuthApplicationId);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static OAuthApplicationService getService() {
-		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					OAuthApplicationService.class.getName());
-
-			if (invokableService instanceof OAuthApplicationService) {
-				_service = (OAuthApplicationService)invokableService;
-			}
-			else {
-				_service = new OAuthApplicationServiceClp(invokableService);
-			}
-
-			ReferenceRegistry.registerReference(OAuthApplicationServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static OAuthApplicationService _service;
+	private static ServiceTracker<OAuthApplicationService, OAuthApplicationService> _serviceTracker =
+		ServiceTrackerFactory.open(OAuthApplicationService.class);
 }

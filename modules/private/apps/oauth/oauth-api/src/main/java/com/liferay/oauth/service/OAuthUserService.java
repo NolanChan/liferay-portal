@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
-import com.liferay.portal.kernel.service.InvokableService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
@@ -41,10 +41,12 @@ import com.liferay.portal.kernel.transaction.Transactional;
  */
 @AccessControlled
 @JSONWebService
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=oauth", "json.web.service.context.path=OAuthUser"}, service = OAuthUserService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface OAuthUserService extends BaseService, InvokableService {
+public interface OAuthUserService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -55,11 +57,6 @@ public interface OAuthUserService extends BaseService, InvokableService {
 
 	public OAuthUser deleteOAuthUser(long oAuthApplicationId)
 		throws PortalException;
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
 
 	/**
 	* Returns the OSGi service identifier.

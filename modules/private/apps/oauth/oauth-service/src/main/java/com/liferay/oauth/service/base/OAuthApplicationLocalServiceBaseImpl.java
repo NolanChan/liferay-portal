@@ -39,12 +39,13 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.ImagePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -546,16 +547,12 @@ public abstract class OAuthApplicationLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		Class<?> clazz = getClass();
-
-		_classLoader = clazz.getClassLoader();
-
-		PersistedModelLocalServiceRegistryUtil.register("com.liferay.oauth.model.OAuthApplication",
+		persistedModelLocalServiceRegistry.register("com.liferay.oauth.model.OAuthApplication",
 			oAuthApplicationLocalService);
 	}
 
 	public void destroy() {
-		PersistedModelLocalServiceRegistryUtil.unregister(
+		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.oauth.model.OAuthApplication");
 	}
 
@@ -567,27 +564,6 @@ public abstract class OAuthApplicationLocalServiceBaseImpl
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return OAuthApplicationLocalService.class.getName();
-	}
-
-	@Override
-	public Object invokeMethod(String name, String[] parameterTypes,
-		Object[] arguments) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != _classLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-		}
-		finally {
-			if (contextClassLoader != _classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
 	}
 
 	protected Class<?> getModelClass() {
@@ -630,22 +606,22 @@ public abstract class OAuthApplicationLocalServiceBaseImpl
 	protected com.liferay.oauth.service.OAuthUserLocalService oAuthUserLocalService;
 	@BeanReference(type = OAuthUserPersistence.class)
 	protected OAuthUserPersistence oAuthUserPersistence;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = ClassNamePersistence.class)
+	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.ImageLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ImageLocalService.class)
 	protected com.liferay.portal.kernel.service.ImageLocalService imageLocalService;
-	@BeanReference(type = ImagePersistence.class)
+	@ServiceReference(type = ImagePersistence.class)
 	protected ImagePersistence imagePersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private ClassLoader _classLoader;
-	private OAuthApplicationLocalServiceClpInvoker _clpInvoker = new OAuthApplicationLocalServiceClpInvoker();
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

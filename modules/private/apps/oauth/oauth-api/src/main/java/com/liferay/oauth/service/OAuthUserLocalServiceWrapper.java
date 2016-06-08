@@ -218,14 +218,6 @@ public class OAuthUserLocalServiceWrapper implements OAuthUserLocalService,
 		return _oAuthUserLocalService.getUserOAuthUsersCount(userId);
 	}
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _oAuthUserLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*

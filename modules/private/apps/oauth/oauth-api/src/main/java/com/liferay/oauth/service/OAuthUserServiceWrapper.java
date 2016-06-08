@@ -47,13 +47,6 @@ public class OAuthUserServiceWrapper implements OAuthUserService,
 		return _oAuthUserService.deleteOAuthUser(oAuthApplicationId);
 	}
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _oAuthUserService.invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*

@@ -18,11 +18,13 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.oauth.model.OAuthUser;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
@@ -246,69 +248,6 @@ public class OAuthUserUtil {
 	}
 
 	/**
-	* Returns all the o auth users that the user has permission to view where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the matching o auth users that the user has permission to view
-	*/
-	public static List<OAuthUser> filterFindByUserId(long userId) {
-		return getPersistence().filterFindByUserId(userId);
-	}
-
-	/**
-	* Returns a range of all the o auth users that the user has permission to view where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuthUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of o auth users
-	* @param end the upper bound of the range of o auth users (not inclusive)
-	* @return the range of matching o auth users that the user has permission to view
-	*/
-	public static List<OAuthUser> filterFindByUserId(long userId, int start,
-		int end) {
-		return getPersistence().filterFindByUserId(userId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the o auth users that the user has permissions to view where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuthUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of o auth users
-	* @param end the upper bound of the range of o auth users (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching o auth users that the user has permission to view
-	*/
-	public static List<OAuthUser> filterFindByUserId(long userId, int start,
-		int end, OrderByComparator<OAuthUser> orderByComparator) {
-		return getPersistence()
-				   .filterFindByUserId(userId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the o auth users before and after the current o auth user in the ordered set of o auth users that the user has permission to view where userId = &#63;.
-	*
-	* @param oAuthUserId the primary key of the current o auth user
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next o auth user
-	* @throws NoSuchUserException if a o auth user with the primary key could not be found
-	*/
-	public static OAuthUser[] filterFindByUserId_PrevAndNext(long oAuthUserId,
-		long userId, OrderByComparator<OAuthUser> orderByComparator)
-		throws com.liferay.oauth.exception.NoSuchUserException {
-		return getPersistence()
-				   .filterFindByUserId_PrevAndNext(oAuthUserId, userId,
-			orderByComparator);
-	}
-
-	/**
 	* Removes all the o auth users where userId = &#63; from the database.
 	*
 	* @param userId the user ID
@@ -325,16 +264,6 @@ public class OAuthUserUtil {
 	*/
 	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
-	}
-
-	/**
-	* Returns the number of o auth users that the user has permission to view where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the number of matching o auth users that the user has permission to view
-	*/
-	public static int filterCountByUserId(long userId) {
-		return getPersistence().filterCountByUserId(userId);
 	}
 
 	/**
@@ -489,76 +418,6 @@ public class OAuthUserUtil {
 	}
 
 	/**
-	* Returns all the o auth users that the user has permission to view where oAuthApplicationId = &#63;.
-	*
-	* @param oAuthApplicationId the o auth application ID
-	* @return the matching o auth users that the user has permission to view
-	*/
-	public static List<OAuthUser> filterFindByOAuthApplicationId(
-		long oAuthApplicationId) {
-		return getPersistence()
-				   .filterFindByOAuthApplicationId(oAuthApplicationId);
-	}
-
-	/**
-	* Returns a range of all the o auth users that the user has permission to view where oAuthApplicationId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuthUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param oAuthApplicationId the o auth application ID
-	* @param start the lower bound of the range of o auth users
-	* @param end the upper bound of the range of o auth users (not inclusive)
-	* @return the range of matching o auth users that the user has permission to view
-	*/
-	public static List<OAuthUser> filterFindByOAuthApplicationId(
-		long oAuthApplicationId, int start, int end) {
-		return getPersistence()
-				   .filterFindByOAuthApplicationId(oAuthApplicationId, start,
-			end);
-	}
-
-	/**
-	* Returns an ordered range of all the o auth users that the user has permissions to view where oAuthApplicationId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuthUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param oAuthApplicationId the o auth application ID
-	* @param start the lower bound of the range of o auth users
-	* @param end the upper bound of the range of o auth users (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching o auth users that the user has permission to view
-	*/
-	public static List<OAuthUser> filterFindByOAuthApplicationId(
-		long oAuthApplicationId, int start, int end,
-		OrderByComparator<OAuthUser> orderByComparator) {
-		return getPersistence()
-				   .filterFindByOAuthApplicationId(oAuthApplicationId, start,
-			end, orderByComparator);
-	}
-
-	/**
-	* Returns the o auth users before and after the current o auth user in the ordered set of o auth users that the user has permission to view where oAuthApplicationId = &#63;.
-	*
-	* @param oAuthUserId the primary key of the current o auth user
-	* @param oAuthApplicationId the o auth application ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next o auth user
-	* @throws NoSuchUserException if a o auth user with the primary key could not be found
-	*/
-	public static OAuthUser[] filterFindByOAuthApplicationId_PrevAndNext(
-		long oAuthUserId, long oAuthApplicationId,
-		OrderByComparator<OAuthUser> orderByComparator)
-		throws com.liferay.oauth.exception.NoSuchUserException {
-		return getPersistence()
-				   .filterFindByOAuthApplicationId_PrevAndNext(oAuthUserId,
-			oAuthApplicationId, orderByComparator);
-	}
-
-	/**
 	* Removes all the o auth users where oAuthApplicationId = &#63; from the database.
 	*
 	* @param oAuthApplicationId the o auth application ID
@@ -575,17 +434,6 @@ public class OAuthUserUtil {
 	*/
 	public static int countByOAuthApplicationId(long oAuthApplicationId) {
 		return getPersistence().countByOAuthApplicationId(oAuthApplicationId);
-	}
-
-	/**
-	* Returns the number of o auth users that the user has permission to view where oAuthApplicationId = &#63;.
-	*
-	* @param oAuthApplicationId the o auth application ID
-	* @return the number of matching o auth users that the user has permission to view
-	*/
-	public static int filterCountByOAuthApplicationId(long oAuthApplicationId) {
-		return getPersistence()
-				   .filterCountByOAuthApplicationId(oAuthApplicationId);
 	}
 
 	/**
@@ -854,16 +702,9 @@ public class OAuthUserUtil {
 	}
 
 	public static OAuthUserPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (OAuthUserPersistence)PortletBeanLocatorUtil.locate(com.liferay.oauth.service.ClpSerializer.getServletContextName(),
-					OAuthUserPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(OAuthUserUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
-	private static OAuthUserPersistence _persistence;
+	private static ServiceTracker<OAuthUserPersistence, OAuthUserPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(OAuthUserPersistence.class);
 }

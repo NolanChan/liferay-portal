@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.ImagePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import javax.sql.DataSource;
 
@@ -376,9 +377,6 @@ public abstract class OAuthApplicationServiceBaseImpl extends BaseServiceImpl
 	}
 
 	public void afterPropertiesSet() {
-		Class<?> clazz = getClass();
-
-		_classLoader = clazz.getClassLoader();
 	}
 
 	public void destroy() {
@@ -392,27 +390,6 @@ public abstract class OAuthApplicationServiceBaseImpl extends BaseServiceImpl
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return OAuthApplicationService.class.getName();
-	}
-
-	@Override
-	public Object invokeMethod(String name, String[] parameterTypes,
-		Object[] arguments) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != _classLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-		}
-		finally {
-			if (contextClassLoader != _classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
 	}
 
 	protected Class<?> getModelClass() {
@@ -459,28 +436,26 @@ public abstract class OAuthApplicationServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.oauth.service.OAuthUserService oAuthUserService;
 	@BeanReference(type = OAuthUserPersistence.class)
 	protected OAuthUserPersistence oAuthUserPersistence;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
 	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
-	@BeanReference(type = ClassNamePersistence.class)
+	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.ImageLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ImageLocalService.class)
 	protected com.liferay.portal.kernel.service.ImageLocalService imageLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ImageService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ImageService.class)
 	protected com.liferay.portal.kernel.service.ImageService imageService;
-	@BeanReference(type = ImagePersistence.class)
+	@ServiceReference(type = ImagePersistence.class)
 	protected ImagePersistence imagePersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.UserService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserService.class)
 	protected com.liferay.portal.kernel.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private ClassLoader _classLoader;
-	private OAuthApplicationServiceClpInvoker _clpInvoker = new OAuthApplicationServiceClpInvoker();
 }
