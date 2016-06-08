@@ -273,10 +273,10 @@ public class KaleoProcessAssetRenderer
 	protected WorkflowTask getWorkflowTask(HttpServletRequest request)
 		throws Exception {
 
-		long workflowTaskId = ParamUtil.getLong(request, "workflowTaskId");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		long workflowTaskId = ParamUtil.getLong(request, "workflowTaskId");
 
 		return WorkflowTaskManagerUtil.getWorkflowTask(
 			themeDisplay.getCompanyId(), workflowTaskId);
