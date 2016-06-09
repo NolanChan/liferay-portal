@@ -16,17 +16,18 @@ package com.liferay.lcs.util;
 
 /**
  * @author Igor Beslic
+ * @author Marko Cikos
  */
 public enum LCSAlert {
 
 	ERROR_ENVIRONMENT_MISMATCH(
-		"error",
+		"danger",
 		"the-automatic-activation-token-file-does-not-match-the-environment"),
 	ERROR_INVALID_ENVIRONMENT_TYPE(
-		"error",
-		"the-environment-that-the-portal-is-registered-to-has-the-wrong-type"),
+		"danger",
+		"this-server-is-registered-to-the-environment-of-the-wrong-type"),
 	ERROR_INVALID_TOKEN(
-		"error", "the-automatic-activation-token-file-is-invalid"),
+		"danger", "the-automatic-activation-token-file-is-invalid"),
 	SUCCESS_VALID_TOKEN(
 		"success", "the-automatic-activation-token-file-is-valid"),
 	WARNING_MISSING_TOKEN(
@@ -38,7 +39,7 @@ public enum LCSAlert {
 		"the-automatic-activation-token-file-does-not-match-the-cached-value");
 
 	public String getCSSClass() {
-		return "alert alert-" + getType() + " lcs-alert";
+		return "alert alert-" + getType();
 	}
 
 	public String getLabel() {
