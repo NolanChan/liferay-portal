@@ -1,36 +1,7 @@
 $blue: #1C75B9;
-$darkgray: #656565;
-$gray: #8D8D8D;
 $indent-width: 16px;
 
-div.tooltip {
-	max-width: inherit;
-}
-
-span.lcs-alert {
-	display: inline-block;
-}
-
 .lcs-portlet {
-	dl {
-		margin: 0;
-
-		dt {
-			color: $darkgray;
-		}
-
-		dd {
-			color: $gray;
-			margin: 0 0 25px;
-			min-height: 20px;
-		}
-	}
-
-	h3 {
-		font-size: 20px;
-		line-height: 20px;
-	}
-
 	.all-lcs-services-panel {
 		textarea {
 			height: 150px;
@@ -59,61 +30,19 @@ span.lcs-alert {
 		}
 	}
 
-	.aui-field-select {
-		min-width: 200px;
-		width: auto;
-	}
-
-	.cluster-node-error {
-		color: #B50303;
-		cursor: default;
-	}
-
-	.connection-status {
-		color: $gray;
-		font-size: 20px;
-		line-height: 29px;
-		padding: 10px;
-
-		& > span {
-			display: inline-block;
-			vertical-align: middle;
-		}
-
-		&.connected .connection-icon {
-			background-image: url(../images/connection_green.png);
-		}
-
-		&.disconnected .connection-icon {
-			background-image: url(../images/connection_red.png);
-		}
-
-		&.synchronizing .connection-icon {
-			background-image: url(../images/connection_orange.png);
-		}
-
-		.connection-icon {
-			height: 29px;
-			position: relative;
-			width: 29px;
-		}
-
-		.taglib-icon-help img {
-			margin-bottom: 8px;
+	.btn {
+		&:active, &:focus {
+			outline: 0;
 		}
 	}
 
 	.content {
-		margin: 0 auto;
-		max-width: 1280px;
-		padding: 0 16px;
+		.alert-connection {
+			margin-top: 22px;
+		}
 
 		.button-holder {
 			margin-bottom: 30px;
-
-			.btn {
-				outline: 0;
-			}
 		}
 
 		.info-panel {
@@ -137,6 +66,10 @@ span.lcs-alert {
 			position: relative;
 		}
 
+		.list-group-item:hover {
+			background-color: #F5F5F5;
+		}
+
 		.logo {
 			height: 5em;
 			margin-right: 30px;
@@ -151,49 +84,7 @@ span.lcs-alert {
 	}
 
 	.footer {
-		border-top: 1px solid $gray;
-		margin: 0 auto;
-		max-width: 1280px;
+		border-top: 1px solid #E3E6E8;
 		padding: 8px 16px;
-	}
-
-	.lcs-info {
-		&:after {
-			clear: both;
-			content: '';
-			display: block;
-			visibility: hidden;
-		}
-
-		& > div {
-			float: left;
-			width: 320px;
-			word-wrap: break-word;
-		}
-	}
-
-	.lcs-environment-container {
-		.lcs-environment-input-wrapper {
-			height: 37px;
-			line-height: 37px;
-			margin-bottom: 8px;
-
-			.loadingmask-content {
-				background-color: transparent;
-			}
-
-			.loadingmask-message {
-				left: 0 !important;
-			}
-		}
-
-		.control-group {
-			margin-bottom: 0;
-			padding-top: 2px;
-		}
-
-		.button-holder {
-			margin: 0;
-		}
 	}
 }
