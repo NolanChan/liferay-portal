@@ -5,11 +5,11 @@ AUI.add(
 
 		var padNumber = A.rbind('padNumber', Lang.String, 2);
 
-		var CSS_CONNECTED = 'connected';
+		var CSS_ALERT_DANGER = 'alert-danger';
 
-		var CSS_DISCONNECTED = 'disconnected';
+		var CSS_ALERT_SUCCESS = 'alert-success';
 
-		var CSS_SYNCHRONIZING = 'synchronizing';
+		var CSS_ALERT_WARNING = 'alert-warning';
 
 		var EVENT_CHANGE = 'change';
 
@@ -76,9 +76,10 @@ AUI.add(
 						);
 					},
 
-					initializeLCSClusterNodePage: function(config) {
+					initializeConnectionPage: function(config) {
 						var instance = this;
 
+						var cluster = config.cluster;
 						var connectURL = config.connectURL;
 						var disconnectURL = config.disconnectURL;
 						var pending = config.pending;
@@ -86,117 +87,125 @@ AUI.add(
 
 						instance._connectionStatusURL = config.connectionStatusURL;
 						instance._handshakeTime = config.handshakeTime;
-						instance._labelConnected = config.labelConnected;
-						instance._labelConnectedHelp = config.labelConnectedHelp;
-						instance._labelDisconnected = config.labelDisconnected;
-						instance._labelDisconnectedHelp = config.labelDisconnectedHelp;
-						instance._labelPending = config.labelPending;
-						instance._labelPendingHelp = config.labelPendingHelp;
+						instance._labels = config.labels;
 						instance._ready = ready;
-
-						var applyToSiblingClusterNodesCheckbox = instance.byId('applyToSiblingClusterNodes');
-						var connectButton = instance.byId('connect');
-						var disconnectButton = instance.byId('disconnect');
 
 						instance._connectionAlertContainer = instance.byId('connectionAlertContainer');
 						instance._durationContainer = instance.byId('duration');
 						instance._gatewayUnavailableAlert = instance.byId('lcsGatewayUnavailable');
 						instance._heartbeatExpiredAlert = instance.byId('heartbeatExpired');
+						instance._spinner = instance.byId('spinner');
+
+						var connectionStatusContainer = instance.byId('connectionStatus');
+
+						if (connectionStatusContainer) {
+							instance._connectionStatusLabel = connectionStatusContainer.one('.lead');
+
+							instance._connectionStatusSpinner = connectionStatusContainer.one('.icon-spin');
+
+							instance._connectionStatusContainer = connectionStatusContainer;
+						}
 
 						var getConnectionStatus = A.bind('_getConnectionStatus', instance);
 
-						connectButton.on(
-							EVENT_CLICK,
-							function(event) {
-								A.io.request(
-									connectURL,
-									{
-										data: Liferay.Util.ns(
-											instance.NS,
+						var applyToSiblingClusterNodesCheckbox = instance.byId('applyToSiblingClusterNodes');
+						var connectButton = instance.byId('connect');
+
+						if (connectButton) {
+							connectButton.on(
+								EVENT_CLICK,
+								function(event) {
+									Liferay.Util.toggleDisabled(connectButton, true);
+
+									var data = {};
+
+									if (applyToSiblingClusterNodesCheckbox && cluster) {
+										data = instance.ns(
 											{
 												applyToSiblingClusterNodes: applyToSiblingClusterNodesCheckbox.attr(STR_CHECKED)
 											}
-										),
-										dataType: 'JSON',
-										method: 'GET',
-										on: {
-											success: function(event, id, obj) {
-												var responseData = this.get(STR_REPONSE_DATA);
+										);
+									}
 
-												if (responseData.result == STR_SUCCESS) {
-													instance._refreshConnectionControls(true, false);
+									A.io.request(
+										connectURL,
+										{
+											data: data,
+											dataType: 'JSON',
+											method: 'GET',
+											on: {
+												failure: function(event, id, obj) {
+													Liferay.Util.toggleDisabled(connectButton, false);
+												},
+												success: function(event, id, obj) {
+													var responseData = this.get(STR_REPONSE_DATA);
 
-													setTimeout(getConnectionStatus, 1000);
+													if (responseData.result == STR_SUCCESS) {
+														instance._refreshConnectionControls(true, false);
+
+														setTimeout(getConnectionStatus, 1000);
+													}
 												}
 											}
 										}
-									}
-								);
-							}
-						);
+									);
+								}
+							);
 
-						disconnectButton.on(
-							EVENT_CLICK,
-							function(event) {
-								A.io.request(
-									disconnectURL,
-									{
-										data: Liferay.Util.ns(
-											instance.NS,
+							instance._connectButton = connectButton;
+						}
+
+						var disconnectButton = instance.byId('disconnect');
+
+						if (disconnectButton) {
+							disconnectButton.on(
+								EVENT_CLICK,
+								function(event) {
+									Liferay.Util.toggleDisabled(disconnectButton, true);
+
+									var data = {};
+
+									if (applyToSiblingClusterNodesCheckbox && cluster) {
+										data = instance.ns(
 											{
 												applyToSiblingClusterNodes: applyToSiblingClusterNodesCheckbox.attr(STR_CHECKED)
 											}
-										),
-										dataType: 'JSON',
-										method: 'GET',
-										on: {
-											success: function(event, id, obj) {
-												var responseData = this.get(STR_REPONSE_DATA);
+										);
+									}
 
-												if (responseData.result == STR_SUCCESS) {
-													instance._refreshConnectionControls(true, true);
+									A.io.request(
+										disconnectURL,
+										{
+											data: data,
+											dataType: 'JSON',
+											method: 'GET',
+											on: {
+												failure: function(event, id, obj) {
+													Liferay.Util.toggleDisabled(disconnectButton, false);
+												},
+												success: function(event, id, obj) {
+													var responseData = this.get(STR_REPONSE_DATA);
 
-													setTimeout(getConnectionStatus, 1000);
+													if (responseData.result == STR_SUCCESS) {
+														instance._refreshConnectionControls(true, true);
+
+														setTimeout(getConnectionStatus, 1000);
+													}
 												}
 											}
 										}
-									}
-								);
-							}
-						);
+									);
+								}
+							);
 
-						instance._connectButton = connectButton;
-						instance._disconnectButton = disconnectButton;
-
-						var connectNode = instance.byId('connect');
-						var discconnectNode = instance.byId('disconnect');
-
-						instance._initializeTooltip(connectNode, config.tooltipConnect);
-						instance._initializeTooltip(discconnectNode, config.tooltipDisconnect);
-
-						var connectionStatusNode = instance.byId('connectionStatus');
-
-						if (connectionStatusNode) {
-							instance._connectionStatusNode = connectionStatusNode;
-
-							var connectionStatusHelp = connectionStatusNode.one('.connection-help');
-
-							if (connectionStatusHelp) {
-								instance._connectionStatusHelp = connectionStatusHelp;
-							}
-
-							var connectionStatusLabel = connectionStatusNode.one('.connection-label');
-
-							if (connectionStatusLabel) {
-								instance._connectionStatusLabel = connectionStatusLabel;
-							}
+							instance._disconnectButton = disconnectButton;
 						}
 
 						var erroneousClusterNodes = instance.all('.cluster-node-error');
 
 						erroneousClusterNodes.each(
 							function(item, index, collection) {
-								instance._initializeTooltip(item, config.tooltipClusterNodeError);
+								instance._initializeTooltip(item, config.clusterNodeError);
 							}
 						);
 
@@ -234,7 +243,7 @@ AUI.add(
 											var gatewayUnavailableAlert = instance._gatewayUnavailableAlert;
 
 											if (gatewayUnavailableAlert) {
-												gatewayUnavailableAlert.toggle(!responseDataReady);
+												gatewayUnavailableAlert.toggle(!responseData.lcsGatewayAvailable);
 											}
 
 											var heartbeatExpiredAlert = instance._heartbeatExpiredAlert;
@@ -271,80 +280,67 @@ AUI.add(
 					_refreshConnectionControls: function(pending, ready) {
 						var instance = this;
 
-						var connectionStatusNode = instance._connectionStatusNode;
+						var connectionStatusContainer = instance._connectionStatusContainer;
 
-						if (connectionStatusNode) {
+						if (connectionStatusContainer) {
 							if (pending) {
-								connectionStatusNode.removeClass(CSS_CONNECTED);
-								connectionStatusNode.removeClass(CSS_DISCONNECTED);
-								connectionStatusNode.addClass(CSS_SYNCHRONIZING);
+								connectionStatusContainer.removeClass(CSS_ALERT_SUCCESS);
+								connectionStatusContainer.removeClass(CSS_ALERT_DANGER);
+								connectionStatusContainer.addClass(CSS_ALERT_WARNING);
 							}
 							else {
-								connectionStatusNode.removeClass(CSS_SYNCHRONIZING);
+								connectionStatusContainer.removeClass(CSS_ALERT_WARNING);
 
 								if (ready) {
-									connectionStatusNode.addClass(CSS_CONNECTED);
+									connectionStatusContainer.addClass(CSS_ALERT_SUCCESS);
 								}
 								else {
-									connectionStatusNode.addClass(CSS_DISCONNECTED);
+									connectionStatusContainer.addClass(CSS_ALERT_DANGER);
 								}
 							}
 						}
 
 						var connectionStatusLabel = instance._connectionStatusLabel;
+						var labels = instance._labels;
 
 						if (connectionStatusLabel) {
-							var statusLabel = instance._labelPending;
+							var label = labels.pending;
 
 							if (!pending) {
 								if (ready) {
-									statusLabel = instance._labelConnected;
+									label = labels.connected;
 								}
 								else {
-									statusLabel = instance._labelDisconnected;
+									label = labels.disconnected;
 								}
 							}
 
-							connectionStatusLabel.html(statusLabel);
+							connectionStatusLabel.html(label);
 						}
 
-						var connectionStatusHelp = instance._connectionStatusHelp;
+						var connectionStatusSpinner = instance._connectionStatusSpinner;
 
-						if (connectionStatusHelp) {
-							connectionStatusHelp.hide();
-						}
-
-						var connectionAlertContainer = instance._connectionAlertContainer;
-
-						if (connectionAlertContainer) {
-							connectionAlertContainer.toggle(pending);
+						if (connectionStatusSpinner) {
+							connectionStatusSpinner.toggle(pending);
 						}
 
 						var connectButton = instance._connectButton;
 
 						if (connectButton) {
-							Liferay.Util.toggleDisabled(connectButton, pending);
-
 							if (!pending) {
 								connectButton.toggle(!ready);
+
+								Liferay.Util.toggleDisabled(connectButton, ready);
 							}
 						}
 
 						var disconnectButton = instance._disconnectButton;
 
 						if (disconnectButton) {
-							Liferay.Util.toggleDisabled(disconnectButton, pending);
-
 							if (!pending) {
 								disconnectButton.toggle(ready);
-							}
-						}
 
-						if (pending) {
-							var tooltip = A.getBody().one('> .tooltip');
-
-							if (tooltip) {
-								tooltip.addClass('tooltip-hidden');
+								Liferay.Util.toggleDisabled(disconnectButton, !ready);
 							}
 						}
 					},
@@ -399,6 +395,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-deprecated', 'aui-loading-mask-deprecated', 'liferay-portlet-base', 'liferay-portlet-url', 'liferay-util-window', 'resize']
+		requires: ['aui-io-deprecated', 'liferay-portlet-base', 'liferay-portlet-url', 'liferay-util-window']
 	}
 );
