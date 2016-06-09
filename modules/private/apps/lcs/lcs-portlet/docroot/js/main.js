@@ -99,11 +99,10 @@ AUI.add(
 						var connectionStatusContainer = instance.byId('connectionStatus');
 
 						if (connectionStatusContainer) {
-							instance._connectionStatusLabel = connectionStatusContainer.one('.lead');
-
-							instance._connectionStatusSpinner = connectionStatusContainer.one('.icon-spin');
-
 							instance._connectionStatusContainer = connectionStatusContainer;
+
+							instance._connectionStatusLabel = connectionStatusContainer.one('.lead');
+							instance._connectionStatusSpinner = connectionStatusContainer.one('.icon-spin');
 						}
 
 						var getConnectionStatus = A.bind('_getConnectionStatus', instance);
@@ -284,9 +283,10 @@ AUI.add(
 
 						if (connectionStatusContainer) {
 							if (pending) {
+								connectionStatusContainer.addClass(CSS_ALERT_WARNING);
+
 								connectionStatusContainer.removeClass(CSS_ALERT_SUCCESS);
 								connectionStatusContainer.removeClass(CSS_ALERT_DANGER);
-								connectionStatusContainer.addClass(CSS_ALERT_WARNING);
 							}
 							else {
 								connectionStatusContainer.removeClass(CSS_ALERT_WARNING);
