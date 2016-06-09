@@ -359,7 +359,7 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 		</c:if>
 
 		<aui:button-row>
-			<aui:button cssClass='<%= "btn-primary " + (ready ? "hide" : StringPool.BLANK) %>' disabled="<%= pending %>" name="connect" value="connect" />
+			<aui:button cssClass='<%= ready ? "hide" : StringPool.BLANK %>' disabled="<%= pending %>" name="connect" primary="<%= true %>" value="connect" />
 
 			<aui:button cssClass='<%= ready ? StringPool.BLANK : "hide" %>' disabled="<%= pending %>" name="disconnect" value="disconnect" />
 		</aui:button-row>
