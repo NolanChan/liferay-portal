@@ -27,7 +27,6 @@ page import="com.liferay.dynamic.data.mapping.model.DDMTemplate" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.DDMFormValues" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsWebKeys" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink" %>
 
 <liferay-theme:defineObjects />
