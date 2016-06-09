@@ -18,6 +18,7 @@ import com.liferay.lcs.util.ClusterNodeUtil;
 import com.liferay.lcs.util.LCSConnectionManagerUtil;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.lcs.util.LCSUtil;
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -109,7 +110,7 @@ public class ConnectedServicesPortlet extends MVCPortlet {
 		catch (Exception e) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("result", "failure");
+			jsonObject.put("result", LCSConstants.JSON_FAILURE);
 
 			_log.error(e, e);
 
@@ -121,21 +122,19 @@ public class ConnectedServicesPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		boolean applyToSiblingClusterNodes = ParamUtil.getBoolean(
-			resourceRequest, "applyToSiblingClusterNodes");
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		try {
+		if (ClusterExecutorUtil.isEnabled()) {
+			boolean applyToSiblingClusterNodes = ParamUtil.getBoolean(
+				resourceRequest, "applyToSiblingClusterNodes");
+
 			ClusterNodeUtil.startPosts(applyToSiblingClusterNodes);
-
-			jsonObject.put("result", "success");
 		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			jsonObject.put("result", "failure");
+		else {
+			LCSConnectionManagerUtil.start();
 		}
+
+		jsonObject.put("result", LCSConstants.JSON_SUCCESS);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
@@ -144,21 +143,19 @@ public class ConnectedServicesPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		boolean applyToSiblingClusterNodes = ParamUtil.getBoolean(
-			resourceRequest, "applyToSiblingClusterNodes");
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		try {
+		if (ClusterExecutorUtil.isEnabled()) {
+			boolean applyToSiblingClusterNodes = ParamUtil.getBoolean(
+				resourceRequest, "applyToSiblingClusterNodes");
+
 			ClusterNodeUtil.stopPosts(applyToSiblingClusterNodes);
-
-			jsonObject.put("result", "success");
 		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			jsonObject.put("result", "failure");
+		else {
+			LCSConnectionManagerUtil.stop();
 		}
+
+		jsonObject.put("result", LCSConstants.JSON_SUCCESS);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
@@ -172,6 +169,9 @@ public class ConnectedServicesPortlet extends MVCPortlet {
 		jsonObject.put(
 			"heartbeatExpiredError",
 			LCSConnectionManagerUtil.isHandshakeExpired());
+		jsonObject.put(
+			"lcsGatewayAvailable",
+			LCSConnectionManagerUtil.isLCSGatewayAvailable());
 		jsonObject.put("pending", LCSConnectionManagerUtil.isPending());
 		jsonObject.put("ready", LCSConnectionManagerUtil.isReady());
 
