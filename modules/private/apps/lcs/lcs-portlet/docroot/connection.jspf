@@ -51,37 +51,9 @@ catch (Exception e) {
 
 	SessionErrors.add(liferayPortletRequest, "generalPluginAccess");
 }
-%>
 
-<c:if test="<%= !LCSConnectionManagerUtil.isLCSGatewayAvailable() %>">
-	<div class="alert alert-danger lcs-alert" id="<portlet:namespace />lcsGatewayUnavailable">
-		<liferay-ui:message key="unable-to-access-liferay-connected-services-gateway" />
-	</div>
-</c:if>
-
-<div class="alert alert-danger hide lcs-alert" id="<portlet:namespace />heartbeatExpired">
-	<liferay-ui:message key="the-connection-to-liferay-connected-services-has-expired" />
-</div>
-
-<%
 Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts();
 %>
-
-<c:if test="<%= (lcsClusterEntryTokenAlerts.size() > 1) || !lcsClusterEntryTokenAlerts.contains(LCSAlert.WARNING_MISSING_TOKEN) %>">
-
-	<%
-	for (LCSAlert lcsAlert : lcsClusterEntryTokenAlerts) {
-	%>
-
-		<div class="<%= lcsAlert.getCSSClass() %>">
-			<liferay-ui:message key="<%= lcsAlert.getLabel() %>" />
-		</div>
-
-	<%
-	}
-	%>
-
-</c:if>
 
 <c:choose>
 	<c:when test="<%= ((lcsClusterNode == null) || (lcsClusterEntry == null)) %>">
@@ -97,6 +69,21 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 				</div>
 			</c:otherwise>
 		</c:choose>
+	</c:when>
+	<c:when test="<%= !lcsClusterEntryTokenAlerts.isEmpty() %>">
+
+		<%
+		for (LCSAlert lcsAlert : lcsClusterEntryTokenAlerts) {
+		%>
+
+			<div class="<%= lcsAlert.getCSSClass() %>">
+				<liferay-ui:message key="<%= lcsAlert.getLabel() %>" />
+			</div>
+
+		<%
+		}
+		%>
+
 	</c:when>
 	<c:otherwise>
 
@@ -114,101 +101,130 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 		boolean pending = LCSConnectionManagerUtil.isPending();
 		boolean ready = LCSConnectionManagerUtil.isReady();
 
+		String connectionStatusCSSClass = "alert-success";
 		String connectionStatusLabel = "connected";
 
 		if (!ready && !pending) {
+			connectionStatusCSSClass = "alert-danger";
 			connectionStatusLabel = "disconnected";
 		}
 		else if (!ready && pending) {
+			connectionStatusCSSClass = "alert-warning";
 			connectionStatusLabel = "synchronizing";
 		}
+
+		String handshakeTime = lcsConnectionMetadata.get("handshakeTime");
 		%>
 
-		<div class="connection-status <%= connectionStatusLabel %>" id="<portlet:namespace />connectionStatus">
-			<span class="connection-icon"></span>
+		<div class="alert alert-connection <%= connectionStatusCSSClass %>" id="<portlet:namespace />connectionStatus">
+			<strong class="lead">
+				<liferay-ui:message key="<%= connectionStatusLabel %>" />
+			</strong>
 
-			<span class="connection-label">
-				<%= LanguageUtil.get(request, connectionStatusLabel) %>
-			</span>
-
-			<span class="connection-help">
-				<liferay-ui:icon-help message='<%= LanguageUtil.get(request, connectionStatusLabel + "-help") %>' />
-			</span>
+			<i class="icon-spin icon-spinner <%= pending ? StringPool.BLANK : "hide" %>"></i>
 		</div>
 
-		<div class="lcs-info">
-			<div class="lcs-connection-info">
-				<h3><liferay-ui:message key="connection" /></h3>
+		<div class="alert alert-danger lcs-alert <%= LCSConnectionManagerUtil.isLCSGatewayAvailable() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />lcsGatewayUnavailable">
+			<liferay-ui:message key="unable-to-access-liferay-connected-services-gateway" />
+		</div>
 
-				<dl>
-					<dt>
+		<div class="alert alert-danger hide lcs-alert" id="<portlet:namespace />heartbeatExpired">
+			<liferay-ui:message key="the-connection-to-liferay-connected-services-has-expired" />
+		</div>
+
+		<ul class="list-group">
+			<li class="list-group-heading">
+				<liferay-ui:message key="connection" />
+			</li>
+
+			<li class="list-group-item">
+				<aui:row>
+					<aui:col width="<%= 50 %>">
 						<liferay-ui:message key="heartbeat-interval" />
 
 						<liferay-ui:icon-help message="heartbeat-interval-help" />
-					</dt>
-					<dd>
+					</aui:col>
+
+					<aui:col width="<%= 50 %>">
 
 						<%
 						Date heartbeatIntervalDate = new Date(GetterUtil.getLong(lcsConnectionMetadata.get("heartbeatInterval")));
 						%>
 
 						<%= intervalDateFormatDate.format(heartbeatIntervalDate) %>
-					</dd>
-					<dt>
+					</aui:col>
+				</aui:row>
+			</li>
+
+			<li class="list-group-item">
+				<aui:row>
+					<aui:col width="<%= 50 %>">
 						<liferay-ui:message key="message-task-interval" />
 
 						<liferay-ui:icon-help message="message-task-interval-help" />
-					</dt>
-					<dd>
+					</aui:col>
+
+					<aui:col width="<%= 50 %>">
 
 						<%
 						Date messageTaskIntervalDate = new Date(GetterUtil.getLong(lcsConnectionMetadata.get("messageTaskInterval")));
 						%>
 
 						<%= intervalDateFormatDate.format(messageTaskIntervalDate) %>
-					</dd>
-					<dt>
+					</aui:col>
+				</aui:row>
+			</li>
+
+			<li class="list-group-item">
+				<aui:row>
+					<aui:col width="<%= 50 %>">
 						<liferay-ui:message key="metrics-task-interval" />
 
 						<liferay-ui:icon-help message="metrics-task-interval-help" />
-					</dt>
-					<dd>
+					</aui:col>
+
+					<aui:col width="<%= 50 %>">
 
 						<%
 						Date jvmMetricsTaskIntervalDate = new Date(GetterUtil.getLong(lcsConnectionMetadata.get("jvmMetricsTaskInterval")));
 						%>
 
 						<%= intervalDateFormatDate.format(jvmMetricsTaskIntervalDate) %>
-					</dd>
+					</aui:col>
+				</aui:row>
+			</li>
 
-					<c:if test='<%= lcsConnectionMetadata.get("messageTaskTime") != null %>'>
-						<dt>
+			<c:if test='<%= lcsConnectionMetadata.get("messageTaskTime") != null %>'>
+				<li class="list-group-item">
+					<aui:row>
+						<aui:col width="<%= 50 %>">
 							<liferay-ui:message key="last-message-received" />
 
 							<liferay-ui:icon-help message="last-message-received-help" />
-						</dt>
-						<dd>
+						</aui:col>
+
+						<aui:col width="<%= 50 %>">
 
 							<%
 							Date messageTaskTimeDate = new Date(GetterUtil.getLong(lcsConnectionMetadata.get("messageTaskTime")));
 							%>
 
 							<%= dateFormatDate.format(messageTaskTimeDate) %>
-						</dd>
-					</c:if>
+						</aui:col>
+					</aui:row>
+				</li>
+			</c:if>
 
-					<dt>
+			<li class="list-group-item">
+				<aui:row>
+					<aui:col width="<%= 50 %>">
 						<liferay-ui:message key="connection-uptime" />
 
 						<liferay-ui:icon-help message="connection-uptime-help" />
-					</dt>
-					<dd>
+					</aui:col>
+
+					<aui:col width="<%= 50 %>">
 						<div id="<portlet:namespace />duration">
-
-							<%
-							String handshakeTime = lcsConnectionMetadata.get("handshakeTime");
-							%>
-
 							<c:choose>
 								<c:when test="<%= ready && !pending && (handshakeTime != null) %>">
 
@@ -223,73 +239,92 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 								</c:otherwise>
 							</c:choose>
 						</div>
-					</dd>
-				</dl>
-			</div>
+					</aui:col>
+				</aui:row>
+			</li>
+		</ul>
 
-			<div class="lcs-portal-info">
-				<h3><liferay-ui:message key="liferay-connected-services-sites" /></h3>
+		<ul class="list-group">
+			<li class="list-group-heading">
+				<liferay-ui:message key="liferay-connected-services-sites" />
+			</li>
 
-				<dl>
-					<dt>
+			<li class="list-group-item">
+				<aui:row>
+					<aui:col width="<%= 50 %>">
 						<liferay-ui:message key="project-home" />
-					</dt>
-					<dd>
+					</aui:col>
+
+					<aui:col width="<%= 50 %>">
 						<aui:a href="<%= lcsProjectLayoutURL %>" target="_blank">
 							<%= HtmlUtil.escape(lcsProject.getName()) %>
 						</aui:a>
-					</dd>
-				</dl>
-				<dl>
-					<dt>
+					</aui:col>
+				</aui:row>
+			</li>
+
+			<li class="list-group-item">
+				<aui:row>
+					<aui:col width="<%= 50 %>">
 						<liferay-ui:message key="environment" />
-					</dt>
-					<dd>
+					</aui:col>
+
+					<aui:col width="<%= 50 %>">
 						<aui:a href="<%= lcsClusterEntryLayoutURL %>" target="_blank">
 							<%= HtmlUtil.escape(lcsClusterEntry.getName()) %>
 						</aui:a>
-					</dd>
-				</dl>
-				<dl>
-					<dt>
+					</aui:col>
+				</aui:row>
+			</li>
+
+			<li class="list-group-item">
+				<aui:row>
+					<aui:col width="<%= 50 %>">
 						<liferay-ui:message key="server-dashboard" />
-					</dt>
-					<dd>
+					</aui:col>
+
+					<aui:col width="<%= 50 %>">
 						<aui:a href="<%= lcsClusterNodeLayoutURL %>" target="_blank">
 							<%= HtmlUtil.escape(lcsClusterNode.getName()) %>
 						</aui:a>
-					</dd>
-				</dl>
-			</div>
+					</aui:col>
+				</aui:row>
+			</li>
+		</ul>
 
-			<c:if test="<%= ClusterExecutorUtil.isEnabled() %>">
-				<div class="lcs-cluster-info">
-					<h3><liferay-ui:message key="cluster" /></h3>
+		<c:if test="<%= ClusterExecutorUtil.isEnabled() %>">
+			<ul class="list-group">
+				<li class="list-group-heading">
+					<liferay-ui:message key="cluster" />
+				</li>
 
-					<dl>
-						<dt>
+				<li class="list-group-item">
+					<aui:row>
+						<aui:col width="<%= 50 %>">
 							<liferay-ui:message key="local-cluster-node-key" />
-						</dt>
-						<dd>
+						</aui:col>
+
+						<aui:col width="<%= 50 %>">
 
 							<%
 							Map<String, Object> localClusterNodeInfo = ClusterNodeUtil.getClusterNodeInfo();
 							%>
 
 							<%= localClusterNodeInfo.get("key") %>
-						</dd>
-					</dl>
+						</aui:col>
+					</aui:row>
 
 					<%
 					List<Map<String, Object>> clusterNodeInfos = ClusterNodeUtil.getClusterNodeInfos();
 					%>
 
 					<c:if test="<%= !clusterNodeInfos.isEmpty() %>">
-						<dl>
-							<dt>
+						<aui:row>
+							<aui:col width="<%= 50 %>">
 								<liferay-ui:message key="sibling-cluster-nodes-keys" />
-							</dt>
-							<dd>
+							</aui:col>
+
+							<aui:col width="<%= 50 %>">
 
 								<%
 								for (Map<String, Object> clusterNodeInfo : ClusterNodeUtil.getClusterNodeInfos()) {
@@ -312,34 +347,22 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 								}
 								%>
 
-							</dd>
-						</dl>
+							</aui:col>
+						</aui:row>
 					</c:if>
-				</div>
-			</c:if>
-		</div>
+				</li>
+			</ul>
 
-		<div class="<%= ClusterExecutorUtil.isEnabled() ? StringPool.BLANK : "hide" %>">
-			<aui:input checked="<%= true %>" id="applyToSiblingClusterNodes" label="apply-to-all-nodes-of-this-cluster" name="applyToSiblingClusterNodes" type="checkbox" />
-		</div>
-
-		<liferay-portlet:renderURL var="lcsServicesURL">
-			<liferay-portlet:param name="lcsPage" value="lcsServices" />
-		</liferay-portlet:renderURL>
-
-		<aui:a href="<%= lcsServicesURL %>" label="configure-services" />
+			<div class="<%= ClusterExecutorUtil.isEnabled() ? StringPool.BLANK : "hide" %>">
+				<aui:input checked="<%= true %>" id="applyToSiblingClusterNodes" label="when-connecting-or-disconnecting-this-node-connect-or-disconnect-all-nodes-in-the-cluster" name="applyToSiblingClusterNodes" type="checkbox" />
+			</div>
+		</c:if>
 
 		<aui:button-row>
-			<aui:button cssClass='<%= "btn-success " + (ready ? "hide" : StringPool.BLANK) %>' disabled="<%= pending %>" name="connect" value="connect" />
+			<aui:button cssClass='<%= "btn-primary " + (ready ? "hide" : StringPool.BLANK) %>' disabled="<%= pending %>" name="connect" value="connect" />
 
 			<aui:button cssClass='<%= ready ? StringPool.BLANK : "hide" %>' disabled="<%= pending %>" name="disconnect" value="disconnect" />
 		</aui:button-row>
-
-		<div class="alert alert-info lcs-synchronizing-alert <%= pending ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />connectionAlertContainer">
-			<liferay-ui:message key="synchronizing-help" />
-
-			<i class="icon-spin icon-spinner"></i>
-		</div>
 
 		<aui:script use="lcs">
 			var lcsPortlet = new Liferay.Portlet.LCS(
@@ -348,23 +371,21 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 				}
 			);
 
-			lcsPortlet.initializeLCSClusterNodePage(
+			lcsPortlet.initializeConnectionPage(
 				{
+					cluster: <%= ClusterExecutorUtil.isEnabled() %>,
 					connectionStatusURL: '<portlet:resourceURL id="serveConnectionStatus" />',
 					connectURL: '<portlet:resourceURL id="connect" />',
 					disconnectURL: '<portlet:resourceURL id="disconnect" />',
 					handshakeTime: <%= handshakeTime %>,
-					labelConnected: '<%= UnicodeLanguageUtil.get(request, "connected") %>',
-					labelConnectedHelp: '<%= UnicodeLanguageUtil.get(request, "connected-help") %>',
-					labelDisconnected: '<%= UnicodeLanguageUtil.get(request, "disconnected") %>',
-					labelDisconnectedHelp: '<%= UnicodeLanguageUtil.get(request, "disconnected-help") %>',
-					labelPending: '<%= UnicodeLanguageUtil.get(request, "synchronizing") %>',
-					labelPendingHelp: '<%= UnicodeLanguageUtil.get(request, "synchronizing-help") %>',
+					labels: {
+						clusterNodeError: '<%= UnicodeLanguageUtil.get(request, "this-cluster-node-does-not-have-liferay-connected-services-client-installed") %>',
+						connected: '<%= UnicodeLanguageUtil.get(request, "connected") %>',
+						disconnected: '<%= UnicodeLanguageUtil.get(request, "disconnected") %>',
+						pending: '<%= UnicodeLanguageUtil.get(request, "synchronizing") %>'
+					},
 					pending: <%= pending %>,
-					ready: <%= ready %>,
-					tooltipClusterNodeError: '<%= UnicodeLanguageUtil.get(request, "this-cluster-node-does-not-have-liferay-connected-services-client-installed") %>',
-					tooltipConnect: '<%= UnicodeLanguageUtil.get(request, "connect-help") %>',
-					tooltipDisconnect: '<%= UnicodeLanguageUtil.get(request, "disconnect-help") %>'
+					ready: <%= ready %>
 				}
 			);
 		</aui:script>

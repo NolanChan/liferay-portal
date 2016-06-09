@@ -42,21 +42,56 @@ if (LCSUtil.isLCSPortletAuthorized(liferayPortletRequest)) {
 <section class="content">
 	<c:choose>
 		<c:when test="<%= !lcsPortletAuthorized || !lcsClusterNodeRegistered %>">
-			<%@ include file="/info.jspf" %>
+			<div class="container-fluid-1280">
+				<%@ include file="/info.jspf" %>
+			</div>
 		</c:when>
-		<c:when test='<%= lcsPage.equals("connection") %>'>
-			<%@ include file="/connection.jspf" %>
-		</c:when>
-		<c:when test='<%= lcsPage.equals("lcsServices") %>'>
-			<%@ include file="/lcs_services.jspf" %>
-		</c:when>
+		<c:otherwise>
+			<aui:nav-bar markupView="lexicon">
+				<aui:nav cssClass="navbar-nav">
+					<liferay-portlet:renderURL var="connectionURL">
+						<liferay-portlet:param name="lcsPage" value="connection" />
+					</liferay-portlet:renderURL>
+
+					<aui:nav-item href="<%= connectionURL %>" label="connection" selected='<%= lcsPage.equals("connection") %>' />
+
+					<liferay-portlet:renderURL var="lcsServicesURL">
+						<liferay-portlet:param name="lcsPage" value="services" />
+					</liferay-portlet:renderURL>
+
+					<aui:nav-item href="<%= lcsServicesURL %>" label="services" selected='<%= lcsPage.equals("services") %>' />
+
+					<liferay-portlet:renderURL var="infoURL">
+						<liferay-portlet:param name="lcsPage" value="info" />
+					</liferay-portlet:renderURL>
+
+					<aui:nav-item href="<%= infoURL %>" label="info" selected='<%= lcsPage.equals("info") %>' />
+				</aui:nav>
+			</aui:nav-bar>
+
+			<div class="container-fluid-1280">
+				<c:choose>
+					<c:when test='<%= lcsPage.equals("connection") %>'>
+						<%@ include file="/connection.jspf" %>
+					</c:when>
+					<c:when test='<%= lcsPage.equals("info") %>'>
+						<%@ include file="/info.jspf" %>
+					</c:when>
+					<c:when test='<%= lcsPage.equals("services") %>'>
+						<%@ include file="/lcs_services.jspf" %>
+					</c:when>
+				</c:choose>
+			</div>
+		</c:otherwise>
 	</c:choose>
 </section>
 
 <footer class="footer">
-	<div class="lcs-version">
-		<liferay-ui:message arguments="<%= LCSUtil.getLCSPortletBuildNumber() %>" key="liferay-connected-services-client-x" />
-	</div>
+	<div class="container-fluid-1280">
+		<div class="lcs-version">
+			<liferay-ui:message arguments="<%= LCSUtil.getLCSPortletBuildNumber() %>" key="liferay-connected-services-client-x" />
+		</div>
 
-	<liferay-ui:message arguments="<%= new Object[] {LCSUtil.getFeedbackURL(request), PortletPropsValues.FEEDBACK_EMAIL_ADDRESS, PortletPropsValues.JIRA_SUPPORT_PROJECT_URL} %>" key="are-you-having-problems" />
+		<liferay-ui:message arguments="<%= new Object[] {LCSUtil.getFeedbackURL(request), PortletPropsValues.FEEDBACK_EMAIL_ADDRESS, PortletPropsValues.JIRA_SUPPORT_PROJECT_URL} %>" key="are-you-having-problems" />
+	</div>
 </footer>

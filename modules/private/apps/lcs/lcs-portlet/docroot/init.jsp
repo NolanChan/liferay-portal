@@ -40,7 +40,6 @@ page import="com.liferay.lcs.util.LCSConstants" %><%@
 page import="com.liferay.lcs.util.LCSUtil" %><%@
 page import="com.liferay.lcs.util.PortletPropsValues" %><%@
 page import="com.liferay.portal.kernel.cluster.ClusterExecutorUtil" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
