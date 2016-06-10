@@ -19,7 +19,7 @@ dependencies {
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
 	provided group: "com.liferay", name: "com.liferay.portal.workflow.kaleo.designer.api", version: "1.0.0"
 	provided project(":private:apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-designer-web")
-	provided project(":private:apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-forms-api")
+	provided group: "com.liferay", name: "com.liferay.portal.workflow.kaleo.forms.api", version: "1.0.0"
 	provided project(":private:apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-forms-service")
 }
 
