@@ -77,7 +77,7 @@ public class SQLServerDataPartitioningExporter
 			sb.append(field);
 		}
 		else if ((field instanceof Date) || (field instanceof Timestamp)) {
-			sb.append("CONVERT(");
+			sb.append("CAST(");
 			sb.append("'");
 			sb.append(formatDateTime(field));
 			sb.append("' AS datetime)");
