@@ -25,5 +25,5 @@
 		<liferay-ui:message arguments="<%= new Object[] {PortletPropsValues.LRDCOM_PRODUCT_PAGE_URL, PortletPropsValues.LRDCOM_USER_DOCUMENTATION_URL} %>" key="liferay-connected-services-is-a-set-of-online-tools-and-services-that-lets-you-manage-and-monitor-your-liferay-installations" />
 	</p>
 
-	<aui:a cssClass="btn" href="<%= PortletPropsValues.LRDCOM_PRODUCT_PAGE_URL %>" label="see-more" target="_blank" />
+	<aui:a cssClass="btn btn-primary" href="<%= LCSUtil.getLCSPortalURL() %>" label="get-started" target="_blank" />
 </div>
