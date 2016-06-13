@@ -55,12 +55,6 @@ if (LCSUtil.isLCSPortletAuthorized(liferayPortletRequest)) {
 
 					<aui:nav-item href="<%= connectionURL %>" label="connection" selected='<%= lcsPage.equals("connection") %>' />
 
-					<liferay-portlet:renderURL var="lcsServicesURL">
-						<liferay-portlet:param name="lcsPage" value="services" />
-					</liferay-portlet:renderURL>
-
-					<aui:nav-item href="<%= lcsServicesURL %>" label="services" selected='<%= lcsPage.equals("services") %>' />
-
 					<liferay-portlet:renderURL var="infoURL">
 						<liferay-portlet:param name="lcsPage" value="info" />
 					</liferay-portlet:renderURL>
@@ -76,9 +70,6 @@ if (LCSUtil.isLCSPortletAuthorized(liferayPortletRequest)) {
 					</c:when>
 					<c:when test='<%= lcsPage.equals("info") %>'>
 						<%@ include file="/info.jspf" %>
-					</c:when>
-					<c:when test='<%= lcsPage.equals("services") %>'>
-						<%@ include file="/lcs_services.jspf" %>
 					</c:when>
 				</c:choose>
 			</div>

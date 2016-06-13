@@ -11,8 +11,6 @@ AUI.add(
 
 		var CSS_ALERT_WARNING = 'alert-warning';
 
-		var EVENT_CHANGE = 'change';
-
 		var EVENT_CLICK = 'click';
 
 		var STR_BLANK = '';
@@ -34,48 +32,6 @@ AUI.add(
 				NAME: 'lcs',
 
 				prototype: {
-					initializeConfigureLCSServicesPage: function(config) {
-						var instance = this;
-
-						var portalPropertiesSecuritySensitiveNodes = instance.all('.portal-properties-security-sensitive');
-
-						portalPropertiesSecuritySensitiveNodes.each(
-							function(item, index, collection) {
-								instance._initializeTooltip(item, config.portalPropertiesSecuritySensitive);
-							}
-						);
-
-						var enableAllServicesCheckbox = instance.byId('enableAllLCSServices');
-						var lcsServicesPanel = instance.byId('lcsServicesPanel');
-						var propertiesPanel = instance.byId('propertiesPanel');
-
-						var lcsServicesCheckboxes = lcsServicesPanel.all('input:checkbox:not(:disabled)');
-
-						enableAllServicesCheckbox.on(
-							EVENT_CHANGE,
-							function(event) {
-								var enableAllLCSServices = enableAllServicesCheckbox.attr(STR_CHECKED);
-
-								lcsServicesCheckboxes.attr(STR_CHECKED, enableAllLCSServices);
-
-								lcsServicesPanel.toggle(!enableAllLCSServices);
-
-								propertiesPanel.toggle(enableAllLCSServices);
-							}
-						);
-
-						var portalPropertiesLCSServiceEnabledCheckbox = instance.byId(config.portalPropertiesLCSServiceEnabled);
-
-						portalPropertiesLCSServiceEnabledCheckbox.on(
-							EVENT_CHANGE,
-							function(event) {
-								var val = portalPropertiesLCSServiceEnabledCheckbox.attr(STR_CHECKED);
-
-								propertiesPanel.toggle(val);
-							}
-						);
-					},
-
 					initializeConnectionPage: function(config) {
 						var instance = this;
 
@@ -200,14 +156,6 @@ AUI.add(
 							instance._disconnectButton = disconnectButton;
 						}
 
-						var erroneousClusterNodes = instance.all('.cluster-node-error');
-
-						erroneousClusterNodes.each(
-							function(item, index, collection) {
-								instance._initializeTooltip(item, config.clusterNodeError);
-							}
-						);
-
 						if (pending) {
 							instance._getConnectionStatus();
 						}
@@ -261,19 +209,6 @@ AUI.add(
 								}
 							}
 						);
-					},
-
-					_initializeTooltip: function(trigger, bodyContent) {
-						var instance = this;
-
-						if (trigger) {
-							trigger.on(
-								'mouseover',
-								function(event) {
-									Liferay.Portal.ToolTip.show(this, bodyContent);
-								}
-							);
-						}
 					},
 
 					_refreshConnectionControls: function(pending, ready) {
