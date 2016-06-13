@@ -763,28 +763,32 @@ public class LCSUtil {
 		javax.portlet.PortletPreferences jxPortletPreferences =
 			fetchJxPortletPreferences();
 
-		if (lcsServicesConfiguration.containsKey(
-				LCSConstants.METRICS_LCS_SERVICE_ENABLED)) {
+		jxPortletPreferences.setValue(
+			LCSConstants.METRICS_LCS_SERVICE_ENABLED,
+			lcsServicesConfiguration.get(
+				LCSConstants.METRICS_LCS_SERVICE_ENABLED));
+
+		jxPortletPreferences.setValue(
+			LCSConstants.PATCHES_LCS_SERVICE_ENABLED,
+			lcsServicesConfiguration.get(
+				LCSConstants.PATCHES_LCS_SERVICE_ENABLED));
+
+		if (GetterUtil.getBoolean(
+				lcsServicesConfiguration.get(
+					LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED))) {
 
 			jxPortletPreferences.setValue(
-				LCSConstants.METRICS_LCS_SERVICE_ENABLED, StringPool.TRUE);
-		}
-
-		if (lcsServicesConfiguration.containsKey(
-				LCSConstants.PATCHES_LCS_SERVICE_ENABLED)) {
-
-			jxPortletPreferences.setValue(
-				LCSConstants.PATCHES_LCS_SERVICE_ENABLED, StringPool.TRUE);
-		}
-
-		if (lcsServicesConfiguration.containsKey(
-				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED)) {
+				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED,
+				lcsServicesConfiguration.get(
+					LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED));
 
 			jxPortletPreferences.setValue(
 				LCSConstants.PORTAL_PROPERTIES_BLACKLIST,
 				lcsServicesConfiguration.get(
-					LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED));
+					LCSConstants.PORTAL_PROPERTIES_BLACKLIST));
 		}
+
+		jxPortletPreferences.store();
 	}
 
 	public static void validateLCSClusterNodeLCSClusterEntry()
