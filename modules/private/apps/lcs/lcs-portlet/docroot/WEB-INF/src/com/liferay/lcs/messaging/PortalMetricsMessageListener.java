@@ -84,7 +84,11 @@ public class PortalMetricsMessageListener implements MessageListener, Runnable {
 
 	@Override
 	public void receive(Message message) {
-		if (!isLCSConnectionManagerReady()) {
+		if (!_lcsConnectionManager.isReady()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Waiting for LCS connection manager");
+			}
+
 			return;
 		}
 
@@ -241,10 +245,6 @@ public class PortalMetricsMessageListener implements MessageListener, Runnable {
 	}
 
 	protected void doRun() {
-		if (!isLCSConnectionManagerReady()) {
-			return;
-		}
-
 		if (_performanceMetricsMap.size() == 0) {
 			return;
 		}
@@ -362,18 +362,6 @@ public class PortalMetricsMessageListener implements MessageListener, Runnable {
 		}
 
 		return performanceMetrics;
-	}
-
-	protected boolean isLCSConnectionManagerReady() {
-		if (_lcsConnectionManager.isReady()) {
-			return true;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Waiting for LCS connection manager");
-		}
-
-		return false;
 	}
 
 	protected void updatePerformanceMetricsMap(

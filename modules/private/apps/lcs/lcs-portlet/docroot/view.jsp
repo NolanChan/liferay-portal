@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String lcsPage = ParamUtil.getString(request, "lcsPage", "connection");
+boolean configureLCSServices = ParamUtil.getBoolean(request, "configureLCSServices");
 
 boolean lcsClusterNodeRegistered = false;
 boolean lcsPortletAuthorized = false;
@@ -41,14 +41,21 @@ if (LCSUtil.isLCSPortletAuthorized(liferayPortletRequest)) {
 
 <section class="content">
 	<c:choose>
-		<c:when test="<%= !lcsPortletAuthorized || !lcsClusterNodeRegistered %>">
-			<%@ include file="/info.jspf" %>
+		<c:when test="<%= configureLCSServices || !LCSUtil.hasLCSServicesPreferences() %>">
+			<liferay-util:include page="/configure_lcs_services.jsp" servletContext="<%= application %>" />
 		</c:when>
-		<c:when test='<%= lcsPage.equals("connection") %>'>
-			<%@ include file="/connection.jspf" %>
+		<c:when test="<%= lcsPortletAuthorized %>">
+			<c:choose>
+				<c:when test="<%= lcsClusterNodeRegistered %>">
+					<liferay-util:include page="/view_lcs_cluster_node.jsp" servletContext="<%= application %>" />
+				</c:when>
+				<c:otherwise>
+					<liferay-util:include page="/register.jsp" servletContext="<%= application %>" />
+				</c:otherwise>
+			</c:choose>
 		</c:when>
-		<c:when test='<%= lcsPage.equals("lcsServices") %>'>
-			<%@ include file="/lcs_services.jspf" %>
+		<c:when test='<%= !SessionErrors.contains(liferayPortletRequest, "generalPluginAccess") %>'>
+			<liferay-util:include page="/login.jsp" servletContext="<%= application %>" />
 		</c:when>
 	</c:choose>
 </section>
@@ -57,6 +64,26 @@ if (LCSUtil.isLCSPortletAuthorized(liferayPortletRequest)) {
 	<div class="lcs-version">
 		<liferay-ui:message arguments="<%= LCSUtil.getLCSPortletBuildNumber() %>" key="liferay-connected-services-client-x" />
 	</div>
+
+	<%
+	Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts();
+	%>
+
+	<c:if test="<%= (lcsClusterEntryTokenAlerts.size() > 1) || !lcsClusterEntryTokenAlerts.contains(LCSAlert.WARNING_MISSING_TOKEN) %>">
+
+		<%
+		for (LCSAlert lcsAlert : lcsClusterEntryTokenAlerts) {
+		%>
+
+			<div class="<%= lcsAlert.getCSSClass() %>">
+				<liferay-ui:message key="<%= lcsAlert.getLabel() %>" />
+			</div>
+
+		<%
+		}
+		%>
+
+	</c:if>
 
 	<liferay-ui:message arguments="<%= new Object[] {LCSUtil.getFeedbackURL(request), PortletPropsValues.FEEDBACK_EMAIL_ADDRESS, PortletPropsValues.JIRA_SUPPORT_PROJECT_URL} %>" key="are-you-having-problems" />
 </footer>

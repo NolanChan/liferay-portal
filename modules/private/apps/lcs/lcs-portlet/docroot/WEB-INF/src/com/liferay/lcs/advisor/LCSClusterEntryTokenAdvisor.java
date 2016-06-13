@@ -75,6 +75,8 @@ public class LCSClusterEntryTokenAdvisor {
 
 		_lcsAlertAdvisor.add(LCSAlert.ERROR_ENVIRONMENT_MISMATCH);
 
+		_lcsAlertAdvisor.remove(LCSAlert.SUCCESS_VALID_TOKEN);
+
 		deleteLCSCLusterEntryTokenFile();
 
 		throw new InvalidLCSClusterEntryTokenException(
@@ -90,6 +92,8 @@ public class LCSClusterEntryTokenAdvisor {
 				lcsClusterEntryTokenId);
 
 		if (lcsClusterEntryToken != null) {
+			_lcsAlertAdvisor.add(LCSAlert.SUCCESS_VALID_TOKEN);
+
 			return;
 		}
 
@@ -122,6 +126,8 @@ public class LCSClusterEntryTokenAdvisor {
 
 			_lcsAlertAdvisor.add(LCSAlert.ERROR_ENVIRONMENT_MISMATCH);
 
+			_lcsAlertAdvisor.remove(LCSAlert.SUCCESS_VALID_TOKEN);
+
 			deleteLCSCLusterEntryTokenFile();
 
 			throw new InvalidLCSClusterEntryTokenException(
@@ -141,6 +147,8 @@ public class LCSClusterEntryTokenAdvisor {
 				cachedLCSClusterEntryTokenId)) {
 
 			_lcsAlertAdvisor.add(LCSAlert.ERROR_ENVIRONMENT_MISMATCH);
+
+			_lcsAlertAdvisor.remove(LCSAlert.SUCCESS_VALID_TOKEN);
 
 			deleteLCSCLusterEntryTokenFile();
 
@@ -346,39 +354,30 @@ public class LCSClusterEntryTokenAdvisor {
 
 		Map<String, String> lcsServicesConfiguration = new HashMap<>();
 
-		lcsServicesConfiguration.put(
-			LCSConstants.METRICS_LCS_SERVICE_ENABLED,
-			String.valueOf(
-				content.contains(LCSConstants.METRICS_LCS_SERVICE_ENABLED)));
-
-		lcsServicesConfiguration.put(
-			LCSConstants.PATCHES_LCS_SERVICE_ENABLED,
-			String.valueOf(
-				content.contains(LCSConstants.PATCHES_LCS_SERVICE_ENABLED)));
-
-		lcsServicesConfiguration.put(
-			LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED,
-			String.valueOf(
-				content.contains(
-					LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED)));
-
-		if (!content.contains(
-				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED)) {
-
-			return lcsServicesConfiguration;
+		if (content.contains(LCSConstants.METRICS_LCS_SERVICE_ENABLED)) {
+			lcsServicesConfiguration.put(
+				LCSConstants.METRICS_LCS_SERVICE_ENABLED, StringPool.TRUE);
 		}
 
-		int propertiesStartIndex = content.indexOf(
-			LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED);
+		if (content.contains(LCSConstants.PATCHES_LCS_SERVICE_ENABLED)) {
+			lcsServicesConfiguration.put(
+				LCSConstants.PATCHES_LCS_SERVICE_ENABLED, StringPool.TRUE);
+		}
 
-		String portalPropertiesBlacklist =
-			content.substring(
+		if (content.contains(
+				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED)) {
+
+			int propertiesStartIndex = content.indexOf(
+				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED);
+
+			String portalPropertiesBlacklist = content.substring(
 				content.indexOf(StringPool.DOUBLE_DASH, propertiesStartIndex) +
 					2);
 
-		lcsServicesConfiguration.put(
-			LCSConstants.PORTAL_PROPERTIES_BLACKLIST,
-			portalPropertiesBlacklist);
+			lcsServicesConfiguration.put(
+				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED,
+				portalPropertiesBlacklist);
+		}
 
 		return lcsServicesConfiguration;
 	}
