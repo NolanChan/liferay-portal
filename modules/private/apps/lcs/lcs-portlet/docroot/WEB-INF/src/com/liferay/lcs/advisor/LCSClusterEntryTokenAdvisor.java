@@ -346,30 +346,39 @@ public class LCSClusterEntryTokenAdvisor {
 
 		Map<String, String> lcsServicesConfiguration = new HashMap<>();
 
-		if (content.contains(LCSConstants.METRICS_LCS_SERVICE_ENABLED)) {
-			lcsServicesConfiguration.put(
-				LCSConstants.METRICS_LCS_SERVICE_ENABLED, StringPool.TRUE);
-		}
+		lcsServicesConfiguration.put(
+			LCSConstants.METRICS_LCS_SERVICE_ENABLED,
+			String.valueOf(
+				content.contains(LCSConstants.METRICS_LCS_SERVICE_ENABLED)));
 
-		if (content.contains(LCSConstants.PATCHES_LCS_SERVICE_ENABLED)) {
-			lcsServicesConfiguration.put(
-				LCSConstants.PATCHES_LCS_SERVICE_ENABLED, StringPool.TRUE);
-		}
+		lcsServicesConfiguration.put(
+			LCSConstants.PATCHES_LCS_SERVICE_ENABLED,
+			String.valueOf(
+				content.contains(LCSConstants.PATCHES_LCS_SERVICE_ENABLED)));
 
-		if (content.contains(
+		lcsServicesConfiguration.put(
+			LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED,
+			String.valueOf(
+				content.contains(
+					LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED)));
+
+		if (!content.contains(
 				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED)) {
 
-			int propertiesStartIndex = content.indexOf(
-				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED);
+			return lcsServicesConfiguration;
+		}
 
-			String portalPropertiesBlacklist = content.substring(
+		int propertiesStartIndex = content.indexOf(
+			LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED);
+
+		String portalPropertiesBlacklist =
+			content.substring(
 				content.indexOf(StringPool.DOUBLE_DASH, propertiesStartIndex) +
 					2);
 
-			lcsServicesConfiguration.put(
-				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED,
-				portalPropertiesBlacklist);
-		}
+		lcsServicesConfiguration.put(
+			LCSConstants.PORTAL_PROPERTIES_BLACKLIST,
+			portalPropertiesBlacklist);
 
 		return lcsServicesConfiguration;
 	}
