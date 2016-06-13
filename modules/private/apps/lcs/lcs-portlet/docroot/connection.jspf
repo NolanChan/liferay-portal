@@ -140,84 +140,6 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 			<li class="list-group-item">
 				<aui:row>
 					<aui:col width="<%= 50 %>">
-						<liferay-ui:message key="heartbeat-interval" />
-
-						<liferay-ui:icon-help message="heartbeat-interval-help" />
-					</aui:col>
-
-					<aui:col width="<%= 50 %>">
-
-						<%
-						Date heartbeatIntervalDate = new Date(GetterUtil.getLong(lcsConnectionMetadata.get("heartbeatInterval")));
-						%>
-
-						<%= intervalDateFormatDate.format(heartbeatIntervalDate) %>
-					</aui:col>
-				</aui:row>
-			</li>
-
-			<li class="list-group-item">
-				<aui:row>
-					<aui:col width="<%= 50 %>">
-						<liferay-ui:message key="message-task-interval" />
-
-						<liferay-ui:icon-help message="message-task-interval-help" />
-					</aui:col>
-
-					<aui:col width="<%= 50 %>">
-
-						<%
-						Date messageTaskIntervalDate = new Date(GetterUtil.getLong(lcsConnectionMetadata.get("messageTaskInterval")));
-						%>
-
-						<%= intervalDateFormatDate.format(messageTaskIntervalDate) %>
-					</aui:col>
-				</aui:row>
-			</li>
-
-			<li class="list-group-item">
-				<aui:row>
-					<aui:col width="<%= 50 %>">
-						<liferay-ui:message key="metrics-task-interval" />
-
-						<liferay-ui:icon-help message="metrics-task-interval-help" />
-					</aui:col>
-
-					<aui:col width="<%= 50 %>">
-
-						<%
-						Date jvmMetricsTaskIntervalDate = new Date(GetterUtil.getLong(lcsConnectionMetadata.get("jvmMetricsTaskInterval")));
-						%>
-
-						<%= intervalDateFormatDate.format(jvmMetricsTaskIntervalDate) %>
-					</aui:col>
-				</aui:row>
-			</li>
-
-			<c:if test='<%= lcsConnectionMetadata.get("messageTaskTime") != null %>'>
-				<li class="list-group-item">
-					<aui:row>
-						<aui:col width="<%= 50 %>">
-							<liferay-ui:message key="last-message-received" />
-
-							<liferay-ui:icon-help message="last-message-received-help" />
-						</aui:col>
-
-						<aui:col width="<%= 50 %>">
-
-							<%
-							Date messageTaskTimeDate = new Date(GetterUtil.getLong(lcsConnectionMetadata.get("messageTaskTime")));
-							%>
-
-							<%= dateFormatDate.format(messageTaskTimeDate) %>
-						</aui:col>
-					</aui:row>
-				</li>
-			</c:if>
-
-			<li class="list-group-item">
-				<aui:row>
-					<aui:col width="<%= 50 %>">
 						<liferay-ui:message key="connection-uptime" />
 
 						<liferay-ui:icon-help message="connection-uptime-help" />
@@ -242,6 +164,92 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 					</aui:col>
 				</aui:row>
 			</li>
+
+			<li class="list-group-item">
+				<aui:row>
+					<aui:col width="<%= 50 %>">
+						<liferay-ui:message key="last-message-received" />
+
+						<liferay-ui:icon-help message="last-message-received-help" />
+					</aui:col>
+
+					<aui:col width="<%= 50 %>">
+						<c:if test='<%= lcsConnectionMetadata.get("messageTaskTime") != null %>'>
+
+							<%
+							Date messageTaskTimeDate = new Date(GetterUtil.getLong(lcsConnectionMetadata.get("messageTaskTime")));
+							%>
+
+							<%= dateFormatDate.format(messageTaskTimeDate) %>
+						</c:if>
+					</aui:col>
+				</aui:row>
+			</li>
+		</ul>
+
+		<ul class="list-group">
+			<li class="list-group-heading">
+				<liferay-ui:message key="services" />
+			</li>
+
+			<%
+			Map<String, Boolean> lcsServicesPreferences = LCSUtil.getLCSServicesPreferences();
+			%>
+
+			<li class="list-group-item">
+				<aui:row>
+					<aui:col width="<%= 50 %>">
+						<liferay-ui:message key="portal-analytics" />
+					</aui:col>
+
+					<aui:col width="<%= 50 %>">
+						<liferay-ui:message key='<%= lcsServicesPreferences.get(LCSConstants.METRICS_LCS_SERVICE_ENABLED) ? "enabled" : "disabled" %>' />
+					</aui:col>
+				</aui:row>
+			</li>
+
+			<li class="list-group-item">
+				<aui:row>
+					<aui:col width="<%= 50 %>">
+						<liferay-ui:message key="fix-packs-management" />
+					</aui:col>
+
+					<aui:col width="<%= 50 %>">
+						<liferay-ui:message key='<%= lcsServicesPreferences.get(LCSConstants.PATCHES_LCS_SERVICE_ENABLED) ? "enabled" : "disabled" %>' />
+					</aui:col>
+				</aui:row>
+			</li>
+
+			<li class="list-group-item">
+				<aui:row>
+					<aui:col width="<%= 50 %>">
+						<liferay-ui:message key="portal-properties-analysis" />
+					</aui:col>
+
+					<aui:col width="<%= 50 %>">
+						<liferay-ui:message key='<%= lcsServicesPreferences.get(LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED) ? "enabled" : "disabled" %>' />
+					</aui:col>
+				</aui:row>
+			</li>
+
+			<c:if test="<%= lcsServicesPreferences.get(LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED) %>">
+
+				<%
+				String properties = String.valueOf(lcsServicesPreferences.get(LCSConstants.PORTAL_PROPERTIES_BLACKLIST));
+				%>
+
+				<li class="list-group-item">
+					<aui:row>
+						<aui:col width="<%= 50 %>">
+							<liferay-ui:message key="additional-blacklisted-properties" />
+						</aui:col>
+
+						<aui:col width="<%= 50 %>">
+							<%= Validator.isNull(properties) ? StringPool.BLANK : properties.replaceAll(StringPool.COMMA, "<br />") %>
+						</aui:col>
+					</aui:row>
+				</li>
+			</c:if>
 		</ul>
 
 		<ul class="list-group">
@@ -313,49 +321,39 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 							<%= localClusterNodeInfo.get("key") %>
 						</aui:col>
 					</aui:row>
+				</li>
 
-					<%
-					List<Map<String, Object>> clusterNodeInfos = ClusterNodeUtil.getClusterNodeInfos();
-					%>
+				<%
+				for (Map<String, Object> clusterNodeInfo : ClusterNodeUtil.getClusterNodeInfos()) {
+				%>
 
-					<c:if test="<%= !clusterNodeInfos.isEmpty() %>">
+					<li class="list-group-item">
 						<aui:row>
 							<aui:col width="<%= 50 %>">
-								<liferay-ui:message key="sibling-cluster-nodes-keys" />
+								<liferay-ui:message key="sibling-cluster-node-key" />
 							</aui:col>
 
 							<aui:col width="<%= 50 %>">
+								<div class="cluster-node-key">
+									<%= clusterNodeInfo.get("key") %>
+								</div>
 
-								<%
-								for (Map<String, Object> clusterNodeInfo : ClusterNodeUtil.getClusterNodeInfos()) {
-								%>
-
-									<c:choose>
-										<c:when test='<%= clusterNodeInfo.containsKey("lcsPortletMissing") %>'>
-											<div class="cluster-node-error">
-												<%= clusterNodeInfo.get("key") %>
-
-												<i class="icon-warning-sign"></i>
-											</div>
-										</c:when>
-										<c:otherwise>
-											<%= clusterNodeInfo.get("key") %>
-										</c:otherwise>
-									</c:choose>
-
-								<%
-								}
-								%>
-
+								<c:if test='<%= clusterNodeInfo.containsKey("lcsPortletMissing") %>'>
+									<div class="alert alert-danger">
+										<liferay-ui:message key="this-cluster-node-does-not-have-liferay-connected-services-client-installed" />
+									</div>
+								</c:if>
 							</aui:col>
 						</aui:row>
-					</c:if>
-				</li>
+					</li>
+
+				<%
+				}
+				%>
+
 			</ul>
 
-			<div class="<%= ClusterExecutorUtil.isEnabled() ? StringPool.BLANK : "hide" %>">
-				<aui:input checked="<%= true %>" id="applyToSiblingClusterNodes" label="when-connecting-or-disconnecting-this-node-connect-or-disconnect-all-nodes-in-the-cluster" name="applyToSiblingClusterNodes" type="checkbox" />
-			</div>
+			<aui:input checked="<%= true %>" id="applyToSiblingClusterNodes" label="when-connecting-or-disconnecting-this-node-connect-or-disconnect-all-nodes-in-the-cluster" name="applyToSiblingClusterNodes" type="checkbox" />
 		</c:if>
 
 		<aui:button-row>
@@ -379,7 +377,6 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 					disconnectURL: '<portlet:resourceURL id="disconnect" />',
 					handshakeTime: <%= handshakeTime %>,
 					labels: {
-						clusterNodeError: '<%= UnicodeLanguageUtil.get(request, "this-cluster-node-does-not-have-liferay-connected-services-client-installed") %>',
 						connected: '<%= UnicodeLanguageUtil.get(request, "connected") %>',
 						disconnected: '<%= UnicodeLanguageUtil.get(request, "disconnected") %>',
 						pending: '<%= UnicodeLanguageUtil.get(request, "synchronizing") %>'
