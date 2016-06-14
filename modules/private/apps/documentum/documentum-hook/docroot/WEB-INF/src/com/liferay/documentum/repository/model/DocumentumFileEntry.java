@@ -57,7 +57,7 @@ public class DocumentumFileEntry
 	@Override
 	public String getTitle() {
 		try {
-			return _idfDocument.getObjectName();
+			return _idfDocumentLastVersion.getObjectName();
 		}
 		catch (DfException de) {
 			throw new SystemException(de);

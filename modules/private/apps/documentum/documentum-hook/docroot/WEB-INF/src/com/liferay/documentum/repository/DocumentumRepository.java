@@ -456,7 +456,10 @@ public class DocumentumRepository
 				IDfDocument idfDocument = getIDfSysObject(
 					IDfDocument.class, extRepositoryFileEntry);
 
-				return idfDocument.getContent();
+				IDfDocument latestIDfDocument = getLatestIDfDocument(
+					idfSession, idfDocument);
+
+				return latestIDfDocument.getContent();
 			}
 
 		};
