@@ -34,6 +34,10 @@ body.open-admin-panel, body.sidenav-transition {
 	}
 }
 
+.lfr-add-panel.open-admin-panel {
+	visibility: visible;
+}
+
 .lfr-admin-panel {
 	.product-menu {
 		@include sm() {
