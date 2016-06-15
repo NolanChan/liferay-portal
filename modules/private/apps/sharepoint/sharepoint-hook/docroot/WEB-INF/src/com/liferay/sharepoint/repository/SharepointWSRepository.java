@@ -61,7 +61,9 @@ import com.liferay.sharepoint.repository.model.SharepointWSObject;
 import com.liferay.sharepoint.repository.search.SharepointQueryBuilder;
 
 import java.io.InputStream;
+
 import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -972,20 +974,6 @@ public class SharepointWSRepository
 		}
 	}
 
-	protected void validateExtension(String oldPath, String newPath)
-		throws PortalException {
-
-		String oldExtension = pathHelper.getExtension(oldPath);
-
-		String newExtension = pathHelper.getExtension(newPath);
-
-		if (!newExtension.equals(oldExtension)) {
-			throw new SourceFileNameException(
-				"Sharepoint connector does not support changing the file " +
-					"extension");
-		}
-	}
-
 	protected <T extends ExtRepositoryObject> T toExtRepositoryObject(
 		ExtRepositoryObjectType<T> extRepositoryObjectType,
 		SharepointObject sharepointObject) {
@@ -1030,6 +1018,20 @@ public class SharepointWSRepository
 
 	protected long toSharepointObjectId(String key) {
 		return GetterUtil.getLong(key);
+	}
+
+	protected void validateExtension(String oldPath, String newPath)
+		throws PortalException {
+
+		String oldExtension = pathHelper.getExtension(oldPath);
+
+		String newExtension = pathHelper.getExtension(newPath);
+
+		if (!newExtension.equals(oldExtension)) {
+			throw new SourceFileNameException(
+				"Sharepoint connector does not support changing the file " +
+					"extension");
+		}
 	}
 
 	protected static PathHelper pathHelper = new PathHelper();
