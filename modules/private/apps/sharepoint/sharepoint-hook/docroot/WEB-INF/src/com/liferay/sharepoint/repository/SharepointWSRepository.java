@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
+import com.liferay.document.library.kernel.exception.SourceFileNameException;
 import com.liferay.document.library.repository.external.CredentialsProvider;
 import com.liferay.document.library.repository.external.ExtRepository;
 import com.liferay.document.library.repository.external.ExtRepositoryAdapter;
@@ -60,9 +61,7 @@ import com.liferay.sharepoint.repository.model.SharepointWSObject;
 import com.liferay.sharepoint.repository.search.SharepointQueryBuilder;
 
 import java.io.InputStream;
-
 import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -764,9 +763,10 @@ public class SharepointWSRepository
 
 	@Override
 	public <T extends ExtRepositoryObject> T moveExtRepositoryObject(
-		ExtRepositoryObjectType<T> extRepositoryObjectType,
-		String extRepositoryObjectKey, String newExtRepositoryFolderKey,
-		String newTitle) {
+			ExtRepositoryObjectType<T> extRepositoryObjectType,
+			String extRepositoryObjectKey, String newExtRepositoryFolderKey,
+			String newTitle)
+		throws PortalException {
 
 		try {
 			SharepointConnection sharepointConnection =
@@ -786,7 +786,7 @@ public class SharepointWSRepository
 
 			String newPath = pathHelper.buildPath(folderPath, newTitle);
 
-			newPath = resetNewPathExtension(path, newPath);
+			validateExtension(path, newPath);
 
 			if (path.equals(newPath)) {
 				return toExtRepositoryObject(
@@ -972,21 +972,18 @@ public class SharepointWSRepository
 		}
 	}
 
-	protected String resetNewPathExtension(String oldPath, String newPath) {
+	protected void validateExtension(String oldPath, String newPath)
+		throws PortalException {
+
 		String oldExtension = pathHelper.getExtension(oldPath);
 
 		String newExtension = pathHelper.getExtension(newPath);
 
-		if (newExtension.equals(oldExtension)) {
-			return newPath;
+		if (!newExtension.equals(oldExtension)) {
+			throw new SourceFileNameException(
+				"Sharepoint connector does not support changing the file " +
+					"extension");
 		}
-
-		String parentFolderPath = pathHelper.getParentFolderPath(newPath);
-
-		String newName = pathHelper.getNameWithoutExtension(newPath);
-
-		return pathHelper.buildPath(
-			parentFolderPath, newName + "." + oldExtension);
 	}
 
 	protected <T extends ExtRepositoryObject> T toExtRepositoryObject(
