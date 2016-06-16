@@ -124,6 +124,9 @@ import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * This class is responsible for the render and the interactions of Kaleo Forms
+ * Admin portlet.
+ *
  * @author Marcellus Tavares
  * @author Eduardo Lundgren
  */
@@ -156,6 +159,20 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class KaleoFormsAdminPortlet extends MVCPortlet {
 
+	/**
+	 * Deactivate the {@link WorkflowDefinition}, associated with the attributes
+	 * name and version.
+	 *
+	 * <p>
+	 * If the deactivate failed, an error key is submitted to {@link
+	 * SessionErrors}.
+	 * </p>
+	 *
+	 * @param  actionRequest the request from which to get the request
+	 *         parameters
+	 * @param  actionResponse the response to receive the render parameters
+	 * @throws Exception if an exception occurred
+	 */
 	public void deactivateWorkflowDefinition(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -187,6 +204,17 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	/**
+	 * Delete {@link DDLRecord} associated with record ID or the records ID, is
+	 * also delete {@link WorkflowInstanceLink} associated with the same
+	 * attribute and name of the class {@link KaleoProcess}, this method uses
+	 * {@link TransactionInvokerUtil}.
+	 *
+	 * @param  actionRequest the request from which to get the request
+	 *         parameters
+	 * @param  actionResponse the response to receive the render parameters
+	 * @throws Exception if an exception occurred
+	 */
 	public void deleteDDLRecord(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -227,6 +255,15 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	/**
+	 * Delete the {@link KaleoDraftDefinition}, associated with the attributes
+	 * name and version.
+	 *
+	 * @param  actionRequest the request from which to get the request
+	 *         parameters
+	 * @param  actionResponse the response to receive the render parameters
+	 * @throws Exception if an exception occurred
+	 */
 	public void deleteKaleoDraftDefinition(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -241,6 +278,15 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			name, version, serviceContext);
 	}
 
+	/**
+	 * Delete the {@link KaleoProcess}, associated with kaleo process ID or the
+	 * kaleo processes ID.
+	 *
+	 * @param  actionRequest the request from which to get the request
+	 *         parameters
+	 * @param  actionResponse the response to receive the render parameters
+	 * @throws Exception if an exception occurred
+	 */
 	public void deleteKaleoProcess(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -306,6 +352,16 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	/**
+	 * Start a {@link WorkflowInstance}, it's also check permission for action
+	 * ID {@value ActionKeys#SUBMIT} and update the {@link DDLRecord} replacing
+	 * its values.
+	 *
+	 * @param  actionRequest the request from which to get the request
+	 *         parameters
+	 * @param  actionResponse the response to receive the render parameters
+	 * @throws Exception if an exception occurred
+	 */
 	public void startWorkflowInstance(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -326,6 +382,15 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			ddlRecord.getRecordId(), ddlRecord, serviceContext);
 	}
 
+	/**
+	 * Update the {@link DDLRecord} replacing its values, also check permission
+	 * for action ID {@value KaleoFormsActionKeys#COMPLETE_FORM}.
+	 *
+	 * @param  actionRequest the request from which to get the request
+	 *         parameters
+	 * @param  actionResponse the response to receive the render parameters
+	 * @throws Exception if an exception occurred
+	 */
 	public void updateDDLRecord(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -342,6 +407,15 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		updateDDLRecord(serviceContext);
 	}
 
+	/**
+	 * Create or update the {@link KaleoProcess} is also update the {@link
+	 * WorkflowDefinitionLink}.
+	 *
+	 * @param  actionRequest the request from which to get the request
+	 *         parameters
+	 * @param  actionResponse the response to receive the render parameters
+	 * @throws Exception if an exception occurred
+	 */
 	public void updateKaleoProcess(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -402,6 +476,13 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			KaleoFormsWebConfiguration.class, properties);
 	}
 
+	/**
+	 * Check permission for action ID
+	 *
+	 * @param  serviceContext the service context to be applied
+	 * @param  actionId the action ID
+	 * @throws Exception if an exception occurred
+	 */
 	protected void checkKaleoProcessPermission(
 			ServiceContext serviceContext, String actionId)
 		throws Exception {
@@ -439,6 +520,13 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	/**
+	 * Return array of records ID
+	 *
+	 * @param  actionRequest the request from which to get the request
+	 *         parameters
+	 * @return array of records ID
+	 */
 	protected long[] getDDLRecordIds(ActionRequest actionRequest) {
 		long ddlRecordId = ParamUtil.getLong(actionRequest, "ddlRecordId");
 
@@ -450,6 +538,16 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "ddlRecordIds"), 0L);
 	}
 
+	/**
+	 * Return workflow instance link ID associated the company ID, the group ID
+	 * and the record ID.
+	 *
+	 * @param  companyId the company ID
+	 * @param  groupId the group ID
+	 * @param  ddlRecordId the ddlRecord ID
+	 * @return the primary key of the Workflow Instance Link
+	 * @throws Exception if an exception occurred
+	 */
 	protected long getDDLRecordWorkfowInstanceLinkId(
 			long companyId, long groupId, long ddlRecordId)
 		throws Exception {
@@ -461,12 +559,27 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		return workfowInstanceLink.getWorkflowInstanceLinkId();
 	}
 
+	/**
+	 * Return the DDM form using the definition in JSON format
+	 *
+	 * @param  actionRequest the request from which to get the request
+	 *         parameters
+	 * @return the DDM form
+	 * @throws Exception if an exception occurred
+	 */
 	protected DDMForm getDDMForm(ActionRequest actionRequest) throws Exception {
 		String definition = ParamUtil.getString(actionRequest, "definition");
 
 		return _ddmFormJSONDeserializer.deserialize(definition);
 	}
 
+	/**
+	 * Return array of kaleo process's ID
+	 *
+	 * @param  actionRequest the request from which to get the request
+	 *         parameters
+	 * @return array of kaleo process's ID
+	 */
 	protected long[] getKaleoProcessIds(ActionRequest actionRequest) {
 		long kaleoProcessId = ParamUtil.getLong(
 			actionRequest, "kaleoProcessId");
@@ -479,6 +592,14 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "kaleoProcessIds"), 0L);
 	}
 
+	/**
+	 * Return the value of the first element identified by name contained in the
+	 * xml content, if no, returns the defaultName.
+	 *
+	 * @param  content the content in xml format
+	 * @param  defaultName the default name
+	 * @return the value of name
+	 */
 	protected String getName(String content, String defaultName) {
 		if (Validator.isNull(content)) {
 			return defaultName;
@@ -516,6 +637,17 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		return false;
 	}
 
+	/**
+	 * Stores {@link KaleoProcess}, {@link WorkflowInstance} and {@link
+	 * WorkflowTask} as attribute in this request, if the parameters
+	 * <code>kaleoProcessId</code>, <code>workflowInstanceId</code> and
+	 * <code>workflowTaskId</code> are present in <code>renderRequest</code>
+	 * respectively.
+	 *
+	 * @param  renderRequest the render request
+	 * @param  renderResponse the render response
+	 * @throws Exception if an exception occurred
+	 */
 	protected void renderKaleoProcess(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
@@ -558,6 +690,15 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	/**
+	 * Binds to this session the workflow definition, in the format <code>{@link
+	 * KaleoDraftDefinition#getName()} + "@" + {@link
+	 * KaleoDraftDefinition#getVersion()}</code>.
+	 *
+	 * @param actionRequest the request from which to get the request parameters
+	 * @param kaleoDraftDefinition the instance of the object that is used to be
+	 *        binds in the session portlet
+	 */
 	protected void saveInPortletSession(
 		ActionRequest actionRequest,
 		KaleoDraftDefinition kaleoDraftDefinition) {
@@ -570,6 +711,14 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 				kaleoDraftDefinition.getVersion());
 	}
 
+	/**
+	 * Binds to this session all parameters present in request except
+	 * "doAsUserId".
+	 *
+	 * @param  resourceRequest the resource request
+	 * @param  resourceResponse the resource response
+	 * @throws Exception if an exception occurred
+	 */
 	protected void saveInPortletSession(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
@@ -591,6 +740,14 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	/**
+	 * Send the JSON of {@link KaleoDraftDefinition} only if the name and the
+	 * draft version exist, otherwise an empty JSON is sent.
+	 *
+	 * @param  resourceRequest the resource request
+	 * @param  resourceResponse the resource response
+	 * @throws Exception if an exception occurred
+	 */
 	protected void serveKaleoDraftDefinitions(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
@@ -626,6 +783,14 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
 
+	/**
+	 * Send a file with all exported records or only the records approved the
+	 * file format will be determined by file extension.
+	 *
+	 * @param  resourceRequest the resource request
+	 * @param  resourceResponse the resource response
+	 * @throws Exception if an exception occurred
+	 */
 	protected void serveKaleoProcess(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
@@ -721,6 +886,12 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		_ddmFormValuesMerger = ddmFormValuesMerger;
 	}
 
+	/**
+	 * Stores {@link KaleoFormsAdminDisplayContext as attribute in this request.
+	 *
+	 * @param renderRequest the render request
+	 * @param renderResponse the render response
+	 */
 	protected void setDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -767,6 +938,19 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		_workflowInstanceLinkLocalService = workflowInstanceLinkLocalService;
 	}
 
+	/**
+	 * Updates the kaleo process's asset with new asset categories, tag names,
+	 * and link entries, removing and adding them as necessary.
+	 *
+	 * @param  userId the primary key of the user updating the record's asset
+	 * @param  ddlRecord the record
+	 * @param  kaleoProcess the kaleo process
+	 * @param  assetCategoryIds the primary keys of the new asset categories
+	 * @param  assetTagNames the new asset tag names
+	 * @param  locale the locale to apply to the asset
+	 * @param  priority the new priority
+	 * @throws PortalException if an exception occurred
+	 */
 	protected void updateAssetEntry(
 			long userId, DDLRecord ddlRecord, KaleoProcess kaleoProcess,
 			long[] assetCategoryIds, String[] assetTagNames, Locale locale,
@@ -794,6 +978,14 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			0, 0, priority);
 	}
 
+	/**
+	 * Create or update the record, replacing its values and update kaleo
+	 * process's asset.
+	 *
+	 * @param  serviceContext the service context to be applied
+	 * @return the record
+	 * @throws Exception if an exception occurred
+	 */
 	protected DDLRecord updateDDLRecord(ServiceContext serviceContext)
 		throws Exception {
 

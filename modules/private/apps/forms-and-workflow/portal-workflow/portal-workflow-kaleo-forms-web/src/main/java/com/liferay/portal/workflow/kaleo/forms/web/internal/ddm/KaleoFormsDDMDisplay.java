@@ -43,6 +43,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 
+	@Override
 	public String getEditTemplateBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classNameId,
@@ -156,6 +157,7 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 		return true;
 	}
 
+	@Override
 	protected String getDefaultViewTemplateTitle(Locale locale) {
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 
