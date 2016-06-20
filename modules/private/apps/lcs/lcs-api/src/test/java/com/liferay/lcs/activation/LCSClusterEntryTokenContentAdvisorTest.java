@@ -14,18 +14,20 @@
 
 package com.liferay.lcs.activation;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Igor Beslic
@@ -35,8 +37,7 @@ public class LCSClusterEntryTokenContentAdvisorTest extends PowerMockito {
 
 	@Test
 	public void testConstructorFromParameters() {
-		Map<String, String> lcsServicesConfiguration =
-			new HashMap<String, String>();
+		Map<String, String> lcsServicesConfiguration = new HashMap<>();
 
 		lcsServicesConfiguration.put("service-1", "true");
 		lcsServicesConfiguration.put("service-2", "true");

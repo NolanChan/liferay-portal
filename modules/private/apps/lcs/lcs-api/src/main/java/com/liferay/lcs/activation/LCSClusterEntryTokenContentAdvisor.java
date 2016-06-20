@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,9 +61,9 @@ public class LCSClusterEntryTokenContentAdvisor {
 	}
 
 	public LCSClusterEntryTokenContentAdvisor(
-			String accessSecret, String accessToken,
-			Map<String, String> lcsServicesConfiguration,
-			String portalPropertiesBlacklist) {
+		String accessSecret, String accessToken,
+		Map<String, String> lcsServicesConfiguration,
+		String portalPropertiesBlacklist) {
 
 		if (isNotValid(accessSecret) || isNotValid(accessToken)) {
 			throw new UnsupportedOperationException(
@@ -146,20 +147,6 @@ public class LCSClusterEntryTokenContentAdvisor {
 		return _portalPropertiesBlacklist;
 	}
 
-	protected boolean isNotValid(String value) {
-		if (value == null) {
-			return true;
-		}
-
-		value = value.trim();
-
-		if (value.length() == 0) {
-			return true;
-		}
-
-		return false;
-	}
-
 	protected String getContentJSONString() {
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -176,7 +163,7 @@ public class LCSClusterEntryTokenContentAdvisor {
 			rootNode.put("consumerSecret", _consumerSecret);
 		}
 
-		if (_dataCenterHostName != null ) {
+		if (_dataCenterHostName != null) {
 			rootNode.put("dataCenterHostName", _dataCenterHostName);
 		}
 
@@ -204,6 +191,20 @@ public class LCSClusterEntryTokenContentAdvisor {
 		}
 
 		return rootNode.toString();
+	}
+
+	protected boolean isNotValid(String value) {
+		if (value == null) {
+			return true;
+		}
+
+		value = value.trim();
+
+		if (value.length() == 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void processContent(String contentJSONString) throws IOException {
@@ -275,8 +276,8 @@ public class LCSClusterEntryTokenContentAdvisor {
 	private String _dataCenterHostName;
 	private String _dataCenterHostPort;
 	private String _dataCenterProtocol;
-	private Map<String, String> _lcsServicesConfiguration =
-		new HashMap<String, String>();
+	private final Map<String, String> _lcsServicesConfiguration =
+		new HashMap<>();
 	private String _portalPropertiesBlacklist;
 
 }
