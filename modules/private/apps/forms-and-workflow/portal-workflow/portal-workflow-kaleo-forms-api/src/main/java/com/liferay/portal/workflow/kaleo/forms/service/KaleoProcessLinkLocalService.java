@@ -89,6 +89,16 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	public KaleoProcessLink addKaleoProcessLink(
 		KaleoProcessLink kaleoProcessLink);
 
+	/**
+	* Adds the kaleo process link referencing the kaleo process.
+	*
+	* @param kaleoProcessId the primary key of the kaleo process
+	* @param workflowTaskName the name of the kaleo process link's workflow
+	task
+	* @param ddmTemplateId the primary key of the kaleo process link's DDM
+	template
+	* @return the kaleo process link that was added
+	*/
 	public KaleoProcessLink addKaleoProcessLink(long kaleoProcessId,
 		java.lang.String workflowTaskName, long ddmTemplateId);
 
@@ -121,6 +131,17 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	public KaleoProcessLink deleteKaleoProcessLink(long kaleoProcessLinkId)
 		throws PortalException;
 
+	/**
+	* Returns the kaleo process link matching the kaleo process and workflow
+	* task name.
+	*
+	* @param kaleoProcessId the primary key of the kaleo process link's kaleo
+	process
+	* @param workflowTaskName the name of workflow task
+	* @return the kaleo process link matching the kaleo process and workflow
+	task name, or <code>null</code> if a matching  kaleo process link
+	could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoProcessLink fetchKaleoProcessLink(long kaleoProcessId,
 		java.lang.String workflowTaskName);
@@ -149,12 +170,42 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	public KaleoProcessLink updateKaleoProcessLink(
 		KaleoProcessLink kaleoProcessLink);
 
+	/**
+	* Creates or updates the kaleo process link.
+	*
+	* @param kaleoProcessId the primary key of the kaleo process
+	* @param workflowTaskName the name of the kaleo process link's workflow
+	task
+	* @param ddmTemplateId the primary key of the kaleo process link's DDM
+	template
+	* @return the kaleo process link
+	*/
 	public KaleoProcessLink updateKaleoProcessLink(long kaleoProcessId,
 		java.lang.String workflowTaskName, long ddmTemplateId);
 
+	/**
+	* Updates the kaleo process of the kaleo process link.
+	*
+	* @param kaleoProcessLinkId the primary key of the kaleo process link
+	* @param kaleoProcessId the primary key of the kaleo process
+	* @return the kaleo process link
+	* @throws PortalException if a portal exception occurred
+	*/
 	public KaleoProcessLink updateKaleoProcessLink(long kaleoProcessLinkId,
 		long kaleoProcessId) throws PortalException;
 
+	/**
+	* Updates the kaleo process link, replacing its values.
+	*
+	* @param kaleoProcessLinkId the primary key of the kaleo process link
+	* @param kaleoProcessId the primary key of the kaleo process
+	* @param workflowTaskName the name of the kaleo process link's workflow
+	task
+	* @param ddmTemplateId the primary key of the kaleo process link's DDM
+	template
+	* @return the kaleo process link
+	* @throws PortalException if a portal exception occurred
+	*/
 	public KaleoProcessLink updateKaleoProcessLink(long kaleoProcessLinkId,
 		long kaleoProcessId, java.lang.String workflowTaskName,
 		long ddmTemplateId) throws PortalException;
@@ -227,6 +278,15 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoProcessLink> getKaleoProcessLinks(int start, int end);
 
+	/**
+	* Returns the kaleo process links matching the kaleo process.
+	*
+	* @param kaleoProcessId the primary key of the kaleo process link's kaleo
+	process
+	* @return the kaleo process links matching the kaleo process, or
+	<code>null</code> if a matching kaleo process link could not be
+	found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoProcessLink> getKaleoProcessLinks(long kaleoProcessId);
 
@@ -248,5 +308,11 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
+	/**
+	* Deletes the kaleo process links and its resources.
+	*
+	* @param kaleoProcessId the primary key of the kaleo process from which to
+	delete kaleo process links
+	*/
 	public void deleteKaleoProcessLinks(long kaleoProcessId);
 }

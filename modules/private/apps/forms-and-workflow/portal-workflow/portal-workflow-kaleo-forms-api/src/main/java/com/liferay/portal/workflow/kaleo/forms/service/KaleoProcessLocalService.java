@@ -99,6 +99,28 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoProcess addKaleoProcess(KaleoProcess kaleoProcess);
 
+	/**
+	* Adds a kaleo process.
+	*
+	* @param userId the primary key of the kaleo process's creator/owner
+	* @param groupId the primary key of the kaleo process's group
+	* @param ddmStructureId the primary key of the kaleo process's DDM
+	structure
+	* @param nameMap the kaleo process's locales and localized names
+	* @param descriptionMap the kaleo process's locales and localized
+	descriptions
+	* @param ddmTemplateId the primary key of the kaleo process's DDM template
+	* @param workflowDefinitionName the name of kaleo process's workflow
+	definition
+	* @param workflowDefinitionVersion the version of kaleo process's workflow
+	definition
+	* @param kaleoTaskFormPairs the kaleo task form pairs. See {@link
+	KaleoTaskFormPairs}
+	* @param serviceContext the service context to be applied. This can set
+	guest permissions, and group permissions for the kaleo process.
+	* @return the kaleo process
+	* @throws PortalException if a portal exception occurred
+	*/
 	public KaleoProcess addKaleoProcess(long userId, long groupId,
 		long ddmStructureId, Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, long ddmTemplateId,
@@ -150,6 +172,13 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	public KaleoProcess fetchKaleoProcessByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
+	/**
+	* Returns the kaleo process matching the record set ID.
+	*
+	* @param ddlRecordSetId the primary key of the record set
+	* @return the matching kaleo process
+	* @throws PortalException if a matching kaleo process could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoProcess getDDLRecordSetKaleoProcess(long ddlRecordSetId)
 		throws PortalException;
@@ -186,6 +215,27 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoProcess updateKaleoProcess(KaleoProcess kaleoProcess);
 
+	/**
+	* Updates the kaleo process.
+	*
+	* @param kaleoProcessId the primary key of the kaleo process
+	* @param ddmStructureId the primary key of the kaleo process's DDM
+	structure
+	* @param nameMap the kaleo process's locales and localized names
+	* @param descriptionMap the kaleo process's locales and localized
+	descriptions
+	* @param ddmTemplateId the primary key of the kaleo process's DDM template
+	* @param workflowDefinitionName the name of kaleo process's workflow
+	definition
+	* @param workflowDefinitionVersion the version of kaleo process's workflow
+	definition
+	* @param kaleoTaskFormPairs the kaleo task form pairs. See {@link
+	KaleoTaskFormPairs}
+	* @param serviceContext the service context to be applied. This can set
+	guest permissions, and group permissions for the kaleo process.
+	* @return the kaleo process
+	* @throws PortalException if a portal exception occurred
+	*/
 	public KaleoProcess updateKaleoProcess(long kaleoProcessId,
 		long ddmStructureId, Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, long ddmTemplateId,
@@ -201,6 +251,12 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKaleoProcessesCount();
 
+	/**
+	* Returns the number of kaleo processes matching the parameters.
+	*
+	* @param groupId the primary key of the kaleo processes's group.
+	* @return the number of matching kaleo processes
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKaleoProcessesCount(long groupId);
 
@@ -264,9 +320,34 @@ public interface KaleoProcessLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoProcess> getKaleoProcesses(int start, int end);
 
+	/**
+	* Returns all the kaleo processes belonging the group.
+	*
+	* @param groupId the primary key of the kaleo processes's group
+	* @return the kaleo processes
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoProcess> getKaleoProcesses(long groupId);
 
+	/**
+	* Returns a range of all kaleo processes matching the parameters.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	* full result set.
+	* </p>
+	*
+	* @param groupId the primary key of the kaleo processes' group
+	* @param start the lower bound of the range of kaleo processes to return
+	* @param end the upper bound of the range of kaleo processes to return
+	(not inclusive)
+	* @param orderByComparator the comparator to order the kaleo processes
+	* @return the range of matching kaleo processes ordered by the comparator
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoProcess> getKaleoProcesses(long groupId, int start,
 		int end, OrderByComparator orderByComparator);

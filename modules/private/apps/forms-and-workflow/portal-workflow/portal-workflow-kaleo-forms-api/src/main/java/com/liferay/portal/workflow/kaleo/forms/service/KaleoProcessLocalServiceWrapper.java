@@ -83,6 +83,28 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 		return _kaleoProcessLocalService.addKaleoProcess(kaleoProcess);
 	}
 
+	/**
+	* Adds a kaleo process.
+	*
+	* @param userId the primary key of the kaleo process's creator/owner
+	* @param groupId the primary key of the kaleo process's group
+	* @param ddmStructureId the primary key of the kaleo process's DDM
+	structure
+	* @param nameMap the kaleo process's locales and localized names
+	* @param descriptionMap the kaleo process's locales and localized
+	descriptions
+	* @param ddmTemplateId the primary key of the kaleo process's DDM template
+	* @param workflowDefinitionName the name of kaleo process's workflow
+	definition
+	* @param workflowDefinitionVersion the version of kaleo process's workflow
+	definition
+	* @param kaleoTaskFormPairs the kaleo task form pairs. See {@link
+	KaleoTaskFormPairs}
+	* @param serviceContext the service context to be applied. This can set
+	guest permissions, and group permissions for the kaleo process.
+	* @return the kaleo process
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Override
 	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess addKaleoProcess(
 		long userId, long groupId, long ddmStructureId,
@@ -159,6 +181,13 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 			groupId);
 	}
 
+	/**
+	* Returns the kaleo process matching the record set ID.
+	*
+	* @param ddlRecordSetId the primary key of the record set
+	* @return the matching kaleo process
+	* @throws PortalException if a matching kaleo process could not be found
+	*/
 	@Override
 	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getDDLRecordSetKaleoProcess(
 		long ddlRecordSetId)
@@ -208,6 +237,27 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 		return _kaleoProcessLocalService.updateKaleoProcess(kaleoProcess);
 	}
 
+	/**
+	* Updates the kaleo process.
+	*
+	* @param kaleoProcessId the primary key of the kaleo process
+	* @param ddmStructureId the primary key of the kaleo process's DDM
+	structure
+	* @param nameMap the kaleo process's locales and localized names
+	* @param descriptionMap the kaleo process's locales and localized
+	descriptions
+	* @param ddmTemplateId the primary key of the kaleo process's DDM template
+	* @param workflowDefinitionName the name of kaleo process's workflow
+	definition
+	* @param workflowDefinitionVersion the version of kaleo process's workflow
+	definition
+	* @param kaleoTaskFormPairs the kaleo task form pairs. See {@link
+	KaleoTaskFormPairs}
+	* @param serviceContext the service context to be applied. This can set
+	guest permissions, and group permissions for the kaleo process.
+	* @return the kaleo process
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Override
 	public com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
 		long kaleoProcessId, long ddmStructureId,
@@ -234,6 +284,12 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 		return _kaleoProcessLocalService.getKaleoProcessesCount();
 	}
 
+	/**
+	* Returns the number of kaleo processes matching the parameters.
+	*
+	* @param groupId the primary key of the kaleo processes's group.
+	* @return the number of matching kaleo processes
+	*/
 	@Override
 	public int getKaleoProcessesCount(long groupId) {
 		return _kaleoProcessLocalService.getKaleoProcessesCount(groupId);
@@ -319,12 +375,37 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 		return _kaleoProcessLocalService.getKaleoProcesses(start, end);
 	}
 
+	/**
+	* Returns all the kaleo processes belonging the group.
+	*
+	* @param groupId the primary key of the kaleo processes's group
+	* @return the kaleo processes
+	*/
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
 		long groupId) {
 		return _kaleoProcessLocalService.getKaleoProcesses(groupId);
 	}
 
+	/**
+	* Returns a range of all kaleo processes matching the parameters.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	* full result set.
+	* </p>
+	*
+	* @param groupId the primary key of the kaleo processes' group
+	* @param start the lower bound of the range of kaleo processes to return
+	* @param end the upper bound of the range of kaleo processes to return
+	(not inclusive)
+	* @param orderByComparator the comparator to order the kaleo processes
+	* @return the range of matching kaleo processes ordered by the comparator
+	*/
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
 		long groupId, int start, int end,
