@@ -15,12 +15,22 @@
 package com.liferay.portal.workflow.kaleo.forms.constants;
 
 /**
+ * Holds action key constants used in the Kaleo Forms permission system.
+ *
  * @author Marcellus Tavares
  */
 public class KaleoFormsActionKeys {
 
+	/**
+	 * {@value #ADD_PROCESS} is the action key to use to check permissions for
+	 * adding a kaleo process.
+	 */
 	public static final String ADD_PROCESS = "ADD_PROCESS";
 
+	/**
+	 * {@value #COMPLETE_FORM} is the action key to use to check permissions for
+	 * complete a kaleo process's form.
+	 */
 	public static final String COMPLETE_FORM = "COMPLETE_FORM";
 
 }
