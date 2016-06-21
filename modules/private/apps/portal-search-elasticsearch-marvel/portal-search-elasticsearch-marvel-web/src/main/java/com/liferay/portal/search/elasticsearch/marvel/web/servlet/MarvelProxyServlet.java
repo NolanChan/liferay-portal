@@ -16,12 +16,15 @@ package com.liferay.portal.search.elasticsearch.marvel.web.servlet;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.elasticsearch.marvel.web.configuration.MarvelWebConfiguration;
 
 import java.util.Map;
 
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletRequest;
+
+import javax.xml.bind.DatatypeConverter;
 
 import org.apache.http.HttpRequest;
 
@@ -65,6 +68,9 @@ public class MarvelProxyServlet extends ProxyServlet {
 
 		super.copyRequestHeaders(servletRequest, proxyRequest);
 
+		proxyRequest.addHeader(
+			HttpHeaders.AUTHORIZATION, getShieldAuthorization());
+
 		proxyRequest.removeHeaders(HttpHeaders.ACCEPT_ENCODING);
 	}
 
@@ -80,6 +86,21 @@ public class MarvelProxyServlet extends ProxyServlet {
 		}
 
 		return super.getConfigParam(key);
+	}
+
+	protected String getShieldAuthorization() {
+		String username = GetterUtil.getString(
+			_marvelWebConfiguration.shieldUsername());
+
+		String password = GetterUtil.getString(
+			_marvelWebConfiguration.shieldPassword());
+
+		String credential = username + ":" + password;
+
+		String base64Encoded = DatatypeConverter.printBase64Binary(
+			credential.getBytes());
+
+		return "Basic " + base64Encoded;
 	}
 
 	@Modified

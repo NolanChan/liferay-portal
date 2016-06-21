@@ -39,4 +39,16 @@ public interface MarvelWebConfiguration {
 	@Meta.AD(description = "proxy-servlet-log-enable-help", required = false)
 	public boolean proxyServletLogEnable();
 
+	@Meta.AD(
+		deflt = "liferay", description = "shield-username-help",
+		required = false
+	)
+	public String shieldUsername();
+
+	@Meta.AD(
+		deflt = "liferay", description = "shield-password-help",
+		required = false
+	)
+	public String shieldPassword();
+
 }
