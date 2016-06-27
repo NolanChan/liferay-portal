@@ -137,7 +137,7 @@ public class LCSClusterEntryTokenContentAdvisorTest extends PowerMockito {
 					getPortalPropertiesBlacklist());
 		}
 		catch (IOException ioe) {
-			Assert.fail("Failed to parse v1 token structure: " + contentV1);
+			Assert.fail("Unable to parse v1 token structure: " + contentV1);
 		}
 
 		String contentV2 = getLCSClusterEntryTokenContent(
@@ -173,7 +173,7 @@ public class LCSClusterEntryTokenContentAdvisorTest extends PowerMockito {
 					getPortalPropertiesBlacklist());
 		}
 		catch (IOException ioe) {
-			Assert.fail("Failed to parse v2 token structure: " + contentV2);
+			Assert.fail("Unable to parse v2 token structure: " + contentV2);
 		}
 
 		String contentV3 = getLCSClusterEntryTokenContent(
@@ -214,7 +214,7 @@ public class LCSClusterEntryTokenContentAdvisorTest extends PowerMockito {
 					getPortalPropertiesBlacklist());
 		}
 		catch (IOException ioe) {
-			Assert.fail("Failed to parse v3 token structure: " + contentV3);
+			Assert.fail("Unable to parse v3 token structure: " + contentV3);
 		}
 	}
 
