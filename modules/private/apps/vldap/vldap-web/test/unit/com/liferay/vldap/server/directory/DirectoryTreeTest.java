@@ -1429,10 +1429,9 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 			branchNode.addNode(exprNode);
 		}
 
-		return
-			(List<FilterConstraint>)
-				toFilterConstraintsFromBranchNodeMethod.invoke(
-					_classInstance, branchNode);
+		return (List<FilterConstraint>)
+			toFilterConstraintsFromBranchNodeMethod.invoke(
+				_classInstance, branchNode);
 	}
 
 	protected static List<FilterConstraint> getFilterConstraintsFromLeafNode(
@@ -1444,10 +1443,9 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		toFilterConstraintsFromLeafNodeMethod.setAccessible(true);
 
-		return
-			(List<FilterConstraint>)
-				toFilterConstraintsFromLeafNodeMethod.invoke(
-					_classInstance, leafNode);
+		return (List<FilterConstraint>)
+			toFilterConstraintsFromLeafNodeMethod.invoke(
+				_classInstance, leafNode);
 	}
 
 	protected static void setUpFastDateFormat() {
