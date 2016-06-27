@@ -276,8 +276,7 @@ public class LCSClusterEntryTokenContentAdvisor {
 	private String _dataCenterHostName;
 	private String _dataCenterHostPort;
 	private String _dataCenterProtocol;
-	private final Map<String, String> _lcsServicesConfiguration =
-		new HashMap<>();
+	private Map<String, String> _lcsServicesConfiguration = new HashMap<>();
 	private String _portalPropertiesBlacklist;
 
 }
