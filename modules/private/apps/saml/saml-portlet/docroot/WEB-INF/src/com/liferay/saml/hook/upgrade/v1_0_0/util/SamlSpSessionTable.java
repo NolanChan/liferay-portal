@@ -26,8 +26,7 @@ public class SamlSpSessionTable {
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"jSessionId", Types.VARCHAR}, {"nameIdFormat", Types.VARCHAR},
-		{"nameIdValue", Types.VARCHAR},
-		{"terminated_", Types.BOOLEAN}
+		{"nameIdValue", Types.VARCHAR}, {"terminated_", Types.BOOLEAN}
 	};
 
 	public static final String TABLE_NAME = "SamlSpSession";

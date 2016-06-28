@@ -249,8 +249,7 @@ public class SambaGroupBuilderTest extends BaseVLDAPTestCase {
 			root, directory.hasAttribute("displayName", "root"));
 		Assert.assertEquals(gid, directory.hasAttribute("gidNumber", "0"));
 		Assert.assertEquals(
-			posixGroup,
-			directory.hasAttribute("objectclass", "posixGroup"));
+			posixGroup, directory.hasAttribute("objectclass", "posixGroup"));
 		Assert.assertTrue(
 			directory.hasAttribute("objectclass", "sambaGroupMapping"));
 		Assert.assertTrue(directory.hasAttribute("sambaGroupType", "4"));

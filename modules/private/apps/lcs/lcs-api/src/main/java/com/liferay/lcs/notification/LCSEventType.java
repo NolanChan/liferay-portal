@@ -48,8 +48,7 @@ public enum LCSEventType {
 		"new-fix-pack-is-available-to-install-on-x", false, 0, 1, 1),
 	NEW_PATCHING_TOOL_AVAILABLE(
 		"new-patching-tool-is-available",
-		"new-patching-tool-is-available-to-install-on-x", false, 0, 1,
-		5),
+		"new-patching-tool-is-available-to-install-on-x", false, 0, 1, 5),
 	OSB_SUBSCRIPTION_STATUS_RECEIVED(null, null, false, 0, 2, 8),
 	PATCHING_TOOL_UNAVAILABLE(
 		"the-patching-tool-is-unavailable",

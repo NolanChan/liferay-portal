@@ -83,8 +83,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		filterConstraint.addAttribute("givenName", "testFirstName");
 		filterConstraint.addAttribute("mail", "test@email");
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("sambaSID", null);
 		filterConstraint.addAttribute("sn", "testLastName");
 		filterConstraint.addAttribute("uidNumber", null);
@@ -158,8 +157,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		filterConstraint.addAttribute("givenName", "testFirstName");
 		filterConstraint.addAttribute("mail", "test@email");
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("sambaSID", "42");
 		filterConstraint.addAttribute("sn", "testLastName");
 		filterConstraint.addAttribute("uidNumber", null);
@@ -198,8 +196,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		filterConstraint.addAttribute("givenName", "testFirstName");
 		filterConstraint.addAttribute("mail", "test@email");
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=invalidType,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=invalidType,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("sambaSID", null);
 		filterConstraint.addAttribute("sn", "testLastName");
 		filterConstraint.addAttribute("uidNumber", null);
@@ -224,8 +221,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		filterConstraint.addAttribute("givenName", "testFirstName");
 		filterConstraint.addAttribute("mail", "test@email");
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("sambaSID", null);
 		filterConstraint.addAttribute("sn", "testLastName");
 		filterConstraint.addAttribute("uidNumber", null);
@@ -269,8 +265,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		filterConstraint.addAttribute("givenName", "testFirstName");
 		filterConstraint.addAttribute("mail", "invalid@email");
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("sambaSID", null);
 		filterConstraint.addAttribute("sn", "testLastName");
 		filterConstraint.addAttribute("uidNumber", null);
@@ -306,8 +301,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		filterConstraint.addAttribute("givenName", "testFirstName");
 		filterConstraint.addAttribute("mail", "test@email");
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("sambaSID", null);
 		filterConstraint.addAttribute("sn", "testLastName");
 		filterConstraint.addAttribute("uidNumber", null);
@@ -334,8 +328,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		filterConstraint.addAttribute("givenName", "testFirstName");
 		filterConstraint.addAttribute("mail", "test@email");
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("sambaSID", null);
 		filterConstraint.addAttribute("sn", "testLastName");
 		filterConstraint.addAttribute("uidNumber", null);
@@ -357,8 +350,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		filterConstraint.addAttribute("givenName", "testFirstName");
 		filterConstraint.addAttribute("mail", "test@email");
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("sambaSID", null);
 		filterConstraint.addAttribute("sn", "testLastName");
 		filterConstraint.addAttribute("uidNumber", null);
@@ -403,8 +395,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		filterConstraint.addAttribute("givenName", "testFirstName");
 		filterConstraint.addAttribute("mail", "test@email");
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=Roles,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=Roles,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("sambaSID", null);
 		filterConstraint.addAttribute("sn", "testLastName");
 		filterConstraint.addAttribute("uidNumber", null);
@@ -443,8 +434,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		filterConstraint.addAttribute("givenName", "testFirstName");
 		filterConstraint.addAttribute("mail", "test@email");
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("sambaSID", null);
 		filterConstraint.addAttribute("sn", "testLastName");
 		filterConstraint.addAttribute("uidNumber", null);
@@ -469,8 +459,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		filterConstraint.addAttribute("givenName", "testFirstName");
 		filterConstraint.addAttribute("mail", "test@email");
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=User Groups,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=User Groups,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("sambaSID", null);
 		filterConstraint.addAttribute("sn", "testLastName");
 		filterConstraint.addAttribute("uidNumber", null);
@@ -494,8 +483,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		filterConstraint.addAttribute("givenName", "testFirstName");
 		filterConstraint.addAttribute("mail", "test@email");
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("sambaSID", "42-42-42");
 		filterConstraint.addAttribute("sn", "testLastName");
 		filterConstraint.addAttribute("uidNumber", null);
@@ -522,8 +510,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		filterConstraint.addAttribute("givenName", "testFirstName");
 		filterConstraint.addAttribute("mail", "test@email");
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("sambaSID", "42-42-42");
 		filterConstraint.addAttribute("sn", "testLastName");
 		filterConstraint.addAttribute("uidNumber", null);
@@ -550,8 +537,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		filterConstraint.addAttribute("givenName", "testFirstName");
 		filterConstraint.addAttribute("mail", "test@email");
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("sambaSID", null);
 		filterConstraint.addAttribute("sn", "testLastName");
 		filterConstraint.addAttribute("uidNumber", "42");
@@ -584,8 +570,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 		filterConstraint.addAttribute("givenName", "testFirstName");
 		filterConstraint.addAttribute("mail", "test@email");
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("sambaSID", null);
 		filterConstraint.addAttribute("sn", "testLastName");
 		filterConstraint.addAttribute("uidNumber", "42");
@@ -614,8 +599,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 
 		filterConstraint.addAttribute("gidNumber", StringPool.STAR);
 		filterConstraint.addAttribute(
-			"member",
-			"ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
+			"member", "ou=testGroupName,ou=Communities,ou=liferay.com,cn=test");
 		filterConstraint.addAttribute("uuid", "testUuid");
 
 		filterConstraints.add(filterConstraint);

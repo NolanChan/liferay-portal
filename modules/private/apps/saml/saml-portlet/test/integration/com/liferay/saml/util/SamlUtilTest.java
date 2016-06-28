@@ -115,8 +115,7 @@ public class SamlUtilTest extends BaseSamlTestCase {
 		Assert.assertEquals(
 			"test", SamlUtil.getValueAsString("screenName", attributesMap));
 		Assert.assertEquals(
-			"TestJobTitle",
-			SamlUtil.getValueAsString("title", attributesMap));
+			"TestJobTitle", SamlUtil.getValueAsString("title", attributesMap));
 	}
 
 	@Test
@@ -177,8 +176,7 @@ public class SamlUtilTest extends BaseSamlTestCase {
 		Assert.assertEquals(
 			"test", SamlUtil.getValueAsString("screenName", attributesMap));
 		Assert.assertEquals(
-			"TestJobTitle",
-			SamlUtil.getValueAsString("title", attributesMap));
+			"TestJobTitle", SamlUtil.getValueAsString("title", attributesMap));
 	}
 
 	@Test

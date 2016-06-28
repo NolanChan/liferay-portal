@@ -208,8 +208,7 @@ public class OAuthApplicationLocalServiceImpl
 
 	@Override
 	public int searchCount(
-		long companyId, String keywords,
-		LinkedHashMap<String, Object> params) {
+		long companyId, String keywords, LinkedHashMap<String, Object> params) {
 
 		keywords = CustomSQLUtil.keywords(keywords)[0];
 
