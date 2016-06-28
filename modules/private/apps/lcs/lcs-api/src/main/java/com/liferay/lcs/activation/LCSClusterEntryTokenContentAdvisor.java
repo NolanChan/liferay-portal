@@ -72,8 +72,9 @@ public class LCSClusterEntryTokenContentAdvisor {
 
 		_accessSecret = accessSecret;
 		_accessToken = accessToken;
-		_lcsServicesConfiguration.putAll(lcsServicesConfiguration);
 		_portalPropertiesBlacklist = portalPropertiesBlacklist;
+
+		_lcsServicesConfiguration.putAll(lcsServicesConfiguration);
 	}
 
 	public LCSClusterEntryTokenContentAdvisor(
