@@ -45,16 +45,18 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 
 	@Override
 	public String getPartitionedTableNamesSQL(ExportContext exportContext) {
-		StringBuilder sb = new StringBuilder(9);
+		StringBuilder sb = new StringBuilder(11);
 
-		sb.append("select c2.");
+		sb.append("select t2.");
 		sb.append(getTableNameFieldName());
-		sb.append(" from syscat.columns c2, syscat.tables t2 where ");
-		sb.append("t2.tabschema = c2.tabschema and t2.tabschema = '");
-		sb.append(exportContext.getSchemaName());
-		sb.append("' and c2.colname = 'COMPANYID' group by c2.");
+		sb.append(" from syscat.columns c2, sysibm.tables t2 where");
+		sb.append(" c2.tabschema=t2.table_schema and t2.");
 		sb.append(getTableNameFieldName());
-		sb.append(" order by c2.");
+		sb.append("=c2.tabname and t2.table_catalog = '");
+		sb.append(exportContext.getCatalogName());
+		sb.append("' and c2.colname = 'COMPANYID' group by t2.");
+		sb.append(getTableNameFieldName());
+		sb.append(" order by t2.");
 		sb.append(getTableNameFieldName());
 
 		return sb.toString();
@@ -62,7 +64,7 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 
 	@Override
 	public String getTableNameFieldName() {
-		return "tabname";
+		return "table_name";
 	}
 
 }
