@@ -1209,6 +1209,75 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	}
 
 	@Test
+	public void testToFilterConstraintsFromBranchNodeWithAndNodeCollision()
+		throws Exception {
+
+		Method toFilterConstraintsFromBranchNodeMethod =
+			_clazz.getDeclaredMethod(
+				"toFilterConstraintsFromBranchNode", BranchNode.class);
+
+		toFilterConstraintsFromBranchNodeMethod.setAccessible(true);
+
+		BranchNode branchNode = new AndNode();
+
+		StringValue stringValue = new StringValue("testScreenName");
+
+		ExprNode exprNode = new EqualityNode("cn", stringValue);
+
+		branchNode.addNode(exprNode);
+
+		stringValue = new StringValue("newTestScreenName");
+
+		exprNode = new EqualityNode("cn", stringValue);
+
+		branchNode.addNode(exprNode);
+
+		List<FilterConstraint> filterConstraints =
+			(List<FilterConstraint>)
+				toFilterConstraintsFromBranchNodeMethod.invoke(
+					_classInstance, branchNode);
+
+		Assert.assertTrue(ListUtil.isEmpty(filterConstraints));
+	}
+
+	@Test
+	public void testToFilterConstraintsFromBranchNodeWithAndNodes()
+		throws Exception {
+
+		Method toFilterConstraintsFromBranchNodeMethod =
+			_clazz.getDeclaredMethod(
+				"toFilterConstraintsFromBranchNode", BranchNode.class);
+
+		toFilterConstraintsFromBranchNodeMethod.setAccessible(true);
+
+		BranchNode branchNode = new AndNode();
+
+		StringValue stringValue = new StringValue("testScreenName");
+
+		ExprNode exprNode = new EqualityNode("cn", stringValue);
+
+		branchNode.addNode(exprNode);
+
+		stringValue = new StringValue("test");
+
+		exprNode = new EqualityNode("ou", stringValue);
+
+		branchNode.addNode(exprNode);
+
+		List<FilterConstraint> filterConstraints =
+			(List<FilterConstraint>)
+				toFilterConstraintsFromBranchNodeMethod.invoke(
+					_classInstance, branchNode);
+
+		Assert.assertEquals(1, filterConstraints.size());
+
+		FilterConstraint filterConstraint = filterConstraints.get(0);
+
+		Assert.assertEquals("testScreenName", filterConstraint.getValue("cn"));
+		Assert.assertEquals("test", filterConstraint.getValue("ou"));
+	}
+
+	@Test
 	public void testToFilterConstraintsFromBranchNodeWithNotNode()
 		throws Exception {
 
