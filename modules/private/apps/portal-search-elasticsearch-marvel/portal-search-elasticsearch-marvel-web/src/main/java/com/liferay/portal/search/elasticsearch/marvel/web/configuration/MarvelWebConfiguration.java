@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Artur Aquino
  * @author André de Oliveira
  */
-@ExtendedObjectClassDefinition
+@ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
 	id = "com.liferay.portal.search.elasticsearch.marvel.web.configuration.MarvelWebConfiguration",
 	localization = "content/Language", name = "marvel.web.configuration.name"
