@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.db2.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataPartitioningExporter;
+import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
 
 /**
  * @author Manuel de la Peña
@@ -22,18 +23,18 @@ import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataP
 public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 
 	@Override
-	public String getControlTableNamesSQL(String schema) {
+	public String getControlTableNamesSQL(ExportContext exportContext) {
 		StringBuilder sb = new StringBuilder(12);
 
 		sb.append("select c1.");
 		sb.append(getTableNameFieldName());
 		sb.append(
 			" from syscat.columns c1, syscat.tables t1 where t1.tabschema = '");
-		sb.append(schema);
+		sb.append(exportContext.getSchemaName());
 		sb.append("' and t1.tabschema = c1.tabschema and c1.");
 		sb.append(getTableNameFieldName());
 		sb.append(" not in (");
-		sb.append(getPartitionedTableNamesSQL(schema));
+		sb.append(getPartitionedTableNamesSQL(exportContext));
 		sb.append(") group by c1.");
 		sb.append(getTableNameFieldName());
 		sb.append(" order by c1.");
@@ -43,14 +44,14 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 	}
 
 	@Override
-	public String getPartitionedTableNamesSQL(String schema) {
+	public String getPartitionedTableNamesSQL(ExportContext exportContext) {
 		StringBuilder sb = new StringBuilder(9);
 
 		sb.append("select c2.");
 		sb.append(getTableNameFieldName());
 		sb.append(" from syscat.columns c2, syscat.tables t2 where ");
 		sb.append("t2.tabschema = c2.tabschema and t2.tabschema = '");
-		sb.append(schema);
+		sb.append(exportContext.getSchemaName());
 		sb.append("' and c2.colname = 'COMPANYID' group by c2.");
 		sb.append(getTableNameFieldName());
 		sb.append(" order by c2.");

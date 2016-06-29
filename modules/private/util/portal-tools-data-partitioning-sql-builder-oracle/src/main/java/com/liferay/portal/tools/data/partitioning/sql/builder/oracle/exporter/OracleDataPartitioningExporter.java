@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.oracle.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataPartitioningExporter;
+import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,7 +37,7 @@ public class OracleDataPartitioningExporter
 	extends BaseDataPartitioningExporter {
 
 	@Override
-	public String getControlTableNamesSQL(String schema) {
+	public String getControlTableNamesSQL(ExportContext exportContext) {
 		StringBuilder sb = new StringBuilder(10);
 
 		sb.append("select ");
@@ -44,7 +45,7 @@ public class OracleDataPartitioningExporter
 		sb.append(" from user_tables where ");
 		sb.append(getTableNameFieldName());
 		sb.append(" not in (");
-		sb.append(getPartitionedTableNamesSQL(schema));
+		sb.append(getPartitionedTableNamesSQL(exportContext));
 		sb.append(") group by ");
 		sb.append(getTableNameFieldName());
 		sb.append(" order by ");
@@ -59,7 +60,7 @@ public class OracleDataPartitioningExporter
 	}
 
 	@Override
-	public String getPartitionedTableNamesSQL(String schema) {
+	public String getPartitionedTableNamesSQL(ExportContext exportContext) {
 		StringBuilder sb = new StringBuilder(4);
 
 		sb.append("select ");

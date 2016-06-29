@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.sybase.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataPartitioningExporter;
+import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
 
 import java.sql.Date;
 
@@ -25,7 +26,7 @@ public class SybaseDataPartitioningExporter
 	extends BaseDataPartitioningExporter {
 
 	@Override
-	public String getControlTableNamesSQL(String schema) {
+	public String getControlTableNamesSQL(ExportContext exportContext) {
 		StringBuilder sb = new StringBuilder(10);
 
 		sb.append("select so1.");
@@ -33,7 +34,7 @@ public class SybaseDataPartitioningExporter
 		sb.append(" from sysobjects so1 where so1.type = 'U' and so1.");
 		sb.append(getTableNameFieldName());
 		sb.append(" not in (");
-		sb.append(getPartitionedTableNamesSQL(schema));
+		sb.append(getPartitionedTableNamesSQL(exportContext));
 		sb.append(") group by so1.");
 		sb.append(getTableNameFieldName());
 		sb.append(" order by so1.");
@@ -48,7 +49,7 @@ public class SybaseDataPartitioningExporter
 	}
 
 	@Override
-	public String getPartitionedTableNamesSQL(String schema) {
+	public String getPartitionedTableNamesSQL(ExportContext exportContext) {
 		StringBuilder sb = new StringBuilder(5);
 
 		sb.append("select so2.");
