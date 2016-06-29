@@ -1,0 +1,13 @@
+Bundle-Name: Liferay SAML Runtime API
+Bundle-SymbolicName: com.liferay.saml.runtime.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.saml,\
+	com.liferay.saml.binding,\
+	com.liferay.saml.credential,\
+	com.liferay.saml.metadata,\
+	com.liferay.saml.profile,\
+	com.liferay.saml.resolver,\
+	com.liferay.saml.util
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
