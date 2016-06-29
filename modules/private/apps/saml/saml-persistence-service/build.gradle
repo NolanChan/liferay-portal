@@ -1,0 +1,17 @@
+buildService {
+	apiDir = "../saml-persistence-api/src/main/java"
+}
+
+dependencies {
+	compile project(':private:apps:saml:saml-persistence-api')
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "ca.juliusdavies", name: "not-yet-commons-ssl", transitive: false, version: "0.3.9"
+	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.3"
+	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.4.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
+	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
+	provided group: "javax.portlet", name: "portlet-api", version: "2.0"
+	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	provided group: "org.opensaml", name: "opensaml", version: "2.6.0"
+	provided group: "xml-resolver", name: "xml-resolver", transitive: false, version: "1.2"
+}
