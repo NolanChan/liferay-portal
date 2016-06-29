@@ -14,6 +14,8 @@
 
 package com.liferay.lcs.messaging.scheduler.impl;
 
+import com.liferay.lcs.advisor.MonitoringAdvisor;
+import com.liferay.lcs.advisor.MonitoringAdvisorFactory;
 import com.liferay.lcs.messaging.scheduler.MessageListenerSchedulerService;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
@@ -27,6 +29,7 @@ import java.util.Map;
 
 /**
  * @author Ivica Cardic
+ * @author Igor Beslic
  */
 public class MessageListenerSchedulerServiceImpl
 	implements MessageListenerSchedulerService {
@@ -52,6 +55,13 @@ public class MessageListenerSchedulerServiceImpl
 		if (_log.isDebugEnabled()) {
 			_log.debug("Scheduled message listener " + messageListenerName);
 		}
+
+		MonitoringAdvisor monitoringAdvisor =
+			MonitoringAdvisorFactory.getInstance(messageListener.getClass());
+
+		if (monitoringAdvisor != null) {
+			monitoringAdvisor.activateMonitoring();
+		}
 	}
 
 	@Override
@@ -66,12 +76,9 @@ public class MessageListenerSchedulerServiceImpl
 		for (String messageListenerName :
 				_messageListenerNamesDestinationNames.keySet()) {
 
-			MessageListener messageListener =
-				(MessageListener)beanLocator.locate(messageListenerName);
-
 			MessageBusUtil.unregisterMessageListener(
 				_messageListenerNamesDestinationNames.get(messageListenerName),
-				messageListener);
+				(MessageListener)beanLocator.locate(messageListenerName));
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
