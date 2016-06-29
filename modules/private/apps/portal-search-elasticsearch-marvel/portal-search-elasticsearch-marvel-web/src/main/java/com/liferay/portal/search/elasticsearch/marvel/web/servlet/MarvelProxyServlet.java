@@ -77,7 +77,7 @@ public class MarvelProxyServlet extends ProxyServlet {
 	@Override
 	protected String getConfigParam(String key) {
 		if (key.equals(ProxyServlet.P_TARGET_URI)) {
-			return _marvelWebConfiguration.kibanaURL();
+			return GetterUtil.getString(_marvelWebConfiguration.kibanaURL());
 		}
 
 		if (key.equals(ProxyServlet.P_LOG)) {
