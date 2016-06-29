@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.saml.hook.upgrade.v1_0_0;
+package com.liferay.saml.upgrade.v1_1_1;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.saml.hook.upgrade.v1_0_0.util.SamlSpSessionTable;
+import com.liferay.saml.upgrade.v1_1_1.util.SamlSpSessionTable;
 
 import java.sql.SQLException;
 
@@ -29,11 +29,7 @@ public class UpgradeSamlSpSession extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try {
 			runSQL(
-				"alter_column_type SamlSpSession nameIdFormat VARCHAR(1024) " +
-					"null");
-			runSQL(
-				"alter_column_type SamlSpSession nameIdValue VARCHAR(1024) " +
-					"null");
+				"alter_column_type SamlSpSession jSessionId VARCHAR(200) null");
 		}
 		catch (SQLException sqle) {
 			upgradeTable(

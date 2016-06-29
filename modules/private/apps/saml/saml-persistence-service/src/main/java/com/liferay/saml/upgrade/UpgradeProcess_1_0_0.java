@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.saml.hook.upgrade;
+package com.liferay.saml.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.saml.hook.upgrade.v1_0_0.UpgradeSamlIdpSpSession;
-import com.liferay.saml.hook.upgrade.v1_0_0.UpgradeSamlSpAuthRequest;
-import com.liferay.saml.hook.upgrade.v1_0_0.UpgradeSamlSpMessage;
-import com.liferay.saml.hook.upgrade.v1_0_0.UpgradeSamlSpSession;
+import com.liferay.saml.upgrade.v1_0_0.UpgradeSamlIdpSpSession;
+import com.liferay.saml.upgrade.v1_0_0.UpgradeSamlSpAuthRequest;
+import com.liferay.saml.upgrade.v1_0_0.UpgradeSamlSpMessage;
+import com.liferay.saml.upgrade.v1_0_0.UpgradeSamlSpSession;
 
 /**
  * @author Mika Koivisto

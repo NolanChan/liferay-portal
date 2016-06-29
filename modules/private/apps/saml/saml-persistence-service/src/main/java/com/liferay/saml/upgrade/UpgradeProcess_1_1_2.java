@@ -12,32 +12,24 @@
  * details.
  */
 
-package com.liferay.saml.hook.upgrade.v1_0_0;
+package com.liferay.saml.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.saml.hook.upgrade.v1_0_0.util.SamlSpMessageTable;
-
-import java.sql.SQLException;
+import com.liferay.saml.upgrade.v1_1_2.UpgradeSamlSpIdpConnection;
 
 /**
  * @author Mika Koivisto
- * @author Brian Wing Shun Chan
  */
-public class UpgradeSamlSpMessage extends UpgradeProcess {
+public class UpgradeProcess_1_1_2 extends UpgradeProcess {
+
+	@Override
+	public int getThreshold() {
+		return 112;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL(
-				"alter_column_type SamlSpMessage samlIdpEntityId " +
-					"VARCHAR(1024) null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				SamlSpMessageTable.TABLE_NAME, SamlSpMessageTable.TABLE_COLUMNS,
-				SamlSpMessageTable.TABLE_SQL_CREATE,
-				SamlSpMessageTable.TABLE_SQL_ADD_INDEXES);
-		}
+		upgrade(UpgradeSamlSpIdpConnection.class);
 	}
 
 }

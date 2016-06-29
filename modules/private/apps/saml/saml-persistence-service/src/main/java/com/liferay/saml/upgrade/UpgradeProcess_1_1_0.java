@@ -12,24 +12,24 @@
  * details.
  */
 
-package com.liferay.saml.hook.upgrade;
+package com.liferay.saml.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.saml.hook.upgrade.v1_1_2.UpgradeSamlSpIdpConnection;
+import com.liferay.saml.upgrade.v1_1_0.UpgradeSamlSpSession;
 
 /**
  * @author Mika Koivisto
  */
-public class UpgradeProcess_1_1_2 extends UpgradeProcess {
+public class UpgradeProcess_1_1_0 extends UpgradeProcess {
 
 	@Override
 	public int getThreshold() {
-		return 112;
+		return 110;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeSamlSpIdpConnection.class);
+		upgrade(UpgradeSamlSpSession.class);
 	}
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.hook.upgrade.v1_0_0.util;
+package com.liferay.saml.upgrade.v1_0_0.util;
 
 import java.sql.Types;
 

@@ -12,38 +12,29 @@
  * details.
  */
 
-package com.liferay.saml.hook.upgrade.v1_0_0;
+package com.liferay.saml.upgrade.v1_1_2;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.saml.hook.upgrade.v1_0_0.util.SamlIdpSpSessionTable;
+import com.liferay.saml.upgrade.v1_1_2.util.SamlSpIdpConnectionTable;
 
 import java.sql.SQLException;
 
 /**
  * @author Mika Koivisto
- * @author Brian Wing Shun Chan
  */
-public class UpgradeSamlIdpSpSession extends UpgradeProcess {
+public class UpgradeSamlSpIdpConnection extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		try {
-			runSQL(
-				"alter_column_type SamlIdpSpSession samlSpEntityId " +
-					"VARCHAR(1024) null");
-			runSQL(
-				"alter_column_type SamlIdpSpSession nameIdFormat " +
-					"VARCHAR(1024) null");
-			runSQL(
-				"alter_column_type SamlIdpSpSession nameIdValue " +
-					"VARCHAR(1024) null");
+			runSQL("alter_column_type SamlSpIdpConnection forceAuthn BOOLEAN");
 		}
 		catch (SQLException sqle) {
 			upgradeTable(
-				SamlIdpSpSessionTable.TABLE_NAME,
-				SamlIdpSpSessionTable.TABLE_COLUMNS,
-				SamlIdpSpSessionTable.TABLE_SQL_CREATE,
-				SamlIdpSpSessionTable.TABLE_SQL_ADD_INDEXES);
+				SamlSpIdpConnectionTable.TABLE_NAME,
+				SamlSpIdpConnectionTable.TABLE_COLUMNS,
+				SamlSpIdpConnectionTable.TABLE_SQL_CREATE,
+				SamlSpIdpConnectionTable.TABLE_SQL_ADD_INDEXES);
 		}
 	}
 
