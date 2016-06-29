@@ -40,9 +40,11 @@ public class MessageListenerSchedulerServiceImpl
 		BeanLocator beanLocator = PortletBeanLocatorUtil.getBeanLocator(
 			"lcs-portlet");
 
+		MessageListener messageListener = (MessageListener)beanLocator.locate(
+			messageListenerName);
+
 		MessageBusUtil.registerMessageListener(
-			destinationName,
-			(MessageListener)beanLocator.locate(messageListenerName));
+			destinationName, messageListener);
 
 		_messageListenerNamesDestinationNames.put(
 			messageListenerName, destinationName);
@@ -64,9 +66,12 @@ public class MessageListenerSchedulerServiceImpl
 		for (String messageListenerName :
 				_messageListenerNamesDestinationNames.keySet()) {
 
+			MessageListener messageListener =
+				(MessageListener)beanLocator.locate(messageListenerName);
+
 			MessageBusUtil.unregisterMessageListener(
 				_messageListenerNamesDestinationNames.get(messageListenerName),
-				(MessageListener)beanLocator.locate(messageListenerName));
+				messageListener);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -75,10 +80,10 @@ public class MessageListenerSchedulerServiceImpl
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
+	private static Log _log = LogFactoryUtil.getLog(
 		MessageListenerSchedulerServiceImpl.class);
 
-	private final Map<String, String> _messageListenerNamesDestinationNames =
-		new HashMap<>();
+	private Map<String, String> _messageListenerNamesDestinationNames =
+		new HashMap<String, String>();
 
 }
