@@ -15,6 +15,8 @@
 package com.liferay.portal.search.elasticsearch.marvel.web.servlet;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -162,6 +164,10 @@ public class MarvelProxyServlet extends ProxyServlet {
 			status = HttpServletResponse.SC_FORBIDDEN;
 		}
 
+		if (_log.isDebugEnabled()) {
+			_log.debug("Proxy servlet failure", e);
+		}
+
 		httpServletResponse.sendError(status, e.getMessage());
 	}
 
@@ -182,6 +188,9 @@ public class MarvelProxyServlet extends ProxyServlet {
 
 		super.service(httpServletRequest, httpServletResponse);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MarvelProxyServlet.class);
 
 	@Reference
 	protected PermissionCheckerFactory permissionCheckerFactory;
