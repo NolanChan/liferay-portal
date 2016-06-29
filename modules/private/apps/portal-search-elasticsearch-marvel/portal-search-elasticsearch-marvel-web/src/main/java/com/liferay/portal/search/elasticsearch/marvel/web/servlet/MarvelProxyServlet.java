@@ -128,7 +128,7 @@ public class MarvelProxyServlet extends ProxyServlet {
 
 	protected String getShieldAuthorization() {
 		String username = GetterUtil.getString(
-			_marvelWebConfiguration.shieldUsername());
+			_marvelWebConfiguration.shieldUserName());
 
 		String password = GetterUtil.getString(
 			_marvelWebConfiguration.shieldPassword());

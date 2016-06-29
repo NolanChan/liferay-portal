@@ -43,7 +43,7 @@ public interface MarvelWebConfiguration {
 		deflt = "liferay", description = "shield-username-help",
 		required = false
 	)
-	public String shieldUsername();
+	public String shieldUserName();
 
 	@Meta.AD(
 		deflt = "liferay", description = "shield-password-help",
