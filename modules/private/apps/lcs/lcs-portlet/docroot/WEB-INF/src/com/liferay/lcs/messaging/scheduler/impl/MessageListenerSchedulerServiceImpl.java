@@ -80,10 +80,10 @@ public class MessageListenerSchedulerServiceImpl
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		MessageListenerSchedulerServiceImpl.class);
 
-	private Map<String, String> _messageListenerNamesDestinationNames =
-		new HashMap<String, String>();
+	private final Map<String, String> _messageListenerNamesDestinationNames =
+		new HashMap<>();
 
 }

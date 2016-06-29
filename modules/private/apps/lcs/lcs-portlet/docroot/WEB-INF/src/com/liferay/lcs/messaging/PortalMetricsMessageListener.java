@@ -64,7 +64,7 @@ public class PortalMetricsMessageListener implements MessageListener {
 		_portalMetricsAggregator = portalMetricsAggregator;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalMetricsMessageListener.class);
 
 	private LCSConnectionManager _lcsConnectionManager;

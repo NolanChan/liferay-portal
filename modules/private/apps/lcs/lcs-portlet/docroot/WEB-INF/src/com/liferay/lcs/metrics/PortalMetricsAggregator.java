@@ -47,19 +47,18 @@ public class PortalMetricsAggregator {
 	}
 
 	synchronized public void push(List<DataSample> dataSamples) {
-		List<Map<String, Object>> performanceMetricsList =
-				new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> performanceMetricsList = new ArrayList<>();
 
 		for (DataSample dataSample : dataSamples) {
 			Map<String, Object> performanceMetrics = getPerformanceMetrics(
-					dataSample);
+				dataSample);
 
 			performanceMetrics.put("metricsType", getMetricsType(dataSample));
 
 			performanceMetricsList.add(performanceMetrics);
 		}
 
-		List<String> layoutNames = new ArrayList<String>();
+		List<String> layoutNames = new ArrayList<>();
 
 		boolean requestTypeRender = true;
 
@@ -105,14 +104,12 @@ public class PortalMetricsAggregator {
 	}
 
 	synchronized public List<Map<String, Object>> pop() {
-		List<Map<String, Object>> performanceMetricsList =
-			new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> performanceMetricsList = new ArrayList<>();
 
 		Set<String> keys = _performanceMetricsMap.keySet();
 
 		for (String key : keys) {
-			Map<String, Object> performanceMetrics =
-				new HashMap<String, Object>();
+			Map<String, Object> performanceMetrics = new HashMap<>();
 
 			MapUtil.copy(_performanceMetricsMap.get(key), performanceMetrics);
 
@@ -147,7 +144,7 @@ public class PortalMetricsAggregator {
 	}
 
 	protected Map<String, Object> getPerformanceMetrics(DataSample dataSample) {
-		Map<String, Object> performanceMetrics = new HashMap<String, Object>();
+		Map<String, Object> performanceMetrics = new HashMap<>();
 
 		Class<?> clazz = dataSample.getClass();
 
@@ -197,7 +194,7 @@ public class PortalMetricsAggregator {
 		Map<String, Object> performanceMetrics, String metricsType,
 		String layoutName) {
 
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 
 		MapUtil.copy(performanceMetrics, map);
 
@@ -274,12 +271,12 @@ public class PortalMetricsAggregator {
 		averageStatistics.addDuration(duration);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalMetricsAggregator.class);
 
-	private Map<String, AverageStatistics> _averageStatisticsMap =
-		new HashMap<String, AverageStatistics>();
-	private Map<String, Map<String, Object>> _performanceMetricsMap =
-		new HashMap<String, Map<String, Object>>();
+	private final Map<String, AverageStatistics> _averageStatisticsMap =
+		new HashMap<>();
+	private final Map<String, Map<String, Object>> _performanceMetricsMap =
+		new HashMap<>();
 
 }

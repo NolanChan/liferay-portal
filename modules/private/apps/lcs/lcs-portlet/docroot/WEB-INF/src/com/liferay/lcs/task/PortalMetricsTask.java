@@ -34,7 +34,7 @@ public class PortalMetricsTask implements ScheduledTask {
 	@Override
 	public void run() {
 		try {
-			doRun();
+			_doRun();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -57,7 +57,7 @@ public class PortalMetricsTask implements ScheduledTask {
 		_portalMetricsAggregator = portalMetricsAggregator;
 	}
 
-	private void doRun() throws Exception {
+	private void _doRun() throws Exception {
 		if (_portalMetricsAggregator.isEmpty()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("No portal metrics to send");
@@ -85,7 +85,8 @@ public class PortalMetricsTask implements ScheduledTask {
 		_lcsConnectionManager.sendMessage(metricsMessage);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortalMetricsTask.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalMetricsTask.class);
 
 	private KeyGenerator _keyGenerator;
 	private LCSConnectionManager _lcsConnectionManager;
