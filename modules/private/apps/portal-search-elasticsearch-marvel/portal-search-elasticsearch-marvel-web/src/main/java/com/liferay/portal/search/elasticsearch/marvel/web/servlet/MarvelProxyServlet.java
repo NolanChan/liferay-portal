@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
@@ -36,8 +37,6 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import javax.xml.bind.DatatypeConverter;
 
 import org.apache.http.HttpRequest;
 
@@ -135,8 +134,7 @@ public class MarvelProxyServlet extends ProxyServlet {
 
 		String credential = username + ":" + password;
 
-		String base64Encoded = DatatypeConverter.printBase64Binary(
-			credential.getBytes());
+		String base64Encoded = Base64.encode(credential.getBytes());
 
 		return "Basic " + base64Encoded;
 	}
