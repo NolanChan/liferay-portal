@@ -1,19 +1,9 @@
 <?xml version="1.0"?>
 
-<beans
-	default-destroy-method="destroy"
-	default-init-method="afterPropertiesSet"
-	xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
->
-
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<!-- Bootstrap -->
-
 	<bean class="com.liferay.saml.util.OpenSamlBootstrap" id="com.liferay.saml.util.OpenSamlBootstrap" init-method="bootstrap" />
-
 	<!-- Binding -->
-
 	<bean class="com.liferay.saml.binding.impl.HttpPostBinding" id="com.liferay.saml.binding.impl.HttpPostBinding">
 		<constructor-arg ref="org.opensaml.xml.parse.ParserPool" />
 		<constructor-arg ref="org.apache.velocity.app.VelocityEngine" />
@@ -25,13 +15,9 @@
 		<constructor-arg ref="org.opensaml.xml.parse.ParserPool" />
 		<constructor-arg ref="org.apache.commons.httpclient.HttpClient" />
 	</bean>
-
 	<!-- Credential -->
-
 	<bean class="com.liferay.saml.credential.KeyStoreCredentialResolver" id="org.opensaml.xml.security.credential.CredentialResolver" />
-
 	<!-- Metadata -->
-
 	<bean class="com.liferay.saml.metadata.MetadataManagerImpl" destroy-method="shutdown" id="com.liferay.saml.metadata.MetadataManager">
 		<property name="credentialResolver" ref="org.opensaml.xml.security.credential.CredentialResolver" />
 		<property name="httpClient" ref="org.apache.commons.httpclient.HttpClient" />
@@ -40,9 +26,7 @@
 	<bean class="com.liferay.saml.metadata.MetadataManagerUtil" id="com.liferay.saml.metadata.MetadataManagerUtil">
 		<property name="metadataManager" ref="com.liferay.saml.metadata.MetadataManager" />
 	</bean>
-
 	<!-- Profile -->
-
 	<bean class="com.liferay.saml.profile.SingleLogoutProfileImpl" id="com.liferay.saml.profile.SingleLogoutProfile">
 		<property name="identifierGenerator" ref="org.opensaml.common.IdentifierGenerator" />
 		<property name="samlBindings">
@@ -69,16 +53,12 @@
 	<bean class="com.liferay.saml.profile.WebSsoProfileUtil" id="com.liferay.saml.profile.WebSsoProfileUtil">
 		<property name="webSsoProfile" ref="com.liferay.saml.profile.WebSsoProfile" />
 	</bean>
-
 	<!-- Resolver -->
-
 	<bean class="com.liferay.saml.resolver.DefaultUserResolver" id="com.liferay.saml.resolver.UserResolver" />
 	<bean class="com.liferay.saml.resolver.UserResolverUtil" id="com.liferay.saml.resolver.UserResolverUtil">
 		<property name="userResolver" ref="com.liferay.saml.resolver.UserResolver" />
 	</bean>
-
 	<!-- Util -->
-
 	<bean class="com.liferay.saml.util.MetadataUtil" id="com.liferay.saml.util.MetadataUtil">
 		<property name="httpClient" ref="org.apache.commons.httpclient.HttpClient" />
 		<property name="parserPool" ref="org.opensaml.xml.parse.ParserPool" />
@@ -95,4 +75,18 @@
 	<bean class="com.liferay.saml.util.VelocityEngineFactory" factory-method="getVelocityEngine" id="org.apache.velocity.app.VelocityEngine" />
 	<bean class="com.liferay.saml.util.SamlIdentifierGenerator" id="org.opensaml.common.IdentifierGenerator" />
 	<bean class="org.opensaml.Configuration" factory-method="getParserPool" id="org.opensaml.xml.parse.ParserPool" />
+	<bean class="com.liferay.saml.service.impl.SamlIdpSpConnectionLocalServiceImpl" id="com.liferay.saml.service.SamlIdpSpConnectionLocalService" />
+	<bean class="com.liferay.saml.service.persistence.impl.SamlIdpSpConnectionPersistenceImpl" id="com.liferay.saml.service.persistence.SamlIdpSpConnectionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.saml.service.impl.SamlIdpSpSessionLocalServiceImpl" id="com.liferay.saml.service.SamlIdpSpSessionLocalService" />
+	<bean class="com.liferay.saml.service.persistence.impl.SamlIdpSpSessionPersistenceImpl" id="com.liferay.saml.service.persistence.SamlIdpSpSessionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.saml.service.impl.SamlIdpSsoSessionLocalServiceImpl" id="com.liferay.saml.service.SamlIdpSsoSessionLocalService" />
+	<bean class="com.liferay.saml.service.persistence.impl.SamlIdpSsoSessionPersistenceImpl" id="com.liferay.saml.service.persistence.SamlIdpSsoSessionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.saml.service.impl.SamlSpAuthRequestLocalServiceImpl" id="com.liferay.saml.service.SamlSpAuthRequestLocalService" />
+	<bean class="com.liferay.saml.service.persistence.impl.SamlSpAuthRequestPersistenceImpl" id="com.liferay.saml.service.persistence.SamlSpAuthRequestPersistence" parent="basePersistence" />
+	<bean class="com.liferay.saml.service.impl.SamlSpIdpConnectionLocalServiceImpl" id="com.liferay.saml.service.SamlSpIdpConnectionLocalService" />
+	<bean class="com.liferay.saml.service.persistence.impl.SamlSpIdpConnectionPersistenceImpl" id="com.liferay.saml.service.persistence.SamlSpIdpConnectionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.saml.service.impl.SamlSpMessageLocalServiceImpl" id="com.liferay.saml.service.SamlSpMessageLocalService" />
+	<bean class="com.liferay.saml.service.persistence.impl.SamlSpMessagePersistenceImpl" id="com.liferay.saml.service.persistence.SamlSpMessagePersistence" parent="basePersistence" />
+	<bean class="com.liferay.saml.service.impl.SamlSpSessionLocalServiceImpl" id="com.liferay.saml.service.SamlSpSessionLocalService" />
+	<bean class="com.liferay.saml.service.persistence.impl.SamlSpSessionPersistenceImpl" id="com.liferay.saml.service.persistence.SamlSpSessionPersistence" parent="basePersistence" />
 </beans>
