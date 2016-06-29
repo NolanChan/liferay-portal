@@ -59,7 +59,7 @@ public class LCSClusterEntryTokenContentAdvisorTest extends PowerMockito {
 		Assert.assertTrue(
 			contentA.contains(
 				"\"portalPropertiesBlacklist\":" +
-				"\"property.key.1,property.key.2\""));
+					"\"property.key.1,property.key.2\""));
 		Assert.assertTrue(contentA.contains("lcsServicesConfiguration"));
 
 		LCSClusterEntryTokenContentAdvisor lcsClusterEntryTokenContentAdvisorB =
