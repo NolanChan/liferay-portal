@@ -60,7 +60,7 @@ public class HttpClientOutTransport implements HTTPOutTransport {
 
 	@Override
 	public String getHeaderValue(String name) {
-		Header header =_postMethod.getRequestHeader(name);
+		Header header = _postMethod.getRequestHeader(name);
 
 		return header.getValue();
 	}
