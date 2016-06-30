@@ -89,15 +89,14 @@ public class MarvelProxyServlet extends ProxyServlet {
 		PermissionChecker permissionChecker = permissionCheckerFactory.create(
 			user);
 
-		String actionKey = ActionKeys.VIEW;
-		String portletKey = MarvelPortletKeys.MARVEL_PORTLET;
-
 		boolean hasPermission = permissionChecker.hasPermission(
-			GroupThreadLocal.getGroupId(), portletKey, portletKey, actionKey);
+			GroupThreadLocal.getGroupId(), MarvelPortletKeys.MARVEL_PORTLET,
+			MarvelPortletKeys.MARVEL_PORTLET, ActionKeys.VIEW);
 
 		if (!hasPermission) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, actionKey);
+				permissionChecker, MarvelPortletKeys.MARVEL_PORTLET, 0,
+				ActionKeys.VIEW);
 		}
 	}
 
