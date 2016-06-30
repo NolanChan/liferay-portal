@@ -24,20 +24,21 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 
 	@Override
 	public String getControlTableNamesSQL(ExportContext exportContext) {
-		StringBuilder sb = new StringBuilder(12);
+		StringBuilder sb = new StringBuilder(14);
 
-		sb.append("select c1.");
+		sb.append("select t1.");
 		sb.append(getTableNameFieldName());
-		sb.append(
-			" from syscat.columns c1, syscat.tables t1 where t1.tabschema = '");
+		sb.append(" from sysibm.tables t1 where t1.table_catalog = '");
+		sb.append(exportContext.getCatalogName());
+		sb.append("' and t1.table_schema = '");
 		sb.append(exportContext.getSchemaName());
-		sb.append("' and t1.tabschema = c1.tabschema and c1.");
+		sb.append("' and t1.");
 		sb.append(getTableNameFieldName());
 		sb.append(" not in (");
 		sb.append(getPartitionedTableNamesSQL(exportContext));
-		sb.append(") group by c1.");
+		sb.append(") group by t1.");
 		sb.append(getTableNameFieldName());
-		sb.append(" order by c1.");
+		sb.append(" order by t1.");
 		sb.append(getTableNameFieldName());
 
 		return sb.toString();
