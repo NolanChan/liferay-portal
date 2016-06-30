@@ -5,9 +5,9 @@ Export-Package:\
 	com.liferay.portal.reports.engine.console.configuration,\
 	com.liferay.portal.reports.engine.console.service.permission,\
 	com.liferay.portal.reports.engine.console.util
--includeresource: @${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Reports Engine Console
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
 -include: ../../../../../../modules/apps/forms-and-workflow/app.bnd
+-includeresource: @com.liferay.util.java-[0-9]*.jar!/com/liferay/util/portlet/PortletProps.class
