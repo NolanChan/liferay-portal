@@ -45,6 +45,11 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 	}
 
 	@Override
+	public String getDateTimeFormat() {
+		return "YYYY-MM-dd hh:mm:ss.SSS";
+	}
+
+	@Override
 	public String getPartitionedTableNamesSQL(ExportContext exportContext) {
 		StringBuilder sb = new StringBuilder(11);
 
