@@ -290,12 +290,12 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 				ReportRequestContext.JDBC_DRIVER_CLASS,
 				source.getDriverClassName());
 			reportRequestContext.setAttribute(
+				ReportRequestContext.JDBC_PASSWORD, source.getDriverPassword());
+			reportRequestContext.setAttribute(
 				ReportRequestContext.JDBC_URL, source.getDriverUrl());
 			reportRequestContext.setAttribute(
 				ReportRequestContext.JDBC_USER_NAME,
 				source.getDriverUserName());
-			reportRequestContext.setAttribute(
-				ReportRequestContext.JDBC_PASSWORD, source.getDriverPassword());
 		}
 
 		ReportRequest reportRequest = new ReportRequest(
