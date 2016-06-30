@@ -51,8 +51,8 @@
 	<bean class="com.liferay.lcs.license.messaging.LicenseManagerValidateLCSMessageListener" id="messageListener.license_manager_validate_lcs" />
 	<bean class="com.liferay.lcs.license.messaging.LicenseManagerValidateSubscriptionMessageListener" id="messageListener.license_manager_validate_subscription" />
 	<bean class="com.liferay.lcs.messaging.PortalMetricsMessageListener" id="messageListener.monitoring">
-		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
 		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+		<property name="portalMetricsAggregator" ref="com.liferay.lcs.metrics.PortalMetricsAggregator" />
 	</bean>
 
 	<!-- Configurator -->

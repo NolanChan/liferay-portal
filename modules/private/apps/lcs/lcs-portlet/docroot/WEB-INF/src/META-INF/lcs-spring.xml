@@ -17,6 +17,10 @@
 		<property name="LCSClusterEntryTokenService" ref="com.liferay.lcs.rest.LCSClusterEntryTokenService" />
 	</bean>
 
+	<!-- Aggregator -->
+
+	<bean class="com.liferay.lcs.metrics.PortalMetricsAggregator" id="com.liferay.lcs.metrics.PortalMetricsAggregator" />
+
 	<!-- Command -->
 
 	<bean class="com.liferay.lcs.command.CheckHeartbeatCommand" id="com.liferay.lcs.command.CheckHeartbeatCommand">
@@ -186,6 +190,11 @@
 	<bean class="com.liferay.lcs.task.JVMMetricsTask" id="com.liferay.lcs.task.JVMMetricsTask">
 		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
 		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+	</bean>
+	<bean class="com.liferay.lcs.task.PortalMetricsTask" id="com.liferay.lcs.task.PortalMetricsTask">
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+		<property name="portalMetricsAggregator" ref="com.liferay.lcs.metrics.PortalMetricsAggregator" />
 	</bean>
 	<bean factory-bean="com.liferay.lcs.task.ServerMetricsTaskFactory" factory-method="getInstance" id="com.liferay.lcs.task.ServerMetricsTask" />
 	<bean class="com.liferay.lcs.task.ServerMetricsTaskFactory" id="com.liferay.lcs.task.ServerMetricsTaskFactory">
