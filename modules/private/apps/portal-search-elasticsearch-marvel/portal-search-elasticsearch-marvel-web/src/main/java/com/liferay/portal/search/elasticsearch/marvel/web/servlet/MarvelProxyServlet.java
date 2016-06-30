@@ -69,7 +69,7 @@ public class MarvelProxyServlet extends ProxyServlet {
 
 	@Override
 	public String getServletInfo() {
-		return "Liferay Portal Search Elasticsearch Marvel Web Proxy Servlet";
+		return "Liferay Portal Search Elasticsearch MARVEL Web Proxy Servlet";
 	}
 
 	@Activate
@@ -90,12 +90,12 @@ public class MarvelProxyServlet extends ProxyServlet {
 			user);
 
 		boolean hasPermission = permissionChecker.hasPermission(
-			GroupThreadLocal.getGroupId(), MarvelPortletKeys.MARVEL_PORTLET,
-			MarvelPortletKeys.MARVEL_PORTLET, ActionKeys.VIEW);
+			GroupThreadLocal.getGroupId(), MarvelPortletKeys.MARVEL,
+			MarvelPortletKeys.MARVEL, ActionKeys.VIEW);
 
 		if (!hasPermission) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, MarvelPortletKeys.MARVEL_PORTLET, 0,
+				permissionChecker, MarvelPortletKeys.MARVEL, 0,
 				ActionKeys.VIEW);
 		}
 	}

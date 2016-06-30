@@ -19,7 +19,7 @@ package com.liferay.portal.search.elasticsearch.marvel.web.constants;
 */
 public class MarvelPortletKeys {
 
-	public static final String MARVEL_PORTLET =
+	public static final String MARVEL =
 		"com_liferay_portal_search_elasticsearch_marvel_web_portlet_" +
 			"MarvelPortlet";
 
