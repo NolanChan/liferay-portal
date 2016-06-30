@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.monitoring.statistics.DataSample;
+import com.liferay.portal.kernel.monitoring.DataSample;
 
 import java.util.List;
 
