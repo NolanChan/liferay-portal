@@ -15,6 +15,7 @@
 package com.liferay.portal.search.elasticsearch.marvel.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.search.elasticsearch.marvel.web.constants.MarvelPortletKeys;
 
 import javax.portlet.Portlet;
 
@@ -38,8 +39,9 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=Marvel", "javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + MarvelPortletKeys.MARVEL,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user,guest",
+		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html",
 		"javax.portlet.window-state=maximized"
 	},
