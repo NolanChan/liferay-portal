@@ -127,17 +127,14 @@ public class MarvelProxyServlet extends ProxyServlet {
 	}
 
 	protected String getShieldAuthorization() {
-		String username = GetterUtil.getString(
+		String userName = GetterUtil.getString(
 			_marvelWebConfiguration.shieldUserName());
-
 		String password = GetterUtil.getString(
 			_marvelWebConfiguration.shieldPassword());
 
-		String credential = username + ":" + password;
+		String authorization = userName + ":" + password;
 
-		String base64Encoded = Base64.encode(credential.getBytes());
-
-		return "Basic " + base64Encoded;
+		return "Basic " + Base64.encode(authorization.getBytes());
 	}
 
 	@Modified
@@ -164,7 +161,7 @@ public class MarvelProxyServlet extends ProxyServlet {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Proxy servlet failure", e);
+			_log.debug(e, e);
 		}
 
 		httpServletResponse.sendError(status, e.getMessage());
