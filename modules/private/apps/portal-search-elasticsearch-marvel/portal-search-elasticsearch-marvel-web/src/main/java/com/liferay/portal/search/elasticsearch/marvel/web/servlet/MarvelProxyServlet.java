@@ -69,7 +69,7 @@ public class MarvelProxyServlet extends ProxyServlet {
 
 	@Override
 	public String getServletInfo() {
-		return "Liferay Portal Search Elasticsearch MARVEL Web Proxy Servlet";
+		return "Liferay Portal Search Elasticsearch Marvel Web Proxy Servlet";
 	}
 
 	@Activate
