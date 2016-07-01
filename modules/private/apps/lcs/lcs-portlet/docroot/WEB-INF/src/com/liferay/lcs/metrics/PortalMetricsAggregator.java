@@ -40,13 +40,13 @@ import java.util.Set;
  */
 public class PortalMetricsAggregator {
 
-	synchronized public void push(DataSample dataSample) {
+	public synchronized void push(DataSample dataSample) {
 		updatePerformanceMetricsMap(
 			getPerformanceMetrics(dataSample), getMetricsType(dataSample),
 			StringPool.BLANK);
 	}
 
-	synchronized public void push(List<DataSample> dataSamples) {
+	public synchronized void push(List<DataSample> dataSamples) {
 		List<Map<String, Object>> performanceMetricsList = new ArrayList<>();
 
 		for (DataSample dataSample : dataSamples) {
@@ -99,11 +99,11 @@ public class PortalMetricsAggregator {
 		}
 	}
 
-	synchronized public boolean isEmpty() {
+	public synchronized boolean isEmpty() {
 		return _performanceMetricsMap.isEmpty();
 	}
 
-	synchronized public List<Map<String, Object>> pop() {
+	public synchronized List<Map<String, Object>> pop() {
 		List<Map<String, Object>> performanceMetricsList = new ArrayList<>();
 
 		Set<String> keys = _performanceMetricsMap.keySet();
