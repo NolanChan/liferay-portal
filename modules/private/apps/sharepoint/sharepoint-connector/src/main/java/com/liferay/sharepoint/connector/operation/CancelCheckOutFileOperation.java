@@ -34,6 +34,11 @@ public class CancelCheckOutFileOperation extends BaseOperation {
 		}
 		catch (RemoteException re) {
 			RemoteExceptionUtil.handleRemoteException(re);
+
+			throw new IllegalStateException(
+				"This statement should be unreachable. " +
+					"RemoteExceptionUtil.handleRemoteException() should " +
+						"always throw an exception");
 		}
 	}
 
