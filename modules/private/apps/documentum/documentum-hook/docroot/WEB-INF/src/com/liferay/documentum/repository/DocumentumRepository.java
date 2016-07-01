@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.repository.AuthenticationRepositoryException;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -1210,9 +1211,14 @@ public class DocumentumRepository
 	}
 
 	protected IDfSession getIDfSession() throws DfServiceException {
-		IDfSessionManager idfSessionManager = getIDfSessionManager();
+		try {
+			IDfSessionManager idfSessionManager = getIDfSessionManager();
 
-		return idfSessionManager.getSession(_repository);
+			return idfSessionManager.getSession(_repository);
+		}
+		catch (DfAuthenticationException dae) {
+			throw new AuthenticationRepositoryException(dae);
+		}
 	}
 
 	protected IDfSessionManager getIDfSessionManager() {
