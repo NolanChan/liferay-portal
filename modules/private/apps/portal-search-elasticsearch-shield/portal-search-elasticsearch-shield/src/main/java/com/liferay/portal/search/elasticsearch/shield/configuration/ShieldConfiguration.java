@@ -23,29 +23,41 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration"
+	id = "com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration",
+	localization = "content/Language", name = "shield.configuration.name"
 )
 public interface ShieldConfiguration {
 
-	@Meta.AD(deflt = "liferay", required = false)
+	@Meta.AD(deflt = "liferay", description = "password-help", required = false)
 	public String password();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false", description = "requires-authentication-help",
+		required = false
+	)
 	public boolean requiresAuthentication();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", description = "requires-ssl-help", required = false
+	)
 	public boolean requiresSSL();
 
-	@Meta.AD(required = false)
+	@Meta.AD(description = "ssl-keystore-key-password-help", required = false)
 	public String sslKeystoreKeyPassword();
 
-	@Meta.AD(deflt = "liferay", required = false)
+	@Meta.AD(
+		deflt = "liferay", description = "ssl-keystore-password-help",
+		required = false
+	)
 	public String sslKeystorePassword();
 
-	@Meta.AD(deflt = "/path/to/keystore.jks", required = false)
+	@Meta.AD(
+		deflt = "/path/to/keystore.jks", description = "ssl-keystore-path-help",
+		required = false
+	)
 	public String sslKeystorePath();
 
-	@Meta.AD(deflt = "liferay", required = false)
+	@Meta.AD(deflt = "liferay", description = "username-help", required = false)
 	public String username();
 
 }
