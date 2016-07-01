@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.sharepoint.connector.SharepointConnection;
 import com.liferay.sharepoint.connector.SharepointException;
 import com.liferay.sharepoint.connector.SharepointResultException;
+import com.liferay.sharepoint.connector.util.RemoteExceptionUtil;
 
 import com.microsoft.schemas.sharepoint.soap.CopyErrorCode;
 import com.microsoft.schemas.sharepoint.soap.CopyResult;
@@ -69,8 +70,7 @@ public class AddOrUpdateFileOperation extends BaseOperation {
 				copyResultCollectionHolder);
 		}
 		catch (RemoteException re) {
-			throw new SharepointException(
-				"Unable to communicate with the Sharepoint server", re);
+			RemoteExceptionUtil.handleRemoteException(re);
 		}
 
 		CopyResult copyResult = copyResultCollectionHolder.value[0];

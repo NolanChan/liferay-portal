@@ -16,6 +16,7 @@ package com.liferay.sharepoint.connector.operation;
 
 import com.liferay.sharepoint.connector.SharepointConnection.CheckInType;
 import com.liferay.sharepoint.connector.SharepointException;
+import com.liferay.sharepoint.connector.util.RemoteExceptionUtil;
 
 import java.net.URL;
 
@@ -40,8 +41,7 @@ public class CheckInFileOperation extends BaseOperation {
 				filePathURL.toString(), comment, protocolValue);
 		}
 		catch (RemoteException re) {
-			throw new SharepointException(
-				"Unable to communicate with the Sharepoint server", re);
+			RemoteExceptionUtil.handleRemoteException(re);
 		}
 	}
 

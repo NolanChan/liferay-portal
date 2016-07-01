@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.sharepoint.connector.SharepointException;
 import com.liferay.sharepoint.connector.SharepointResultException;
 import com.liferay.sharepoint.connector.schema.batch.Batch;
+import com.liferay.sharepoint.connector.util.RemoteExceptionUtil;
 
 import com.microsoft.schemas.sharepoint.soap.UpdateListItemsResponseUpdateListItemsResult;
 import com.microsoft.schemas.sharepoint.soap.UpdateListItemsUpdates;
@@ -53,8 +54,7 @@ public class BatchOperation extends BaseOperation {
 					updateListItemsUpdates);
 		}
 		catch (RemoteException re) {
-			throw new SharepointException(
-				"Unable to communicate with the Sharepoint server", re);
+			RemoteExceptionUtil.handleRemoteException(re);
 		}
 
 		parseUpdateListItemsResponseUpdateListItemsResult(

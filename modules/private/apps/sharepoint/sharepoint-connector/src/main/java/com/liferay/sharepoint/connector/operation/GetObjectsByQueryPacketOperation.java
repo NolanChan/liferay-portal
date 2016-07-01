@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.sharepoint.connector.SharepointException;
 import com.liferay.sharepoint.connector.SharepointObject;
 import com.liferay.sharepoint.connector.SharepointResultException;
+import com.liferay.sharepoint.connector.util.RemoteExceptionUtil;
 
 import com.microsoft.webservices.SharePoint.QueryService.QueryServiceSoap;
 
@@ -97,8 +98,7 @@ public class GetObjectsByQueryPacketOperation extends BaseOperation {
 			return sharepointObjects;
 		}
 		catch (RemoteException re) {
-			throw new SharepointException(
-				"Unable to communicate with the Sharepoint server", re);
+			RemoteExceptionUtil.handleRemoteException(re);
 		}
 	}
 

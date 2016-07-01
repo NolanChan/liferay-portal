@@ -26,6 +26,7 @@ import com.liferay.sharepoint.connector.schema.query.QueryField;
 import com.liferay.sharepoint.connector.schema.query.QueryFieldsList;
 import com.liferay.sharepoint.connector.schema.query.QueryOptionsList;
 import com.liferay.sharepoint.connector.schema.query.option.ExpandUserFieldQueryOption;
+import com.liferay.sharepoint.connector.util.RemoteExceptionUtil;
 
 import com.microsoft.schemas.sharepoint.soap.GetListItemsQuery;
 import com.microsoft.schemas.sharepoint.soap.GetListItemsQueryOptions;
@@ -92,8 +93,7 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 				getListItemsQueryOptions, SharepointConstants.WEB_ID_DEFAULT);
 		}
 		catch (RemoteException re) {
-			throw new SharepointException(
-				"Unable to communicate with the Sharepoint server", re);
+			RemoteExceptionUtil.handleRemoteException(re);
 		}
 
 		log(query, queryOptionsList, getListItemsResponseGetListItemsResult);

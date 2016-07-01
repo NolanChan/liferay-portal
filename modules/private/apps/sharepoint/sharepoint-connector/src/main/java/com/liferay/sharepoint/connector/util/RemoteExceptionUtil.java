@@ -12,29 +12,35 @@
  * details.
  */
 
-package com.liferay.sharepoint.connector.operation;
+package com.liferay.sharepoint.connector.util;
 
+import com.liferay.portal.kernel.repository.AuthenticationRepositoryException;
 import com.liferay.sharepoint.connector.SharepointException;
-import com.liferay.sharepoint.connector.util.RemoteExceptionUtil;
-
-import java.net.URL;
 
 import java.rmi.RemoteException;
 
+import org.apache.axis.AxisFault;
+
 /**
- * @author Iván Zaera
+ * @author Adolfo Pérez
  */
-public class CancelCheckOutFileOperation extends BaseOperation {
+public class RemoteExceptionUtil {
 
-	public boolean execute(String filePath) throws SharepointException {
-		try {
-			URL filePathURL = toURL(filePath);
+	public static void handleRemoteException(RemoteException re)
+		throws SharepointException {
 
-			return listsSoap.undoCheckOut(filePathURL.toString());
+		if (re instanceof AxisFault) {
+			AxisFault axisFault = (AxisFault)re;
+
+			String faultString = axisFault.getFaultString();
+
+			if (faultString.startsWith("(401)Unauthorized")) {
+				throw new AuthenticationRepositoryException(re);
+			}
 		}
-		catch (RemoteException re) {
-			RemoteExceptionUtil.handleRemoteException(re);
-		}
+
+		throw new SharepointException(
+			"Unable to communicate with the Sharepoint server", re);
 	}
 
 }
