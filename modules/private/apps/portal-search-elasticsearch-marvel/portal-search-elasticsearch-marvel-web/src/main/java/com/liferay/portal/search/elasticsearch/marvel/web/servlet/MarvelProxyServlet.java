@@ -185,14 +185,14 @@ public class MarvelProxyServlet extends ProxyServlet {
 		super.service(httpServletRequest, httpServletResponse);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		MarvelProxyServlet.class);
-
 	@Reference
 	protected PermissionCheckerFactory permissionCheckerFactory;
 
 	@Reference
 	protected Portal portal;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MarvelProxyServlet.class);
 
 	private MarvelWebConfiguration _marvelWebConfiguration;
 

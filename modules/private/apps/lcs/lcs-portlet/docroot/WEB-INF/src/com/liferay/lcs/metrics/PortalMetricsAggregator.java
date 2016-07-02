@@ -15,9 +15,9 @@
 package com.liferay.lcs.metrics;
 
 import com.liferay.lcs.messaging.MetricsMessage;
+import com.liferay.lcs.monitoring.statistics.AverageStatistics;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.lcs.monitoring.statistics.AverageStatistics;
 import com.liferay.portal.kernel.monitoring.DataSample;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,6 +39,36 @@ import java.util.Set;
  * @author Igor Beslic
  */
 public class PortalMetricsAggregator {
+
+	public synchronized boolean isEmpty() {
+		return _performanceMetricsMap.isEmpty();
+	}
+
+	public synchronized List<Map<String, Object>> pop() {
+		List<Map<String, Object>> performanceMetricsList = new ArrayList<>();
+
+		Set<String> keys = _performanceMetricsMap.keySet();
+
+		for (String key : keys) {
+			Map<String, Object> performanceMetrics = new HashMap<>();
+
+			MapUtil.copy(_performanceMetricsMap.get(key), performanceMetrics);
+
+			AverageStatistics averageStatistics = _averageStatisticsMap.get(
+				key);
+
+			performanceMetrics.put(
+				"duration", averageStatistics.getAverageTime());
+			performanceMetrics.put("frequency", averageStatistics.getCount());
+
+			performanceMetricsList.add(performanceMetrics);
+		}
+
+		_averageStatisticsMap.clear();
+		_performanceMetricsMap.clear();
+
+		return performanceMetricsList;
+	}
 
 	public synchronized void push(DataSample dataSample) {
 		updatePerformanceMetricsMap(
@@ -97,36 +127,6 @@ public class PortalMetricsAggregator {
 				}
 			}
 		}
-	}
-
-	public synchronized boolean isEmpty() {
-		return _performanceMetricsMap.isEmpty();
-	}
-
-	public synchronized List<Map<String, Object>> pop() {
-		List<Map<String, Object>> performanceMetricsList = new ArrayList<>();
-
-		Set<String> keys = _performanceMetricsMap.keySet();
-
-		for (String key : keys) {
-			Map<String, Object> performanceMetrics = new HashMap<>();
-
-			MapUtil.copy(_performanceMetricsMap.get(key), performanceMetrics);
-
-			AverageStatistics averageStatistics = _averageStatisticsMap.get(
-				key);
-
-			performanceMetrics.put(
-				"duration", averageStatistics.getAverageTime());
-			performanceMetrics.put("frequency", averageStatistics.getCount());
-
-			performanceMetricsList.add(performanceMetrics);
-		}
-
-		_averageStatisticsMap.clear();
-		_performanceMetricsMap.clear();
-
-		return performanceMetricsList;
 	}
 
 	protected String getMetricsType(DataSample dataSample) {

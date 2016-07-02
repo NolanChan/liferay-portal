@@ -128,10 +128,10 @@ public abstract class BasePortalCacheClusterChannel
 	private static final AtomicInteger _dispatchThreadCounter =
 		new AtomicInteger(0);
 
-	private volatile boolean _destroy = false;
+	private volatile boolean _destroy;
 	private final Thread _dispatchThread;
 	private final CoalescedPipe<PortalCacheClusterEvent> _eventQueue;
 	private final AtomicLong _sentEventCounter = new AtomicLong(0);
-	private volatile boolean _started = false;
+	private volatile boolean _started;
 
 }
