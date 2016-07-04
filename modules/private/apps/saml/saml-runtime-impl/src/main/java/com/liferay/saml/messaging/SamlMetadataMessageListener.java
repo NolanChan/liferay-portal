@@ -14,27 +14,66 @@
 
 package com.liferay.saml.messaging;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.configuration.SAMLConfiguration;
 import com.liferay.saml.model.SamlIdpSpConnection;
 import com.liferay.saml.model.SamlSpIdpConnection;
-import com.liferay.saml.service.SamlIdpSpConnectionLocalServiceUtil;
-import com.liferay.saml.service.SamlSpIdpConnectionLocalServiceUtil;
+import com.liferay.saml.service.SamlIdpSpConnectionLocalService;
+import com.liferay.saml.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.util.SamlUtil;
 
 import java.util.List;
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
  */
-public class SamlMetadataMessageListener extends BaseMessageListener {
+@Component(
+	configurationPid = "com.liferay.saml.configuration.SAMLConfiguration",
+	immediate = true, service = SamlMetadataMessageListener.class
+)
+public class SamlMetadataMessageListener
+	extends BaseSchedulerEntryMessageListener {
+
+	private SAMLConfiguration _samlConfiguration;
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_samlConfiguration = ConfigurableUtil.createConfigurable(
+			SAMLConfiguration.class, properties);
+
+		schedulerEntryImpl.setTrigger(
+			TriggerFactoryUtil.createTrigger(
+				getEventListenerClass(), getEventListenerClass(),
+				_samlConfiguration.getMetadataRefreshInterval(),
+				TimeUnit.SECOND));
+
+		_schedulerEngineHelper.register(
+			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_schedulerEngineHelper.unregister(this);
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -79,8 +118,7 @@ public class SamlMetadataMessageListener extends BaseMessageListener {
 
 	protected void updateIdpMetadata(long companyId) {
 		List<SamlSpIdpConnection> samlSpIdpConnections =
-			SamlSpIdpConnectionLocalServiceUtil.getSamlSpIdpConnections(
-				companyId);
+			_samlSpIdpConnectionLocalService.getSamlSpIdpConnections(companyId);
 
 		for (SamlSpIdpConnection samlSpIdpConnection : samlSpIdpConnections) {
 			if (!samlSpIdpConnection.isEnabled() ||
@@ -90,7 +128,7 @@ public class SamlMetadataMessageListener extends BaseMessageListener {
 			}
 
 			try {
-				SamlSpIdpConnectionLocalServiceUtil.updateMetadata(
+				_samlSpIdpConnectionLocalService.updateMetadata(
 					samlSpIdpConnection.getSamlSpIdpConnectionId());
 			}
 			catch (Exception e) {
@@ -106,8 +144,7 @@ public class SamlMetadataMessageListener extends BaseMessageListener {
 
 	protected void updateSpMetadata(long companyId) {
 		List<SamlIdpSpConnection> samlIdpSpConnections =
-			SamlIdpSpConnectionLocalServiceUtil.getSamlIdpSpConnections(
-				companyId);
+			_samlIdpSpConnectionLocalService.getSamlIdpSpConnections(companyId);
 
 		for (SamlIdpSpConnection samlIdpSpConnection : samlIdpSpConnections) {
 			if (!samlIdpSpConnection.isEnabled() ||
@@ -117,7 +154,7 @@ public class SamlMetadataMessageListener extends BaseMessageListener {
 			}
 
 			try {
-				SamlIdpSpConnectionLocalServiceUtil.updateMetadata(
+				_samlSpIdpConnectionLocalService.updateMetadata(
 					samlIdpSpConnection.getSamlIdpSpConnectionId());
 			}
 			catch (Exception e) {
@@ -134,4 +171,12 @@ public class SamlMetadataMessageListener extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SamlMetadataMessageListener.class);
 
+	@Reference
+	SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
+
+	@Reference
+	SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
 }

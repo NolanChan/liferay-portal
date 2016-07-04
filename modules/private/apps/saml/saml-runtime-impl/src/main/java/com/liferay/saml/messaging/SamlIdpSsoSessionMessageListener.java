@@ -14,18 +14,63 @@
 
 package com.liferay.saml.messaging;
 
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.saml.service.SamlIdpSsoSessionLocalServiceUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.saml.configuration.SAMLConfiguration;
+import com.liferay.saml.service.SamlIdpSsoSessionLocalService;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Christopher Kian
  */
-public class SamlIdpSsoSessionMessageListener extends BaseMessageListener {
+@Component(
+	configurationPid = "com.liferay.saml.configuration.SAMLConfiguration",
+	immediate = true, service = SamlIdpSsoSessionMessageListener.class
+)
+public class SamlIdpSsoSessionMessageListener
+	extends BaseSchedulerEntryMessageListener {
+
+	private SAMLConfiguration _samlConfiguration;
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_samlConfiguration = ConfigurableUtil.createConfigurable(
+			SAMLConfiguration.class, properties);
+
+		schedulerEntryImpl.setTrigger(
+			TriggerFactoryUtil.createTrigger(
+				getEventListenerClass(), getEventListenerClass(),
+				_samlConfiguration.getIdpSsoSessionCheckInterval(),
+				TimeUnit.MINUTE));
+
+		_schedulerEngineHelper.register(
+			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_schedulerEngineHelper.unregister(this);
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		SamlIdpSsoSessionLocalServiceUtil.deleteExpiredSamlIdpSsoSessions();
+		_samlIdpSsoSessionLocalService.deleteExpiredSamlIdpSsoSessions();
 	}
 
+	@Reference
+	SamlIdpSsoSessionLocalService _samlIdpSsoSessionLocalService;
+
+	@Reference
+	SchedulerEngineHelper _schedulerEngineHelper;
 }
