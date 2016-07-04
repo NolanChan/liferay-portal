@@ -22,7 +22,8 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Mika Koivisto
  */
 @ProviderType
-public class DuplicateSamlIdpSpConnectionSamlSpEntityIdException extends PortalException {
+public class DuplicateSamlIdpSpConnectionSamlSpEntityIdException
+	extends PortalException {
 
 	public DuplicateSamlIdpSpConnectionSamlSpEntityIdException() {
 	}
@@ -31,11 +32,15 @@ public class DuplicateSamlIdpSpConnectionSamlSpEntityIdException extends PortalE
 		super(msg);
 	}
 
-	public DuplicateSamlIdpSpConnectionSamlSpEntityIdException(String msg, Throwable cause) {
+	public DuplicateSamlIdpSpConnectionSamlSpEntityIdException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 
-	public DuplicateSamlIdpSpConnectionSamlSpEntityIdException(Throwable cause) {
+	public DuplicateSamlIdpSpConnectionSamlSpEntityIdException(
+		Throwable cause) {
+
 		super(cause);
 	}
 

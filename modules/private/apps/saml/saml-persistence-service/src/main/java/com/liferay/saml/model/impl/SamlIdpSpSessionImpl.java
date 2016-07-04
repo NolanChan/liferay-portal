@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class SamlIdpSpSessionImpl extends SamlIdpSpSessionBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a saml idp sp session model instance should use the {@link com.liferay.saml.model.SamlIdpSpSession} interface instead.
 	 */
 	public SamlIdpSpSessionImpl() {
 	}
+
 }

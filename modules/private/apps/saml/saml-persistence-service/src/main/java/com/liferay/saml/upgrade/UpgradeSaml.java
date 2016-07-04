@@ -17,12 +17,13 @@ package com.liferay.saml.upgrade;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.saml.upgrade.v1_0_0.UpgradeSamlSpAuthRequest;
 import com.liferay.saml.upgrade.v1_0_0.UpgradeSamlSpMessage;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate=true)
+@Component(immediate = true)
 public class UpgradeSaml implements UpgradeStepRegistrator {
 
 	public void register(Registry registry) {

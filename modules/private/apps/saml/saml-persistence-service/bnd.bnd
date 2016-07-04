@@ -3,19 +3,27 @@ Bundle-SymbolicName: com.liferay.saml.persistence.service
 Bundle-Version: 1.0.0
 Import-Package:\
 	!com.sun.*,\
+	\
 	!com.swabunga.*,\
+	\
+	!com.werken.*,\
+	\
 	!net.fortuna.*,\
+	\
+	!net.jcip.*,\
+	\
+	!nu.xom,\
+	\
 	!org.apache.axis.*,\
 	!org.apache.commons.configuration,\
 	!org.apache.commons.ssl,\
 	!org.apache.log.*,\
 	!org.apache.oro.*,\
 	!org.apache.poi.*,\
-	!org.owasp.validator.html,\
+	\
 	!org.joda.convert,\
-	!net.jcip.*,\
-	!nu.xom,\
-	!com.werken.*,\
+	\
+	!org.owasp.validator.html,\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: SAML

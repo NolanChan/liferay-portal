@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class SamlSpAuthRequestImpl extends SamlSpAuthRequestBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a saml sp auth request model instance should use the {@link com.liferay.saml.model.SamlSpAuthRequest} interface instead.
 	 */
 	public SamlSpAuthRequestImpl() {
 	}
+
 }

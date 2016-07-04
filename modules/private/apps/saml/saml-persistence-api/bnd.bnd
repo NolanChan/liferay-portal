@@ -1,0 +1,15 @@
+Bundle-Name: Liferay SAML Persistence API
+Bundle-SymbolicName: com.liferay.saml.persistence.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.saml.*
+Import-Package:\
+	!com.swabunga.*,\
+	\
+	!net.fortuna.*,\
+	\
+	!org.apache.axis.*,\
+	!org.apache.poi.*,\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-includeresource: @com.liferay.util.java*.jar

@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class SamlSpIdpConnectionImpl extends SamlSpIdpConnectionBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a saml sp idp connection model instance should use the {@link com.liferay.saml.model.SamlSpIdpConnection} interface instead.
 	 */
 	public SamlSpIdpConnectionImpl() {
 	}
+
 }
