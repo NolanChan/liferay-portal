@@ -83,6 +83,6 @@ if (LCSUtil.isLCSPortletAuthorized(liferayPortletRequest)) {
 			<liferay-ui:message arguments="<%= LCSUtil.getLCSPortletBuildNumber() %>" key="liferay-connected-services-client-x" />
 		</div>
 
-		<liferay-ui:message arguments="<%= new Object[] {LCSUtil.getFeedbackURL(request), PortletPropsValues.FEEDBACK_EMAIL_ADDRESS, PortletPropsValues.JIRA_SUPPORT_PROJECT_URL} %>" key="are-you-having-problems" />
+		<liferay-ui:message arguments="<%= PortletPropsValues.JIRA_SUPPORT_PROJECT_URL %>" key="for-any-questions-or-issues-please-open-a-ticket-in-lesa-under-the-liferay-connected-services-component" />
 	</div>
 </footer>

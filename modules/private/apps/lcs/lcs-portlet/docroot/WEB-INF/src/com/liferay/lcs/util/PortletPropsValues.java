@@ -77,9 +77,6 @@ public class PortletPropsValues {
 	public static final String DIGITAL_SIGNATURE_SIGNING_ALGORITHM =
 		PortletProps.get(PortletPropsKeys.DIGITAL_SIGNATURE_SIGNING_ALGORITHM);
 
-	public static final String FEEDBACK_EMAIL_ADDRESS = PortletProps.get(
-		PortletPropsKeys.FEEDBACK_EMAIL_ADDRESS);
-
 	public static final String JIRA_SUPPORT_PROJECT_URL = PortletProps.get(
 		PortletPropsKeys.JIRA_SUPPORT_PROJECT_URL);
 

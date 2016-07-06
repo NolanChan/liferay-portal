@@ -65,9 +65,6 @@ public interface PortletPropsKeys {
 	public static final String DIGITAL_SIGNATURE_SIGNING_ALGORITHM =
 		"digital.signature.signing.algorithm";
 
-	public static final String FEEDBACK_EMAIL_ADDRESS =
-		"feedback.email.address";
-
 	public static final String JIRA_SUPPORT_PROJECT_URL =
 		"jira.support.project.url";
 

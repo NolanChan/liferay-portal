@@ -245,50 +245,6 @@ public class LCSUtil {
 			Collections.<String, String>emptyMap());
 	}
 
-	public static String getFeedbackURL(HttpServletRequest request) {
-		InstallationEnvironmentAdvisor installationEnvironmentAdvisor =
-			InstallationEnvironmentAdvisorFactory.getInstance();
-
-		Map<String, String> softwareMetadata =
-			installationEnvironmentAdvisor.getSoftwareMetadata();
-
-		StringBundler sb = new StringBundler(4 * softwareMetadata.size() + 19);
-
-		sb.append("mailto:");
-		sb.append(PortletPropsValues.FEEDBACK_EMAIL_ADDRESS);
-		sb.append("?subject=");
-		sb.append(
-			LanguageUtil.get(
-				request, "liferay-connected-services-client-feedback"));
-		sb.append("&body=");
-		sb.append(LanguageUtil.get(request, "system-details"));
-
-		String newLine = HttpUtil.encodeURL(StringPool.NEW_LINE);
-
-		sb.append(newLine);
-		sb.append(LanguageUtil.get(request, "portal-edition"));
-		sb.append(": ");
-		sb.append(getPortalEdition());
-		sb.append(newLine);
-		sb.append(LanguageUtil.get(request, "portal-build-number"));
-		sb.append(": ");
-		sb.append(ReleaseInfo.getBuildNumber());
-		sb.append(newLine);
-		sb.append(LanguageUtil.get(request, "patching-tool-version"));
-		sb.append(": ");
-		sb.append(PatcherUtil.getPatchingToolVersion());
-		sb.append(newLine);
-
-		for (Map.Entry<String, String> entry : softwareMetadata.entrySet()) {
-			sb.append(entry.getKey());
-			sb.append(": ");
-			sb.append(entry.getValue());
-			sb.append(newLine);
-		}
-
-		return sb.toString();
-	}
-
 	public static String getLCSClusterEntryLayoutURL(
 		LCSProject lcsProject, LCSClusterNode lcsClusterNode) {
 
