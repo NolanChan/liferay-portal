@@ -29,7 +29,7 @@ public class KaleoFormsActionKeys {
 
 	/**
 	 * {@value #COMPLETE_FORM} is the action key to use to check permissions for
-	 * complete a kaleo process's form.
+	 * completing a kaleo process's form.
 	 */
 	public static final String COMPLETE_FORM = "COMPLETE_FORM";
 
