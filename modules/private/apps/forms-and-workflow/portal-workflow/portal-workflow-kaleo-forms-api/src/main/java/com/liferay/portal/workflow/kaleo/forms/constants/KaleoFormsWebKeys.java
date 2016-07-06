@@ -30,14 +30,14 @@ public class KaleoFormsWebKeys {
 
 	/**
 	 * {@value #KALEO_DRAFT_DEFINITION_CONTENT} is the key to use to retrieve
-	 * the content of Kaleo Draft Definition from the request attribute.
+	 * the content of the Kaleo Draft Definition from the request attribute.
 	 */
 	public static final String KALEO_DRAFT_DEFINITION_CONTENT =
 		"KALEO_DRAFT_DEFINITION_CONTENT";
 
 	/**
 	 * {@value #KALEO_DRAFT_DEFINITION_ID} is the key to use to retrieve the
-	 * primary key of Kaleo Draft Definition from the request attribute.
+	 * primary key of the Kaleo Draft Definition from the request attribute.
 	 */
 	public static final String KALEO_DRAFT_DEFINITION_ID =
 		"KALEO_DRAFT_DEFINITION_ID";
