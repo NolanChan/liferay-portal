@@ -14,6 +14,7 @@
 
 package com.liferay.saml.util;
 
+import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,23 +26,62 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
 
+import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 
+import com.liferay.saml.configuration.MetadataUtilConfiguration;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 
+import org.apache.commons.httpclient.params.HttpClientParams;
 import org.opensaml.saml2.metadata.EntityDescriptor;
 import org.opensaml.xml.XMLObject;
 import org.opensaml.xml.parse.ParserPool;
 import org.opensaml.xml.util.XMLObjectHelper;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
  */
+@Component(
+	configurationPid = "com.liferay.saml.util.MetadataUtilConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
+	immediate = true
+)
 public class MetadataUtil {
+
+	private ServiceRegistration<HttpClient>
+		_httpClientServiceRegistration;
+
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+		MetadataUtilConfiguration metadataUtilConfiguration =
+			Configurable.createConfigurable(
+				MetadataUtilConfiguration.class, properties);
+
+		HttpClientParams httpClientParams = new HttpClientParams();
+
+		httpClientParams.setConnectionManagerTimeout(
+			metadataUtilConfiguration.getConnectionManagerTimeout());
+		httpClientParams.setSoTimeout(metadataUtilConfiguration.getSoTimeout());
+
+		_httpClient = new HttpClient(
+			httpClientParams, new MultiThreadedHttpConnectionManager());
+
+		_httpClientServiceRegistration = bundleContext.registerService(
+			HttpClient.class, _httpClient, null);
+	}
 
 	public static InputStream getMetadata(String url) {
 		GetMethod getMethod = new GetMethod(url);
@@ -90,6 +130,11 @@ public class MetadataUtil {
 		return null;
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_httpClientServiceRegistration.unregister();
+	}
+
 	public static String parseMetadataXml(
 			InputStream inputStream, String entityId)
 		throws Exception {
@@ -118,17 +163,15 @@ public class MetadataUtil {
 		}
 	}
 
-	public void setHttpClient(HttpClient httpClient) {
-		_httpClient = httpClient;
-	}
+	private static volatile ParserPool _parserPool;
 
-	public void setParserPool(ParserPool parserPool) {
+	@Reference
+	protected void setParserPool(ParserPool parserPool) {
 		_parserPool = parserPool;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(MetadataUtil.class);
 
 	private static HttpClient _httpClient;
-	private static ParserPool _parserPool;
 
 }
