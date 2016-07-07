@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.credential;
+package com.liferay.saml.credential.impl;
 
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.saml.util.PortletPrefsPropsUtil;
@@ -181,3 +181,4 @@ public class KeyStoreCredentialResolver
 	}
 
 }
+

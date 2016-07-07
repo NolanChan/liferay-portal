@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.credential;
+package com.liferay.saml.credential.impl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

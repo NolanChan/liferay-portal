@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.credential;
+package com.liferay.saml.credential.impl;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.DLStoreUtil;

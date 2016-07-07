@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.util;
+package com.liferay.saml.util.impl;
 
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 

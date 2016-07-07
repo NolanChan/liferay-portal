@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.metadata;
+package com.liferay.saml.metadata.impl;
 
 import com.liferay.portal.kernel.concurrent.ReadWriteLockKey;
 import com.liferay.portal.kernel.concurrent.ReadWriteLockRegistry;
@@ -640,3 +640,4 @@ public class MetadataManagerImpl implements MetadataManager {
 	private final Timer _timer = new Timer(true);
 
 }
+
