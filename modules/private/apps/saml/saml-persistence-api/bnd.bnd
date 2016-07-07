@@ -12,4 +12,3 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--includeresource: @com.liferay.util.java*.jar
