@@ -1,6 +1,15 @@
 Bundle-Name: Liferay SAML Runtime Impl
 Bundle-SymbolicName: com.liferay.saml.runtime.impl
 Bundle-Version: 1.0.0
-Export-Package:
+Export-Package: org.apache.velocity.*
+Import-Package:\
+	!com.werken.*,\
+	\
+	!org.apache.log.*,\
+	!org.apache.oro.*,\
+	\
+	com.liferay.saml.util,\
+	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
+-includeresource: @velocity-*.jar
