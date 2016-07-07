@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.saml.credential.KeyStoreManagerUtil;
+import com.liferay.saml.credential.KeyStoreManager;
 import com.liferay.saml.exception.CertificateKeyPasswordException;
 import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.model.SamlIdpSpConnection;
@@ -204,14 +204,14 @@ public class AdminPortlet extends MVCPortlet {
 		KeyStore.PrivateKeyEntry privateKeyEntry = new KeyStore.PrivateKeyEntry(
 			keyPair.getPrivate(), new Certificate[] {x509Certificate});
 
-		KeyStore keyStore = KeyStoreManagerUtil.getKeyStore();
+		KeyStore keyStore = _keyStoreManager.getKeyStore();
 
 		keyStore.setEntry(
 			entityId, privateKeyEntry,
 			new KeyStore.PasswordProtection(
 				certificateKeyPassword.toCharArray()));
 
-		KeyStoreManagerUtil.saveKeyStore(keyStore);
+		_keyStoreManager.saveKeyStore(keyStore);
 
 		updateProperties(actionRequest, properties);
 	}
@@ -260,11 +260,11 @@ public class AdminPortlet extends MVCPortlet {
 		if (Validator.isNotNull(currentEntityId) &&
 			!StringUtil.equalsIgnoreCase(currentEntityId, newEntityId)) {
 
-			KeyStore keyStore = KeyStoreManagerUtil.getKeyStore();
+			KeyStore keyStore = _keyStoreManager.getKeyStore();
 
 			keyStore.deleteEntry(currentEntityId);
 
-			KeyStoreManagerUtil.saveKeyStore(keyStore);
+			_keyStoreManager.saveKeyStore(keyStore);
 		}
 
 		updateProperties(actionRequest, properties);
@@ -468,4 +468,6 @@ public class AdminPortlet extends MVCPortlet {
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
 
+	@Reference
+	KeyStoreManager _keyStoreManager;
 }

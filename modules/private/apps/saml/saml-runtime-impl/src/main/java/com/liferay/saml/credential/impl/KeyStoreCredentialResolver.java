@@ -15,6 +15,7 @@
 package com.liferay.saml.credential.impl;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.saml.credential.KeyStoreManager;
 import com.liferay.saml.util.PortletPrefsPropsUtil;
 import com.liferay.saml.util.PortletPropsKeys;
 
@@ -35,14 +36,19 @@ import org.opensaml.xml.security.SecurityException;
 import org.opensaml.xml.security.credential.AbstractCriteriaFilteringCredentialResolver;
 import org.opensaml.xml.security.credential.BasicCredential;
 import org.opensaml.xml.security.credential.Credential;
+import org.opensaml.xml.security.credential.CredentialResolver;
 import org.opensaml.xml.security.credential.UsageType;
 import org.opensaml.xml.security.criteria.EntityIDCriteria;
 import org.opensaml.xml.security.criteria.UsageCriteria;
 import org.opensaml.xml.security.x509.BasicX509Credential;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mika Koivisto
  */
+@Component(service = CredentialResolver.class)
 public class KeyStoreCredentialResolver
 	extends AbstractCriteriaFilteringCredentialResolver {
 
@@ -151,7 +157,7 @@ public class KeyStoreCredentialResolver
 					samlKeyStoreCredentialPassword.toCharArray());
 			}
 
-			KeyStore keyStore = KeyStoreManagerUtil.getKeyStore();
+			KeyStore keyStore = _keyStoreManager.getKeyStore();
 
 			Entry entry = keyStore.getEntry(
 				entityId, keyStorePasswordProtection);
@@ -180,5 +186,7 @@ public class KeyStoreCredentialResolver
 		}
 	}
 
-}
+	@Reference
+	KeyStoreManager _keyStoreManager;
 
+}
