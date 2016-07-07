@@ -20,9 +20,12 @@ import com.liferay.portal.kernel.util.UnicodeFormatter;
 
 import org.opensaml.common.IdentifierGenerator;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mika Koivisto
  */
+@Component(immediate = true)
 public class SamlIdentifierGenerator implements IdentifierGenerator {
 
 	@Override

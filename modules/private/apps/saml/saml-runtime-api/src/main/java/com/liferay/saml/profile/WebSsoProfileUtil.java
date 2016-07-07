@@ -20,9 +20,16 @@ import com.liferay.saml.model.SamlSpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Mika Koivisto
  */
+@Component(immediate = true)
 public class WebSsoProfileUtil {
 
 	public static SamlSpSession getSamlSpSession(HttpServletRequest request) {
@@ -61,8 +68,17 @@ public class WebSsoProfileUtil {
 		getWebSsoProfile().updateSamlSpSession(request, response);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	public void setWebSsoProfile(WebSsoProfile webSsoProfile) {
 		_webSsoProfile = webSsoProfile;
+	}
+
+	public void unsetWebSsoProfile(WebSsoProfile webSsoProfile) {
+		_webSsoProfile = null;
 	}
 
 	private static WebSsoProfile _webSsoProfile;

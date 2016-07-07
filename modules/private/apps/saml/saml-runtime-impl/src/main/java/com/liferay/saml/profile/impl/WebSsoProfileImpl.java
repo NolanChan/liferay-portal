@@ -53,11 +53,12 @@ import com.liferay.saml.model.SamlSpAuthRequest;
 import com.liferay.saml.model.SamlSpIdpConnection;
 import com.liferay.saml.model.SamlSpMessage;
 import com.liferay.saml.model.SamlSpSession;
+import com.liferay.saml.profile.WebSsoProfile;
 import com.liferay.saml.resolver.AttributeResolver;
-import com.liferay.saml.resolver.AttributeResolverFactory;
 import com.liferay.saml.resolver.NameIdResolver;
-import com.liferay.saml.resolver.NameIdResolverFactory;
 import com.liferay.saml.resolver.UserResolverUtil;
+import com.liferay.saml.resolver.impl.AttributeResolverFactory;
+import com.liferay.saml.resolver.impl.NameIdResolverFactory;
 import com.liferay.saml.service.SamlIdpSpSessionLocalServiceUtil;
 import com.liferay.saml.service.SamlIdpSsoSessionLocalServiceUtil;
 import com.liferay.saml.service.SamlSpAuthRequestLocalServiceUtil;
@@ -81,6 +82,7 @@ import javax.servlet.http.HttpSession;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
+import org.opensaml.common.IdentifierGenerator;
 import org.opensaml.common.SAMLObject;
 import org.opensaml.common.SAMLVersion;
 import org.opensaml.common.binding.SAMLMessageContext;
@@ -121,9 +123,13 @@ import org.opensaml.xml.security.trust.TrustEngine;
 import org.opensaml.xml.signature.Signature;
 import org.opensaml.xml.signature.SignatureTrustEngine;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mika Koivisto
  */
+@Component
 public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	@Override
@@ -188,6 +194,18 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				throw new SamlException(e);
 			}
 		}
+	}
+
+	@Reference(unbind = "-")
+	public void setIdentifierGenerator(
+		IdentifierGenerator identifierGenerator) {
+
+		super.setIdentifierGenerator(identifierGenerator);
+	}
+
+	@Reference(unbind = "-")
+	public void setSamlBindings(List<SamlBinding> samlBindings) {
+		super.setSamlBindings(samlBindings);
 	}
 
 	@Override

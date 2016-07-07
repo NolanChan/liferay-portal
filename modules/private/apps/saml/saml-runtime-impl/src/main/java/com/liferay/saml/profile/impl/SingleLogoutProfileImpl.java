@@ -39,6 +39,7 @@ import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.model.SamlIdpSpSession;
 import com.liferay.saml.model.SamlIdpSsoSession;
 import com.liferay.saml.model.SamlSpSession;
+import com.liferay.saml.profile.SingleLogoutProfile;
 import com.liferay.saml.service.SamlIdpSpSessionLocalServiceUtil;
 import com.liferay.saml.service.SamlIdpSsoSessionLocalServiceUtil;
 import com.liferay.saml.service.SamlSpSessionLocalServiceUtil;
@@ -63,6 +64,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
+import org.opensaml.common.IdentifierGenerator;
 import org.opensaml.common.SAMLObject;
 import org.opensaml.common.SAMLVersion;
 import org.opensaml.common.binding.SAMLMessageContext;
@@ -87,9 +89,14 @@ import org.opensaml.ws.transport.http.HttpServletRequestAdapter;
 import org.opensaml.ws.transport.http.HttpServletResponseAdapter;
 import org.opensaml.xml.security.credential.Credential;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Mika Koivisto
  */
+@Component
 public class SingleLogoutProfileImpl
 	extends BaseProfile implements SingleLogoutProfile {
 
@@ -278,6 +285,19 @@ public class SingleLogoutProfileImpl
 				throw new SamlException(e);
 			}
 		}
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	public void setIdentifierGenerator(
+		IdentifierGenerator identifierGenerator) {
+
+		super.setIdentifierGenerator(identifierGenerator);
+	}
+
+	@Reference(policyOption = ReferencePolicyOption.RELUCTANT, unbind = "-")
+	public void setSamlBindings(List<SamlBinding> samlBindings) {
+		super.setSamlBindings(samlBindings);
 	}
 
 	@Override

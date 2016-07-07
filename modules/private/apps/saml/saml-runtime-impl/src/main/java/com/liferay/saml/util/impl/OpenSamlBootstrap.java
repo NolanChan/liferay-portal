@@ -22,6 +22,7 @@ import org.opensaml.DefaultBootstrap;
 import org.opensaml.xml.ConfigurationException;
 import org.opensaml.xml.parse.BasicParserPool;
 import org.opensaml.xml.parse.ParserPool;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -35,8 +36,6 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 @Component(immediate = true)
 public class OpenSamlBootstrap extends DefaultBootstrap {
-
-	private ServiceRegistration<ParserPool> _parserPoolServiceRegistration;
 
 	@Activate
 	public synchronized void activate(BundleContext bundleContext)
@@ -73,12 +72,6 @@ public class OpenSamlBootstrap extends DefaultBootstrap {
 		}
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_parserPoolServiceRegistration.unregister();
-	}
-
-
 	protected static void initializeParserPool() throws ConfigurationException {
 		BasicParserPool parserPool = new BasicParserPool();
 
@@ -106,6 +99,11 @@ public class OpenSamlBootstrap extends DefaultBootstrap {
 		Configuration.setParserPool(parserPool);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_parserPoolServiceRegistration.unregister();
+	}
+
 	private static final String[] _xmlToolingConfigs = {
 		"/default-config.xml", "/encryption-config.xml",
 		"/encryption-validation-config.xml", "/saml1-metadata-config.xml",
@@ -119,5 +117,7 @@ public class OpenSamlBootstrap extends DefaultBootstrap {
 		"/signature-config.xml", "/signature-validation-config.xml",
 		"/soap11-config.xml"
 	};
+
+	private ServiceRegistration<ParserPool> _parserPoolServiceRegistration;
 
 }

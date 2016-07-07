@@ -24,9 +24,16 @@ import org.opensaml.xml.security.SecurityException;
 import org.opensaml.xml.security.credential.Credential;
 import org.opensaml.xml.signature.SignatureTrustEngine;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Mika Koivisto
  */
+@Component(immediate = true)
 public class MetadataManagerUtil {
 
 	public static int getAssertionLifetime(String entityId) {
@@ -136,8 +143,17 @@ public class MetadataManagerUtil {
 		return getMetadataManager().isWantAuthnRequestSigned();
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	public void setMetadataManager(MetadataManager metadataManager) {
 		_metadataManager = metadataManager;
+	}
+
+	public void unsetMetadataManager(MetadataManager metadataManager) {
+		_metadataManager = null;
 	}
 
 	private static MetadataManager _metadataManager;

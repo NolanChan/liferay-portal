@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.metadata.MetadataGeneratorUtil;
+import com.liferay.saml.metadata.MetadataManager;
+import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.model.SamlIdpSpConnection;
 import com.liferay.saml.model.SamlSpIdpConnection;
 import com.liferay.saml.provider.CachingChainingMetadataProvider;
@@ -83,9 +86,14 @@ import org.opensaml.xml.signature.SignatureTrustEngine;
 import org.opensaml.xml.signature.impl.ChainingSignatureTrustEngine;
 import org.opensaml.xml.signature.impl.ExplicitKeySignatureTrustEngine;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mika Koivisto
  */
+@Component(immediate = true)
 public class MetadataManagerImpl implements MetadataManager {
 
 	public static final int SAML_IDP_ASSERTION_LIFETIME_DEFAULT = 1800;
@@ -601,18 +609,22 @@ public class MetadataManagerImpl implements MetadataManager {
 			PortletPropsKeys.SAML_IDP_AUTHN_REQUEST_SIGNATURE_REQUIRED);
 	}
 
+	@Reference(unbind = "-")
 	public void setCredentialResolver(CredentialResolver credentialResolver) {
 		_credentialResolver = credentialResolver;
 	}
 
+	@Reference(unbind = "-")
 	public void setHttpClient(HttpClient httpClient) {
 		_httpClient = httpClient;
 	}
 
+	@Reference(unbind = "-")
 	public void setParserPool(ParserPool parserPool) {
 		_parserPool = parserPool;
 	}
 
+	@Deactivate
 	public void shutdown() {
 		for (MetadataProvider metadataProvider : _metadataProviders.values()) {
 			if (metadataProvider instanceof BaseMetadataProvider) {
@@ -640,4 +652,3 @@ public class MetadataManagerImpl implements MetadataManager {
 	private final Timer _timer = new Timer(true);
 
 }
-

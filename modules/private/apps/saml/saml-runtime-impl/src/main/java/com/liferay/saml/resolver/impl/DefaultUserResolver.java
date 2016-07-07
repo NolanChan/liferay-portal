@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.saml.metadata.MetadataManagerUtil;
+import com.liferay.saml.resolver.UserResolver;
 import com.liferay.saml.util.SamlUtil;
 
 import java.io.Serializable;
@@ -62,10 +63,12 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mika Koivisto
  */
+@Component
 public class DefaultUserResolver implements UserResolver {
 
 	public void afterPropertiesSet() {

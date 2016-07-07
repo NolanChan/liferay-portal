@@ -20,9 +20,16 @@ import com.liferay.saml.model.SamlSpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Mika Koivisto
  */
+@Component(immediate = true)
 public class SingleLogoutProfileUtil {
 
 	public static SamlSpSession getSamlSpSession(HttpServletRequest request) {
@@ -76,10 +83,21 @@ public class SingleLogoutProfileUtil {
 		getSingleLogoutProfile().terminateSsoSession(request, response);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	public void setSingleLogoutProfile(
 		SingleLogoutProfile singleLogoutProfile) {
 
 		_singleLogoutProfile = singleLogoutProfile;
+	}
+
+	public void unsetSingleLogoutProfile(
+		SingleLogoutProfile singleLogoutProfile) {
+
+		_singleLogoutProfile = null;
 	}
 
 	private static SingleLogoutProfile _singleLogoutProfile;

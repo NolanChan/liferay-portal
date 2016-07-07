@@ -23,9 +23,13 @@ import org.opensaml.saml2.core.Assertion;
 import org.opensaml.saml2.core.NameID;
 import org.opensaml.saml2.core.Response;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mika Koivisto
  */
+@Component(immediate = true)
 public class UserResolverUtil {
 
 	public static UserResolver getUserResolver() {
@@ -42,6 +46,7 @@ public class UserResolverUtil {
 			assertion, samlMessageContext, serviceContext);
 	}
 
+	@Reference(unbind = "-")
 	public void setUserResolver(UserResolver userResolver) {
 		_userResolver = userResolver;
 	}
