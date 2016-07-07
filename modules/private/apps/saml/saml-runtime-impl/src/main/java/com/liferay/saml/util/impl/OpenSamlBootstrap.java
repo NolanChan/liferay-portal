@@ -14,8 +14,6 @@
 
 package com.liferay.saml.util.impl;
 
-import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,20 +21,37 @@ import org.opensaml.Configuration;
 import org.opensaml.DefaultBootstrap;
 import org.opensaml.xml.ConfigurationException;
 import org.opensaml.xml.parse.BasicParserPool;
+import org.opensaml.xml.parse.ParserPool;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.framework.wiring.BundleWiring;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Mika Koivisto
  */
+@Component(immediate = true)
 public class OpenSamlBootstrap extends DefaultBootstrap {
 
-	public static synchronized void bootstrap() throws ConfigurationException {
+	private ServiceRegistration<ParserPool> _parserPoolServiceRegistration;
+
+	@Activate
+	public synchronized void activate(BundleContext bundleContext)
+		throws ConfigurationException {
+
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader classLoader = currentThread.getContextClassLoader();
 
 		try {
-			currentThread.setContextClassLoader(
-				PortletClassLoaderUtil.getClassLoader());
+			Bundle bundle = bundleContext.getBundle();
+
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+			currentThread.setContextClassLoader(bundleWiring.getClassLoader());
 
 			initializeXMLSecurity();
 
@@ -48,12 +63,21 @@ public class OpenSamlBootstrap extends DefaultBootstrap {
 
 			initializeParserPool();
 
+			_parserPoolServiceRegistration = bundleContext.registerService(
+				ParserPool.class, Configuration.getParserPool(), null);
+
 			initializeESAPI();
 		}
 		finally {
 			currentThread.setContextClassLoader(classLoader);
 		}
 	}
+
+	@Deactivate
+	protected void deactivate() {
+		_parserPoolServiceRegistration.unregister();
+	}
+
 
 	protected static void initializeParserPool() throws ConfigurationException {
 		BasicParserPool parserPool = new BasicParserPool();
