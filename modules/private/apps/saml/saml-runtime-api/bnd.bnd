@@ -4,10 +4,53 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.saml,\
 	com.liferay.saml.binding,\
+	com.liferay.saml.configuration,\
 	com.liferay.saml.credential,\
 	com.liferay.saml.metadata,\
 	com.liferay.saml.profile,\
 	com.liferay.saml.resolver,\
-	com.liferay.saml.util
+	com.liferay.saml.util,\
+	\
+	org.bouncycastle.*,\
+	\
+	org.joda.time,\
+	\
+	org.opensaml.*
+Import-Package:\
+	!bsh,\
+	\
+	!com.google.common.*,\
+	\
+	!com.swabunga.*,\
+	\
+	!com.werken.*,\
+	\
+	!net.fortuna.*,\
+	\
+	!net.jcip.*,\
+	\
+	!nu.xom,\
+	\
+	!org.apache.axis.*,\
+	!org.apache.commons.configuration,\
+	!org.apache.commons.ssl,\
+	!org.apache.log.*,\
+	!org.apache.oro.*,\
+	!org.apache.poi.*,\
+	\
+	!org.joda.convert,\
+	\
+	!org.owasp.validator.html,\
+	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
+-includeresource:\
+	@bcpkix-jdk15on*.jar,\
+	@bcprov-jdk15on*.jar,\
+	@com.liferay.util.java*.jar,\
+	@esapi*.jar,\
+	@joda-convert*.jar,\
+	@joda-time*.jar,\
+	@opensaml*.jar,\
+	@openws*.jar,\
+	@xmltooling*.jar
