@@ -70,50 +70,37 @@ public class LCSHotDeployMessageListener extends HotDeployMessageListener {
 		try {
 			SigarNativeLoader.load();
 
-			boolean hasLCSClusterEntryToken = false;
-			boolean hasStoredCredentials = false;
-
 			LCSUtil.checkDefaultPortletPreferences();
 
 			LCSClusterEntryToken lcsClusterEntryToken =
 				_lcsClusterEntryTokenAdvisor.processLCSCLusterEntryTokenFile();
 
-			if (lcsClusterEntryToken != null) {
-				hasLCSClusterEntryToken = true;
-			}
+			if (lcsClusterEntryToken == null) {
+				LCSUtil.removeCredentials();
 
-			if (LCSUtil.getCredentialsStatus() == LCSUtil.CREDENTIALS_SET) {
-				hasStoredCredentials = true;
-			}
-
-			if (hasLCSClusterEntryToken && hasStoredCredentials) {
-				_lcsClusterEntryTokenAdvisor.
-					checkLCSClusterEntryTokenPreferences(lcsClusterEntryToken);
-			}
-			else if (!hasLCSClusterEntryToken && !hasStoredCredentials) {
 				LCSUtil.sendServiceAvailabilityNotification(
 					LCSPortletState.NO_CONNECTION);
 
 				return;
 			}
 
-			if (hasLCSClusterEntryToken) {
-				_lcsClusterEntryTokenAdvisor.processLCSClusterEntryToken();
+			if (LCSUtil.getCredentialsStatus() == LCSUtil.CREDENTIALS_SET) {
+				_lcsClusterEntryTokenAdvisor.
+					checkLCSClusterEntryTokenPreferences(lcsClusterEntryToken);
 			}
+
+			_lcsClusterEntryTokenAdvisor.processLCSClusterEntryToken();
 
 			LCSUtil.setUpJSONWebServiceClientCredentials();
 
 			if (!LCSUtil.isLCSPortletAuthorized()) {
-				if (hasLCSClusterEntryToken) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"LCS activation token file credentials are " +
-								"invalid. Deleting the file.");
-					}
-
-					_lcsClusterEntryTokenAdvisor.
-						deleteLCSCLusterEntryTokenFile();
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"LCS activation token file credentials are invalid. " +
+							"Deleting the file.");
 				}
+
+				_lcsClusterEntryTokenAdvisor.deleteLCSCLusterEntryTokenFile();
 
 				LCSUtil.removeCredentials();
 
@@ -123,31 +110,16 @@ public class LCSHotDeployMessageListener extends HotDeployMessageListener {
 				return;
 			}
 
-			if (hasLCSClusterEntryToken) {
-				_lcsClusterEntryTokenAdvisor.checkLCSClusterEntryTokenId(
-					lcsClusterEntryToken.getLcsClusterEntryTokenId());
-			}
+			_lcsClusterEntryTokenAdvisor.checkLCSClusterEntryTokenId(
+				lcsClusterEntryToken.getLcsClusterEntryTokenId());
 
 			if (!LCSUtil.isLCSClusterNodeRegistered()) {
-				if (hasLCSClusterEntryToken || !hasStoredCredentials) {
-					String siblingKey = ClusterNodeUtil.registerClusterNode(
-						lcsClusterEntryToken.getLcsClusterEntryId());
-
-					ClusterNodeUtil.registerUnregisteredClusterNodes(
-						siblingKey);
-				}
-				else {
-					ClusterNodeUtil.registerClusterNode();
-				}
+				ClusterNodeUtil.registerClusterNode(
+					lcsClusterEntryToken.getLcsClusterEntryId());
 			}
 			else {
-				if (hasLCSClusterEntryToken) {
-					_lcsClusterEntryTokenAdvisor.checkLCSClusterEntry(
-						lcsClusterEntryToken);
-				}
-				else {
-					LCSUtil.validateLCSClusterNodeLCSClusterEntry();
-				}
+				_lcsClusterEntryTokenAdvisor.checkLCSClusterEntry(
+					lcsClusterEntryToken);
 			}
 
 			LCSUtil.sendServiceAvailabilityNotification(

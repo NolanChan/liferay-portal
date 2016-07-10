@@ -18,7 +18,6 @@ import com.liferay.lcs.advisor.InstallationEnvironmentAdvisor;
 import com.liferay.lcs.advisor.InstallationEnvironmentAdvisorFactory;
 import com.liferay.lcs.rest.LCSClusterNode;
 import com.liferay.lcs.rest.LCSClusterNodeServiceUtil;
-import com.liferay.portal.kernel.cluster.ClusterException;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
@@ -36,10 +35,8 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -147,45 +144,6 @@ public class ClusterNodeUtil {
 		return clusterNodeKeys;
 	}
 
-	public static boolean isFirstClusterNode() throws Exception {
-		if (!ClusterExecutorUtil.isEnabled()) {
-			return false;
-		}
-
-		if (_getSiblingKey() != null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public static String registerClusterNode() throws Exception {
-		if (!ClusterExecutorUtil.isEnabled()) {
-			throw new ClusterException("Not in cluster environment");
-		}
-
-		String siblingKey = _getSiblingKey();
-
-		if (siblingKey == null) {
-			throw new ClusterException("No sibling nodes in cluster");
-		}
-
-		InstallationEnvironmentAdvisor installationEnvironmentAdvisor =
-			InstallationEnvironmentAdvisorFactory.getInstance();
-
-		LCSClusterNode lcsClusterNode =
-			LCSClusterNodeServiceUtil.addLCSClusterNode(
-				siblingKey, _generateLCSClusterNodeName(), StringPool.BLANK,
-				KeyGeneratorUtil.getKey(),
-				StringUtil.merge(LicenseManagerUtil.getIpAddresses()),
-				installationEnvironmentAdvisor.getProcessorCoresTotal());
-
-		LCSUtil.sendServiceAvailabilityNotification(
-			LCSPortletState.NO_SUBSCRIPTION);
-
-		return lcsClusterNode.getKey();
-	}
-
 	public static String registerClusterNode(long lcsClusterEntryId)
 		throws Exception {
 
@@ -213,60 +171,6 @@ public class ClusterNodeUtil {
 			LCSPortletState.NO_SUBSCRIPTION);
 
 		return lcsClusterNode.getKey();
-	}
-
-	public static Map<String, Object> registerUnregisteredClusterNodes(
-			String siblingKey)
-		throws Exception {
-
-		if ((siblingKey == null) || !ClusterExecutorUtil.isEnabled()) {
-			return Collections.emptyMap();
-		}
-
-		Map<String, Object> map = new HashMap<>();
-
-		MethodHandler registerClusterNodeMethodHandler = new MethodHandler(
-			_registerClusterNodeMethodKey, siblingKey);
-
-		List<String> unregisteredClusterNodeIds =
-			_getUnregisteredClusterNodeIds();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Register " + unregisteredClusterNodeIds.size() +
-					" sibling cluster nodes");
-		}
-
-		for (String clusterNodeId : unregisteredClusterNodeIds) {
-			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
-				registerClusterNodeMethodHandler, clusterNodeId);
-
-			FutureClusterResponses futureClusterResponses =
-				ClusterExecutorUtil.execute(clusterRequest);
-
-			ClusterNodeResponses clusterNodeResponses =
-				futureClusterResponses.get(20000, TimeUnit.MILLISECONDS);
-
-			ClusterNodeResponse clusterNodeResponse =
-				clusterNodeResponses.getClusterResponse(clusterNodeId);
-
-			Map<String, Object> result =
-				(Map<String, Object>)clusterNodeResponse.getResult();
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Invoked register cluster node on cluster node " +
-						clusterNodeId);
-			}
-
-			for (Map.Entry<String, Object> entry : result.entrySet()) {
-				map.put(
-					clusterNodeId + StringPool.UNDERLINE + entry.getKey(),
-					entry.getValue());
-			}
-		}
-
-		return map;
 	}
 
 	public static void restartPosts(boolean applyToSiblingClusterNodes)
@@ -432,48 +336,6 @@ public class ClusterNodeUtil {
 	}
 
 	@SuppressWarnings("unused")
-	private static Map<String, Object> _registerClusterNode(String siblingKey) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Register cluster node via cluster executor");
-		}
-
-		Map<String, Object> clusterNodeInfo = new HashMap<>();
-
-		String key = KeyGeneratorUtil.getKey();
-
-		try {
-			LCSUtil.setUpJSONWebServiceClientCredentials();
-
-			InstallationEnvironmentAdvisor installationEnvironmentAdvisor =
-				InstallationEnvironmentAdvisorFactory.getInstance();
-
-			LCSClusterNodeServiceUtil.addLCSClusterNode(
-				siblingKey, _generateLCSClusterNodeName(), StringPool.BLANK,
-				key, StringUtil.merge(LicenseManagerUtil.getIpAddresses()),
-				installationEnvironmentAdvisor.getProcessorCoresTotal());
-
-			LCSUtil.sendServiceAvailabilityNotification(
-				LCSPortletState.NO_SUBSCRIPTION);
-
-			LCSConnectionManagerUtil.start();
-
-			clusterNodeInfo.put("success", key);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			clusterNodeInfo.put("error", key);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Register cluster node " + MapUtil.toString(clusterNodeInfo));
-		}
-
-		return clusterNodeInfo;
-	}
-
-	@SuppressWarnings("unused")
 	private static void _restartPosts() {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Restart posting data from this cluster node");
@@ -541,9 +403,6 @@ public class ClusterNodeUtil {
 	private static final MethodHandler _getClusterNodeInfoMethodHandler =
 		new MethodHandler(
 			new MethodKey(ClusterNodeUtil.class, "getClusterNodeInfo"));
-	private static final MethodKey _registerClusterNodeMethodKey =
-		new MethodKey(
-			ClusterNodeUtil.class, "_registerClusterNode", String.class);
 	private static final MethodKey _restartPostsMethodKey = new MethodKey(
 		ClusterNodeUtil.class, "_restartPosts");
 	private static final MethodKey _startPostsMethodKey = new MethodKey(
