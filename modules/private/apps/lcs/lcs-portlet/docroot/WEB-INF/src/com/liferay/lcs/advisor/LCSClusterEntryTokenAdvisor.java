@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.lcs.InvalidLCSClusterEntryTokenException;
 import com.liferay.lcs.NoLCSClusterEntryTokenException;
+import com.liferay.lcs.activation.LCSClusterEntryTokenContentAdvisor;
 import com.liferay.lcs.rest.LCSClusterEntryToken;
 import com.liferay.lcs.rest.LCSClusterEntryTokenImpl;
 import com.liferay.lcs.rest.LCSClusterEntryTokenService;
@@ -26,7 +27,6 @@ import com.liferay.lcs.rest.LCSClusterNodeServiceUtil;
 import com.liferay.lcs.security.KeyStoreFactory;
 import com.liferay.lcs.util.KeyGenerator;
 import com.liferay.lcs.util.LCSAlert;
-import com.liferay.lcs.util.LCSConstants;
 import com.liferay.lcs.util.LCSUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,8 +47,6 @@ import java.io.IOException;
 import java.security.Key;
 import java.security.KeyStore;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -112,41 +110,41 @@ public class LCSClusterEntryTokenAdvisor {
 			return;
 		}
 
-		String lcsAccessSecret = extractAccessSecret(lcsClusterEntryToken);
-		String lcsAccessToken = extractAccessToken(lcsClusterEntryToken);
+		LCSClusterEntryTokenContentAdvisor lcsClusterEntryTokenContentAdvisor =
+			new LCSClusterEntryTokenContentAdvisor(
+				lcsClusterEntryToken.getContent());
 
-		if (!lcsAccessSecret.equals(
-				jxPortletPreferences.getValue("lcsAccessSecret", null)) ||
-			!lcsAccessToken.equals(
-				jxPortletPreferences.getValue("lcsAccessToken", null))) {
+		String lcsAccessSecret =
+			lcsClusterEntryTokenContentAdvisor.getAccessSecret();
+		String lcsAccessToken =
+			lcsClusterEntryTokenContentAdvisor.getAccessToken();
+		long lcsClusterEntryId = lcsClusterEntryToken.getLcsClusterEntryId();
+		long lcsClusterEntryTokenId =
+			lcsClusterEntryToken.getLcsClusterEntryTokenId();
 
-			_lcsAlertAdvisor.add(LCSAlert.ERROR_ENVIRONMENT_MISMATCH);
+		if (lcsAccessSecret.equals(
+				jxPortletPreferences.getValue("lcsAccessSecret", null)) &&
+			lcsAccessToken.equals(
+				jxPortletPreferences.getValue("lcsAccessToken", null)) &&
+			(lcsClusterEntryId ==
+				GetterUtil.getLong(
+					jxPortletPreferences.getValue(
+						"lcsClusterEntryId", null))) &&
+			(lcsClusterEntryTokenId ==
+				GetterUtil.getLong(
+					jxPortletPreferences.getValue(
+						"lcsClusterEntryTokenId", null)))) {
 
-			deleteLCSCLusterEntryTokenFile();
-
-			throw new InvalidLCSClusterEntryTokenException(
-				"LCS cluster entry token mismatches portlet preferences");
+			return;
 		}
 
-		long cachedLCSClusterEntryTokenId = GetterUtil.getLong(
-			jxPortletPreferences.getValue("lcsClusterEntryTokenId", null));
-		long cachedLCSClusterEntryId = GetterUtil.getLong(
-			jxPortletPreferences.getValue("lcsClusterEntryId", null));
-
-		if ((cachedLCSClusterEntryId != 0) &&
-			(lcsClusterEntryToken.getLcsClusterEntryId() !=
-				cachedLCSClusterEntryId) &&
-			(cachedLCSClusterEntryTokenId != 0) &&
-			(lcsClusterEntryToken.getLcsClusterEntryTokenId() !=
-				cachedLCSClusterEntryTokenId)) {
-
-			_lcsAlertAdvisor.add(LCSAlert.ERROR_ENVIRONMENT_MISMATCH);
-
-			deleteLCSCLusterEntryTokenFile();
-
-			throw new InvalidLCSClusterEntryTokenException(
-				"LCS cluster entry token mismatches portlet preferences");
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"LCS portlet will update credentials in portlet preferences " +
+					"to match the LCS cluster entry token");
 		}
+
+		LCSUtil.removeCredentials();
 	}
 
 	public void deleteLCSCLusterEntryTokenFile() {
@@ -179,9 +177,13 @@ public class LCSClusterEntryTokenAdvisor {
 				"Unable to find LCS cluster entry token");
 		}
 
+		LCSClusterEntryTokenContentAdvisor lcsClusterEntryTokenContentAdvisor =
+			new LCSClusterEntryTokenContentAdvisor(
+				lcsClusterEntryToken.getContent());
+
 		if (!LCSUtil.storeLCSPortletCredentials(
-				extractAccessSecret(lcsClusterEntryToken),
-				extractAccessToken(lcsClusterEntryToken),
+				lcsClusterEntryTokenContentAdvisor.getAccessSecret(),
+				lcsClusterEntryTokenContentAdvisor.getAccessToken(),
 				lcsClusterEntryToken.getLcsClusterEntryId(),
 				lcsClusterEntryToken.getLcsClusterEntryTokenId())) {
 
@@ -195,8 +197,7 @@ public class LCSClusterEntryTokenAdvisor {
 				"Unable to find LCS cluster entry token");
 		}
 
-		LCSUtil.storeLCSServicesConfiguration(
-			extractLCSServicesConfiguration(lcsClusterEntryToken));
+		LCSUtil.storeLCSConfiguration(lcsClusterEntryTokenContentAdvisor);
 
 		return lcsClusterEntryToken;
 	}
@@ -317,70 +318,6 @@ public class LCSClusterEntryTokenAdvisor {
 
 		return Encryptor.decryptUnencodedAsString(
 			symmetricKey, ArrayUtil.subset(bytes, 256, bytes.length));
-	}
-
-	protected String extractAccessSecret(
-		LCSClusterEntryToken lcsClusterEntryToken) {
-
-		String content = lcsClusterEntryToken.getContent();
-
-		String[] tokens = content.split(StringPool.DOUBLE_DASH);
-
-		return tokens[1];
-	}
-
-	protected String extractAccessToken(
-		LCSClusterEntryToken lcsClusterEntryToken) {
-
-		String content = lcsClusterEntryToken.getContent();
-
-		String[] tokens = content.split(StringPool.DOUBLE_DASH);
-
-		return tokens[0];
-	}
-
-	protected Map<String, String> extractLCSServicesConfiguration(
-		LCSClusterEntryToken lcsClusterEntryToken) {
-
-		String content = lcsClusterEntryToken.getContent();
-
-		Map<String, String> lcsServicesConfiguration = new HashMap<>();
-
-		lcsServicesConfiguration.put(
-			LCSConstants.METRICS_LCS_SERVICE_ENABLED,
-			String.valueOf(
-				content.contains(LCSConstants.METRICS_LCS_SERVICE_ENABLED)));
-
-		lcsServicesConfiguration.put(
-			LCSConstants.PATCHES_LCS_SERVICE_ENABLED,
-			String.valueOf(
-				content.contains(LCSConstants.PATCHES_LCS_SERVICE_ENABLED)));
-
-		lcsServicesConfiguration.put(
-			LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED,
-			String.valueOf(
-				content.contains(
-					LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED)));
-
-		if (!content.contains(
-				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED)) {
-
-			return lcsServicesConfiguration;
-		}
-
-		int propertiesStartIndex = content.indexOf(
-			LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED);
-
-		String portalPropertiesBlacklist =
-			content.substring(
-				content.indexOf(StringPool.DOUBLE_DASH, propertiesStartIndex) +
-					2);
-
-		lcsServicesConfiguration.put(
-			LCSConstants.PORTAL_PROPERTIES_BLACKLIST,
-			portalPropertiesBlacklist);
-
-		return lcsServicesConfiguration;
 	}
 
 	protected String getLCSClusterEntryTokenFileName()
