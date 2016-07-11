@@ -18,16 +18,20 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.metadata.MetadataManagerUtil;
+import com.liferay.saml.metadata.MetadataManager;
 import com.liferay.saml.resolver.NameIdResolver;
 import com.liferay.saml.util.OpenSamlUtil;
 
 import org.opensaml.saml2.core.NameID;
 import org.opensaml.saml2.core.NameIDPolicy;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mika Koivisto
  */
+@Component(immediate = true, service = NameIdResolver.class)
 public class DefaultNameIdResolver implements NameIdResolver {
 
 	@Override
@@ -49,8 +53,13 @@ public class DefaultNameIdResolver implements NameIdResolver {
 			nameIdFormat, null, spNameQualifier, nameIdValue);
 	}
 
+	@Reference(unbind = "-")
+	public void setMetadataManager(MetadataManager metadataManager) {
+		_metadataManager = metadataManager;
+	}
+
 	protected String getNameIdAttributeName(String entityId) {
-		return MetadataManagerUtil.getNameIdAttribute(entityId);
+		return _metadataManager.getNameIdAttribute(entityId);
 	}
 
 	protected String getNameIdFormat(
@@ -62,7 +71,7 @@ public class DefaultNameIdResolver implements NameIdResolver {
 			return nameIdPolicy.getFormat();
 		}
 
-		return MetadataManagerUtil.getNameIdFormat(entityId);
+		return _metadataManager.getNameIdFormat(entityId);
 	}
 
 	protected String getNameIdValue(User user, String entityId) {
@@ -92,5 +101,7 @@ public class DefaultNameIdResolver implements NameIdResolver {
 
 		return nameIdValue;
 	}
+
+	private MetadataManager _metadataManager;
 
 }

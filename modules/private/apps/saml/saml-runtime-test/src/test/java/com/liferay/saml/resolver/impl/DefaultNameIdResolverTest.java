@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.saml.BaseSamlTestCase;
 import com.liferay.saml.metadata.MetadataManager;
-import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.util.OpenSamlUtil;
 
 import org.junit.Assert;
@@ -48,11 +47,9 @@ public class DefaultNameIdResolverTest extends BaseSamlTestCase {
 
 		beanPropertiesUtil.setBeanProperties(_beanProperties);
 
-		MetadataManagerUtil metadataManagerUtil = new MetadataManagerUtil();
-
 		_metadataManager = mock(MetadataManager.class);
 
-		metadataManagerUtil.setMetadataManager(_metadataManager);
+		_defaultNameIdResolver.setMetadataManager(_metadataManager);
 
 		when(
 			_metadataManager.getNameIdFormat(Mockito.eq(SP_ENTITY_ID))
