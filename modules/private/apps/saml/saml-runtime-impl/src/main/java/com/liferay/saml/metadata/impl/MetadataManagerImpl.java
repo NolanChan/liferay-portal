@@ -437,7 +437,7 @@ public class MetadataManagerImpl implements MetadataManager {
 		}
 
 		HTTPRule httpRule = new HTTPRule(
-			null, null, MetadataManagerUtil.isSSLRequired());
+			null, null, isSSLRequired());
 
 		securityPolicyRules.add(httpRule);
 

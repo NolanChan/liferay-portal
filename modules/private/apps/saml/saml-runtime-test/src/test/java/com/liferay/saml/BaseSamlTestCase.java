@@ -45,7 +45,7 @@ import com.liferay.saml.credential.KeyStoreManager;
 import com.liferay.saml.credential.impl.FileSystemKeyStoreManagerImpl;
 import com.liferay.saml.credential.impl.KeyStoreCredentialResolver;
 import com.liferay.saml.metadata.MetadataGeneratorUtil;
-import com.liferay.saml.metadata.MetadataManagerImpl;
+import com.liferay.saml.metadata.impl.MetadataManagerImpl;
 import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.provider.CachingChainingMetadataProvider;
 import com.liferay.saml.provider.DBMetadataProvider;
