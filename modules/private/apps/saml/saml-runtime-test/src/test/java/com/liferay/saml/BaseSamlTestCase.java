@@ -41,6 +41,7 @@ import com.liferay.saml.binding.SamlBinding;
 import com.liferay.saml.binding.impl.HttpPostBinding;
 import com.liferay.saml.binding.impl.HttpRedirectBinding;
 import com.liferay.saml.binding.impl.HttpSoap11Binding;
+import com.liferay.saml.credential.KeyStoreManager;
 import com.liferay.saml.credential.impl.FileSystemKeyStoreManagerImpl;
 import com.liferay.saml.credential.impl.KeyStoreCredentialResolver;
 import com.liferay.saml.metadata.MetadataGeneratorUtil;
@@ -350,7 +351,11 @@ public class BaseSamlTestCase extends PowerMockito {
 	protected void setupMetadata() throws Exception {
 		MetadataManagerImpl metadataManagerImpl = new MetadataManagerImpl();
 
+		KeyStoreManager keyStoreManager = new FileSystemKeyStoreManagerImpl(); 
+
 		credentialResolver = new KeyStoreCredentialResolver();
+
+		credentialResolver.setKeyStoreManager(keyStoreManager);
 
 		metadataManagerImpl.setCredentialResolver(credentialResolver);
 
@@ -564,7 +569,7 @@ public class BaseSamlTestCase extends PowerMockito {
 
 	protected static final String UNKNOWN_ENTITY_ID = "testunknown";
 
-	protected CredentialResolver credentialResolver;
+	protected KeyStoreCredentialResolver credentialResolver;
 	protected HttpClient httpClient;
 	protected IdentifierGenerator identifierGenerator;
 	protected List<String> identifiers = new ArrayList<>();

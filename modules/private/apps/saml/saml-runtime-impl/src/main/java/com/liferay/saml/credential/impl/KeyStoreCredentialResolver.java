@@ -52,6 +52,11 @@ import org.osgi.service.component.annotations.Reference;
 public class KeyStoreCredentialResolver
 	extends AbstractCriteriaFilteringCredentialResolver {
 
+	@Reference(unbind = "-")
+	public void setKeyStoreManager(KeyStoreManager keyStoreManager) {
+		_keyStoreManager = keyStoreManager;
+	}
+
 	protected Credential buildCredential(
 		Entry entry, String entityId, UsageType usage) {
 
@@ -186,7 +191,6 @@ public class KeyStoreCredentialResolver
 		}
 	}
 
-	@Reference
-	KeyStoreManager _keyStoreManager;
+	private KeyStoreManager _keyStoreManager;
 
 }
