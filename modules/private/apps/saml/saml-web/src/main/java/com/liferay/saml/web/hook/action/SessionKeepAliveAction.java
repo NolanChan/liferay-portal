@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.hook.action;
+package com.liferay.saml.web.hook.action;
 
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;

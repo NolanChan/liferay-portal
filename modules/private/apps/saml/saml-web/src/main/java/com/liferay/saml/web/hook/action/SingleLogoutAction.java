@@ -12,39 +12,32 @@
  * details.
  */
 
-package com.liferay.saml.hook.action;
+package com.liferay.saml.web.hook.action;
 
-import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.saml.metadata.MetadataManagerUtil;
-import com.liferay.saml.util.OpenSamlUtil;
-
-import java.io.PrintWriter;
+import com.liferay.saml.profile.SingleLogoutProfileUtil;
+import com.liferay.saml.util.SamlUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.opensaml.saml2.metadata.EntityDescriptor;
-
 /**
  * @author Mika Koivisto
  */
-public class MetadataAction extends BaseSamlStrutsAction {
+public class SingleLogoutAction extends BaseSamlStrutsAction {
 
 	@Override
 	protected String doExecute(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		response.setContentType(ContentTypes.TEXT_XML);
+		String requestURI = request.getRequestURI();
 
-		EntityDescriptor entityDescriptor =
-			MetadataManagerUtil.getEntityDescriptor(request);
-
-		String metadata = OpenSamlUtil.marshall(entityDescriptor);
-
-		PrintWriter printWriter = response.getWriter();
-
-		printWriter.print(metadata);
+		if (SamlUtil.isRoleIdp() && requestURI.endsWith("/slo_logout")) {
+			SingleLogoutProfileUtil.processIdpLogout(request, response);
+		}
+		else {
+			SingleLogoutProfileUtil.processSingleLogout(request, response);
+		}
 
 		return null;
 	}

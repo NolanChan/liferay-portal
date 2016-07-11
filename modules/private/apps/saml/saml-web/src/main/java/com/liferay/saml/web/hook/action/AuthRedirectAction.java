@@ -12,18 +12,23 @@
  * details.
  */
 
-package com.liferay.saml.hook.action;
+package com.liferay.saml.web.hook.action;
 
-import com.liferay.saml.profile.WebSsoProfileUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.util.SamlUtil;
+
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Mika Koivisto
+ * @author Tomas Polesovsky
  */
-public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
+public class AuthRedirectAction extends BaseSamlStrutsAction {
 
 	@Override
 	public boolean isEnabled() {
@@ -39,7 +44,20 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		WebSsoProfileUtil.processResponse(request, response);
+		String redirect = ParamUtil.getString(request, "redirect");
+
+		redirect = PortalUtil.escapeRedirect(redirect);
+
+		if (Validator.isNull(redirect)) {
+			redirect = PortalUtil.getHomeURL(request);
+		}
+
+		try {
+			response.sendRedirect(redirect);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 
 		return null;
 	}

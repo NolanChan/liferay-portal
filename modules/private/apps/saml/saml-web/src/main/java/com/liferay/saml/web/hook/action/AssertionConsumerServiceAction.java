@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.hook.action;
+package com.liferay.saml.web.hook.action;
 
 import com.liferay.saml.profile.WebSsoProfileUtil;
 import com.liferay.saml.util.SamlUtil;
@@ -23,11 +23,11 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Mika Koivisto
  */
-public class WebSsoAction extends BaseSamlStrutsAction {
+public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 
 	@Override
 	public boolean isEnabled() {
-		if (SamlUtil.isEnabled() && SamlUtil.isRoleIdp()) {
+		if (SamlUtil.isEnabled() && SamlUtil.isRoleSp()) {
 			return true;
 		}
 
@@ -39,7 +39,7 @@ public class WebSsoAction extends BaseSamlStrutsAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		WebSsoProfileUtil.processAuthnRequest(request, response);
+		WebSsoProfileUtil.processResponse(request, response);
 
 		return null;
 	}
