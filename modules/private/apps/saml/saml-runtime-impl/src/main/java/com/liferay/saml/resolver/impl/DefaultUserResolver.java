@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.exportimport.UserImporter;
-import com.liferay.saml.metadata.MetadataManagerUtil;
+import com.liferay.saml.metadata.MetadataManager;
 import com.liferay.saml.resolver.UserResolver;
 import com.liferay.saml.util.SamlUtil;
 
@@ -59,34 +59,14 @@ import org.opensaml.saml2.core.NameID;
 import org.opensaml.saml2.core.NameIDType;
 import org.opensaml.saml2.core.Response;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
  */
-@Component
+@Component(immediate = true)
 public class DefaultUserResolver implements UserResolver {
-
-	public void afterPropertiesSet() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_bundleContext = bundle.getBundleContext();
-
-		_serviceReference = _bundleContext.getServiceReference(
-			UserImporter.class);
-
-		_userImporter = _bundleContext.getService(_serviceReference);
-	}
-
-	public void destroy() {
-		_bundleContext.ungetService(_serviceReference);
-
-		_bundleContext = null;
-	}
 
 	@Override
 	public User resolveUser(
@@ -124,6 +104,16 @@ public class DefaultUserResolver implements UserResolver {
 		}
 
 		return user;
+	}
+
+	@Reference(unbind = "-")
+	public void setMetadataManager(MetadataManager metadataManager) {
+		_metadataManager = metadataManager;
+	}
+
+	@Reference(unbind = "-")
+	public void setUserImporter(UserImporter userImporter) {
+		_userImporter = userImporter;
 	}
 
 	protected User addUser(
@@ -216,7 +206,7 @@ public class DefaultUserResolver implements UserResolver {
 
 		try {
 			String userAttributeMappings =
-				MetadataManagerUtil.getUserAttributeMappings(peerEntityId);
+				_metadataManager.getUserAttributeMappings(peerEntityId);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -504,8 +494,7 @@ public class DefaultUserResolver implements UserResolver {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultUserResolver.class);
 
-	private BundleContext _bundleContext;
-	private ServiceReference<UserImporter> _serviceReference;
+	private MetadataManager _metadataManager;
 	private UserImporter _userImporter;
 
 }

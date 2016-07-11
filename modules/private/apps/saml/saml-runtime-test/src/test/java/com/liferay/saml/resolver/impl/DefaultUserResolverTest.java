@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.saml.BaseSamlTestCase;
 import com.liferay.saml.metadata.MetadataManager;
-import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.util.OpenSamlUtil;
 
 import java.util.List;
@@ -51,11 +50,9 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		MetadataManagerUtil metadataManagerUtil = new MetadataManagerUtil();
-
 		MetadataManager metadataManager = mock(MetadataManager.class);
 
-		metadataManagerUtil.setMetadataManager(metadataManager);
+		_defaultUserResolver.setMetadataManager(metadataManager);
 
 		when(
 			metadataManager.getUserAttributeMappings(Mockito.eq(IDP_ENTITY_ID))
@@ -136,9 +133,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		samlMessageContext.setPeerEntityId(IDP_ENTITY_ID);
 
-		DefaultUserResolver defaultUserResolver = new DefaultUserResolver();
-
-		User resolvedUser = defaultUserResolver.importUser(
+		User resolvedUser = _defaultUserResolver.importUser(
 			1, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS, "emailAddress",
 			assertion, samlMessageContext, new ServiceContext());
 
@@ -153,5 +148,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		"test@liferay.com";
 
 	private static final String _SUBJECT_NAME_IDENTIFIER_SCREEN_NAME = "test";
+
+	private final DefaultUserResolver _defaultUserResolver =
+		new DefaultUserResolver();
 
 }
