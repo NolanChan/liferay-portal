@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.util.impl;
+package com.liferay.saml.bootstrap;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,24 +52,28 @@ public class OpenSamlBootstrap extends DefaultBootstrap {
 
 			currentThread.setContextClassLoader(bundleWiring.getClassLoader());
 
-			initializeXMLSecurity();
-
-			initializeXMLTooling(_xmlToolingConfigs);
-
-			initializeArtifactBuilderFactories();
-
-			initializeGlobalSecurityConfiguration();
-
-			initializeParserPool();
+			bootstrap();
 
 			_parserPoolServiceRegistration = bundleContext.registerService(
 				ParserPool.class, Configuration.getParserPool(), null);
-
-			initializeESAPI();
 		}
 		finally {
 			currentThread.setContextClassLoader(classLoader);
 		}
+	}
+
+	public static synchronized void bootstrap() throws ConfigurationException {
+		initializeXMLSecurity();
+
+		initializeXMLTooling(_xmlToolingConfigs);
+
+		initializeArtifactBuilderFactories();
+
+		initializeGlobalSecurityConfiguration();
+
+		initializeParserPool();
+
+		initializeESAPI();
 	}
 
 	protected static void initializeParserPool() throws ConfigurationException {

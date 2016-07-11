@@ -16,6 +16,7 @@ package com.liferay.saml.binding.impl;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.saml.binding.SamlBinding;
+import com.liferay.saml.velocity.VelocityEngineFactory;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -55,12 +56,8 @@ public class HttpBindingsRegistrator {
 
 		Hashtable<String, Object> properties = new Hashtable<>(propertiesMap);
 
-		Bundle bundle = bundleContext.getBundle();
-
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
 		HttpPostBinding httpPostBinding = new HttpPostBinding(
-			_parserPool, getVelocityEngine(bundleWiring.getClassLoader()));
+			_parserPool, _velocityEngineFactory.getVelocityEngine());
 
 		HttpRedirectBinding httpRedirectBinding = new HttpRedirectBinding(
 			_parserPool);
@@ -80,44 +77,6 @@ public class HttpBindingsRegistrator {
 				SamlBinding.class, httpSoap11Binding, properties);
 	}
 
-	private VelocityEngine getVelocityEngine(ClassLoader classLoader) {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(classLoader);
-
-			VelocityEngine velocityEngine = new VelocityEngine();
-
-			velocityEngine.setProperty(
-				RuntimeConstants.ENCODING_DEFAULT, StringPool.UTF8);
-			velocityEngine.setProperty(
-				RuntimeConstants.OUTPUT_ENCODING, StringPool.UTF8);
-			velocityEngine.setProperty(
-				RuntimeConstants.RESOURCE_LOADER, "classpath");
-			velocityEngine.setProperty(
-				RuntimeConstants.RUNTIME_LOG_LOGSYSTEM + ".log4j.category",
-				"org.apache.velocity");
-			velocityEngine.setProperty(
-				RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,
-				Log4JLogChute.class.getName());
-			velocityEngine.setProperty(
-				"classpath.resource.loader.class",
-				ClasspathResourceLoader.class.getName());
-
-			velocityEngine.init();
-
-			return velocityEngine;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(
-				"Unable to initialize velocity engine", e);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
-	}
 
 	@Deactivate
 	protected void deactivate() {
@@ -133,4 +92,5 @@ public class HttpBindingsRegistrator {
 
 	@Reference ParserPool _parserPool;
 
+	@Reference VelocityEngineFactory _velocityEngineFactory;
 }

@@ -41,18 +41,18 @@ import com.liferay.saml.binding.SamlBinding;
 import com.liferay.saml.binding.impl.HttpPostBinding;
 import com.liferay.saml.binding.impl.HttpRedirectBinding;
 import com.liferay.saml.binding.impl.HttpSoap11Binding;
+import com.liferay.saml.bootstrap.OpenSamlBootstrap;
 import com.liferay.saml.credential.KeyStoreManager;
 import com.liferay.saml.credential.impl.FileSystemKeyStoreManagerImpl;
 import com.liferay.saml.credential.impl.KeyStoreCredentialResolver;
+import com.liferay.saml.identifier.SamlIdentifierGenerator;
 import com.liferay.saml.metadata.MetadataGeneratorUtil;
 import com.liferay.saml.metadata.impl.MetadataManagerImpl;
 import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.provider.CachingChainingMetadataProvider;
 import com.liferay.saml.provider.DBMetadataProvider;
-import com.liferay.saml.util.OpenSamlBootstrap;
 import com.liferay.saml.util.PortletPropsKeys;
-import com.liferay.saml.util.SamlIdentifierGenerator;
-import com.liferay.saml.util.VelocityEngineFactory;
+import com.liferay.saml.velocity.VelocityEngineFactory;
 
 import java.io.UnsupportedEncodingException;
 
@@ -66,7 +66,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.httpclient.HttpClient;
-
+import org.apache.velocity.app.VelocityEngine;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -527,11 +527,19 @@ public class BaseSamlTestCase extends PowerMockito {
 	}
 
 	protected void setupSamlBindings() {
+		VelocityEngineFactory velocityEngineFactory = new VelocityEngineFactory();
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		VelocityEngine velocityEngine = velocityEngineFactory.getVelocityEngine(
+			contextClassLoader);
+
 		samlBindings = new ArrayList<>();
 
 		samlBindings.add(
-			new HttpPostBinding(
-				parserPool, VelocityEngineFactory.getVelocityEngine()));
+			new HttpPostBinding(parserPool, velocityEngine));
 		samlBindings.add(new HttpRedirectBinding(parserPool));
 		samlBindings.add(new HttpSoap11Binding(parserPool, httpClient));
 	}

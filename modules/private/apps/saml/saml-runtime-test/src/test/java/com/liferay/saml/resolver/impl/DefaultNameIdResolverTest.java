@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.resolver;
+package com.liferay.saml.resolver.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.BeanProperties;

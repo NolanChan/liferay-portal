@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.util.impl;
+package com.liferay.saml.identifier;
 
 import com.liferay.portal.kernel.security.SecureRandom;
 import com.liferay.portal.kernel.util.StringPool;
