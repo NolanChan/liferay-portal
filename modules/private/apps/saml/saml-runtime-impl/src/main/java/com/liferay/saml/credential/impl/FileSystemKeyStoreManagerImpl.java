@@ -17,6 +17,7 @@ package com.liferay.saml.credential.impl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.saml.credential.KeyStoreManager;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -26,9 +27,12 @@ import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mika Koivisto
  */
+@Component(immediate = true, service = KeyStoreManager.class)
 public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 	public FileSystemKeyStoreManagerImpl() {

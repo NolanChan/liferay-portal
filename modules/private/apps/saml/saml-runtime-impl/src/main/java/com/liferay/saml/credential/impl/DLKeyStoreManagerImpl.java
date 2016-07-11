@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.saml.credential.KeyStoreManager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,9 +31,17 @@ import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mika Koivisto
  */
+@Component(
+	immediate = true,
+	property = {
+		"service.ranking:Integer=-1"
+	},
+	service = KeyStoreManager.class)
 public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 	@Override
