@@ -35,8 +35,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.resolver.AttributeResolver;
+import com.liferay.saml.metadata.MetadataManager;
 import com.liferay.saml.util.OpenSamlUtil;
 import com.liferay.saml.util.PortletPropsKeys;
 import com.liferay.saml.util.SamlUtil;
@@ -60,9 +60,13 @@ import org.opensaml.saml2.metadata.SingleSignOnService;
 import org.opensaml.saml2.metadata.provider.MetadataProviderException;
 import org.opensaml.xml.XMLObject;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mika Koivisto
  */
+@Component(immediate = true)
 public class DefaultAttributeResolver implements AttributeResolver {
 
 	@Override
@@ -74,7 +78,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		String entityId = samlMessageContext.getPeerEntityId();
 
 		boolean namespaceEnabled =
-			MetadataManagerUtil.isAttributesNamespaceEnabled(
+			_metadataManager.isAttributesNamespaceEnabled(
 				samlMessageContext.getPeerEntityId());
 
 		for (String attributeName : getAttributeNames(entityId)) {
@@ -141,6 +145,11 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		}
 
 		return attributes;
+	}
+
+	@Reference(unbind = "-")
+	public void setMetadataManager(MetadataManager metadataManager) {
+		_metadataManager = metadataManager;
 	}
 
 	protected void addExpandoAttribute(
@@ -592,7 +601,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected String[] getAttributeNames(String entityId) {
-		return MetadataManagerUtil.getAttributeNames(entityId);
+		return _metadataManager.getAttributeNames(entityId);
 	}
 
 	protected List<Attribute> getSalesForceAttributes(
@@ -653,5 +662,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultAttributeResolver.class);
+
+	private MetadataManager _metadataManager;
 
 }

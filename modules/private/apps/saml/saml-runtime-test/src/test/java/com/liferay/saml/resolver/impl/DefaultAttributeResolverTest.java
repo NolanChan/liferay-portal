@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.saml.BaseSamlTestCase;
 import com.liferay.saml.metadata.MetadataManager;
-import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.util.SamlUtil;
 
 import java.util.ArrayList;
@@ -70,11 +69,9 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 
 		beanPropertiesUtil.setBeanProperties(_beanProperties);
 
-		MetadataManagerUtil metadataManagerUtil = new MetadataManagerUtil();
-
 		_metadataManager = mock(MetadataManager.class);
 
-		metadataManagerUtil.setMetadataManager(_metadataManager);
+		_defaultAttributeResolver.setMetadataManager(_metadataManager);
 
 		when(
 			_metadataManager.isAttributesEnabled(Mockito.eq(SP_ENTITY_ID))
