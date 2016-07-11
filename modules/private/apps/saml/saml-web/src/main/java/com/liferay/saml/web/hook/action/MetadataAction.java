@@ -14,6 +14,7 @@
 
 package com.liferay.saml.web.hook.action;
 
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.util.OpenSamlUtil;
@@ -25,9 +26,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.opensaml.saml2.metadata.EntityDescriptor;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mika Koivisto
  */
+@Component(
+	immediate = true,
+	property = {
+		"path=/portal/saml/metadata"
+	},
+	service = StrutsAction.class
+)
 public class MetadataAction extends BaseSamlStrutsAction {
 
 	@Override

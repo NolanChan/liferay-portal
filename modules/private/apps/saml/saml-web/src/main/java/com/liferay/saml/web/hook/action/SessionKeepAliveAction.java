@@ -15,6 +15,7 @@
 package com.liferay.saml.web.hook.action;
 
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -35,9 +36,18 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mika Koivisto
  */
+@Component(
+	immediate = true,
+	property = {
+		"path=/portal/saml/keep_alive"
+	},
+	service = StrutsAction.class
+)
 public class SessionKeepAliveAction extends BaseSamlStrutsAction {
 
 	@Override

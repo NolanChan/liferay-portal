@@ -14,15 +14,29 @@
 
 package com.liferay.saml.web.hook.action;
 
+import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.saml.profile.SingleLogoutProfile;
 import com.liferay.saml.profile.SingleLogoutProfileUtil;
 import com.liferay.saml.util.SamlUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mika Koivisto
  */
+@Component(
+	immediate = true,
+	property = {
+		"path=/portal/saml/slo",
+		"path=/portal/saml/slo_logout",
+		"path=/portal/saml/slo_soap"
+	},
+	service = StrutsAction.class
+)
 public class SingleLogoutAction extends BaseSamlStrutsAction {
 
 	@Override
@@ -33,13 +47,16 @@ public class SingleLogoutAction extends BaseSamlStrutsAction {
 		String requestURI = request.getRequestURI();
 
 		if (SamlUtil.isRoleIdp() && requestURI.endsWith("/slo_logout")) {
-			SingleLogoutProfileUtil.processIdpLogout(request, response);
+			_singleLogoutProfile.processIdpLogout(request, response);
 		}
 		else {
-			SingleLogoutProfileUtil.processSingleLogout(request, response);
+			_singleLogoutProfile.processSingleLogout(request, response);
 		}
 
 		return null;
 	}
+
+	@Reference
+	private SingleLogoutProfile _singleLogoutProfile;
 
 }

@@ -14,15 +14,27 @@
 
 package com.liferay.saml.web.hook.action;
 
+import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.saml.profile.WebSsoProfile;
 import com.liferay.saml.profile.WebSsoProfileUtil;
 import com.liferay.saml.util.SamlUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mika Koivisto
  */
+@Component(
+	immediate = true,
+	property = {
+		"path=/portal/saml/sso"
+	},
+	service = StrutsAction.class
+)
 public class WebSsoAction extends BaseSamlStrutsAction {
 
 	@Override
@@ -39,9 +51,12 @@ public class WebSsoAction extends BaseSamlStrutsAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		WebSsoProfileUtil.processAuthnRequest(request, response);
+		_webSsoProfile.processAuthnRequest(request, response);
 
 		return null;
 	}
+
+	@Reference(unbind = "-")
+	private WebSsoProfile _webSsoProfile;
 
 }
