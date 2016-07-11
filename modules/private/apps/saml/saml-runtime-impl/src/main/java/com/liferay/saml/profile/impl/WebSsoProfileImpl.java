@@ -47,7 +47,6 @@ import com.liferay.saml.exception.ReplayException;
 import com.liferay.saml.exception.SignatureException;
 import com.liferay.saml.exception.StatusException;
 import com.liferay.saml.exception.SubjectException;
-import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.model.SamlIdpSsoSession;
 import com.liferay.saml.model.SamlSpAuthRequest;
 import com.liferay.saml.model.SamlSpIdpConnection;
@@ -56,9 +55,7 @@ import com.liferay.saml.model.SamlSpSession;
 import com.liferay.saml.profile.WebSsoProfile;
 import com.liferay.saml.resolver.AttributeResolver;
 import com.liferay.saml.resolver.NameIdResolver;
-import com.liferay.saml.resolver.UserResolverUtil;
-import com.liferay.saml.resolver.impl.AttributeResolverFactory;
-import com.liferay.saml.resolver.impl.NameIdResolverFactory;
+import com.liferay.saml.resolver.UserResolver;
 import com.liferay.saml.service.SamlIdpSpSessionLocalServiceUtil;
 import com.liferay.saml.service.SamlIdpSsoSessionLocalServiceUtil;
 import com.liferay.saml.service.SamlSpAuthRequestLocalServiceUtil;
@@ -82,7 +79,6 @@ import javax.servlet.http.HttpSession;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
-import org.opensaml.common.IdentifierGenerator;
 import org.opensaml.common.SAMLObject;
 import org.opensaml.common.SAMLVersion;
 import org.opensaml.common.binding.SAMLMessageContext;
@@ -197,15 +193,18 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	@Reference(unbind = "-")
-	public void setIdentifierGenerator(
-		IdentifierGenerator identifierGenerator) {
-
-		super.setIdentifierGenerator(identifierGenerator);
+	public void setAttributeResolver(AttributeResolver attributeResolver) {
+		_attributeResolver = attributeResolver;
 	}
 
 	@Reference(unbind = "-")
-	public void setSamlBindings(List<SamlBinding> samlBindings) {
-		super.setSamlBindings(samlBindings);
+	public void setNameIdResolver(NameIdResolver nameIdResolver) {
+		_nameIdResolver = nameIdResolver;
+	}
+
+	@Reference(unbind = "-")
+	public void setUserResolver(UserResolver userResolver) {
+		_userResolver = userResolver;
 	}
 
 	@Override
@@ -350,7 +349,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				(SAMLMessageContext<AuthnRequest, Response, NameID>)
 					decodeSamlMessage(
 						request, response, samlBinding,
-						MetadataManagerUtil.isWantAuthnRequestSigned());
+						metadataManager.isWantAuthnRequestSigned());
 
 			AuthnRequest authnRequest =
 				samlMessageContext.getInboundSAMLMessage();
@@ -493,7 +492,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		Assertion assertion = null;
 
 		SignatureTrustEngine signatureTrustEngine =
-			MetadataManagerUtil.getSignatureTrustEngine();
+			metadataManager.getSignatureTrustEngine();
 
 		List<Attribute> attributes = new ArrayList<>();
 
@@ -575,7 +574,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			request);
 
-		User user = UserResolverUtil.resolveUser(
+		User user = _userResolver.resolveUser(
 			assertion, samlMessageContext, serviceContext);
 
 		serviceContext.setUserId(user.getUserId());
@@ -636,7 +635,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			String relayState)
 		throws Exception {
 
-		String entityId = MetadataManagerUtil.getDefaultIdpEntityId();
+		String entityId = metadataManager.getDefaultIdpEntityId();
 
 		SAMLMessageContext<SAMLObject, AuthnRequest, SAMLObject>
 			samlMessageContext =
@@ -660,7 +659,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		NameIDPolicy nameIdPolicy = OpenSamlUtil.buildNameIdPolicy();
 
 		nameIdPolicy.setAllowCreate(true);
-		nameIdPolicy.setFormat(MetadataManagerUtil.getNameIdFormat(entityId));
+		nameIdPolicy.setFormat(metadataManager.getNameIdFormat(entityId));
 
 		AuthnRequest authnRequest = OpenSamlUtil.buildAuthnRequest(
 			spSsoDescriptor, assertionConsumerService, singleSignOnService,
@@ -689,7 +688,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		if (spSsoDescriptor.isAuthnRequestsSigned() ||
 			idpSsoDescriptor.getWantAuthnRequestsSigned()) {
 
-			Credential credential = MetadataManagerUtil.getSigningCredential();
+			Credential credential = metadataManager.getSigningCredential();
 
 			samlMessageContext.setOutboundSAMLMessageSigningCredential(
 				credential);
@@ -753,20 +752,16 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		authnStatements.add(
 			getSuccessAuthnStatement(samlSsoRequestContext, assertion));
 
-		boolean attributesEnabled = MetadataManagerUtil.isAttributesEnabled(
+		boolean attributesEnabled = metadataManager.isAttributesEnabled(
 			samlMessageContext.getPeerEntityId());
 
 		if (!attributesEnabled) {
 			return assertion;
 		}
 
-		AttributeResolver attributeResolver =
-			AttributeResolverFactory.getAttributeResolver(
-				samlMessageContext.getPeerEntityId());
-
 		User user = samlSsoRequestContext.getUser();
 
-		List<Attribute> attributes = attributeResolver.resolve(
+		List<Attribute> attributes = _attributeResolver.resolve(
 			user, samlMessageContext);
 
 		if (attributes.isEmpty()) {
@@ -866,9 +861,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
-		NameIdResolver nameIDResolver = NameIdResolverFactory.getNameIdResolver(
-			samlMessageContext.getPeerEntityId());
-
 		User user = samlSsoRequestContext.getUser();
 
 		NameIDPolicy nameIDPolicy = null;
@@ -879,7 +871,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			nameIDPolicy = authnRequest.getNameIDPolicy();
 		}
 
-		return nameIDResolver.resolve(
+		return _nameIdResolver.resolve(
 			user, samlMessageContext.getPeerEntityId(), nameIDPolicy);
 	}
 
@@ -962,7 +954,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		subjectConfirmationData.setRecipient(
 			assertionConsumerService.getLocation());
 
-		int assertionLifetime = MetadataManagerUtil.getAssertionLifetime(
+		int assertionLifetime = metadataManager.getAssertionLifetime(
 			samlMessageContext.getPeerEntityId());
 
 		DateTime notOnOrAfterDateTime = issueInstantDateTime.plusSeconds(
@@ -1037,7 +1029,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		samlMessageContext.setPeerEntityEndpoint(assertionConsumerService);
 
 		try {
-			Credential credential = MetadataManagerUtil.getSigningCredential();
+			Credential credential = metadataManager.getSigningCredential();
 
 			samlMessageContext.setOutboundSAMLMessageSigningCredential(
 				credential);
@@ -1091,7 +1083,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		Assertion assertion = getSuccessAssertion(
 			samlSsoRequestContext, assertionConsumerService, nameId);
 
-		Credential credential = MetadataManagerUtil.getSigningCredential();
+		Credential credential = metadataManager.getSigningCredential();
 
 		SPSSODescriptor spSsoDescriptor =
 			(SPSSODescriptor)samlMessageContext.getPeerEntityRoleMetadata();
@@ -1212,7 +1204,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		if (conditions.getNotOnOrAfter() != null) {
 			verifyNotOnOrAfterDateTime(
-				MetadataManagerUtil.getClockSkew(),
+				metadataManager.getClockSkew(),
 				conditions.getNotOnOrAfter());
 		}
 	}
@@ -1405,7 +1397,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				}
 
 				verifyNotOnOrAfterDateTime(
-					MetadataManagerUtil.getClockSkew(),
+					metadataManager.getClockSkew(),
 					subjectConfirmationData.getNotOnOrAfter());
 
 				if (Validator.isNull(subjectConfirmationData.getRecipient())) {
@@ -1433,5 +1425,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	private static final SAMLSignatureProfileValidator
 		_samlSignatureProfileValidator = new SAMLSignatureProfileValidator();
+
+	private AttributeResolver _attributeResolver;
+	private NameIdResolver _nameIdResolver;
+	private UserResolver _userResolver;
 
 }

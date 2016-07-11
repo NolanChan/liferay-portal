@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.SamlException;
 import com.liferay.saml.binding.SamlBinding;
-import com.liferay.saml.metadata.MetadataManagerUtil;
+import com.liferay.saml.metadata.MetadataManager;
 import com.liferay.saml.model.SamlSpSession;
 import com.liferay.saml.service.SamlSpSessionLocalServiceUtil;
 import com.liferay.saml.util.OpenSamlUtil;
@@ -59,6 +59,8 @@ import org.opensaml.ws.transport.http.HttpServletResponseAdapter;
 import org.opensaml.xml.XMLObject;
 import org.opensaml.xml.io.MarshallingException;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mika Koivisto
  */
@@ -77,7 +79,7 @@ public abstract class BaseProfile {
 			samlBinding.getCommunicationProfileId());
 
 		SecurityPolicyResolver securityPolicyResolver =
-			MetadataManagerUtil.getSecurityPolicyResolver(
+			metadataManager.getSecurityPolicyResolver(
 				samlMessageContext.getCommunicationProfileId(),
 				requireSignature);
 
@@ -164,7 +166,7 @@ public abstract class BaseProfile {
 		RoleDescriptor roleDescriptor = null;
 
 		EntityDescriptor entityDescriptor =
-			MetadataManagerUtil.getEntityDescriptor(request);
+			metadataManager.getEntityDescriptor(request);
 
 		samlMessageContext.setLocalEntityMetadata(entityDescriptor);
 
@@ -191,7 +193,7 @@ public abstract class BaseProfile {
 		samlMessageContext.setLocalEntityRoleMetadata(roleDescriptor);
 
 		MetadataProvider metadataProvider =
-			MetadataManagerUtil.getMetadataProvider();
+			metadataManager.getMetadataProvider();
 
 		samlMessageContext.setMetadataProvider(metadataProvider);
 
@@ -408,6 +410,12 @@ public abstract class BaseProfile {
 		_identifierGenerator = identifierGenerator;
 	}
 
+	@Reference(unbind = "-")
+	public void setMetadataManager(MetadataManager metadataManager) {
+		this.metadataManager = metadataManager;
+	}
+
+
 	public void setSamlBindings(List<SamlBinding> samlBindings) {
 		_samlBindings = samlBindings;
 	}
@@ -431,6 +439,8 @@ public abstract class BaseProfile {
 
 		response.addCookie(cookie);
 	}
+
+	protected MetadataManager metadataManager;
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseProfile.class);
 

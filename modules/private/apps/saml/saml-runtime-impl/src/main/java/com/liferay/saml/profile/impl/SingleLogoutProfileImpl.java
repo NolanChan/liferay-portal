@@ -35,7 +35,6 @@ import com.liferay.saml.SamlSloRequestInfo;
 import com.liferay.saml.binding.SamlBinding;
 import com.liferay.saml.exception.UnsolicitedLogoutResponseException;
 import com.liferay.saml.exception.UnsupportedBindingException;
-import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.model.SamlIdpSpSession;
 import com.liferay.saml.model.SamlIdpSsoSession;
 import com.liferay.saml.model.SamlSpSession;
@@ -104,9 +103,9 @@ public class SingleLogoutProfileImpl
 	public boolean isSingleLogoutSupported(HttpServletRequest request) {
 		try {
 			MetadataProvider metadataProvider =
-				MetadataManagerUtil.getMetadataProvider();
+				metadataManager.getMetadataProvider();
 
-			String entityId = MetadataManagerUtil.getDefaultIdpEntityId();
+			String entityId = metadataManager.getDefaultIdpEntityId();
 
 			EntityDescriptor entityDescriptor =
 				metadataProvider.getEntityDescriptor(entityId);
@@ -775,7 +774,7 @@ public class SingleLogoutProfileImpl
 		}
 
 		samlMessageContext.setOutboundSAMLMessageSigningCredential(
-			MetadataManagerUtil.getSigningCredential());
+			metadataManager.getSigningCredential());
 
 		LogoutResponse logoutResponse = OpenSamlUtil.buildLogoutResponse();
 
@@ -868,7 +867,7 @@ public class SingleLogoutProfileImpl
 
 		samlMessageContext.setOutboundSAMLMessage(logoutRequest);
 
-		Credential credential = MetadataManagerUtil.getSigningCredential();
+		Credential credential = metadataManager.getSigningCredential();
 
 		samlMessageContext.setOutboundSAMLMessageSigningCredential(credential);
 
@@ -995,7 +994,7 @@ public class SingleLogoutProfileImpl
 		samlMessageContext.setOutboundSAMLMessage(logoutResponse);
 
 		samlMessageContext.setOutboundSAMLMessageSigningCredential(
-			MetadataManagerUtil.getSigningCredential());
+			metadataManager.getSigningCredential());
 		samlMessageContext.setOutboundSAMLProtocol(SAMLConstants.SAML20P_NS);
 		samlMessageContext.setPeerEntityEndpoint(singleLogoutService);
 
@@ -1022,7 +1021,7 @@ public class SingleLogoutProfileImpl
 
 		LogoutRequest logoutRequest = OpenSamlUtil.buildLogoutRequest();
 
-		String entityId = MetadataManagerUtil.getDefaultIdpEntityId();
+		String entityId = metadataManager.getDefaultIdpEntityId();
 
 		SAMLMessageContext<SAMLObject, LogoutRequest, SAMLObject>
 			samlMessageContext =
@@ -1067,7 +1066,7 @@ public class SingleLogoutProfileImpl
 		samlMessageContext.setOutboundSAMLMessage(logoutRequest);
 
 		samlMessageContext.setOutboundSAMLMessageSigningCredential(
-			MetadataManagerUtil.getSigningCredential());
+			metadataManager.getSigningCredential());
 		samlMessageContext.setPeerEntityEndpoint(singleLogoutService);
 
 		sendSamlMessage(samlMessageContext);
@@ -1116,7 +1115,7 @@ public class SingleLogoutProfileImpl
 
 		samlMessageContext.setOutboundSAMLMessage(logoutRequest);
 
-		Credential credential = MetadataManagerUtil.getSigningCredential();
+		Credential credential = metadataManager.getSigningCredential();
 
 		samlMessageContext.setOutboundSAMLMessageSigningCredential(credential);
 
@@ -1132,7 +1131,7 @@ public class SingleLogoutProfileImpl
 		messageEncoder.encode(samlMessageContext);
 
 		SecurityPolicyResolver securityPolicyResolver =
-			MetadataManagerUtil.getSecurityPolicyResolver(
+			metadataManager.getSecurityPolicyResolver(
 				samlBinding.getCommunicationProfileId(), true);
 
 		samlMessageContext.setSecurityPolicyResolver(securityPolicyResolver);
