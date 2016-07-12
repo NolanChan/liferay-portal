@@ -15,6 +15,7 @@
 package com.liferay.lcs.util;
 
 import com.liferay.lcs.InvalidLCSClusterEntryException;
+import com.liferay.lcs.activation.LCSClusterEntryTokenContentAdvisor;
 import com.liferay.lcs.advisor.LCSAlertAdvisor;
 import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.lcs.exception.InitializationException;
@@ -657,6 +658,41 @@ public class LCSUtil {
 		_jsonWebServiceClient.resetHttpClient();
 	}
 
+	public static void storeLCSConfiguration(
+			LCSClusterEntryTokenContentAdvisor
+				lcsClusterEntryTokenContentAdvisor)
+		throws Exception {
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			fetchJxPortletPreferences();
+
+		Map<String, String> lcsServicesConfiguration =
+			lcsClusterEntryTokenContentAdvisor.getLCSServicesConfiguration();
+
+		for (Map.Entry<String, String> lcsServiceConfigurationEntry :
+				lcsServicesConfiguration.entrySet()) {
+
+			jxPortletPreferences.setValue(
+				lcsServiceConfigurationEntry.getKey(),
+				lcsServiceConfigurationEntry.getValue());
+		}
+
+		if (GetterUtil.getBoolean(
+				lcsServicesConfiguration.get(
+					LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED)) &&
+			Validator.isNotNull(
+				lcsClusterEntryTokenContentAdvisor.
+					getPortalPropertiesBlacklist())) {
+
+			jxPortletPreferences.setValue(
+				LCSConstants.PORTAL_PROPERTIES_BLACKLIST,
+				lcsClusterEntryTokenContentAdvisor.
+					getPortalPropertiesBlacklist());
+		}
+
+		jxPortletPreferences.store();
+	}
+
 	public static boolean storeLCSPortletCredentials(
 			PortletRequest portletRequest, String lcsAccessSecret,
 			String lcsAccessToken)
@@ -703,41 +739,6 @@ public class LCSUtil {
 		return storeLCSPortletCredentials(
 			null, lcsAccessSecret, lcsAccessToken, lcsClusterEntryId,
 			lcsClusterEntryTokenId);
-	}
-
-	public static void storeLCSServicesConfiguration(
-			Map<String, String> lcsServicesConfiguration)
-		throws Exception {
-
-		javax.portlet.PortletPreferences jxPortletPreferences =
-			fetchJxPortletPreferences();
-
-		jxPortletPreferences.setValue(
-			LCSConstants.METRICS_LCS_SERVICE_ENABLED,
-			lcsServicesConfiguration.get(
-				LCSConstants.METRICS_LCS_SERVICE_ENABLED));
-
-		jxPortletPreferences.setValue(
-			LCSConstants.PATCHES_LCS_SERVICE_ENABLED,
-			lcsServicesConfiguration.get(
-				LCSConstants.PATCHES_LCS_SERVICE_ENABLED));
-
-		if (GetterUtil.getBoolean(
-				lcsServicesConfiguration.get(
-					LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED))) {
-
-			jxPortletPreferences.setValue(
-				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED,
-				lcsServicesConfiguration.get(
-					LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED));
-
-			jxPortletPreferences.setValue(
-				LCSConstants.PORTAL_PROPERTIES_BLACKLIST,
-				lcsServicesConfiguration.get(
-					LCSConstants.PORTAL_PROPERTIES_BLACKLIST));
-		}
-
-		jxPortletPreferences.store();
 	}
 
 	public static void validateLCSClusterNodeLCSClusterEntry()
