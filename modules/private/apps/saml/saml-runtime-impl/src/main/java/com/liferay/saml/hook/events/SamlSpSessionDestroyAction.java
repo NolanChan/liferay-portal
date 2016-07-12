@@ -15,11 +15,13 @@
 package com.liferay.saml.hook.events;
 
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.SessionAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.model.SamlSpSession;
 import com.liferay.saml.service.SamlSpSessionLocalServiceUtil;
@@ -27,9 +29,16 @@ import com.liferay.saml.util.SamlUtil;
 
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mika Koivisto
  */
+@Component(
+	immediate = true,
+	property = "key=" + PropsKeys.SERVLET_SESSION_DESTROY_EVENTS,
+	service = LifecycleAction.class
+)
 public class SamlSpSessionDestroyAction extends SessionAction {
 
 	@Override
