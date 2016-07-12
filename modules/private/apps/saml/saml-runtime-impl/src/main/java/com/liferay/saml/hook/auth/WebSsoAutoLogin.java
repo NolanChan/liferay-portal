@@ -17,6 +17,7 @@ package com.liferay.saml.hook.auth;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -26,6 +27,7 @@ import com.liferay.saml.model.SamlIdpSsoSession;
 import com.liferay.saml.service.SamlIdpSsoSessionLocalServiceUtil;
 import com.liferay.saml.util.PortletWebKeys;
 import com.liferay.saml.util.SamlUtil;
+import org.osgi.service.component.annotations.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +35,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Mika Koivisto
  */
-public class WebSsoAutoLoginHook extends BaseAutoLogin {
+@Component(immediate = true, service = AutoLogin.class)
+public class WebSsoAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
@@ -83,6 +86,6 @@ public class WebSsoAutoLoginHook extends BaseAutoLogin {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		WebSsoAutoLoginHook.class);
+		WebSsoAutoLogin.class);
 
 }
