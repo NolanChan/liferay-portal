@@ -11,7 +11,7 @@
  * details.
  */
 
- package com.liferay.saml.velocity;
+package com.liferay.saml.velocity;
 
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -21,6 +21,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.log.Log4JLogChute;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.wiring.BundleWiring;

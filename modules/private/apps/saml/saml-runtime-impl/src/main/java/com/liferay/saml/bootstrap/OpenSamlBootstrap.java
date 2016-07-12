@@ -37,6 +37,20 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true)
 public class OpenSamlBootstrap extends DefaultBootstrap {
 
+	public static synchronized void bootstrap() throws ConfigurationException {
+		initializeXMLSecurity();
+
+		initializeXMLTooling(_xmlToolingConfigs);
+
+		initializeArtifactBuilderFactories();
+
+		initializeGlobalSecurityConfiguration();
+
+		initializeParserPool();
+
+		initializeESAPI();
+	}
+
 	@Activate
 	public synchronized void activate(BundleContext bundleContext)
 		throws ConfigurationException {
@@ -60,20 +74,6 @@ public class OpenSamlBootstrap extends DefaultBootstrap {
 		finally {
 			currentThread.setContextClassLoader(classLoader);
 		}
-	}
-
-	public static synchronized void bootstrap() throws ConfigurationException {
-		initializeXMLSecurity();
-
-		initializeXMLTooling(_xmlToolingConfigs);
-
-		initializeArtifactBuilderFactories();
-
-		initializeGlobalSecurityConfiguration();
-
-		initializeParserPool();
-
-		initializeESAPI();
 	}
 
 	protected static void initializeParserPool() throws ConfigurationException {

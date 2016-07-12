@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.metadata.MetadataGeneratorUtil;
 import com.liferay.saml.metadata.MetadataManager;
-import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.model.SamlIdpSpConnection;
 import com.liferay.saml.model.SamlSpIdpConnection;
 import com.liferay.saml.provider.CachingChainingMetadataProvider;
@@ -436,8 +435,7 @@ public class MetadataManagerImpl implements MetadataManager {
 			securityPolicyRules.add(mandatoryAuthenticatedMessageRule);
 		}
 
-		HTTPRule httpRule = new HTTPRule(
-			null, null, isSSLRequired());
+		HTTPRule httpRule = new HTTPRule(null, null, isSSLRequired());
 
 		securityPolicyRules.add(httpRule);
 

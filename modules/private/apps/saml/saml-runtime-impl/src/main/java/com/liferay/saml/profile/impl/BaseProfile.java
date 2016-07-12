@@ -165,8 +165,8 @@ public abstract class BaseProfile {
 
 		RoleDescriptor roleDescriptor = null;
 
-		EntityDescriptor entityDescriptor =
-			metadataManager.getEntityDescriptor(request);
+		EntityDescriptor entityDescriptor = metadataManager.getEntityDescriptor(
+			request);
 
 		samlMessageContext.setLocalEntityMetadata(entityDescriptor);
 
@@ -414,7 +414,6 @@ public abstract class BaseProfile {
 	public void setMetadataManager(MetadataManager metadataManager) {
 		this.metadataManager = metadataManager;
 	}
-
 
 	public void setSamlBindings(List<SamlBinding> samlBindings) {
 		_samlBindings = samlBindings;

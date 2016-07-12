@@ -1204,8 +1204,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		if (conditions.getNotOnOrAfter() != null) {
 			verifyNotOnOrAfterDateTime(
-				metadataManager.getClockSkew(),
-				conditions.getNotOnOrAfter());
+				metadataManager.getClockSkew(), conditions.getNotOnOrAfter());
 		}
 	}
 

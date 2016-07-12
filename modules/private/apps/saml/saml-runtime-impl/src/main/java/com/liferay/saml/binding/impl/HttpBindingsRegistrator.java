@@ -14,24 +14,16 @@
 
 package com.liferay.saml.binding.impl;
 
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.saml.binding.SamlBinding;
 import com.liferay.saml.velocity.VelocityEngineFactory;
 
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.runtime.log.Log4JLogChute;
-import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
-
 import org.opensaml.xml.parse.ParserPool;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -76,7 +68,6 @@ public class HttpBindingsRegistrator {
 			bundleContext.registerService(
 				SamlBinding.class, httpSoap11Binding, properties);
 	}
-
 
 	@Deactivate
 	protected void deactivate() {

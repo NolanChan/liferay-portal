@@ -37,11 +37,9 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true,
-	property = {
-		"service.ranking:Integer=-1"
-	},
-	service = KeyStoreManager.class)
+	immediate = true, property = {"service.ranking:Integer=-1"},
+	service = KeyStoreManager.class
+)
 public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 	@Override
