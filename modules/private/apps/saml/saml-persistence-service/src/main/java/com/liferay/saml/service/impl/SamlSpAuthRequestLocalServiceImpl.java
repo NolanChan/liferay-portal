@@ -14,13 +14,23 @@
 
 package com.liferay.saml.service.impl;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.saml.configuration.SAMLConfiguration;
 import com.liferay.saml.model.SamlSpAuthRequest;
 import com.liferay.saml.service.base.SamlSpAuthRequestLocalServiceBaseImpl;
-import com.liferay.saml.util.PortletPropsValues;
 
+import java.io.IOException;
+
+import java.util.Collections;
 import java.util.Date;
+import java.util.Dictionary;
+
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Mika Koivisto
@@ -49,13 +59,37 @@ public class SamlSpAuthRequestLocalServiceImpl
 		return samlSpAuthRequest;
 	}
 
+	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+
+		try {
+			Configuration configuration = _configurationAdmin.getConfiguration(
+				"com.liferay.saml.configuration.SAMLConfiguration");
+
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
+
+			if (properties != null) {
+				_samlConfiguration = Configurable.createConfigurable(
+					SAMLConfiguration.class, properties);
+			}
+			else {
+				_samlConfiguration = Configurable.createConfigurable(
+					SAMLConfiguration.class, Collections.emptyMap());
+			}
+		}
+		catch (IOException ioe) {
+			_samlConfiguration = Configurable.createConfigurable(
+				SAMLConfiguration.class, Collections.emptyMap());
+		}
+	}
+
 	@Override
 	public void deleteExpiredSamlSpAuthRequests() {
 		Date createDate = new Date();
 
 		createDate.setTime(
-			createDate.getTime() -
-				PortletPropsValues.SAML_SP_AUTH_REQUEST_MAX_AGE);
+			createDate.getTime() - _samlConfiguration.getSpAuthRequestMaxAge());
 
 		samlSpAuthRequestPersistence.removeByCreateDate(createDate);
 	}
@@ -76,5 +110,10 @@ public class SamlSpAuthRequestLocalServiceImpl
 		return samlSpAuthRequestPersistence.findBySIEI_SSARK(
 			samlIdpEntityId, samlSpAuthRequestKey);
 	}
+
+	@ServiceReference(type = ConfigurationAdmin.class)
+	private ConfigurationAdmin _configurationAdmin;
+
+	private SAMLConfiguration _samlConfiguration;
 
 }

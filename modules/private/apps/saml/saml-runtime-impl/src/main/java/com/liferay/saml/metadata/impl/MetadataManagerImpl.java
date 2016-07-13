@@ -14,6 +14,8 @@
 
 package com.liferay.saml.metadata.impl;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.concurrent.ReadWriteLockKey;
 import com.liferay.portal.kernel.concurrent.ReadWriteLockRegistry;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.configuration.SAMLConfiguration;
 import com.liferay.saml.metadata.MetadataGeneratorUtil;
 import com.liferay.saml.metadata.MetadataManager;
 import com.liferay.saml.model.SamlIdpSpConnection;
@@ -38,12 +41,12 @@ import com.liferay.saml.service.SamlIdpSpConnectionLocalServiceUtil;
 import com.liferay.saml.service.SamlSpIdpConnectionLocalServiceUtil;
 import com.liferay.saml.util.PortletPrefsPropsUtil;
 import com.liferay.saml.util.PortletPropsKeys;
-import com.liferay.saml.util.PortletPropsValues;
 import com.liferay.saml.util.SamlUtil;
 
 import java.io.File;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
@@ -85,14 +88,19 @@ import org.opensaml.xml.signature.SignatureTrustEngine;
 import org.opensaml.xml.signature.impl.ChainingSignatureTrustEngine;
 import org.opensaml.xml.signature.impl.ExplicitKeySignatureTrustEngine;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true)
+@Component(
+	configurationPid = "com.liferay.saml.configuration.SAMLConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true
+)
 public class MetadataManagerImpl implements MetadataManager {
 
 	public static final int SAML_IDP_ASSERTION_LIFETIME_DEFAULT = 1800;
@@ -243,9 +251,9 @@ public class MetadataManagerImpl implements MetadataManager {
 
 					httpMetadataProvider.setFailFastInitialization(false);
 					httpMetadataProvider.setMaxRefreshDelay(
-						PortletPropsValues.SAML_METADATA_MAX_REFRESH_DELAY);
+						_samlConfiguration.getMetadataMaxRefreshDelay());
 					httpMetadataProvider.setMinRefreshDelay(
-						PortletPropsValues.SAML_METADATA_MIN_REFRESH_DELAY);
+						_samlConfiguration.getMetadataMinRefreshDelay());
 					httpMetadataProvider.setParserPool(_parserPool);
 
 					try {
@@ -267,9 +275,9 @@ public class MetadataManagerImpl implements MetadataManager {
 
 					filesystemMetadataProvider.setFailFastInitialization(false);
 					filesystemMetadataProvider.setMaxRefreshDelay(
-						PortletPropsValues.SAML_METADATA_MAX_REFRESH_DELAY);
+						_samlConfiguration.getMetadataMaxRefreshDelay());
 					filesystemMetadataProvider.setMinRefreshDelay(
-						PortletPropsValues.SAML_METADATA_MIN_REFRESH_DELAY);
+						_samlConfiguration.getMetadataMinRefreshDelay());
 					filesystemMetadataProvider.setParserPool(_parserPool);
 
 					try {
@@ -637,6 +645,12 @@ public class MetadataManagerImpl implements MetadataManager {
 		_timer.cancel();
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_samlConfiguration = Configurable.createConfigurable(
+			SAMLConfiguration.class, properties);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		MetadataManagerImpl.class);
 
@@ -647,6 +661,7 @@ public class MetadataManagerImpl implements MetadataManager {
 	private ParserPool _parserPool;
 	private final ReadWriteLockRegistry _readWriteLockRegistry =
 		new ReadWriteLockRegistry();
+	private SAMLConfiguration _samlConfiguration;
 	private final Timer _timer = new Timer(true);
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.saml.profile.impl;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.SamlException;
 import com.liferay.saml.SamlSsoRequestContext;
 import com.liferay.saml.binding.SamlBinding;
+import com.liferay.saml.configuration.SAMLConfiguration;
 import com.liferay.saml.exception.AssertionException;
 import com.liferay.saml.exception.AudienceException;
 import com.liferay.saml.exception.DestinationException;
@@ -63,7 +66,6 @@ import com.liferay.saml.service.SamlSpIdpConnectionLocalServiceUtil;
 import com.liferay.saml.service.SamlSpMessageLocalServiceUtil;
 import com.liferay.saml.service.SamlSpSessionLocalServiceUtil;
 import com.liferay.saml.util.OpenSamlUtil;
-import com.liferay.saml.util.PortletPropsValues;
 import com.liferay.saml.util.PortletWebKeys;
 import com.liferay.saml.util.SamlUtil;
 
@@ -71,6 +73,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -119,13 +122,18 @@ import org.opensaml.xml.security.trust.TrustEngine;
 import org.opensaml.xml.signature.Signature;
 import org.opensaml.xml.signature.SignatureTrustEngine;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
  */
-@Component
+@Component(
+	configurationPid = "com.liferay.saml.configuration.SAMLConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true
+)
 public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	@Override
@@ -227,6 +235,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			catch (Exception e) {
 			}
 		}
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_samlConfiguration = Configurable.createConfigurable(
+			SAMLConfiguration.class, properties);
 	}
 
 	protected void addSamlSsoSession(
@@ -1311,7 +1325,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		DateTime notOnOrAfter = new DateTime();
 
 		notOnOrAfter = notOnOrAfter.plusMillis(
-			PortletPropsValues.SAML_REPLAY_CACHE_DURATION);
+			_samlConfiguration.getReplayChacheDuration());
 
 		try {
 			SamlSpMessage samlSpMessage =
@@ -1427,6 +1441,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	private AttributeResolver _attributeResolver;
 	private NameIdResolver _nameIdResolver;
+	private SAMLConfiguration _samlConfiguration;
 	private UserResolver _userResolver;
 
 }
