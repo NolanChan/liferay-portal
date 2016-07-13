@@ -185,7 +185,7 @@ public class HandshakeTask implements Task {
 		boolean metricsLCSServiceEnabled = GetterUtil.getBoolean(
 			jxPortletPreferences.getValue(
 				LCSConstants.METRICS_LCS_SERVICE_ENABLED,
-				Boolean.TRUE.toString()));
+				Boolean.FALSE.toString()));
 
 		if (metricsLCSServiceEnabled) {
 			handshakeMessage.put(
@@ -207,7 +207,7 @@ public class HandshakeTask implements Task {
 		boolean patchesLCSServiceEnabled = GetterUtil.getBoolean(
 			jxPortletPreferences.getValue(
 				LCSConstants.PATCHES_LCS_SERVICE_ENABLED,
-				Boolean.TRUE.toString()));
+				Boolean.FALSE.toString()));
 
 		if (patchesLCSServiceEnabled) {
 			handshakeMessage.put(
@@ -228,7 +228,7 @@ public class HandshakeTask implements Task {
 		boolean portalPropertiesLCSServiceEnabled = GetterUtil.getBoolean(
 			jxPortletPreferences.getValue(
 				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED,
-				Boolean.TRUE.toString()));
+				Boolean.FALSE.toString()));
 
 		if (portalPropertiesLCSServiceEnabled) {
 			handshakeMessage.put(
