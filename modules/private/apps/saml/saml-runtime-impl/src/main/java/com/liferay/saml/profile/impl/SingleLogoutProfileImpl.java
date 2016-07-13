@@ -90,6 +90,7 @@ import org.opensaml.xml.security.credential.Credential;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -294,7 +295,10 @@ public class SingleLogoutProfileImpl
 		super.setIdentifierGenerator(identifierGenerator);
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.RELUCTANT, unbind = "-")
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policyOption = ReferencePolicyOption.RELUCTANT, unbind = "-"
+	)
 	public void setSamlBindings(List<SamlBinding> samlBindings) {
 		super.setSamlBindings(samlBindings);
 	}
