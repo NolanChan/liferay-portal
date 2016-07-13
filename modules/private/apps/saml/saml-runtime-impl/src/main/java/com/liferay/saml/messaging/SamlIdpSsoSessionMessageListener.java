@@ -28,6 +28,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
@@ -36,7 +37,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.saml.configuration.SAMLConfiguration",
-	immediate = true, service = SamlIdpSsoSessionMessageListener.class
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = SamlIdpSsoSessionMessageListener.class
 )
 public class SamlIdpSsoSessionMessageListener
 	extends BaseSchedulerEntryMessageListener {
