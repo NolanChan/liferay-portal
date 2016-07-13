@@ -100,7 +100,11 @@ public class OracleDataPartitioningExporter
 
 				stringWriter.flush();
 
-				sb.append(stringWriter.toString());
+				String value = stringWriter.toString();
+
+				value = value.replace("'", "''");
+
+				sb.append(value);
 			}
 			catch (IOException | SQLException e) {
 				throw new RuntimeException("Unable to read the CLOB value", e);
