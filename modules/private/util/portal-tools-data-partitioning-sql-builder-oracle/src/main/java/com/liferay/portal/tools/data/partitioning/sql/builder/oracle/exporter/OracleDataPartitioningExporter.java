@@ -98,8 +98,6 @@ public class OracleDataPartitioningExporter
 					stringWriter.write(c);
 				}
 
-				stringWriter.flush();
-
 				String value = stringWriter.toString();
 
 				value = value.replace("'", "''");

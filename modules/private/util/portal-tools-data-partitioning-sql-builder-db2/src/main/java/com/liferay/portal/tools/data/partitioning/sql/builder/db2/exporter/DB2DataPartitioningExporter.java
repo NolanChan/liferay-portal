@@ -108,8 +108,6 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 					stringWriter.write(c);
 				}
 
-				stringWriter.flush();
-
 				String value = stringWriter.toString();
 
 				value = value.replace("'", "''");
