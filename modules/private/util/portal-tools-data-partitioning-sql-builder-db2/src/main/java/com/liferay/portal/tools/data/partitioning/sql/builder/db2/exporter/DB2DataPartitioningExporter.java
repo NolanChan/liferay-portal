@@ -17,6 +17,19 @@ package com.liferay.portal.tools.data.partitioning.sql.builder.db2.exporter;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataPartitioningExporter;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+
+import java.nio.charset.Charset;
+
+import java.sql.Clob;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+
 /**
  * @author Manuel de la Peña
  */
@@ -71,6 +84,65 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 	@Override
 	public String getTableNameFieldName() {
 		return "table_name";
+	}
+
+	@Override
+	public String serializeTableField(Object field) {
+		StringBuilder sb = new StringBuilder();
+
+		if (field == null) {
+			sb.append("null");
+		}
+		else if (field instanceof Clob) {
+			sb.append("TO_CLOB('");
+
+			try (InputStream inputStream = ((Clob)field).getAsciiStream()) {
+				Reader reader = new InputStreamReader(
+					inputStream, Charset.forName("UTF-8"));
+
+				StringWriter stringWriter = new StringWriter();
+
+				int c = -1;
+
+				while ((c = reader.read()) != -1) {
+					stringWriter.write(c);
+				}
+
+				stringWriter.flush();
+
+				String value = stringWriter.toString();
+
+				value = value.replace("'", "''");
+
+				sb.append(value);
+			}
+			catch (IOException | SQLException e) {
+				throw new RuntimeException("Unable to read the CLOB value", e);
+			}
+
+			sb.append("')");
+		}
+		else if ((field instanceof Date) || (field instanceof Timestamp)) {
+			sb.append("'");
+			sb.append(formatDateTime(field));
+			sb.append("'");
+		}
+		else if (field instanceof String) {
+			String value = (String)field;
+
+			value = value.replace("'", "''");
+
+			sb.append("'");
+			sb.append(value);
+			sb.append("'");
+		}
+		else {
+			sb.append("'");
+			sb.append(field);
+			sb.append("'");
+		}
+
+		return sb.toString();
 	}
 
 }
