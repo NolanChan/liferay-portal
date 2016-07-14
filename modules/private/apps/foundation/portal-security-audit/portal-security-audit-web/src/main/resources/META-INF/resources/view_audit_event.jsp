@@ -103,7 +103,7 @@ if (auditEventId > 0) {
 				</aui:field-wrapper>
 
 				<aui:field-wrapper label="additional-information">
-					<%= Validator.isNotNull(auditEvent.getAdditionalInfo()) ? auditEvent.getAdditionalInfo() : LanguageUtil.get(request, "none") %>
+					<%= Validator.isNotNull(auditEvent.getAdditionalInfo()) ? HtmlUtil.escape(auditEvent.getAdditionalInfo()) : LanguageUtil.get(request, "none") %>
 				</aui:field-wrapper>
 			</aui:col>
 		</c:otherwise>
