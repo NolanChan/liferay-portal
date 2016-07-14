@@ -33,14 +33,30 @@ import com.liferay.saml.profile.SingleLogoutProfileUtil;
 import com.liferay.saml.profile.WebSsoProfileUtil;
 import com.liferay.saml.util.SamlUtil;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mika Koivisto
  */
+@Component(
+	immediate = true,
+	property = {
+		"servlet-context-name=",
+		"servlet-filter-name=SSO SAML SP Filter",
+		"after-filter=Virtual Host Filter",
+		"url-pattern=/*",
+		"dispatcher=FORWARD",
+		"dispatcher=REQUEST",
+		"init-param.url-regex-ignore-pattern=^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$"
+	},
+	service = Filter.class
+)
 public class SamlSpSsoFilter extends BaseFilter {
 
 	@Override

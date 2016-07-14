@@ -25,13 +25,28 @@ import com.liferay.saml.profile.SingleLogoutProfileUtil;
 import com.liferay.saml.util.PortletWebKeys;
 import com.liferay.saml.util.SamlUtil;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mika Koivisto
  */
+@Component(
+	immediate = true,
+	property = {
+		"servlet-context-name=",
+		"servlet-filter-name=SSO SAML IdP Filter",
+		"after-filter=Virtual Host Filter",
+		"url-pattern=/c/portal/logout",
+		"dispatcher=FORWARD",
+		"dispatcher=REQUEST"
+	},
+	service = Filter.class
+)
 public class SamlIdpSsoFilter extends BaseFilter {
 
 	@Override
