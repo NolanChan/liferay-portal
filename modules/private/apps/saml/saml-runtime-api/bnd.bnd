@@ -21,6 +21,8 @@ Import-Package:\
 	\
 	!com.google.common.*,\
 	\
+	!com.sun.*,\
+	\
 	!com.swabunga.*,\
 	\
 	!com.werken.*,\
@@ -51,6 +53,7 @@ Liferay-Releng-Module-Group-Title:
 	@esapi*.jar,\
 	@joda-convert*.jar,\
 	@joda-time*.jar,\
+	@not-yet-commons-ssl*.jar,\
 	@opensaml*.jar,\
 	@openws*.jar,\
 	@xmltooling*.jar
