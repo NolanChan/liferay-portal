@@ -136,7 +136,6 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 			<li class="list-group-heading">
 				<liferay-ui:message key="connection" />
 			</li>
-
 			<li class="list-group-item">
 				<aui:row>
 					<aui:col width="<%= 50 %>">
@@ -164,7 +163,6 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 					</aui:col>
 				</aui:row>
 			</li>
-
 			<li class="list-group-item">
 				<aui:row>
 					<aui:col width="<%= 50 %>">
@@ -207,7 +205,6 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 					</aui:col>
 				</aui:row>
 			</li>
-
 			<li class="list-group-item">
 				<aui:row>
 					<aui:col width="<%= 50 %>">
@@ -219,7 +216,6 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 					</aui:col>
 				</aui:row>
 			</li>
-
 			<li class="list-group-item">
 				<aui:row>
 					<aui:col width="<%= 50 %>">
@@ -256,7 +252,6 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 			<li class="list-group-heading">
 				<liferay-ui:message key="liferay-connected-services-sites" />
 			</li>
-
 			<li class="list-group-item">
 				<aui:row>
 					<aui:col width="<%= 50 %>">
@@ -270,7 +265,6 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 					</aui:col>
 				</aui:row>
 			</li>
-
 			<li class="list-group-item">
 				<aui:row>
 					<aui:col width="<%= 50 %>">
@@ -284,7 +278,6 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 					</aui:col>
 				</aui:row>
 			</li>
-
 			<li class="list-group-item">
 				<aui:row>
 					<aui:col width="<%= 50 %>">
@@ -305,7 +298,6 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 				<li class="list-group-heading">
 					<liferay-ui:message key="cluster" />
 				</li>
-
 				<li class="list-group-item">
 					<aui:row>
 						<aui:col width="<%= 50 %>">

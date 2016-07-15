@@ -148,6 +148,7 @@
 									</div>
 								</div>
 							</div>
+
 							<div class="property-builder-content-container">
 								<div class="tabbable">
 									<div class="tabbable-content">
@@ -170,6 +171,7 @@
 													<div class="property-builder-drop-container"></div>
 												</div>
 											</div>
+
 											<div class="tab-pane">
 												<div class="lfr-template-editor-wrapper" id="<portlet:namespace />editorWrapper"></div>
 											</div>
