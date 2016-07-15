@@ -59,8 +59,6 @@ import org.opensaml.ws.transport.http.HttpServletResponseAdapter;
 import org.opensaml.xml.XMLObject;
 import org.opensaml.xml.io.MarshallingException;
 
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Mika Koivisto
  */
@@ -410,7 +408,6 @@ public abstract class BaseProfile {
 		_identifierGenerator = identifierGenerator;
 	}
 
-	@Reference(unbind = "-")
 	public void setMetadataManager(MetadataManager metadataManager) {
 		this.metadataManager = metadataManager;
 	}

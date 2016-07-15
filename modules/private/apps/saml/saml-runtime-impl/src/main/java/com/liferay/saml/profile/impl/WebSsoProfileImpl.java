@@ -50,6 +50,7 @@ import com.liferay.saml.exception.ReplayException;
 import com.liferay.saml.exception.SignatureException;
 import com.liferay.saml.exception.StatusException;
 import com.liferay.saml.exception.SubjectException;
+import com.liferay.saml.metadata.MetadataManager;
 import com.liferay.saml.model.SamlIdpSsoSession;
 import com.liferay.saml.model.SamlSpAuthRequest;
 import com.liferay.saml.model.SamlSpIdpConnection;
@@ -81,7 +82,7 @@ import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-
+import org.opensaml.common.IdentifierGenerator;
 import org.opensaml.common.SAMLObject;
 import org.opensaml.common.SAMLVersion;
 import org.opensaml.common.binding.SAMLMessageContext;
@@ -126,6 +127,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Mika Koivisto
@@ -206,6 +210,18 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	@Reference(unbind = "-")
+	public void setIdentifierGenerator(
+		IdentifierGenerator identifierGenerator) {
+
+		super.setIdentifierGenerator(identifierGenerator);
+	}
+
+	@Reference(unbind = "-")
+	public void setMetadataManager(MetadataManager metadataManager) {
+		super.setMetadataManager(metadataManager);
+	}
+
+	@Reference(unbind = "-")
 	public void setNameIdResolver(NameIdResolver nameIdResolver) {
 		_nameIdResolver = nameIdResolver;
 	}
@@ -213,6 +229,14 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	@Reference(unbind = "-")
 	public void setUserResolver(UserResolver userResolver) {
 		_userResolver = userResolver;
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policyOption = ReferencePolicyOption.RELUCTANT, unbind = "-"
+	)
+	public void setSamlBindings(List<SamlBinding> samlBindings) {
+		super.setSamlBindings(samlBindings);
 	}
 
 	@Override

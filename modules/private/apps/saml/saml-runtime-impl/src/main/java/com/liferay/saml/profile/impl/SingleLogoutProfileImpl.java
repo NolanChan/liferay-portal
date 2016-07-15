@@ -35,6 +35,7 @@ import com.liferay.saml.SamlSloRequestInfo;
 import com.liferay.saml.binding.SamlBinding;
 import com.liferay.saml.exception.UnsolicitedLogoutResponseException;
 import com.liferay.saml.exception.UnsupportedBindingException;
+import com.liferay.saml.metadata.MetadataManager;
 import com.liferay.saml.model.SamlIdpSpSession;
 import com.liferay.saml.model.SamlIdpSsoSession;
 import com.liferay.saml.model.SamlSpSession;
@@ -287,7 +288,6 @@ public class SingleLogoutProfileImpl
 		}
 	}
 
-	@Override
 	@Reference(unbind = "-")
 	public void setIdentifierGenerator(
 		IdentifierGenerator identifierGenerator) {
@@ -301,6 +301,11 @@ public class SingleLogoutProfileImpl
 	)
 	public void setSamlBindings(List<SamlBinding> samlBindings) {
 		super.setSamlBindings(samlBindings);
+	}
+
+	@Reference(unbind = "-")
+	public void setMetadataManager(MetadataManager metadataManager) {
+		super.setMetadataManager(metadataManager);
 	}
 
 	@Override
