@@ -92,6 +92,7 @@ import org.opensaml.xml.security.credential.Credential;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -296,11 +297,12 @@ public class SingleLogoutProfileImpl
 	}
 
 	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policyOption = ReferencePolicyOption.RELUCTANT, unbind = "-"
-	)
-	public void setSamlBindings(List<SamlBinding> samlBindings) {
-		super.setSamlBindings(samlBindings);
+		policy = ReferencePolicy.DYNAMIC ,
+		policyOption = ReferencePolicyOption.GREEDY, 
+		unbind = "unsetSamlBinding", 
+		cardinality = ReferenceCardinality.AT_LEAST_ONE)
+	public void setSamlBinding(SamlBinding samlBinding) {
+		addSamlBinding(samlBinding);
 	}
 
 	@Reference(unbind = "-")
@@ -366,6 +368,10 @@ public class SingleLogoutProfileImpl
 		addCookie(
 			request, response, PortletWebKeys.SAML_SSO_SESSION_ID,
 			StringPool.BLANK, 0);
+	}
+
+	public void unsetSamlBinding(SamlBinding samlBinding) {
+		removeSamlBinding(samlBinding);
 	}
 
 	protected void addSessionIndex(

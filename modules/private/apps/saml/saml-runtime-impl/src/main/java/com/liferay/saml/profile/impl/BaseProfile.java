@@ -31,6 +31,7 @@ import com.liferay.saml.util.OpenSamlUtil;
 import com.liferay.saml.util.PortletWebKeys;
 import com.liferay.saml.util.SamlUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -436,11 +437,19 @@ public abstract class BaseProfile {
 		response.addCookie(cookie);
 	}
 
+	protected void addSamlBinding(SamlBinding samlBinding) {
+		_samlBindings.add(samlBinding);
+	}
+
+	protected void removeSamlBinding(SamlBinding samlBinding) {
+		_samlBindings.remove(samlBinding);
+	}
+
 	protected MetadataManager metadataManager;
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseProfile.class);
 
 	private IdentifierGenerator _identifierGenerator;
-	private List<SamlBinding> _samlBindings;
+	private List<SamlBinding> _samlBindings = new ArrayList<>();
 
 }

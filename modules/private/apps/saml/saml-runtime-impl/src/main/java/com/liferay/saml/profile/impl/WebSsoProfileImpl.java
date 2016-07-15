@@ -232,11 +232,16 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policyOption = ReferencePolicyOption.RELUCTANT, unbind = "-"
-	)
-	public void setSamlBindings(List<SamlBinding> samlBindings) {
-		super.setSamlBindings(samlBindings);
+		policy = ReferencePolicy.DYNAMIC ,
+		policyOption = ReferencePolicyOption.GREEDY, 
+		unbind = "unsetSamlBinding", 
+		cardinality = ReferenceCardinality.AT_LEAST_ONE)
+	public void setSamlBinding(SamlBinding samlBinding) {
+		addSamlBinding(samlBinding);
+	}
+
+	public void unsetSamlBinding(SamlBinding samlBinding) {
+		removeSamlBinding(samlBinding);
 	}
 
 	@Override
