@@ -83,6 +83,9 @@ public interface PortletPropsKeys {
 	public static final String LRDCOM_PRODUCT_PAGE_URL =
 		"lrdcom.product.page.url";
 
+	public static final String LRDCOM_SALES_EMAIL_ADDRESS =
+		"lrdcom.sales.email.address";
+
 	public static final String LRDCOM_USER_DOCUMENTATION_URL =
 		"lrdcom.user.documentation.url";
 

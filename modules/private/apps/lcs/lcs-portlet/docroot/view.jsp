@@ -79,10 +79,16 @@ if (LCSUtil.isLCSPortletAuthorized(liferayPortletRequest)) {
 
 <footer class="footer">
 	<div class="container-fluid-1280">
-		<div class="lcs-version">
+		<div class="footer-note">
 			<liferay-ui:message arguments="<%= LCSUtil.getLCSPortletBuildNumber() %>" key="liferay-connected-services-client-x" />
 		</div>
 
-		<liferay-ui:message arguments="<%= PortletPropsValues.JIRA_SUPPORT_PROJECT_URL %>" key="for-any-questions-or-issues-please-open-a-ticket-in-lesa-under-the-liferay-connected-services-component" />
+		<div class="footer-note">
+			<liferay-ui:message arguments="<%= PortletPropsValues.JIRA_SUPPORT_PROJECT_URL %>" key="if-you-have-a-liferay-enterprise-subscription-and-you-have-questions-or-issues-please-open-a-ticket-in-lesa-under-the-liferay-connected-services-component" />
+		</div>
+
+		<div class="footer-note">
+			<liferay-ui:message arguments="<%= PortletPropsValues.LRDCOM_SALES_EMAIL_ADDRESS %>" key="if-you-do-not-have-an-active-enterprise-subscription-please-contact-your-account-executive-or-x" />
+		</div>
 	</div>
 </footer>

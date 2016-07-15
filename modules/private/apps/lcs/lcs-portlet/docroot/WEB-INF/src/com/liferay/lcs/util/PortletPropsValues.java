@@ -95,6 +95,9 @@ public class PortletPropsValues {
 	public static final String LRDCOM_PRODUCT_PAGE_URL = PortletProps.get(
 		PortletPropsKeys.LRDCOM_PRODUCT_PAGE_URL);
 
+	public static final String LRDCOM_SALES_EMAIL_ADDRESS = PortletProps.get(
+		PortletPropsKeys.LRDCOM_SALES_EMAIL_ADDRESS);
+
 	public static final String LRDCOM_USER_DOCUMENTATION_URL = PortletProps.get(
 		PortletPropsKeys.LRDCOM_USER_DOCUMENTATION_URL);
 
