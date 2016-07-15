@@ -18,6 +18,7 @@
 String lcsClusterEntryLayoutURL = StringPool.BLANK;
 String lcsClusterNodeLayoutURL = StringPool.BLANK;
 String lcsProjectLayoutURL = StringPool.BLANK;
+String registrationLayoutURL = StringPool.BLANK;
 
 LCSClusterEntry lcsClusterEntry = null;
 LCSClusterNode lcsClusterNode = null;
@@ -44,6 +45,8 @@ try {
 		lcsClusterEntryLayoutURL = LCSUtil.getLCSClusterEntryLayoutURL(lcsProject, lcsClusterNode);
 
 		lcsClusterNodeLayoutURL = LCSUtil.getLCSClusterNodeLayoutURL(lcsProject, lcsClusterNode);
+
+		registrationLayoutURL = LCSUtil.getRegistrationLayoutURL(lcsProject, lcsClusterNode);
 	}
 }
 catch (Exception e) {
@@ -247,6 +250,10 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 				</li>
 			</c:if>
 		</ul>
+
+		<div class="lcs-note">
+			<liferay-ui:message arguments="<%= registrationLayoutURL %>" key="to-enable-or-disable-services-you-need-to-regenerate-the-token" />
+		</div>
 
 		<ul class="list-group">
 			<li class="list-group-heading">

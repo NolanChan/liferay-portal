@@ -399,6 +399,25 @@ public class LCSUtil {
 			LCSConstants.PORTAL_PROPERTIES_BLACKLIST, null);
 	}
 
+	public static String getRegistrationLayoutURL(
+		LCSProject lcsProject, LCSClusterNode lcsClusterNode) {
+
+		Map<String, String> publicRenderParameters = new HashMap<>();
+
+		publicRenderParameters.put(
+			getPublicRenderParameterName("environmentPage"), "registration");
+		publicRenderParameters.put(
+			getPublicRenderParameterName("layoutLCSClusterEntryId"),
+			String.valueOf(lcsClusterNode.getLcsClusterEntryId()));
+		publicRenderParameters.put(
+			getPublicRenderParameterName("layoutLCSProjectId"),
+			String.valueOf(lcsProject.getLcsProjectId()));
+
+		return getLCSLayoutURL(
+			PortletPropsValues.OSB_LCS_PORTLET_LAYOUT_LCS_CLUSTER_ENTRY,
+			publicRenderParameters);
+	}
+
 	public static boolean hasLCSServicesPreferences() {
 		javax.portlet.PortletPreferences jxPortletPreferences =
 			LCSUtil.fetchJxPortletPreferences();

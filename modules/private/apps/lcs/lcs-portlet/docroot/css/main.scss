@@ -20,9 +20,17 @@
 			}
 		}
 
+		.lcs-note {
+			margin-bottom: 20px;
+		}
+
 		.list-group-item {
 			&:hover {
 				background-color: #F5F5F5;
+			}
+
+			&.indent {
+				padding-left: 20px;
 			}
 
 			.alert {
