@@ -301,7 +301,7 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 				<li class="list-group-item">
 					<aui:row>
 						<aui:col width="<%= 50 %>">
-							<liferay-ui:message key="local-cluster-node-key" />
+							<liferay-ui:message key="local-server-address" />
 						</aui:col>
 
 						<aui:col width="<%= 50 %>">
@@ -310,7 +310,7 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 							Map<String, Object> localClusterNodeInfo = ClusterNodeUtil.getClusterNodeInfo();
 							%>
 
-							<%= localClusterNodeInfo.get("key") %>
+							<%= localClusterNodeInfo.get("address") %>
 						</aui:col>
 					</aui:row>
 				</li>
@@ -322,12 +322,12 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 					<li class="list-group-item">
 						<aui:row>
 							<aui:col width="<%= 50 %>">
-								<liferay-ui:message key="sibling-cluster-node-key" />
+								<liferay-ui:message key="sibling-server-address" />
 							</aui:col>
 
 							<aui:col width="<%= 50 %>">
 								<div class="cluster-node-key">
-									<%= clusterNodeInfo.get("key") %>
+									<%= clusterNodeInfo.get("address") %>
 								</div>
 
 								<c:if test='<%= clusterNodeInfo.containsKey("lcsPortletMissing") %>'>

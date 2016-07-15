@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.net.InetAddress;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +58,13 @@ public class ClusterNodeUtil {
 		Map<String, Object> clusterNodeInfo = new HashMap<>();
 
 		try {
+			ClusterNode localClusterNode =
+				ClusterExecutorUtil.getLocalClusterNode();
+
+			InetAddress inetAddress = localClusterNode.getBindInetAddress();
+
+			clusterNodeInfo.put("address", inetAddress.getHostAddress());
+
 			clusterNodeInfo.put("key", KeyGeneratorUtil.getKey());
 
 			if (LCSUtil.getCredentialsStatus() == LCSUtil.CREDENTIALS_SET) {
