@@ -34,7 +34,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * The implementation of custom finder for kaleo process.
+ * Implements custom finders for kaleo processes.
  *
  * @author Inácio Nery
  */
@@ -48,9 +48,7 @@ public class KaleoProcessFinderImpl
 		KaleoProcessFinder.class.getName() + ".findByG_N_D";
 
 	/**
-	 * Returns the number of kaleo processes matching the parameters, including
-	 * a keywords parameter for matching string values to the kaleo process's
-	 * name or description.
+	 * Returns the number of kaleo processes in a group whose string title or description values match the keywords parameter's string value.
 	 *
 	 * @param  groupId the primary key of the kaleo process's group
 	 * @param  keywords the keywords (space separated) to look for and match in
@@ -63,8 +61,8 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns the number of kaleo processes matching the kaleo process's name
-	 * or description.
+	 * Returns the number of kaleo processes matching the name
+	 * or description parameters.
 	 *
 	 * @param  groupId the primary key of the kaleo process's group
 	 * @param  name the name to look for and match in the kaleo process name
@@ -85,8 +83,8 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns the number of kaleo processes matching the parameters, including
-	 * a keywords parameter for matching string values to the kaleo process's
+	 * Returns the number of kaleo processes in the group that matceh the keywords parameter. The
+	 * keywords parameter is for matching string values to the kaleo process's
 	 * name or description and filter by permission checks.
 	 *
 	 * @param  groupId the primary key of the kaleo process's group
@@ -100,8 +98,8 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns the number of kaleo processes matching the kaleo process's name
-	 * or description and filter by permission checks.
+	 * Returns the number of kaleo processes matching the name
+	 * or description parameters and filter by permission checks.
 	 *
 	 * @param  groupId the primary key of the kaleo process's group
 	 * @param  andOperator whether uses the OR operator in connecting query
@@ -119,9 +117,8 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns a range of all kaleo processes matching the parameters, including
-	 * a keywords parameter for matching string values to the kaleo process's
-	 * name or description and filter by permission checks.
+	 * Returns an ordered range of all kaleo processes whose name or description matches the string values of the keywords parameter.
+	 * and filter by permission checks.
 	 *
 	 * @param  groupId the primary key of the kaleo process's group
 	 * @param  keywords the keywords (space separated) to look for and match in
@@ -155,7 +152,7 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns a range of all kaleo processes matching the kaleo process's name
+	 * Returns an ordered range of all kaleo processes in the group, matching the kaleo process's name
 	 * or description and filter by permission checks.
 	 *
 	 * @param  groupId the primary key of the kaleo process's group
@@ -184,8 +181,8 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns a range of all kaleo processes matching the kaleo process's name
-	 * or description and filter by permission checks.
+	 * Returns an ordered range of all kaleo processes matching the name
+	 * or description parameter and filter by permission checks.
 	 *
 	 * @param  groupId the primary key of the kaleo process's group
 	 * @param  names the names to look for and match in the kaleo process name
@@ -211,7 +208,7 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns a range of all kaleo processes matching the parameters, including
+	 * Returns an ordered range of all kaleo processes in the group matching the parameters, including
 	 * a keywords parameter for matching string values to the kaleo process's
 	 * name or description.
 	 *
@@ -247,8 +244,8 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns a range of all kaleo processes matching the kaleo process's name
-	 * or description.
+	 * Returns an ordered range of all kaleo processes matching the name
+	 * or description parameter.
 	 *
 	 * @param  groupId the primary key of the kaleo process's group
 	 * @param  name the name to look for and match in the kaleo process name
@@ -276,7 +273,7 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns a range of all kaleo processes matching the kaleo process's names
+	 * Returns anordered range of all kaleo processes matching the entered names
 	 * or descriptions.
 	 *
 	 * @param  groupId the primary key of the kaleo process's group
@@ -331,8 +328,8 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns the number of kaleo processes matching the kaleo process's name
-	 * or description.
+	 * Returns the number of kaleo processes matching the entered names
+	 * or descriptions.
 	 *
 	 * @param  groupId the primary key of the kaleo process's group
 	 * @param  names the names to look for and match in the kaleo process name
@@ -409,8 +406,8 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns a range of all kaleo processes matching the kaleo process's name
-	 * or description.
+	 * Returns an ordered range of all kaleo processes in the group matching the entered names
+	 * or descriptions.
 	 *
 	 * @param  groupId the primary key of the kaleo process's group
 	 * @param  names the names to look for and match in the kaleo process name
