@@ -24,10 +24,11 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.saml.model.SamlSpSession;
 import com.liferay.saml.profile.WebSsoProfileUtil;
 import com.liferay.saml.util.SamlUtil;
-import org.osgi.service.component.annotations.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mika Koivisto

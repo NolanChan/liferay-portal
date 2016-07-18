@@ -43,8 +43,6 @@ import org.osgi.service.component.annotations.Reference;
 public class SamlIdpSsoSessionMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
-	private SAMLConfiguration _samlConfiguration;
-
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_samlConfiguration = ConfigurableUtil.createConfigurable(
@@ -70,9 +68,12 @@ public class SamlIdpSsoSessionMessageListener
 		_samlIdpSsoSessionLocalService.deleteExpiredSamlIdpSsoSessions();
 	}
 
-	@Reference
-	SamlIdpSsoSessionLocalService _samlIdpSsoSessionLocalService;
+	private SAMLConfiguration _samlConfiguration;
 
 	@Reference
-	SchedulerEngineHelper _schedulerEngineHelper;
+	private SamlIdpSsoSessionLocalService _samlIdpSsoSessionLocalService;
+
+	@Reference
+	private SchedulerEngineHelper _schedulerEngineHelper;
+
 }

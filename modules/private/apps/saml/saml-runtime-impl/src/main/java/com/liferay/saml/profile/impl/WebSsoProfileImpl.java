@@ -14,8 +14,7 @@
 
 package com.liferay.saml.profile.impl;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -82,6 +81,7 @@ import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+
 import org.opensaml.common.IdentifierGenerator;
 import org.opensaml.common.SAMLObject;
 import org.opensaml.common.SAMLVersion;
@@ -226,18 +226,18 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		_nameIdResolver = nameIdResolver;
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.AT_LEAST_ONE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY, unbind = "unsetSamlBinding"
+	)
+	public void setSamlBinding(SamlBinding samlBinding) {
+		addSamlBinding(samlBinding);
+	}
+
 	@Reference(unbind = "-")
 	public void setUserResolver(UserResolver userResolver) {
 		_userResolver = userResolver;
-	}
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC ,
-		policyOption = ReferencePolicyOption.GREEDY, 
-		unbind = "unsetSamlBinding", 
-		cardinality = ReferenceCardinality.AT_LEAST_ONE)
-	public void setSamlBinding(SamlBinding samlBinding) {
-		addSamlBinding(samlBinding);
 	}
 
 	public void unsetSamlBinding(SamlBinding samlBinding) {
@@ -268,7 +268,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_samlConfiguration = Configurable.createConfigurable(
+		_samlConfiguration = ConfigurableUtil.createConfigurable(
 			SAMLConfiguration.class, properties);
 	}
 

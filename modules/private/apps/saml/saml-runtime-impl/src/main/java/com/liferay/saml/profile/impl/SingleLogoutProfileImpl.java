@@ -296,18 +296,18 @@ public class SingleLogoutProfileImpl
 		super.setIdentifierGenerator(identifierGenerator);
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC ,
-		policyOption = ReferencePolicyOption.GREEDY, 
-		unbind = "unsetSamlBinding", 
-		cardinality = ReferenceCardinality.AT_LEAST_ONE)
-	public void setSamlBinding(SamlBinding samlBinding) {
-		addSamlBinding(samlBinding);
-	}
-
 	@Reference(unbind = "-")
 	public void setMetadataManager(MetadataManager metadataManager) {
 		super.setMetadataManager(metadataManager);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.AT_LEAST_ONE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY, unbind = "unsetSamlBinding"
+	)
+	public void setSamlBinding(SamlBinding samlBinding) {
+		addSamlBinding(samlBinding);
 	}
 
 	@Override

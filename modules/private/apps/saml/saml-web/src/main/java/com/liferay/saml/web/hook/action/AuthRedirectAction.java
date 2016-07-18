@@ -32,10 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Tomas Polesovsky
  */
 @Component(
-	immediate = true,
-	property = {
-		"path=/portal/saml/auth_redirect"
-	},
+	immediate = true, property = {"path=/portal/saml/auth_redirect"},
 	service = StrutsAction.class
 )
 public class AuthRedirectAction extends BaseSamlStrutsAction {

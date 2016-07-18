@@ -42,10 +42,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true,
-	property = {
-		"path=/portal/saml/keep_alive"
-	},
+	immediate = true, property = {"path=/portal/saml/keep_alive"},
 	service = StrutsAction.class
 )
 public class SessionKeepAliveAction extends BaseSamlStrutsAction {

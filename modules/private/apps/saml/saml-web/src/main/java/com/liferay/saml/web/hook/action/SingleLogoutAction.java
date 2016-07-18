@@ -16,7 +16,6 @@ package com.liferay.saml.web.hook.action;
 
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.saml.profile.SingleLogoutProfile;
-import com.liferay.saml.profile.SingleLogoutProfileUtil;
 import com.liferay.saml.util.SamlUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"path=/portal/saml/slo",
-		"path=/portal/saml/slo_logout",
+		"path=/portal/saml/slo", "path=/portal/saml/slo_logout",
 		"path=/portal/saml/slo_soap"
 	},
 	service = StrutsAction.class

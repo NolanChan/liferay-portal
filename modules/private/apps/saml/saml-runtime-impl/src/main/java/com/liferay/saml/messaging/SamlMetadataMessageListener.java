@@ -55,8 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 public class SamlMetadataMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
-	private SAMLConfiguration _samlConfiguration;
-
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_samlConfiguration = ConfigurableUtil.createConfigurable(
@@ -174,14 +172,17 @@ public class SamlMetadataMessageListener
 		SamlMetadataMessageListener.class);
 
 	@Reference
-	CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
+
+	private SAMLConfiguration _samlConfiguration;
 
 	@Reference
-	SchedulerEngineHelper _schedulerEngineHelper;
+	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
 
 	@Reference
-	SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
+	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
 
 	@Reference
-	SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
+	private SchedulerEngineHelper _schedulerEngineHelper;
+
 }

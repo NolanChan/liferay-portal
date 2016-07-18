@@ -14,8 +14,7 @@
 
 package com.liferay.saml.metadata.impl;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.concurrent.ReadWriteLockKey;
 import com.liferay.portal.kernel.concurrent.ReadWriteLockRegistry;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -647,7 +646,7 @@ public class MetadataManagerImpl implements MetadataManager {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_samlConfiguration = Configurable.createConfigurable(
+		_samlConfiguration = ConfigurableUtil.createConfigurable(
 			SAMLConfiguration.class, properties);
 	}
 
@@ -662,12 +661,13 @@ public class MetadataManagerImpl implements MetadataManager {
 	private final ReadWriteLockRegistry _readWriteLockRegistry =
 		new ReadWriteLockRegistry();
 	private SAMLConfiguration _samlConfiguration;
+
+	@Reference
+	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
+
+	@Reference
+	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
+
 	private final Timer _timer = new Timer(true);
-
-	@Reference
-	SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
-
-	@Reference
-	SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
 
 }

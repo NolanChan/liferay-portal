@@ -47,13 +47,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"servlet-context-name=",
-		"servlet-filter-name=SSO SAML SP Filter",
-		"after-filter=Virtual Host Filter",
-		"url-pattern=/*",
-		"dispatcher=FORWARD",
+		"after-filter=Virtual Host Filter", "dispatcher=FORWARD",
 		"dispatcher=REQUEST",
-		"init-param.url-regex-ignore-pattern=^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$"
+		"init-param.url-regex-ignore-pattern=^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$",
+		"servlet-context-name=", "servlet-filter-name=SSO SAML SP Filter",
+		"url-pattern=/*"
 	},
 	service = Filter.class
 )

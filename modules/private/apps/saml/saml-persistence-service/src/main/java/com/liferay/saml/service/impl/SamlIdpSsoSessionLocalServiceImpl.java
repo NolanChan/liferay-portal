@@ -14,8 +14,7 @@
 
 package com.liferay.saml.service.impl;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -85,16 +84,16 @@ public class SamlIdpSsoSessionLocalServiceImpl
 				configuration.getProperties();
 
 			if (properties != null) {
-				_samlConfiguration = Configurable.createConfigurable(
+				_samlConfiguration = ConfigurableUtil.createConfigurable(
 					SAMLConfiguration.class, properties);
 			}
 			else {
-				_samlConfiguration = Configurable.createConfigurable(
+				_samlConfiguration = ConfigurableUtil.createConfigurable(
 					SAMLConfiguration.class, Collections.emptyMap());
 			}
 		}
 		catch (IOException ioe) {
-			_samlConfiguration = Configurable.createConfigurable(
+			_samlConfiguration = ConfigurableUtil.createConfigurable(
 				SAMLConfiguration.class, Collections.emptyMap());
 		}
 	}
@@ -104,8 +103,7 @@ public class SamlIdpSsoSessionLocalServiceImpl
 		Date createDate = new Date();
 
 		createDate.setTime(
-			createDate.getTime() -
-			_samlConfiguration.getIdpSsoSessionMaxAge());
+			createDate.getTime() - _samlConfiguration.getIdpSsoSessionMaxAge());
 
 		samlIdpSsoSessionPersistence.removeByCreateDate(createDate);
 		samlIdpSpSessionPersistence.removeByCreateDate(createDate);

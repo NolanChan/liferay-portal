@@ -43,8 +43,6 @@ import org.osgi.service.component.annotations.Reference;
 public class SamlSpAuthRequestMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
-	private SAMLConfiguration _samlConfiguration;
-
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_samlConfiguration = ConfigurableUtil.createConfigurable(
@@ -70,9 +68,12 @@ public class SamlSpAuthRequestMessageListener
 		_samlSpAuthRequestLocalService.deleteExpiredSamlSpAuthRequests();
 	}
 
-	@Reference
-	SchedulerEngineHelper _schedulerEngineHelper;
+	private SAMLConfiguration _samlConfiguration;
 
 	@Reference
-	SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;
+	private SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;
+
+	@Reference
+	private SchedulerEngineHelper _schedulerEngineHelper;
+
 }

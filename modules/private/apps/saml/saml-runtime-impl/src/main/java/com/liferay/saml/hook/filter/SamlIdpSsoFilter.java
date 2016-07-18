@@ -38,12 +38,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"servlet-context-name=",
+		"after-filter=Virtual Host Filter", "dispatcher=FORWARD",
+		"dispatcher=REQUEST", "servlet-context-name=",
 		"servlet-filter-name=SSO SAML IdP Filter",
-		"after-filter=Virtual Host Filter",
-		"url-pattern=/c/portal/logout",
-		"dispatcher=FORWARD",
-		"dispatcher=REQUEST"
+		"url-pattern=/c/portal/logout"
 	},
 	service = Filter.class
 )

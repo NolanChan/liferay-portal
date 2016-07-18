@@ -14,8 +14,7 @@
 
 package com.liferay.saml.service.impl;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -70,16 +69,16 @@ public class SamlSpAuthRequestLocalServiceImpl
 				configuration.getProperties();
 
 			if (properties != null) {
-				_samlConfiguration = Configurable.createConfigurable(
+				_samlConfiguration = ConfigurableUtil.createConfigurable(
 					SAMLConfiguration.class, properties);
 			}
 			else {
-				_samlConfiguration = Configurable.createConfigurable(
+				_samlConfiguration = ConfigurableUtil.createConfigurable(
 					SAMLConfiguration.class, Collections.emptyMap());
 			}
 		}
 		catch (IOException ioe) {
-			_samlConfiguration = Configurable.createConfigurable(
+			_samlConfiguration = ConfigurableUtil.createConfigurable(
 				SAMLConfiguration.class, Collections.emptyMap());
 		}
 	}

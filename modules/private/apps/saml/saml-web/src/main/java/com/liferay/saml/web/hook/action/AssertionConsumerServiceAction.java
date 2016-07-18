@@ -16,7 +16,6 @@ package com.liferay.saml.web.hook.action;
 
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.saml.profile.WebSsoProfile;
-import com.liferay.saml.profile.WebSsoProfileUtil;
 import com.liferay.saml.util.SamlUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,10 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true,
-	property = {
-		"path=/portal/saml/acs"
-	},
+	immediate = true, property = {"path=/portal/saml/acs"},
 	service = StrutsAction.class
 )
 public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {

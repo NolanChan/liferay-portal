@@ -48,7 +48,6 @@ import com.liferay.saml.credential.impl.KeyStoreCredentialResolver;
 import com.liferay.saml.identifier.SamlIdentifierGenerator;
 import com.liferay.saml.metadata.MetadataGeneratorUtil;
 import com.liferay.saml.metadata.impl.MetadataManagerImpl;
-import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.provider.CachingChainingMetadataProvider;
 import com.liferay.saml.provider.DBMetadataProvider;
 import com.liferay.saml.util.PortletPropsKeys;
@@ -67,6 +66,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.velocity.app.VelocityEngine;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -87,7 +87,6 @@ import org.opensaml.xml.parse.BasicParserPool;
 import org.opensaml.xml.parse.ParserPool;
 import org.opensaml.xml.security.CriteriaSet;
 import org.opensaml.xml.security.credential.Credential;
-import org.opensaml.xml.security.credential.CredentialResolver;
 import org.opensaml.xml.security.criteria.EntityIDCriteria;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -351,7 +350,7 @@ public class BaseSamlTestCase extends PowerMockito {
 	protected void setupMetadata() throws Exception {
 		metadataManagerImpl = new MetadataManagerImpl();
 
-		KeyStoreManager keyStoreManager = new FileSystemKeyStoreManagerImpl(); 
+		KeyStoreManager keyStoreManager = new FileSystemKeyStoreManagerImpl();
 
 		credentialResolver = new KeyStoreCredentialResolver();
 
@@ -523,7 +522,8 @@ public class BaseSamlTestCase extends PowerMockito {
 	}
 
 	protected void setupSamlBindings() {
-		VelocityEngineFactory velocityEngineFactory = new VelocityEngineFactory();
+		VelocityEngineFactory velocityEngineFactory =
+			new VelocityEngineFactory();
 
 		Thread currentThread = Thread.currentThread();
 
@@ -534,8 +534,7 @@ public class BaseSamlTestCase extends PowerMockito {
 
 		samlBindings = new ArrayList<>();
 
-		samlBindings.add(
-			new HttpPostBinding(parserPool, velocityEngine));
+		samlBindings.add(new HttpPostBinding(parserPool, velocityEngine));
 		samlBindings.add(new HttpRedirectBinding(parserPool));
 		samlBindings.add(new HttpSoap11Binding(parserPool, httpClient));
 	}

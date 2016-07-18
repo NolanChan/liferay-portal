@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- * <p>
+ *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
  * any later version.
- * <p>
+ *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
@@ -19,6 +19,8 @@ import com.liferay.saml.velocity.VelocityEngineFactory;
 
 import java.util.Hashtable;
 import java.util.Map;
+
+import org.apache.commons.httpclient.HttpClient;
 
 import org.opensaml.xml.parse.ParserPool;
 
@@ -34,13 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class HttpBindingsRegistrator {
-
-	private ServiceRegistration<SamlBinding>
-		_samlHttpPostBindingServiceRegistration;
-	private ServiceRegistration<SamlBinding>
-		_samlHttpRedirectBindingServiceRegistration;
-	private ServiceRegistration<SamlBinding>
-		_samlHttpSoap11BindingServiceRegistration;
 
 	@Activate
 	protected void activate(
@@ -79,9 +74,19 @@ public class HttpBindingsRegistrator {
 	}
 
 	@Reference
-	org.apache.commons.httpclient.HttpClient _httpClient;
+	private HttpClient _httpClient;
 
-	@Reference ParserPool _parserPool;
+	@Reference
+	private ParserPool _parserPool;
 
-	@Reference VelocityEngineFactory _velocityEngineFactory;
+	private ServiceRegistration<SamlBinding>
+		_samlHttpPostBindingServiceRegistration;
+	private ServiceRegistration<SamlBinding>
+		_samlHttpRedirectBindingServiceRegistration;
+	private ServiceRegistration<SamlBinding>
+		_samlHttpSoap11BindingServiceRegistration;
+
+	@Reference
+	private VelocityEngineFactory _velocityEngineFactory;
+
 }

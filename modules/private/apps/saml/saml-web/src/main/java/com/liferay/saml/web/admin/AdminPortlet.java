@@ -463,11 +463,12 @@ public class AdminPortlet extends MVCPortlet {
 	private CompanyService _companyService;
 
 	@Reference
+	private KeyStoreManager _keyStoreManager;
+
+	@Reference
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
 
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
 
-	@Reference
-	KeyStoreManager _keyStoreManager;
 }
