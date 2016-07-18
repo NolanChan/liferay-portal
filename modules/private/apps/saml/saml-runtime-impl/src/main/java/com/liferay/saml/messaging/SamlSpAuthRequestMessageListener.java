@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.saml.configuration.SAMLConfiguration;
-import com.liferay.saml.service.SamlSpAuthRequestLocalServiceUtil;
+import com.liferay.saml.service.SamlSpAuthRequestLocalService;
 
 import java.util.Map;
 
@@ -67,10 +67,12 @@ public class SamlSpAuthRequestMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		SamlSpAuthRequestLocalServiceUtil.deleteExpiredSamlSpAuthRequests();
+		_samlSpAuthRequestLocalService.deleteExpiredSamlSpAuthRequests();
 	}
 
 	@Reference
 	SchedulerEngineHelper _schedulerEngineHelper;
 
+	@Reference
+	SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;
 }

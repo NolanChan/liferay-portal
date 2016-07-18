@@ -37,8 +37,8 @@ import com.liferay.saml.provider.CachingChainingMetadataProvider;
 import com.liferay.saml.provider.DBMetadataProvider;
 import com.liferay.saml.provider.ReinitializingFilesystemMetadataProvider;
 import com.liferay.saml.provider.ReinitializingHttpMetadataProvider;
-import com.liferay.saml.service.SamlIdpSpConnectionLocalServiceUtil;
-import com.liferay.saml.service.SamlSpIdpConnectionLocalServiceUtil;
+import com.liferay.saml.service.SamlIdpSpConnectionLocalService;
+import com.liferay.saml.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.util.PortletPrefsPropsUtil;
 import com.liferay.saml.util.PortletPropsKeys;
 import com.liferay.saml.util.SamlUtil;
@@ -111,7 +111,7 @@ public class MetadataManagerImpl implements MetadataManager {
 
 		try {
 			SamlIdpSpConnection samlIdpSpConnection =
-				SamlIdpSpConnectionLocalServiceUtil.getSamlIdpSpConnection(
+				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 					companyId, entityId);
 
 			return samlIdpSpConnection.getAssertionLifetime();
@@ -132,7 +132,7 @@ public class MetadataManagerImpl implements MetadataManager {
 
 		try {
 			SamlIdpSpConnection samlIdpSpConnection =
-				SamlIdpSpConnectionLocalServiceUtil.getSamlIdpSpConnection(
+				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 					companyId, entityId);
 
 			return StringUtil.splitLines(
@@ -315,7 +315,7 @@ public class MetadataManagerImpl implements MetadataManager {
 
 		try {
 			SamlIdpSpConnection samlIdpSpConnection =
-				SamlIdpSpConnectionLocalServiceUtil.getSamlIdpSpConnection(
+				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 					companyId, entityId);
 
 			nameIdAttributeName = samlIdpSpConnection.getNameIdAttribute();
@@ -347,7 +347,7 @@ public class MetadataManagerImpl implements MetadataManager {
 		if (SamlUtil.isRoleIdp()) {
 			try {
 				SamlIdpSpConnection samlIdpSpConnection =
-					SamlIdpSpConnectionLocalServiceUtil.getSamlIdpSpConnection(
+					_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 						companyId, entityId);
 
 				nameIdFormat = samlIdpSpConnection.getNameIdFormat();
@@ -366,7 +366,7 @@ public class MetadataManagerImpl implements MetadataManager {
 		else if (SamlUtil.isRoleSp()) {
 			try {
 				SamlSpIdpConnection samlSpIdpConnection =
-					SamlSpIdpConnectionLocalServiceUtil.getSamlSpIdpConnection(
+					_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 						companyId, entityId);
 
 				nameIdFormat = samlSpIdpConnection.getNameIdFormat();
@@ -532,7 +532,7 @@ public class MetadataManagerImpl implements MetadataManager {
 
 		try {
 			SamlSpIdpConnection samlSpIdpConnection =
-				SamlSpIdpConnectionLocalServiceUtil.getSamlSpIdpConnection(
+				_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 					companyId, entityId);
 
 			return samlSpIdpConnection.getUserAttributeMappings();
@@ -549,7 +549,7 @@ public class MetadataManagerImpl implements MetadataManager {
 
 		try {
 			SamlIdpSpConnection samlIdpSpConnection =
-				SamlIdpSpConnectionLocalServiceUtil.getSamlIdpSpConnection(
+				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 					companyId, entityId);
 
 			return samlIdpSpConnection.isAttributesEnabled();
@@ -570,7 +570,7 @@ public class MetadataManagerImpl implements MetadataManager {
 
 		try {
 			SamlIdpSpConnection samlIdpSpConnection =
-				SamlIdpSpConnectionLocalServiceUtil.getSamlIdpSpConnection(
+				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 					companyId, entityId);
 
 			return samlIdpSpConnection.isAttributesNamespaceEnabled();
@@ -663,5 +663,11 @@ public class MetadataManagerImpl implements MetadataManager {
 		new ReadWriteLockRegistry();
 	private SAMLConfiguration _samlConfiguration;
 	private final Timer _timer = new Timer(true);
+
+	@Reference
+	SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
+
+	@Reference
+	SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
 
 }

@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.configuration.SAMLConfiguration;
 import com.liferay.saml.model.SamlIdpSpConnection;
@@ -79,7 +79,7 @@ public class SamlMetadataMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		List<Company> companies = CompanyLocalServiceUtil.getCompanies(false);
+		List<Company> companies = _companyLocalService.getCompanies(false);
 
 		for (Company company : companies) {
 			if (!company.isActive()) {
@@ -172,6 +172,9 @@ public class SamlMetadataMessageListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SamlMetadataMessageListener.class);
+
+	@Reference
+	CompanyLocalService _companyLocalService;
 
 	@Reference
 	SchedulerEngineHelper _schedulerEngineHelper;
