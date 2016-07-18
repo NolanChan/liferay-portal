@@ -349,7 +349,7 @@ public class BaseSamlTestCase extends PowerMockito {
 	protected void setupMetadata() throws Exception {
 		metadataManagerImpl = new MetadataManagerImpl();
 
-		KeyStoreManager keyStoreManager = new FileSystemKeyStoreManagerImpl();
+		keyStoreManager = new FileSystemKeyStoreManagerImpl();
 
 		credentialResolver = new KeyStoreCredentialResolver();
 
@@ -575,6 +575,7 @@ public class BaseSamlTestCase extends PowerMockito {
 	protected HttpClient httpClient;
 	protected IdentifierGenerator identifierGenerator;
 	protected List<String> identifiers = new ArrayList<>();
+	protected KeyStoreManager keyStoreManager;
 	protected MetadataManagerImpl metadataManagerImpl;
 	protected ParserPool parserPool;
 	protected Portal portal;
