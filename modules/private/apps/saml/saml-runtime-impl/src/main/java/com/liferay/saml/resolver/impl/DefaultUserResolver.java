@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -116,6 +116,11 @@ public class DefaultUserResolver implements UserResolver {
 		_userImporter = userImporter;
 	}
 
+	@Reference(unbind = "-")
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	protected User addUser(
 			long companyId, Map<String, List<Serializable>> attributesMap,
 			ServiceContext serviceContext)
@@ -160,23 +165,22 @@ public class DefaultUserResolver implements UserResolver {
 
 		serviceContext.setUuid(uuid);
 
-		User user = UserLocalServiceUtil.addUser(
+		User user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
-		user = UserLocalServiceUtil.updateEmailAddressVerified(
+		user = _userLocalService.updateEmailAddressVerified(
 			user.getUserId(), true);
 
-		user = UserLocalServiceUtil.updatePasswordReset(
-			user.getUserId(), false);
+		user = _userLocalService.updatePasswordReset(user.getUserId(), false);
 
 		Date modifiedDate = getValueAsDate("modifiedDate", attributesMap);
 
 		if (modifiedDate != null) {
-			user = UserLocalServiceUtil.updateModifiedDate(
+			user = _userLocalService.updateModifiedDate(
 				user.getUserId(), modifiedDate);
 		}
 
@@ -263,19 +267,19 @@ public class DefaultUserResolver implements UserResolver {
 			if (subjectNameIdentifierType.endsWith(
 					_SUBJECT_NAME_TYPE_EMAIL_ADDRESS)) {
 
-				return UserLocalServiceUtil.getUserByEmailAddress(
+				return _userLocalService.getUserByEmailAddress(
 					companyId, subjectNameIdentifier);
 			}
 			else if (subjectNameIdentifierType.endsWith(
 						_SUBJECT_NAME_TYPE_SCREENNAME)) {
 
-				return UserLocalServiceUtil.getUserByScreenName(
+				return _userLocalService.getUserByScreenName(
 					companyId, subjectNameIdentifier);
 			}
 			else if (subjectNameIdentifierType.endsWith(
 						_SUBJECT_NAME_TYPE_UUID)) {
 
-				return UserLocalServiceUtil.getUserByUuidAndCompanyId(
+				return _userLocalService.getUserByUuidAndCompanyId(
 					subjectNameIdentifier, companyId);
 			}
 		}
@@ -441,10 +445,10 @@ public class DefaultUserResolver implements UserResolver {
 		if (!StringUtil.equalsIgnoreCase(
 				emailAddress, user.getEmailAddress())) {
 
-			user = UserLocalServiceUtil.updateEmailAddress(
+			user = _userLocalService.updateEmailAddress(
 				user.getUserId(), StringPool.BLANK, emailAddress, emailAddress);
 
-			user = UserLocalServiceUtil.updateEmailAddressVerified(
+			user = _userLocalService.updateEmailAddressVerified(
 				user.getUserId(), true);
 		}
 
@@ -459,7 +463,7 @@ public class DefaultUserResolver implements UserResolver {
 
 			birthdayCalendar.setTime(contact.getBirthday());
 
-			user = UserLocalServiceUtil.updateUser(
+			user = _userLocalService.updateUser(
 				user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, false, user.getReminderQueryQuestion(),
 				user.getReminderQueryAnswer(), screenName, emailAddress,
@@ -476,7 +480,7 @@ public class DefaultUserResolver implements UserResolver {
 				serviceContext);
 
 			if (!Objects.equals(oldModifiedDate, modifiedDate)) {
-				user = UserLocalServiceUtil.updateModifiedDate(
+				user = _userLocalService.updateModifiedDate(
 					user.getUserId(), modifiedDate);
 			}
 		}
@@ -496,5 +500,6 @@ public class DefaultUserResolver implements UserResolver {
 
 	private MetadataManager _metadataManager;
 	private UserImporter _userImporter;
+	private UserLocalService _userLocalService;
 
 }

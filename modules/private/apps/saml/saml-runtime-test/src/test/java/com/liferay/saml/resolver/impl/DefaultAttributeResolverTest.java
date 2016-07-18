@@ -26,11 +26,8 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
-import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.saml.BaseSamlTestCase;
 import com.liferay.saml.metadata.MetadataManager;
@@ -69,6 +66,8 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 
 		beanPropertiesUtil.setBeanProperties(_beanProperties);
 
+		_defaultAttributeResolver.setGroupLocalService(groupLocalService);
+
 		_metadataManager = mock(MetadataManager.class);
 
 		_defaultAttributeResolver.setMetadataManager(_metadataManager);
@@ -89,9 +88,24 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			_expandoBridge
 		);
 
+		_roleLocalService = mock(RoleLocalService.class);
+
+		_defaultAttributeResolver.setRoleLocalService(_roleLocalService);
+
 		_samlMessageContext = new BasicSAMLMessageContext<>();
 
 		_samlMessageContext.setPeerEntityId(SP_ENTITY_ID);
+
+		_userGroupGroupRoleLocalService = mock(
+			UserGroupGroupRoleLocalService.class);
+
+		_defaultAttributeResolver.setUserGroupGroupRoleLocalService(
+			_userGroupGroupRoleLocalService);
+
+		_userGroupRoleLocalService = mock(UserGroupRoleLocalService.class);
+
+		_defaultAttributeResolver.setUserGroupRoleLocalService(
+			_userGroupRoleLocalService);
 	}
 
 	@Test
@@ -164,11 +178,6 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			new String[] {"organizationRoles"}
 		);
 
-		UserGroupRoleLocalService userGroupRoleLocalService =
-			getMockPortalService(
-				UserGroupRoleLocalServiceUtil.class,
-				UserGroupRoleLocalService.class);
-
 		Group group1 = mock(Group.class);
 
 		when(
@@ -240,7 +249,7 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 		userGroupRoles.add(userGroupRole2);
 
 		when(
-			userGroupRoleLocalService.getUserGroupRoles(Mockito.anyLong())
+			_userGroupRoleLocalService.getUserGroupRoles(Mockito.anyLong())
 		).thenReturn(
 			userGroupRoles
 		);
@@ -350,11 +359,8 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			groups
 		);
 
-		RoleLocalService roleLocalService = getMockPortalService(
-			RoleLocalServiceUtil.class, RoleLocalService.class);
-
 		when(
-			roleLocalService.hasGroupRoles(Mockito.anyLong())
+			_roleLocalService.hasGroupRoles(Mockito.anyLong())
 		).thenReturn(
 			Boolean.TRUE
 		);
@@ -372,7 +378,7 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 		groupRoles.add(groupRole1);
 
 		when(
-			roleLocalService.getGroupRoles(Mockito.anyLong())
+			_roleLocalService.getGroupRoles(Mockito.anyLong())
 		).thenReturn(
 			groupRoles
 		);
@@ -392,11 +398,6 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 		).thenReturn(
 			new String[] {"siteRoles"}
 		);
-
-		UserGroupRoleLocalService userGroupRoleLocalService =
-			getMockPortalService(
-				UserGroupRoleLocalServiceUtil.class,
-				UserGroupRoleLocalService.class);
 
 		Group group1 = mock(Group.class);
 
@@ -495,7 +496,7 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 		userGroupRoles.add(userGroupRole3);
 
 		when(
-			userGroupRoleLocalService.getUserGroupRoles(Mockito.anyLong())
+			_userGroupRoleLocalService.getUserGroupRoles(Mockito.anyLong())
 		).thenReturn(
 			userGroupRoles
 		);
@@ -518,13 +519,8 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 
 		userGroupGroupRoles.add(userGroupGroupRole);
 
-		UserGroupGroupRoleLocalService userGroupGroupRoleLocalService =
-			getMockPortalService(
-				UserGroupGroupRoleLocalServiceUtil.class,
-				UserGroupGroupRoleLocalService.class);
-
 		when(
-			userGroupGroupRoleLocalService.getUserGroupGroupRolesByUser(
+			_userGroupGroupRoleLocalService.getUserGroupGroupRolesByUser(
 				Mockito.anyLong())
 		).thenReturn(
 			userGroupGroupRoles
@@ -619,11 +615,6 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			new String[] {"userGroupRoles"}
 		);
 
-		UserGroupRoleLocalService userGroupRoleLocalService =
-			getMockPortalService(
-				UserGroupRoleLocalServiceUtil.class,
-				UserGroupRoleLocalService.class);
-
 		Group group1 = mock(Group.class);
 
 		when(
@@ -713,15 +704,10 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 		userGroupRoles.add(userGroupRole3);
 
 		when(
-			userGroupRoleLocalService.getUserGroupRoles(Mockito.anyLong())
+			_userGroupRoleLocalService.getUserGroupRoles(Mockito.anyLong())
 		).thenReturn(
 			userGroupRoles
 		);
-
-		UserGroupGroupRoleLocalService userGroupGroupRoleLocalService =
-			getMockPortalService(
-				UserGroupGroupRoleLocalServiceUtil.class,
-				UserGroupGroupRoleLocalService.class);
 
 		List<Attribute> attributes = _defaultAttributeResolver.resolve(
 			_user, _samlMessageContext);
@@ -809,8 +795,11 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 		new DefaultAttributeResolver();
 	private ExpandoBridge _expandoBridge;
 	private MetadataManager _metadataManager;
+	private RoleLocalService _roleLocalService;
 	private SAMLMessageContext<AuthnRequest, Response, NameID>
 		_samlMessageContext;
 	private User _user;
+	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

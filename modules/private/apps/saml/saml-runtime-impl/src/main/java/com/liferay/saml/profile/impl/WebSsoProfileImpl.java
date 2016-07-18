@@ -59,12 +59,12 @@ import com.liferay.saml.profile.WebSsoProfile;
 import com.liferay.saml.resolver.AttributeResolver;
 import com.liferay.saml.resolver.NameIdResolver;
 import com.liferay.saml.resolver.UserResolver;
-import com.liferay.saml.service.SamlIdpSpSessionLocalServiceUtil;
-import com.liferay.saml.service.SamlIdpSsoSessionLocalServiceUtil;
-import com.liferay.saml.service.SamlSpAuthRequestLocalServiceUtil;
-import com.liferay.saml.service.SamlSpIdpConnectionLocalServiceUtil;
-import com.liferay.saml.service.SamlSpMessageLocalServiceUtil;
-import com.liferay.saml.service.SamlSpSessionLocalServiceUtil;
+import com.liferay.saml.service.SamlIdpSpSessionLocalService;
+import com.liferay.saml.service.SamlIdpSsoSessionLocalService;
+import com.liferay.saml.service.SamlSpAuthRequestLocalService;
+import com.liferay.saml.service.SamlSpIdpConnectionLocalService;
+import com.liferay.saml.service.SamlSpMessageLocalService;
+import com.liferay.saml.service.SamlSpSessionLocalService;
 import com.liferay.saml.util.OpenSamlUtil;
 import com.liferay.saml.util.PortletWebKeys;
 import com.liferay.saml.util.SamlUtil;
@@ -258,7 +258,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			!jSessionId.equals(samlSpSession.getJSessionId())) {
 
 			try {
-				SamlSpSessionLocalServiceUtil.updateSamlSpSession(
+				_samlSpSessionLocalService.updateSamlSpSession(
 					samlSpSession.getPrimaryKey(), jSessionId);
 			}
 			catch (Exception e) {
@@ -281,13 +281,13 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			request);
 
 		SamlIdpSsoSession samlIdpSsoSession =
-			SamlIdpSsoSessionLocalServiceUtil.addSamlIdpSsoSession(
+			_samlIdpSsoSessionLocalService.addSamlIdpSsoSession(
 				samlSsoRequestContext.getSamlSsoSessionId(), serviceContext);
 
 		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
-		SamlIdpSpSessionLocalServiceUtil.addSamlIdpSpSession(
+		_samlIdpSpSessionLocalService.addSamlIdpSpSession(
 			samlIdpSsoSession.getSamlIdpSsoSessionId(),
 			samlMessageContext.getPeerEntityId(), nameId.getFormat(),
 			nameId.getValue(), serviceContext);
@@ -453,7 +453,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				samlSsoRequestContext.getSamlSsoSessionId();
 
 			SamlIdpSsoSession samlIdpSsoSession =
-				SamlIdpSsoSessionLocalServiceUtil.fetchSamlIdpSso(
+				_samlIdpSsoSessionLocalService.fetchSamlIdpSso(
 					samlSsoSessionId);
 
 			if (samlIdpSsoSession != null) {
@@ -627,7 +627,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SamlSpSession samlSpSession = getSamlSpSession(request);
 
 		if (samlSpSession != null) {
-			SamlSpSessionLocalServiceUtil.updateSamlSpSession(
+			_samlSpSessionLocalService.updateSamlSpSession(
 				samlSpSession.getSamlSpSessionId(),
 				samlSpSession.getSamlSpSessionKey(), assertionXml,
 				session.getId(), nameId.getFormat(), nameId.getNameQualifier(),
@@ -637,7 +637,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		else {
 			String samlSpSessionKey = generateIdentifier(30);
 
-			samlSpSession = SamlSpSessionLocalServiceUtil.addSamlSpSession(
+			samlSpSession = _samlSpSessionLocalService.addSamlSpSession(
 				samlSpSessionKey, assertionXml, session.getId(),
 				nameId.getFormat(), nameId.getNameQualifier(),
 				nameId.getSPNameQualifier(), nameId.getValue(), sessionIndex,
@@ -716,7 +716,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		try {
 			SamlSpIdpConnection samlSpIdpConnection =
-				SamlSpIdpConnectionLocalServiceUtil.getSamlSpIdpConnection(
+				_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 					companyId, entityId);
 
 			forceAuthn = samlSpIdpConnection.isForceAuthn();
@@ -745,7 +745,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			request);
 
-		SamlSpAuthRequestLocalServiceUtil.addSamlSpAuthRequest(
+		_samlSpAuthRequestLocalService.addSamlSpAuthRequest(
 			samlMessageContext.getPeerEntityId(), authnRequest.getID(),
 			serviceContext);
 
@@ -1164,19 +1164,19 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			request);
 
 		SamlIdpSsoSession samlIdpSsoSession =
-			SamlIdpSsoSessionLocalServiceUtil.updateModifiedDate(
+			_samlIdpSsoSessionLocalService.updateModifiedDate(
 				samlSsoRequestContext.getSamlSsoSessionId());
 
 		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
 		try {
-			SamlIdpSpSessionLocalServiceUtil.updateModifiedDate(
+			_samlIdpSpSessionLocalService.updateModifiedDate(
 				samlIdpSsoSession.getSamlIdpSsoSessionId(),
 				samlMessageContext.getPeerEntityId());
 		}
 		catch (NoSuchIdpSpSessionException nsisse) {
-			SamlIdpSpSessionLocalServiceUtil.addSamlIdpSpSession(
+			_samlIdpSpSessionLocalService.addSamlIdpSpSession(
 				samlIdpSsoSession.getSamlIdpSsoSessionId(),
 				samlMessageContext.getPeerEntityId(), nameId.getFormat(),
 				nameId.getValue(), serviceContext);
@@ -1294,11 +1294,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		String inResponseTo = samlResponse.getInResponseTo();
 
 		SamlSpAuthRequest samlSpAuthRequest =
-			SamlSpAuthRequestLocalServiceUtil.fetchSamlSpAuthRequest(
+			_samlSpAuthRequestLocalService.fetchSamlSpAuthRequest(
 				issuerEntityId, inResponseTo);
 
 		if (samlSpAuthRequest != null) {
-			SamlSpAuthRequestLocalServiceUtil.deleteSamlSpAuthRequest(
+			_samlSpAuthRequestLocalService.deleteSamlSpAuthRequest(
 				samlSpAuthRequest);
 		}
 		else {
@@ -1358,7 +1358,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		try {
 			SamlSpMessage samlSpMessage =
-				SamlSpMessageLocalServiceUtil.fetchSamlSpMessage(
+				_samlSpMessageLocalService.fetchSamlSpMessage(
 					idpEntityId, messageKey);
 
 			if ((samlSpMessage != null) && !samlSpMessage.isExpired()) {
@@ -1368,7 +1368,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			}
 			else {
 				if (samlSpMessage != null) {
-					SamlSpMessageLocalServiceUtil.deleteSamlSpMessage(
+					_samlSpMessageLocalService.deleteSamlSpMessage(
 						samlSpMessage);
 				}
 
@@ -1378,7 +1378,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 				serviceContext.setCompanyId(companyId);
 
-				SamlSpMessageLocalServiceUtil.addSamlSpMessage(
+				_samlSpMessageLocalService.addSamlSpMessage(
 					idpEntityId, messageKey, notOnOrAfter.toDate(),
 					serviceContext);
 			}
@@ -1471,6 +1471,25 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	private AttributeResolver _attributeResolver;
 	private NameIdResolver _nameIdResolver;
 	private SAMLConfiguration _samlConfiguration;
+
+	@Reference
+	private SamlIdpSpSessionLocalService _samlIdpSpSessionLocalService;
+
+	@Reference
+	private SamlIdpSsoSessionLocalService _samlIdpSsoSessionLocalService;
+
+	@Reference
+	private SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;
+
+	@Reference
+	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
+
+	@Reference
+	private SamlSpMessageLocalService _samlSpMessageLocalService;
+
+	@Reference
+	private SamlSpSessionLocalService _samlSpSessionLocalService;
+
 	private UserResolver _userResolver;
 
 }

@@ -17,7 +17,6 @@ package com.liferay.saml.resolver.impl;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.saml.BaseSamlTestCase;
 import com.liferay.saml.metadata.MetadataManager;
 import com.liferay.saml.util.OpenSamlUtil;
@@ -54,6 +53,10 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		_defaultUserResolver.setMetadataManager(metadataManager);
 
+		_userLocalService = mock(UserLocalService.class);
+
+		_defaultUserResolver.setUserLocalService(_userLocalService);
+
 		when(
 			metadataManager.getUserAttributeMappings(Mockito.eq(IDP_ENTITY_ID))
 		).thenReturn(
@@ -63,11 +66,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 	@Test
 	public void testImportUserWithEmailAddress() throws Exception {
-		UserLocalService userLocalService = getMockPortalService(
-			UserLocalServiceUtil.class, UserLocalService.class);
-
 		when(
-			userLocalService.getUserByEmailAddress(
+			_userLocalService.getUserByEmailAddress(
 				1, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS)
 		).thenReturn(
 			null
@@ -76,7 +76,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		User user = mock(User.class);
 
 		when(
-			userLocalService.addUser(
+			_userLocalService.addUser(
 				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyBoolean(),
 				Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean(),
 				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_SCREEN_NAME),
@@ -94,14 +94,14 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 
 		when(
-			userLocalService.updateEmailAddressVerified(
+			_userLocalService.updateEmailAddressVerified(
 				Mockito.anyLong(), Mockito.eq(true))
 		).thenReturn(
 			user
 		);
 
 		when(
-			userLocalService.updatePasswordReset(
+			_userLocalService.updatePasswordReset(
 				Mockito.anyLong(), Mockito.eq(false))
 		).thenReturn(
 			user
@@ -151,5 +151,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 	private final DefaultUserResolver _defaultUserResolver =
 		new DefaultUserResolver();
+	private UserLocalService _userLocalService;
 
 }

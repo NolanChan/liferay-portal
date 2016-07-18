@@ -40,9 +40,9 @@ import com.liferay.saml.model.SamlIdpSpSession;
 import com.liferay.saml.model.SamlIdpSsoSession;
 import com.liferay.saml.model.SamlSpSession;
 import com.liferay.saml.profile.SingleLogoutProfile;
-import com.liferay.saml.service.SamlIdpSpSessionLocalServiceUtil;
-import com.liferay.saml.service.SamlIdpSsoSessionLocalServiceUtil;
-import com.liferay.saml.service.SamlSpSessionLocalServiceUtil;
+import com.liferay.saml.service.SamlIdpSpSessionLocalService;
+import com.liferay.saml.service.SamlIdpSsoSessionLocalService;
+import com.liferay.saml.service.SamlSpSessionLocalService;
 import com.liferay.saml.transport.HttpClientInTransport;
 import com.liferay.saml.transport.HttpClientOutTransport;
 import com.liferay.saml.util.JspUtil;
@@ -321,7 +321,7 @@ public class SingleLogoutProfileImpl
 				return;
 			}
 
-			SamlSpSessionLocalServiceUtil.deleteSamlSpSession(samlSpSession);
+			_samlSpSessionLocalService.deleteSamlSpSession(samlSpSession);
 
 			addCookie(
 				request, response, PortletWebKeys.SAML_SP_SESSION_KEY,
@@ -341,21 +341,21 @@ public class SingleLogoutProfileImpl
 		if (Validator.isNotNull(samlSsoSessionId)) {
 			try {
 				SamlIdpSsoSession samlIdpSsoSession =
-					SamlIdpSsoSessionLocalServiceUtil.fetchSamlIdpSso(
+					_samlIdpSsoSessionLocalService.fetchSamlIdpSso(
 						samlSsoSessionId);
 
 				if (samlIdpSsoSession != null) {
-					SamlIdpSsoSessionLocalServiceUtil.deleteSamlIdpSsoSession(
+					_samlIdpSsoSessionLocalService.deleteSamlIdpSsoSession(
 						samlIdpSsoSession);
 
 					List<SamlIdpSpSession> samlIdpSpSessions =
-						SamlIdpSpSessionLocalServiceUtil.getSamlIdpSpSessions(
+						_samlIdpSpSessionLocalService.getSamlIdpSpSessions(
 							samlIdpSsoSession.getSamlIdpSsoSessionId());
 
 					for (SamlIdpSpSession samlIdpSpSession :
 							samlIdpSpSessions) {
 
-						SamlIdpSpSessionLocalServiceUtil.deleteSamlIdpSpSession(
+						_samlIdpSpSessionLocalService.deleteSamlIdpSpSession(
 							samlIdpSpSession);
 					}
 				}
@@ -418,7 +418,7 @@ public class SingleLogoutProfileImpl
 
 		if ((samlSloContext == null) && Validator.isNotNull(samlSsoSessionId)) {
 			SamlIdpSsoSession samlIdpSsoSession =
-				SamlIdpSsoSessionLocalServiceUtil.fetchSamlIdpSso(
+				_samlIdpSsoSessionLocalService.fetchSamlIdpSso(
 					samlSsoSessionId);
 
 			if (samlIdpSsoSession != null) {
@@ -741,8 +741,7 @@ public class SingleLogoutProfileImpl
 
 		if (sessionIndexes.isEmpty()) {
 			List<SamlSpSession> samlSpSessions =
-				SamlSpSessionLocalServiceUtil.getSamlSpSessions(
-					nameId.getValue());
+				_samlSpSessionLocalService.getSamlSpSessions(nameId.getValue());
 
 			if (samlSpSessions.isEmpty()) {
 				statusCodeURI = StatusCode.UNKNOWN_PRINCIPAL_URI;
@@ -751,14 +750,13 @@ public class SingleLogoutProfileImpl
 			for (SamlSpSession samlSpSession : samlSpSessions) {
 				samlSpSession.setTerminated(true);
 
-				SamlSpSessionLocalServiceUtil.updateSamlSpSession(
-					samlSpSession);
+				_samlSpSessionLocalService.updateSamlSpSession(samlSpSession);
 			}
 		}
 
 		for (SessionIndex sessionIndex : sessionIndexes) {
 			SamlSpSession samlSpSession =
-				SamlSpSessionLocalServiceUtil.fetchSamlSpSessionBySessionIndex(
+				_samlSpSessionLocalService.fetchSamlSpSessionBySessionIndex(
 					sessionIndex.getSessionIndex());
 
 			if (samlSpSession == null) {
@@ -774,8 +772,7 @@ public class SingleLogoutProfileImpl
 
 				samlSpSession.setTerminated(true);
 
-				SamlSpSessionLocalServiceUtil.updateSamlSpSession(
-					samlSpSession);
+				_samlSpSessionLocalService.updateSamlSpSession(samlSpSession);
 			}
 			else if (!statusCodeURI.equals(StatusCode.PARTIAL_LOGOUT_URI)) {
 				statusCodeURI = StatusCode.UNKNOWN_PRINCIPAL_URI;
@@ -1167,5 +1164,14 @@ public class SingleLogoutProfileImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SingleLogoutProfileImpl.class);
+
+	@Reference
+	private SamlIdpSpSessionLocalService _samlIdpSpSessionLocalService;
+
+	@Reference
+	private SamlIdpSsoSessionLocalService _samlIdpSsoSessionLocalService;
+
+	@Reference
+	private SamlSpSessionLocalService _samlSpSessionLocalService;
 
 }

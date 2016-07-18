@@ -1,4 +1,5 @@
 dependencies {
+	testCompile group: "com.liferay", name: "com.liferay.portal.security.exportimport.api", transitive: false, version: "1.0.0"
 	testCompile group: "org.opensaml", name: "opensaml", version: "2.6.0"
 	testCompile group: "org.opensaml", name: "openws", version: "1.5.0"
 	testCompile group: "org.opensaml", name: "xmltooling", version: "1.4.0"

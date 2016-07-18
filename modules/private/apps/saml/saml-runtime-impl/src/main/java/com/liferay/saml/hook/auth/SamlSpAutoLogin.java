@@ -20,15 +20,16 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.saml.model.SamlSpSession;
-import com.liferay.saml.profile.WebSsoProfileUtil;
+import com.liferay.saml.profile.WebSsoProfile;
 import com.liferay.saml.util.SamlUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
@@ -46,15 +47,14 @@ public class SamlSpAutoLogin extends BaseAutoLogin {
 				return null;
 			}
 
-			SamlSpSession samlSpSession = WebSsoProfileUtil.getSamlSpSession(
+			SamlSpSession samlSpSession = _webSsoProfile.getSamlSpSession(
 				request);
 
 			if (samlSpSession == null) {
 				return null;
 			}
 
-			User user = UserLocalServiceUtil.fetchUser(
-				samlSpSession.getUserId());
+			User user = _userLocalService.fetchUser(samlSpSession.getUserId());
 
 			if (user == null) {
 				return null;
@@ -77,5 +77,11 @@ public class SamlSpAutoLogin extends BaseAutoLogin {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SamlSpAutoLogin.class);
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+	@Reference
+	private WebSsoProfile _webSsoProfile;
 
 }

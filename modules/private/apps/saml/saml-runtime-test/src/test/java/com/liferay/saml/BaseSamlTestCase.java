@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
@@ -432,8 +431,7 @@ public class BaseSamlTestCase extends PowerMockito {
 		PortletBeanLocatorUtil.setBeanLocator(
 			"saml-portlet", portletBeanLocator);
 
-		GroupLocalService groupLocalService = getMockPortalService(
-			GroupLocalServiceUtil.class, GroupLocalService.class);
+		groupLocalService = mock(GroupLocalService.class);
 
 		Group guestGroup = mock(Group.class);
 
@@ -573,6 +571,7 @@ public class BaseSamlTestCase extends PowerMockito {
 	protected static final String UNKNOWN_ENTITY_ID = "testunknown";
 
 	protected KeyStoreCredentialResolver credentialResolver;
+	protected GroupLocalService groupLocalService;
 	protected HttpClient httpClient;
 	protected IdentifierGenerator identifierGenerator;
 	protected List<String> identifiers = new ArrayList<>();

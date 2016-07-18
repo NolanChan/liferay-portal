@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.model.SamlIdpSpSession;
 import com.liferay.saml.model.SamlIdpSsoSession;
-import com.liferay.saml.service.SamlIdpSpSessionLocalServiceUtil;
-import com.liferay.saml.service.SamlIdpSsoSessionLocalServiceUtil;
+import com.liferay.saml.service.SamlIdpSpSessionLocalService;
+import com.liferay.saml.service.SamlIdpSsoSessionLocalService;
 import com.liferay.saml.util.PortletWebKeys;
 import com.liferay.saml.util.SamlUtil;
 
@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
@@ -108,7 +109,7 @@ public class SessionKeepAliveAction extends BaseSamlStrutsAction {
 			request, PortletWebKeys.SAML_SSO_SESSION_ID);
 
 		SamlIdpSsoSession samlIdpSsoSession =
-			SamlIdpSsoSessionLocalServiceUtil.fetchSamlIdpSso(samlSsoSessionId);
+			_samlIdpSsoSessionLocalService.fetchSamlIdpSso(samlSsoSessionId);
 
 		if (samlIdpSsoSession == null) {
 			return Collections.emptyList();
@@ -119,7 +120,7 @@ public class SessionKeepAliveAction extends BaseSamlStrutsAction {
 		String entityId = ParamUtil.getString(request, "entityId");
 
 		List<SamlIdpSpSession> samlIdpSpSessions =
-			SamlIdpSpSessionLocalServiceUtil.getSamlIdpSpSessions(
+			_samlIdpSpSessionLocalService.getSamlIdpSpSessions(
 				samlIdpSsoSession.getSamlIdpSsoSessionId());
 
 		for (SamlIdpSpSession samlIdpSpSession : samlIdpSpSessions) {
@@ -138,5 +139,11 @@ public class SessionKeepAliveAction extends BaseSamlStrutsAction {
 
 		return sessionKeepAliveURLs;
 	}
+
+	@Reference
+	private SamlIdpSpSessionLocalService _samlIdpSpSessionLocalService;
+
+	@Reference
+	private SamlIdpSsoSessionLocalService _samlIdpSsoSessionLocalService;
 
 }

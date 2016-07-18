@@ -20,11 +20,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.model.SamlIdpSsoSession;
-import com.liferay.saml.service.SamlIdpSsoSessionLocalServiceUtil;
+import com.liferay.saml.service.SamlIdpSsoSessionLocalService;
 import com.liferay.saml.util.PortletWebKeys;
 import com.liferay.saml.util.SamlUtil;
 
@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
@@ -57,14 +58,14 @@ public class WebSsoAutoLogin extends BaseAutoLogin {
 			}
 
 			SamlIdpSsoSession samlIdpSsoSession =
-				SamlIdpSsoSessionLocalServiceUtil.fetchSamlIdpSso(
+				_samlIdpSsoSessionLocalService.fetchSamlIdpSso(
 					samlSsoSessionId);
 
 			if ((samlIdpSsoSession == null) || samlIdpSsoSession.isExpired()) {
 				return null;
 			}
 
-			User user = UserLocalServiceUtil.fetchUserById(
+			User user = _userLocalService.fetchUserById(
 				samlIdpSsoSession.getUserId());
 
 			if (user == null) {
@@ -88,5 +89,11 @@ public class WebSsoAutoLogin extends BaseAutoLogin {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WebSsoAutoLogin.class);
+
+	@Reference
+	private SamlIdpSsoSessionLocalService _samlIdpSsoSessionLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

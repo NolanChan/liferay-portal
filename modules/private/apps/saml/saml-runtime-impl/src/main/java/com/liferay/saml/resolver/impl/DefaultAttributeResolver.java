@@ -27,10 +27,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -148,8 +148,32 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	@Reference(unbind = "-")
+	public void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
 	public void setMetadataManager(MetadataManager metadataManager) {
 		_metadataManager = metadataManager;
+	}
+
+	@Reference(unbind = "-")
+	public void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setUserGroupGroupRoleLocalService(
+		UserGroupGroupRoleLocalService userGroupGroupRoleLocalService) {
+
+		_userGroupGroupRoleLocalService = userGroupGroupRoleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setUserGroupRoleLocalService(
+		UserGroupRoleLocalService userGroupRoleLocalService) {
+
+		_userGroupRoleLocalService = userGroupRoleLocalService;
 	}
 
 	protected void addExpandoAttribute(
@@ -221,8 +245,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 		try {
 			List<UserGroupRole> userGroupRoles =
-				UserGroupRoleLocalServiceUtil.getUserGroupRoles(
-					user.getUserId());
+				_userGroupRoleLocalService.getUserGroupRoles(user.getUserId());
 
 			Map<String, Set<Role>> groupRoles = new HashMap<>();
 
@@ -334,13 +357,13 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			List<UserGroup> userGroups = user.getUserGroups();
 
 			List<Group> inheritedSiteGroups =
-				GroupLocalServiceUtil.getUserGroupsRelatedGroups(userGroups);
+				_groupLocalService.getUserGroupsRelatedGroups(userGroups);
 
 			List<Group> organizationsRelatedGroups = Collections.emptyList();
 
 			if (!organizations.isEmpty()) {
 				organizationsRelatedGroups =
-					GroupLocalServiceUtil.getOrganizationsRelatedGroups(
+					_groupLocalService.getOrganizationsRelatedGroups(
 						organizations);
 
 				for (Group group : organizationsRelatedGroups) {
@@ -356,17 +379,17 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			allGroups.addAll(inheritedSiteGroups);
 			allGroups.addAll(organizationsRelatedGroups);
 			allGroups.addAll(
-				GroupLocalServiceUtil.getOrganizationsGroups(organizations));
+				_groupLocalService.getOrganizationsGroups(organizations));
 			allGroups.addAll(
-				GroupLocalServiceUtil.getUserGroupsGroups(userGroups));
+				_groupLocalService.getUserGroupsGroups(userGroups));
 
 			Set<Role> uniqueRoles = new HashSet<>();
 
 			uniqueRoles.addAll(roles);
 
 			for (Group group : allGroups) {
-				if (RoleLocalServiceUtil.hasGroupRoles(group.getGroupId())) {
-					List<Role> groupRoles = RoleLocalServiceUtil.getGroupRoles(
+				if (_roleLocalService.hasGroupRoles(group.getGroupId())) {
+					List<Role> groupRoles = _roleLocalService.getGroupRoles(
 						group.getGroupId());
 
 					uniqueRoles.addAll(groupRoles);
@@ -411,8 +434,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 		try {
 			List<UserGroupRole> userGroupRoles =
-				UserGroupRoleLocalServiceUtil.getUserGroupRoles(
-					user.getUserId());
+				_userGroupRoleLocalService.getUserGroupRoles(user.getUserId());
 
 			Map<String, Set<Role>> groupRoles = new HashMap<>();
 
@@ -439,7 +461,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			}
 
 			List<UserGroupGroupRole> inheritedSiteRoles =
-				UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRolesByUser(
+				_userGroupGroupRoleLocalService.getUserGroupGroupRolesByUser(
 					user.getUserId());
 
 			for (UserGroupGroupRole userGroupGroupRole : inheritedSiteRoles) {
@@ -663,6 +685,10 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultAttributeResolver.class);
 
+	private GroupLocalService _groupLocalService;
 	private MetadataManager _metadataManager;
+	private RoleLocalService _roleLocalService;
+	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

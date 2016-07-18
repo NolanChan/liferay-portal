@@ -20,16 +20,17 @@ import com.liferay.portal.kernel.events.SessionAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.model.SamlSpSession;
-import com.liferay.saml.service.SamlSpSessionLocalServiceUtil;
+import com.liferay.saml.service.SamlSpSessionLocalService;
 import com.liferay.saml.util.SamlUtil;
 
 import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
@@ -52,8 +53,7 @@ public class SamlSpSessionDestroyAction extends SessionAction {
 		long userCompanyId = 0;
 
 		try {
-			userCompanyId = CompanyLocalServiceUtil.getCompanyIdByUserId(
-				userId);
+			userCompanyId = _companyLocalService.getCompanyIdByUserId(userId);
 		}
 		catch (Exception e) {
 		}
@@ -81,7 +81,7 @@ public class SamlSpSessionDestroyAction extends SessionAction {
 
 		try {
 			SamlSpSession samlSpSession =
-				SamlSpSessionLocalServiceUtil.getSamlSpSessionByJSessionId(
+				_samlSpSessionLocalService.getSamlSpSessionByJSessionId(
 					session.getId());
 
 			if (_log.isDebugEnabled()) {
@@ -91,7 +91,7 @@ public class SamlSpSessionDestroyAction extends SessionAction {
 							samlSpSession.getSamlSpSessionKey());
 			}
 
-			SamlSpSessionLocalServiceUtil.deleteSamlSpSession(
+			_samlSpSessionLocalService.deleteSamlSpSession(
 				samlSpSession.getSamlSpSessionId());
 		}
 		catch (Exception e) {
@@ -100,5 +100,11 @@ public class SamlSpSessionDestroyAction extends SessionAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SamlSpSessionDestroyAction.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private SamlSpSessionLocalService _samlSpSessionLocalService;
 
 }
