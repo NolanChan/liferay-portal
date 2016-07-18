@@ -349,7 +349,7 @@ public class BaseSamlTestCase extends PowerMockito {
 	}
 
 	protected void setupMetadata() throws Exception {
-		MetadataManagerImpl metadataManagerImpl = new MetadataManagerImpl();
+		metadataManagerImpl = new MetadataManagerImpl();
 
 		KeyStoreManager keyStoreManager = new FileSystemKeyStoreManagerImpl(); 
 
@@ -360,10 +360,6 @@ public class BaseSamlTestCase extends PowerMockito {
 		metadataManagerImpl.setCredentialResolver(credentialResolver);
 
 		metadataManagerImpl.setParserPool(new BasicParserPool());
-
-		MetadataManagerUtil metadataManagerUtil = new MetadataManagerUtil();
-
-		metadataManagerUtil.setMetadataManager(metadataManagerImpl);
 
 		CachingChainingMetadataProvider cachingChainingMetadataProvider =
 			(CachingChainingMetadataProvider)
@@ -581,6 +577,7 @@ public class BaseSamlTestCase extends PowerMockito {
 	protected HttpClient httpClient;
 	protected IdentifierGenerator identifierGenerator;
 	protected List<String> identifiers = new ArrayList<>();
+	protected MetadataManagerImpl metadataManagerImpl;
 	protected ParserPool parserPool;
 	protected Portal portal;
 	protected BeanLocator portalBeanLocator;

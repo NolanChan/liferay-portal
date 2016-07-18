@@ -14,6 +14,8 @@
 
 package com.liferay.saml.metadata;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.opensaml.saml2.metadata.EntityDescriptor;
@@ -29,6 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Mika Koivisto
@@ -64,7 +67,7 @@ public class MetadataManagerUtil {
 	}
 
 	public static MetadataManager getMetadataManager() {
-		return _metadataManager;
+		return _serviceTracker.getService();
 	}
 
 	public static MetadataProvider getMetadataProvider()
@@ -143,19 +146,8 @@ public class MetadataManagerUtil {
 		return getMetadataManager().isWantAuthnRequestSigned();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	public void setMetadataManager(MetadataManager metadataManager) {
-		_metadataManager = metadataManager;
-	}
-
-	public void unsetMetadataManager(MetadataManager metadataManager) {
-		_metadataManager = null;
-	}
-
 	private static MetadataManager _metadataManager;
+	private static ServiceTracker<MetadataManager, MetadataManager> _serviceTracker =
+		ServiceTrackerFactory.open(MetadataManager.class);
 
 }
