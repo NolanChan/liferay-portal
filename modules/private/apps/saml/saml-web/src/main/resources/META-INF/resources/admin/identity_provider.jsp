@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int assertionLifetime = PortletPrefsPropsUtil.getInteger(0);
 String attributeNames = PortletPrefsPropsUtil.getString(PortletPropsKeys.SAML_IDP_METADATA_ATTRIBUTE_NAMES);
 boolean attributesEnabled = PortletPrefsPropsUtil.getBoolean(PortletPropsKeys.SAML_IDP_METADATA_ATTRIBUTES_ENABLED);
 boolean attributesNamespaceEnabled = PortletPrefsPropsUtil.getBoolean(PortletPropsKeys.SAML_IDP_METADATA_ATTRIBUTES_NAMESPACE_ENABLED);
@@ -39,13 +38,13 @@ String nameIdAttribute = PortletPrefsPropsUtil.getString(PortletPropsKeys.SAML_I
 	</aui:fieldset>
 
 	<aui:fieldset label="session">
-		<aui:input helpMessage="session-maximum-age-help" label="session-maximum-age" name='<%= "settings--" + PortletPropsKeys.SAML_IDP_SESSION_MAXIMUM_AGE + "--" %>' value="<%= MetadataManagerUtil.getSessionMaximumAge() %>" />
+		<aui:input helpMessage="session-maximum-age-help" label="session-maximum-age" name='<%= "settings--" + PortletPropsKeys.SAML_IDP_SESSION_MAXIMUM_AGE + "--" %>' value="<%= String.valueOf(MetadataManagerUtil.getSessionMaximumAge()) %>" />
 
-		<aui:input helpMessage="session-timeout-help" label="session-timeout" name='<%= "settings--" + PortletPropsKeys.SAML_IDP_SESSION_TIMEOUT + "--" %>' value="<%= MetadataManagerUtil.getSessionTimeout() %>" />
+		<aui:input helpMessage="session-timeout-help" label="session-timeout" name='<%= "settings--" + PortletPropsKeys.SAML_IDP_SESSION_TIMEOUT + "--" %>' value="<%= String.valueOf(MetadataManagerUtil.getSessionTimeout()) %>" />
 	</aui:fieldset>
 
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" title="service-provider-defaults">
-		<aui:input helpMessage="assertion-lifetime-help" label="assertion-lifetime" name='<%= "settings--" + PortletPropsKeys.SAML_IDP_ASSERTION_LIFETIME + "--" %>' value="<%= String.valueOf(assertionLifetime) %>" />
+		<aui:input helpMessage="assertion-lifetime-help" label="assertion-lifetime" name='<%= "settings--" + PortletPropsKeys.SAML_IDP_ASSERTION_LIFETIME + "--" %>' value="<%= String.valueOf(MetadataManagerUtil.getAssertionLifetime(MetadataManagerUtil.getLocalEntityId())) %>" />
 
 		<aui:fieldset label="name-identifier">
 			<aui:select label="name-identifier-format" name='<%= "settings--" + PortletPropsKeys.SAML_IDP_METADATA_NAME_ID_FORMAT + "--" %>'>
