@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.scheduler.SchedulerClusterInvokingThreadLocal;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -342,6 +343,14 @@ public class ClusterSchedulerEngine
 					trigger, description, destinationName, message,
 					storageType);
 			}
+		}
+		catch (Exception e) {
+			if (!(e instanceof SchedulerException)) {
+				e = new SchedulerException(
+					"Unable to retrieve memory clustered job from master", e);
+			}
+
+			throw (SchedulerException)e;
 		}
 		finally {
 			_readLock.unlock();
@@ -679,9 +688,15 @@ public class ClusterSchedulerEngine
 					SchedulerResponse schedulerResponse =
 						memoryClusteredJob.getKey();
 
+					Trigger oldTrigger = schedulerResponse.getTrigger();
+
+					Date startDate = oldTrigger.getFireDateAfter(new Date());
+
+					Trigger newTrigger = _triggerFactory.createTrigger(
+						oldTrigger, startDate, oldTrigger.getEndDate());
+
 					_schedulerEngine.schedule(
-						schedulerResponse.getTrigger(),
-						schedulerResponse.getDescription(),
+						newTrigger, schedulerResponse.getDescription(),
 						schedulerResponse.getDestinationName(),
 						schedulerResponse.getMessage(),
 						schedulerResponse.getStorageType());
