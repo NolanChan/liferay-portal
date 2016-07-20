@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth.web.application;
+package com.liferay.oauth.web.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
