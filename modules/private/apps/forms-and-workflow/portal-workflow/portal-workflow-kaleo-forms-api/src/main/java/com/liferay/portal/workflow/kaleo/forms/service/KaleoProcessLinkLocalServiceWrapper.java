@@ -203,7 +203,7 @@ public class KaleoProcessLinkLocalServiceWrapper
 	}
 
 	/**
-	* Updates the kaleo process of the kaleo process link.
+	* Updates the kaleo process link's kaleo process ID.
 	*
 	* @param kaleoProcessLinkId the primary key of the kaleo process link
 	* @param kaleoProcessId the primary key of the kaleo process
@@ -219,7 +219,7 @@ public class KaleoProcessLinkLocalServiceWrapper
 	}
 
 	/**
-	* Updates the kaleo process link, replacing its values.
+	* Updates the kaleo process link, replacing its values. New values are set for the primary key of the associated kaleo process, the name of the associated workflow task, and the primary key of the associated DDM Template.
 	*
 	* @param kaleoProcessLinkId the primary key of the kaleo process link
 	* @param kaleoProcessId the primary key of the kaleo process
@@ -331,7 +331,7 @@ public class KaleoProcessLinkLocalServiceWrapper
 	}
 
 	/**
-	* Returns the kaleo process links matching the kaleo process.
+	* Returns all the kaleo process links matching the kaleo process.
 	*
 	* @param kaleoProcessId the primary key of the kaleo process link's kaleo
 	process
@@ -373,7 +373,7 @@ public class KaleoProcessLinkLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the kaleo process links and its resources.
+	* Deletes all kaleo process links matching the kaleo process, including their resources.
 	*
 	* @param kaleoProcessId the primary key of the kaleo process from which to
 	delete kaleo process links
