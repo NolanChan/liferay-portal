@@ -76,7 +76,7 @@ public interface KaleoProcessService extends BaseService {
 	* @param kaleoTaskFormPairs the kaleo task form pairs. See {@link
 	KaleoTaskFormPairs}
 	* @param serviceContext the service context to be applied. This can set
-	guest permissions, and group permissions for the kaleo process.
+	guest permissions and group permissions for the kaleo process.
 	* @return the kaleo process
 	* @throws PortalException if a portal exception occurred
 	*/
@@ -126,7 +126,7 @@ public interface KaleoProcessService extends BaseService {
 	* @param kaleoTaskFormPairs the kaleo task form pairs. See {@link
 	KaleoTaskFormPairs}
 	* @param serviceContext the service context to be applied. This can set
-	guest permissions, and group permissions for the kaleo process.
+	guest permissions and group permissions for the kaleo process.
 	* @return the kaleo process
 	* @throws PortalException if a portal exception occurred
 	*/
@@ -138,13 +138,13 @@ public interface KaleoProcessService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Returns the number of kaleo processes matching the parameters. The
-	* keywords parameter is used for matching the kaleo process's name or
-	* description.
+	* Returns the number of kaleo processes n a group, matching the keywords parameter. The
+	* keywords parameter is used for matching string values to the kaleo processes' names or
+	* descriptions.
 	*
-	* @param groupId the primary key of the kaleo process's group.
+	* @param groupId the primary key of the kaleo processes' group.
 	* @param keywords the keywords (space separated) to look for and match in
-	the kaleo process name or description (optionally
+	each kaleo process's name or description (optionally
 	<code>null</code>). If the keywords value is not
 	<code>null</code>, the OR operator is used in connecting query
 	criteria; otherwise it uses the AND operator.
@@ -161,9 +161,9 @@ public interface KaleoProcessService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
-	* Returns a range of all kaleo processes matching the parameters, including
-	* a keywords parameter for matching string values to the kaleo process's
-	* name or description.
+	* Returns an ordered range of all kaleo processes in a group, matching the keywords parameter. The
+	* keywords parameter matches string values to the kaleo processes'
+	* names or descriptions.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -174,9 +174,9 @@ public interface KaleoProcessService extends BaseService {
 	* full result set.
 	* </p>
 	*
-	* @param groupId the primary key of the kaleo process's group
+	* @param groupId the primary key of the kaleo processes' group
 	* @param keywords the keywords (space separated) to look for and match in
-	the kaleo process name or description (optionally
+	each kaleo process name or description (optionally
 	<code>null</code>). If the keywords value is not
 	<code>null</code>, the search uses the OR operator in connecting
 	query criteria; otherwise it uses the AND operator.
