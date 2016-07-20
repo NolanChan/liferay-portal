@@ -176,7 +176,7 @@ public class KaleoProcessLocalServiceUtil {
 	}
 
 	/**
-	* Returns the kaleo process matching the record set ID.
+	* Returns the kaleo process matching the DDL record set ID.
 	*
 	* @param ddlRecordSetId the primary key of the record set
 	* @return the matching kaleo process
@@ -272,9 +272,9 @@ public class KaleoProcessLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of kaleo processes matching the parameters.
+	* Returns the number of kaleo processes matching the group.
 	*
-	* @param groupId the primary key of the kaleo processes's group.
+	* @param groupId the primary key of the kaleo processes' group.
 	* @return the number of matching kaleo processes
 	*/
 	public static int getKaleoProcessesCount(long groupId) {
@@ -357,9 +357,9 @@ public class KaleoProcessLocalServiceUtil {
 	}
 
 	/**
-	* Returns all the kaleo processes belonging the group.
+	* Returns all the kaleo processes belonging to the group.
 	*
-	* @param groupId the primary key of the kaleo processes's group
+	* @param groupId the primary key of the kaleo processes' group
 	* @return the kaleo processes
 	*/
 	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> getKaleoProcesses(
@@ -368,7 +368,7 @@ public class KaleoProcessLocalServiceUtil {
 	}
 
 	/**
-	* Returns a range of all kaleo processes matching the parameters.
+	* Returns an ordered range of all kaleo processes matching the parameters.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
