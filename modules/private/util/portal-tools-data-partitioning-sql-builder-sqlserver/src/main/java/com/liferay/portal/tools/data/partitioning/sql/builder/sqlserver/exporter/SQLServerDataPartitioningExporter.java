@@ -78,10 +78,10 @@ public class SQLServerDataPartitioningExporter
 			sb.append(field);
 		}
 		else if ((field instanceof Date) || (field instanceof Timestamp)) {
-			sb.append("CAST(");
+			sb.append("CONVERT(datetime, ");
 			sb.append("'");
 			sb.append(formatDateTime(field));
-			sb.append("' AS datetime)");
+			sb.append("', 121)");
 		}
 		else if (field instanceof String) {
 			String value = (String)field;
