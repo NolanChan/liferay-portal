@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.scheduler.BaseSchedulerEngineConfigurator;
@@ -43,7 +44,7 @@ public class ClusterSchedulerEngineConfigurator
 
 		if (_clusterLink.isEnabled()) {
 			ClusterSchedulerEngine clusterSchedulerEngine =
-				new ClusterSchedulerEngine(schedulerEngine);
+				new ClusterSchedulerEngine(schedulerEngine, _triggerFactory);
 
 			clusterSchedulerEngine.setClusterMasterExecutor(
 				_clusterMasterExecutor);
@@ -95,11 +96,17 @@ public class ClusterSchedulerEngineConfigurator
 			singleDestinationMessageSenderFactory) {
 	}
 
+	@Reference(unbind = "-")
+	protected void TriggerFactory(TriggerFactory triggerFactory) {
+		_triggerFactory = triggerFactory;
+	}
+
 	private ClusterLink _clusterLink;
 	private ClusterMasterExecutor _clusterMasterExecutor;
 	private Props _props;
 	private volatile ServiceRegistration<SchedulerEngine>
 		_schedulerEngineServiceRegistration;
 	private ServiceRegistration<IdentifiableOSGiService> _serviceRegistration;
+	private TriggerFactory _triggerFactory;
 
 }

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.servlet.PluginContextLifecycleThreadLocal;
@@ -57,8 +58,11 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class ClusterSchedulerEngine
 	implements IdentifiableOSGiService, SchedulerEngine {
 
-	public ClusterSchedulerEngine(SchedulerEngine schedulerEngine) {
+	public ClusterSchedulerEngine(
+		SchedulerEngine schedulerEngine, TriggerFactory triggerFactory) {
+
 		_schedulerEngine = schedulerEngine;
+		_triggerFactory = triggerFactory;
 
 		ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
@@ -634,6 +638,7 @@ public class ClusterSchedulerEngine
 	private ClusterMasterTokenTransitionListener
 		_schedulerClusterMasterTokenTransitionListener;
 	private final SchedulerEngine _schedulerEngine;
+	private final TriggerFactory _triggerFactory;
 	private final java.util.concurrent.locks.Lock _writeLock;
 
 	private class SchedulerClusterMasterTokenTransitionListener
