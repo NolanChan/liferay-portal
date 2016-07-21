@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth.web.search;
+package com.liferay.oauth.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.util.ParamUtil;

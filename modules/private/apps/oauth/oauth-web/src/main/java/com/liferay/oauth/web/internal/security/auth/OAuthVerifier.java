@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth.web.security.auth;
+package com.liferay.oauth.web.internal.security.auth;
 
 import com.liferay.oauth.model.OAuthUser;
 import com.liferay.oauth.service.OAuthUserLocalService;

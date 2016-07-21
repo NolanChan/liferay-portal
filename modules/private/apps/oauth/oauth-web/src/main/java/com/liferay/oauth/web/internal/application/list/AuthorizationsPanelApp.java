@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth.web.application.list;
+package com.liferay.oauth.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
@@ -29,21 +29,21 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.app.order:Integer=600",
-		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION
+		"panel.app.order:Integer=400",
+		"panel.category.key=" + PanelCategoryKeys.USER_MY_ACCOUNT
 	},
 	service = PanelApp.class
 )
-public class AdminPanelApp extends BasePanelApp {
+public class AuthorizationsPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return OAuthPortletKeys.OAUTH_ADMIN;
+		return OAuthPortletKeys.OAUTH_AUTHORIZATIONS;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + OAuthPortletKeys.OAUTH_ADMIN + ")",
+		target = "(javax.portlet.name=" + OAuthPortletKeys.OAUTH_AUTHORIZATIONS + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

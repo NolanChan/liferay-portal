@@ -20,12 +20,12 @@ package com.liferay.oauth.constants;
 public class OAuthPortletKeys {
 
 	public static final String OAUTH_ADMIN =
-		"com_liferay_oauth_web_portlet_AdminPortlet";
+		"com_liferay_oauth_web_internal_portlet_AdminPortlet";
 
 	public static final String OAUTH_AUTHORIZATIONS =
-		"com_liferay_oauth_web_portlet_AuthorizationsPortlet";
+		"com_liferay_oauth_web_internal_portlet_AuthorizationsPortlet";
 
 	public static final String OAUTH_AUTHORIZE =
-		"com_liferay_oauth_web_portlet_AuthorizePortlet";
+		"com_liferay_oauth_web_internal_portlet_AuthorizePortlet";
 
 }

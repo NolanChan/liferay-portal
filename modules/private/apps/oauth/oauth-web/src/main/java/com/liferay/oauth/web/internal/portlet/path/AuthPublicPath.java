@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.oauth.web.servlet.filter;
+package com.liferay.oauth.web.internal.portlet.path;
 
-import com.liferay.portal.servlet.filters.autologin.AutoLoginFilter;
-
-import javax.servlet.Filter;
+import com.liferay.oauth.constants.OAuthConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,10 +24,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.http.whiteboard.filter.name=com.liferay.oauth.web.servlet.filter.OAuthAutoLoginFilter",
-		"osgi.http.whiteboard.filter.pattern=/c/portal/oauth/*"
+		"auth.public.path=" + OAuthConstants.PUBLIC_PATH_ACCESS_TOKEN,
+		"auth.public.path=" + OAuthConstants.PUBLIC_PATH_AUTHORIZE,
+		"auth.public.path=" + OAuthConstants.PUBLIC_PATH_REQUEST_TOKEN
 	},
-	service = Filter.class
+	service = Object.class
 )
-public class OAuthAutoLoginFilter extends AutoLoginFilter {
+public class AuthPublicPath {
 }

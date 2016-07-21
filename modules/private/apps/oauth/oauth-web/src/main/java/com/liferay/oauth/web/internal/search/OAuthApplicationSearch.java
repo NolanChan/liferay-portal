@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth.web.search;
+package com.liferay.oauth.web.internal.search;
 
 import com.liferay.oauth.constants.OAuthPortletKeys;
 import com.liferay.oauth.model.OAuthApplication;
