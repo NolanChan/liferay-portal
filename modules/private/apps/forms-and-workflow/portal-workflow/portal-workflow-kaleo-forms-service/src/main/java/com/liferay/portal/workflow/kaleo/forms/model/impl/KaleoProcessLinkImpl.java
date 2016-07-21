@@ -26,6 +26,7 @@ public class KaleoProcessLinkImpl extends KaleoProcessLinkBaseImpl {
 	public KaleoProcessLinkImpl() {
 	}
 
+	@Override
 	public KaleoProcess getKaleoProcess() throws PortalException {
 		return KaleoProcessLocalServiceUtil.getKaleoProcess(
 			getKaleoProcessId());

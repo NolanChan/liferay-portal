@@ -30,43 +30,51 @@ import java.util.Locale;
  */
 public class KaleoProcessImpl extends KaleoProcessBaseImpl {
 
+	@Override
 	public DDLRecordSet getDDLRecordSet() throws PortalException {
 		return DDLRecordSetLocalServiceUtil.getRecordSet(getDDLRecordSetId());
 	}
 
+	@Override
 	public DDMTemplate getDDMTemplate() throws PortalException {
 		return DDMTemplateLocalServiceUtil.getTemplate(getDDMTemplateId());
 	}
 
+	@Override
 	public String getDescription() throws PortalException {
 		DDLRecordSet ddlRecordSet = getDDLRecordSet();
 
 		return ddlRecordSet.getDescription();
 	}
 
+	@Override
 	public String getDescription(Locale locale) throws PortalException {
 		DDLRecordSet ddlRecordSet = getDDLRecordSet();
 
 		return ddlRecordSet.getDescription(locale);
 	}
 
+	@Override
 	public List<KaleoProcessLink> getKaleoProcessLinks() {
 		return KaleoProcessLinkLocalServiceUtil.getKaleoProcessLinks(
 			getKaleoProcessId());
 	}
 
+	@Override
 	public String getName() throws PortalException {
 		DDLRecordSet ddlRecordSet = getDDLRecordSet();
 
 		return ddlRecordSet.getName();
 	}
 
+	@Override
 	public String getName(Locale locale) throws PortalException {
 		DDLRecordSet ddlRecordSet = getDDLRecordSet();
 
 		return ddlRecordSet.getName(locale);
 	}
 
+	@Override
 	public String getWorkflowDefinition() {
 		String workflowDefinition =
 			getWorkflowDefinitionName() + "@" + getWorkflowDefinitionVersion();

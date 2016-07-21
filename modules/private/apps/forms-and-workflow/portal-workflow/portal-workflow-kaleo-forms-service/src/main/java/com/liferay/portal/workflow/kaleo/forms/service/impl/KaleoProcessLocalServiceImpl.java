@@ -60,13 +60,14 @@ public class KaleoProcessLocalServiceImpl
 	 *         definition
 	 * @param  workflowDefinitionVersion the version of kaleo process's workflow
 	 *         definition
-	 * @param  kaleoTaskFormPairs the kaleo task form pairs used to create a kaleo process link. See {@link
-	 *         KaleoTaskFormPairs}
+	 * @param  kaleoTaskFormPairs the kaleo task form pairs used to create a
+	 *         kaleo process link. See {@link KaleoTaskFormPairs}
 	 * @param  serviceContext the service context to be applied. This can set
 	 *         guest permissions and group permissions for the kaleo process.
 	 * @return the kaleo process
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@Override
 	public KaleoProcess addKaleoProcess(
 			long userId, long groupId, long ddmStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
@@ -186,6 +187,7 @@ public class KaleoProcessLocalServiceImpl
 	 * @return the matching kaleo process
 	 * @throws PortalException if a matching kaleo process could not be found
 	 */
+	@Override
 	public KaleoProcess getDDLRecordSetKaleoProcess(long ddlRecordSetId)
 		throws PortalException {
 
@@ -213,6 +215,7 @@ public class KaleoProcessLocalServiceImpl
 	 * @param  groupId the primary key of the kaleo processes's group
 	 * @return the kaleo processes
 	 */
+	@Override
 	public List<KaleoProcess> getKaleoProcesses(long groupId) {
 		return kaleoProcessPersistence.findByGroupId(groupId);
 	}
@@ -225,8 +228,8 @@ public class KaleoProcessLocalServiceImpl
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the
-	 * full result set.
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	 * result set.
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the kaleo processes' group
@@ -236,6 +239,7 @@ public class KaleoProcessLocalServiceImpl
 	 * @param  orderByComparator the comparator to order the kaleo processes
 	 * @return the range of matching kaleo processes ordered by the comparator
 	 */
+	@Override
 	public List<KaleoProcess> getKaleoProcesses(
 		long groupId, int start, int end, OrderByComparator orderByComparator) {
 
@@ -249,6 +253,7 @@ public class KaleoProcessLocalServiceImpl
 	 * @param  groupId the primary key of the kaleo processes' group.
 	 * @return the number of matching kaleo processes
 	 */
+	@Override
 	public int getKaleoProcessesCount(long groupId) {
 		return kaleoProcessPersistence.countByGroupId(groupId);
 	}
@@ -267,12 +272,16 @@ public class KaleoProcessLocalServiceImpl
 	 *         definition
 	 * @param  workflowDefinitionVersion the version of kaleo process's workflow
 	 *         definition
-	 * @param  kaleoTaskFormPairs the kaleo task form pairs. For more information see the <code>com.liferay.portal.workflow.kaleo.forms.api</code> module's <code>KaleoTaskFormPairs</code> class.
+	 * @param  kaleoTaskFormPairs the kaleo task form pairs. For more
+	 *         information see the
+	 *         <code>com.liferay.portal.workflow.kaleo.forms.api</code> module's
+	 *         <code>KaleoTaskFormPairs</code> class.
 	 * @param  serviceContext the service context to be applied. This can set
 	 *         guest permissions and group permissions for the kaleo process.
 	 * @return the kaleo process
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@Override
 	public KaleoProcess updateKaleoProcess(
 			long kaleoProcessId, long ddmStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
@@ -409,7 +418,8 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	/**
-	 * Updates the matching DDL record set's name and description using its primary key.
+	 * Updates the matching DDL record set's name and description using its
+	 * primary key.
 	 *
 	 * @param  ddlRecordSetId the primary key of the record set
 	 * @param  ddmStructureId the primary key of the record set's DDM structure
@@ -435,7 +445,9 @@ public class KaleoProcessLocalServiceImpl
 	 * Adds a kaleo process link referencing the kaleo process ID.
 	 *
 	 * @param kaleoProcessId the primary key of the kaleo process
-	 * @param kaleoTaskFormPairs the kaleo task form pairs. For more information see the <code>com.liferay.portal.workflow.kaleo.forms.api</code> module's <code>KaleoTaskFormPairs</code> class.
+	 * @param kaleoTaskFormPairs the kaleo task form pairs. For more information
+	 *        see the <code>com.liferay.portal.workflow.kaleo.forms.api</code>
+	 *        module's <code>KaleoTaskFormPairs</code> class.
 	 */
 	protected void updateKaleoProcessLinks(
 		long kaleoProcessId, KaleoTaskFormPairs kaleoTaskFormPairs) {

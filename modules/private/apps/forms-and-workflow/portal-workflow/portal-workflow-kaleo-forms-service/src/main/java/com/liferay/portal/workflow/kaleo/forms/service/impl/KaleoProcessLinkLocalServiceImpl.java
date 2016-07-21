@@ -41,6 +41,7 @@ public class KaleoProcessLinkLocalServiceImpl
 	 *         template
 	 * @return the kaleo process link that was added
 	 */
+	@Override
 	public KaleoProcessLink addKaleoProcessLink(
 		long kaleoProcessId, String workflowTaskName, long ddmTemplateId) {
 
@@ -63,11 +64,13 @@ public class KaleoProcessLinkLocalServiceImpl
 	}
 
 	/**
-	 * Deletes the kaleo process links associated with the kaleo process, and their resources.
+	 * Deletes the kaleo process links associated with the kaleo process, and
+	 * their resources.
 	 *
 	 * @param kaleoProcessId the primary key of the kaleo process from which to
 	 *        delete kaleo process links
 	 */
+	@Override
 	public void deleteKaleoProcessLinks(long kaleoProcessId) {
 		List<KaleoProcessLink> kaleoProcessLinks =
 			kaleoProcessLinkPersistence.findByKaleoProcessId(kaleoProcessId);
@@ -87,11 +90,13 @@ public class KaleoProcessLinkLocalServiceImpl
 	 *
 	 * @param  kaleoProcessId the primary key of the kaleo process link's kaleo
 	 *         process
-	 * @param  workflowTaskName the name of the kaleo process link's workflow task
+	 * @param  workflowTaskName the name of the kaleo process link's workflow
+	 *         task
 	 * @return the kaleo process link matching the kaleo process and workflow
 	 *         task name, or <code>null</code> if a matching  kaleo process link
 	 *         could not be found
 	 */
+	@Override
 	public KaleoProcessLink fetchKaleoProcessLink(
 		long kaleoProcessId, String workflowTaskName) {
 
@@ -108,18 +113,21 @@ public class KaleoProcessLinkLocalServiceImpl
 	 *         <code>null</code> if a matching kaleo process link could not be
 	 *         found
 	 */
+	@Override
 	public List<KaleoProcessLink> getKaleoProcessLinks(long kaleoProcessId) {
 		return kaleoProcessLinkPersistence.findByKaleoProcessId(kaleoProcessId);
 	}
 
 	/**
-	 * Updates the kaleo process link, setting the primary key of the associated kaleo process.
+	 * Updates the kaleo process link, setting the primary key of the associated
+	 * kaleo process.
 	 *
 	 * @param  kaleoProcessLinkId the primary key of the kaleo process link
 	 * @param  kaleoProcessId the primary key of the kaleo process
 	 * @return the kaleo process link
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@Override
 	public KaleoProcessLink updateKaleoProcessLink(
 			long kaleoProcessLinkId, long kaleoProcessId)
 		throws PortalException {
@@ -135,7 +143,10 @@ public class KaleoProcessLinkLocalServiceImpl
 	}
 
 	/**
-	 * Updates the kaleo process link, replacing its values with new ones. New values are set for the primary key of the associated kaleo process, the name of the associated workflow task, and the primary key of the associated DDM Template.
+	 * Updates the kaleo process link, replacing its values with new ones. New
+	 * values are set for the primary key of the associated kaleo process, the
+	 * name of the associated workflow task, and the primary key of the
+	 * associated DDM Template.
 	 *
 	 * @param  kaleoProcessLinkId the primary key of the kaleo process link
 	 * @param  kaleoProcessId the primary key of the kaleo process
@@ -146,6 +157,7 @@ public class KaleoProcessLinkLocalServiceImpl
 	 * @return the kaleo process link
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@Override
 	public KaleoProcessLink updateKaleoProcessLink(
 			long kaleoProcessLinkId, long kaleoProcessId,
 			String workflowTaskName, long ddmTemplateId)
@@ -168,7 +180,9 @@ public class KaleoProcessLinkLocalServiceImpl
 	}
 
 	/**
-	 * Creates or updates the kaleo process link. If no kaleo process link is found matching the primary key of the kaleo process and the workflow task name, a new link is created.
+	 * Creates or updates the kaleo process link. If no kaleo process link is
+	 * found matching the primary key of the kaleo process and the workflow task
+	 * name, a new link is created.
 	 *
 	 * @param  kaleoProcessId the primary key of the kaleo process
 	 * @param  workflowTaskName the name of the kaleo process link's workflow
@@ -177,6 +191,7 @@ public class KaleoProcessLinkLocalServiceImpl
 	 *         template
 	 * @return the kaleo process link
 	 */
+	@Override
 	public KaleoProcessLink updateKaleoProcessLink(
 		long kaleoProcessId, String workflowTaskName, long ddmTemplateId) {
 
