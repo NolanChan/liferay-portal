@@ -56,8 +56,10 @@ public class KaleoProcessServiceUtil {
 	definition
 	* @param workflowDefinitionVersion the version of kaleo process's workflow
 	definition
-	* @param kaleoTaskFormPairs the kaleo task form pairs. See {@link
-	KaleoTaskFormPairs}
+	* @param kaleoTaskFormPairs the kaleo task form pairs. For more
+	information see the
+	<code>com.liferay.portal.workflow.kaleo.forms.api</code> module's
+	<code>KaleoTaskFormPairs</code> class.
 	* @param serviceContext the service context to be applied. This can set
 	guest permissions and group permissions for the kaleo process.
 	* @return the kaleo process
@@ -82,7 +84,7 @@ public class KaleoProcessServiceUtil {
 	* Deletes the kaleo process and its resources.
 	*
 	* @param kaleoProcessId the primary key of the kaleo process to be deleted
-	* @return the kaleo process that was removed
+	* @return the deleted kaleo process
 	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess deleteKaleoProcess(
@@ -119,8 +121,10 @@ public class KaleoProcessServiceUtil {
 	definition
 	* @param workflowDefinitionVersion the version of kaleo process's workflow
 	definition
-	* @param kaleoTaskFormPairs the kaleo task form pairs. See {@link
-	KaleoTaskFormPairs}
+	* @param kaleoTaskFormPairs the kaleo task form pairs. For more
+	information see the
+	<code>com.liferay.portal.workflow.kaleo.forms.api</code> module's
+	<code>KaleoTaskFormPairs</code> class.
 	* @param serviceContext the service context to be applied. This can set
 	guest permissions and group permissions for the kaleo process.
 	* @return the kaleo process
@@ -142,13 +146,13 @@ public class KaleoProcessServiceUtil {
 	}
 
 	/**
-	* Returns the number of kaleo processes in the group, matching the keywords parameters. The
-	* keywords parameter is used for matching string values to the kaleo processes' names or
-	* descriptions.
+	* Returns the number of kaleo processes matching the parameters. The
+	* keywords parameter is used for matching the kaleo process's name or
+	* description.
 	*
-	* @param groupId the primary key of the kaleo processes' group.
+	* @param groupId the primary key of the kaleo process's group
 	* @param keywords the keywords (space separated) to look for and match in
-	each kaleo process's name or description (optionally
+	the kaleo process name or description (optionally
 	<code>null</code>). If the keywords value is not
 	<code>null</code>, the OR operator is used in connecting query
 	criteria; otherwise it uses the AND operator.
@@ -168,22 +172,23 @@ public class KaleoProcessServiceUtil {
 	}
 
 	/**
-	* Returns a range of all kaleo processes in a group, matching the keywords parameter. 
-	* The keywords parameter is used for matching string values to the kaleo processes'
-	* names or descriptions.
+	* Returns an ordered range of all kaleo processes matching the parameters,
+	* including a keywords parameter for matching string values to the kaleo
+	* process's name or description.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
-	* full result set.
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
-	* @param groupId the primary key of the kaleo processes' group
+	* @param groupId the primary key of the kaleo process's group
 	* @param keywords the keywords (space separated) to look for and match in
-	each kaleo process's name or description (optionally
+	the kaleo process name or description (optionally
 	<code>null</code>). If the keywords value is not
 	<code>null</code>, the search uses the OR operator in connecting
 	query criteria; otherwise it uses the AND operator.

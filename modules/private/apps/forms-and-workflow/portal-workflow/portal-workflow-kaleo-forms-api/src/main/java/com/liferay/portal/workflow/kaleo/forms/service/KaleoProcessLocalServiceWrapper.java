@@ -98,8 +98,8 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 	definition
 	* @param workflowDefinitionVersion the version of kaleo process's workflow
 	definition
-	* @param kaleoTaskFormPairs the kaleo task form pairs. See {@link
-	KaleoTaskFormPairs}
+	* @param kaleoTaskFormPairs the kaleo task form pairs used to create a
+	kaleo process link. See {@link KaleoTaskFormPairs}
 	* @param serviceContext the service context to be applied. This can set
 	guest permissions and group permissions for the kaleo process.
 	* @return the kaleo process
@@ -182,7 +182,7 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 	}
 
 	/**
-	* Returns the kaleo process matching the DDL record set ID.
+	* Returns the kaleo process matching the record set ID.
 	*
 	* @param ddlRecordSetId the primary key of the record set
 	* @return the matching kaleo process
@@ -251,8 +251,10 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 	definition
 	* @param workflowDefinitionVersion the version of kaleo process's workflow
 	definition
-	* @param kaleoTaskFormPairs the kaleo task form pairs. See {@link
-	KaleoTaskFormPairs}
+	* @param kaleoTaskFormPairs the kaleo task form pairs. For more
+	information see the
+	<code>com.liferay.portal.workflow.kaleo.forms.api</code> module's
+	<code>KaleoTaskFormPairs</code> class.
 	* @param serviceContext the service context to be applied. This can set
 	guest permissions and group permissions for the kaleo process.
 	* @return the kaleo process
@@ -285,7 +287,7 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 	}
 
 	/**
-	* Returns the number of kaleo processes matching the group.
+	* Returns the number of kaleo processes matching the parameters.
 	*
 	* @param groupId the primary key of the kaleo processes' group.
 	* @return the number of matching kaleo processes
@@ -376,7 +378,7 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 	}
 
 	/**
-	* Returns all the kaleo processes belonging the group.
+	* Returns all the kaleo processes belonging to the group.
 	*
 	* @param groupId the primary key of the kaleo processes's group
 	* @return the kaleo processes
@@ -388,15 +390,15 @@ public class KaleoProcessLocalServiceWrapper implements KaleoProcessLocalService
 	}
 
 	/**
-	* Returns an ordered range of all kaleo processes matching the group.
+	* Returns an ordered range of all kaleo processes belonging to the group.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
-	* full result set.
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
 	* </p>
 	*
 	* @param groupId the primary key of the kaleo processes' group

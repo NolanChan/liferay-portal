@@ -137,7 +137,8 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 	*
 	* @param kaleoProcessId the primary key of the kaleo process link's kaleo
 	process
-	* @param workflowTaskName the name of workflow task
+	* @param workflowTaskName the name of the kaleo process link's workflow
+	task
 	* @return the kaleo process link matching the kaleo process and workflow
 	task name, or <code>null</code> if a matching  kaleo process link
 	could not be found
@@ -171,7 +172,9 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 		KaleoProcessLink kaleoProcessLink);
 
 	/**
-	* Creates or updates the kaleo process link.
+	* Creates or updates the kaleo process link. If no kaleo process link is
+	* found matching the primary key of the kaleo process and the workflow task
+	* name, a new link is created.
 	*
 	* @param kaleoProcessId the primary key of the kaleo process
 	* @param workflowTaskName the name of the kaleo process link's workflow
@@ -184,7 +187,8 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 		java.lang.String workflowTaskName, long ddmTemplateId);
 
 	/**
-	* Updates the kaleo process link's kaleo process ID.
+	* Updates the kaleo process link, setting the primary key of the associated
+	* kaleo process.
 	*
 	* @param kaleoProcessLinkId the primary key of the kaleo process link
 	* @param kaleoProcessId the primary key of the kaleo process
@@ -195,7 +199,10 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 		long kaleoProcessId) throws PortalException;
 
 	/**
-	* Updates the kaleo process link, replacing its values. New values are set for the primary key of the associated kaleo process, the name of the associated workflow task, and the primary key of the associated DDM Template.
+	* Updates the kaleo process link, replacing its values with new ones. New
+	* values are set for the primary key of the associated kaleo process, the
+	* name of the associated workflow task, and the primary key of the
+	* associated DDM Template.
 	*
 	* @param kaleoProcessLinkId the primary key of the kaleo process link
 	* @param kaleoProcessId the primary key of the kaleo process
@@ -309,7 +316,8 @@ public interface KaleoProcessLinkLocalService extends BaseLocalService,
 		Projection projection);
 
 	/**
-	* Deletes all kaleo process links matching the kaleo process, including their resources.
+	* Deletes the kaleo process links associated with the kaleo process, and
+	* their resources.
 	*
 	* @param kaleoProcessId the primary key of the kaleo process from which to
 	delete kaleo process links
