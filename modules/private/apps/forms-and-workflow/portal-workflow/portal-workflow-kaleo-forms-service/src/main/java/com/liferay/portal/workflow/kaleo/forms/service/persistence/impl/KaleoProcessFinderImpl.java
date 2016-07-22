@@ -70,8 +70,8 @@ public class KaleoProcessFinderImpl
 	 * @param  name the name to look for and match in the kaleo process name
 	 * @param  description the description to look for and match in the kaleo
 	 *         process description
-	 * @param  andOperator whether uses the OR operator in connecting query
-	 *         criteria; otherwise it uses the AND operator
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field
 	 * @return the number of matching kaleo processes
 	 */
 	@Override
@@ -86,9 +86,8 @@ public class KaleoProcessFinderImpl
 
 	/**
 	 * Returns the number of kaleo processes in the group, matching the keywords
-	 * parameter. The keywords parameter is for matching string values to the
-	 * kaleo processes' names or descriptions. Filters results by permission
-	 * checks.
+	 * parameter that the user has permission to view. The keywords parameter is
+	 * for matching string values to the kaleo processes' names or descriptions.
 	 *
 	 * @param  groupId the primary key of the kaleo processes' group
 	 * @param  keywords the keywords (space separated) to look for and match in
@@ -102,13 +101,13 @@ public class KaleoProcessFinderImpl
 
 	/**
 	 * Returns the number of kaleo processes in the group, matching the name or
-	 * description parameters. Whether both the name and description must match,
-	 * or only one must match, depends on the andOperator parameter. Filters
-	 * results by permission checks.
+	 * description parameters that the user has permission to view. Whether both
+	 * the name and description must match, or only one must match, depends on
+	 * the andOperator parameter.
 	 *
 	 * @param  groupId the primary key of the kaleo processes' group
-	 * @param  andOperator whether uses the OR operator in connecting query
-	 *         criteria; otherwise it uses the AND operator
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field
 	 * @return the number of matching kaleo processes
 	 */
 	@Override
@@ -123,8 +122,8 @@ public class KaleoProcessFinderImpl
 
 	/**
 	 * Returns an ordered range of all kaleo processes in the group whose name
-	 * or description matches the string values of the keywords parameter.
-	 * Filters results by permission checks.
+	 * or description matches the string values of the keywords parameter that
+	 * the user has permission to view.
 	 *
 	 * @param  groupId the primary key of the kaleo processes' group
 	 * @param  keywords the keywords (space separated) to look for and match in
@@ -159,16 +158,16 @@ public class KaleoProcessFinderImpl
 
 	/**
 	 * Returns an ordered range of all kaleo processes in the group, matching
-	 * the kaleo process's name and/or description. Whether both the name and
-	 * description must match, or only one must match, depends on the
-	 * andOperator parameter. Filters results by permission checks.
+	 * the kaleo process's name and/or description that the user has permission
+	 * to view. Whether both the name and description must match, or only one
+	 * must match, depends on the andOperator parameter.
 	 *
 	 * @param  groupId the primary key of the kaleo process's group
 	 * @param  name the name to look for and match in the kaleo process name
 	 * @param  description the description to look for and match in the kaleo
 	 *         process description
-	 * @param  andOperator whether uses the OR operator in connecting query
-	 *         criteria; otherwise it uses the AND operator.
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field
 	 * @param  start the lower bound of the range of kaleo processes to return
 	 * @param  end the upper bound of the range of kaleo processes to return
 	 *         (not inclusive)
@@ -190,16 +189,16 @@ public class KaleoProcessFinderImpl
 
 	/**
 	 * Returns an ordered range of all kaleo processes matching the name and/or
-	 * description parameter. Whether both the name and description must match,
-	 * or only one must match, depends on the andOperator parameter. Filters
-	 * results by permission checks.
+	 * description parameter that the user has permission to view. Whether both
+	 * the name and description must match, or only one must match, depends on
+	 * the andOperator parameter.
 	 *
 	 * @param  groupId the primary key of the kaleo process's group
 	 * @param  names the names to look for and match in the kaleo process name
 	 * @param  descriptions the descriptions to look for and match in the kaleo
 	 *         process description
-	 * @param  andOperator whether uses the OR operator in connecting query
-	 *         criteria; otherwise it uses the AND operator.
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field
 	 * @param  start the lower bound of the range of kaleo processes to return
 	 * @param  end the upper bound of the range of kaleo processes to return
 	 *         (not inclusive)
@@ -263,8 +262,8 @@ public class KaleoProcessFinderImpl
 	 * @param  name the name to look for and match in the kaleo process name
 	 * @param  description the description to look for and match in the kaleo
 	 *         process description
-	 * @param  andOperator whether uses the OR operator in connecting query
-	 *         criteria; otherwise it uses the AND operator.
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field
 	 * @param  start the lower bound of the range of kaleo processes to return
 	 * @param  end the upper bound of the range of kaleo processes to return
 	 *         (not inclusive)
@@ -294,8 +293,8 @@ public class KaleoProcessFinderImpl
 	 * @param  names the names to look for and match in the kaleo process name
 	 * @param  descriptions the descriptions to look for and match in the kaleo
 	 *         process description
-	 * @param  andOperator whether uses the OR operator in connecting query
-	 *         criteria; otherwise it uses the AND operator.
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field
 	 * @param  start the lower bound of the range of kaleo processes to return
 	 * @param  end the upper bound of the range of kaleo processes to return
 	 *         (not inclusive)
@@ -350,8 +349,8 @@ public class KaleoProcessFinderImpl
 	 * @param  names the names to look for and match in the kaleo process name
 	 * @param  descriptions the descriptions to look for and match in the kaleo
 	 *         process description
-	 * @param  andOperator whether uses the OR operator in connecting query
-	 *         criteria; otherwise it uses the AND operator
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field
 	 * @param  inlineSQLHelper whether checks the permission
 	 * @return the number of matching kaleo processes
 	 */
@@ -429,8 +428,8 @@ public class KaleoProcessFinderImpl
 	 * @param  names the names to look for and match in the kaleo process name
 	 * @param  descriptions the descriptions to look for and match in the kaleo
 	 *         process description
-	 * @param  andOperator whether uses the OR operator in connecting query
-	 *         criteria; otherwise it uses the AND operator.
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field
 	 * @param  start the lower bound of the range of kaleo processes to return
 	 * @param  end the upper bound of the range of kaleo processes to return
 	 *         (not inclusive)
