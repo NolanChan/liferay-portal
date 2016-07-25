@@ -204,7 +204,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		}
 	}
 
-	@Reference(unbind = "-")
+	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
 	public void setAttributeResolver(AttributeResolver attributeResolver) {
 		_attributeResolver = attributeResolver;
 	}
@@ -221,21 +221,17 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		super.setMetadataManager(metadataManager);
 	}
 
-	@Reference(unbind = "-")
+	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
 	public void setNameIdResolver(NameIdResolver nameIdResolver) {
 		_nameIdResolver = nameIdResolver;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.AT_LEAST_ONE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "unsetSamlBinding"
-	)
+	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
 	public void setSamlBinding(SamlBinding samlBinding) {
 		addSamlBinding(samlBinding);
 	}
 
-	@Reference(unbind = "-")
+	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
 	public void setUserResolver(UserResolver userResolver) {
 		_userResolver = userResolver;
 	}
