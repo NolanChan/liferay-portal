@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.reports.engine.jasper.compiler;
+package com.liferay.portal.reports.engine.jasper.internal.compiler;
 
 import com.liferay.portal.kernel.util.LRUMap;
 import com.liferay.portal.reports.engine.ReportDesignRetriever;

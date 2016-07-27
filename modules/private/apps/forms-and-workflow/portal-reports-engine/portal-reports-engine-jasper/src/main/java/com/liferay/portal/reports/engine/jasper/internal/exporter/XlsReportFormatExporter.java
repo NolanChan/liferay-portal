@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.reports.engine.jasper.exporter;
+package com.liferay.portal.reports.engine.jasper.internal.exporter;
 
 import com.liferay.portal.reports.engine.ReportFormatExporter;
 

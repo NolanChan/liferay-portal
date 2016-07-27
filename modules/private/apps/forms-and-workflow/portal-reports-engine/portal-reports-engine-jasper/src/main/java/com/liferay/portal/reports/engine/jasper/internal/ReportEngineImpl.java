@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.reports.engine.jasper;
+package com.liferay.portal.reports.engine.jasper.internal.internal;
 
 import com.liferay.portal.kernel.concurrent.CallerRunsPolicy;
 import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
@@ -34,9 +34,9 @@ import com.liferay.portal.reports.engine.ReportRequest;
 import com.liferay.portal.reports.engine.ReportRequestContext;
 import com.liferay.portal.reports.engine.ReportResultContainer;
 import com.liferay.portal.reports.engine.constants.ReportsEngineDestinationNames;
-import com.liferay.portal.reports.engine.jasper.compiler.ReportCompiler;
-import com.liferay.portal.reports.engine.jasper.fill.manager.ReportFillManager;
-import com.liferay.portal.reports.engine.jasper.fill.manager.ReportFillManagerRegistry;
+import com.liferay.portal.reports.engine.jasper.internal.compiler.ReportCompiler;
+import com.liferay.portal.reports.engine.jasper.internal.fill.manager.ReportFillManager;
+import com.liferay.portal.reports.engine.jasper.internal.fill.manager.ReportFillManagerRegistry;
 import com.liferay.portal.reports.engine.messaging.ReportCompilerRequestMessageListener;
 import com.liferay.portal.reports.engine.messaging.ReportRequestMessageListener;
 
