@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.metadata;
+package com.liferay.saml.metadata.impl;
 
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
