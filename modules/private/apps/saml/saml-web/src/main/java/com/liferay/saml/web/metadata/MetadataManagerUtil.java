@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.saml.metadata;
+package com.liferay.saml.web.metadata;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.liferay.saml.metadata.MetadataManager;
 import org.opensaml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml2.metadata.provider.MetadataProvider;
 import org.opensaml.saml2.metadata.provider.MetadataProviderException;
