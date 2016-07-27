@@ -78,7 +78,7 @@ public interface SAMLConfiguration {
 	 * Set the duration in milliseconds to prevent replaying messages.
 	 */
 	@Meta.AD(
-		deflt = "3600000". name ="saml.replay.cache.duration", required = false
+		deflt = "3600000", name = "saml.replay.cache.duration", required = false
 	)
 	public int getReplayChacheDuration();
 
