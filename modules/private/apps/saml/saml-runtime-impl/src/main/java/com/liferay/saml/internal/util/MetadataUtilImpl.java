@@ -14,8 +14,7 @@
 
 package com.liferay.saml.internal.util;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,6 +22,8 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.saml.configuration.MetadataUtilConfiguration;
+import com.liferay.saml.util.MetadataUtil;
+import com.liferay.saml.util.SamlUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -32,8 +33,6 @@ import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 
-import com.liferay.saml.util.MetadataUtil;
-import com.liferay.saml.util.SamlUtil;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
@@ -111,8 +110,7 @@ public class MetadataUtilImpl implements MetadataUtil {
 		return null;
 	}
 
-	public String parseMetadataXml(
-			InputStream inputStream, String entityId)
+	public String parseMetadataXml(InputStream inputStream, String entityId)
 		throws Exception {
 
 		try {
@@ -144,7 +142,7 @@ public class MetadataUtilImpl implements MetadataUtil {
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		MetadataUtilConfiguration metadataUtilConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				MetadataUtilConfiguration.class, properties);
 
 		HttpClientParams httpClientParams = new HttpClientParams();
@@ -165,13 +163,13 @@ public class MetadataUtilImpl implements MetadataUtil {
 		_httpClientServiceRegistration.unregister();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(MetadataUtilImpl.class);
-
-	private HttpClient _httpClient;
-
 	@Reference
 	protected ParserPool parserPool;
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		MetadataUtilImpl.class);
+
+	private HttpClient _httpClient;
 	private ServiceRegistration<HttpClient> _httpClientServiceRegistration;
 
 }

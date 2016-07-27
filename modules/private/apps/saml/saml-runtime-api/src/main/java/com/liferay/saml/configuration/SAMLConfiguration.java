@@ -33,21 +33,30 @@ public interface SAMLConfiguration {
 	 * will be run to check for and delete SAML IDP SSO sessions that are older
 	 * than the maximum age set in the property "saml.idp.sso.session.max.age".
 	 */
-	@Meta.AD(name = "saml.idp.sso.session.check.interval", deflt = "60", required = false)
+	@Meta.AD(
+		deflt = "60", name = "saml.idp.sso.session.check.interval",
+		required = false
+	)
 	public int getIdpSsoSessionCheckInterval();
 
 	/**
 	 * Set the duration in milliseconds to remove and expire SAML IDP SSO
 	 * sessions.
 	 */
-	@Meta.AD(name = "saml.idp.sso.session.max.age", deflt = "86400000", required = false)
+	@Meta.AD(
+		deflt = "86400000", name = "saml.idp.sso.session.max.age",
+		required = false
+	)
 	public int getIdpSsoSessionMaxAge();
 
 	/**
-	 * Set the maximum metadata refresh interval is in milliseconds when metadata
-	 * has no validity set.
+	 * Set the maximum metadata refresh interval is in milliseconds when
+	 * metadata has no validity set.
 	 */
-	@Meta.AD(name = "saml.metadata.max.refresh.delay", deflt = "14400000", required = false)
+	@Meta.AD(
+		deflt = "14400000", name = "saml.metadata.max.refresh.delay",
+		required = false
+	)
 	public int getMetadataMaxRefreshDelay();
 
 	/**
@@ -55,13 +64,13 @@ public interface SAMLConfiguration {
 	 * refresh.
 	 */
 	@Meta.AD(
-		name = "saml.metadata.min.refresh.delay", deflt = "300000",
+		deflt = "300000", name = "saml.metadata.min.refresh.delay",
 		required = false
 	)
 	public int getMetadataMinRefreshDelay();
 
 	@Meta.AD(
-		name = "saml.metadata.refresh.interval", deflt = "30", required = false
+		deflt = "30", name = "saml.metadata.refresh.interval", required = false
 	)
 	public int getMetadataRefreshInterval();
 
@@ -69,7 +78,7 @@ public interface SAMLConfiguration {
 	 * Set the duration in milliseconds to prevent replaying messages.
 	 */
 	@Meta.AD(
-		name ="saml.replay.cache.duration", deflt = "3600000", required = false
+		deflt = "3600000". name ="saml.replay.cache.duration", required = false
 	)
 	public int getReplayChacheDuration();
 
@@ -80,7 +89,7 @@ public interface SAMLConfiguration {
 	 * "saml.sp.auth.request.max.age".
 	 */
 	@Meta.AD(
-		name = "saml.sp.auth.request.check.interval", deflt = "60",
+		deflt = "60", name = "saml.sp.auth.request.check.interval",
 		required = false
 	)
 	public int getSpAuthRequestCheckInterval();
@@ -90,7 +99,7 @@ public interface SAMLConfiguration {
 	 * authentication requests.
 	 */
 	@Meta.AD(
-		name = "saml.sp.auth.request.max.age", deflt = "86400000",
+		deflt = "86400000", name = "saml.sp.auth.request.max.age",
 		required = false
 	)
 	public int getSpAuthRequestMaxAge();
@@ -100,7 +109,7 @@ public interface SAMLConfiguration {
 	 * will be run to check for and delete expired SAML SP messages.
 	 */
 	@Meta.AD(
-		name = "saml.sp.message.check.interval", deflt = "60", required = false
+		deflt = "60", name = "saml.sp.message.check.interval", required = false
 	)
 	public int getSpMessageCheckInterval();
 

@@ -13,5 +13,5 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -includeresource:\
-	@velocity-*.jar,\
-	@opensaml-*.jar!/templates/*.vm
+	@opensaml-*.jar!/templates/*.vm,\
+	@velocity-*.jar
