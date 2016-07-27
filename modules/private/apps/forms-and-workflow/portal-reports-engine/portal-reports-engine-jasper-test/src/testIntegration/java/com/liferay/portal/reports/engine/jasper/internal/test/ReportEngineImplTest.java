@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.reports.engine.jasper.test;
+package com.liferay.portal.reports.engine.jasper.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
