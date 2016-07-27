@@ -123,7 +123,7 @@ Liferay-Releng-Module-Group-Title: Reports Engine
 	lib/groovy-all.jar=groovy-all-[0-9]*.jar,\
 	lib/itext.jar=itext-[0-9]*.jar,\
 	lib/jasperreports-fonts.jar=jasperreports-fonts-[0-9]*.jar,\
-	lib/jasperreports.jar=jasperreports-5[0-9]*.jar,\
+	lib/jasperreports.jar=jasperreports-[0-9]*.jar,\
 	lib/jcommon.jar=jcommon-[0-9]*.jar,\
 	lib/jfreechart.jar=jfreechart-[0-9]*.jar,\
 	lib/jxl.jar=jxl-[0-9]*.jar,\
