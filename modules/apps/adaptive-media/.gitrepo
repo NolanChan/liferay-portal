@@ -5,6 +5,6 @@
 [subrepo]
 	cmdver = liferay
 	commit = 91279ee8623946a20b4f2f3978c43a65ffbbdacd
-	mode = push
+	mode = pull
 	parent = 457cf29f94ce92a2a919b8a6894a3d4bbf7990ad
 	remote = git@github.com:liferay/com-liferay-adaptive-media.git
