@@ -1,23 +1,23 @@
 {
-	"name": "osb-lcs-theme",
-	"version": "0.0.0",
-	"main": "package.json",
+	"devDependencies": {
+		"gulp": "^3.8.10",
+		"liferay-theme-deps-7.0": "*",
+		"liferay-theme-tasks": "*"
+	},
 	"keywords": [
 		"liferay-theme"
 	],
 	"liferayTheme": {
 		"baseTheme": "styled",
-		"screenshot": "",
 		"rubySass": false,
+		"screenshot": "",
 		"templateLanguage": "vm",
 		"version": "7.0"
 	},
-	"devDependencies": {
-		"gulp": "^3.8.10",
-		"liferay-theme-tasks": "*",
-		"liferay-theme-deps-7.0": "*"
-	},
+	"main": "package.json",
+	"name": "osb-lcs-theme",
 	"publishConfig": {
 		"tag": "6_2_x"
-	}
+	},
+	"version": "0.0.0"
 }
