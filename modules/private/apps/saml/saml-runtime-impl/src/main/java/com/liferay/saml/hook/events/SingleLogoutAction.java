@@ -14,14 +14,17 @@
 
 package com.liferay.saml.hook.events;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.saml.profile.SingleLogoutProfileUtil;
+import com.liferay.saml.profile.SingleLogoutProfile;
 import com.liferay.saml.util.SamlUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Mika Koivisto
@@ -35,7 +38,12 @@ public class SingleLogoutAction extends Action {
 		}
 
 		try {
-			SingleLogoutProfileUtil.processIdpLogout(request, response);
+			SingleLogoutProfile singleLogoutProfile =
+				_serviceTracker.getService();
+
+			if (singleLogoutProfile != null) {
+				singleLogoutProfile.processIdpLogout(request, response);
+			}
 		}
 		catch (Exception e) {
 			_log.warn("Unable to perform single logout", e);
@@ -44,5 +52,10 @@ public class SingleLogoutAction extends Action {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SingleLogoutAction.class);
+
+	private static final ServiceTracker
+		<SingleLogoutProfile, SingleLogoutProfile>
+			_serviceTracker = ServiceTrackerFactory.open(
+				SingleLogoutProfile.class);
 
 }

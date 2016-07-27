@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.profile.SingleLogoutProfileUtil;
+import com.liferay.saml.profile.SingleLogoutProfile;
 import com.liferay.saml.util.PortletWebKeys;
 import com.liferay.saml.util.SamlUtil;
 
@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
@@ -105,7 +106,7 @@ public class SamlIdpSsoFilter extends BaseFilter {
 				request, PortletWebKeys.SAML_SSO_SESSION_ID);
 
 			if (Validator.isNotNull(samlSsoSessionId)) {
-				SingleLogoutProfileUtil.processIdpLogout(request, response);
+				_singleLogoutProfile.processIdpLogout(request, response);
 			}
 			else {
 				filterChain.doFilter(request, response);
@@ -118,5 +119,8 @@ public class SamlIdpSsoFilter extends BaseFilter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SamlIdpSsoFilter.class);
+
+	@Reference
+	private SingleLogoutProfile _singleLogoutProfile;
 
 }

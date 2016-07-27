@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.model.SamlSpSession;
-import com.liferay.saml.profile.SingleLogoutProfileUtil;
-import com.liferay.saml.profile.WebSsoProfileUtil;
+import com.liferay.saml.profile.SingleLogoutProfile;
+import com.liferay.saml.profile.WebSsoProfile;
 import com.liferay.saml.util.SamlUtil;
 
 import javax.servlet.Filter;
@@ -40,6 +40,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
@@ -135,7 +136,7 @@ public class SamlSpSsoFilter extends BaseFilter {
 			relayState = PortalUtil.getPathMain();
 		}
 
-		WebSsoProfileUtil.sendAuthnRequest(request, response, relayState);
+		_webSsoProfile.sendAuthnRequest(request, response, relayState);
 	}
 
 	@Override
@@ -146,13 +147,13 @@ public class SamlSpSsoFilter extends BaseFilter {
 
 		String requestPath = SamlUtil.getRequestPath(request);
 
-		SamlSpSession samlSpSession = SingleLogoutProfileUtil.getSamlSpSession(
+		SamlSpSession samlSpSession = _singleLogoutProfile.getSamlSpSession(
 			request);
 
 		if ((samlSpSession != null) && samlSpSession.isTerminated()) {
-			SingleLogoutProfileUtil.terminateSpSession(request, response);
+			_singleLogoutProfile.terminateSpSession(request, response);
 
-			SingleLogoutProfileUtil.logout(request, response);
+			_singleLogoutProfile.logout(request, response);
 
 			response.sendRedirect(PortalUtil.getCurrentCompleteURL(request));
 		}
@@ -160,17 +161,17 @@ public class SamlSpSsoFilter extends BaseFilter {
 			login(request, response);
 		}
 		else if (requestPath.equals("/c/portal/logout") &&
-				 SingleLogoutProfileUtil.isSingleLogoutSupported(request)) {
+				 _singleLogoutProfile.isSingleLogoutSupported(request)) {
 
 			if (samlSpSession != null) {
-				SingleLogoutProfileUtil.processSpLogout(request, response);
+				_singleLogoutProfile.processSpLogout(request, response);
 			}
 			else {
 				filterChain.doFilter(request, response);
 			}
 		}
 		else {
-			WebSsoProfileUtil.updateSamlSpSession(request, response);
+			_webSsoProfile.updateSamlSpSession(request, response);
 
 			filterChain.doFilter(request, response);
 		}
@@ -178,5 +179,11 @@ public class SamlSpSsoFilter extends BaseFilter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SamlSpSsoFilter.class);
+
+	@Reference
+	private SingleLogoutProfile _singleLogoutProfile;
+
+	@Reference
+	private WebSsoProfile _webSsoProfile;
 
 }
