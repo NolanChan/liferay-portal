@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class SamlServiceUpgrade implements UpgradeStepRegistrator {
 
 	public void register(Registry registry) {
