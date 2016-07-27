@@ -117,7 +117,7 @@ public class MetadataUtilImpl implements MetadataUtil {
 
 		try {
 			XMLObject xmlObject = XMLObjectHelper.unmarshallFromInputStream(
-				_parserPool, inputStream);
+				parserPool, inputStream);
 
 			EntityDescriptor entityDescriptor =
 				SamlUtil.getEntityDescriptorById(entityId, xmlObject);
@@ -170,7 +170,7 @@ public class MetadataUtilImpl implements MetadataUtil {
 	private HttpClient _httpClient;
 
 	@Reference
-	private ParserPool _parserPool;
+	protected ParserPool parserPool;
 
 	private ServiceRegistration<HttpClient> _httpClientServiceRegistration;
 
