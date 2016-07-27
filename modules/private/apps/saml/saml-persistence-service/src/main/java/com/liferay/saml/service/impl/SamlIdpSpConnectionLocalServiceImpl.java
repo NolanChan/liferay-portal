@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.saml.exception.DuplicateSamlIdpSpConnectionSamlSpEntityIdException;
 import com.liferay.saml.exception.SamlIdpSpConnectionMetadataUrlException;
 import com.liferay.saml.exception.SamlIdpSpConnectionMetadataXmlException;
@@ -90,7 +91,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 
 			samlIdpSpConnection.setMetadataUrl(metadataUrl);
 
-			metadataXmlInputStream = MetadataUtil.getMetadata(metadataUrl);
+			metadataXmlInputStream = _metadataUtil.getMetadata(metadataUrl);
 		}
 
 		if (metadataXmlInputStream == null) {
@@ -158,7 +159,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 			return;
 		}
 
-		InputStream metadataXmlInputStream = MetadataUtil.getMetadata(
+		InputStream metadataXmlInputStream = _metadataUtil.getMetadata(
 			metadataUrl);
 
 		if (metadataXmlInputStream == null) {
@@ -172,7 +173,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		String metadataXml = StringPool.BLANK;
 
 		try {
-			metadataXml = MetadataUtil.parseMetadataXml(
+			metadataXml = _metadataUtil.parseMetadataXml(
 				metadataXmlInputStream,
 				samlIdpSpConnection.getSamlSpEntityId());
 		}
@@ -231,7 +232,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 
 			samlIdpSpConnection.setMetadataUrl(metadataUrl);
 
-			metadataXmlInputStream = MetadataUtil.getMetadata(metadataUrl);
+			metadataXmlInputStream = _metadataUtil.getMetadata(metadataUrl);
 		}
 
 		String metadataXml = StringPool.BLANK;
@@ -262,7 +263,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		String metadataXml = StringPool.BLANK;
 
 		try {
-			metadataXml = MetadataUtil.parseMetadataXml(
+			metadataXml = _metadataUtil.parseMetadataXml(
 				metadataXmlInputStream, samlSpEntityId);
 		}
 		catch (Exception e) {
@@ -278,5 +279,8 @@ public class SamlIdpSpConnectionLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SamlIdpSpConnectionLocalServiceImpl.class);
+
+	@ServiceReference(type = MetadataUtil.class)
+	private MetadataUtil _metadataUtil;
 
 }

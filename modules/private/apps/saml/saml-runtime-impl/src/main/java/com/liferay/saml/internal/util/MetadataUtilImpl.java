@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 
+import com.liferay.saml.util.MetadataUtil;
 import com.liferay.saml.util.SamlUtil;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
@@ -58,11 +59,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.saml.util.MetadataUtilConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = MetadataUtil.class
 )
-public class MetadataUtilImpl {
+public class MetadataUtilImpl implements MetadataUtil {
 
-	public static InputStream getMetadata(String url) {
+	public InputStream getMetadata(String url) {
 		GetMethod getMethod = new GetMethod(url);
 
 		try {
@@ -109,7 +111,7 @@ public class MetadataUtilImpl {
 		return null;
 	}
 
-	public static String parseMetadataXml(
+	public String parseMetadataXml(
 			InputStream inputStream, String entityId)
 		throws Exception {
 
@@ -163,15 +165,12 @@ public class MetadataUtilImpl {
 		_httpClientServiceRegistration.unregister();
 	}
 
-	@Reference(unbind = "-")
-	protected void setParserPool(ParserPool parserPool) {
-		_parserPool = parserPool;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(MetadataUtilImpl.class);
 
-	private static HttpClient _httpClient;
-	private static volatile ParserPool _parserPool;
+	private HttpClient _httpClient;
+
+	@Reference
+	private ParserPool _parserPool;
 
 	private ServiceRegistration<HttpClient> _httpClientServiceRegistration;
 
