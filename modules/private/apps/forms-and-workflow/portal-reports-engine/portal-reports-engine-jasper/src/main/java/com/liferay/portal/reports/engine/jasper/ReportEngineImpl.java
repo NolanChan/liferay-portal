@@ -35,8 +35,8 @@ import com.liferay.portal.reports.engine.ReportRequestContext;
 import com.liferay.portal.reports.engine.ReportResultContainer;
 import com.liferay.portal.reports.engine.constants.ReportsEngineDestinationNames;
 import com.liferay.portal.reports.engine.jasper.compiler.ReportCompiler;
-import com.liferay.portal.reports.engine.jasper.fillmanager.ReportFillManager;
-import com.liferay.portal.reports.engine.jasper.fillmanager.ReportFillManagerRegistry;
+import com.liferay.portal.reports.engine.jasper.fill.manager.ReportFillManager;
+import com.liferay.portal.reports.engine.jasper.fill.manager.ReportFillManagerRegistry;
 import com.liferay.portal.reports.engine.messaging.ReportCompilerRequestMessageListener;
 import com.liferay.portal.reports.engine.messaging.ReportRequestMessageListener;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.reports.engine.jasper.fillmanager;
+package com.liferay.portal.reports.engine.jasper.fill.manager;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
