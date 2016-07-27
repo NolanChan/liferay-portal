@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.util;
+package com.liferay.saml.internal.util;
 
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
@@ -20,6 +20,7 @@ import com.liferay.saml.bootstrap.OpenSamlBootstrap;
 
 import java.io.InputStream;
 
+import com.liferay.saml.internal.util.MetadataUtilImpl;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -43,7 +44,7 @@ public class MetadataUtilTest {
 
 		OpenSamlBootstrap.bootstrap();
 
-		MetadataUtil metadataUtil = new MetadataUtil();
+		MetadataUtilImpl metadataUtil = new MetadataUtilImpl();
 
 		metadataUtil.setParserPool(new BasicParserPool());
 	}
@@ -60,7 +61,7 @@ public class MetadataUtilTest {
 		InputStream inputStream = clazz.getResourceAsStream(
 			"dependencies/entities-descriptor.xml");
 
-		String metadata = MetadataUtil.parseMetadataXml(
+		String metadata = MetadataUtilImpl.parseMetadataXml(
 			inputStream, "https://saml.liferay.com/shibboleth");
 
 		Assert.assertNotNull(metadata);
@@ -73,7 +74,7 @@ public class MetadataUtilTest {
 		InputStream inputStream = clazz.getResourceAsStream(
 			"dependencies/entity-descriptor.xml");
 
-		String metadata = MetadataUtil.parseMetadataXml(
+		String metadata = MetadataUtilImpl.parseMetadataXml(
 			inputStream, "liferaysamlidpdemo");
 
 		Assert.assertNotNull(metadata);
