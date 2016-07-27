@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true)
+@Component(immediate = true, service = UserResolver.class)
 public class DefaultUserResolver implements UserResolver {
 
 	@Override

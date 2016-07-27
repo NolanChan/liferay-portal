@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true)
+@Component(immediate = true, service = AttributeResolver.class)
 public class DefaultAttributeResolver implements AttributeResolver {
 
 	@Override
