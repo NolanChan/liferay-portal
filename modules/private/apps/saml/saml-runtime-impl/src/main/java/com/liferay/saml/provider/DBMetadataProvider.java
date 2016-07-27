@@ -20,8 +20,8 @@ import com.liferay.saml.exception.NoSuchIdpSpConnectionException;
 import com.liferay.saml.exception.NoSuchSpIdpConnectionException;
 import com.liferay.saml.model.SamlIdpSpConnection;
 import com.liferay.saml.model.SamlSpIdpConnection;
-import com.liferay.saml.service.SamlIdpSpConnectionLocalServiceUtil;
-import com.liferay.saml.service.SamlSpIdpConnectionLocalServiceUtil;
+import com.liferay.saml.service.SamlIdpSpConnectionLocalService;
+import com.liferay.saml.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.util.SamlUtil;
 
 import java.io.StringReader;
@@ -56,6 +56,14 @@ import org.w3c.dom.Element;
  * @author Mika Koivisto
  */
 public class DBMetadataProvider extends BaseMetadataProvider {
+
+	public DBMetadataProvider(
+		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService,
+		SamlIdpSpConnectionLocalService samlIdpSpConnectionLocalService) {
+
+		_samlSpIdpConnectionLocalService = samlSpIdpConnectionLocalService;
+		_samlIdpSpConnectionLocalService = samlIdpSpConnectionLocalService;
+	}
 
 	@Override
 	public EntitiesDescriptor getEntitiesDescriptor(String name) {
@@ -134,7 +142,7 @@ public class DBMetadataProvider extends BaseMetadataProvider {
 		if (SamlUtil.isRoleIdp()) {
 			try {
 				SamlIdpSpConnection samlIdpSpConnection =
-					SamlIdpSpConnectionLocalServiceUtil.getSamlIdpSpConnection(
+					_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 						companyId, entityId);
 
 				if (!samlIdpSpConnection.isEnabled()) {
@@ -150,7 +158,7 @@ public class DBMetadataProvider extends BaseMetadataProvider {
 		else if (SamlUtil.isRoleSp()) {
 			try {
 				SamlSpIdpConnection samlSpIdpConnection =
-					SamlSpIdpConnectionLocalServiceUtil.getSamlSpIdpConnection(
+					_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 						companyId, entityId);
 
 				if (!samlSpIdpConnection.isEnabled()) {
@@ -168,6 +176,10 @@ public class DBMetadataProvider extends BaseMetadataProvider {
 	}
 
 	private ParserPool _parserPool;
+	private final SamlIdpSpConnectionLocalService
+		_samlIdpSpConnectionLocalService;
+	private final SamlSpIdpConnectionLocalService
+		_samlSpIdpConnectionLocalService;
 
 	private class DBEntitiesDescriptor implements EntitiesDescriptor {
 

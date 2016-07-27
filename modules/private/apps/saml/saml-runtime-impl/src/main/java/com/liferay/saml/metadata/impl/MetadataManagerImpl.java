@@ -33,6 +33,7 @@ import com.liferay.saml.model.SamlIdpSpConnection;
 import com.liferay.saml.model.SamlSpIdpConnection;
 import com.liferay.saml.provider.CachingChainingMetadataProvider;
 import com.liferay.saml.provider.DBMetadataProvider;
+import com.liferay.saml.provider.DBMetadataProviderFactory;
 import com.liferay.saml.provider.ReinitializingFilesystemMetadataProvider;
 import com.liferay.saml.provider.ReinitializingHttpMetadataProvider;
 import com.liferay.saml.service.SamlIdpSpConnectionLocalService;
@@ -231,9 +232,9 @@ public class MetadataManagerImpl implements MetadataManager {
 
 			metadataProvider = cachingChainingMetadataProvider;
 
-			DBMetadataProvider dbMetadataProvider = new DBMetadataProvider();
-
-			dbMetadataProvider.setParserPool(_parserPool);
+			DBMetadataProvider dbMetadataProvider =
+				_dbMetadataProviderFactory.createDBMetadataProvider(
+					_parserPool);
 
 			cachingChainingMetadataProvider.addMetadataProvider(
 				dbMetadataProvider);
@@ -653,6 +654,10 @@ public class MetadataManagerImpl implements MetadataManager {
 		MetadataManagerImpl.class);
 
 	private CredentialResolver _credentialResolver;
+
+	@Reference
+	private DBMetadataProviderFactory _dbMetadataProviderFactory;
+
 	private HttpClient _httpClient;
 	private final ConcurrentHashMap<Long, MetadataProvider> _metadataProviders =
 		new ConcurrentHashMap<>();
