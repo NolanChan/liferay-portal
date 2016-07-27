@@ -15,10 +15,10 @@
 package com.liferay.saml.web.metadata;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.saml.metadata.MetadataManager;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.liferay.saml.metadata.MetadataManager;
 import org.opensaml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml2.metadata.provider.MetadataProvider;
 import org.opensaml.saml2.metadata.provider.MetadataProviderException;
@@ -28,10 +28,6 @@ import org.opensaml.xml.security.credential.Credential;
 import org.opensaml.xml.signature.SignatureTrustEngine;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -147,8 +143,7 @@ public class MetadataManagerUtil {
 		return getMetadataManager().isWantAuthnRequestSigned();
 	}
 
-	private static MetadataManager _metadataManager;
-	private static ServiceTracker<MetadataManager, MetadataManager> _serviceTracker =
-		ServiceTrackerFactory.open(MetadataManager.class);
+	private static final ServiceTracker<MetadataManager, MetadataManager>
+		_serviceTracker = ServiceTrackerFactory.open(MetadataManager.class);
 
 }

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.metadata.MetadataManagerUtil;
+import com.liferay.saml.metadata.MetadataManager;
 import com.liferay.saml.model.SamlIdpSpSession;
 import com.liferay.saml.model.SamlIdpSsoSession;
 import com.liferay.saml.service.SamlIdpSpSessionLocalService;
@@ -129,7 +129,7 @@ public class SessionKeepAliveAction extends BaseSamlStrutsAction {
 			}
 
 			String sessionKeepAliveURL =
-				MetadataManagerUtil.getSessionKeepAliveURL(
+				_metadataManager.getSessionKeepAliveURL(
 					samlIdpSpSession.getSamlSpEntityId());
 
 			if (Validator.isNotNull(sessionKeepAliveURL)) {
@@ -139,6 +139,9 @@ public class SessionKeepAliveAction extends BaseSamlStrutsAction {
 
 		return sessionKeepAliveURLs;
 	}
+
+	@Reference
+	private MetadataManager _metadataManager;
 
 	@Reference
 	private SamlIdpSpSessionLocalService _samlIdpSpSessionLocalService;

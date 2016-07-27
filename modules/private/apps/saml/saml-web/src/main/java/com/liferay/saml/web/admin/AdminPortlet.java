@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.credential.KeyStoreManager;
 import com.liferay.saml.exception.CertificateKeyPasswordException;
-import com.liferay.saml.metadata.MetadataManagerUtil;
+import com.liferay.saml.metadata.MetadataManager;
 import com.liferay.saml.model.SamlIdpSpConnection;
 import com.liferay.saml.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.service.SamlSpIdpConnectionLocalService;
@@ -116,7 +116,7 @@ public class AdminPortlet extends MVCPortlet {
 		throws Exception {
 
 		X509Credential x509Credential =
-			(X509Credential)MetadataManagerUtil.getSigningCredential();
+			(X509Credential)_metadataManager.getSigningCredential();
 
 		if (x509Credential == null) {
 			return;
@@ -134,7 +134,7 @@ public class AdminPortlet extends MVCPortlet {
 
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse,
-			MetadataManagerUtil.getLocalEntityId() + ".pem", content.getBytes(),
+			_metadataManager.getLocalEntityId() + ".pem", content.getBytes(),
 			ContentTypes.TEXT_PLAIN);
 	}
 
@@ -156,7 +156,7 @@ public class AdminPortlet extends MVCPortlet {
 
 		UnicodeProperties properties = getProperties(actionRequest);
 
-		String entityId = MetadataManagerUtil.getLocalEntityId();
+		String entityId = _metadataManager.getLocalEntityId();
 
 		String certificateKeyPassword = properties.getProperty(
 			PortletPropsKeys.SAML_KEYSTORE_CREDENTIAL_PASSWORD + "["+ entityId +
@@ -225,7 +225,7 @@ public class AdminPortlet extends MVCPortlet {
 		boolean enabled = GetterUtil.getBoolean(
 			properties.getProperty(PortletPropsKeys.SAML_ENABLED));
 
-		if (enabled && (MetadataManagerUtil.getSigningCredential() == null)) {
+		if (enabled && (_metadataManager.getSigningCredential() == null)) {
 			SessionErrors.add(actionRequest, "certificateInvalid");
 
 			return;
@@ -236,10 +236,10 @@ public class AdminPortlet extends MVCPortlet {
 
 		if (enabled && samlRole.equals("sp")) {
 			String defaultIdpEntityId =
-				MetadataManagerUtil.getDefaultIdpEntityId();
+				_metadataManager.getDefaultIdpEntityId();
 
 			MetadataProvider metadataProvider =
-				MetadataManagerUtil.getMetadataProvider();
+				_metadataManager.getMetadataProvider();
 
 			if (Validator.isNull(defaultIdpEntityId) ||
 				(metadataProvider.getRole(
@@ -252,7 +252,7 @@ public class AdminPortlet extends MVCPortlet {
 			}
 		}
 
-		String currentEntityId = MetadataManagerUtil.getLocalEntityId();
+		String currentEntityId = _metadataManager.getLocalEntityId();
 
 		String newEntityId = properties.getProperty(
 			PortletPropsKeys.SAML_ENTITY_ID);
@@ -464,6 +464,9 @@ public class AdminPortlet extends MVCPortlet {
 
 	@Reference
 	private KeyStoreManager _keyStoreManager;
+
+	@Reference
+	private MetadataManager _metadataManager;
 
 	@Reference
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;

@@ -16,7 +16,7 @@ package com.liferay.saml.web.hook.action;
 
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.saml.metadata.MetadataManagerUtil;
+import com.liferay.saml.metadata.MetadataManager;
 import com.liferay.saml.util.OpenSamlUtil;
 
 import java.io.PrintWriter;
@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.opensaml.saml2.metadata.EntityDescriptor;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
@@ -45,7 +46,7 @@ public class MetadataAction extends BaseSamlStrutsAction {
 		response.setContentType(ContentTypes.TEXT_XML);
 
 		EntityDescriptor entityDescriptor =
-			MetadataManagerUtil.getEntityDescriptor(request);
+			_metadataManager.getEntityDescriptor(request);
 
 		String metadata = OpenSamlUtil.marshall(entityDescriptor);
 
@@ -55,5 +56,8 @@ public class MetadataAction extends BaseSamlStrutsAction {
 
 		return null;
 	}
+
+	@Reference
+	private MetadataManager _metadataManager;
 
 }

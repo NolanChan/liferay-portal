@@ -41,7 +41,6 @@ page import="com.liferay.saml.exception.SamlIdpSpConnectionSamlSpEntityIdExcepti
 page import="com.liferay.saml.exception.SamlSpIdpConnectionMetadataUrlException" %><%@
 page import="com.liferay.saml.exception.SamlSpIdpConnectionMetadataXmlException" %><%@
 page import="com.liferay.saml.exception.SamlSpIdpConnectionSamlIdpEntityIdException" %><%@
-page import="com.liferay.saml.metadata.MetadataManagerUtil" %><%@
 page import="com.liferay.saml.model.SamlIdpSpConnection" %><%@
 page import="com.liferay.saml.model.SamlSpIdpConnection" %><%@
 page import="com.liferay.saml.service.SamlIdpSpConnectionLocalServiceUtil" %><%@
@@ -50,6 +49,7 @@ page import="com.liferay.saml.util.CertificateUtil" %><%@
 page import="com.liferay.saml.util.PortletPrefsPropsUtil" %><%@
 page import="com.liferay.saml.util.PortletPropsKeys" %><%@
 page import="com.liferay.saml.util.SamlUtil" %><%@
+page import="com.liferay.saml.web.metadata.MetadataManagerUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.security.InvalidParameterException" %><%@

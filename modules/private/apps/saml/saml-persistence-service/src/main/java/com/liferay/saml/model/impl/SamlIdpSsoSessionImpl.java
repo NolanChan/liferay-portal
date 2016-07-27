@@ -15,9 +15,11 @@
 package com.liferay.saml.model.impl;
 
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.saml.metadata.MetadataManagerUtil;
+import com.liferay.saml.metadata.MetadataManager;
 
 import java.util.Date;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
@@ -29,9 +31,8 @@ public class SamlIdpSsoSessionImpl extends SamlIdpSsoSessionBaseImpl {
 
 	@Override
 	public boolean isExpired() {
-		long samlIdpSessionMaximumAge =
-			MetadataManagerUtil.getSessionMaximumAge();
-		long samlIdpSessionTimeout = MetadataManagerUtil.getSessionTimeout();
+		long samlIdpSessionMaximumAge = _metadataManager.getSessionMaximumAge();
+		long samlIdpSessionTimeout = _metadataManager.getSessionTimeout();
 
 		if (samlIdpSessionMaximumAge > 0) {
 			Date createDate = getCreateDate();
@@ -60,5 +61,8 @@ public class SamlIdpSsoSessionImpl extends SamlIdpSsoSessionBaseImpl {
 			return false;
 		}
 	}
+
+	@Reference
+	private MetadataManager _metadataManager;
 
 }
