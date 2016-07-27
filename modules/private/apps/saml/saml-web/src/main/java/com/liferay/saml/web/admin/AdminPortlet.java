@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -299,7 +299,7 @@ public class AdminPortlet extends MVCPortlet {
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(actionRequest);
+			_portal.getUploadPortletRequest(actionRequest);
 
 		long samlSpIdpConnectionId = ParamUtil.getLong(
 			uploadPortletRequest, "samlSpIdpConnectionId");
@@ -367,7 +367,7 @@ public class AdminPortlet extends MVCPortlet {
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(actionRequest);
+			_portal.getUploadPortletRequest(actionRequest);
 
 		long samlIdpSpConnectionId = ParamUtil.getLong(
 			uploadPortletRequest, "samlIdpSpConnectionId");
@@ -414,7 +414,7 @@ public class AdminPortlet extends MVCPortlet {
 		String redirect = ParamUtil.getString(uploadPortletRequest, "redirect");
 
 		if (Validator.isNotNull(redirect)) {
-			redirect = PortalUtil.escapeRedirect(redirect);
+			redirect = _portal.escapeRedirect(redirect);
 
 			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 		}
@@ -467,6 +467,9 @@ public class AdminPortlet extends MVCPortlet {
 
 	@Reference
 	private MetadataManager _metadataManager;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;

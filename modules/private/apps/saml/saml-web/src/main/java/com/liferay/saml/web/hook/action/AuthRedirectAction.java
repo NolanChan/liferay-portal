@@ -17,7 +17,7 @@ package com.liferay.saml.web.hook.action;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.util.SamlUtil;
 
@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tomas Polesovsky
@@ -53,10 +54,10 @@ public class AuthRedirectAction extends BaseSamlStrutsAction {
 
 		String redirect = ParamUtil.getString(request, "redirect");
 
-		redirect = PortalUtil.escapeRedirect(redirect);
+		redirect = _portal.escapeRedirect(redirect);
 
 		if (Validator.isNull(redirect)) {
-			redirect = PortalUtil.getHomeURL(request);
+			redirect = _portal.getHomeURL(request);
 		}
 
 		try {
@@ -68,5 +69,8 @@ public class AuthRedirectAction extends BaseSamlStrutsAction {
 
 		return null;
 	}
+
+	@Reference
+	private Portal _portal;
 
 }
