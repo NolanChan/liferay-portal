@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.saml.configuration.SAMLConfiguration;
 import com.liferay.saml.service.SamlSpAuthRequestLocalService;
@@ -66,6 +67,10 @@ public class SamlSpAuthRequestMessageListener
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		_samlSpAuthRequestLocalService.deleteExpiredSamlSpAuthRequests();
+	}
+
+	@Reference(unbind = "-")
+	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
 	private SAMLConfiguration _samlConfiguration;
