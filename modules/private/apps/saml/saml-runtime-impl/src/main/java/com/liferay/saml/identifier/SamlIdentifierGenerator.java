@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true)
+@Component(immediate = true, service = IdentifierGenerator.class)
 public class SamlIdentifierGenerator implements IdentifierGenerator {
 
 	@Override
