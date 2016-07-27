@@ -6,6 +6,7 @@
 		<version>7.0.0+</version>
 	</compatibility>
 	<theme id="osb-lcs" name="OSB LCS">
+		<template-extension>ftl</template-extension>
 		<settings>
 			<setting configurable="true" key="feedback-page" value="/group/guest/feedback" />
 			<setting configurable="true" key="google-tag-manager-id" value="" />

@@ -11,7 +11,7 @@
 		"baseTheme": "styled",
 		"rubySass": false,
 		"screenshot": "",
-		"templateLanguage": "vm",
+		"templateLanguage": "ftl",
 		"version": "7.0"
 	},
 	"main": "package.json",
