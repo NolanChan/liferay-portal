@@ -30,3 +30,14 @@ app.artifacts-2.0.2=\
 app.change.log-2.0.2=CLDSVCS-2235
 
 app.git.id-2.0.2=420503cc43f7569e29ea36f8cf4cc4dc483ebfbf
+
+#
+# Liferay App Version 2.0.3
+#
+
+app.artifacts-2.0.3=\
+	
+
+app.change.log-2.0.3=CLDSVCS-2212 CLDSVCS-2224 CLDSVCS-2226 CLDSVCS-2231 CLDSVCS-2235 CLDSVCS-2255 CLDSVCS-2269 CLDSVCS-2281 CLDSVCS-2291 LPS-66853 LPS-67069
+
+app.git.id-2.0.3=30efdfa7bc8f458e99165175ccb64f9a66f88afe
