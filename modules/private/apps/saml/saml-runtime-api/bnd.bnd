@@ -1,3 +1,15 @@
+Bundle-ClassPath:\
+	.,\
+	lib/bcpkix-jdk15on.jar,\
+	lib/bcprov-jdk15on.jar,\
+	lib/com.liferay.util.java.jar,\
+	lib/esapi.jar,\
+	lib/joda-convert.jar,\
+	lib/joda-time.jar,\
+	lib/not-yet-commons-ssl.jar,\
+	lib/opensaml.jar,\
+	lib/openws.jar,\
+	lib/xmltooling.jar
 Bundle-Name: Liferay SAML Runtime API
 Bundle-SymbolicName: com.liferay.saml.runtime.api
 Bundle-Version: 1.0.0
@@ -47,13 +59,13 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -includeresource:\
-	@bcpkix-jdk15on*.jar,\
-	@bcprov-jdk15on*.jar,\
-	@com.liferay.util.java*.jar,\
-	@esapi*.jar,\
-	@joda-convert*.jar,\
-	@joda-time*.jar,\
-	@not-yet-commons-ssl*.jar,\
-	@opensaml*.jar,\
-	@openws*.jar,\
-	@xmltooling*.jar
+	lib/bcpkix-jdk15on.jar=bcpkix-jdk15on-[0-9]*.jar,\
+	lib/bcprov-jdk15on.jar=bcprov-jdk15on-[0-9]*.jar,\
+	lib/com.liferay.util.java.jar=com.liferay.util.java-[0-9]*.jar,\
+	lib/esapi.jar=esapi-[0-9]*.jar,\
+	lib/joda-convert.jar=joda-convert-[0-9]*.jar,\
+	lib/joda-time.jar=joda-time-[0-9]*.jar,\
+	lib/not-yet-commons-ssl.jar=not-yet-commons-ssl-[0-9]*.jar,\
+	lib/opensaml.jar=opensaml-[0-9]*.jar,\
+	lib/openws.jar=openws-[0-9]*.jar,\
+	lib/xmltooling.jar=xmltooling-[0-9]*.jar
