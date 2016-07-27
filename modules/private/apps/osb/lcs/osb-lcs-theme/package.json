@@ -8,14 +8,14 @@
 	"liferayTheme": {
 		"baseTheme": "styled",
 		"screenshot": "",
-		"rubySass": true,
+		"rubySass": false,
 		"templateLanguage": "vm",
-		"version": "6.2"
+		"version": "7.0"
 	},
 	"devDependencies": {
 		"gulp": "^3.8.10",
 		"liferay-theme-tasks": "*",
-		"liferay-theme-deps-6.2": "*"
+		"liferay-theme-deps-7.0": "*"
 	},
 	"publishConfig": {
 		"tag": "6_2_x"

@@ -1,19 +1,19 @@
-@import "compass";
+@import "bourbon";
 @import "compass/css3/user-interface";
 @import "mixins";
 
 /* ---------- Common variables ---------- */
 
-$blue: #4A96E8;
+/* $blue has been removed in Bootstrap 3 -- $blue: #4A96E8; */
 $dark-blue: #185497;
 $dark-gray: #555;
 $gray: #DDD;
-$green: #97CE68;
+/* $green has been removed in Bootstrap 3 -- $green: #97CE68; */
 $header-height: 56px;
 $light-blue: #E6F5FC;
 $light-gray: #F9F9F9;
-$red: #B50303;
-$white: #FFF;
+/* $red has been removed in Bootstrap 3 -- $red: #B50303; */
+/* $white has been removed in Bootstrap 3 -- $white: #FFF; */
 
 @mixin keyframes($name) {
 	@-webkit-keyframes #{$name} {
@@ -48,10 +48,10 @@ $white: #FFF;
 .lcs {
 	font: 12px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-	&.aui {
+	&html {
 		a {
 			&, &:focus, &:hover {
-				color: $blue;
+/* $blue has been removed in Bootstrap 3 -- 				color: $blue; */
 				outline: 0;
 			}
 		}
@@ -75,7 +75,7 @@ $white: #FFF;
 			}
 		}
 
-		input[type="checkbox"], select:focus, .btn:focus {
+		input[type="checkbox"], select:focus, .btn btn-default:focus {
 			outline: 0;
 		}
 
@@ -84,12 +84,12 @@ $white: #FFF;
 			height: auto;
 
 			&:invalid {
-				border-color: $red;
-				color: $red;
+/* $red has been removed in Bootstrap 3 -- 				border-color: $red; */
+/* $red has been removed in Bootstrap 3 -- 				color: $red; */
 			}
 		}
 
-		label, .btn-group {
+		label, .btn btn-default-group {
 			font-size: inherit;
 		}
 
@@ -114,15 +114,15 @@ $white: #FFF;
 			}
 		}
 
-		.btn {
+		.btn btn-default {
 			color: $dark-gray;
 
 			&.btn-primary {
-				color: $white;
+/* $white has been removed in Bootstrap 3 -- 				color: $white; */
 			}
 		}
 
-		.control-group.success {
+		.form-group.success {
 			input, .control-label {
 				color: $dark-gray;
 			}
@@ -135,7 +135,7 @@ $white: #FFF;
 		.controls-container {
 			display: inline-block;
 
-			.control-group {
+			.form-group {
 				& > label, & .control-label {
 					font-size: 0.9em;
 					font-weight: bold;
@@ -202,14 +202,14 @@ $white: #FFF;
 		}
 
 		.content-container {
-			@include pie-clearfix();
+			@include pie-clearfix-deprecated();
 
 			.settings-container .content {
 				min-width: 230px;
 			}
 
 			.table-container .header {
-				@include pie-clearfix();
+				@include pie-clearfix-deprecated();
 
 				.actions {
 					float: right;
@@ -264,7 +264,7 @@ $white: #FFF;
 		.server-details {
 			min-height: 135px;
 
-			@include pie-clearfix();
+			@include pie-clearfix-deprecated();
 
 			.lcs-about-hardware .result-value {
 				text-align: right;
@@ -279,8 +279,8 @@ $white: #FFF;
 				height: 20px;
 
 				.table-cell {
-					border-left-color: $white;
-					border-right-color: $white;
+/* $white has been removed in Bootstrap 3 -- 					border-left-color: $white; */
+/* $white has been removed in Bootstrap 3 -- 					border-right-color: $white; */
 				}
 			}
 
@@ -344,7 +344,7 @@ $white: #FFF;
 			.tooltip-help-content {
 				background-color: rgba(0, 0, 0, 0.8);
 				border-width: 0;
-				color: $white;
+/* $white has been removed in Bootstrap 3 -- 				color: $white; */
 			}
 		}
 	}
@@ -359,7 +359,7 @@ $white: #FFF;
 	}
 
 	.basecelleditor {
-		background-color: $white;
+/* $white has been removed in Bootstrap 3 -- 		background-color: $white; */
 		border-color: $gray;
 		outline: 0;
 		padding: 10px;
@@ -378,17 +378,17 @@ $white: #FFF;
 			}
 		}
 
-		.btn:nth-child(1) {
+		.btn btn-default:nth-child(1) {
 			background-color: #50A2F5;
 			border-color: #4A96E8 #4A96E8 #1A6FCC;
-			color: $white;
+/* $white has been removed in Bootstrap 3 -- 			color: $white; */
 
 			&:hover {
 				background-color: #4A96E8;
 			}
 		}
 
-		.btn:nth-child(2) {
+		.btn btn-default:nth-child(2) {
 			background-color: transparent;
 			background-image: none;
 			border-width: 0;
@@ -451,7 +451,7 @@ $white: #FFF;
 		position: relative;
 
 		&.open:after {
-			border-bottom: 6px solid $white;
+/* $white has been removed in Bootstrap 3 -- 			border-bottom: 6px solid $white; */
 			border-left: 6px solid transparent;
 			border-right: 6px solid transparent;
 			content: "";
@@ -550,7 +550,7 @@ $white: #FFF;
 			}
 
 			.alert-message.offline {
-				color: $red;
+/* $red has been removed in Bootstrap 3 -- 				color: $red; */
 			}
 
 			.table-sorted {
@@ -673,7 +673,7 @@ $white: #FFF;
 				left: auto;
 				right: 0;
 
-				.control-group {
+				.form-group {
 					margin-bottom: 0;
 
 					label {
@@ -734,8 +734,8 @@ $white: #FFF;
 .lcs-checkboxes-container {
 	display: inline-block;
 
-	.control-group {
-		border: 1px solid $white;
+	.form-group {
+/* $white has been removed in Bootstrap 3 -- 		border: 1px solid $white; */
 		margin-bottom: 5px;
 		padding-right: 10px;
 
@@ -785,7 +785,7 @@ $white: #FFF;
 	width: 14px;
 
 	&:after {
-		background-color: $white;
+/* $white has been removed in Bootstrap 3 -- 		background-color: $white; */
 		bottom: 0;
 		content: "";
 		height: 75%;
@@ -880,12 +880,12 @@ $white: #FFF;
 	}
 
 	.lcs-header {
-		background-color: $white;
+/* $white has been removed in Bootstrap 3 -- 		background-color: $white; */
 		color: $dark-gray;
 		padding: 5px 20px;
 
 		.profile {
-			background-color: $white;
+/* $white has been removed in Bootstrap 3 -- 			background-color: $white; */
 			float: right;
 
 			.user-full-name {
@@ -907,7 +907,7 @@ $white: #FFF;
 /* ---------- Header ---------- */
 
 .lcs-admin {
-	&.aui .dockbar .navbar-inner {
+	&html {
 		min-height: 0;
 		padding: 0;
 
@@ -934,7 +934,7 @@ $white: #FFF;
 
 .lcs-header .osb-lcs-portlet-header {
 	background-color: $dark-blue;
-	color: $white;
+/* $white has been removed in Bootstrap 3 -- 	color: $white; */
 	display: block;
 	height: $header-height;
 	left: 0;
@@ -945,11 +945,11 @@ $white: #FFF;
 	width: 100%;
 	z-index: 10;
 
-	@include pie-clearfix();
+	@include pie-clearfix-deprecated();
 
 	a.lcs-dropdown-link {
 		&, &:focus, &:hover {
-			color: $white;
+/* $white has been removed in Bootstrap 3 -- 			color: $white; */
 			text-decoration: none;
 		}
 	}
@@ -975,7 +975,7 @@ $white: #FFF;
 		position: relative;
 
 		.unread {
-			background-color: $red;
+/* $red has been removed in Bootstrap 3 -- 			background-color: $red; */
 			border-radius: 12px;
 			font-size: 12px;
 			font-weight: bold;
@@ -1025,7 +1025,7 @@ $white: #FFF;
 				}
 
 				.header {
-					@include pie-clearfix();
+					@include pie-clearfix-deprecated();
 
 					.from {
 						float: left;
@@ -1055,7 +1055,7 @@ $white: #FFF;
 			border-bottom: 1px solid $gray;
 			padding: 0.1em 1em 0.4em;
 
-			@include pie-clearfix();
+			@include pie-clearfix-deprecated();
 
 			.options {
 				float: right;
@@ -1068,7 +1068,7 @@ $white: #FFF;
 			text-align: center;
 
 			&:hover {
-				background-color: $white;
+/* $white has been removed in Bootstrap 3 -- 				background-color: $white; */
 			}
 
 			.updating {
@@ -1097,7 +1097,7 @@ $white: #FFF;
 		margin-left: 10px;
 
 		.beta {
-			color: $white;
+/* $white has been removed in Bootstrap 3 -- 			color: $white; */
 			font-size: 0.7em;
 		}
 
@@ -1107,7 +1107,7 @@ $white: #FFF;
 		}
 
 		.title {
-			border-left: 1px solid $white;
+/* $white has been removed in Bootstrap 3 -- 			border-left: 1px solid $white; */
 			padding-left: 19px;
 		}
 	}
@@ -1125,7 +1125,7 @@ $white: #FFF;
 	font-size: 15px;
 	margin: 15px 0;
 
-	@include pie-clearfix();
+	@include pie-clearfix-deprecated();
 
 	li {
 		float: left;
@@ -1157,7 +1157,7 @@ $white: #FFF;
 /* ---------- Toolbar ---------- */
 
 .lcs-toolbar {
-	@include pie-clearfix();
+	@include pie-clearfix-deprecated();
 
 	.item {
 		border: 1px solid $gray;
@@ -1195,10 +1195,10 @@ $white: #FFF;
 	&.osb-lcs-portlet-downloads .download-options {
 		max-width: 960px;
 
-		@include pie-clearfix();
+		@include pie-clearfix-deprecated();
 
 		.item {
-			background-color: $white;
+/* $white has been removed in Bootstrap 3 -- 			background-color: $white; */
 			border: 1px solid $gray;
 			margin-bottom: 1em;
 			padding: 1em;
@@ -1238,7 +1238,7 @@ $white: #FFF;
 			margin-bottom: 20px;
 			padding-left: 32px;
 
-			@include pie-clearfix();
+			@include pie-clearfix-deprecated();
 
 			textarea {
 				min-height: 250px;
@@ -1270,7 +1270,7 @@ $white: #FFF;
 		}
 
 		.title {
-			color: $blue;
+/* $blue has been removed in Bootstrap 3 -- 			color: $blue; */
 			font-size: 2em;
 			font-weight: lighter;
 			vertical-align: middle;
@@ -1296,7 +1296,7 @@ $white: #FFF;
 	}
 
 	&.osb-lcs-portlet-navigation  {
-		background-color: $white;
+/* $white has been removed in Bootstrap 3 -- 		background-color: $white; */
 		max-width: 245px;
 		padding-top: $header-height;
 		position: fixed;
@@ -1391,7 +1391,7 @@ $white: #FFF;
 						width: auto;
 
 						&:hover {
-							color: $blue;
+/* $blue has been removed in Bootstrap 3 -- 							color: $blue; */
 						}
 					}
 				}
@@ -1467,8 +1467,8 @@ $white: #FFF;
 			}
 
 			.patches-count {
-				background-color: $blue;
-				color: $white;
+/* $blue has been removed in Bootstrap 3 -- 				background-color: $blue; */
+/* $white has been removed in Bootstrap 3 -- 				color: $white; */
 				font-size: 12px;
 				font-weight: bold;
 				line-height: 12px;
@@ -1498,7 +1498,7 @@ $white: #FFF;
 	&.osb-lcs-portlet-server {
 		.controls-container {
 			input[readonly] {
-				background-color: $white;
+/* $white has been removed in Bootstrap 3 -- 				background-color: $white; */
 				cursor: pointer;
 			}
 
@@ -1546,13 +1546,13 @@ $white: #FFF;
 		.server-settings {
 			padding-top: 16px;
 
-			.control-group {
+			.form-group {
 				margin-bottom: 0;
 			}
 		}
 
 		.lcs-chart-overlay-container {
-			color: $white;
+/* $white has been removed in Bootstrap 3 -- 			color: $white; */
 			position: relative;
 
 			.lcs-chart-overlay-value {
@@ -1565,7 +1565,7 @@ $white: #FFF;
 			margin-bottom: 20px;
 			min-height: 180px;
 
-			@include pie-clearfix();
+			@include pie-clearfix-deprecated();
 		}
 
 		.lcs-bar-chart-container {
@@ -1581,7 +1581,7 @@ $white: #FFF;
 			}
 
 			.lcs-chart-overlay-value {
-				border-right: 2px solid $blue;
+/* $blue has been removed in Bootstrap 3 -- 				border-right: 2px solid $blue; */
 				height: 57px;
 				padding: 8px 5px 0 0;
 			}
@@ -1611,7 +1611,7 @@ $white: #FFF;
 					border-top-width: 0;
 
 					td {
-						background-color: $white;
+/* $white has been removed in Bootstrap 3 -- 						background-color: $white; */
 						display: table;
 						font-size: 0.9em;
 						padding: 0;
@@ -1650,7 +1650,7 @@ $white: #FFF;
 			&.summary {
 				.content {
 					.load-time-high {
-						color: $red;
+/* $red has been removed in Bootstrap 3 -- 						color: $red; */
 					}
 
 					.table-cell {
@@ -1832,11 +1832,11 @@ $white: #FFF;
 		}
 
 		.lcs-download-status-downloaded {
-			color: $green;
+/* $green has been removed in Bootstrap 3 -- 			color: $green; */
 		}
 
 		.lcs-download-status-error {
-			color: $red;
+/* $red has been removed in Bootstrap 3 -- 			color: $red; */
 		}
 	}
 
@@ -1845,7 +1845,7 @@ $white: #FFF;
 	}
 
 	.lcs-tabs-default {
-		@include pie-clearfix();
+		@include pie-clearfix-deprecated();
 
 		.nav {
 			border-bottom: 1px solid $gray;
@@ -1857,7 +1857,7 @@ $white: #FFF;
 
 					&:focus, &:hover {
 						background-color: $light-blue;
-						border-color: $white $white $gray;
+/* $white has been removed in Bootstrap 3 -- 						border-color: $white $white $gray; */
 					}
 				}
 
@@ -1866,8 +1866,8 @@ $white: #FFF;
 					cursor: pointer;
 
 					&:focus, &:hover {
-						background-color: $white;
-						border-color: $gray $gray $white;
+/* $white has been removed in Bootstrap 3 -- 						background-color: $white; */
+/* $white has been removed in Bootstrap 3 -- 						border-color: $gray $gray $white; */
 					}
 				}
 			}
@@ -1938,7 +1938,7 @@ $white: #FFF;
 	width: auto !important;
 
 	h3 {
-		color: $blue;
+/* $blue has been removed in Bootstrap 3 -- 		color: $blue; */
 		font-size: 1.4em;
 		font-weight: normal;
 	}
@@ -1947,16 +1947,16 @@ $white: #FFF;
 		padding-bottom: 0;
 		text-align: center;
 
-		.btn-link {
+		.btn btn-default-link {
 			padding-right: 0;
 		}
 	}
 
-	.control-group .help-inline {
+	.form-group .help-inline {
 		padding-left: 0;
 	}
 
-	.field, .aui-field-select {
+	.field, html {
 		width: 100%;
 	}
 
@@ -1967,7 +1967,7 @@ $white: #FFF;
 			margin-left: 11px;
 		}
 
-		.control-group {
+		.form-group {
 			margin-bottom: 0;
 
 			& > .checkbox {
@@ -2013,7 +2013,7 @@ $white: #FFF;
 				overflow: auto;
 				padding: 10px;
 
-				.btn-add-users {
+				.btn btn-default-add-users {
 					font-size: 0.9em;
 					left: 50%;
 					margin-left: -17px;
@@ -2076,7 +2076,7 @@ $white: #FFF;
 		padding: 8px 12px;
 
 		&, &:focus, &:hover {
-			color: $white;
+/* $white has been removed in Bootstrap 3 -- 			color: $white; */
 			text-decoration: none;
 		}
 
@@ -2107,8 +2107,8 @@ $white: #FFF;
 /* ---------- Responsive ---------- */
 
 @include respond-to(tablet) {
-	.aui.lcs {
-		.btn-group > .btn {
+	html {
+		.btn btn-default-group > .btn btn-default {
 			font-size: inherit;
 		}
 
@@ -2117,20 +2117,20 @@ $white: #FFF;
 		}
 	}
 
-	.lcs-dialog .lcs-manage-membership-request .lcs-users .lcs-users-column .btn-add-users {
+	.lcs-dialog .lcs-manage-membership-request .lcs-users .lcs-users-column .btn btn-default-add-users {
 		margin-left: -24px;
 		margin-top: -22px;
 	}
 }
 
 @include respond-to(phone) {
-	.aui > body {
+	html {
 		padding-left: 0;
 		padding-right: 0;
 	}
 
-	.aui.lcs {
-		.btn-group > .btn {
+	html {
+		.btn btn-default-group > .btn btn-default {
 			font-size: inherit;
 		}
 
@@ -2199,7 +2199,7 @@ $white: #FFF;
 		}
 
 		.lcs-users {
-			.btn-add-users {
+			.btn btn-default-add-users {
 				padding: 5px;
 				width: 34px;
 			}
@@ -2257,7 +2257,7 @@ $white: #FFF;
 				margin: 0;
 				padding-bottom: 20px;
 
-				@include pie-clearfix();
+				@include pie-clearfix-deprecated();
 
 				.menu-item {
 					float: left;
@@ -2322,18 +2322,18 @@ $white: #FFF;
 }
 
 @include respond-to(phone, tablet) {
-	.aui.lcs .user-avatar-image {
+	html {
 		width: 38px;
 	}
 
-	.lcs .table-sortable.yui3-datatable .table-foot td .yui3-datatable-paginator .yui3-datatable-paginator-group .btn {
+	.lcs .table-sortable.yui3-datatable .table-foot td .yui3-datatable-paginator .yui3-datatable-paginator-group .btn btn-default {
 		display: inline-block;
 		margin-top: 0;
 		padding: 11px 19px;
 		width: auto;
 	}
 
-	.lcs-admin .dockbar .navbar-inner .container .btn-navbar {
+	.lcs-admin .dockbar .navbar-inner .container .navbar-btn {
 		padding: 4px 10px;
 
 		&:first-child {
@@ -2350,58 +2350,58 @@ $white: #FFF;
 /* ---------- Extras ---------- */
 
 .lcs {
-	&.aui {
+	&html {
 		input[type="email"], input[type="password"], input[type="text"], textarea {
-			@include box-shadow(none);
+			box-shadow: none;
 			@include box-sizing(border-box);
 		}
 
-		.control-group.success input:focus {
-			@include box-shadow(none);
+		.form-group.success input:focus {
+			box-shadow: none;
 		}
 	}
 
-	.basecelleditor .btn:nth-child(1) {
+	.basecelleditor .btn btn-default:nth-child(1) {
 		@include background-image(linear-gradient(#54AAFF, #4A96E8));
-		@include text-shadow(0 -1px 0 rgba(0, 0, 0, 0.25));
+		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	}
 
 	.chart-container .header {
-		@include opacity(0.5);
+		opacity: 0.5;
 	}
 
 	.checkbox {
-		@include border-radius(4px);
+		border-radius: 4px;
 	}
 
 	.fade-out {
-		@include opacity(0);
+		opacity: 0;
 		@include transition(opacity 0.3s ease);
 	}
 
-	.table-container .header .options-menu .control-group label {
+	.table-container .header .options-menu .form-group label {
 		@include box-sizing(border-box);
 	}
 
 	.yui3-datatable .table-foot td .yui3-datatable-paginator .yui3-datatable-paginator-control {
-		@include box-shadow(none);
+		box-shadow: none;
 	}
 }
 
-.lcs-checkboxes-container .control-group {
-	@include border-radius(4px);
+.lcs-checkboxes-container .form-group {
+	border-radius: 4px;
 }
 
 .lcs-dragging-original {
-	@include opacity(0.5);
+	opacity: 0.5;
 }
 
 .lcs-feedback-bar {
-	@include border-radius(5px 5px 0 0);
+	border-radius: 5px 5px 0 0;
 }
 
 .lcs-toolbar .item {
-	@include border-radius(4px);
+	border-radius: 4px;
 }
 
 .osb-lcs-portlet {
@@ -2411,15 +2411,15 @@ $white: #FFF;
 		}
 
 		.table-container .table-col-name {
-			@include word-break(break-all);
+			@include word-wrap(break-all);
 		}
 
 		.yui3-cartesianchart-content > div:last-child {
-			@include border-radius(4px);
+			border-radius: 4px;
 		}
 
 		.yui3-graph {
-			@include border-radius(10px);
+			border-radius: 10px;
 		}
 	}
 
@@ -2434,12 +2434,12 @@ $white: #FFF;
 
 		.lcs-navigation-submenu {
 			.patches-count {
-				@include border-radius(2px);
+				border-radius: 2px;
 			}
 
 			.titlebar-top {
-				@include border-top-left-radius(15px);
-				@include border-top-right-radius(15px);
+				border-top-left-radius: 15px;
+				border-top-right-radius: 15px;
 			}
 
 			.titlebar-inner .title {
@@ -2449,7 +2449,7 @@ $white: #FFF;
 	}
 
 	.lcs-tabs-sub .tab > a {
-		@include border-radius(4px);
+		border-radius: 4px;
 	}
 }
 
@@ -2460,34 +2460,34 @@ $white: #FFF;
 
 	.table-container.properties .table-data .inner-cell {
 		@include user-select (text);
-		@include word-break(break-all);
+		@include word-wrap(break-all);
 	}
 }
 
 .table-container .table-data td {
 	@include user-select (text);
-	@include word-break(break-all);
+	@include word-wrap(break-all);
 }
 
 .updating {
-	@include background-image(linear-gradient(to right, $dark-gray 10%, $white 50%));
-	@include border-radius(50%);
+/* $white has been removed in Bootstrap 3 -- 	@include background-image(linear-gradient(to right, $dark-gray 10%, $white 50%)); */
+	border-radius: 50%;
 
 	&:after {
-		@include border-radius(50%);
+		border-radius: 50%;
 	}
 
 	&:before {
-		@include border-top-left-radius(100%);
+		border-top-left-radius: 100%;
 	}
 }
 
 .user-avatar-image {
-	@include border-radius(50%);
+	border-radius: 50%;
 }
 
 @include respond-to(phone) {
 	.lcs-feedback-bar {
-		@include border-radius(2px);
+		border-radius: 2px;
 	}
 }
