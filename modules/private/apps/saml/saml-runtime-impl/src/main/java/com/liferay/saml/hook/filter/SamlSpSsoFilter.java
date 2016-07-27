@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -77,7 +77,7 @@ public class SamlSpSsoFilter extends BaseFilter {
 		}
 
 		try {
-			User user = PortalUtil.getUser(request);
+			User user = _portal.getUser(request);
 
 			if (user != null) {
 				return true;
@@ -112,7 +112,7 @@ public class SamlSpSsoFilter extends BaseFilter {
 		String relayState = ParamUtil.getString(request, "redirect");
 
 		if (Validator.isNotNull(relayState)) {
-			relayState = PortalUtil.escapeRedirect(relayState);
+			relayState = _portal.escapeRedirect(relayState);
 		}
 
 		HttpSession session = request.getSession();
@@ -120,12 +120,12 @@ public class SamlSpSsoFilter extends BaseFilter {
 		LastPath lastPath = (LastPath)session.getAttribute(WebKeys.LAST_PATH);
 
 		if (GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.AUTH_FORWARD_BY_LAST_PATH)) &&
+				_props.get(PropsKeys.AUTH_FORWARD_BY_LAST_PATH)) &&
 			(lastPath != null) && Validator.isNull(relayState)) {
 
 			StringBundler sb = new StringBundler(4);
 
-			sb.append(PortalUtil.getPortalURL(request));
+			sb.append(_portal.getPortalURL(request));
 			sb.append(lastPath.getContextPath());
 			sb.append(lastPath.getPath());
 			sb.append(lastPath.getParameters());
@@ -133,7 +133,7 @@ public class SamlSpSsoFilter extends BaseFilter {
 			relayState = sb.toString();
 		}
 		else if (Validator.isNull(relayState)) {
-			relayState = PortalUtil.getPathMain();
+			relayState = _portal.getPathMain();
 		}
 
 		_webSsoProfile.sendAuthnRequest(request, response, relayState);
@@ -155,7 +155,7 @@ public class SamlSpSsoFilter extends BaseFilter {
 
 			_singleLogoutProfile.logout(request, response);
 
-			response.sendRedirect(PortalUtil.getCurrentCompleteURL(request));
+			response.sendRedirect(_portal.getCurrentCompleteURL(request));
 		}
 		else if (requestPath.equals("/c/portal/login")) {
 			login(request, response);
@@ -179,6 +179,12 @@ public class SamlSpSsoFilter extends BaseFilter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SamlSpSsoFilter.class);
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private Props _props;
 
 	@Reference
 	private SingleLogoutProfile _singleLogoutProfile;

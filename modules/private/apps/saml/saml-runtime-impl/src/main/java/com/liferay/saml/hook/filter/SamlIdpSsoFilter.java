@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.CookieKeys;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.profile.SingleLogoutProfile;
 import com.liferay.saml.util.PortletWebKeys;
@@ -67,7 +67,7 @@ public class SamlIdpSsoFilter extends BaseFilter {
 		}
 
 		try {
-			User user = PortalUtil.getUser(request);
+			User user = _portal.getUser(request);
 
 			if (user != null) {
 				return true;
@@ -119,6 +119,9 @@ public class SamlIdpSsoFilter extends BaseFilter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SamlIdpSsoFilter.class);
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SingleLogoutProfile _singleLogoutProfile;
