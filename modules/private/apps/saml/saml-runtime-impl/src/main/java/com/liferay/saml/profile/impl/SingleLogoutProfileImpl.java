@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -426,7 +426,7 @@ public class SingleLogoutProfileImpl
 					samlIdpSsoSession, samlMessageContext);
 
 				samlSloContext.setSamlSsoSessionId(samlSsoSessionId);
-				samlSloContext.setUserId(PortalUtil.getUserId(request));
+				samlSloContext.setUserId(portal.getUserId(request));
 
 				session.setAttribute(
 					PortletWebKeys.SAML_SLO_CONTEXT, samlSloContext);
@@ -445,9 +445,9 @@ public class SingleLogoutProfileImpl
 		SamlSloContext samlSloContext = getSamlSloContext(request, null);
 
 		if (samlSloContext != null) {
-			String portalURL = PortalUtil.getPortalURL(request);
+			String portalURL = portal.getPortalURL(request);
 
-			String pathMain = PortalUtil.getPathMain();
+			String pathMain = portal.getPathMain();
 
 			String redirect = portalURL.concat(pathMain).concat(
 				"/portal/saml/slo_logout");
@@ -840,9 +840,9 @@ public class SingleLogoutProfileImpl
 			terminateSpSession(request, response);
 		}
 
-		String portalURL = PortalUtil.getPortalURL(request);
+		String portalURL = portal.getPortalURL(request);
 
-		String pathMain = PortalUtil.getPathMain();
+		String pathMain = portal.getPathMain();
 
 		String redirect = portalURL.concat(pathMain).concat("/portal/logout");
 
@@ -1160,6 +1160,11 @@ public class SingleLogoutProfileImpl
 		StatusCode statusCode = status.getStatusCode();
 
 		return statusCode.getValue();
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		super.portal = portal;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

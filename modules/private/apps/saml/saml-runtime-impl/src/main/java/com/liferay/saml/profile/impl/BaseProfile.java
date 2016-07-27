@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.SamlException;
@@ -425,11 +425,11 @@ public abstract class BaseProfile {
 
 		cookie.setMaxAge(maxAge);
 
-		if (Validator.isNull(PortalUtil.getPathContext())) {
+		if (Validator.isNull(portal.getPathContext())) {
 			cookie.setPath(StringPool.SLASH);
 		}
 		else {
-			cookie.setPath(PortalUtil.getPathContext());
+			cookie.setPath(portal.getPathContext());
 		}
 
 		cookie.setSecure(request.isSecure());
@@ -446,6 +446,7 @@ public abstract class BaseProfile {
 	}
 
 	protected MetadataManager metadataManager;
+	protected Portal portal;
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseProfile.class);
 

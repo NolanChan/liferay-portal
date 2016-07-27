@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -342,7 +342,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlSsoRequestContext.setStage(
 				SamlSsoRequestContext.STAGE_AUTHENTICATED);
 
-			long userId = PortalUtil.getUserId(request);
+			long userId = portal.getUserId(request);
 
 			samlSsoRequestContext.setUserId(userId);
 
@@ -410,7 +410,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		samlSsoRequestContext.setStage(SamlSsoRequestContext.STAGE_INITIAL);
 
-		long userId = PortalUtil.getUserId(request);
+		long userId = portal.getUserId(request);
 
 		samlSsoRequestContext.setUserId(userId);
 
@@ -655,11 +655,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		sb.append("/portal/saml/auth_redirect?redirect=");
 
-		String relayState = PortalUtil.escapeRedirect(
+		String relayState = portal.escapeRedirect(
 			samlMessageContext.getRelayState());
 
 		if (Validator.isNull(relayState)) {
-			relayState = PortalUtil.getHomeURL(request);
+			relayState = portal.getHomeURL(request);
 		}
 
 		sb.append(HttpUtil.encodeURL(relayState));
@@ -704,7 +704,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		authnRequest.setID(generateIdentifier(20));
 
-		long companyId = PortalUtil.getCompanyId(request);
+		long companyId = portal.getCompanyId(request);
 
 		boolean forceAuthn = false;
 
@@ -1149,6 +1149,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		sendSamlMessage(samlMessageContext);
 	}
 
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		super.portal = portal;
+	}
+
 	protected void updateSamlSsoSession(
 			HttpServletRequest request,
 			SamlSsoRequestContext samlSsoRequestContext, NameID nameId)
@@ -1463,6 +1468,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		_samlSignatureProfileValidator = new SAMLSignatureProfileValidator();
 
 	private AttributeResolver _attributeResolver;
+
+	@Reference
+	private HttpUtil _httpUtil;
+
 	private NameIdResolver _nameIdResolver;
 	private SAMLConfiguration _samlConfiguration;
 
