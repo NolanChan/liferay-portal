@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml;
+package com.liferay.saml.profile.impl;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
