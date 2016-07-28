@@ -14,7 +14,7 @@ dependencies {
 	provided group: "org.opensaml", name: "opensaml", version: "2.6.0"
 	provided group: "org.opensaml", name: "openws", version: "1.5.0"
 	provided group: "org.opensaml", name: "xmltooling", version: "1.4.0"
-	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.owasp.esapi", name: "esapi", transitive: false, version: "2.0.1"
 	provided project(':private:apps:saml:saml-persistence-api')
 }
