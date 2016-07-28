@@ -4,3 +4,21 @@ dependencies {
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
 }
+
+task cleanTestResources(type: Delete)
+task unzipTestResources(type: Copy)
+
+cleanTestResources {
+	delete "src/testIntegration/resources/"
+}
+
+unzipTestResources {
+	def zipFile = file("jasperreports-5.2.0-project.zip")
+	def outputDir = file("src/testIntegration/resources")
+
+	from zipTree(zipFile).files
+	into outputDir
+}
+
+compileJava.dependsOn unzipTestResources
+clean.dependsOn cleanTestResources
