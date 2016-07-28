@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.SamlException;
-import com.liferay.saml.SamlSsoRequestContext;
 import com.liferay.saml.binding.SamlBinding;
 import com.liferay.saml.configuration.SAMLConfiguration;
 import com.liferay.saml.exception.AssertionException;

@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.SamlException;
-import com.liferay.saml.SamlSloContext;
-import com.liferay.saml.SamlSloRequestInfo;
 import com.liferay.saml.binding.SamlBinding;
 import com.liferay.saml.exception.UnsolicitedLogoutResponseException;
 import com.liferay.saml.exception.UnsupportedBindingException;
