@@ -301,7 +301,6 @@ public class SingleLogoutProfileImpl
 
 	@Reference(
 		cardinality = ReferenceCardinality.AT_LEAST_ONE,
-		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY, unbind = "unsetSamlBinding"
 	)
 	public void setSamlBinding(SamlBinding samlBinding) {
@@ -366,10 +365,6 @@ public class SingleLogoutProfileImpl
 		addCookie(
 			request, response, PortletWebKeys.SAML_SSO_SESSION_ID,
 			StringPool.BLANK, 0);
-	}
-
-	public void unsetSamlBinding(SamlBinding samlBinding) {
-		removeSamlBinding(samlBinding);
 	}
 
 	protected void addSessionIndex(

@@ -417,6 +417,10 @@ public abstract class BaseProfile {
 		_samlBindings = samlBindings;
 	}
 
+	public void unsetSamlBinding(SamlBinding samlBinding) {
+		removeSamlBinding(samlBinding);
+	}
+
 	protected void addCookie(
 		HttpServletRequest request, HttpServletResponse response,
 		String cookieName, String cookieValue, int maxAge) {

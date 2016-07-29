@@ -126,6 +126,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -223,7 +224,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		_nameIdResolver = nameIdResolver;
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
+	@Reference(
+		cardinality = ReferenceCardinality.AT_LEAST_ONE,
+		policyOption = ReferencePolicyOption.GREEDY, unbind = "unsetSamlBinding"
+	)
 	public void setSamlBinding(SamlBinding samlBinding) {
 		addSamlBinding(samlBinding);
 	}
