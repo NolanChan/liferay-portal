@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.servlet.PluginContextLifecycleThreadLocal;
@@ -828,8 +829,10 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertTrue(schedulerResponses.isEmpty());
 		Assert.assertEquals(1, _memoryClusteredJobs.size());
 
+		_mockClusterMasterExecutor.reset(false, 2, 0);
+
 		Trigger trigger = getTrigger(
-			_TEST_JOB_NAME_PREFIX + "new", _MEMORY_CLUSTER_TEST_GROUP_NAME,
+			_TEST_JOB_NAME_PREFIX + "1", _MEMORY_CLUSTER_TEST_GROUP_NAME,
 			_DEFAULT_INTERVAL);
 
 		_clusterSchedulerEngine.schedule(
@@ -1742,7 +1745,7 @@ public class ClusterSchedulerEngineTest {
 		_mockSchedulerEngine = new MockSchedulerEngine();
 
 		_clusterSchedulerEngine = new ClusterSchedulerEngine(
-			_mockSchedulerEngine);
+			_mockSchedulerEngine, new MockTriggerFactory());
 
 		_clusterSchedulerEngine.setClusterMasterExecutor(
 			_mockClusterMasterExecutor);
@@ -1817,6 +1820,9 @@ public class ClusterSchedulerEngineTest {
 
 	private static final String _TEST_JOB_NAME_PREFIX = "test.job.";
 
+	private static final MethodKey _getScheduledJobMethodKey = new MethodKey(
+		SchedulerEngineHelperUtil.class, "getScheduledJob", String.class,
+		String.class, StorageType.class);
 	private static final MethodKey _getScheduledJobsMethodKey = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJobs", StorageType.class);
 
@@ -1858,6 +1864,15 @@ public class ClusterSchedulerEngineTest {
 					(StorageType)methodHandler.getArguments()[0];
 
 				result = (T)_mockSchedulerEngine.getScheduledJobs(storageType);
+			}
+			else if (methodKey.equals(_getScheduledJobMethodKey)) {
+				String jobName = (String)methodHandler.getArguments()[0];
+				String groupName = (String)methodHandler.getArguments()[1];
+				StorageType storageType =
+					(StorageType)methodHandler.getArguments()[2];
+
+				result = (T)_mockSchedulerEngine.getScheduledJob(
+					jobName, groupName, storageType);
 			}
 
 			DefaultNoticeableFuture<T> defaultNoticeableFuture =
@@ -2188,7 +2203,14 @@ public class ClusterSchedulerEngineTest {
 
 			_jobName = jobName;
 			_groupName = groupName;
-			_startDate = startDate;
+
+			if (startDate != null) {
+				_startDate = startDate;
+			}
+			else {
+				_startDate = new Date();
+			}
+
 			_endDate = endDate;
 			_interval = interval;
 			_timeUnit = timeUnit;
@@ -2197,6 +2219,22 @@ public class ClusterSchedulerEngineTest {
 		@Override
 		public Date getEndDate() {
 			return _endDate;
+		}
+
+		@Override
+		public Date getFireDateAfter(Date date) {
+			if (_timeUnit != TimeUnit.SECOND) {
+				return null;
+			}
+
+			long nextFirTime = _startDate.getTime();
+
+			do {
+				nextFirTime += _interval * 1000;
+			}
+			while (nextFirTime <= date.getTime());
+
+			return new Date(nextFirTime);
 		}
 
 		@Override
@@ -2233,6 +2271,37 @@ public class ClusterSchedulerEngineTest {
 		private final String _jobName;
 		private final Date _startDate;
 		private final TimeUnit _timeUnit;
+
+	}
+
+	private static class MockTriggerFactory implements TriggerFactory {
+
+		@Override
+		public Trigger createTrigger(
+			String jobName, String groupName, Date startDate, Date endDate,
+			int interval, TimeUnit timeUnit) {
+
+			return null;
+		}
+
+		@Override
+		public Trigger createTrigger(
+			String jobName, String groupName, Date startDate, Date endDate,
+			String cronExpression) {
+
+			return null;
+		}
+
+		@Override
+		public Trigger createTrigger(
+			Trigger trigger, Date startDate, Date endDate) {
+
+			MockTrigger mockTrigger = (MockTrigger)trigger;
+
+			return new MockTrigger(
+				mockTrigger.getJobName(), mockTrigger.getGroupName(), startDate,
+				endDate, mockTrigger.getInterval(), mockTrigger.getTimeUnit());
+		}
 
 	}
 
