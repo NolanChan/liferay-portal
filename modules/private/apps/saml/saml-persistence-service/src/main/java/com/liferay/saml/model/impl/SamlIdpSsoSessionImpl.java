@@ -15,11 +15,10 @@
 package com.liferay.saml.model.impl;
 
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.saml.metadata.MetadataManager;
 
 import java.util.Date;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
@@ -62,7 +61,7 @@ public class SamlIdpSsoSessionImpl extends SamlIdpSsoSessionBaseImpl {
 		}
 	}
 
-	@Reference
+	@ServiceReference(type = MetadataManager.class)
 	private MetadataManager _metadataManager;
 
 }
