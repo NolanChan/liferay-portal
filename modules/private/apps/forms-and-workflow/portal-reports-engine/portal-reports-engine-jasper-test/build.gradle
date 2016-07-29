@@ -6,14 +6,49 @@ dependencies {
 }
 
 task cleanTestResources(type: Delete)
+
+task extractUpgradedResources(type: Copy)
+task buildUpgradedResourcesZip(type: Zip, dependsOn: extractUpgradedResources)
+task upgradeTestResources(type: Delete, dependsOn: buildUpgradedResourcesZip)
+
 task unzipTestResources(type: Copy)
+
+def jasperVersion = "5.2.0"
 
 cleanTestResources {
 	delete "src/testIntegration/resources/"
 }
 
+buildUpgradedResourcesZip {
+	includeEmptyDirs = false
+	archiveName = "jasperreports-${jasperVersion}-project.zip"
+
+	from ("${buildDir}/temp") {
+		include "**/csvdatasource/data/*"
+		include "**/csvdatasource/reports/*"
+		include "**/xlsdatasource/data/*"
+		include "**/xlsdatasource/reports/*"
+		include "**/xmldatasource/data/*"
+		include "**/xmldatasource/reports/*"
+	}
+
+	destinationDir = projectDir
+}
+
+extractUpgradedResources {
+	from zipTree("jasperreports-${jasperVersion}-project.zip")
+	destinationDir = file("${buildDir}/temp")
+
+	rename ("jasperreports-${jasperVersion}-project.zip", "jasperreports-${jasperVersion}-project-old.zip")
+}
+
+upgradeTestResources {
+	delete "${buildDir}/temp"
+	delete "jasperreports-${jasperVersion}-project-old.zip"
+}
+
 unzipTestResources {
-	def zipFile = file("jasperreports-5.2.0-project.zip")
+	def zipFile = file("jasperreports-${jasperVersion}-project.zip")
 	def outputDir = file("src/testIntegration/resources")
 
 	from zipTree(zipFile).files
