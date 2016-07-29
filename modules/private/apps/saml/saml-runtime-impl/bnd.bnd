@@ -4,6 +4,7 @@ Bundle-ClassPath:\
 Bundle-Name: Liferay SAML Runtime Impl
 Bundle-SymbolicName: com.liferay.saml.runtime.impl
 Bundle-Version: 1.0.0
+Export-Package: org.apache.velocity.*
 Import-Package:\
 	!com.werken.*,\
 	\
