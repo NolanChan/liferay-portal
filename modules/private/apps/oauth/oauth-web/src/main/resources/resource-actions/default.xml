@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_oauth_web_portlet_AdminPortlet</portlet-name>
+		<portlet-name>com_liferay_oauth_web_internal_portlet_AdminPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
@@ -22,7 +22,7 @@
 		</permissions>
 	</portlet-resource>
 	<portlet-resource>
-		<portlet-name>com_liferay_oauth_web_portlet_AuthorizationsPortlet</portlet-name>
+		<portlet-name>com_liferay_oauth_web_internal_portlet_AuthorizationsPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
@@ -39,7 +39,7 @@
 	<model-resource>
 		<model-name>com.liferay.oauth</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_oauth_web_portlet_AdminPortlet</portlet-name>
+			<portlet-name>com_liferay_oauth_web_internal_portlet_AdminPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<permissions>
@@ -56,7 +56,7 @@
 	<model-resource>
 		<model-name>com.liferay.oauth.model.OAuthApplication</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_oauth_web_portlet_AdminPortlet</portlet-name>
+			<portlet-name>com_liferay_oauth_web_internal_portlet_AdminPortlet</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -78,8 +78,8 @@
 	<model-resource>
 		<model-name>com.liferay.oauth.model.OAuthUser</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_oauth_web_portlet_AdminPortlet</portlet-name>
-			<portlet-name>com_liferay_oauth_web_portlet_AuthorizationsPortlet</portlet-name>
+			<portlet-name>com_liferay_oauth_web_internal_portlet_AdminPortlet</portlet-name>
+			<portlet-name>com_liferay_oauth_web_internal_portlet_AuthorizationsPortlet</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
