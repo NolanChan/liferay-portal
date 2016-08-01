@@ -15,8 +15,8 @@
 package com.liferay.saml.model.impl;
 
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.saml.metadata.MetadataManager;
+import com.liferay.saml.util.PortletPrefsPropsUtil;
+import com.liferay.saml.util.PortletPropsKeys;
 
 import java.util.Date;
 
@@ -30,8 +30,10 @@ public class SamlIdpSsoSessionImpl extends SamlIdpSsoSessionBaseImpl {
 
 	@Override
 	public boolean isExpired() {
-		long samlIdpSessionMaximumAge = _metadataManager.getSessionMaximumAge();
-		long samlIdpSessionTimeout = _metadataManager.getSessionTimeout();
+		long samlIdpSessionMaximumAge = PortletPrefsPropsUtil.getLong(
+			PortletPropsKeys.SAML_IDP_SESSION_MAXIMUM_AGE);
+		long samlIdpSessionTimeout = PortletPrefsPropsUtil.getLong(
+			PortletPropsKeys.SAML_IDP_SESSION_TIMEOUT);
 
 		if (samlIdpSessionMaximumAge > 0) {
 			Date createDate = getCreateDate();
@@ -60,8 +62,5 @@ public class SamlIdpSsoSessionImpl extends SamlIdpSsoSessionBaseImpl {
 			return false;
 		}
 	}
-
-	@ServiceReference(type = MetadataManager.class)
-	private MetadataManager _metadataManager;
 
 }
