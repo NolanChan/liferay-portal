@@ -14,13 +14,11 @@
 
 package com.liferay.portal.workflow.kaleo.forms.web.asset;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
-import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -148,64 +146,6 @@ public class KaleoProcessAssetRenderer
 			"ddlRecordId", String.valueOf(_ddlRecord.getRecordId()));
 
 		return portletURL;
-	}
-
-	@Override
-	public String getURLViewInContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		String noSuchEntryRedirect) {
-
-		try {
-			String currentURL = PortalUtil.getCurrentURL(liferayPortletRequest);
-
-			PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-			AssetRendererFactory<KaleoProcess> assetRendererFactory =
-				getAssetRendererFactory();
-
-			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-				getClassName(), getClassPK());
-
-			ResultRow resultRow = (ResultRow)liferayPortletRequest.getAttribute(
-				WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-			if (resultRow != null) {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)liferayPortletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				WorkflowTask workflowTask =
-					(WorkflowTask)resultRow.getParameter("workflowTask");
-
-				if ((workflowTask.getAssigneeUserId() ==
-						themeDisplay.getUserId()) &&
-					!workflowTask.isCompleted()) {
-
-					portletURL.setParameter("showEditURL", "true");
-				}
-			}
-
-			portletURL.setParameter("mvcPath", "/view_content.jsp");
-			portletURL.setParameter("redirect", currentURL);
-			portletURL.setParameter(
-				"assetEntryId", String.valueOf(assetEntry.getEntryId()));
-			portletURL.setParameter(
-				"assetEntryClassPK", String.valueOf(_ddlRecord.getRecordId()));
-			portletURL.setParameter(
-				"assetEntryVersionId",
-				String.valueOf(_ddlRecordVersion.getRecordId()));
-			portletURL.setParameter("type", assetRendererFactory.getType());
-
-			return portletURL.toString();
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
-			}
-		}
-
-		return noSuchEntryRedirect;
 	}
 
 	@Override
