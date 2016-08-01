@@ -199,22 +199,35 @@ public class KaleoProcessAssetRenderer
 	protected KaleoProcessLink fetchKaleoProcessLink(HttpServletRequest request)
 		throws Exception {
 
+		KaleoProcessLink kaleoProcessLink = null;
+
 		WorkflowTask workflowTask = getWorkflowTask(request);
 
-		return _kaKaleoProcessLinkLocalService.fetchKaleoProcessLink(
-			_kaleoProcess.getKaleoProcessId(), workflowTask.getName());
+		if (workflowTask != null) {
+			kaleoProcessLink =
+				_kaKaleoProcessLinkLocalService.fetchKaleoProcessLink(
+					_kaleoProcess.getKaleoProcessId(), workflowTask.getName());
+		}
+
+		return kaleoProcessLink;
 	}
 
 	protected WorkflowTask getWorkflowTask(HttpServletRequest request)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		WorkflowTask workflowTask = null;
 
 		long workflowTaskId = ParamUtil.getLong(request, "workflowTaskId");
 
-		return WorkflowTaskManagerUtil.getWorkflowTask(
-			themeDisplay.getCompanyId(), workflowTaskId);
+		if (workflowTaskId > 0) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			workflowTask = WorkflowTaskManagerUtil.getWorkflowTask(
+				themeDisplay.getCompanyId(), workflowTaskId);
+		}
+
+		return workflowTask;
 	}
 
 	protected void setKaleoProcessLinkLocalService(
