@@ -83,7 +83,7 @@ public class JasperReportFormatExporterRegistry
 		if (Validator.isNull(reportFormat)) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"No reportFormat specified for: " + reportFormatExporter);
+					"No report format specified for " + reportFormatExporter);
 			}
 
 			return;
