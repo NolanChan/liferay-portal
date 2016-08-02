@@ -34,12 +34,12 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.apache.commons.io.IOUtils;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
