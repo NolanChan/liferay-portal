@@ -57,20 +57,20 @@ public class ReportFillManagerRegistry {
 		String reportDataSourceTypeString = GetterUtil.getString(
 			properties.get("reportDataSourceType"));
 
-		ReportDataSourceType reportSourceDataType = ReportDataSourceType.parse(
+		ReportDataSourceType reportDataSourceType = ReportDataSourceType.parse(
 			reportDataSourceTypeString);
 
-		if (Validator.isNull(reportSourceDataType)) {
+		if (Validator.isNull(reportDataSourceType)) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"No reportDataSourceType specified for: " +
+					"No report data source type specified for " +
 						reportFillManager);
 			}
 
 			return;
 		}
 
-		_reportFillManagers.remove(reportSourceDataType);
+		_reportFillManagers.remove(reportDataSourceType);
 	}
 
 	@Reference(
