@@ -22,7 +22,7 @@ buildUpgradedResourcesZip {
 }
 
 dependencies {
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.5"
 	testIntegrationCompile project(":apps:forms-and-workflow:portal-reports-engine:portal-reports-engine-api")
 	testIntegrationCompile project(":private:apps:forms-and-workflow:portal-reports-engine:portal-reports-engine-jasper")
 }
