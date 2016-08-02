@@ -87,7 +87,7 @@ public class ReportEngineImplTest extends TestCase {
 
 			if (counter >= 5) {
 				throw new IllegalStateException(
-					"Cannot obtain reference to ReportEngine");
+					"Unable to get reference to a report engine");
 			}
 		}
 		while (_serviceReference == null);
@@ -191,17 +191,16 @@ public class ReportEngineImplTest extends TestCase {
 		ReportRequestContext reportRequestContext = new ReportRequestContext(
 			reportDataSourceType);
 
-		Class reportEngineImplTestClass = getClass();
+		Class<?> reportEngineImplTestClass = getClass();
 
 		ClassLoader classLoader = reportEngineImplTestClass.getClassLoader();
 
 		InputStream dataSourceInputStream = classLoader.getResourceAsStream(
 			dataSourceFileName);
 
-		byte[] dataSourceByteArray = IOUtils.toByteArray(dataSourceInputStream);
-
 		reportRequestContext.setAttribute(
-			ReportRequestContext.DATA_SOURCE_BYTE_ARRAY, dataSourceByteArray);
+			ReportRequestContext.DATA_SOURCE_BYTE_ARRAY,
+			IOUtils.toByteArray(dataSourceInputStream));
 
 		reportRequestContext.setAttribute(
 			ReportRequestContext.DATA_SOURCE_COLUMN_NAMES,
