@@ -233,7 +233,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		when(
 			portal.getUserId(Mockito.any(MockHttpServletRequest.class))
 		).thenReturn(
-			1000l
+			1000L
 		);
 
 		samlSsoRequestContext = _webSsoProfileImpl.decodeAuthnRequest(

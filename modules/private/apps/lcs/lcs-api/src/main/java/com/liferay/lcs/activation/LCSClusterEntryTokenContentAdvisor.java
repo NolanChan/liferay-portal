@@ -38,7 +38,7 @@ public class LCSClusterEntryTokenContentAdvisor {
 				"Automatic activation token content must not be empty");
 		}
 
-		String array[] = content.split("--");
+		String[] array = content.split("--");
 
 		if (array.length == 1) {
 			processContent(content);

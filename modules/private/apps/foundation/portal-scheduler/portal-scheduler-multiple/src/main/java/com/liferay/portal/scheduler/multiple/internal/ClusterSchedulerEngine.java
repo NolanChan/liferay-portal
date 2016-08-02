@@ -542,7 +542,7 @@ public class ClusterSchedulerEngine
 					memoryClusteredJobs.iterator();
 
 		while (itr.hasNext()) {
-			Map.Entry <String, ObjectValuePair<SchedulerResponse, TriggerState>>
+			Map.Entry<String, ObjectValuePair<SchedulerResponse, TriggerState>>
 				entry = itr.next();
 
 			ObjectValuePair<SchedulerResponse, TriggerState>

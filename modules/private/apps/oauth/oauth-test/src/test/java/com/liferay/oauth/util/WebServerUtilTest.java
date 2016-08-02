@@ -29,7 +29,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Igor Beslic
  */
-@PrepareForTest({PropsUtil.class})
+@PrepareForTest(PropsUtil.class)
 @RunWith(PowerMockRunner.class)
 public class WebServerUtilTest extends PowerMockito {
 

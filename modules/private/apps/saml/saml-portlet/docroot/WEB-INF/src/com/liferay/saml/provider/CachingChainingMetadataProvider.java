@@ -224,7 +224,7 @@ public class CachingChainingMetadataProvider extends BaseMetadataProvider {
 				metadataProvider = _metadataProviders.get(i);
 
 				try {
-					List<RoleDescriptor>roleDescriptors =
+					List<RoleDescriptor> roleDescriptors =
 						metadataProvider.getRole(entityId, qName);
 
 					if ((roleDescriptors != null) &&

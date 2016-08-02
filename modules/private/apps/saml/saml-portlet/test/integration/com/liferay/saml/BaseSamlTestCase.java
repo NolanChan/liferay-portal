@@ -450,7 +450,9 @@ public class BaseSamlTestCase extends PowerMockito {
 		when(
 			layoutLocalService.getDefaultPlid(
 				Mockito.anyLong(), Mockito.anyBoolean())
-		).thenReturn(1l);
+		).thenReturn(
+			1L
+		);
 	}
 
 	protected void setupProps() {

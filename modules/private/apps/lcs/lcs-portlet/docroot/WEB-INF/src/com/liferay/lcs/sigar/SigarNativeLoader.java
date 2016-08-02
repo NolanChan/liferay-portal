@@ -91,7 +91,7 @@ public class SigarNativeLoader {
 
 		nativeLibrariesField.setAccessible(true);
 
-		Vector<?> nativeLibraries = (Vector< ? >)nativeLibrariesField.get(
+		Vector<?> nativeLibraries = (Vector<?>)nativeLibrariesField.get(
 			SigarNativeLoader.class.getClassLoader());
 
 		SigarLoader sigarLoader = new SigarLoader(Sigar.class);
