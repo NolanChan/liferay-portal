@@ -1,28 +1,16 @@
-dependencies {
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
-	testIntegrationCompile project(":apps:forms-and-workflow:portal-reports-engine:portal-reports-engine-api")
-	testIntegrationCompile project(":private:apps:forms-and-workflow:portal-reports-engine:portal-reports-engine-jasper")
-}
-
 task cleanTestResources(type: Delete)
-
 task extractUpgradedResources(type: Copy)
 task buildUpgradedResourcesZip(type: Zip, dependsOn: extractUpgradedResources)
 task upgradeTestResources(type: Delete, dependsOn: buildUpgradedResourcesZip)
-
 task unzipTestResources(type: Copy)
 
 def jasperVersion = "5.2.0"
 
-cleanTestResources {
-	delete "src/testIntegration/resources/"
-}
-
 buildUpgradedResourcesZip {
-	includeEmptyDirs = false
 	archiveName = "jasperreports-${jasperVersion}-project.zip"
+	destinationDir = projectDir
 
-	from ("${buildDir}/temp") {
+	from("${buildDir}/temp") {
 		include "**/csvdatasource/data/*"
 		include "**/csvdatasource/reports/*"
 		include "**/xlsdatasource/data/*"
@@ -31,19 +19,31 @@ buildUpgradedResourcesZip {
 		include "**/xmldatasource/reports/*"
 	}
 
-	destinationDir = projectDir
+	includeEmptyDirs = false
+}
+
+clean {
+	dependsOn cleanTestResources
+}
+
+cleanTestResources {
+	delete "src/testIntegration/resources/"
+}
+
+compileJava {
+	dependsOn unzipTestResources
+}
+
+dependencies {
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+	testIntegrationCompile project(":apps:forms-and-workflow:portal-reports-engine:portal-reports-engine-api")
+	testIntegrationCompile project(":private:apps:forms-and-workflow:portal-reports-engine:portal-reports-engine-jasper")
 }
 
 extractUpgradedResources {
 	from zipTree("jasperreports-${jasperVersion}-project.zip")
 	destinationDir = file("${buildDir}/temp")
-
-	rename ("jasperreports-${jasperVersion}-project.zip", "jasperreports-${jasperVersion}-project-old.zip")
-}
-
-upgradeTestResources {
-	delete "${buildDir}/temp"
-	delete "jasperreports-${jasperVersion}-project-old.zip"
+	rename "jasperreports-${jasperVersion}-project.zip", "jasperreports-${jasperVersion}-project-old.zip"
 }
 
 unzipTestResources {
@@ -54,5 +54,7 @@ unzipTestResources {
 	into outputDir
 }
 
-compileJava.dependsOn unzipTestResources
-clean.dependsOn cleanTestResources
+upgradeTestResources {
+	delete "${buildDir}/temp"
+	delete "jasperreports-${jasperVersion}-project-old.zip"
+}
