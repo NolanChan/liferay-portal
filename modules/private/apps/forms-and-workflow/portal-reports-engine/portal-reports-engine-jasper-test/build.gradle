@@ -2,7 +2,7 @@ task extractUpgradedResources(type: Copy)
 task buildUpgradedResourcesZip(type: Zip, dependsOn: extractUpgradedResources)
 task upgradeTestResources(type: Delete, dependsOn: buildUpgradedResourcesZip)
 
-def jasperVersion = "5.2.0"
+String jasperVersion = "5.2.0"
 FileTree jasperZipTree = zipTree("jasperreports-${jasperVersion}-project.zip")
 
 buildUpgradedResourcesZip {
