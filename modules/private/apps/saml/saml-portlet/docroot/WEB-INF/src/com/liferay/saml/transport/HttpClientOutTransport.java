@@ -194,10 +194,10 @@ public class HttpClientOutTransport implements HTTPOutTransport {
 	}
 
 	@Override
-	public void setVersion(HTTP_VERSION http_version) {
+	public void setVersion(HTTP_VERSION httpVersion) {
 		HttpParams httpParams = _postMethod.getParams();
 
-		switch (http_version) {
+		switch (httpVersion) {
 			case HTTP1_0:
 				httpParams.setParameter(
 					"http.protocol.version", HttpVersion.HTTP_1_0);
