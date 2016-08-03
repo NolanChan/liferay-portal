@@ -61,7 +61,7 @@ public class SPIDefinitionServiceImpl extends SPIDefinitionServiceBaseImpl {
 		SPIDefinitionPermissionUtil.check(
 			getPermissionChecker(), ActionKeys.VIEW_SPI_DEFINITIONS);
 
-		return spiDefinitionLocalService. getPortletIdsAndServletContextNames();
+		return spiDefinitionLocalService.getPortletIdsAndServletContextNames();
 	}
 
 	@Override
