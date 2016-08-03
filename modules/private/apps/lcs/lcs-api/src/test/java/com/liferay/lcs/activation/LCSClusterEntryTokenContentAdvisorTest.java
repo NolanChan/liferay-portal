@@ -108,114 +108,90 @@ public class LCSClusterEntryTokenContentAdvisorTest extends PowerMockito {
 		String contentV1 = getLCSClusterEntryTokenContent(
 			"lcs_cluster_entry_token_content_v1.txt");
 
-		try {
-			LCSClusterEntryTokenContentAdvisor
-				lcsClusterEntryTokenContentAdvisor =
-					new LCSClusterEntryTokenContentAdvisor(contentV1);
+		LCSClusterEntryTokenContentAdvisor lcsClusterEntryTokenContentAdvisor =
+			new LCSClusterEntryTokenContentAdvisor(contentV1);
 
-			Assert.assertEquals(
-				"accessTokenPart",
-				lcsClusterEntryTokenContentAdvisor.getAccessToken());
-			Assert.assertEquals(
-				"accessSecretPart",
-				lcsClusterEntryTokenContentAdvisor.getAccessSecret());
-			Assert.assertNull(
-				lcsClusterEntryTokenContentAdvisor.getConsumerKey());
-			Assert.assertNull(
-				lcsClusterEntryTokenContentAdvisor.getConsumerSecret());
-			Assert.assertNull(
-				lcsClusterEntryTokenContentAdvisor.getDataCenterHostName());
-			Assert.assertNull(
-				lcsClusterEntryTokenContentAdvisor.getDataCenterHostPort());
-			Assert.assertNull(
-				lcsClusterEntryTokenContentAdvisor.getDataCenterProtocol());
-			Assert.assertTrue(
-				lcsClusterEntryTokenContentAdvisor.
-					getLCSServicesConfiguration().isEmpty());
-			Assert.assertNull(
-				lcsClusterEntryTokenContentAdvisor.
-					getPortalPropertiesBlacklist());
-		}
-		catch (IOException ioe) {
-			Assert.fail("Unable to parse v1 token structure: " + contentV1);
-		}
+		Assert.assertEquals(
+			"accessTokenPart",
+			lcsClusterEntryTokenContentAdvisor.getAccessToken());
+		Assert.assertEquals(
+			"accessSecretPart",
+			lcsClusterEntryTokenContentAdvisor.getAccessSecret());
+		Assert.assertNull(lcsClusterEntryTokenContentAdvisor.getConsumerKey());
+		Assert.assertNull(
+			lcsClusterEntryTokenContentAdvisor.getConsumerSecret());
+		Assert.assertNull(
+			lcsClusterEntryTokenContentAdvisor.getDataCenterHostName());
+		Assert.assertNull(
+			lcsClusterEntryTokenContentAdvisor.getDataCenterHostPort());
+		Assert.assertNull(
+			lcsClusterEntryTokenContentAdvisor.getDataCenterProtocol());
+		Assert.assertTrue(
+			lcsClusterEntryTokenContentAdvisor.
+				getLCSServicesConfiguration().isEmpty());
+		Assert.assertNull(
+			lcsClusterEntryTokenContentAdvisor.getPortalPropertiesBlacklist());
 
 		String contentV2 = getLCSClusterEntryTokenContent(
 			"lcs_cluster_entry_token_content_v2.txt");
 
-		try {
-			LCSClusterEntryTokenContentAdvisor
-				lcsClusterEntryTokenContentAdvisor =
-					new LCSClusterEntryTokenContentAdvisor(contentV2);
+		lcsClusterEntryTokenContentAdvisor =
+			new LCSClusterEntryTokenContentAdvisor(contentV2);
 
-			Assert.assertEquals(
-				"accessTokenPart",
-				lcsClusterEntryTokenContentAdvisor.getAccessToken());
-			Assert.assertEquals(
-				"accessSecretPart",
-				lcsClusterEntryTokenContentAdvisor.getAccessSecret());
-			Assert.assertNull(
-				lcsClusterEntryTokenContentAdvisor.getConsumerKey());
-			Assert.assertNull(
-				lcsClusterEntryTokenContentAdvisor.getConsumerSecret());
-			Assert.assertNull(
-				lcsClusterEntryTokenContentAdvisor.getDataCenterHostName());
-			Assert.assertNull(
-				lcsClusterEntryTokenContentAdvisor.getDataCenterHostPort());
-			Assert.assertNull(
-				lcsClusterEntryTokenContentAdvisor.getDataCenterProtocol());
-			Assert.assertFalse(
-				lcsClusterEntryTokenContentAdvisor.
-					getLCSServicesConfiguration().isEmpty());
-			Assert.assertEquals(
-				"property.key.1,property.key.2",
-				lcsClusterEntryTokenContentAdvisor.
-					getPortalPropertiesBlacklist());
-		}
-		catch (IOException ioe) {
-			Assert.fail("Unable to parse v2 token structure: " + contentV2);
-		}
+		Assert.assertEquals(
+			"accessTokenPart",
+			lcsClusterEntryTokenContentAdvisor.getAccessToken());
+		Assert.assertEquals(
+			"accessSecretPart",
+			lcsClusterEntryTokenContentAdvisor.getAccessSecret());
+		Assert.assertNull(lcsClusterEntryTokenContentAdvisor.getConsumerKey());
+		Assert.assertNull(
+			lcsClusterEntryTokenContentAdvisor.getConsumerSecret());
+		Assert.assertNull(
+			lcsClusterEntryTokenContentAdvisor.getDataCenterHostName());
+		Assert.assertNull(
+			lcsClusterEntryTokenContentAdvisor.getDataCenterHostPort());
+		Assert.assertNull(
+			lcsClusterEntryTokenContentAdvisor.getDataCenterProtocol());
+		Assert.assertFalse(
+			lcsClusterEntryTokenContentAdvisor.
+				getLCSServicesConfiguration().isEmpty());
+		Assert.assertEquals(
+			"property.key.1,property.key.2",
+			lcsClusterEntryTokenContentAdvisor.getPortalPropertiesBlacklist());
 
 		String contentV3 = getLCSClusterEntryTokenContent(
 			"lcs_cluster_entry_token_content_v3.json");
 
-		try {
-			LCSClusterEntryTokenContentAdvisor
-				lcsClusterEntryTokenContentAdvisor =
-					new LCSClusterEntryTokenContentAdvisor(contentV3);
+		lcsClusterEntryTokenContentAdvisor =
+			new LCSClusterEntryTokenContentAdvisor(contentV3);
 
-			Assert.assertEquals(
-				"accessTokenPart",
-				lcsClusterEntryTokenContentAdvisor.getAccessToken());
-			Assert.assertEquals(
-				"accessSecretPart",
-				lcsClusterEntryTokenContentAdvisor.getAccessSecret());
-			Assert.assertEquals(
-				"consumerKeyPart",
-				lcsClusterEntryTokenContentAdvisor.getConsumerKey());
-			Assert.assertEquals(
-				"consumerSecretPart",
-				lcsClusterEntryTokenContentAdvisor.getConsumerSecret());
-			Assert.assertEquals(
-				"lcs.liferay.com",
-				lcsClusterEntryTokenContentAdvisor.getDataCenterHostName());
-			Assert.assertEquals(
-				"443",
-				lcsClusterEntryTokenContentAdvisor.getDataCenterHostPort());
-			Assert.assertEquals(
-				"https",
-				lcsClusterEntryTokenContentAdvisor.getDataCenterProtocol());
-			Assert.assertFalse(
-				lcsClusterEntryTokenContentAdvisor.
-					getLCSServicesConfiguration().isEmpty());
-			Assert.assertEquals(
-				"property.key.1,property.key.2",
-				lcsClusterEntryTokenContentAdvisor.
-					getPortalPropertiesBlacklist());
-		}
-		catch (IOException ioe) {
-			Assert.fail("Unable to parse v3 token structure: " + contentV3);
-		}
+		Assert.assertEquals(
+			"accessTokenPart",
+			lcsClusterEntryTokenContentAdvisor.getAccessToken());
+		Assert.assertEquals(
+			"accessSecretPart",
+			lcsClusterEntryTokenContentAdvisor.getAccessSecret());
+		Assert.assertEquals(
+			"consumerKeyPart",
+			lcsClusterEntryTokenContentAdvisor.getConsumerKey());
+		Assert.assertEquals(
+			"consumerSecretPart",
+			lcsClusterEntryTokenContentAdvisor.getConsumerSecret());
+		Assert.assertEquals(
+			"lcs.liferay.com",
+			lcsClusterEntryTokenContentAdvisor.getDataCenterHostName());
+		Assert.assertEquals(
+			"443", lcsClusterEntryTokenContentAdvisor.getDataCenterHostPort());
+		Assert.assertEquals(
+			"https",
+			lcsClusterEntryTokenContentAdvisor.getDataCenterProtocol());
+		Assert.assertFalse(
+			lcsClusterEntryTokenContentAdvisor.
+				getLCSServicesConfiguration().isEmpty());
+		Assert.assertEquals(
+			"property.key.1,property.key.2",
+			lcsClusterEntryTokenContentAdvisor.getPortalPropertiesBlacklist());
 	}
 
 	protected String getLCSClusterEntryTokenContent(String fileName)
