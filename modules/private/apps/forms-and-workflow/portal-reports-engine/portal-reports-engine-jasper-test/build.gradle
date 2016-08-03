@@ -1,25 +1,9 @@
-task extractUpgradedResources(type: Copy)
-task buildUpgradedResourcesZip(type: Zip, dependsOn: extractUpgradedResources)
-task upgradeTestResources(type: Delete, dependsOn: buildUpgradedResourcesZip)
+task upgradeTestResources(type: Zip)
 
 String jasperVersion = "5.2.0"
-FileTree jasperZipTree = zipTree("jasperreports-${jasperVersion}-project.zip")
 
-buildUpgradedResourcesZip {
-	archiveName = "jasperreports-${jasperVersion}-project.zip"
-	destinationDir = projectDir
-
-	from("${buildDir}/temp") {
-		include "**/csvdatasource/data/*"
-		include "**/csvdatasource/reports/*"
-		include "**/xlsdatasource/data/*"
-		include "**/xlsdatasource/reports/*"
-		include "**/xmldatasource/data/*"
-		include "**/xmldatasource/reports/*"
-	}
-
-	includeEmptyDirs = false
-}
+File jasperFile = file("jasperreports-${jasperVersion}-project.zip")
+FileTree jasperZipTree = zipTree(jasperFile)
 
 dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.5"
@@ -27,17 +11,35 @@ dependencies {
 	testIntegrationCompile project(":private:apps:forms-and-workflow:portal-reports-engine:portal-reports-engine-jasper")
 }
 
-extractUpgradedResources {
-	from zipTree("jasperreports-${jasperVersion}-project.zip")
-	destinationDir = file("${buildDir}/temp")
-	rename "jasperreports-${jasperVersion}-project.zip", "jasperreports-${jasperVersion}-project-old.zip"
-}
-
 processTestIntegrationResources {
 	from jasperZipTree.files
 }
 
 upgradeTestResources {
-	delete "${buildDir}/temp"
-	delete "jasperreports-${jasperVersion}-project-old.zip"
+	archiveName = "test-resources.zip"
+	destinationDir = temporaryDir
+
+	doLast {
+		delete jasperFile
+
+		boolean success = archivePath.renameTo(jasperFile)
+
+		if (!success) {
+			throw new GradleException("Unable to rename ${archivePath} to ${jasperFile}")
+		}
+	}
+
+	include "**/csvdatasource/data/"
+	include "**/csvdatasource/reports/"
+	include "**/xlsdatasource/data/"
+	include "**/xlsdatasource/reports/"
+	include "**/xmldatasource/data/"
+	include "**/xmldatasource/reports/"
+
+	includeEmptyDirs = false
+	from jasperZipTree
+
+	outputs.upToDateWhen {
+		false
+	}
 }
