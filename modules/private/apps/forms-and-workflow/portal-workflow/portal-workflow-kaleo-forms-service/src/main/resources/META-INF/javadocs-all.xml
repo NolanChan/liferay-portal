@@ -2606,7 +2606,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoProcessWorkflowHandler</name>
-		<type>com.liferay.portal.workflow.kaleo.forms.workflow.KaleoProcessWorkflowHandler</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.internal.workflow.KaleoProcessWorkflowHandler</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>getClassName</name>

@@ -66,10 +66,10 @@ page import="com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs" %
 page import="com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalServiceUtil" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoFormsPermission" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.web.display.context.KaleoFormsAdminDisplayContext" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.web.display.context.KaleoFormsViewRecordsDisplayContext" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.web.search.KaleoProcessSearch" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.web.util.KaleoFormsUtil" %>
+page import="com.liferay.portal.workflow.kaleo.forms.web.internal.display.context.KaleoFormsAdminDisplayContext" %><%@
+page import="com.liferay.portal.workflow.kaleo.forms.web.internal.display.context.KaleoFormsViewRecordsDisplayContext" %><%@
+page import="com.liferay.portal.workflow.kaleo.forms.web.internal.search.KaleoProcessSearch" %><%@
+page import="com.liferay.portal.workflow.kaleo.forms.web.internal.util.KaleoFormsUtil" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.WindowState" %>
