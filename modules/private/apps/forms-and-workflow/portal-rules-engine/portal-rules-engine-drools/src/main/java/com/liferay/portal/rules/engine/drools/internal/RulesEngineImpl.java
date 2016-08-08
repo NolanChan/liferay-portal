@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.rules.engine.drools;
+package com.liferay.portal.rules.engine.drools.internal;
 
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
