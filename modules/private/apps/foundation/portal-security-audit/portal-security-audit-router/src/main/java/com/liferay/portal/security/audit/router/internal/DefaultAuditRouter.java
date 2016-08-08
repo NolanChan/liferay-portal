@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
-import com.liferay.portal.security.audit.router.constants.AuditConstants;
+import com.liferay.portal.security.audit.router.internal.constants.AuditConstants;
 
 import java.util.Dictionary;
 import java.util.HashSet;
