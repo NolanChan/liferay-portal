@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.marvel.web.servlet;
+package com.liferay.portal.search.elasticsearch.marvel.web.internal.servlet;
 
 import com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter;
 
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/marvel-proxy/*",
-		"osgi.http.whiteboard.filter.name=com.liferay.portal.search.elasticsearch.marvel.web.servlet.MarvelProxyFilter",
+		"osgi.http.whiteboard.filter.name=com.liferay.portal.search.elasticsearch.marvel.web.internal.servlet.MarvelProxyFilter",
 		"osgi.http.whiteboard.filter.pattern=/marvel-proxy/*"
 	},
 	service = Filter.class

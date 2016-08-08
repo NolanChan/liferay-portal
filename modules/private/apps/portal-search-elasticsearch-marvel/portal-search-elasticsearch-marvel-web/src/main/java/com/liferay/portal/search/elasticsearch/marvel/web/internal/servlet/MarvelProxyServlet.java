@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.marvel.web.servlet;
+package com.liferay.portal.search.elasticsearch.marvel.web.internal.servlet;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.elasticsearch.marvel.web.configuration.MarvelWebConfiguration;
-import com.liferay.portal.search.elasticsearch.marvel.web.constants.MarvelPortletKeys;
+import com.liferay.portal.search.elasticsearch.marvel.web.internal.constants.MarvelPortletKeys;
 
 import java.io.IOException;
 
@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"osgi.http.whiteboard.context.select=portal-search-elasticsearch-marvel-web",
-		"osgi.http.whiteboard.servlet.name=com.liferay.portal.search.elasticsearch.marvel.web.servlet.MarvelProxyServlet",
+		"osgi.http.whiteboard.servlet.name=com.liferay.portal.search.elasticsearch.marvel.web.internal.servlet.MarvelProxyServlet",
 		"osgi.http.whiteboard.servlet.pattern=/marvel-proxy/*"
 	},
 	service = Servlet.class

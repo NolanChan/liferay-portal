@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.marvel.web.constants;
+package com.liferay.portal.search.elasticsearch.marvel.web.internal.constants;
 
 /**
  * @author André de Oliveira

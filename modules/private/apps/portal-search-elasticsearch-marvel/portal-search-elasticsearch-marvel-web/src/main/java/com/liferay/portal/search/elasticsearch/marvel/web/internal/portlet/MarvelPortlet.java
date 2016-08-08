@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.marvel.web.portlet;
+package com.liferay.portal.search.elasticsearch.marvel.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.search.elasticsearch.marvel.web.constants.MarvelPortletKeys;
+import com.liferay.portal.search.elasticsearch.marvel.web.internal.constants.MarvelPortletKeys;
 
 import javax.portlet.Portlet;
 
