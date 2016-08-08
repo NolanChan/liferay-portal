@@ -17,8 +17,8 @@ package com.liferay.sharepoint.connector.operation;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.sharepoint.connector.SharepointException;
 import com.liferay.sharepoint.connector.SharepointResultException;
+import com.liferay.sharepoint.connector.internal.util.RemoteExceptionUtil;
 import com.liferay.sharepoint.connector.schema.batch.Batch;
-import com.liferay.sharepoint.connector.util.RemoteExceptionUtil;
 
 import com.microsoft.schemas.sharepoint.soap.UpdateListItemsResponseUpdateListItemsResult;
 import com.microsoft.schemas.sharepoint.soap.UpdateListItemsUpdates;

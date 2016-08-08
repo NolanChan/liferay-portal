@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.sharepoint.connector.SharepointException;
 import com.liferay.sharepoint.connector.SharepointObject;
 import com.liferay.sharepoint.connector.SharepointObject.Permission;
+import com.liferay.sharepoint.connector.internal.util.RemoteExceptionUtil;
 import com.liferay.sharepoint.connector.schema.query.Query;
 import com.liferay.sharepoint.connector.schema.query.QueryField;
 import com.liferay.sharepoint.connector.schema.query.QueryFieldsList;
 import com.liferay.sharepoint.connector.schema.query.QueryOptionsList;
 import com.liferay.sharepoint.connector.schema.query.option.ExpandUserFieldQueryOption;
-import com.liferay.sharepoint.connector.util.RemoteExceptionUtil;
 
 import com.microsoft.schemas.sharepoint.soap.GetListItemsQuery;
 import com.microsoft.schemas.sharepoint.soap.GetListItemsQueryOptions;

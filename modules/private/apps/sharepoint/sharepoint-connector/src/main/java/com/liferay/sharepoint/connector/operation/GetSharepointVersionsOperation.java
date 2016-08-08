@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.sharepoint.connector.SharepointException;
 import com.liferay.sharepoint.connector.SharepointObject;
 import com.liferay.sharepoint.connector.SharepointVersion;
-import com.liferay.sharepoint.connector.util.RemoteExceptionUtil;
+import com.liferay.sharepoint.connector.internal.util.RemoteExceptionUtil;
 
 import com.microsoft.schemas.sharepoint.soap.GetVersionsResponseGetVersionsResult;
 

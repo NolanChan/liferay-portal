@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.connector.util;
+package com.liferay.sharepoint.connector.internal.util;
 
 import com.liferay.portal.kernel.repository.AuthenticationRepositoryException;
 import com.liferay.sharepoint.connector.SharepointException;

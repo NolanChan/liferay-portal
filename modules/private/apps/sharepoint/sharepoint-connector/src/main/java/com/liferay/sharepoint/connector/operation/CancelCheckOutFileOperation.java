@@ -15,7 +15,7 @@
 package com.liferay.sharepoint.connector.operation;
 
 import com.liferay.sharepoint.connector.SharepointException;
-import com.liferay.sharepoint.connector.util.RemoteExceptionUtil;
+import com.liferay.sharepoint.connector.internal.util.RemoteExceptionUtil;
 
 import java.net.URL;
 
