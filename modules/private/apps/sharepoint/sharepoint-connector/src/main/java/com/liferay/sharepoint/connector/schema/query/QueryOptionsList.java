@@ -59,8 +59,8 @@ public class QueryOptionsList extends BaseNode {
 	protected void populate(Element element) {
 		super.populate(element);
 
-		for (BaseQueryOption _baseQueryOption : _baseQueryOptions) {
-			_baseQueryOption.attach(element);
+		for (BaseQueryOption baseQueryOption : _baseQueryOptions) {
+			baseQueryOption.attach(element);
 		}
 	}
 
