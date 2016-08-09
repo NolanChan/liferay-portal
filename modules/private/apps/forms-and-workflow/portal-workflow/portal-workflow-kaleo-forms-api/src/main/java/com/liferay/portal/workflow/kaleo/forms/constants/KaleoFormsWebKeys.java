@@ -23,45 +23,45 @@ public class KaleoFormsWebKeys {
 
 	/**
 	 * {@value #DYNAMIC_DATA_MAPPING_STRUCTURE} is the key to use to retrieve
-	 * the DDM Structure from the request attribute.
+	 * the DDM structure from the request attribute.
 	 */
 	public static final String DYNAMIC_DATA_MAPPING_STRUCTURE =
 		"DYNAMIC_DATA_MAPPING_STRUCTURE";
 
 	/**
 	 * {@value #KALEO_DRAFT_DEFINITION_CONTENT} is the key to use to retrieve
-	 * the content of the Kaleo Draft Definition from the request attribute.
+	 * the content of the Kaleo draft definition from the request attribute.
 	 */
 	public static final String KALEO_DRAFT_DEFINITION_CONTENT =
 		"KALEO_DRAFT_DEFINITION_CONTENT";
 
 	/**
 	 * {@value #KALEO_DRAFT_DEFINITION_ID} is the key to use to retrieve the
-	 * primary key of the Kaleo Draft Definition from the request attribute.
+	 * primary key of the Kaleo draft definition from the request attribute.
 	 */
 	public static final String KALEO_DRAFT_DEFINITION_ID =
 		"KALEO_DRAFT_DEFINITION_ID";
 
 	/**
-	 * {@value #KALEO_PROCESS} is the key to use to retrieve the Kaleo Process
+	 * {@value #KALEO_PROCESS} is the key to use to retrieve the Kaleo process
 	 * from the request attribute.
 	 */
 	public static final String KALEO_PROCESS = "KALEO_PROCESS";
 
 	/**
 	 * {@value #KALEO_PROCESS_LINK} is the key to use to retrieve the Kaleo
-	 * Process Link from the request attribute.
+	 * process link from the request attribute.
 	 */
 	public static final String KALEO_PROCESS_LINK = "KALEO_PROCESS_LINK";
 
 	/**
-	 * {@value #WORKFLOW_INSTANCE} is the key to use to retrieve the Workflow
-	 * Instance from the request attribute.
+	 * {@value #WORKFLOW_INSTANCE} is the key to use to retrieve the workflow
+	 * instance from the request attribute.
 	 */
 	public static final String WORKFLOW_INSTANCE = "WORKFLOW_INSTANCE";
 
 	/**
-	 * {@value #WORKFLOW_TASK} is the key to use to retrieve the Workflow Task
+	 * {@value #WORKFLOW_TASK} is the key to use to retrieve the workflow task
 	 * from the request attribute.
 	 */
 	public static final String WORKFLOW_TASK = "WORKFLOW_TASK";

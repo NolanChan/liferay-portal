@@ -23,13 +23,13 @@ public class KaleoFormsActionKeys {
 
 	/**
 	 * {@value #ADD_PROCESS} is the action key to use to check permissions for
-	 * adding a kaleo process.
+	 * adding a Kaleo process.
 	 */
 	public static final String ADD_PROCESS = "ADD_PROCESS";
 
 	/**
 	 * {@value #COMPLETE_FORM} is the action key to use to check permissions for
-	 * completing a kaleo process's form.
+	 * completing a Kaleo process's form.
 	 */
 	public static final String COMPLETE_FORM = "COMPLETE_FORM";
 
