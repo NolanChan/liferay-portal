@@ -17,8 +17,8 @@ package com.liferay.portal.workflow.kaleo.forms.exception;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * Thrown when the system is unable to find the required DDM Template for a
- * Kaleo Process.
+ * Thrown when the system is unable to find the required DDM template for a
+ * Kaleo process.
  *
  * @author Marcellus Tavares
  */

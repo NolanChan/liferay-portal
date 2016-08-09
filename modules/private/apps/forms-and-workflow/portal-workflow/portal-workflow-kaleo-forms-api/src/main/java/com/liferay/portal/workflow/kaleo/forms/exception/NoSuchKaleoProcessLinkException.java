@@ -17,7 +17,7 @@ package com.liferay.portal.workflow.kaleo.forms.exception;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
- * Thrown when the system is unable to find a required Kaleo Process Link.
+ * Thrown when the system is unable to find a required Kaleo process link.
  *
  * @author Marcellus Tavares
  */
