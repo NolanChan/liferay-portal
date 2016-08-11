@@ -38,15 +38,15 @@ public class LCSConstants {
 
 	public static final String CORP_PROJECT_DEFAULT_NAME = "My LCS Project";
 
-	public static final String JSON_DATA = "data";
+	public static final String JSON_KEY_DATA = "data";
 
-	public static final String JSON_FAILURE = "failure";
+	public static final String JSON_KEY_MESSAGE = "message";
 
-	public static final String JSON_MESSAGE = "message";
+	public static final String JSON_KEY_RESULT = "result";
 
-	public static final String JSON_RESULT = "result";
+	public static final String JSON_VALUE_FAILURE = "failure";
 
-	public static final String JSON_SUCCESS = "success";
+	public static final String JSON_VALUE_SUCCESS = "success";
 
 	public static final String LABEL_CLUSTER = "cluster";
 
