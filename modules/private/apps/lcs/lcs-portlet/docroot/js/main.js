@@ -21,8 +21,6 @@ AUI.add(
 
 		var STR_REPONSE_DATA = 'responseData';
 
-		var STR_SUCCESS = 'success';
-
 		var LCS = A.Component.create(
 			{
 				AUGMENTS: [Liferay.PortletBase],
@@ -38,6 +36,7 @@ AUI.add(
 						var cluster = config.cluster;
 						var connectURL = config.connectURL;
 						var disconnectURL = config.disconnectURL;
+						var lcsConstants = config.lcsConstants;
 						var pending = config.pending;
 						var ready = config.ready;
 
@@ -95,7 +94,7 @@ AUI.add(
 												success: function(event, id, obj) {
 													var responseData = this.get(STR_REPONSE_DATA);
 
-													if (responseData.result == STR_SUCCESS) {
+													if (responseData[lcsConstants.JSON_KEY_RESULT] == lcsConstants.JSON_VALUE_SUCCESS) {
 														instance._refreshConnectionControls(true, false);
 
 														setTimeout(getConnectionStatus, 1000);
@@ -141,7 +140,7 @@ AUI.add(
 												success: function(event, id, obj) {
 													var responseData = this.get(STR_REPONSE_DATA);
 
-													if (responseData.result == STR_SUCCESS) {
+													if (responseData[lcsConstants.JSON_KEY_RESULT] == lcsConstants.JSON_VALUE_SUCCESS) {
 														instance._refreshConnectionControls(true, true);
 
 														setTimeout(getConnectionStatus, 1000);

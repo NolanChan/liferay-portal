@@ -380,6 +380,10 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 						disconnected: '<%= UnicodeLanguageUtil.get(request, "disconnected") %>',
 						pending: '<%= UnicodeLanguageUtil.get(request, "synchronizing") %>'
 					},
+					lcsConstants: {
+						JSON_KEY_RESULT: '<%= LCSConstants.JSON_KEY_RESULT %>',
+						JSON_VALUE_SUCCESS: '<%= LCSConstants.JSON_VALUE_SUCCESS %>'
+					},
 					pending: <%= pending %>,
 					ready: <%= ready %>
 				}

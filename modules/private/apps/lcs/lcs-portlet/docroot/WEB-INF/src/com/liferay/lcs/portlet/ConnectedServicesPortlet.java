@@ -110,7 +110,8 @@ public class ConnectedServicesPortlet extends MVCPortlet {
 		catch (Exception e) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("result", LCSConstants.JSON_FAILURE);
+			jsonObject.put(
+				LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_FAILURE);
 
 			_log.error(e, e);
 
@@ -134,7 +135,8 @@ public class ConnectedServicesPortlet extends MVCPortlet {
 			LCSConnectionManagerUtil.start();
 		}
 
-		jsonObject.put("result", LCSConstants.JSON_SUCCESS);
+		jsonObject.put(
+			LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_SUCCESS);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
@@ -155,7 +157,8 @@ public class ConnectedServicesPortlet extends MVCPortlet {
 			LCSConnectionManagerUtil.stop();
 		}
 
-		jsonObject.put("result", LCSConstants.JSON_SUCCESS);
+		jsonObject.put(
+			LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_SUCCESS);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
