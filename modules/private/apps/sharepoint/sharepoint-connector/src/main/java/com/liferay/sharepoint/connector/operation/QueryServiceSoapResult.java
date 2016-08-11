@@ -136,7 +136,7 @@ public class QueryServiceSoapResult {
 			_sb.setLength(0);
 		}
 
-		private StringBuilder _sb = new StringBuilder();
+		private final StringBuilder _sb = new StringBuilder();
 
 	};
 

@@ -25,14 +25,14 @@ import com.liferay.portal.kernel.util.CentralizedThreadLocal;
  */
 public class TestBean {
 
-	public static String TIMESTAMP;
+	public static String timeStamp;
 
 	public static String testMethod1(String timeStamp) {
 		if (timeStamp.length() == 0) {
 			return null;
 		}
 
-		TIMESTAMP = timeStamp;
+		TestBean.timeStamp = timeStamp;
 
 		return timeStamp;
 	}
