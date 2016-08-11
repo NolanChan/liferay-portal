@@ -25,24 +25,24 @@ import com.liferay.portal.kernel.util.CentralizedThreadLocal;
  */
 public class TestBean {
 
-	public static String timeStamp;
+	public static String timestamp;
 
-	public static String testMethod1(String timeStamp) {
-		if (timeStamp.length() == 0) {
+	public static String testMethod1(String timestamp) {
+		if (timestamp.length() == 0) {
 			return null;
 		}
 
-		TestBean.timeStamp = timeStamp;
+		TestBean.timestamp = timestamp;
 
-		return timeStamp;
+		return timestamp;
 	}
 
 	public static Object testMethod2() {
 		return new Object();
 	}
 
-	public static Object testMethod3(String timeStamp) throws Exception {
-		throw new Exception(timeStamp);
+	public static Object testMethod3(String timestamp) throws Exception {
+		throw new Exception(timestamp);
 	}
 
 	public static String testMethod4(String value) {
