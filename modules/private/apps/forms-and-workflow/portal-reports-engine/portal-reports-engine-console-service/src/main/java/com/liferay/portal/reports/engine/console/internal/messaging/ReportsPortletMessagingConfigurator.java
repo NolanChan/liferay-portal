@@ -193,7 +193,7 @@ public class ReportsPortletMessagingConfigurator {
 	@Reference
 	private EntryLocalService _entryLocalService;
 
-	private List<ServiceRegistration<MessageListener>>
+	private final List<ServiceRegistration<MessageListener>>
 		_messageListenerServiceRegistrations = new ArrayList<>();
 	private ReportsPortletMessagingConfiguration
 		_reportsPortletMessagingConfiguration;
