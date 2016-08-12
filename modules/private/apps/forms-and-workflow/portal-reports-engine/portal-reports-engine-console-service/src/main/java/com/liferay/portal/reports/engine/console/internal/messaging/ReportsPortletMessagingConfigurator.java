@@ -90,7 +90,7 @@ public class ReportsPortletMessagingConfigurator {
 			}
 		}
 
-		_messageListenerServiceRegistrations = null;
+		_messageListenerServiceRegistrations.clear();
 
 		_bundleContext = null;
 	}
