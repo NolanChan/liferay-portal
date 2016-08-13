@@ -126,7 +126,6 @@ public class UptimeMonitoringAdvisor {
 		jsonObject.put(
 			"endTime",
 			_runtimeMXBean.getStartTime() + _runtimeMXBean.getUptime());
-
 		jsonObject.put("startTime", _runtimeMXBean.getStartTime());
 
 		jsonArray.put(jsonObject);
