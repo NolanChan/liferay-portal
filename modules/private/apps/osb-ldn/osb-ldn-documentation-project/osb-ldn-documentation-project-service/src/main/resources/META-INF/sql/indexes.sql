@@ -1,0 +1,1 @@
+create index IX_CE0C0DE3 on OSB_LDN_DocumentationProject (uuid_[$COLUMN_LENGTH:75$], companyId);
