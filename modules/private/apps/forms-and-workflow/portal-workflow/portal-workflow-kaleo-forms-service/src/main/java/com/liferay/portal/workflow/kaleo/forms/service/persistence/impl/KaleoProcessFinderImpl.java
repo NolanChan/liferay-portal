@@ -107,6 +107,9 @@ public class KaleoProcessFinderImpl
 	 * processes the user has permission to view are counted.
 	 *
 	 * @param  groupId the primary key of the Kaleo processes' group
+	 * @param  name the name to match in the Kaleo process name
+	 * @param  description the description to match in the Kaleo process
+	 *         description
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
 	 * @return the number of matching Kaleo processes
