@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 
 /**
- * Used to order kaleo processes according to their created date during listing
+ * Orders Kaleo processes according to their created date during listing
  * operations. The order can be ascending or descending and is defined by the
  * value specified in the class constructor.
  *
