@@ -38,7 +38,7 @@ import java.util.Map;
 
 /**
  * Provides the local service for accessing, adding, deleting, and updating
- * kaleo processes.
+ * Kaleo processes.
  *
  * @author Marcellus Tavares
  */
@@ -46,25 +46,25 @@ public class KaleoProcessLocalServiceImpl
 	extends KaleoProcessLocalServiceBaseImpl {
 
 	/**
-	 * Adds a kaleo process.
+	 * Adds a Kaleo process.
 	 *
-	 * @param  userId the primary key of the kaleo process's creator/owner
-	 * @param  groupId the primary key of the kaleo process's group
-	 * @param  ddmStructureId the primary key of the kaleo process's DDM
+	 * @param  userId the primary key of the Kaleo process's creator/owner
+	 * @param  groupId the primary key of the Kaleo process's group
+	 * @param  ddmStructureId the primary key of the Kaleo process's DDM
 	 *         structure
-	 * @param  nameMap the kaleo process's locales and localized names
-	 * @param  descriptionMap the kaleo process's locales and localized
+	 * @param  nameMap the Kaleo process's locales and localized names
+	 * @param  descriptionMap the Kaleo process's locales and localized
 	 *         descriptions
-	 * @param  ddmTemplateId the primary key of the kaleo process's DDM template
-	 * @param  workflowDefinitionName the name of kaleo process's workflow
-	 *         definition
-	 * @param  workflowDefinitionVersion the version of kaleo process's workflow
-	 *         definition
-	 * @param  kaleoTaskFormPairs the kaleo task form pairs used to create a
-	 *         kaleo process link. See {@link KaleoTaskFormPairs}
+	 * @param  ddmTemplateId the primary key of the Kaleo process's DDM template
+	 * @param  workflowDefinitionName the Kaleo process's workflow
+	 *         definition name
+	 * @param  workflowDefinitionVersion the Kaleo process's workflow
+	 *         definition version
+	 * @param  kaleoTaskFormPairs the Kaleo task form pairs used to create a
+	 *         Kaleo process link. See <code>KaleoTaskFormPairs</code> in the <code>portal.workflow.kaleo.forms.api</code> module.
 	 * @param  serviceContext the service context to be applied. This can set
-	 *         guest permissions and group permissions for the kaleo process.
-	 * @return the kaleo process
+	 *         guest permissions and group permissions for the Kaleo process.
+	 * @return the Kaleo process
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
@@ -126,10 +126,10 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	/**
-	 * Deletes the kaleo process and its resources.
+	 * Deletes the Kaleo process and its resources.
 	 *
-	 * @param  kaleoProcess the kaleo process to be deleted
-	 * @return the deleted kaleo process
+	 * @param  kaleoProcess the Kaleo process to delete
+	 * @return the deleted Kaleo process
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
@@ -164,10 +164,10 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	/**
-	 * Deletes the kaleo process and its resources.
+	 * Deletes the Kaleo process and its resources.
 	 *
-	 * @param  kaleoProcessId the primary key of the kaleo process to be deleted
-	 * @return the deleted kaleo process
+	 * @param  kaleoProcessId the primary key of the Kaleo process to delete
+	 * @return the deleted Kaleo process
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
@@ -181,11 +181,11 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	/**
-	 * Returns the kaleo process matching the record set ID.
+	 * Returns the Kaleo process matching the DDL record set ID.
 	 *
-	 * @param  ddlRecordSetId the primary key of the record set
-	 * @return the matching kaleo process
-	 * @throws PortalException if a matching kaleo process could not be found
+	 * @param  ddlRecordSetId the primary key of the DDL record set associated with the Kaleo process
+	 * @return the Kaleo process
+	 * @throws PortalException if a matching Kaleo process could not be found
 	 */
 	@Override
 	public KaleoProcess getDDLRecordSetKaleoProcess(long ddlRecordSetId)
@@ -195,11 +195,11 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	/**
-	 * Returns the kaleo process with the primary key.
+	 * Returns the Kaleo process with the primary key.
 	 *
-	 * @param  kaleoProcessId the primary key of the kaleo process
-	 * @return the kaleo process
-	 * @throws PortalException if a kaleo process with the primary key could not
+	 * @param  kaleoProcessId the primary key of the Kaleo process
+	 * @return the Kaleo process
+	 * @throws PortalException if a Kaleo process with the primary key could not
 	 *         be found
 	 */
 	@Override
@@ -210,10 +210,10 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	/**
-	 * Returns all the kaleo processes belonging to the group.
+	 * Returns all the Kaleo processes belonging to the group.
 	 *
-	 * @param  groupId the primary key of the kaleo processes's group
-	 * @return the kaleo processes
+	 * @param  groupId the primary key of the Kaleo processes's group
+	 * @return the Kaleo processes
 	 */
 	@Override
 	public List<KaleoProcess> getKaleoProcesses(long groupId) {
@@ -221,23 +221,23 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all kaleo processes belonging to the group.
+	 * Returns an ordered range of all Kaleo processes belonging to the group.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to <code>QueryUtil#ALL_POS</code>, which resides in <code>portal-kernel</code>, will return the full
 	 * result set.
 	 * </p>
 	 *
-	 * @param  groupId the primary key of the kaleo processes' group
-	 * @param  start the lower bound of the range of kaleo processes to return
-	 * @param  end the upper bound of the range of kaleo processes to return
+	 * @param  groupId the primary key of the Kaleo processes' group
+	 * @param  start the lower bound of the range of Kaleo processes to return
+	 * @param  end the upper bound of the range of Kaleo processes to return
 	 *         (not inclusive)
-	 * @param  orderByComparator the comparator to order the kaleo processes
-	 * @return the range of matching kaleo processes ordered by the comparator
+	 * @param  orderByComparator the comparator to order the Kaleo processes
+	 * @return the range of matching Kaleo processes ordered by the comparator
 	 */
 	@Override
 	public List<KaleoProcess> getKaleoProcesses(
@@ -248,10 +248,10 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of kaleo processes matching the parameters.
+	 * Returns the number of Kaleo processes belonging to the group.
 	 *
-	 * @param  groupId the primary key of the kaleo processes' group.
-	 * @return the number of matching kaleo processes
+	 * @param  groupId the primary key of the Kaleo processes' group
+	 * @return the number of Kaleo processes
 	 */
 	@Override
 	public int getKaleoProcessesCount(long groupId) {
@@ -259,26 +259,26 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	/**
-	 * Updates the kaleo process.
+	 * Updates the Kaleo process.
 	 *
-	 * @param  kaleoProcessId the primary key of the kaleo process
-	 * @param  ddmStructureId the primary key of the kaleo process's DDM
+	 * @param  kaleoProcessId the primary key of the Kaleo process
+	 * @param  ddmStructureId the primary key of the Kaleo process's DDM
 	 *         structure
-	 * @param  nameMap the kaleo process's locales and localized names
-	 * @param  descriptionMap the kaleo process's locales and localized
+	 * @param  nameMap the Kaleo process's locales and localized names
+	 * @param  descriptionMap the Kaleo process's locales and localized
 	 *         descriptions
-	 * @param  ddmTemplateId the primary key of the kaleo process's DDM template
-	 * @param  workflowDefinitionName the name of kaleo process's workflow
-	 *         definition
-	 * @param  workflowDefinitionVersion the version of kaleo process's workflow
-	 *         definition
-	 * @param  kaleoTaskFormPairs the kaleo task form pairs. For more
-	 *         information see the
-	 *         <code>com.liferay.portal.workflow.kaleo.forms.api</code> module's
+	 * @param  ddmTemplateId the primary key of the Kaleo process's DDM template
+	 * @param  workflowDefinitionName the Kaleo process's workflow
+	 *         definition name
+	 * @param  workflowDefinitionVersion the Kaleo process's workflow
+	 *         definition version
+	 * @param  kaleoTaskFormPairs the Kaleo task form pairs. For more
+	 *         information, see the
+	 *         <code>portal.workflow.kaleo.forms.api</code> module's
 	 *         <code>KaleoTaskFormPairs</code> class.
 	 * @param  serviceContext the service context to be applied. This can set
-	 *         guest permissions and group permissions for the kaleo process.
-	 * @return the kaleo process
+	 *         guest permissions and group permissions for the Kaleo process.
+	 * @return the Kaleo process
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
@@ -346,7 +346,7 @@ public class KaleoProcessLocalServiceImpl
 	 * @param  descriptionMap the record set's locales and localized
 	 *         descriptions
 	 * @param  serviceContext the service context to be applied
-	 * @return the record set
+	 * @return the DDL record set
 	 * @throws PortalException if a portal exception occurred
 	 */
 	protected DDLRecordSet addDDLRecordSet(
@@ -364,9 +364,9 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	/**
-	 * Deletes the kaleo process's resources.
+	 * Deletes the Kaleo process's resources.
 	 *
-	 * @param  kaleoProcess the kaleo process
+	 * @param  kaleoProcess the Kaleo process
 	 * @throws PortalException if a portal exception occurred
 	 */
 	protected void deleteKaleoProcessData(KaleoProcess kaleoProcess)
@@ -389,15 +389,15 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	/**
-	 * Determines if kaleo process data is stale.
+	 * Returns <code>true</code> if the Kaleo process data is stale.
 	 *
-	 * @param  kaleoProcess the kaleo process
-	 * @param  newDDMStructureId the new primary key of the kaleo process's DDM
+	 * @param  kaleoProcess the Kaleo process
+	 * @param  newDDMStructureId the new primary key of the Kaleo process's DDM
 	 *         structure
-	 * @param  newWorkflowDefinition the new workflow definition of the kaleo
+	 * @param  newWorkflowDefinition the new workflow definition of the Kaleo
 	 *         process
-	 * @return <code>true</code> if the kaleo process data is stale;
-	 *         <code>false</code> otherwise.
+	 * @return <code>true</code> if the Kaleo process data is stale;
+	 *         <code>false</code> otherwise
 	 * @throws PortalException if a portal exception occurred
 	 */
 	protected boolean isKaleoProcessDataStale(
@@ -442,11 +442,11 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	/**
-	 * Adds a kaleo process link referencing the kaleo process ID.
+	 * Adds a Kaleo process link referencing the Kaleo process ID.
 	 *
 	 * @param kaleoProcessId the primary key of the kaleo process
-	 * @param kaleoTaskFormPairs the kaleo task form pairs. For more information
-	 *        see the <code>com.liferay.portal.workflow.kaleo.forms.api</code>
+	 * @param kaleoTaskFormPairs the Kaleo task form pairs. For more information,
+	 *        see the <code>portal.workflow.kaleo.forms.api</code>
 	 *        module's <code>KaleoTaskFormPairs</code> class.
 	 */
 	protected void updateKaleoProcessLinks(
@@ -462,9 +462,9 @@ public class KaleoProcessLocalServiceImpl
 	}
 
 	/**
-	 * Validates the the primary key of the DDM template
+	 * Validates the the primary key of the DDM template.
 	 *
-	 * @param  ddmTemplateId the primary key of the DDM template to check
+	 * @param  ddmTemplateId the primary key of the DDM template
 	 * @throws PortalException if the primary key of the DDM template is
 	 *         <code>null</code>
 	 */

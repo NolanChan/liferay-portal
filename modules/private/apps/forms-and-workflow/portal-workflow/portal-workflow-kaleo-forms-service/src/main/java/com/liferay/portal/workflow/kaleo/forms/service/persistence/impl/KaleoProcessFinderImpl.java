@@ -34,7 +34,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Implements custom finders for kaleo processes.
+ * Implements custom finders for Kaleo processes.
  *
  * @author Inácio Nery
  */
@@ -48,13 +48,13 @@ public class KaleoProcessFinderImpl
 		KaleoProcessFinder.class.getName() + ".findByG_N_D";
 
 	/**
-	 * Returns the number of kaleo processes in a group, matching the string
+	 * Returns the number of Kaleo processes in a group, matching the String
 	 * value of the keywords parameter to the processes' titles or descriptions.
 	 *
-	 * @param  groupId the primary key of the kaleo process's group
-	 * @param  keywords the keywords (space separated) to look for and match in
-	 *         the kaleo process name or description
-	 * @return the number of matching kaleo processes
+	 * @param  groupId the primary key of the Kaleo process's group
+	 * @param  keywords the keywords (space separated) to match in
+	 *         the Kaleo process name or description
+	 * @return the number of matching Kaleo processes
 	 */
 	@Override
 	public int countByKeywords(long groupId, String keywords) {
@@ -62,17 +62,17 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns the number of kaleo processes in the group, matching the name
-	 * and/or description parameters. Whether both the name and description must
-	 * match, or only one must match, depends on the andOperator parameter.
+	 * Returns the number of Kaleo processes in the group, matching the name
+	 * and/or description parameters. Whether the name and description should
+	 * both match depends on the <code>andOperator</code> parameter.
 	 *
-	 * @param  groupId the primary key of the kaleo process's group
-	 * @param  name the name to look for and match in the kaleo process name
-	 * @param  description the description to look for and match in the kaleo
+	 * @param  groupId the primary key of the Kaleo process's group
+	 * @param  name the name to match in the Kaleo process name
+	 * @param  description the description to match in the Kaleo
 	 *         process description
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
-	 * @return the number of matching kaleo processes
+	 * @return the number of matching Kaleo processes
 	 */
 	@Override
 	public int countByG_N_D(
@@ -85,14 +85,14 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns the number of kaleo processes in the group, matching the keywords
+	 * Returns the number of Kaleo processes in the group matching the keywords
 	 * parameter. The keywords parameter is
-	 * for matching string values to the kaleo processes' names or descriptions. Only kaleo processes the user has permission to view will be counted.
+	 * for matching String values to the Kaleo processes' names or descriptions. Only Kaleo processes the user has permission to view are counted.
 	 *
-	 * @param  groupId the primary key of the kaleo processes' group
-	 * @param  keywords the keywords (space separated) to look for and match in
-	 *         each kaleo process's name or description
-	 * @return the number of matching kaleo processes
+	 * @param  groupId the primary key of the Kaleo processes' group
+	 * @param  keywords the keywords (space separated) to match with
+	 *         each Kaleo process's name or description
+	 * @return the number of matching Kaleo processes
 	 */
 	@Override
 	public int filterCountByKeywords(long groupId, String keywords) {
@@ -100,15 +100,14 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns the number of kaleo processes in the group, matching the name or
-	 * description parameters. Whether both
-	 * the name and description must match, or only one must match, depends on
-	 * the andOperator parameter. Only kaleo processes the user has permission to view will be counted.
+	 * Returns the number of Kaleo processes in the group, matching the name or
+	 * description parameters. Whether the name and description should
+	 * both match depends on the <code>andOperator</code> parameter. Only Kaleo processes the user has permission to view are counted.
 	 *
-	 * @param  groupId the primary key of the kaleo processes' group
+	 * @param  groupId the primary key of the Kaleo processes' group
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
-	 * @return the number of matching kaleo processes
+	 * @return the number of matching Kaleo processes
 	 */
 	@Override
 	public int filterCountByG_N_D(
@@ -121,18 +120,18 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns an ordered range of all kaleo processes in the group whose name
-	 * or description matches the string values of the keywords parameter.
-	 * Only kaleo processes the user has permission to view will be returned.
+	 * Returns an ordered range of all Kaleo processes in the group whose name
+	 * or description matches the String values of the keywords parameter.
+	 * Only Kaleo processes the user has permission to view are returned.
 	 *
-	 * @param  groupId the primary key of the kaleo processes' group
-	 * @param  keywords the keywords (space separated) to look for and match in
-	 *         each kaleo process's name or description
-	 * @param  start the lower bound of the range of kaleo processes to return
-	 * @param  end the upper bound of the range of kaleo processes to return
+	 * @param  groupId the primary key of the Kaleo processes' group
+	 * @param  keywords the keywords (space separated) to match in
+	 *         each Kaleo process's name or description
+	 * @param  start the lower bound of the range of Kaleo processes to return
+	 * @param  end the upper bound of the range of Kaleo processes to return
 	 *         (not inclusive)
-	 * @param  orderByComparator the comparator to order the kaleo processes
-	 * @return the range of matching kaleo processes ordered by the comparator
+	 * @param  orderByComparator the comparator to order the Kaleo processes
+	 * @return the range of matching Kaleo processes ordered by the comparator
 	 */
 	@Override
 	public List<KaleoProcess> filterFindByKeywords(
@@ -157,22 +156,22 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns an ordered range of all kaleo processes in the group, matching
-	 * the kaleo process's name and/or description.
-	 * Whether both the name and description must match, or only one
-	 * must match, depends on the andOperator parameter. Only kaleo processes the user has permission to view will be returned.
+	 * Returns an ordered range of all Kaleo processes in the group, matching
+	 * the Kaleo process's name and/or description.
+	 * Whether the name and description should
+	 * both match depends on the <code>andOperator</code> parameter. Only Kaleo processes the user has permission to view are returned.
 	 *
-	 * @param  groupId the primary key of the kaleo process's group
-	 * @param  name the name to look for and match in the kaleo process name
-	 * @param  description the description to look for and match in the kaleo
+	 * @param  groupId the primary key of the Kaleo process's group
+	 * @param  name the name to match in the Kaleo process name
+	 * @param  description the description to match in the Kaleo
 	 *         process description
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
-	 * @param  start the lower bound of the range of kaleo processes to return
-	 * @param  end the upper bound of the range of kaleo processes to return
+	 * @param  start the lower bound of the range of Kaleo processes to return
+	 * @param  end the upper bound of the range of Kaleo processes to return
 	 *         (not inclusive)
-	 * @param  orderByComparator the comparator to order the kaleo processes
-	 * @return the range of matching kaleo processes ordered by the comparator
+	 * @param  orderByComparator the comparator to order the Kaleo processes
+	 * @return the range of matching Kaleo processes ordered by the comparator
 	 */
 	@Override
 	public List<KaleoProcess> filterFindByG_N_D(
@@ -188,22 +187,21 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns an ordered range of all kaleo processes matching the name and/or
-	 * description parameter. Whether both
-	 * the name and description must match, or only one must match, depends on
-	 * the andOperator parameter. Only kaleo processes the user has permission to view will be returned.
+	 * Returns an ordered range of all Kaleo processes matching the name and/or
+	 * description parameter. Whether the name and description should
+	 * both match depends on the <code>andOperator</code> parameter. Only Kaleo processes the user has permission to view are returned.
 	 *
-	 * @param  groupId the primary key of the kaleo process's group
-	 * @param  names the names to look for and match in the kaleo process name
-	 * @param  descriptions the descriptions to look for and match in the kaleo
+	 * @param  groupId the primary key of the Kaleo process's group
+	 * @param  names the names to match in the Kaleo process name
+	 * @param  descriptions the descriptions to match in the Kaleo
 	 *         process description
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
-	 * @param  start the lower bound of the range of kaleo processes to return
-	 * @param  end the upper bound of the range of kaleo processes to return
+	 * @param  start the lower bound of the range of Kaleo processes to return
+	 * @param  end the upper bound of the range of Kaleo processes to return
 	 *         (not inclusive)
-	 * @param  orderByComparator the comparator to order the kaleo processes
-	 * @return the range of matching kaleo processes ordered by the comparator
+	 * @param  orderByComparator the comparator to order the Kaleo processes
+	 * @return the range of matching Kaleo processes ordered by the comparator
 	 */
 	@Override
 	public List<KaleoProcess> filterFindByG_N_D(
@@ -217,18 +215,18 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns an ordered range of all kaleo processes in the group matching the
-	 * parameters. The keywords parameter is used for matching string values to
-	 * the kaleo processes' names or descriptions.
+	 * Returns an ordered range of all Kaleo processes in the group matching the
+	 * parameters. The keywords parameter is used for matching String values to
+	 * the Kaleo processes' names or descriptions.
 	 *
-	 * @param  groupId the primary key of the kaleo processes' group
-	 * @param  keywords the keywords (space separated) to look for and match in
-	 *         each kaleo process's name or description
-	 * @param  start the lower bound of the range of kaleo processes to return
-	 * @param  end the upper bound of the range of kaleo processes to return
+	 * @param  groupId the primary key of the Kaleo processes' group
+	 * @param  keywords the keywords (space separated) to match in
+	 *         each Kaleo process's name or description
+	 * @param  start the lower bound of the range of Kaleo processes to return
+	 * @param  end the upper bound of the range of Kaleo processes to return
 	 *         (not inclusive)
-	 * @param  orderByComparator the comparator to order the kaleo processes
-	 * @return the range of matching kaleo processes ordered by the comparator
+	 * @param  orderByComparator the comparator to order the Kaleo processes
+	 * @return the range of matching Kaleo processes ordered by the comparator
 	 */
 	@Override
 	public List<KaleoProcess> findByKeywords(
@@ -253,22 +251,21 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns an ordered range of all kaleo processes in the group, matching
-	 * the name and/or description parameter. Whether both the name and
-	 * description must match, or only one must match, depends on the
-	 * andOperator parameter.
+	 * Returns an ordered range of all Kaleo processes in the group, matching
+	 * the name and/or description parameter. Whether the name and description should
+	 * both match depends on the <code>andOperator</code> parameter.
 	 *
-	 * @param  groupId the primary key of the kaleo process's group
-	 * @param  name the name to look for and match in the kaleo process name
-	 * @param  description the description to look for and match in the kaleo
+	 * @param  groupId the primary key of the Kaleo process's group
+	 * @param  name the name to match in the Kaleo process name
+	 * @param  description the description match in the Kaleo
 	 *         process description
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
-	 * @param  start the lower bound of the range of kaleo processes to return
-	 * @param  end the upper bound of the range of kaleo processes to return
+	 * @param  start the lower bound of the range of Kaleo processes to return
+	 * @param  end the upper bound of the range of Kaleo processes to return
 	 *         (not inclusive)
-	 * @param  orderByComparator the comparator to order the kaleo processes
-	 * @return the range of matching kaleo processes ordered by the comparator
+	 * @param  orderByComparator the comparator to order the Kaleo processes
+	 * @return the range of matching Kaleo processes ordered by the comparator
 	 */
 	@Override
 	public List<KaleoProcess> findByG_N_D(
@@ -284,22 +281,21 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns an ordered range of all kaleo processes in the group, matching
-	 * the entered names and/or descriptions. Whether both the name and
-	 * description must match, or only one must match, depends on the
-	 * andOperator parameter.
+	 * Returns an ordered range of all Kaleo processes in the group, matching
+	 * the names and/or descriptions. Whether the name and description should
+	 * both match depends on the <code>andOperator</code> parameter.
 	 *
-	 * @param  groupId the primary key of the kaleo process's group
-	 * @param  names the names to look for and match in the kaleo process name
-	 * @param  descriptions the descriptions to look for and match in the kaleo
+	 * @param  groupId the primary key of the Kaleo process's group
+	 * @param  names the names to match in the Kaleo process name
+	 * @param  descriptions the descriptions to match in the Kaleo
 	 *         process description
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
-	 * @param  start the lower bound of the range of kaleo processes to return
-	 * @param  end the upper bound of the range of kaleo processes to return
+	 * @param  start the lower bound of the range of Kaleo processes to return
+	 * @param  end the upper bound of the range of Kaleo processes to return
 	 *         (not inclusive)
-	 * @param  orderByComparator the comparator to order the kaleo processes
-	 * @return the range of matching kaleo processes ordered by the comparator
+	 * @param  orderByComparator the comparator to order the Kaleo processes
+	 * @return the range of matching Kaleo processes ordered by the comparator
 	 */
 	@Override
 	public List<KaleoProcess> findByG_N_D(
@@ -313,15 +309,15 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns the number of kaleo processes in the group matching the
-	 * parameters, including a keywords parameter for matching string values to
-	 * the kaleo processes' names or descriptions.
+	 * Returns the number of Kaleo processes in the group matching the
+	 * parameters, including a keywords parameter for matching String values to
+	 * the Kaleo processes' names or descriptions.
 	 *
-	 * @param  groupId the primary key of the kaleo process's group
-	 * @param  keywords the keywords (space separated) to look for and match in
-	 *         the kaleo process name or description
+	 * @param  groupId the primary key of the Kaleo process's group
+	 * @param  keywords the keywords (space separated) to match in
+	 *         the Kaleo process name or description
 	 * @param  inlineSQLHelper whether checks the permission
-	 * @return the number of matching kaleo processes
+	 * @return the number of matching Kaleo processes
 	 */
 	protected int doCountByKeywords(
 		long groupId, String keywords, boolean inlineSQLHelper) {
@@ -341,18 +337,18 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns the number of kaleo processes in the group, matching the entered
-	 * names or descriptions. Whether both the name and description must match,
-	 * or only one must match, depends on the andOperator parameter.
+	 * Returns the number of Kaleo processes in the group, matching the
+	 * names or descriptions. Whether the name and description should
+	 * both match depends on the <code>andOperator</code> parameter.
 	 *
-	 * @param  groupId the primary key of the kaleo process's group
-	 * @param  names the names to look for and match in the kaleo process name
-	 * @param  descriptions the descriptions to look for and match in the kaleo
+	 * @param  groupId the primary key of the Kaleo process's group
+	 * @param  names the names to match in the Kaleo process name
+	 * @param  descriptions the descriptions to match in the Kaleo
 	 *         process description
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
 	 * @param  inlineSQLHelper whether checks the permission
-	 * @return the number of matching kaleo processes
+	 * @return the number of matching Kaleo processes
 	 */
 	protected int doCountByG_N_D(
 		long groupId, String[] names, String[] descriptions,
@@ -420,22 +416,22 @@ public class KaleoProcessFinderImpl
 	}
 
 	/**
-	 * Returns an ordered range of all kaleo processes in the group, matching
-	 * the entered names or descriptions. Whether both the name and description
-	 * must match, or only one must match, depends on the andOperator parameter.
+	 * Returns an ordered range of all Kaleo processes in the group, matching
+	 * the names or descriptions. Whether the name and description should
+	 * both match depends on the <code>andOperator</code> parameter.
 	 *
-	 * @param  groupId the primary key of the kaleo process's group
-	 * @param  names the names to look for and match in the kaleo process name
-	 * @param  descriptions the descriptions to look for and match in the kaleo
+	 * @param  groupId the primary key of the Kaleo process's group
+	 * @param  names the names to match in the Kaleo process name
+	 * @param  descriptions the descriptions to match in the Kaleo
 	 *         process description
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
-	 * @param  start the lower bound of the range of kaleo processes to return
-	 * @param  end the upper bound of the range of kaleo processes to return
+	 * @param  start the lower bound of the range of Kaleo processes to return
+	 * @param  end the upper bound of the range of Kaleo processes to return
 	 *         (not inclusive)
-	 * @param  orderByComparator the comparator to order the kaleo processes
+	 * @param  orderByComparator the comparator to order the Kaleo processes
 	 * @param  inlineSQLHelper whether checks the permission
-	 * @return the range of matching kaleo processes ordered by the comparator
+	 * @return the range of matching Kaleo processes ordered by the comparator
 	 */
 	protected List<KaleoProcess> doFindByG_N_D(
 		long groupId, String[] names, String[] descriptions,
