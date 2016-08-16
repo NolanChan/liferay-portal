@@ -123,7 +123,8 @@ public class KaleoProcessLinkLocalServiceImpl
 	 * Kaleo process.
 	 *
 	 * @param  kaleoProcessLinkId the primary key of the Kaleo process link
-	 * @param  kaleoProcessId the primary key of the Kaleo process link's Kaleo process
+	 * @param  kaleoProcessId the primary key of the Kaleo process link's Kaleo
+	 *         process
 	 * @return the Kaleo process link
 	 * @throws PortalException if a portal exception occurred
 	 */
@@ -149,7 +150,8 @@ public class KaleoProcessLinkLocalServiceImpl
 	 * associated DDM Template.
 	 *
 	 * @param  kaleoProcessLinkId the primary key of the Kaleo process link
-	 * @param  kaleoProcessId the primary key of the Kaleo process link's Kaleo process
+	 * @param  kaleoProcessId the primary key of the Kaleo process link's Kaleo
+	 *         process
 	 * @param  workflowTaskName the name of the Kaleo process link's workflow
 	 *         task
 	 * @param  ddmTemplateId the primary key of the Kaleo process link's DDM
@@ -180,11 +182,12 @@ public class KaleoProcessLinkLocalServiceImpl
 	}
 
 	/**
-	 * Updates the Kaleo process link. If no Kaleo process link is
-	 * found matching the primary key of the Kaleo process and the workflow task
-	 * name, a new link is created.
+	 * Updates the Kaleo process link. If no Kaleo process link is found
+	 * matching the primary key of the Kaleo process and the workflow task name,
+	 * a new link is created.
 	 *
-	 * @param  kaleoProcessId the primary key of the Kaleo process link's Kaleo process
+	 * @param  kaleoProcessId the primary key of the Kaleo process link's Kaleo
+	 *         process
 	 * @param  workflowTaskName the name of the Kaleo process link's workflow
 	 *         task
 	 * @param  ddmTemplateId the primary key of the Kaleo process link's DDM

@@ -56,12 +56,13 @@ public class KaleoProcessLocalServiceImpl
 	 * @param  descriptionMap the Kaleo process's locales and localized
 	 *         descriptions
 	 * @param  ddmTemplateId the primary key of the Kaleo process's DDM template
-	 * @param  workflowDefinitionName the Kaleo process's workflow
-	 *         definition name
-	 * @param  workflowDefinitionVersion the Kaleo process's workflow
-	 *         definition version
+	 * @param  workflowDefinitionName the Kaleo process's workflow definition
+	 *         name
+	 * @param  workflowDefinitionVersion the Kaleo process's workflow definition
+	 *         version
 	 * @param  kaleoTaskFormPairs the Kaleo task form pairs used to create a
-	 *         Kaleo process link. See <code>KaleoTaskFormPairs</code> in the <code>portal.workflow.kaleo.forms.api</code> module.
+	 *         Kaleo process link. See <code>KaleoTaskFormPairs</code> in the
+	 *         <code>portal.workflow.kaleo.forms.api</code> module.
 	 * @param  serviceContext the service context to be applied. This can set
 	 *         guest permissions and group permissions for the Kaleo process.
 	 * @return the Kaleo process
@@ -183,7 +184,8 @@ public class KaleoProcessLocalServiceImpl
 	/**
 	 * Returns the Kaleo process matching the DDL record set ID.
 	 *
-	 * @param  ddlRecordSetId the primary key of the DDL record set associated with the Kaleo process
+	 * @param  ddlRecordSetId the primary key of the DDL record set associated
+	 *         with the Kaleo process
 	 * @return the Kaleo process
 	 * @throws PortalException if a matching Kaleo process could not be found
 	 */
@@ -228,8 +230,8 @@ public class KaleoProcessLocalServiceImpl
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to <code>QueryUtil#ALL_POS</code>, which resides in <code>portal-kernel</code>, will return the full
-	 * result set.
+	 * and <code>end</code> to <code>QueryUtil#ALL_POS</code>, which resides in
+	 * <code>portal-kernel</code>, will return the full result set.
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the Kaleo processes' group
@@ -268,14 +270,13 @@ public class KaleoProcessLocalServiceImpl
 	 * @param  descriptionMap the Kaleo process's locales and localized
 	 *         descriptions
 	 * @param  ddmTemplateId the primary key of the Kaleo process's DDM template
-	 * @param  workflowDefinitionName the Kaleo process's workflow
-	 *         definition name
-	 * @param  workflowDefinitionVersion the Kaleo process's workflow
-	 *         definition version
+	 * @param  workflowDefinitionName the Kaleo process's workflow definition
+	 *         name
+	 * @param  workflowDefinitionVersion the Kaleo process's workflow definition
+	 *         version
 	 * @param  kaleoTaskFormPairs the Kaleo task form pairs. For more
-	 *         information, see the
-	 *         <code>portal.workflow.kaleo.forms.api</code> module's
-	 *         <code>KaleoTaskFormPairs</code> class.
+	 *         information, see the <code>portal.workflow.kaleo.forms.api</code>
+	 *         module's <code>KaleoTaskFormPairs</code> class.
 	 * @param  serviceContext the service context to be applied. This can set
 	 *         guest permissions and group permissions for the Kaleo process.
 	 * @return the Kaleo process
@@ -445,8 +446,8 @@ public class KaleoProcessLocalServiceImpl
 	 * Adds a Kaleo process link referencing the Kaleo process ID.
 	 *
 	 * @param kaleoProcessId the primary key of the kaleo process
-	 * @param kaleoTaskFormPairs the Kaleo task form pairs. For more information,
-	 *        see the <code>portal.workflow.kaleo.forms.api</code>
+	 * @param kaleoTaskFormPairs the Kaleo task form pairs. For more
+	 *        information, see the <code>portal.workflow.kaleo.forms.api</code>
 	 *        module's <code>KaleoTaskFormPairs</code> class.
 	 */
 	protected void updateKaleoProcessLinks(
