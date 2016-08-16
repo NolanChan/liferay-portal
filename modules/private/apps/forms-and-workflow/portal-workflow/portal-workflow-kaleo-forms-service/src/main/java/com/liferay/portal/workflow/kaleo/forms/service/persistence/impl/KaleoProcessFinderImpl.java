@@ -316,7 +316,8 @@ public class KaleoProcessFinderImpl
 	 * @param  groupId the primary key of the Kaleo process's group
 	 * @param  keywords the keywords (space separated) to match in
 	 *         the Kaleo process name or description
-	 * @param  inlineSQLHelper whether checks the permission
+	 * @param  inlineSQLHelper whether to add a query criterion that checks if
+	 *         the user has view permissions for the Kaleo processes
 	 * @return the number of matching Kaleo processes
 	 */
 	protected int doCountByKeywords(
@@ -347,7 +348,8 @@ public class KaleoProcessFinderImpl
 	 *         process description
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
-	 * @param  inlineSQLHelper whether checks the permission
+	 * @param  inlineSQLHelper whether to add a query criterion that checks if
+	 *         the user has view permissions for the Kaleo processes
 	 * @return the number of matching Kaleo processes
 	 */
 	protected int doCountByG_N_D(
@@ -430,7 +432,8 @@ public class KaleoProcessFinderImpl
 	 * @param  end the upper bound of the range of Kaleo processes to return
 	 *         (not inclusive)
 	 * @param  orderByComparator the comparator to order the Kaleo processes
-	 * @param  inlineSQLHelper whether checks the permission
+	 * @param  inlineSQLHelper whether to add a query criterion that checks if
+	 *         the user has view permissions for the Kaleo processes
 	 * @return the range of matching Kaleo processes ordered by the comparator
 	 */
 	protected List<KaleoProcess> doFindByG_N_D(
