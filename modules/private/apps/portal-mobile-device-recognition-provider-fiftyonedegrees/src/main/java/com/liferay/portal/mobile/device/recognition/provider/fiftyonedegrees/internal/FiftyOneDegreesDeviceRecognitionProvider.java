@@ -48,6 +48,9 @@ public class FiftyOneDegreesDeviceRecognitionProvider
 		_fiftyOneDegreesKnownDevices.reload();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	public void setDeviceCapabilityFilter(
 		DeviceCapabilityFilter deviceCapabilityFilter) {
