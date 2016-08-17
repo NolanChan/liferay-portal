@@ -470,7 +470,7 @@ public class KaleoProcessLocalServiceImpl
 	 *         <code>null</code>
 	 */
 	protected void validate(long ddmTemplateId) throws PortalException {
-		if (Validator.isNull(ddmTemplateId)) {
+		if (ddmTemplateId == 0) {
 			throw new KaleoProcessDDMTemplateIdException();
 		}
 	}
