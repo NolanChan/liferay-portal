@@ -1,352 +1,55 @@
 @import "bourbon";
-@import "compass/css3/user-interface";
-@import "mixins";
 
 /* ---------- Common variables ---------- */
 
-/* $blue has been removed in Bootstrap 3 -- $blue: #4A96E8; */
-$dark-blue: #185497;
+$blue: #337AB7;
 $dark-gray: #555;
 $gray: #DDD;
-/* $green has been removed in Bootstrap 3 -- $green: #97CE68; */
+$green: #97CE68;
 $header-height: 56px;
 $light-blue: #E6F5FC;
 $light-gray: #F9F9F9;
-/* $red has been removed in Bootstrap 3 -- $red: #B50303; */
-/* $white has been removed in Bootstrap 3 -- $white: #FFF; */
-
-@mixin keyframes($name) {
-	@-webkit-keyframes #{$name} {
-		@content;
-	}
-
-	@-moz-keyframes #{$name} {
-		@content;
-	}
-
-	@-ms-keyframes #{$name} {
-		@content;
-	}
-
-	@keyframes #{$name} {
-		@content;
-	}
-}
-
-@include keyframes(spin) {
-	0% {
-		@include transform(rotate(0));
-	}
-
-	100% {
-		@include transform(rotate(360deg));
-	}
-}
+$red: #B50303;
+$white: #FFF;
 
 /* ---------- Base styles ---------- */
 
 .lcs {
-	font: 12px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
-	&html {
-		a {
-			&, &:focus, &:hover {
-/* $blue has been removed in Bootstrap 3 -- 				color: $blue; */
-				outline: 0;
-			}
-		}
-
-		body {
-			background-color: inherit;
-			color: $dark-gray;
-			line-height: inherit;
-		}
-
-		form {
-			margin-bottom: 0;
-		}
-
-		input[type="checkbox"] {
-			margin-top: 0;
-
-			&.field {
-				margin-bottom: 2px;
-				margin-right: 4px;
-			}
-		}
-
-		input[type="checkbox"], select:focus, .btn btn-default:focus {
+	a {
+		&, &:focus, &:hover {
+			color: $blue;
 			outline: 0;
 		}
+	}
 
-		input[type="email"], input[type="password"], input[type="text"], select, textarea {
-			border-color: $gray;
-			height: auto;
+	body {
+		background-color: inherit;
+		color: $dark-gray;
+		font: 15px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		line-height: inherit;
+	}
 
-			&:invalid {
-/* $red has been removed in Bootstrap 3 -- 				border-color: $red; */
-/* $red has been removed in Bootstrap 3 -- 				color: $red; */
-			}
+	form {
+		margin-bottom: 0;
+	}
+
+	input[type="email"], input[type="password"], input[type="text"], select, textarea {
+		border: 1px solid $gray;
+		outline: 0;
+		padding: 0.4em;
+
+		&:invalid {
+			border-color: $red;
+			color: $red;
 		}
+	}
 
-		label, .btn btn-default-group {
-			font-size: inherit;
-		}
+	label {
+		font-weight: inherit;
+	}
 
-		li {
-			line-height: inherit;
-		}
-
-		ul {
-			list-style-type: none;
-			margin: 0;
-		}
-
-		[class^="icon-"]:before, [class*=" icon-"]:before {
-			text-decoration: none;
-		}
-
-		.alert {
-			display: inline-block;
-
-			&.alert-info {
-				background-color: $light-blue;
-			}
-		}
-
-		.btn btn-default {
-			color: $dark-gray;
-
-			&.btn-primary {
-/* $white has been removed in Bootstrap 3 -- 				color: $white; */
-			}
-		}
-
-		.form-group.success {
-			input, .control-label {
-				color: $dark-gray;
-			}
-
-			input:focus {
-				border-color: $gray;
-			}
-		}
-
-		.controls-container {
-			display: inline-block;
-
-			.form-group {
-				& > label, & .control-label {
-					font-size: 0.9em;
-					font-weight: bold;
-				}
-
-				& > label.checkbox {
-					font-weight: normal;
-				}
-
-				&.control-group-inline {
-					margin: 0 6px 6px 0;
-				}
-			}
-
-			.date-time {
-				a {
-					float: right;
-					font-size: 1.1em;
-					padding: 3px;
-				}
-
-				.control-label {
-					display: inline-block;
-				}
-
-				.inputs {
-					.lfr-input-date {
-						display: inline-block;;
-
-						.field, .input-medium {
-							border-right-width: 0;
-							cursor: pointer;
-							margin-right: -6px;
-							padding-left: 8px;
-							padding-right: 0;
-							width: 84px;
-						}
-					}
-
-					.lfr-input-time {
-						&.ampm .input-small {
-							width: 78px;
-						}
-
-						.input-small {
-							border-left-width: 0;
-							cursor: pointer;
-							padding-left: 0;
-							padding-right: 10px;
-							text-align: right;
-							width: 54px;
-						}
-					}
-				}
-
-				.success input {
-					color: $dark-gray;
-
-					&:focus {
-						border-color: $gray;
-					}
-				}
-			}
-		}
-
-		.content-container {
-			@include pie-clearfix-deprecated();
-
-			.settings-container .content {
-				min-width: 230px;
-			}
-
-			.table-container .header {
-				@include pie-clearfix-deprecated();
-
-				.actions {
-					float: right;
-				}
-			}
-		}
-
-		.dockbar .navbar-inner .site-administration-menu li a:hover {
-			background-color: $light-blue;
-			color: $dark-gray;
-		}
-
-		.dropdown-menu {
-			& > .active > a {
-				background-color: $gray;
-				background-image: none;
-
-				&:focus, &:hover {
-					background-color: $light-blue;
-					color: $dark-gray
-				}
-			}
-
-			& > li > a {
-				color: $dark-gray;
-				padding: 0.2em 1em;
-
-				&:focus, &:hover {
-					background-color: $light-blue;
-					background-image: none;
-				}
-			}
-		}
-
-		.fluid {
-			float: left;
-			margin-right: 20px;
-		}
-
-		.modal-header {
-			padding: 0 0 8px 0;
-		}
-
-		.modal-body {
-			position: static;
-		}
-
-		.pager .disabled {
-			display: none;
-		}
-
-		.server-details {
-			min-height: 135px;
-
-			@include pie-clearfix-deprecated();
-
-			.lcs-about-hardware .result-value {
-				text-align: right;
-			}
-
-			.lcs-about-hardware, .lcs-about-software {
-				float: left;
-				margin: 0 20px 20px 0;
-			}
-
-			.lcs-about-software .empty-row {
-				height: 20px;
-
-				.table-cell {
-/* $white has been removed in Bootstrap 3 -- 					border-left-color: $white; */
-/* $white has been removed in Bootstrap 3 -- 					border-right-color: $white; */
-				}
-			}
-
-			.table-cell {
-				border: 1px solid $gray;
-			}
-		}
-
-		.table {
-			border-collapse: collapse;
-			margin-bottom: 0;
-
-			tbody tr.info > td {
-				background-color: inherit;
-			}
-
-			td {
-				border-left-width: 0;
-				line-height: inherit;
-				vertical-align: middle;
-
-				&.text-right {
-					text-align: right;
-				}
-			}
-
-			th {
-				border-left-width: 0;
-				font-weight: normal;
-			}
-
-			&.settings-table td {
-				border: 1px solid $gray;
-			}
-
-			&.table-hover tbody tr:hover > td {
-				background-color: $light-blue;
-			}
-
-			.table-columns, .table-data {
-				border-left: 1px solid $gray;
-			}
-		}
-
-		.tooltip {
-			font-size: 0.9em;
-			max-width: 600px;
-			z-index: 10000;
-
-			.tooltip-content {
-				max-width: none;
-				text-align: left;
-			}
-		}
-
-		.tooltip-help {
-			.tooltip-arrow {
-				border-top-color: rgba(0, 0, 0, 0.8);
-			}
-
-			.tooltip-help-content {
-				background-color: rgba(0, 0, 0, 0.8);
-				border-width: 0;
-/* $white has been removed in Bootstrap 3 -- 				color: $white; */
-			}
-		}
+	li {
+		line-height: inherit;
 	}
 
 	select option {
@@ -358,8 +61,25 @@ $light-gray: #F9F9F9;
 		min-width: 420px;
 	}
 
+	ul {
+		list-style-type: none;
+		padding-left: 0;
+	}
+
+	[class^="icon-"]:before, [class*=" icon-"]:before {
+		text-decoration: none;
+	}
+
+	.alert {
+		display: table;
+
+		&.alert-info {
+			background-color: $light-blue;
+		}
+	}
+
 	.basecelleditor {
-/* $white has been removed in Bootstrap 3 -- 		background-color: $white; */
+		background-color: $white;
 		border-color: $gray;
 		outline: 0;
 		padding: 10px;
@@ -381,7 +101,8 @@ $light-gray: #F9F9F9;
 		.btn btn-default:nth-child(1) {
 			background-color: #50A2F5;
 			border-color: #4A96E8 #4A96E8 #1A6FCC;
-/* $white has been removed in Bootstrap 3 -- 			color: $white; */
+			color: $white;
+			text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 
 			&:hover {
 				background-color: #4A96E8;
@@ -403,6 +124,14 @@ $light-gray: #F9F9F9;
 	.button-holder {
 		margin: 0;
 		padding: 15px 0;
+	}
+
+	.btn btn-default {
+		color: $dark-gray;
+
+		&.btn-primary {
+			color: $white;
+		}
 	}
 
 	.chart-container {
@@ -427,6 +156,7 @@ $light-gray: #F9F9F9;
 
 			font-size: 0.9em;
 			max-width: 300px;
+			opacity: 0.5;
 			position: absolute;
 			right: 0;
 			top: -2px;
@@ -434,14 +164,144 @@ $light-gray: #F9F9F9;
 		}
 	}
 
+	.checkbox {
+		border-radius: 4px;
+	}
+
 	.column-content {
 		padding: 0;
+	}
+
+	.controls-container {
+		display: inline-block;
+
+		.field-wrapper {
+			& > label, & .control-label {
+				display: block;
+				font-size: 0.9em;
+				font-weight: bold;
+				margin-bottom: 8px;
+			}
+
+			& > label.checkbox {
+				font-weight: normal;
+			}
+
+			&.lfr-ddm-field-group-inline {
+				margin: 0 6px 6px 0;
+			}
+		}
+
+		.date-time {
+			a {
+				float: right;
+				font-size: 1.1em;
+				padding: 3px;
+			}
+
+			.control-label {
+				display: inline-block;
+			}
+
+			.inputs {
+				.lfr-input-date {
+					display: inline-block;;
+
+					.field, .input-medium {
+						border-right-width: 0;
+						cursor: pointer;
+						margin-right: -6px;
+						padding-left: 8px;
+						padding-right: 0;
+						width: 84px;
+					}
+				}
+
+				.lfr-input-time {
+					&.ampm .input-small {
+						width: 78px;
+					}
+
+					.input-small {
+						border-left-width: 0;
+						cursor: pointer;
+						padding-left: 0;
+						padding-right: 10px;
+						text-align: right;
+						width: 54px;
+					}
+				}
+			}
+
+			.success input {
+				color: $dark-gray;
+
+				&:focus {
+					border-color: $gray;
+				}
+			}
+		}
+
+		.updating {
+			margin-bottom: 16px;
+			vertical-align: bottom;
+		}
+	}
+
+	.content-container {
+		@include clearfix();
+
+		.settings-container .content {
+			min-width: 230px;
+		}
+
+		.table-container .header {
+			@include clearfix();
+
+			.actions {
+				float: right;
+			}
+		}
 	}
 
 	.datepicker-popover .yui3-calendar-content {
 		background-image: none;
 		border-width: 0;
 		padding: 0;
+	}
+
+	.dockbar .navbar-inner .site-administration-menu li a:hover {
+		background-color: $light-blue;
+		color: $dark-gray;
+	}
+
+	.dropdown-menu {
+		font-size: inherit;
+		margin: 0;
+
+		& > .active > a {
+			background-color: $gray;
+			background-image: none;
+
+			&:focus, &:hover {
+				background-color: $light-blue;
+				color: $dark-gray
+			}
+		}
+
+		& > li > a {
+			color: $dark-gray;
+			padding: 0.2em 1em;
+
+			&:focus, &:hover {
+				background-color: $light-blue;
+				background-image: none;
+			}
+		}
+
+		.lexicon-icon-shortcut {
+			height: 12px;
+		}
 	}
 
 	.dropdown-menu-toggler {
@@ -451,7 +311,7 @@ $light-gray: #F9F9F9;
 		position: relative;
 
 		&.open:after {
-/* $white has been removed in Bootstrap 3 -- 			border-bottom: 6px solid $white; */
+			border-bottom: 6px solid $white;
 			border-left: 6px solid transparent;
 			border-right: 6px solid transparent;
 			content: "";
@@ -463,11 +323,81 @@ $light-gray: #F9F9F9;
 		}
 	}
 
+	.fade-out {
+		opacity: 0;
+	}
+
+	.fluid {
+		float: left;
+		margin-right: 20px;
+	}
+
 	.footer-note {
 		clear: both;
 		font-size: 0.9em;
 		font-style: italic;
 		margin-bottom: 4px;
+	}
+
+	.form-group.success {
+		input, .control-label {
+			color: $dark-gray;
+		}
+
+		input:focus {
+			border-color: $gray;
+			box-shadow: none;
+		}
+	}
+
+	.lcs-checkboxes-container .field-wrapper {
+		border: 1px solid $white;
+		border-radius: 4px;
+		margin-bottom: 5px;
+		padding-right: 10px;
+
+		&:hover {
+			background-color: $light-blue;
+			border-color: $light-blue;
+		}
+
+		&.overridden, &.updated {
+			border-color: $gray;
+		}
+
+		&.updated {
+			background-color: $gray;
+		}
+
+		label {
+			cursor: pointer;
+			display: inline-block;
+			margin-bottom: 0;
+			padding: 5px 5px 5px 10px;
+
+			.field {
+				cursor: pointer;
+				margin: 0 4px 2px 0;
+				vertical-align: middle;
+			}
+		}
+	}
+
+	.lcs-dragging-original {
+		opacity: 0.5;
+	}
+
+	.lcs-section {
+		margin-bottom: 20px;
+		min-height: 45px;
+
+		.lcs-section-label, .lcs-section-note {
+			margin-bottom: 5px;
+		}
+
+		.lcs-section-label {
+			font-weight: bold;
+		}
 	}
 
 	.lfr-search-container {
@@ -507,6 +437,10 @@ $light-gray: #F9F9F9;
 		display: none;
 	}
 
+	.pager .disabled {
+		display: none;
+	}
+
 	.portlet-borderless-container {
 		min-height: 0;
 
@@ -515,7 +449,67 @@ $light-gray: #F9F9F9;
 		}
 	}
 
+	.server-details {
+		min-height: 135px;
+
+		@include clearfix();
+
+		.lcs-about-hardware .result-value {
+			text-align: right;
+		}
+
+		.lcs-about-hardware, .lcs-about-software {
+			float: left;
+			margin: 0 20px 20px 0;
+		}
+
+		.lcs-about-software .empty-row {
+			height: 20px;
+
+			.table-cell {
+				border-left-color: $white;
+				border-right-color: $white;
+			}
+		}
+
+		.table-cell {
+			border: 1px solid $gray;
+		}
+	}
+
 	.table {
+		border-collapse: collapse;
+		margin-bottom: 0;
+
+		tbody tr.info > td {
+			background-color: inherit;
+		}
+
+		td {
+			border-width: 1px 0;
+
+			&.text-right {
+				text-align: right;
+			}
+		}
+
+		th {
+			border-width: 1px 0;
+			font-weight: normal;
+		}
+
+		&.settings-table td {
+			border: 1px solid $gray;
+		}
+
+		&.table-hover tbody tr:hover > td {
+			background-color: $light-blue;
+		}
+
+			.alert-message.offline {
+				color: $red;
+			}
+
 		.table-columns {
 			border: 1px solid $gray;
 
@@ -547,14 +541,6 @@ $light-gray: #F9F9F9;
 				&.selected {
 					background-color: $gray;
 				}
-			}
-
-			.alert-message.offline {
-/* $red has been removed in Bootstrap 3 -- 				color: $red; */
-			}
-
-			.table-sorted {
-				background-color: inherit;
 			}
 		}
 
@@ -613,6 +599,10 @@ $light-gray: #F9F9F9;
 			}
 		}
 
+		.table-sorted {
+			background-color: inherit;
+		}
+
 		.table-table {
 			width: 100%;
 		}
@@ -644,7 +634,10 @@ $light-gray: #F9F9F9;
 			.alert-no-search-results {
 				background-color: $light-gray;
 				border-color: $gray;
+				border-radius: 0;
 				color: $dark-gray;
+				display: block;
+				padding: 8px;
 			}
 
 			.header .search-input {
@@ -729,106 +722,95 @@ $light-gray: #F9F9F9;
 	.timepicker-popover.popover {
 		min-width: 100px;
 	}
-}
 
-.lcs-checkboxes-container {
-	display: inline-block;
+	.tooltip {
+		font-size: 0.9em;
+		max-width: 600px;
+		z-index: 10000;
 
-	.form-group {
-/* $white has been removed in Bootstrap 3 -- 		border: 1px solid $white; */
-		margin-bottom: 5px;
-		padding-right: 10px;
-
-		&:hover {
-			background-color: $light-blue;
-			border-color: $light-blue;
-		}
-
-		&.overridden, &.updated {
-			border-color: $gray;
-		}
-
-		&.updated {
-			background-color: $gray;
-		}
-
-		label {
-			display: inline-block;
-			margin-bottom: 0;
-			padding: 5px 5px 5px 10px;
+		.tooltip-content {
+			max-width: none;
+			text-align: left;
 		}
 	}
-}
 
-.lcs-section {
-	margin-bottom: 20px;
-	min-height: 45px;
+	.tooltip-help {
+		.tooltip-arrow {
+			border-top-color: rgba(0, 0, 0, 0.8);
+		}
 
-	.lcs-section-label, .lcs-section-note {
-		margin-bottom: 5px;
+		.tooltip-help-content {
+			background-color: rgba(0, 0, 0, 0.8);
+			border-width: 0;
+			color: $white;
+		}
 	}
 
-	.lcs-section-label {
-		font-weight: bold;
+	.updating {
+		border-radius: 50%;
+		display: inline-block;
+		height: 14px;
+		margin-left: 5px;
+		position: relative;
+		width: 14px;
+
+		&:after {
+			background-color: $white;
+			border-radius: 50%;
+			bottom: 0;
+			content: "";
+			height: 75%;
+			left: 0;
+			margin: auto;
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: 75%;
+		}
+
+		&:before {
+			background-color: $dark-gray;
+			border-top-left-radius: 100%;
+			content: "";
+			height: 50%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 50%;
+		}
+
+		&.block {
+			display: block;
+			margin: 1em 0;
+		}
 	}
-}
 
-.updating {
-	-moz-animation: spin 1s linear infinite;
-	-o-animation: spin 1s linear infinite;
-	-webkit-animation: spin 1s linear infinite;
-	animation: spin 1s linear infinite;
-	display: inline-block;
-	height: 14px;
-	margin-left: 5px;
-	position: relative;
-	width: 14px;
+	.user-avatar-image {
+		background-position: center center;
+		background-size: 100% 120%;
+		border: 2px solid $gray;
+		border-radius: 50%;
+		display: inline-block;
+		height: 38px;
+		line-height: 0;
+		margin-right: 5px;
+		overflow: hidden;
+		vertical-align: middle;
+		width: 38px;
 
-	&:after {
-/* $white has been removed in Bootstrap 3 -- 		background-color: $white; */
-		bottom: 0;
-		content: "";
-		height: 75%;
-		left: 0;
-		margin: auto;
-		position: absolute;
-		right: 0;
-		top: 0;
-		width: 75%;
+		img {
+			max-width: 100%;
+		}
 	}
 
-	&:before {
-		background-color: $dark-gray;
-		content: "";
-		height: 50%;
-		left: 0;
-		position: absolute;
-		top: 0;
-		width: 50%;
+	.yui3-datatable .table-foot td .yui3-datatable-paginator .yui3-datatable-paginator-control {
+		box-shadow: none;
 	}
 
-	&.block {
-		display: block;
-		margin: 1em 0;
+	.yui3-dd-proxy {
+		color: $dark-gray;
+		z-index: 8000 !important;
 	}
-}
-
-.user-avatar-image {
-	background-position: center center;
-	background-size: 100% 120%;
-	border: 2px solid $gray;
-	display: inline-block;
-	height: 38px;
-	line-height: 0;
-	margin-right: 5px;
-	overflow: hidden;
-	vertical-align: middle;
-	width: 38px;
-}
-
-.yui3-dd-proxy {
-	color: $dark-gray;
-	z-index: 8000 !important;
 }
 
 /* ---------- Exclusive page ---------- */
@@ -876,16 +858,16 @@ $light-gray: #F9F9F9;
 		padding-left: 115px;
 		position: fixed;
 		right: 0;
-		width: 330px;
+		width: 440px;
 	}
 
 	.lcs-header {
-/* $white has been removed in Bootstrap 3 -- 		background-color: $white; */
+		background-color: $white;
 		color: $dark-gray;
 		padding: 5px 20px;
 
 		.profile {
-/* $white has been removed in Bootstrap 3 -- 			background-color: $white; */
+			background-color: $white;
 			float: right;
 
 			.user-full-name {
@@ -907,34 +889,18 @@ $light-gray: #F9F9F9;
 /* ---------- Header ---------- */
 
 .lcs-admin {
-	&html {
-		min-height: 0;
-		padding: 0;
-
-		.container {
-			background-color: inherit;
-			position: fixed;
-			z-index: 1000;
-
-			.user-notifications-count {
-				margin: 0;
-				padding: 0 6px;
-			}
-		}
-	}
-
 	.osb-lcs-portlet.osb-lcs-portlet-navigation, .private-page .lcs-content {
-		padding-top: 95px;
+		padding-top: 119px;
 	}
 
 	.lcs-header .osb-lcs-portlet-header {
-		top: 40px;
+		top: 63px;
 	}
 }
 
 .lcs-header .osb-lcs-portlet-header {
-	background-color: $dark-blue;
-/* $white has been removed in Bootstrap 3 -- 	color: $white; */
+	background-color: #286090;
+	color: $white;
 	display: block;
 	height: $header-height;
 	left: 0;
@@ -945,11 +911,11 @@ $light-gray: #F9F9F9;
 	width: 100%;
 	z-index: 10;
 
-	@include pie-clearfix-deprecated();
+	@include clearfix();
 
 	a.lcs-dropdown-link {
 		&, &:focus, &:hover {
-/* $white has been removed in Bootstrap 3 -- 			color: $white; */
+			color: $white;
 			text-decoration: none;
 		}
 	}
@@ -975,7 +941,7 @@ $light-gray: #F9F9F9;
 		position: relative;
 
 		.unread {
-/* $red has been removed in Bootstrap 3 -- 			background-color: $red; */
+			background-color: $red;
 			border-radius: 12px;
 			font-size: 12px;
 			font-weight: bold;
@@ -990,6 +956,8 @@ $light-gray: #F9F9F9;
 	.lcs-messages-menu {
 		color: $dark-gray;
 		margin-top: 0;
+		max-height: inherit;
+		overflow: inherit;
 		width: 440px;
 
 		&.open {
@@ -1025,7 +993,7 @@ $light-gray: #F9F9F9;
 				}
 
 				.header {
-					@include pie-clearfix-deprecated();
+					@include clearfix();
 
 					.from {
 						float: left;
@@ -1055,7 +1023,7 @@ $light-gray: #F9F9F9;
 			border-bottom: 1px solid $gray;
 			padding: 0.1em 1em 0.4em;
 
-			@include pie-clearfix-deprecated();
+			@include clearfix();
 
 			.options {
 				float: right;
@@ -1068,7 +1036,7 @@ $light-gray: #F9F9F9;
 			text-align: center;
 
 			&:hover {
-/* $white has been removed in Bootstrap 3 -- 				background-color: $white; */
+				background-color: $white;
 			}
 
 			.updating {
@@ -1081,7 +1049,7 @@ $light-gray: #F9F9F9;
 	.profile-menu {
 		.profile-icon {
 			display: inline-block;
-			min-width: 20px;
+			padding-right: 8px;
 		}
 
 		.project-item .icon-chevron-right {
@@ -1097,7 +1065,7 @@ $light-gray: #F9F9F9;
 		margin-left: 10px;
 
 		.beta {
-/* $white has been removed in Bootstrap 3 -- 			color: $white; */
+			color: $white;
 			font-size: 0.7em;
 		}
 
@@ -1107,7 +1075,7 @@ $light-gray: #F9F9F9;
 		}
 
 		.title {
-/* $white has been removed in Bootstrap 3 -- 			border-left: 1px solid $white; */
+			border-left: 1px solid $white;
 			padding-left: 19px;
 		}
 	}
@@ -1125,30 +1093,34 @@ $light-gray: #F9F9F9;
 	font-size: 15px;
 	margin: 15px 0;
 
-	@include pie-clearfix-deprecated();
+	@include clearfix();
 
-	li {
-		float: left;
-		padding-right: 7px;
+	ul {
+		padding: 0;
 
-		&.space {
-			padding-top: 1px;
-		}
+		li {
+			float: left;
+			padding-right: 7px;
 
-		& > a {
-			display: inline-block;
-			vertical-align: middle;
-		}
-
-		.trigger {
-			font-size: 14px;
-
-			&:focus, &:hover {
-				text-decoration: none;
+			&.space {
+				padding-top: 1px;
 			}
 
-			.caret {
-				display: none;
+			& > a {
+				display: inline-block;
+				vertical-align: middle;
+			}
+
+			.trigger {
+				font-size: 14px;
+
+				&:focus, &:hover {
+					text-decoration: none;
+				}
+
+				.caret {
+					display: none;
+				}
 			}
 		}
 	}
@@ -1157,10 +1129,11 @@ $light-gray: #F9F9F9;
 /* ---------- Toolbar ---------- */
 
 .lcs-toolbar {
-	@include pie-clearfix-deprecated();
+	@include clearfix();
 
 	.item {
 		border: 1px solid $gray;
+		border-radius: 4px;
 		float: left;
 		margin: 0 10px 20px 0;
 		text-align: center;
@@ -1190,15 +1163,14 @@ $light-gray: #F9F9F9;
 .osb-lcs-portlet {
 	color: $dark-gray;
 	display: table;
-	font-size: 15px;
 
 	&.osb-lcs-portlet-downloads .download-options {
 		max-width: 960px;
 
-		@include pie-clearfix-deprecated();
+		@include clearfix();
 
 		.item {
-/* $white has been removed in Bootstrap 3 -- 			background-color: $white; */
+			background-color: $white;
 			border: 1px solid $gray;
 			margin-bottom: 1em;
 			padding: 1em;
@@ -1238,7 +1210,7 @@ $light-gray: #F9F9F9;
 			margin-bottom: 20px;
 			padding-left: 32px;
 
-			@include pie-clearfix-deprecated();
+			@include clearfix();
 
 			textarea {
 				min-height: 250px;
@@ -1270,7 +1242,7 @@ $light-gray: #F9F9F9;
 		}
 
 		.title {
-/* $blue has been removed in Bootstrap 3 -- 			color: $blue; */
+			color: $blue;
 			font-size: 2em;
 			font-weight: lighter;
 			vertical-align: middle;
@@ -1296,7 +1268,7 @@ $light-gray: #F9F9F9;
 	}
 
 	&.osb-lcs-portlet-navigation  {
-/* $white has been removed in Bootstrap 3 -- 		background-color: $white; */
+		background-color: $white;
 		max-width: 245px;
 		padding-top: $header-height;
 		position: fixed;
@@ -1391,7 +1363,7 @@ $light-gray: #F9F9F9;
 						width: auto;
 
 						&:hover {
-/* $blue has been removed in Bootstrap 3 -- 							color: $blue; */
+							color: $blue;
 						}
 					}
 				}
@@ -1426,11 +1398,16 @@ $light-gray: #F9F9F9;
 						background-color: $gray;
 					}
 
-					&.titlebar-top a {
-						padding: 8px;
+					&.titlebar-top {
+						border-top-left-radius: 15px;
+						border-top-right-radius: 15px;
 
-						.title {
-							padding-left: 5px;
+						a {
+							padding: 8px;
+
+							.title {
+								padding-left: 5px;
+							}
 						}
 					}
 				}
@@ -1467,8 +1444,8 @@ $light-gray: #F9F9F9;
 			}
 
 			.patches-count {
-/* $blue has been removed in Bootstrap 3 -- 				background-color: $blue; */
-/* $white has been removed in Bootstrap 3 -- 				color: $white; */
+				background-color: $blue;
+				color: $white;
 				font-size: 12px;
 				font-weight: bold;
 				line-height: 12px;
@@ -1498,13 +1475,17 @@ $light-gray: #F9F9F9;
 	&.osb-lcs-portlet-server {
 		.controls-container {
 			input[readonly] {
-/* $white has been removed in Bootstrap 3 -- 				background-color: $white; */
+				background-color: $white;
 				cursor: pointer;
 			}
 
 			input, select {
 				width: 160px;
 			}
+		}
+
+		.lcs-garbage-collector-metrics-container, .lcs-multivm-container {
+			margin-bottom: 20px;
 		}
 
 		.lcs-metrics-tabs-container {
@@ -1517,10 +1498,6 @@ $light-gray: #F9F9F9;
 					padding: 0;
 				}
 			}
-		}
-
-		.lcs-garbage-collector-metrics-container, .lcs-multivm-container {
-			margin-bottom: 20px;
 		}
 
 		.lcs-memory-charts-container {
@@ -1543,6 +1520,10 @@ $light-gray: #F9F9F9;
 			}
 		}
 
+		.lcs-tabs-sub .tab > a {
+			border-radius: 4px;
+		}
+
 		.server-settings {
 			padding-top: 16px;
 
@@ -1552,7 +1533,7 @@ $light-gray: #F9F9F9;
 		}
 
 		.lcs-chart-overlay-container {
-/* $white has been removed in Bootstrap 3 -- 			color: $white; */
+			color: $white;
 			position: relative;
 
 			.lcs-chart-overlay-value {
@@ -1565,7 +1546,7 @@ $light-gray: #F9F9F9;
 			margin-bottom: 20px;
 			min-height: 180px;
 
-			@include pie-clearfix-deprecated();
+			@include clearfix();
 		}
 
 		.lcs-bar-chart-container {
@@ -1581,7 +1562,7 @@ $light-gray: #F9F9F9;
 			}
 
 			.lcs-chart-overlay-value {
-/* $blue has been removed in Bootstrap 3 -- 				border-right: 2px solid $blue; */
+				border-right: 2px solid $blue;
 				height: 57px;
 				padding: 8px 5px 0 0;
 			}
@@ -1611,7 +1592,7 @@ $light-gray: #F9F9F9;
 					border-top-width: 0;
 
 					td {
-/* $white has been removed in Bootstrap 3 -- 						background-color: $white; */
+						background-color: $white;
 						display: table;
 						font-size: 0.9em;
 						padding: 0;
@@ -1650,7 +1631,7 @@ $light-gray: #F9F9F9;
 			&.summary {
 				.content {
 					.load-time-high {
-/* $red has been removed in Bootstrap 3 -- 						color: $red; */
+						color: $red;
 					}
 
 					.table-cell {
@@ -1709,6 +1690,7 @@ $light-gray: #F9F9F9;
 
 		.yui3-cartesianchart-content {
 			& > div:last-child {
+				border-radius: 4px;
 				opacity: 1 !important;
 				padding: 5px !important;
 			}
@@ -1716,6 +1698,10 @@ $light-gray: #F9F9F9;
 			.yui3-graph {
 				border: 2px solid $gray;
 			}
+		}
+
+		.yui3-graph {
+			border-radius: 10px;
 		}
 	}
 
@@ -1806,6 +1792,7 @@ $light-gray: #F9F9F9;
 	h2 {
 		font-size: 0.9em;
 		font-weight: bold;
+		line-height: 40px;
 		margin: 0;
 	}
 
@@ -1832,11 +1819,11 @@ $light-gray: #F9F9F9;
 		}
 
 		.lcs-download-status-downloaded {
-/* $green has been removed in Bootstrap 3 -- 			color: $green; */
+			color: $green;
 		}
 
 		.lcs-download-status-error {
-/* $red has been removed in Bootstrap 3 -- 			color: $red; */
+			color: $red;
 		}
 	}
 
@@ -1845,7 +1832,7 @@ $light-gray: #F9F9F9;
 	}
 
 	.lcs-tabs-default {
-		@include pie-clearfix-deprecated();
+		@include clearfix();
 
 		.nav {
 			border-bottom: 1px solid $gray;
@@ -1857,7 +1844,7 @@ $light-gray: #F9F9F9;
 
 					&:focus, &:hover {
 						background-color: $light-blue;
-/* $white has been removed in Bootstrap 3 -- 						border-color: $white $white $gray; */
+						border-color: $white $white $gray;
 					}
 				}
 
@@ -1866,8 +1853,8 @@ $light-gray: #F9F9F9;
 					cursor: pointer;
 
 					&:focus, &:hover {
-/* $white has been removed in Bootstrap 3 -- 						background-color: $white; */
-/* $white has been removed in Bootstrap 3 -- 						border-color: $gray $gray $white; */
+						background-color: $white;
+						border-color: $gray $gray $white;
 					}
 				}
 			}
@@ -1929,49 +1916,13 @@ $light-gray: #F9F9F9;
 /* ---------- Dialog ---------- */
 
 .lcs-dialog {
-	color: $dark-gray;
-	height: auto !important;
-	max-height: 620px;
-	min-width: 350px;
-	overflow: auto;
-	padding: 25px 30px 30px;
-	width: auto !important;
-
-	h3 {
-/* $blue has been removed in Bootstrap 3 -- 		color: $blue; */
-		font-size: 1.4em;
-		font-weight: normal;
-	}
-
-	.button-holder {
-		padding-bottom: 0;
-		text-align: center;
-
-		.btn btn-default-link {
-			padding-right: 0;
-		}
-	}
-
-	.form-group .help-inline {
-		padding-left: 0;
-	}
-
-	.field, html {
-		width: 100%;
-	}
-
 	.lcs-manage-membership-request {
-		width: 630px;
-
-		.checkbox .lcs-select-all-users {
-			margin-left: 11px;
-		}
-
 		.form-group {
 			margin-bottom: 0;
 
-			& > .checkbox {
+			label {
 				font-weight: bold;
+				padding-left: 15px;
 			}
 		}
 
@@ -1980,26 +1931,31 @@ $light-gray: #F9F9F9;
 		}
 
 		.lcs-search-users {
+			margin-bottom: 8px;
 			position: relative;
 
 			.search-users-icon {
 				color: $gray;
-				left: 8px;
+				left: 24px;
 				position: absolute;
 				top: 8px;
 			}
 
 			.search-users-input {
-				padding-left: 25px;
+				padding-left: 30px;
 			}
-		}
-
-		.lcs-search-users-icon {
-			margin-right: 0;
 		}
 
 		.lcs-users {
 			position: relative;
+
+			.add-users {
+				margin-top: -8px;
+				position: absolute;
+				right: -6px;
+				top: 50%;
+				z-index: 2;
+			}
 
 			.field-choice {
 				display: inline-block;
@@ -2011,21 +1967,16 @@ $light-gray: #F9F9F9;
 				border: 1px solid $gray;
 				height: 240px;
 				overflow: auto;
-				padding: 10px;
-
-				.btn btn-default-add-users {
-					font-size: 0.9em;
-					left: 50%;
-					margin-left: -17px;
-					margin-top: -15px;
-					position: absolute;
-					top: 50%;
-				}
+				padding: 0;
 
 				.lcs-cancel-user {
 					color: $gray;
 					cursor: pointer;
 					vertical-align: middle;
+				}
+
+				.lcs-scroll-panel {
+					padding: 15px;
 				}
 
 				.lcs-user-name {
@@ -2048,21 +1999,16 @@ $light-gray: #F9F9F9;
 		}
 	}
 
-	.modal-body {
-		height: auto !important;
-		max-height: inherit !important;
-		padding: 15px 0 0;
-	}
-
-	.searchcontainer-content {
-		max-height: 500px;
+	.modal-title {
+		font-size: 1.4em;
 	}
 }
 
 /* ---------- Feedback bar ---------- */
 
 .lcs-feedback-bar {
-	background-color: $dark-blue;
+	background-color: $blue;
+	border-radius: 5px 5px 0 0;
 	bottom: 0;
 	cursor: pointer;
 	position: fixed;
@@ -2076,7 +2022,7 @@ $light-gray: #F9F9F9;
 		padding: 8px 12px;
 
 		&, &:focus, &:hover {
-/* $white has been removed in Bootstrap 3 -- 			color: $white; */
+			color: $white;
 			text-decoration: none;
 		}
 
@@ -2107,35 +2053,23 @@ $light-gray: #F9F9F9;
 /* ---------- Responsive ---------- */
 
 @include respond-to(tablet) {
-	html {
-		.btn btn-default-group > .btn btn-default {
-			font-size: inherit;
-		}
-
-		.lcs-dialog, .lcs-footer, .osb-lcs-portlet {
-			font-size: 1.2em;
-		}
-	}
-
-	.lcs-dialog .lcs-manage-membership-request .lcs-users .lcs-users-column .btn btn-default-add-users {
-		margin-left: -24px;
-		margin-top: -22px;
+	.lcs .btn {
+		font-size: inherit;
 	}
 }
 
 @include respond-to(phone) {
-	html {
-		padding-left: 0;
-		padding-right: 0;
-	}
-
-	html {
-		.btn btn-default-group > .btn btn-default {
+	.lcs {
+		.btn {
 			font-size: inherit;
 		}
 
 		.lcs-dialog, .lcs-footer, .osb-lcs-portlet {
 			font-size: 1.4em;
+		}
+
+		.lcs-dialog .modal-body {
+			padding-top: 30px;
 		}
 
 		.lcs-footer {
@@ -2148,9 +2082,7 @@ $light-gray: #F9F9F9;
 		.navbar-static-top {
 			margin: 0;
 		}
-	}
 
-	.lcs {
 		.table-container {
 			&.searchable .header .search-input {
 				float: none;
@@ -2178,12 +2110,16 @@ $light-gray: #F9F9F9;
 	}
 
 	.lcs-admin {
-		.dockbar .navbar-inner .container {
-			right: 0;
+		.lcs-header .osb-lcs-portlet-header {
+			top: 47px;
+		}
+
+		.osb-lcs-portlet.osb-lcs-portlet-navigation {
+			padding-top: 103px;
 		}
 
 		.private-page .lcs-content {
-			padding-top: 0;
+			padding-top: 20px;
 		}
 	}
 
@@ -2219,6 +2155,7 @@ $light-gray: #F9F9F9;
 	}
 
 	.lcs-feedback-bar {
+		border-radius: 2px;
 		margin: 0 10px 20px;
 		position: static;
 		text-align: center;
@@ -2257,7 +2194,7 @@ $light-gray: #F9F9F9;
 				margin: 0;
 				padding-bottom: 20px;
 
-				@include pie-clearfix-deprecated();
+				@include clearfix();
 
 				.menu-item {
 					float: left;
@@ -2322,15 +2259,17 @@ $light-gray: #F9F9F9;
 }
 
 @include respond-to(phone, tablet) {
-	html {
-		width: 38px;
-	}
+	.lcs {
+		.table-sortable.yui3-datatable .table-foot td .yui3-datatable-paginator .yui3-datatable-paginator-group .btn btn-default {
+			display: inline-block;
+			margin-top: 0;
+			padding: 11px 19px;
+			width: auto;
+		}
 
-	.lcs .table-sortable.yui3-datatable .table-foot td .yui3-datatable-paginator .yui3-datatable-paginator-group .btn btn-default {
-		display: inline-block;
-		margin-top: 0;
-		padding: 11px 19px;
-		width: auto;
+		.user-avatar-image {
+			width: 38px;
+		}
 	}
 
 	.lcs-admin .dockbar .navbar-inner .container .navbar-btn {
@@ -2350,58 +2289,21 @@ $light-gray: #F9F9F9;
 /* ---------- Extras ---------- */
 
 .lcs {
-	&html {
-		input[type="email"], input[type="password"], input[type="text"], textarea {
-			box-shadow: none;
-			@include box-sizing(border-box);
-		}
-
-		.form-group.success input:focus {
-			box-shadow: none;
-		}
+	input[type="email"], input[type="password"], input[type="text"], select, textarea {
+		@include box-sizing(border-box);
 	}
 
 	.basecelleditor .btn btn-default:nth-child(1) {
 		@include background-image(linear-gradient(#54AAFF, #4A96E8));
-		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	}
-
-	.chart-container .header {
-		opacity: 0.5;
-	}
-
-	.checkbox {
-		border-radius: 4px;
 	}
 
 	.fade-out {
-		opacity: 0;
 		@include transition(opacity 0.3s ease);
 	}
 
 	.table-container .header .options-menu .form-group label {
 		@include box-sizing(border-box);
 	}
-
-	.yui3-datatable .table-foot td .yui3-datatable-paginator .yui3-datatable-paginator-control {
-		box-shadow: none;
-	}
-}
-
-.lcs-checkboxes-container .form-group {
-	border-radius: 4px;
-}
-
-.lcs-dragging-original {
-	opacity: 0.5;
-}
-
-.lcs-feedback-bar {
-	border-radius: 5px 5px 0 0;
-}
-
-.lcs-toolbar .item {
-	border-radius: 4px;
 }
 
 .osb-lcs-portlet {
@@ -2412,14 +2314,6 @@ $light-gray: #F9F9F9;
 
 		.table-container .table-col-name {
 			@include word-wrap(break-all);
-		}
-
-		.yui3-cartesianchart-content > div:last-child {
-			border-radius: 4px;
-		}
-
-		.yui3-graph {
-			border-radius: 10px;
 		}
 	}
 
@@ -2433,23 +2327,10 @@ $light-gray: #F9F9F9;
 		}
 
 		.lcs-navigation-submenu {
-			.patches-count {
-				border-radius: 2px;
-			}
-
-			.titlebar-top {
-				border-top-left-radius: 15px;
-				border-top-right-radius: 15px;
-			}
-
 			.titlebar-inner .title {
 				@include box-sizing(border-box);
 			}
 		}
-	}
-
-	.lcs-tabs-sub .tab > a {
-		border-radius: 4px;
 	}
 }
 
@@ -2470,24 +2351,6 @@ $light-gray: #F9F9F9;
 }
 
 .updating {
-/* $white has been removed in Bootstrap 3 -- 	@include background-image(linear-gradient(to right, $dark-gray 10%, $white 50%)); */
-	border-radius: 50%;
-
-	&:after {
-		border-radius: 50%;
-	}
-
-	&:before {
-		border-top-left-radius: 100%;
-	}
-}
-
-.user-avatar-image {
-	border-radius: 50%;
-}
-
-@include respond-to(phone) {
-	.lcs-feedback-bar {
-		border-radius: 2px;
-	}
+	@include animation(spin 1s linear infinite);
+	@include background-image(linear-gradient(to right, $dark-gray 10%, $white 50%));
 }
