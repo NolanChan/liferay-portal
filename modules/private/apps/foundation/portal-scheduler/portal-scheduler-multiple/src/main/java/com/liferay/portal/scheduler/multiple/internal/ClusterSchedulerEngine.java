@@ -309,20 +309,33 @@ public class ClusterSchedulerEngine
 
 		try {
 			if (memoryClusteredSlaveJob) {
-				SchedulerResponse schedulerResponse = new SchedulerResponse();
+				ObjectValuePair<SchedulerResponse, TriggerState> value =
+					_memoryClusteredJobs.get(getFullName(jobName, groupName));
 
-				schedulerResponse.setDescription(description);
-				schedulerResponse.setDestinationName(destinationName);
-				schedulerResponse.setGroupName(groupName);
-				schedulerResponse.setJobName(jobName);
-				schedulerResponse.setMessage(message);
-				schedulerResponse.setTrigger(trigger);
-				schedulerResponse.setStorageType(storageType);
+				if (value == null) {
+					MethodHandler methodHandler = new MethodHandler(
+						_getScheduledJobMethodKey, jobName, groupName,
+						StorageType.MEMORY_CLUSTERED);
 
-				_memoryClusteredJobs.put(
-					getFullName(jobName, groupName),
-					new ObjectValuePair<SchedulerResponse, TriggerState>(
-						schedulerResponse, TriggerState.NORMAL));
+					Future<SchedulerResponse> future =
+						_clusterMasterExecutor.executeOnMaster(methodHandler);
+
+					SchedulerResponse schedulerResponse = future.get(
+						GetterUtil.getLong(
+							_props.get(
+								PropsKeys.
+									CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT)),
+						TimeUnit.SECONDS);
+
+					if (schedulerResponse == null) {
+						throw new NullPointerException(
+							"Unable to find memory clustered job (job name :" +
+								trigger.getJobName() + ", group name :" +
+									trigger.getGroupName() + "on master node.");
+					}
+
+					addMemoryClusteredJob(schedulerResponse);
+				}
 			}
 			else {
 				_schedulerEngine.schedule(
@@ -493,6 +506,22 @@ public class ClusterSchedulerEngine
 		setClusterableThreadLocal(storageType);
 	}
 
+	protected void addMemoryClusteredJob(SchedulerResponse schedulerResponse) {
+		String jobName = schedulerResponse.getJobName();
+		String groupName = schedulerResponse.getGroupName();
+
+		TriggerState triggerState = SchedulerEngineHelperUtil.getJobState(
+			schedulerResponse);
+
+		Message message = schedulerResponse.getMessage();
+
+		message.remove(JOB_STATE);
+
+		_memoryClusteredJobs.put(
+			getFullName(jobName, groupName),
+			new ObjectValuePair<>(schedulerResponse, triggerState));
+	}
+
 	protected String getFullName(String jobName, String groupName) {
 		return groupName.concat(StringPool.PERIOD).concat(jobName);
 	}
@@ -510,19 +539,7 @@ public class ClusterSchedulerEngine
 			TimeUnit.SECONDS);
 
 		for (SchedulerResponse schedulerResponse : schedulerResponses) {
-			String jobName = schedulerResponse.getJobName();
-			String groupName = schedulerResponse.getGroupName();
-
-			TriggerState triggerState = SchedulerEngineHelperUtil.getJobState(
-				schedulerResponse);
-
-			Message message = schedulerResponse.getMessage();
-
-			message.remove(JOB_STATE);
-
-			_memoryClusteredJobs.put(
-				getFullName(jobName, groupName),
-				new ObjectValuePair<>(schedulerResponse, triggerState));
+			addMemoryClusteredJob(schedulerResponse);
 		}
 	}
 
@@ -546,7 +563,7 @@ public class ClusterSchedulerEngine
 					memoryClusteredJobs.iterator();
 
 		while (itr.hasNext()) {
-			Map.Entry<String, ObjectValuePair<SchedulerResponse, TriggerState>>
+			Map.Entry <String, ObjectValuePair<SchedulerResponse, TriggerState>>
 				entry = itr.next();
 
 			ObjectValuePair<SchedulerResponse, TriggerState>
@@ -626,6 +643,9 @@ public class ClusterSchedulerEngine
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterSchedulerEngine.class);
 
+	private static final MethodKey _getScheduledJobMethodKey = new MethodKey(
+		SchedulerEngineHelperUtil.class, "getScheduledJob", String.class,
+		String.class, StorageType.class);
 	private static final MethodKey _getScheduledJobsMethodKey = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJobs", StorageType.class);
 
