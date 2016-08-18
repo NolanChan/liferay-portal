@@ -300,11 +300,8 @@ public class LCSClusterNodeDetailsServiceImpl
 
 	@Override
 	public synchronized void updateStatus(String key, int status) {
-		LCSClusterNodeDetails lcsClusterNodeDetails =
-			_lcsClusterNodeDetailsPersistence.fetchByKey(key);
-
 		_lcsClusterNodeDetailsPersistence.updateStatusColumn(
-			key, new Date(), lcsClusterNodeDetails.getStatus() | status);
+			key, new Date(), status);
 	}
 
 	private LCSClusterNodeCurrentThreadsMetricsPersistence

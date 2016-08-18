@@ -59,6 +59,8 @@ public class LCSClusterNodePropertiesServiceImpl
 				key, mapKey, properties.get(mapKey));
 		}
 
+		removeDeletedLCSClusterNodeProperties(key, properties);
+
 		LCSClusterNodeProperties lcsClusterNodeProperties =
 			_lcsClusterNodePropertiesPersistence.create();
 
@@ -69,6 +71,25 @@ public class LCSClusterNodePropertiesServiceImpl
 		lcsClusterNodeProperties.setProperties(properties);
 
 		return lcsClusterNodeProperties;
+	}
+
+	protected void removeDeletedLCSClusterNodeProperties(
+		String key, Map<String, String> properties) {
+
+		LCSClusterNodeProperties oldLCSClusterNodeProperties =
+			fetchLCSClusterNodeProperties(key);
+
+		Map<String, String> oldProperties =
+			oldLCSClusterNodeProperties.getProperties();
+
+		Set<String> oldKeys = oldProperties.keySet();
+
+		oldKeys.removeAll(properties.keySet());
+
+		for (String oldKey : oldKeys) {
+			_lcsClusterNodePropertiesPersistence.updatePropertiesMapColumn(
+				key, oldKey, null);
+		}
 	}
 
 	private LCSClusterNodePropertiesPersistence
