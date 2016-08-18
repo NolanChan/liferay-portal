@@ -16,7 +16,7 @@
 
 <#assign lcs_exclusive_page = false />
 
-<#if !is_signed_in || !selectable || oauth_url || info_layout>
+<#if info_layout || !is_signed_in || oauth_url || !selectable>
 	<#assign root_css_class = root_css_class + " lcs-exclusive" />
 	<#assign lcs_exclusive_page = true />
 </#if>
