@@ -2,7 +2,8 @@
 
 /* ---------- Common variables ---------- */
 
-$blue: #337AB7;
+$blue: #4A96E8;
+$dark-blue: #337AB7;
 $dark-gray: #555;
 $gray: #DDD;
 $green: #97CE68;
@@ -17,7 +18,7 @@ $white: #FFF;
 .lcs {
 	a {
 		&, &:focus, &:hover {
-			color: $blue;
+			color: $dark-blue;
 			outline: 0;
 		}
 	}
@@ -100,12 +101,12 @@ $white: #FFF;
 
 		.btn btn-default:nth-child(1) {
 			background-color: #50A2F5;
-			border-color: #4A96E8 #4A96E8 #1A6FCC;
+			border-color: $blue $blue #1A6FCC;
 			color: $white;
 			text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 
 			&:hover {
-				background-color: #4A96E8;
+				background-color: $blue;
 			}
 		}
 
@@ -314,7 +315,7 @@ $white: #FFF;
 			border-bottom: 6px solid $white;
 			border-left: 6px solid transparent;
 			border-right: 6px solid transparent;
-			content: "";
+			content: '';
 			display: inline-block;
 			position: absolute;
 			right: 18px;
@@ -450,9 +451,9 @@ $white: #FFF;
 	}
 
 	.server-details {
-		min-height: 135px;
-
 		@include clearfix();
+
+		min-height: 135px;
 
 		.lcs-about-hardware .result-value {
 			text-align: right;
@@ -758,7 +759,7 @@ $white: #FFF;
 			background-color: $white;
 			border-radius: 50%;
 			bottom: 0;
-			content: "";
+			content: '';
 			height: 75%;
 			left: 0;
 			margin: auto;
@@ -771,7 +772,7 @@ $white: #FFF;
 		&:before {
 			background-color: $dark-gray;
 			border-top-left-radius: 100%;
-			content: "";
+			content: '';
 			height: 50%;
 			left: 0;
 			position: absolute;
@@ -900,6 +901,9 @@ $white: #FFF;
 
 .lcs-header .osb-lcs-portlet-header {
 	background-color: #286090;
+
+	@include clearfix();
+
 	color: $white;
 	display: block;
 	height: $header-height;
@@ -910,8 +914,6 @@ $white: #FFF;
 	top: 0;
 	width: 100%;
 	z-index: 10;
-
-	@include clearfix();
 
 	a.lcs-dropdown-link {
 		&, &:focus, &:hover {
@@ -1021,9 +1023,10 @@ $white: #FFF;
 
 		.menu-header {
 			border-bottom: 1px solid $gray;
-			padding: 0.1em 1em 0.4em;
 
 			@include clearfix();
+
+			padding: 0.1em 1em 0.4em;
 
 			.options {
 				float: right;
@@ -1090,10 +1093,10 @@ $white: #FFF;
 /* ---------- Breadcrumb ---------- */
 
 .lcs-breadcrumb {
+	@include clearfix();
+
 	font-size: 15px;
 	margin: 15px 0;
-
-	@include clearfix();
 
 	ul {
 		padding: 0;
@@ -1165,9 +1168,9 @@ $white: #FFF;
 	display: table;
 
 	&.osb-lcs-portlet-downloads .download-options {
-		max-width: 960px;
-
 		@include clearfix();
+
+		max-width: 960px;
 
 		.item {
 			background-color: $white;
@@ -1207,10 +1210,10 @@ $white: #FFF;
 		}
 
 		.panel {
+			@include clearfix();
+
 			margin-bottom: 20px;
 			padding-left: 32px;
-
-			@include clearfix();
 
 			textarea {
 				min-height: 250px;
@@ -1242,7 +1245,7 @@ $white: #FFF;
 		}
 
 		.title {
-			color: $blue;
+			color: $dark-blue;
 			font-size: 2em;
 			font-weight: lighter;
 			vertical-align: middle;
@@ -1363,7 +1366,7 @@ $white: #FFF;
 						width: auto;
 
 						&:hover {
-							color: $blue;
+							color: $dark-blue;
 						}
 					}
 				}
@@ -1444,7 +1447,7 @@ $white: #FFF;
 			}
 
 			.patches-count {
-				background-color: $blue;
+				background-color: $dark-blue;
 				color: $white;
 				font-size: 12px;
 				font-weight: bold;
@@ -1543,10 +1546,10 @@ $white: #FFF;
 		}
 
 		.lcs-server-charts-container {
+			@include clearfix();
+
 			margin-bottom: 20px;
 			min-height: 180px;
-
-			@include clearfix();
 		}
 
 		.lcs-bar-chart-container {
@@ -1562,7 +1565,7 @@ $white: #FFF;
 			}
 
 			.lcs-chart-overlay-value {
-				border-right: 2px solid $blue;
+				border-right: 2px solid $dark-blue;
 				height: 57px;
 				padding: 8px 5px 0 0;
 			}
@@ -2007,7 +2010,7 @@ $white: #FFF;
 /* ---------- Feedback bar ---------- */
 
 .lcs-feedback-bar {
-	background-color: $blue;
+	background-color: $dark-blue;
 	border-radius: 5px 5px 0 0;
 	bottom: 0;
 	cursor: pointer;
@@ -2191,10 +2194,10 @@ $white: #FFF;
 			position: static;
 
 			.lcs-navigation-header {
+				@include clearfix();
+
 				margin: 0;
 				padding-bottom: 20px;
-
-				@include clearfix();
 
 				.menu-item {
 					float: left;
@@ -2294,7 +2297,7 @@ $white: #FFF;
 	}
 
 	.basecelleditor .btn btn-default:nth-child(1) {
-		@include background-image(linear-gradient(#54AAFF, #4A96E8));
+		@include background-image(linear-gradient(#54AAFF, $blue));
 	}
 
 	.fade-out {
