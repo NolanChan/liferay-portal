@@ -10,8 +10,8 @@
 
 	<!-- Session -->
 
-	<bean id="com.datastax.driver.core.Session" factory-bean="com.liferay.osb.lcs.nosql.cassandra.spring.SessionFactoryBean" factory-method="getSession" />
-	<bean id="com.liferay.osb.lcs.nosql.cassandra.spring.SessionFactoryBean" class="com.liferay.osb.lcs.nosql.cassandra.spring.SessionFactoryBean">
+	<bean factory-bean="com.liferay.osb.lcs.nosql.cassandra.spring.SessionFactoryBean" factory-method="getSession" id="com.datastax.driver.core.Session" />
+	<bean class="com.liferay.osb.lcs.nosql.cassandra.spring.SessionFactoryBean" id="com.liferay.osb.lcs.nosql.cassandra.spring.SessionFactoryBean">
 		<property name="compression" value="${cassandra.session.factory.compression}" />
 		<property name="hostNames" value="${cassandra.session.factory.host.names}" />
 		<property name="hostPort" value="${cassandra.session.factory.host.port}" />
@@ -21,13 +21,13 @@
 
 	<!-- Service -->
 
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterEntryPropertyDifferencesService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterEntryPropertyDifferencesServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterEntryPropertyDifferencesServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterEntryPropertyDifferencesService">
 		<property name="LCSClusterEntryPropertyDifferencesPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterEntryPropertyDifferencesPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeCurrentThreadsMetricsService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeCurrentThreadsMetricsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeCurrentThreadsMetricsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeCurrentThreadsMetricsService">
 		<property name="LCSClusterNodeCurrentThreadsMetricsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeCurrentThreadsMetricsPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeDetailsService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeDetailsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeDetailsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeDetailsService">
 		<property name="LCSClusterNodeCurrentThreadsMetricsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeCurrentThreadsMetricsPersistence" />
 		<property name="LCSClusterNodeDetailsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeDetailsPersistence" />
 		<property name="LCSClusterNodeHibernateMetricsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeHibernateMetricsPersistence" />
@@ -44,178 +44,178 @@
 		<property name="LCSClusterNodePropertiesPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePropertiesPersistence" />
 		<property name="LCSClusterNodeScriptPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeScriptPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeHibernateMetricsService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeHibernateMetricsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeHibernateMetricsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeHibernateMetricsService">
 		<property name="LCSClusterNodeHibernateMetricsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeHibernateMetricsPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeInstallationEnvironmentService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeInstallationEnvironmentServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeInstallationEnvironmentServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeInstallationEnvironmentService">
 		<property name="LCSClusterNodeInstallationEnvironmentPersistance" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeInstallationEnvironmentPersistance" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeJDBCConnectionPoolMetricsService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeJDBCConnectionPoolMetricsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeJDBCConnectionPoolMetricsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeJDBCConnectionPoolMetricsService">
 		<property name="LCSClusterNodeJDBCConnectionPoolMetricsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJDBCConnectionPoolMetricsPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeJVMMetricsEventsService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeJVMMetricsEventsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeJVMMetricsEventsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeJVMMetricsEventsService">
 		<property name="LCSClusterNodeJVMMetricsEventsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJVMMetricsEventsPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeJVMMetricsService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeJVMMetricsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeJVMMetricsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeJVMMetricsService">
 		<property name="LCSClusterNodeJVMMetricsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJVMMetricsPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeLayoutMetricsEventsService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeLayoutMetricsEventsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeLayoutMetricsEventsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeLayoutMetricsEventsService">
 		<property name="LCSClusterNodeLayoutMetricsEventsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLayoutMetricsEventsPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeLayoutMetricsService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeLayoutMetricsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeLayoutMetricsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeLayoutMetricsService">
 		<property name="LCSClusterNodeLayoutMetricsCounterPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLayoutMetricsCounterPersistence" />
 		<property name="LCSClusterNodeLayoutMetricsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLayoutMetricsPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeLiferayVMMetricsService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeLiferayVMMetricsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeLiferayVMMetricsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeLiferayVMMetricsService">
 		<property name="LCSClusterNodeLiferayVMMetricsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLiferayVMMetricsPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodePatchesService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodePatchesServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodePatchesServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodePatchesService">
 		<property name="LCSClusterNodePatchesEventsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePatchesEventsPersistence" />
 		<property name="LCSClusterNodePatchesPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePatchesPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodePortletMetricsEventsService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodePortletMetricsEventsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodePortletMetricsEventsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodePortletMetricsEventsService">
 		<property name="LCSClusterNodePortletMetricsEventsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePortletMetricsEventsPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodePortletMetricsService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodePortletMetricsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodePortletMetricsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodePortletMetricsService">
 		<property name="LCSClusterNodeDetailsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeDetailsPersistence" />
 		<property name="LCSClusterNodePortletMetricsCounterPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePortletMetricsCounterPersistence" />
 		<property name="LCSClusterNodePortletMetricsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePortletMetricsPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodePropertiesService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodePropertiesServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodePropertiesServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodePropertiesService">
 		<property name="LCSClusterNodePropertiesPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePropertiesPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeScriptService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeScriptServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeScriptServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeScriptService">
 		<property name="LCSClusterNodeScriptPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeScriptPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeSiteService" class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeSiteServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSClusterNodeSiteServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSClusterNodeSiteService">
 		<property name="LCSClusterNodeSitePersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeSitePersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSMetadataDetailsService" class="com.liferay.osb.lcs.nosql.service.impl.LCSMetadataDetailsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSMetadataDetailsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSMetadataDetailsService">
 		<property name="LCSMetadataDetailsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSMetadataDetailsPersistence" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSStatsLayoutMetricsEventsService10080" class="com.liferay.osb.lcs.nosql.service.impl.LCSStatsLayoutMetricsEventsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSStatsLayoutMetricsEventsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSStatsLayoutMetricsEventsService10080">
 		<property name="LCSStatsLayoutMetricsEventsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsEventsPersistence10080" />
 		<property name="LCSStatsLayoutMetricsSummaryEventsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsSummaryEventsPersistence10080" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSStatsLayoutMetricsEventsService1440" class="com.liferay.osb.lcs.nosql.service.impl.LCSStatsLayoutMetricsEventsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSStatsLayoutMetricsEventsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSStatsLayoutMetricsEventsService1440">
 		<property name="LCSStatsLayoutMetricsEventsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsEventsPersistence1440" />
 		<property name="LCSStatsLayoutMetricsSummaryEventsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsSummaryEventsPersistence1440" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSStatsLayoutMetricsEventsService60" class="com.liferay.osb.lcs.nosql.service.impl.LCSStatsLayoutMetricsEventsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSStatsLayoutMetricsEventsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSStatsLayoutMetricsEventsService60">
 		<property name="LCSStatsLayoutMetricsEventsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsEventsPersistence60" />
 		<property name="LCSStatsLayoutMetricsSummaryEventsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsSummaryEventsPersistence60" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.LCSStatsPortletMetricsEventsService60" class="com.liferay.osb.lcs.nosql.service.impl.LCSStatsPortletMetricsEventsServiceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.impl.LCSStatsPortletMetricsEventsServiceImpl" id="com.liferay.osb.lcs.nosql.service.LCSStatsPortletMetricsEventsService60">
 		<property name="LCSStatsPortletMetricsEventsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsPortletMetricsEventsPersistence60" />
 		<property name="LCSStatsPortletMetricsSummaryEventsPersistence" ref="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsPortletMetricsSummaryEventsPersistenceImpl60" />
 	</bean>
 
 	<!-- Persistence -->
 
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterEntryPropertyDifferencesPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterEntryPropertyDifferencesPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterEntryPropertyDifferencesPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterEntryPropertyDifferencesPersistence">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeCurrentThreadsMetricsPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeCurrentThreadsMetricsPersistenceImpl">
-		<property name="session" ref="com.datastax.driver.core.Session" />
-		<property name="timeToLive" value="${cassandra.data.expiration.ttl}" />
-	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeDetailsPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeDetailsPersistenceImpl">
-		<property name="session" ref="com.datastax.driver.core.Session" />
-	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeHibernateMetricsPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeHibernateMetricsPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeCurrentThreadsMetricsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeCurrentThreadsMetricsPersistence">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 		<property name="timeToLive" value="${cassandra.data.expiration.ttl}" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeInstallationEnvironmentPersistance" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeInstallationEnvironmentPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeDetailsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeDetailsPersistence">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJDBCConnectionPoolMetricsPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJDBCConnectionPoolMetricsPersistenceImpl">
-		<property name="session" ref="com.datastax.driver.core.Session" />
-		<property name="timeToLive" value="${cassandra.data.expiration.ttl}" />
-	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJVMMetricsEventsPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJVMMetricsEventsPersistenceImpl">
-		<property name="session" ref="com.datastax.driver.core.Session" />
-	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJVMMetricsPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJVMMetricsPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeHibernateMetricsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeHibernateMetricsPersistence">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 		<property name="timeToLive" value="${cassandra.data.expiration.ttl}" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLayoutMetricsCounterPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLayoutMetricsCounterPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeInstallationEnvironmentPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeInstallationEnvironmentPersistance">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLayoutMetricsEventsPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLayoutMetricsEventsPersistenceImpl">
-		<property name="session" ref="com.datastax.driver.core.Session" />
-	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLayoutMetricsPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLayoutMetricsPersistenceImpl">
-		<property name="session" ref="com.datastax.driver.core.Session" />
-	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLiferayVMMetricsPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLiferayVMMetricsPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJDBCConnectionPoolMetricsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJDBCConnectionPoolMetricsPersistence">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 		<property name="timeToLive" value="${cassandra.data.expiration.ttl}" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePatchesPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePatchesPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJVMMetricsEventsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJVMMetricsEventsPersistence">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePatchesEventsPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePatchesEventsPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJVMMetricsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJVMMetricsPersistence">
+		<property name="session" ref="com.datastax.driver.core.Session" />
+		<property name="timeToLive" value="${cassandra.data.expiration.ttl}" />
+	</bean>
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLayoutMetricsCounterPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLayoutMetricsCounterPersistence">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePortletMetricsCounterPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePortletMetricsCounterPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLayoutMetricsEventsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLayoutMetricsEventsPersistence">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePortletMetricsEventsPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePortletMetricsEventsPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLayoutMetricsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLayoutMetricsPersistence">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePortletMetricsPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePortletMetricsPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLiferayVMMetricsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLiferayVMMetricsPersistence">
+		<property name="session" ref="com.datastax.driver.core.Session" />
+		<property name="timeToLive" value="${cassandra.data.expiration.ttl}" />
+	</bean>
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePatchesPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePatchesPersistence">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePropertiesPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePropertiesPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePatchesEventsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePatchesEventsPersistence">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeScriptPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeScriptPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePortletMetricsCounterPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePortletMetricsCounterPersistence">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeSitePersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeSitePersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePortletMetricsEventsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePortletMetricsEventsPersistence">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSMetadataDetailsPersistence" class="com.liferay.osb.lcs.nosql.service.persistence.LCSMetadataDetailsPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePortletMetricsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePortletMetricsPersistence">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsEventsPersistence10080" class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsEventsPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePropertiesPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodePropertiesPersistence">
+		<property name="session" ref="com.datastax.driver.core.Session" />
+	</bean>
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeScriptPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeScriptPersistence">
+		<property name="session" ref="com.datastax.driver.core.Session" />
+	</bean>
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeSitePersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeSitePersistence">
+		<property name="session" ref="com.datastax.driver.core.Session" />
+	</bean>
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSMetadataDetailsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSMetadataDetailsPersistence">
+		<property name="session" ref="com.datastax.driver.core.Session" />
+	</bean>
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsEventsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsEventsPersistence10080">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 		<property name="tableName" value="LCSStatsLayoutMetricsEvents1440" />
 		<property name="timeSlotMinutes" value="10080" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsEventsPersistence1440" class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsEventsPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsEventsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsEventsPersistence1440">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 		<property name="tableName" value="LCSStatsLayoutMetricsEvents1440" />
 		<property name="timeSlotMinutes" value="1440" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsEventsPersistence60" class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsEventsPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsEventsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsEventsPersistence60">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 		<property name="tableName" value="LCSStatsLayoutMetricsEvents60" />
 		<property name="timeSlotMinutes" value="60" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsSummaryEventsPersistence10080" class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsSummaryEventsPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsSummaryEventsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsSummaryEventsPersistence10080">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 		<property name="tableName" value="LCSStatsLayoutMetricsSummaryEvents10080" />
 		<property name="timeSlotMinutes" value="60" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsSummaryEventsPersistence1440" class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsSummaryEventsPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsSummaryEventsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsSummaryEventsPersistence1440">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 		<property name="tableName" value="LCSStatsLayoutMetricsSummaryEvents1440" />
 		<property name="timeSlotMinutes" value="60" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsSummaryEventsPersistence60" class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsSummaryEventsPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsSummaryEventsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsLayoutMetricsSummaryEventsPersistence60">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 		<property name="tableName" value="LCSStatsLayoutMetricsSummaryEvents60" />
 		<property name="timeSlotMinutes" value="60" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsPortletMetricsEventsPersistence60" class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsPortletMetricsEventsPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsPortletMetricsEventsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsPortletMetricsEventsPersistence60">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 		<property name="tableName" value="LCSStatsPortletMetricsEvents60" />
 		<property name="timeSlotMinutes" value="60" />
 	</bean>
-	<bean id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsPortletMetricsSummaryEventsPersistenceImpl60" class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsPortletMetricsSummaryEventsPersistenceImpl">
+	<bean class="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsPortletMetricsSummaryEventsPersistenceImpl" id="com.liferay.osb.lcs.nosql.service.persistence.LCSStatsPortletMetricsSummaryEventsPersistenceImpl60">
 		<property name="session" ref="com.datastax.driver.core.Session" />
 		<property name="tableName" value="LCSStatsPortletMetricsSummaryEvents60" />
 		<property name="timeSlotMinutes" value="60" />

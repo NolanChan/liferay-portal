@@ -14,9 +14,9 @@
 
 package com.liferay.osb.lcs.nosql.model.impl;
 
-import java.util.Date;
-
 import com.liferay.osb.lcs.nosql.model.LCSStats;
+
+import java.util.Date;
 
 /**
  * @author Riccardo Ferrari
