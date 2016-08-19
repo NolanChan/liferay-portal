@@ -20,10 +20,13 @@ import static org.mockito.Mockito.verify;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.Authenticator;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.vldap.BaseVLDAPTestCase;
 import com.liferay.vldap.web.portal.security.auth.SambaAuth;
+
+import java.lang.reflect.Method;
 
 import java.util.HashMap;
 
@@ -52,6 +55,15 @@ public class SambaAuthTest extends BaseVLDAPTestCase {
 		_authenticator = new SambaAuth();
 
 		_expandoBridge = mock(ExpandoBridge.class);
+
+		Class clazz = Class.forName(SambaAuth.class.getName());
+
+		Method setUserLocalServiceMethod = clazz.getDeclaredMethod(
+			"setUserLocalService", UserLocalService.class);
+
+		setUserLocalServiceMethod.setAccessible(true);
+
+		setUserLocalServiceMethod.invoke(_authenticator, userLocalService);
 	}
 
 	@Test
