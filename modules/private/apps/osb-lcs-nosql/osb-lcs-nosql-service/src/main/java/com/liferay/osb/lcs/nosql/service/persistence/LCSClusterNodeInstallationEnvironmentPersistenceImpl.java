@@ -24,8 +24,7 @@ import com.liferay.osb.lcs.nosql.util.DMLStatementExecutor;
  * @author Igor Beslic
  */
 public class LCSClusterNodeInstallationEnvironmentPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl
-		<LCSClusterNodeInstallationEnvironment>
+	extends BaseLCSClusterNodePersistenceImpl<LCSClusterNodeInstallationEnvironment>
 	implements LCSClusterNodeInstallationEnvironmentPersistence {
 
 	@Override

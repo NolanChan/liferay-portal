@@ -29,8 +29,7 @@ import java.util.List;
  * @author Igor Beslic
  */
 public class LCSClusterNodeJDBCConnectionPoolMetricsPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl
-		<LCSClusterNodeJDBCConnectionPoolMetrics>
+	extends BaseLCSClusterNodePersistenceImpl<LCSClusterNodeJDBCConnectionPoolMetrics>
 	implements LCSClusterNodeJDBCConnectionPoolMetricsPersistence {
 
 	@Override

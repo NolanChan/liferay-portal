@@ -25,8 +25,7 @@ import com.liferay.osb.lcs.nosql.util.DMLStatementExecutor;
  * @author Riccardo Ferrari
  */
 public class LCSClusterNodePortletMetricsEventsPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl
-		<LCSClusterNodePortletMetricsEvents>
+	extends BaseLCSClusterNodePersistenceImpl<LCSClusterNodePortletMetricsEvents>
 	implements LCSClusterNodePortletMetricsEventsPersistence {
 
 	@Override
