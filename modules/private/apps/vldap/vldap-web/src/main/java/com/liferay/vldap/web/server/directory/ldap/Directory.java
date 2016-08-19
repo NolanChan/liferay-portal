@@ -43,6 +43,52 @@ import org.apache.directory.api.ldap.model.name.Dn;
  */
 public abstract class Directory {
 
+	public void addAttribute(String attributeId, byte[] bytes) {
+		Attribute attribute = new Attribute(attributeId, bytes);
+
+		_attributes.add(attribute);
+	}
+
+	public void addAttribute(String attributeId, String value) {
+		Attribute attribute = new Attribute(attributeId, value);
+
+		_attributes.add(attribute);
+	}
+
+	public void addMemberAttributes(
+		String top, Company company, LinkedHashMap<String, Object> params) {
+
+		List<User> users = UserLocalServiceUtil.search(
+			company.getCompanyId(), null, null, null, null, null,
+			WorkflowConstants.STATUS_APPROVED, params, true, 0,
+			PortletPropsValues.SEARCH_MAX_SIZE, new UserScreenNameComparator());
+
+		for (User user : users) {
+			String value = LdapUtil.buildName(
+				user.getScreenName(), top, company, "Users");
+
+			addAttribute("member", value);
+		}
+	}
+
+	public boolean containsIgnoreCase(List<String> list, String value) {
+		if (list == null) {
+			return false;
+		}
+
+		for (String current : list) {
+			if (StringUtil.equalsIgnoreCase(current, value)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public List<Attribute> getAttributes() {
+		return _attributes;
+	}
+
 	public List<Attribute> getAttributes(String attributeId) {
 		List<Attribute> attributes = new ArrayList<>();
 
@@ -116,52 +162,6 @@ public abstract class Directory {
 		}
 
 		return entry;
-	}
-
-	protected void addAttribute(String attributeId, byte[] bytes) {
-		Attribute attribute = new Attribute(attributeId, bytes);
-
-		_attributes.add(attribute);
-	}
-
-	protected void addAttribute(String attributeId, String value) {
-		Attribute attribute = new Attribute(attributeId, value);
-
-		_attributes.add(attribute);
-	}
-
-	protected void addMemberAttributes(
-		String top, Company company, LinkedHashMap<String, Object> params) {
-
-		List<User> users = UserLocalServiceUtil.search(
-			company.getCompanyId(), null, null, null, null, null,
-			WorkflowConstants.STATUS_APPROVED, params, true, 0,
-			PortletPropsValues.SEARCH_MAX_SIZE, new UserScreenNameComparator());
-
-		for (User user : users) {
-			String value = LdapUtil.buildName(
-				user.getScreenName(), top, company, "Users");
-
-			addAttribute("member", value);
-		}
-	}
-
-	protected boolean containsIgnoreCase(List<String> list, String value) {
-		if (list == null) {
-			return false;
-		}
-
-		for (String current : list) {
-			if (StringUtil.equalsIgnoreCase(current, value)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	protected List<Attribute> getAttributes() {
-		return _attributes;
 	}
 
 	protected Dn getDn() throws LdapInvalidDnException {

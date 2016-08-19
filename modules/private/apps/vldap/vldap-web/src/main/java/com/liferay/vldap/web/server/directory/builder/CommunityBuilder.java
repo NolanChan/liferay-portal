@@ -51,7 +51,7 @@ public class CommunityBuilder extends DirectoryBuilder {
 	}
 
 	@Override
-	protected List<Directory> buildDirectories(
+	public List<Directory> buildDirectories(
 			SearchBase searchBase, List<FilterConstraint> filterConstraints)
 		throws LdapInvalidDnException {
 

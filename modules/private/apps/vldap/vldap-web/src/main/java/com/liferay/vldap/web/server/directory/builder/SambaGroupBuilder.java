@@ -47,6 +47,24 @@ public class SambaGroupBuilder extends OrganizationBuilder {
 			"top", "*");
 	}
 
+	@Override
+	public List<Directory> buildDirectories(
+			SearchBase searchBase, List<FilterConstraint> filterConstraints)
+		throws Exception {
+
+		if (filterConstraints.isEmpty()) {
+			return new ArrayList<>();
+		}
+		else if (searchBase.getOrganization() == null) {
+			return buildAllOrganizationDirectories(
+				searchBase, filterConstraints);
+		}
+		else {
+			return buildSingleOrganizationDirectory(
+				searchBase, filterConstraints);
+		}
+	}
+
 	protected void addSambaGroup(
 		List<SambaGroup> sambaGroups, String name, String sambaSID,
 		String gidNumber) {
@@ -105,24 +123,6 @@ public class SambaGroupBuilder extends OrganizationBuilder {
 		}
 
 		return directories;
-	}
-
-	@Override
-	protected List<Directory> buildDirectories(
-			SearchBase searchBase, List<FilterConstraint> filterConstraints)
-		throws Exception {
-
-		if (filterConstraints.isEmpty()) {
-			return new ArrayList<>();
-		}
-		else if (searchBase.getOrganization() == null) {
-			return buildAllOrganizationDirectories(
-				searchBase, filterConstraints);
-		}
-		else {
-			return buildSingleOrganizationDirectory(
-				searchBase, filterConstraints);
-		}
 	}
 
 	protected List<Directory> buildSingleOrganizationDirectory(

@@ -74,7 +74,7 @@ public class UserBuilder extends DirectoryBuilder {
 	}
 
 	@Override
-	protected List<Directory> buildDirectories(
+	public List<Directory> buildDirectories(
 			SearchBase searchBase, List<FilterConstraint> filterConstraints)
 		throws Exception {
 
@@ -94,7 +94,7 @@ public class UserBuilder extends DirectoryBuilder {
 		return directories;
 	}
 
-	protected List<User> getUsers(
+	public List<User> getUsers(
 			Company company, SearchBase searchBase,
 			List<FilterConstraint> filterConstraints)
 		throws Exception {

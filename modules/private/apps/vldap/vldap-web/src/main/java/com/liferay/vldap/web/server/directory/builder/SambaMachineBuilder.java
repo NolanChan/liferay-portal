@@ -38,6 +38,24 @@ public class SambaMachineBuilder extends OrganizationBuilder {
 			"objectclass", "sambaDomain");
 	}
 
+	@Override
+	public List<Directory> buildDirectories(
+			SearchBase searchBase, List<FilterConstraint> filterConstraints)
+		throws Exception {
+
+		if (filterConstraints.isEmpty()) {
+			return new ArrayList<>();
+		}
+		else if (searchBase.getOrganization() == null) {
+			return buildAllOrganizationDirectories(
+				searchBase, filterConstraints);
+		}
+		else {
+			return buildSingleOrganizationDirectory(
+				searchBase, filterConstraints);
+		}
+	}
+
 	public List<Directory> buildDirectories(
 		String top, Company company, Organization organization,
 		String sambaDomainName) {
@@ -100,24 +118,6 @@ public class SambaMachineBuilder extends OrganizationBuilder {
 		}
 
 		return directories;
-	}
-
-	@Override
-	protected List<Directory> buildDirectories(
-			SearchBase searchBase, List<FilterConstraint> filterConstraints)
-		throws Exception {
-
-		if (filterConstraints.isEmpty()) {
-			return new ArrayList<>();
-		}
-		else if (searchBase.getOrganization() == null) {
-			return buildAllOrganizationDirectories(
-				searchBase, filterConstraints);
-		}
-		else {
-			return buildSingleOrganizationDirectory(
-				searchBase, filterConstraints);
-		}
 	}
 
 	protected List<Directory> buildSingleOrganizationDirectory(

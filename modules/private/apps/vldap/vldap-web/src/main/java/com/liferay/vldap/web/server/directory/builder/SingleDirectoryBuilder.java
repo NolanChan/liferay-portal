@@ -27,12 +27,7 @@ import java.util.List;
 public abstract class SingleDirectoryBuilder extends DirectoryBuilder {
 
 	@Override
-	public boolean isValidAttribute(String attributeId, String value) {
-		return true;
-	}
-
-	@Override
-	protected List<Directory> buildDirectories(
+	public List<Directory> buildDirectories(
 		SearchBase searchBase, List<FilterConstraint> filterConstraints) {
 
 		List<Directory> directories = new ArrayList<>();
@@ -42,6 +37,11 @@ public abstract class SingleDirectoryBuilder extends DirectoryBuilder {
 		directories.add(directory);
 
 		return directories;
+	}
+
+	@Override
+	public boolean isValidAttribute(String attributeId, String value) {
+		return true;
 	}
 
 	protected abstract Directory getDirectory();

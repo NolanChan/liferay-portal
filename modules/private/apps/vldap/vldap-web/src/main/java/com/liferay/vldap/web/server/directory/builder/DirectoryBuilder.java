@@ -36,6 +36,13 @@ public class DirectoryBuilder {
 	}
 
 	public List<Directory> buildDirectories(
+			SearchBase searchBase, List<FilterConstraint> filterConstraints)
+		throws Exception {
+
+		return new ArrayList<>();
+	}
+
+	public List<Directory> buildDirectories(
 		SearchBase searchBase, List<FilterConstraint> filterConstraints,
 		boolean subtree) {
 
@@ -85,13 +92,6 @@ public class DirectoryBuilder {
 		}
 
 		return true;
-	}
-
-	protected List<Directory> buildDirectories(
-			SearchBase searchBase, List<FilterConstraint> filterConstraints)
-		throws Exception {
-
-		return new ArrayList<>();
 	}
 
 	protected final AttributeValidator attributeValidator =

@@ -36,7 +36,7 @@ public class UserGroupsBuilder extends DirectoryBuilder {
 	}
 
 	@Override
-	protected List<Directory> buildDirectories(
+	public List<Directory> buildDirectories(
 		SearchBase searchBase, List<FilterConstraint> filterConstraints) {
 
 		List<Directory> directories = new ArrayList<>();
