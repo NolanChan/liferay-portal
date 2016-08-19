@@ -1,12 +1,12 @@
 dependencies {
-	compile group: "com.datastax.cassandra", name: "cassandra-driver-core", version: "3.0.0"
-	compile group: "com.datastax.cassandra", name: "cassandra-driver-mapping", version: "3.0.0"
-	compile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.4.2"
-	compile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.4.2"
-	compile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.4.2"
-	compile group: "com.google.guava", name: "guava", version: "19.0"
-	compile group: "net.jpountz.lz4", name: "lz4", version: "1.2.0"
-	compile group: "org.xerial.snappy", name: "snappy-java", version: "1.0.5"
-	compile project(":osb-lcs-nosql-api")
-	compile project(":private:apps:lcs:lcs-api")
+	provided group: "com.datastax.cassandra", name: "cassandra-driver-core", version: "3.0.0"
+	provided group: "com.datastax.cassandra", name: "cassandra-driver-mapping", version: "3.0.0"
+	provided group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.4.2"
+	provided group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.4.2"
+	provided group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.4.2"
+	provided group: "com.google.guava", name: "guava", version: "19.0"
+	provided group: "net.jpountz.lz4", name: "lz4", version: "1.2.0"
+	provided group: "org.xerial.snappy", name: "snappy-java", version: "1.0.5"
+	provided project(":osb-lcs-nosql-api")
+	provided project(":private:apps:lcs:lcs-api")
 }
