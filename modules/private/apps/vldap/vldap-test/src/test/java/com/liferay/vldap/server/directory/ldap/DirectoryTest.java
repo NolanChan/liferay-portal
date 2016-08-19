@@ -61,10 +61,10 @@ public class DirectoryTest extends BaseVLDAPTestCase {
 		_directory.addMemberAttributes(
 			"Liferay", company, new LinkedHashMap<String, Object>());
 
-		List<com.liferay.vldap.server.directory.ldap.Attribute> attributes =
+		List<com.liferay.vldap.web.server.directory.ldap.Attribute> attributes =
 			_directory.getAttributes("member");
 
-		com.liferay.vldap.server.directory.ldap.Attribute attribute =
+		com.liferay.vldap.web.server.directory.ldap.Attribute attribute =
 			attributes.get(0);
 
 		Assert.assertEquals(
@@ -95,14 +95,14 @@ public class DirectoryTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetAttributes() {
-		List<com.liferay.vldap.server.directory.ldap.Attribute> attributes =
+		List<com.liferay.vldap.web.server.directory.ldap.Attribute> attributes =
 			_directory.getAttributes();
 
 		Assert.assertEquals(5, attributes.size());
 
 		attributes = _directory.getAttributes("testAttribute");
 
-		com.liferay.vldap.server.directory.ldap.Attribute attribute =
+		com.liferay.vldap.web.server.directory.ldap.Attribute attribute =
 			attributes.get(0);
 
 		Assert.assertEquals("testAttribute", attribute.getAttributeId());
