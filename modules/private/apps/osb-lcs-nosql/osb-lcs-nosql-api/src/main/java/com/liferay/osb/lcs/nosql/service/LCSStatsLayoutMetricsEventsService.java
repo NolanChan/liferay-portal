@@ -27,7 +27,7 @@ public interface LCSStatsLayoutMetricsEventsService {
 	public List<? extends LCSStatsLayoutMetricsEvents>
 		getLCSStatsLayoutMetricsEventsList(
 			long companyId, Date endDate, long groupId, String key,
-			String LayoutName);
+			String layoutName);
 
 	public List<? extends LCSStatsLayoutMetricsEvents>
 		getSummaryLCSStatsLayoutMetricsEventsList(
