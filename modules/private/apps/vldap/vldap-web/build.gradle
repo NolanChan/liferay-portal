@@ -1,6 +1,7 @@
 dependencies {
 	provided group: "antlr", name: "antlr", version: "2.7.7"
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay", name: "com.liferay.portal.instance.lifecycle", version: "3.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.4.0"
 	provided group: "commons-collections", name: "commons-collections", version: "3.2.1"
 	provided group: "commons-io", name: "commons-io", version: "2.4"
