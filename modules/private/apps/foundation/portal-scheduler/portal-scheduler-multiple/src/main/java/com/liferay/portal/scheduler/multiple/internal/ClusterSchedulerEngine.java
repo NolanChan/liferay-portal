@@ -330,9 +330,9 @@ public class ClusterSchedulerEngine
 
 					if (schedulerResponse == null) {
 						throw new NullPointerException(
-							"Unable to find memory clustered job (job name :" +
-								trigger.getJobName() + ", group name :" +
-									trigger.getGroupName() + "on master node.");
+							"Unable to find memory clustered job on master " +
+								"node with job name " + jobName +
+									" and group name " + groupName);
 					}
 
 					addMemoryClusteredJob(schedulerResponse);
