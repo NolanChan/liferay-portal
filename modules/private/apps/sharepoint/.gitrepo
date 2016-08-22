@@ -4,7 +4,7 @@
 ;
 [subrepo]
 	cmdver = liferay
-	commit = 8d0ec3b458ed635a32349feaee1b36bdae84620c
+	commit = aa4b20b4725bf50a4d8b9b8a1c2f0f67380d4562
 	mode = push
-	parent = e9134ea6b5575711d0955034522938db25a56d99
+	parent = b6d698a11152f83a17fcae85205d95d3f3f4463f
 	remote = git@github.com:liferay/com-liferay-sharepoint-private.git
