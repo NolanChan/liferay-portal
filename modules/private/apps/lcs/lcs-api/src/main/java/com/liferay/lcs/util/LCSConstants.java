@@ -89,6 +89,10 @@ public class LCSConstants {
 
 	public static final int LCS_CLUSTER_ENTRY_TYPE_ENVIRONMENT = 1;
 
+	public static final int LCS_CLUSTER_NODE_CLUSTER_LINK_BROKEN = 0;
+
+	public static final int LCS_CLUSTER_NODE_CLUSTER_LINK_HEALTHY = 1;
+
 	public static final int METRICS_LCS_SERVICE_AVAILABLE = 1;
 
 	public static final String METRICS_LCS_SERVICE_ENABLED =
