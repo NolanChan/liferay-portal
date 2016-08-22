@@ -7,6 +7,6 @@ dependencies {
 	provided group: "com.google.guava", name: "guava", version: "19.0"
 	provided group: "net.jpountz.lz4", name: "lz4", version: "1.2.0"
 	provided group: "org.xerial.snappy", name: "snappy-java", version: "1.0.5"
-	provided project(":private:apps:lcs:lcs-api")
+	provided group: "com.liferay", name: "com.liferay.lcs.api", version: "2.0.0"
 	provided project(":private:apps:osb-lcs-nosql:osb-lcs-nosql-api")
 }
