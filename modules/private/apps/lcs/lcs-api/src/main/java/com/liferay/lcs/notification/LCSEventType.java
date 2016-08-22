@@ -186,6 +186,6 @@ public enum LCSEventType {
 	private final boolean _repeatable;
 	private final long _repeatPeriod;
 	private final int _severityLevel;
-	private int _type;
+	private final int _type;
 
 }
