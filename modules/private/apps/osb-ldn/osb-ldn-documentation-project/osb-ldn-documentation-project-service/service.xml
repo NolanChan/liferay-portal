@@ -22,5 +22,21 @@
 
 		<column name="name" type="String" />
 		<column name="description" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column case-sensitive="false" name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="Name">
+			<finder-column name="name" />
+		</finder>
 	</entity>
+	<exceptions>
+		<exception>DocumentationProjectDescription</exception>
+		<exception>DocumentationProjectName</exception>
+	</exceptions>
 </service-builder>
