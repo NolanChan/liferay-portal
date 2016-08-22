@@ -18,12 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectDescriptionException;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectNameException;
-import com.liferay.osb.ldn.documentation.project.exception.NoSuchDocumentationProjectException;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.base.DocumentationProjectLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
@@ -38,11 +36,11 @@ public class DocumentationProjectLocalServiceImpl
 
 	@Override
 	public DocumentationProject addDocumentationProject(
-			long userId, String name, String description,
-			ServiceContext serviceContext)
+			long userId, String name, String description)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
+		Date now = new Date();
 
 		validate(name, description);
 
@@ -51,15 +49,11 @@ public class DocumentationProjectLocalServiceImpl
 		DocumentationProject documentationProject =
 			documentationProjectPersistence.create(documentationProjectId);
 
-		Date now = new Date();
-
-		documentationProject.setUuid(serviceContext.getUuid());
 		documentationProject.setCompanyId(user.getCompanyId());
 		documentationProject.setUserId(userId);
 		documentationProject.setUserName(user.getFullName());
-		documentationProject.setCreateDate(serviceContext.getCreateDate(now));
-		documentationProject.setModifiedDate(
-			serviceContext.getModifiedDate(now));
+		documentationProject.setCreateDate(now);
+		documentationProject.setModifiedDate(now);
 		documentationProject.setName(name);
 		documentationProject.setDescription(description);
 
@@ -69,31 +63,9 @@ public class DocumentationProjectLocalServiceImpl
 	}
 
 	@Override
-	public DocumentationProject deleteDocumentationProject(
-			long documentationProjectId)
-		throws PortalException {
-
-		DocumentationProject documentationProject =
-			documentationProjectPersistence.findByPrimaryKey(
-				documentationProjectId);
-
-		return deleteDocumentationProject(documentationProject);
-	}
-
-	@Override
-	public DocumentationProject getDocumentationProject(String name)
-		throws NoSuchDocumentationProjectException {
-
-		return documentationProjectPersistence.findByName(name);
-	}
-
-	@Override
 	public DocumentationProject updateDocumentationProject(
-			long userId, long documentationProjectId, String name,
-			String description, ServiceContext serviceContext)
+			long documentationProjectId, String name, String description)
 		throws PortalException {
-
-		User user = userPersistence.findByPrimaryKey(userId);
 
 		DocumentationProject documentationProject =
 			documentationProjectPersistence.findByPrimaryKey(
@@ -101,18 +73,13 @@ public class DocumentationProjectLocalServiceImpl
 
 		validate(name, description);
 
-		Date now = new Date();
-
-		documentationProject.setUuid(serviceContext.getUuid());
-		documentationProject.setCompanyId(user.getCompanyId());
-		documentationProject.setUserId(userId);
-		documentationProject.setUserName(user.getFullName());
-		documentationProject.setModifiedDate(
-			serviceContext.getModifiedDate(now));
+		documentationProject.setModifiedDate(new Date());
 		documentationProject.setName(name);
 		documentationProject.setDescription(description);
 
-		return updateDocumentationProject(documentationProject);
+		documentationProjectPersistence.update(documentationProject);
+
+		return documentationProject;
 	}
 
 	protected void validate(String name, String description)
