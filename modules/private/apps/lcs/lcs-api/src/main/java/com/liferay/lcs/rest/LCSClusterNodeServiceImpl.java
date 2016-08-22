@@ -15,7 +15,6 @@
 package com.liferay.lcs.rest;
 
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,9 +147,7 @@ public class LCSClusterNodeServiceImpl
 			getLCSClusterEntryLCSClusterNodes(lcsClusterEntryId);
 
 		for (LCSClusterNode lcsClusterNode : lcsClusterNodes) {
-			if (StringUtil.equalsIgnoreCase(
-					lcsClusterNodeName, lcsClusterNode.getName())) {
-
+			if (lcsClusterNodeName.equalsIgnoreCase(lcsClusterNode.getName())) {
 				throw new DuplicateLCSClusterNodeNameException();
 			}
 		}
