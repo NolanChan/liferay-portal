@@ -94,8 +94,8 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 	public static final String TABLE_SQL_CREATE = "create table OSB_LDN_DocumentationProject (uuid_ VARCHAR(75) null,documentationProjectId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table OSB_LDN_DocumentationProject";
-	public static final String ORDER_BY_JPQL = " ORDER BY documentationProject.documentationProjectId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY OSB_LDN_DocumentationProject.documentationProjectId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY documentationProject.name ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY OSB_LDN_DocumentationProject.name ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -109,8 +109,8 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 				"value.object.column.bitmask.enabled.com.liferay.osb.ldn.documentation.project.model.DocumentationProject"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long UUID_COLUMN_BITMASK = 2L;
-	public static final long DOCUMENTATIONPROJECTID_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long UUID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.osb.ldn.documentation.project.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.osb.ldn.documentation.project.model.DocumentationProject"));
 
@@ -359,7 +359,17 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 	@Override
 	public void setName(String name) {
+		_columnBitmask = -1L;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@Override
@@ -431,17 +441,15 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 	@Override
 	public int compareTo(DocumentationProject documentationProject) {
-		long primaryKey = documentationProject.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = getName().compareToIgnoreCase(documentationProject.getName());
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -492,6 +500,8 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		documentationProjectModelImpl._setOriginalCompanyId = false;
 
 		documentationProjectModelImpl._setModifiedDate = false;
+
+		documentationProjectModelImpl._originalName = documentationProjectModelImpl._name;
 
 		documentationProjectModelImpl._columnBitmask = 0;
 	}
@@ -653,6 +663,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
+	private String _originalName;
 	private String _description;
 	private long _columnBitmask;
 	private DocumentationProject _escapedModel;

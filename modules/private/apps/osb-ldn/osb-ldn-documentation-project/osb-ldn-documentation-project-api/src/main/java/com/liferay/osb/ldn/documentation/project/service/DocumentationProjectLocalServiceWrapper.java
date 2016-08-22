@@ -46,6 +46,14 @@ public class DocumentationProjectLocalServiceWrapper
 		return _documentationProjectLocalService.addDocumentationProject(documentationProject);
 	}
 
+	@Override
+	public com.liferay.osb.ldn.documentation.project.model.DocumentationProject addDocumentationProject(
+		long userId, java.lang.String name, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _documentationProjectLocalService.addDocumentationProject(userId,
+			name, description);
+	}
+
 	/**
 	* Creates a new documentation project with the primary key. Does not add the documentation project to the database.
 	*
@@ -144,6 +152,15 @@ public class DocumentationProjectLocalServiceWrapper
 	public com.liferay.osb.ldn.documentation.project.model.DocumentationProject updateDocumentationProject(
 		com.liferay.osb.ldn.documentation.project.model.DocumentationProject documentationProject) {
 		return _documentationProjectLocalService.updateDocumentationProject(documentationProject);
+	}
+
+	@Override
+	public com.liferay.osb.ldn.documentation.project.model.DocumentationProject updateDocumentationProject(
+		long documentationProjectId, java.lang.String name,
+		java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _documentationProjectLocalService.updateDocumentationProject(documentationProjectId,
+			name, description);
 	}
 
 	@Override

@@ -323,6 +323,51 @@ public interface DocumentationProjectPersistence extends BasePersistence<Documen
 	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
+	* Returns the documentation project where name = &#63; or throws a {@link NoSuchDocumentationProjectException} if it could not be found.
+	*
+	* @param name the name
+	* @return the matching documentation project
+	* @throws NoSuchDocumentationProjectException if a matching documentation project could not be found
+	*/
+	public DocumentationProject findByName(java.lang.String name)
+		throws NoSuchDocumentationProjectException;
+
+	/**
+	* Returns the documentation project where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param name the name
+	* @return the matching documentation project, or <code>null</code> if a matching documentation project could not be found
+	*/
+	public DocumentationProject fetchByName(java.lang.String name);
+
+	/**
+	* Returns the documentation project where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param name the name
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching documentation project, or <code>null</code> if a matching documentation project could not be found
+	*/
+	public DocumentationProject fetchByName(java.lang.String name,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the documentation project where name = &#63; from the database.
+	*
+	* @param name the name
+	* @return the documentation project that was removed
+	*/
+	public DocumentationProject removeByName(java.lang.String name)
+		throws NoSuchDocumentationProjectException;
+
+	/**
+	* Returns the number of documentation projects where name = &#63;.
+	*
+	* @param name the name
+	* @return the number of matching documentation projects
+	*/
+	public int countByName(java.lang.String name);
+
+	/**
 	* Caches the documentation project in the entity cache if it is enabled.
 	*
 	* @param documentationProject the documentation project

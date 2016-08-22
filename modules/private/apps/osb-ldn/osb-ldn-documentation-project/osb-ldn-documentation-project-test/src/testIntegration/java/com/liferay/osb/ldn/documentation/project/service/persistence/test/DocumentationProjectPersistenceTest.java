@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -56,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -180,6 +182,15 @@ public class DocumentationProjectPersistenceTest {
 		_persistence.countByUuid_C(StringPool.NULL, 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByName() throws Exception {
+		_persistence.countByName(StringPool.BLANK);
+
+		_persistence.countByName(StringPool.NULL);
+
+		_persistence.countByName((String)null);
 	}
 
 	@Test
@@ -408,6 +419,20 @@ public class DocumentationProjectPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		DocumentationProject newDocumentationProject = addDocumentationProject();
+
+		_persistence.clearCache();
+
+		DocumentationProject existingDocumentationProject = _persistence.findByPrimaryKey(newDocumentationProject.getPrimaryKey());
+
+		Assert.assertTrue(Objects.equals(
+				existingDocumentationProject.getName(),
+				ReflectionTestUtil.invoke(existingDocumentationProject,
+					"getOriginalName", new Class<?>[0])));
 	}
 
 	protected DocumentationProject addDocumentationProject()

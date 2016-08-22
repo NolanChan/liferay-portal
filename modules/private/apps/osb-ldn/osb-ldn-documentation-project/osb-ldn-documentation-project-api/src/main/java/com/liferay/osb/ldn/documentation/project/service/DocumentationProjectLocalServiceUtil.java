@@ -53,6 +53,12 @@ public class DocumentationProjectLocalServiceUtil {
 		return getService().addDocumentationProject(documentationProject);
 	}
 
+	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject addDocumentationProject(
+		long userId, java.lang.String name, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addDocumentationProject(userId, name, description);
+	}
+
 	/**
 	* Creates a new documentation project with the primary key. Does not add the documentation project to the database.
 	*
@@ -143,6 +149,15 @@ public class DocumentationProjectLocalServiceUtil {
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject updateDocumentationProject(
 		com.liferay.osb.ldn.documentation.project.model.DocumentationProject documentationProject) {
 		return getService().updateDocumentationProject(documentationProject);
+	}
+
+	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject updateDocumentationProject(
+		long documentationProjectId, java.lang.String name,
+		java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateDocumentationProject(documentationProjectId, name,
+			description);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
