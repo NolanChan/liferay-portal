@@ -28,6 +28,9 @@ public enum LCSClusterNodeStatus {
 	ACTIVE("online", "offline", 0x01),
 	DATA_INITIALIZED("data-initialized", "data-not-initialized", 0x02),
 	HEARTBEAT_DELAYED("heartbeat-delayed", "heartbeat-not-delayed", 0x08),
+	LCS_CLUSTER_NODE_CLUSTER_LINK_HEALTHY(
+		"lcs-cluster-node-cluster-link-healthy",
+		"lcs-cluster-node-cluster-link-broken", 0x200),
 	METRICS_DATA_INITIALIZED(
 		"metrics-data-initialized", "metrics-data-not-initialized", 0x04),
 	METRICS_LCS_SERVICE_ENABLED(
@@ -39,7 +42,10 @@ public enum LCSClusterNodeStatus {
 		"patching-tool-enabled", "patching-tool-disabled", 0x20),
 	PORTAL_PROPERTIES_LCS_SERVICE_ENABLED(
 		"portal-properties-lcs-service-enabled",
-		"portal-properties-lcs-service-disabled", 0x100);
+		"portal-properties-lcs-service-disabled", 0x100),
+	SERVER_MANUALLY_SHUT_DOWN(
+		"the-server-is-manually-shut-down", "the-server-unexpectedly-shut-down",
+		0x400);
 
 	public static LCSClusterNodeStatus[] getLCSClusterNodeStatuses(int status) {
 		List<LCSClusterNodeStatus> lcsClusterNodeStatusesList =
