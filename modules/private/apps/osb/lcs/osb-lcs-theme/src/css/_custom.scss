@@ -206,7 +206,7 @@ $white: #FFF;
 
 			.inputs {
 				.lfr-input-date {
-					display: inline-block;;
+					display: inline-block;
 
 					.field, .input-medium {
 						border-right-width: 0;
@@ -286,7 +286,7 @@ $white: #FFF;
 
 			&:focus, &:hover {
 				background-color: $light-blue;
-				color: $dark-gray
+				color: $dark-gray;
 			}
 		}
 
@@ -507,9 +507,9 @@ $white: #FFF;
 			background-color: $light-blue;
 		}
 
-			.alert-message.offline {
-				color: $red;
-			}
+		.alert-message.offline {
+			color: $red;
+		}
 
 		.table-columns {
 			border: 1px solid $gray;
@@ -1270,7 +1270,7 @@ $white: #FFF;
 		}
 	}
 
-	&.osb-lcs-portlet-navigation  {
+	&.osb-lcs-portlet-navigation {
 		background-color: $white;
 		max-width: 245px;
 		padding-top: $header-height;
