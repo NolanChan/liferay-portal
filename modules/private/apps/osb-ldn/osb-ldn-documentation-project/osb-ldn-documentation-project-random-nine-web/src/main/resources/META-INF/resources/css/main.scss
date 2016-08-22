@@ -1,0 +1,37 @@
+/* ---------- Pages ---------- */
+
+/* ---------- View ---------- */
+
+.documentation-project-random-nine .view {
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		width: 384px;
+	}
+
+	li {
+		display: inline-block;
+		height: 128px;
+		width: 128px;
+
+		span {
+			display: block;
+		}
+
+		.icon, .icon img {
+			height: 64px;
+			margin: 0 auto;
+			width: 64px;
+		}
+
+		.name {
+			color: #FFF;
+			font-size: 16px;
+			font-weight: 600;
+			margin-top: 17px;
+			text-align: center;
+			text-transform: uppercase;
+		}
+	}
+}

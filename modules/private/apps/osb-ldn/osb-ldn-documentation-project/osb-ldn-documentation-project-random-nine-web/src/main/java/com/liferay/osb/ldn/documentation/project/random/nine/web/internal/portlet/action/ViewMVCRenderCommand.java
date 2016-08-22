@@ -19,6 +19,11 @@ import com.liferay.osb.ldn.documentation.project.random.nine.web.internal.consta
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -44,7 +49,27 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		Template template = (Template)renderRequest.getAttribute(
 			WebKeys.TEMPLATE);
 
+		List<Map<String, Object>> documentationProjects =
+			getRandomDocumentationProjectList();
+
+		template.put("documentationProjects", documentationProjects);
+
 		return "view";
+	}
+
+	protected List<Map<String, Object>> getRandomDocumentationProjectList() {
+		List<Map<String, Object>> documentationProjectList = new ArrayList<>(9);
+
+		for (int i = 0; i < 9; i++) {
+			Map<String, Object> documentationProjectMap = new HashMap<>(2);
+
+			documentationProjectMap.put("name", "Project " + i);
+			documentationProjectMap.put("iconURL", null);
+
+			documentationProjectList.add(documentationProjectMap);
+		}
+
+		return documentationProjectList;
 	}
 
 }
