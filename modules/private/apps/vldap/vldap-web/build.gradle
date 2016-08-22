@@ -11,8 +11,7 @@ dependencies {
 	embedCompile group: "pull-parser", name: "pull-parser", version: "2.1.10"
 	embedCompile group: "xmlpull", name: "xmlpull", version: "1.1.3.1"
 
-	compile configurations.embedCompile
-
+	provided configurations.embedCompile
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.portal.instance.lifecycle", version: "3.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.4.0"
@@ -27,15 +26,15 @@ task syncThirdPartyLibs(type: Sync) {
 jar.dependsOn(syncThirdPartyLibs)
 
 def bundleClassPath() {
-    def classPath = ["."] + configurations.embedCompile.collect {
-        "OSGI-INF/lib/" + it.name
-    }
+	def classPath = ["."] + configurations.embedCompile.collect {
+		"OSGI-INF/lib/" + it.name
+	}
 
-    return classPath.join(",")
+	return classPath.join(",")
 }
 
 bundle {
-  instructions << [
-    "Bundle-ClassPath": bundleClassPath()
-  ]
+	instructions << [
+		"Bundle-ClassPath": bundleClassPath()
+	]
 }
