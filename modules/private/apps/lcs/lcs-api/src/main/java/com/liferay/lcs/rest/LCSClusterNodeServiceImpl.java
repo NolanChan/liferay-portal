@@ -132,6 +132,13 @@ public class LCSClusterNodeServiceImpl
 	}
 
 	@Override
+	public void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(
+		String key) {
+
+		doPut(_URL_LCS_CLUSTER_NODE, "key", key);
+	}
+
+	@Override
 	public void verifyLCSClusterNodeClusterLink(
 		String key, String siblingKeys) {
 

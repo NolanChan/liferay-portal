@@ -34,6 +34,9 @@ public interface LCSClusterNodeService {
 
 	public void updateBuildNumber(String key, int buildNumber);
 
+	public void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(
+		String key);
+
 	public void verifyLCSClusterNodeClusterLink(String key, String siblingKeys);
 
 }
