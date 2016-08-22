@@ -1139,7 +1139,7 @@ public class DocumentumRepository
 
 				int versionLabelCount = curIDfDocument.getVersionLabelCount();
 
-				for (int i = 0; i<versionLabelCount; i++) {
+				for (int i = 0; i < versionLabelCount; i++) {
 					idfDocuments.put(
 						curIDfDocument.getVersionLabel(i), curIDfDocument);
 				}

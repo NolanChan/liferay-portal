@@ -135,8 +135,8 @@ public class AdminPortlet extends MVCPortlet {
 		String entityId = MetadataManagerUtil.getLocalEntityId();
 
 		String certificateKeyPassword = properties.getProperty(
-			PortletPropsKeys.SAML_KEYSTORE_CREDENTIAL_PASSWORD + "["+ entityId +
-				"]");
+			PortletPropsKeys.SAML_KEYSTORE_CREDENTIAL_PASSWORD + "[" +
+				entityId + "]");
 
 		if (Validator.isNull(certificateKeyPassword)) {
 			throw new CertificateKeyPasswordException();

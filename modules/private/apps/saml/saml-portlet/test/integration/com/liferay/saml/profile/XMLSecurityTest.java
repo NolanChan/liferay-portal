@@ -86,11 +86,11 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 			String lol = "";
 
 			for (int j = 0; j < 10; j++) {
-				lol += "&lol"+(i-1) + ";";
+				lol += "&lol" + (i - 1) + ";";
 			}
 
 			authnRequestXML =
-				authnRequestXML + " <!ENTITY lol" + i +" \"" + lol + "\">\n";
+				authnRequestXML + " <!ENTITY lol" + i + " \"" + lol + "\">\n";
 		}
 
 		authnRequestXML += "]>" + samlMessageXML;
