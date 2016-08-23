@@ -14,8 +14,8 @@
 
 package com.liferay.osb.ldn.documentation.project.random.nine.web.internal.portlet;
 
-import com.liferay.portal.portlet.bridge.soy.SoyPortlet;
 import com.liferay.osb.ldn.documentation.project.random.nine.web.internal.constants.DocumentationProjectPortletKeys;
+import com.liferay.portal.portlet.bridge.soy.SoyPortlet;
 
 import javax.portlet.Portlet;
 
