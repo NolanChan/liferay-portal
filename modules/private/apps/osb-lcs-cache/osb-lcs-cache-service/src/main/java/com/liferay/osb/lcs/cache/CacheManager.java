@@ -31,13 +31,15 @@ public interface CacheManager<T> extends MessageListener {
 
 	public T get(String key);
 
-	Set<String> getKeys();
+	public Set<String> getKeys();
 
-	Set<String> getKeys(String prefix);
+	public Set<String> getKeys(String prefix);
 
 	public void put(String key, T value);
 
 	public void remove(String key);
+
+	public void setCacheManager(CacheManager<T> cacheManager);
 
 	public void setMasterHostName(String masterHostNameostName);
 
@@ -46,7 +48,5 @@ public interface CacheManager<T> extends MessageListener {
 	public void setSlaveHostName(String slaveHostName);
 
 	public void setSlaveHostPort(int slaveHostPort);
-
-	public void setCacheManager(CacheManager<T> cacheManager);
 
 }
