@@ -2,8 +2,8 @@
 
 /* ---------- Common variables ---------- */
 
-$blue: #4A96E8;
-$dark-blue: #337AB7;
+$blue: #337AB7;
+$dark-blue: #286090;
 $dark-gray: #555;
 $gray: #DDD;
 $green: #97CE68;
@@ -17,9 +17,14 @@ $white: #FFF;
 
 .lcs {
 	a {
-		&, &:focus, &:hover {
-			color: $dark-blue;
+		color: $blue;
+
+		&:active, &:focus {
 			outline: 0;
+		}
+
+		&:hover {
+			color: $dark-blue;
 		}
 	}
 
@@ -57,9 +62,8 @@ $white: #FFF;
 		padding: 0 8px;
 	}
 
-	textarea.description {
+	textarea {
 		min-height: 100px;
-		min-width: 420px;
 	}
 
 	ul {
@@ -72,10 +76,11 @@ $white: #FFF;
 	}
 
 	.alert {
-		display: table;
+		display: block;
 
 		&.alert-info {
 			background-color: $light-blue;
+			color: $dark-blue;
 		}
 	}
 
@@ -86,38 +91,46 @@ $white: #FFF;
 		padding: 10px;
 
 		&.lcssubscriptiontypecelleditor {
-			&.lcssubscriptiontypecelleditor-hidden {
-				display: none;
-			}
-
 			.elastic-container {
-				margin-bottom: 12px;
+				margin-bottom: 1em;
+				padding-top: 0.5em;
 
-				.checkbox, .elastic-label {
-					margin-right: 6px;
+				.checkbox {
+					margin-top: 0;
+				}
+
+				.checkbox, .elastic-label, .icon-question-sign {
+					display: inline-block;
+					margin-right: 0.5em;
+					vertical-align: middle;
 				}
 			}
 		}
 
-		.btn btn-default:nth-child(1) {
-			background-color: #50A2F5;
-			border-color: $blue $blue #1A6FCC;
+		.btn:nth-child(1) {
+			background-color: $blue;
+			border: 1px solid $blue;
 			color: $white;
-			text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 
 			&:hover {
-				background-color: $blue;
+				background-color: $dark-blue;
+				border-color: $dark-blue;
 			}
 		}
 
-		.btn btn-default:nth-child(2) {
+		.btn:nth-child(2) {
 			background-color: transparent;
 			background-image: none;
 			border-width: 0;
+			color: $blue;
 			text-decoration: underline;
 		}
 
-		.icon-ok-sign {
+		.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+			border-radius: 4px;
+		}
+
+		.glyphicon {
 			display: none;
 		}
 	}
@@ -127,11 +140,18 @@ $white: #FFF;
 		padding: 15px 0;
 	}
 
-	.btn btn-default {
-		color: $dark-gray;
+	.btn {
+		&:active, &:focus {
+			box-shadow: none;
+			outline: 0;
+		}
 
-		&.btn-primary {
-			color: $white;
+		&.btn-link:active {
+			&:focus, &:hover {
+				background-color: $white;
+				border-color: $white;
+				color: $dark-blue;
+			}
 		}
 	}
 
@@ -166,7 +186,7 @@ $white: #FFF;
 	}
 
 	.checkbox {
-		border-radius: 4px;
+		display: inline-block;
 	}
 
 	.column-content {
@@ -328,6 +348,10 @@ $white: #FFF;
 		opacity: 0;
 	}
 
+	.field-wrapper .control-label {
+		display: block;
+	}
+
 	.fluid {
 		float: left;
 		margin-right: 20px;
@@ -338,6 +362,25 @@ $white: #FFF;
 		font-size: 0.9em;
 		font-style: italic;
 		margin-bottom: 4px;
+	}
+
+	.form-control {
+		box-shadow: none;
+
+		&:focus {
+			border-color: $blue;
+			box-shadow: 0 0 8px $blue;
+
+			&.error-field {
+				border-color: $red;
+				box-shadow: 0 0 8px $red;
+			}
+
+			&.success-field {
+				border-color: $green;
+				box-shadow: 0 0 8px $green;
+			}
+		}
 	}
 
 	.form-group.success {
@@ -398,6 +441,14 @@ $white: #FFF;
 
 		.lcs-section-label {
 			font-weight: bold;
+		}
+	}
+
+	.lfr-alert-wrapper {
+		max-width: none;
+
+		.liferayalert {
+			display: block;
 		}
 	}
 
@@ -725,7 +776,6 @@ $white: #FFF;
 	}
 
 	.tooltip {
-		font-size: 0.9em;
 		max-width: 600px;
 		z-index: 10000;
 
@@ -1445,19 +1495,6 @@ $white: #FFF;
 			.menu-item-label {
 				padding-left: 4px;
 			}
-
-			.patches-count {
-				background-color: $dark-blue;
-				color: $white;
-				font-size: 12px;
-				font-weight: bold;
-				line-height: 12px;
-				margin-top: -9px;
-				padding: 3px 5px;
-				position: absolute;
-				right: 20px;
-				top: 50%;
-			}
 		}
 
 		.menu-item-icon, .titlebar-icon {
@@ -2010,7 +2047,7 @@ $white: #FFF;
 /* ---------- Feedback bar ---------- */
 
 .lcs-feedback-bar {
-	background-color: $dark-blue;
+	background-color: $blue;
 	border-radius: 5px 5px 0 0;
 	bottom: 0;
 	cursor: pointer;
@@ -2018,6 +2055,10 @@ $white: #FFF;
 	right: 20px;
 	text-transform: uppercase;
 	z-index: 2000;
+
+	&:hover {
+		background-color: $dark-blue;
+	}
 
 	a.feedback-link {
 		display: block;
@@ -2292,20 +2333,8 @@ $white: #FFF;
 /* ---------- Extras ---------- */
 
 .lcs {
-	input[type="email"], input[type="password"], input[type="text"], select, textarea {
-		@include box-sizing(border-box);
-	}
-
-	.basecelleditor .btn btn-default:nth-child(1) {
-		@include background-image(linear-gradient(#54AAFF, $blue));
-	}
-
 	.fade-out {
 		@include transition(opacity 0.3s ease);
-	}
-
-	.table-container .header .options-menu .form-group label {
-		@include box-sizing(border-box);
 	}
 }
 
@@ -2322,18 +2351,6 @@ $white: #FFF;
 
 	&.osb-lcs-portlet-environment .panel {
 		@include transition(height 0.3s ease);
-	}
-
-	&.osb-lcs-portlet-navigation {
-		a {
-			@include box-sizing(border-box);
-		}
-
-		.lcs-navigation-submenu {
-			.titlebar-inner .title {
-				@include box-sizing(border-box);
-			}
-		}
 	}
 }
 
