@@ -83,7 +83,7 @@ if (auditEventId > 0) {
 				</aui:field-wrapper>
 
 				<aui:field-wrapper label="user-name">
-					<%= auditEvent.getUserName() %>
+					<%= HtmlUtil.escape(auditEvent.getUserName()) %>
 				</aui:field-wrapper>
 
 				<aui:field-wrapper label="client-host">
