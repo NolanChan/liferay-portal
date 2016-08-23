@@ -59,7 +59,7 @@ public class RedisCacheManagerImpl<T> extends AbstractCacheManagerImpl<T> {
 				jedisPoolConfig, _slaveHostName, _slaveHostPort);
 		}
 
-		_jedisPubSub = getJedisPubSub();
+		_jedisPubSub = _getJedisPubSub();
 	}
 
 	public void destroy() {
@@ -115,7 +115,7 @@ public class RedisCacheManagerImpl<T> extends AbstractCacheManagerImpl<T> {
 		Jedis jedis = getJedis();
 
 		try {
-			Set<String> keys = new HashSet<String>();
+			Set<String> keys = new HashSet<>();
 
 			for (String key : jedis.keys("*" + prefix + "*")) {
 				key = key.substring(7, key.length());
@@ -230,7 +230,7 @@ public class RedisCacheManagerImpl<T> extends AbstractCacheManagerImpl<T> {
 					objectInput.close();
 				}
 			}
-			catch (IOException ex) {
+			catch (IOException ioe) {
 			}
 		}
 	}
@@ -279,12 +279,12 @@ public class RedisCacheManagerImpl<T> extends AbstractCacheManagerImpl<T> {
 					objectOutput.close();
 				}
 			}
-			catch (IOException ex) {
+			catch (IOException ioe) {
 			}
 		}
 	}
 
-	private JedisPubSub getJedisPubSub() {
+	private JedisPubSub _getJedisPubSub() {
 		final JedisPubSub jedisPubSub = new JedisPubSub() {
 
 			@Override
@@ -355,8 +355,7 @@ public class RedisCacheManagerImpl<T> extends AbstractCacheManagerImpl<T> {
 	private String _masterHostName;
 	private int _masterHostPort;
 	private JedisPool _masterJedisPool;
-	private List<MessageListener> _messageListeners =
-		new ArrayList<MessageListener>();
+	private final List<MessageListener> _messageListeners = new ArrayList<>();
 	private String _slaveHostName;
 	private int _slaveHostPort;
 	private JedisPool _slaveJedisPool;

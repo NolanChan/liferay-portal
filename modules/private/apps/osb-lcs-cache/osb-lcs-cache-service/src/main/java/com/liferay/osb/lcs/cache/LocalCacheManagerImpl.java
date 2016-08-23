@@ -89,7 +89,7 @@ public class LocalCacheManagerImpl<T> extends AbstractCacheManagerImpl<T> {
 
 	@Override
 	public Set<String> getKeys() {
-		Set<String> keys = new HashSet<String>();
+		Set<String> keys = new HashSet<>();
 
 		Enumeration<String> enumeration = _servletContext.getAttributeNames();
 
@@ -106,7 +106,7 @@ public class LocalCacheManagerImpl<T> extends AbstractCacheManagerImpl<T> {
 
 	@Override
 	public Set<String> getKeys(String prefix) {
-		Set<String> keys = new HashSet<String>();
+		Set<String> keys = new HashSet<>();
 
 		Enumeration<String> enumeration = _servletContext.getAttributeNames();
 
@@ -150,8 +150,7 @@ public class LocalCacheManagerImpl<T> extends AbstractCacheManagerImpl<T> {
 			LocalCacheManagerImpl.class.getName() + "#key#", "");
 	}
 
-	private List<MessageListener> _messageListeners =
-		new ArrayList<MessageListener>();
-	private ServletContext _servletContext;
+	private final List<MessageListener> _messageListeners = new ArrayList<>();
+	private final ServletContext _servletContext;
 
 }

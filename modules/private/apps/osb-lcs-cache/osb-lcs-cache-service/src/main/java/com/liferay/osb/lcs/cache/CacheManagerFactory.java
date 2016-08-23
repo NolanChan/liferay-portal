@@ -27,7 +27,8 @@ public class CacheManagerFactory {
 		try {
 			Class<?> clazz = Class.forName(_cacheManagerClassName);
 
-			_cacheManager = wrapCacheManager((CacheManager)clazz.newInstance());
+			_cacheManager = _wrapCacheManager(
+				(CacheManager)clazz.newInstance());
 
 			_cacheManager.setMasterHostName(_masterHostName);
 			_cacheManager.setMasterHostPort(_masterHostPort);
@@ -75,7 +76,7 @@ public class CacheManagerFactory {
 		_slaveHostPort = slaveHostPort;
 	}
 
-	private CacheManager wrapCacheManager(CacheManager cacheManager) {
+	private CacheManager _wrapCacheManager(CacheManager cacheManager) {
 		if (_cacheManager == null) {
 			return cacheManager;
 		}

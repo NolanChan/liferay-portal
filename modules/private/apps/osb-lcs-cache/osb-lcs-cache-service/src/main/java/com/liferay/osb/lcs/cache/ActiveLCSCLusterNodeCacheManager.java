@@ -33,7 +33,7 @@ public class ActiveLCSCLusterNodeCacheManager {
 	}
 
 	public List<String> getKeys() {
-		List<String> keys = new ArrayList<String>();
+		List<String> keys = new ArrayList<>();
 
 		Set<String> cacheKeys = _cacheManager.getKeys("ACTIVE_");
 
