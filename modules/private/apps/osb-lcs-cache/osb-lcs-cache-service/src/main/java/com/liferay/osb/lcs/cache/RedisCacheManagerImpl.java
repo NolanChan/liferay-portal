@@ -288,19 +288,10 @@ public class RedisCacheManagerImpl<T> extends AbstractCacheManagerImpl<T> {
 		final JedisPubSub jedisPubSub = new JedisPubSub() {
 
 			@Override
-			public void onUnsubscribe(String channel, int subscribedChannels) {
-			}
-
-			@Override
-			public void onSubscribe(String channel, int subscribedChannels) {
-			}
-
-			@Override
-			public void onPUnsubscribe(String pattern, int subscribedChannels) {
-			}
-
-			@Override
-			public void onPSubscribe(String pattern, int subscribedChannels) {
+			public void onMessage(String channel, String message) {
+				for (MessageListener messageListener : _messageListeners) {
+					messageListener.onMessage(channel, message);
+				}
 			}
 
 			@Override
@@ -309,10 +300,19 @@ public class RedisCacheManagerImpl<T> extends AbstractCacheManagerImpl<T> {
 			}
 
 			@Override
-			public void onMessage(String channel, String message) {
-				for (MessageListener messageListener : _messageListeners) {
-					messageListener.onMessage(channel, message);
-				}
+			public void onPSubscribe(String pattern, int subscribedChannels) {
+			}
+
+			@Override
+			public void onPUnsubscribe(String pattern, int subscribedChannels) {
+			}
+
+			@Override
+			public void onSubscribe(String channel, int subscribedChannels) {
+			}
+
+			@Override
+			public void onUnsubscribe(String channel, int subscribedChannels) {
 			}
 
 		};
