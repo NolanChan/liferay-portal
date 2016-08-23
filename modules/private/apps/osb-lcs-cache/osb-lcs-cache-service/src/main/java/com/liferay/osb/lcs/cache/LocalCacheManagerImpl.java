@@ -14,6 +14,7 @@
 
 package com.liferay.osb.lcs.cache;
 
+import com.liferay.portal.kernel.messaging.BaseDestination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
@@ -40,8 +41,11 @@ public class LocalCacheManagerImpl<T> extends AbstractCacheManagerImpl<T> {
 		MessageBus messageBus = MessageBusUtil.getMessageBus();
 
 		if (!messageBus.hasDestination("liferay/osb_lcs_cache")) {
-			messageBus.addDestination(
-				new ParallelDestination("liferay/osb_lcs_cache"));
+			BaseDestination baseDestination = new ParallelDestination();
+
+			baseDestination.setName("liferay/osb_lcs_cache");
+
+			messageBus.addDestination(baseDestination);
 		}
 
 		messageBus.registerMessageListener(
