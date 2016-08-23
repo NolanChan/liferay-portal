@@ -1,0 +1,45 @@
+/* ---------- Pages ---------- */
+
+/* ---------- View ---------- */
+
+.documentation-project-index .view {
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+	}
+
+	li {
+		display: inline-block;
+		width: 25%;
+
+		a {
+			text-decoration: none;
+		}
+
+		span {
+			display: block;
+		}
+
+		.icon, .icon img {
+			height: 64px;
+			margin: 0 auto;
+			width: 64px;
+		}
+
+		.name {
+			font-size: 16px;
+			font-weight: 600;
+			margin-top: 17px;
+			text-align: center;
+		}
+
+		.description {
+			font-size: 16px;
+			font-weight: 600;
+			margin-top: 17px;
+			text-align: center;
+		}
+	}
+}
