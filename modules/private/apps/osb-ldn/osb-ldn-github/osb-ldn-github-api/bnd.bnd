@@ -1,0 +1,10 @@
+Bundle-Name: Liferay OSB LDN Github API
+Bundle-SymbolicName: com.liferay.osb.ldn.github.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.osb.ldn.github.exception,\
+	com.liferay.osb.ldn.github.model,\
+	com.liferay.osb.ldn.github.service,\
+	com.liferay.osb.ldn.github.service.persistence
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

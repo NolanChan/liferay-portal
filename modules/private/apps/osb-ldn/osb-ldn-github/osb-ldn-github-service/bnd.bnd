@@ -1,0 +1,7 @@
+Bundle-Name: Liferay OSB LDN Github Service
+Bundle-SymbolicName: com.liferay.osb.ldn.github.service
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Liferay-Require-SchemaVersion: 2.0.0
+Liferay-Service: true
