@@ -57,12 +57,12 @@ public class LocalQueueManagerImpl extends AbstractQueueManagerImpl {
 
 	@Override
 	public <T extends Message> List<T> getMessages(String queueName) {
-		List<T> messages = new ArrayList<T>();
+		List<T> messages = new ArrayList<>();
 
 		Queue<String> queue = getQueue(queueName);
 
 		if (!queue.isEmpty()) {
-			messages = new ArrayList<T>();
+			messages = new ArrayList<>();
 
 			int counter = 0;
 
@@ -95,7 +95,7 @@ public class LocalQueueManagerImpl extends AbstractQueueManagerImpl {
 		Queue<String> queue = (Queue<String>)_portalCache.get(queueName);
 
 		if (queue == null) {
-			queue = new ConcurrentLinkedQueue<String>();
+			queue = new ConcurrentLinkedQueue<>();
 
 			_portalCache.put(queueName, queue);
 		}
@@ -103,6 +103,6 @@ public class LocalQueueManagerImpl extends AbstractQueueManagerImpl {
 		return queue;
 	}
 
-	private PortalCache _portalCache;
+	private final PortalCache _portalCache;
 
 }

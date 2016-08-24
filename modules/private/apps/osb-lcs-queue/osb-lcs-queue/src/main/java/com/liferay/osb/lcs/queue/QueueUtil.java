@@ -94,7 +94,7 @@ public class QueueUtil {
 
 	private static final String _CLOUD_IN = "cloud-in-";
 
-	private static final String _CLOUD_LCS_MESSAGE = "cloud-lcs-message" ;
+	private static final String _CLOUD_LCS_MESSAGE = "cloud-lcs-message";
 
 	private static final String _CLOUD_LCS_SUBSCRIPTION_ENTRY =
 		"cloud-lcs-subscription-entry";

@@ -37,7 +37,7 @@ public class RabitMQQueueManagerImpl extends AbstractQueueManagerImpl {
 
 	@Override
 	public void deleteMessage(Message message) {
-		List<Message> messages = new ArrayList<Message>();
+		List<Message> messages = new ArrayList<>();
 
 		messages.add(message);
 
@@ -60,7 +60,7 @@ public class RabitMQQueueManagerImpl extends AbstractQueueManagerImpl {
 
 	@Override
 	public <T extends Message> List<T> getMessages(String queueName) {
-		List<T> messages = new ArrayList<T>();
+		List<T> messages = new ArrayList<>();
 
 		try {
 			Channel channel = getChannel(queueName);
@@ -172,7 +172,7 @@ public class RabitMQQueueManagerImpl extends AbstractQueueManagerImpl {
 
 	private static final int _PREFETCH_COUNT = 10;
 
-	private Map<String, Channel> _channels = new HashMap<String, Channel>();
+	private final Map<String, Channel> _channels = new HashMap<>();
 	private Connection _connection;
 	private String _hostName;
 	private int _hostPort;

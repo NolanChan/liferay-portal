@@ -94,7 +94,7 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 
 	@Override
 	public void deleteMessage(Message message) {
-		List<Message> messages = new ArrayList<Message>();
+		List<Message> messages = new ArrayList<>();
 
 		messages.add(message);
 
@@ -107,7 +107,7 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 			return;
 		}
 
-		Map<String, List<Message>> map = new HashMap<String, List<Message>>();
+		Map<String, List<Message>> map = new HashMap<>();
 
 		for (Message message : messages) {
 			List<Message> queueMessages = null;
@@ -116,7 +116,7 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 				queueMessages = map.get(message.getQueueURL());
 			}
 			else {
-				queueMessages = new ArrayList<Message>();
+				queueMessages = new ArrayList<>();
 
 				map.put(message.getQueueURL(), queueMessages);
 			}
@@ -126,8 +126,7 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 
 		for (Map.Entry<String, List<Message>> entry : map.entrySet()) {
 			List<DeleteMessageBatchRequestEntry>
-				deleteMessageBatchRequestEntries =
-					new ArrayList<DeleteMessageBatchRequestEntry>();
+				deleteMessageBatchRequestEntries = new ArrayList<>();
 
 			for (Message message : entry.getValue()) {
 				DeleteMessageBatchRequestEntry deleteMessageBatchRequestEntry =
@@ -149,7 +148,7 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 
 	@Override
 	public <T extends Message> List<T> getMessages(String queueName) {
-		List<T> messages = new ArrayList<T>();
+		List<T> messages = new ArrayList<>();
 
 		String queueURL = getQueueURL(queueName);
 
@@ -278,7 +277,7 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 			QueueUtil.isHandshakeQueue(queueName) ||
 			QueueUtil.isHeartbeatQueue(queueName)) {
 
-			Map<String, String> attributes = new HashMap<String, String>();
+			Map<String, String> attributes = new HashMap<>();
 
 			attributes.put(
 				QueueAttributeName.MessageRetentionPeriod.toString(),
@@ -297,7 +296,7 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 		}
 
 		if (QueueUtil.isOutQueue(queueName)) {
-			Map<String, String> attributes = new HashMap<String, String>();
+			Map<String, String> attributes = new HashMap<>();
 
 			attributes.put(
 				QueueAttributeName.ReceiveMessageWaitTimeSeconds.toString(),
