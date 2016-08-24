@@ -91,9 +91,12 @@ $white: #FFF;
 		padding: 10px;
 
 		&.lcssubscriptiontypecelleditor {
+			&.lcssubscriptiontypecelleditor-hidden {
+				display: none;
+			}
+
 			.elastic-container {
 				margin-bottom: 1em;
-				padding-top: 0.5em;
 
 				.checkbox {
 					margin-top: 0;
@@ -104,6 +107,10 @@ $white: #FFF;
 					margin-right: 0.5em;
 					vertical-align: middle;
 				}
+			}
+
+			.form-control {
+				margin-bottom: 1em;
 			}
 		}
 
@@ -194,23 +201,9 @@ $white: #FFF;
 	}
 
 	.controls-container {
-		display: inline-block;
-
-		.field-wrapper {
-			& > label, & .control-label {
-				display: block;
-				font-size: 0.9em;
-				font-weight: bold;
-				margin-bottom: 8px;
-			}
-
-			& > label.checkbox {
-				font-weight: normal;
-			}
-
-			&.lfr-ddm-field-group-inline {
-				margin: 0 6px 6px 0;
-			}
+		.control-label {
+			font-size: 0.9em;
+			font-weight: bold;
 		}
 
 		.date-time {
@@ -263,9 +256,13 @@ $white: #FFF;
 			}
 		}
 
+		.form-group-inline {
+			margin-right: 6px;
+			min-width: 200px;
+		}
+
 		.updating {
-			margin-bottom: 16px;
-			vertical-align: bottom;
+			margin-bottom: 22px;
 		}
 	}
 
@@ -2081,12 +2078,13 @@ $white: #FFF;
 .lcs-footer {
 	background: url(../images/lcs/logo_footer.png) no-repeat 255px center;
 	color: $dark-gray;
-	font-size: 0.9em;
+	font-size: 0.8em;
 	min-height: 40px;
 	padding-left: 384px;
 
 	a {
 		line-height: 40px;
+		opacity: 0.5;
 
 		&.copyright {
 			margin-right: 10px;
