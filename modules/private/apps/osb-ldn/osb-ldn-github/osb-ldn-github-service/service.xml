@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-namespace-tables="true" package-path="com.liferay.osb.ldn.github">
+	<author>Howie Chou</author>
+	<namespace>OSB_LDN</namespace>
+	<entity local-service="true" name="GithubContributor" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="githubContributorId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="githubRepositoryId" type="long" />
+		<column name="name" type="String" />
+		<column name="avatarURL" type="String" />
+		<column name="contributions" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="contributions" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GithubRepositoryId" return-type="Collection">
+			<finder-column name="githubRepositoryId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="GithubRepository" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="githubRepositoryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="owner" type="String" />
+		<column name="name" type="String" />
+		<column name="commits" type="int" />
+		<column name="openIssues" type="int" />
+		<column name="repositoryCreateDate" type="Date" />
+		<column name="stars" type="int" />
+		<column name="url" type="String" />
+
+		<!-- Relationships -->
+
+		<column entity="GithubContributor" mapping-key="githubRepositoryId" name="githubContributors" type="Collection" />
+
+		<!-- Finder methods -->
+
+		<finder name="O_N" return-type="GithubRepository">
+			<finder-column name="owner" />
+			<finder-column name="name" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>GithubContributorAvatarURL</exception>
+		<exception>GithubContributorContributions</exception>
+		<exception>GithubContributorName</exception>
+		<exception>GithubRepositoryCommits</exception>
+		<exception>GithubRepositoryOpenIssues</exception>
+		<exception>GithubRepositoryStars</exception>
+		<exception>GithubRepositoryURL</exception>
+	</exceptions>
+</service-builder>
