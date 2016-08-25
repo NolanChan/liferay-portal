@@ -2,5 +2,6 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<bean class="com.liferay.osb.ldn.documentation.project.service.impl.DocumentationProjectLocalServiceImpl" id="com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalService" />
+	<bean class="com.liferay.osb.ldn.documentation.project.service.impl.DocumentationProjectServiceImpl" id="com.liferay.osb.ldn.documentation.project.service.DocumentationProjectService" />
 	<bean class="com.liferay.osb.ldn.documentation.project.service.persistence.impl.DocumentationProjectPersistenceImpl" id="com.liferay.osb.ldn.documentation.project.service.persistence.DocumentationProjectPersistence" parent="basePersistence" />
 </beans>

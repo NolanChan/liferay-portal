@@ -23,9 +23,11 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProjectModel;
+import com.liferay.osb.ldn.documentation.project.model.DocumentationProjectSoap;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -41,8 +43,10 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +62,7 @@ import java.util.Map;
  * @see DocumentationProjectModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationProject>
 	implements DocumentationProjectModel {
@@ -111,6 +116,55 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long NAME_COLUMN_BITMASK = 2L;
 	public static final long UUID_COLUMN_BITMASK = 4L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static DocumentationProject toModel(
+		DocumentationProjectSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		DocumentationProject model = new DocumentationProjectImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setDocumentationProjectId(soapModel.getDocumentationProjectId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setName(soapModel.getName());
+		model.setDescription(soapModel.getDescription());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<DocumentationProject> toModels(
+		DocumentationProjectSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<DocumentationProject> models = new ArrayList<DocumentationProject>(soapModels.length);
+
+		for (DocumentationProjectSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.osb.ldn.documentation.project.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.osb.ldn.documentation.project.model.DocumentationProject"));
 
@@ -225,6 +279,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -248,6 +303,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getDocumentationProjectId() {
 		return _documentationProjectId;
@@ -258,6 +314,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		_documentationProjectId = documentationProjectId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -280,6 +337,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -306,6 +364,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -321,6 +380,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -331,6 +391,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -347,6 +408,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -372,6 +434,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		return GetterUtil.getString(_originalName);
 	}
 
+	@JSON
 	@Override
 	public String getDescription() {
 		if (_description == null) {

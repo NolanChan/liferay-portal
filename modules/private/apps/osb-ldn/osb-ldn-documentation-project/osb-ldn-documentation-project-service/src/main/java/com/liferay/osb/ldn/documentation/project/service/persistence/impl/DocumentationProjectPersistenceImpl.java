@@ -28,9 +28,11 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -564,6 +566,346 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 	}
 
 	/**
+	 * Returns all the documentation projects that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching documentation projects that the user has permission to view
+	 */
+	@Override
+	public List<DocumentationProject> filterFindByUuid(String uuid) {
+		return filterFindByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the documentation projects that the user has permission to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DocumentationProjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of documentation projects
+	 * @param end the upper bound of the range of documentation projects (not inclusive)
+	 * @return the range of matching documentation projects that the user has permission to view
+	 */
+	@Override
+	public List<DocumentationProject> filterFindByUuid(String uuid, int start,
+		int end) {
+		return filterFindByUuid(uuid, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the documentation projects that the user has permissions to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DocumentationProjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of documentation projects
+	 * @param end the upper bound of the range of documentation projects (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching documentation projects that the user has permission to view
+	 */
+	@Override
+	public List<DocumentationProject> filterFindByUuid(String uuid, int start,
+		int end, OrderByComparator<DocumentationProject> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByUuid(uuid, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(3 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DOCUMENTATIONPROJECT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_DOCUMENTATIONPROJECT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		boolean bindUuid = false;
+
+		if (uuid == null) {
+			query.append(_FINDER_COLUMN_UUID_UUID_1_SQL);
+		}
+		else if (uuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
+		}
+		else {
+			bindUuid = true;
+
+			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DOCUMENTATIONPROJECT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(DocumentationProjectModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(DocumentationProjectModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				DocumentationProject.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, DocumentationProjectImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, DocumentationProjectImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (bindUuid) {
+				qPos.add(uuid);
+			}
+
+			return (List<DocumentationProject>)QueryUtil.list(q, getDialect(),
+				start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the documentation projects before and after the current documentation project in the ordered set of documentation projects that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param documentationProjectId the primary key of the current documentation project
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next documentation project
+	 * @throws NoSuchDocumentationProjectException if a documentation project with the primary key could not be found
+	 */
+	@Override
+	public DocumentationProject[] filterFindByUuid_PrevAndNext(
+		long documentationProjectId, String uuid,
+		OrderByComparator<DocumentationProject> orderByComparator)
+		throws NoSuchDocumentationProjectException {
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByUuid_PrevAndNext(documentationProjectId, uuid,
+				orderByComparator);
+		}
+
+		DocumentationProject documentationProject = findByPrimaryKey(documentationProjectId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DocumentationProject[] array = new DocumentationProjectImpl[3];
+
+			array[0] = filterGetByUuid_PrevAndNext(session,
+					documentationProject, uuid, orderByComparator, true);
+
+			array[1] = documentationProject;
+
+			array[2] = filterGetByUuid_PrevAndNext(session,
+					documentationProject, uuid, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DocumentationProject filterGetByUuid_PrevAndNext(
+		Session session, DocumentationProject documentationProject,
+		String uuid, OrderByComparator<DocumentationProject> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DOCUMENTATIONPROJECT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_DOCUMENTATIONPROJECT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		boolean bindUuid = false;
+
+		if (uuid == null) {
+			query.append(_FINDER_COLUMN_UUID_UUID_1_SQL);
+		}
+		else if (uuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
+		}
+		else {
+			bindUuid = true;
+
+			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DOCUMENTATIONPROJECT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(DocumentationProjectModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(DocumentationProjectModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				DocumentationProject.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, DocumentationProjectImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, DocumentationProjectImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindUuid) {
+			qPos.add(uuid);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(documentationProject);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<DocumentationProject> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the documentation projects where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -641,9 +983,74 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 		return count.intValue();
 	}
 
+	/**
+	 * Returns the number of documentation projects that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching documentation projects that the user has permission to view
+	 */
+	@Override
+	public int filterCountByUuid(String uuid) {
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return countByUuid(uuid);
+		}
+
+		StringBundler query = new StringBundler(2);
+
+		query.append(_FILTER_SQL_COUNT_DOCUMENTATIONPROJECT_WHERE);
+
+		boolean bindUuid = false;
+
+		if (uuid == null) {
+			query.append(_FINDER_COLUMN_UUID_UUID_1_SQL);
+		}
+		else if (uuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
+		}
+		else {
+			bindUuid = true;
+
+			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				DocumentationProject.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (bindUuid) {
+				qPos.add(uuid);
+			}
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "documentationProject.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "documentationProject.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(documentationProject.uuid IS NULL OR documentationProject.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "documentationProject.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "documentationProject.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(documentationProject.uuid_ IS NULL OR documentationProject.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(DocumentationProjectModelImpl.ENTITY_CACHE_ENABLED,
 			DocumentationProjectModelImpl.FINDER_CACHE_ENABLED,
 			DocumentationProjectImpl.class,
@@ -1150,6 +1557,364 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 	}
 
 	/**
+	 * Returns all the documentation projects that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching documentation projects that the user has permission to view
+	 */
+	@Override
+	public List<DocumentationProject> filterFindByUuid_C(String uuid,
+		long companyId) {
+		return filterFindByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the documentation projects that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DocumentationProjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of documentation projects
+	 * @param end the upper bound of the range of documentation projects (not inclusive)
+	 * @return the range of matching documentation projects that the user has permission to view
+	 */
+	@Override
+	public List<DocumentationProject> filterFindByUuid_C(String uuid,
+		long companyId, int start, int end) {
+		return filterFindByUuid_C(uuid, companyId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the documentation projects that the user has permissions to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DocumentationProjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of documentation projects
+	 * @param end the upper bound of the range of documentation projects (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching documentation projects that the user has permission to view
+	 */
+	@Override
+	public List<DocumentationProject> filterFindByUuid_C(String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<DocumentationProject> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DOCUMENTATIONPROJECT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_DOCUMENTATIONPROJECT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		boolean bindUuid = false;
+
+		if (uuid == null) {
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1_SQL);
+		}
+		else if (uuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
+		}
+		else {
+			bindUuid = true;
+
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
+		}
+
+		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DOCUMENTATIONPROJECT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(DocumentationProjectModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(DocumentationProjectModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				DocumentationProject.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, DocumentationProjectImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, DocumentationProjectImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (bindUuid) {
+				qPos.add(uuid);
+			}
+
+			qPos.add(companyId);
+
+			return (List<DocumentationProject>)QueryUtil.list(q, getDialect(),
+				start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the documentation projects before and after the current documentation project in the ordered set of documentation projects that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param documentationProjectId the primary key of the current documentation project
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next documentation project
+	 * @throws NoSuchDocumentationProjectException if a documentation project with the primary key could not be found
+	 */
+	@Override
+	public DocumentationProject[] filterFindByUuid_C_PrevAndNext(
+		long documentationProjectId, String uuid, long companyId,
+		OrderByComparator<DocumentationProject> orderByComparator)
+		throws NoSuchDocumentationProjectException {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByUuid_C_PrevAndNext(documentationProjectId, uuid,
+				companyId, orderByComparator);
+		}
+
+		DocumentationProject documentationProject = findByPrimaryKey(documentationProjectId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DocumentationProject[] array = new DocumentationProjectImpl[3];
+
+			array[0] = filterGetByUuid_C_PrevAndNext(session,
+					documentationProject, uuid, companyId, orderByComparator,
+					true);
+
+			array[1] = documentationProject;
+
+			array[2] = filterGetByUuid_C_PrevAndNext(session,
+					documentationProject, uuid, companyId, orderByComparator,
+					false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DocumentationProject filterGetByUuid_C_PrevAndNext(
+		Session session, DocumentationProject documentationProject,
+		String uuid, long companyId,
+		OrderByComparator<DocumentationProject> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DOCUMENTATIONPROJECT_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_DOCUMENTATIONPROJECT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		boolean bindUuid = false;
+
+		if (uuid == null) {
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1_SQL);
+		}
+		else if (uuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
+		}
+		else {
+			bindUuid = true;
+
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
+		}
+
+		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DOCUMENTATIONPROJECT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(DocumentationProjectModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(DocumentationProjectModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				DocumentationProject.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, DocumentationProjectImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, DocumentationProjectImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindUuid) {
+			qPos.add(uuid);
+		}
+
+		qPos.add(companyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(documentationProject);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<DocumentationProject> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the documentation projects where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1233,9 +1998,79 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 		return count.intValue();
 	}
 
+	/**
+	 * Returns the number of documentation projects that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching documentation projects that the user has permission to view
+	 */
+	@Override
+	public int filterCountByUuid_C(String uuid, long companyId) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return countByUuid_C(uuid, companyId);
+		}
+
+		StringBundler query = new StringBundler(3);
+
+		query.append(_FILTER_SQL_COUNT_DOCUMENTATIONPROJECT_WHERE);
+
+		boolean bindUuid = false;
+
+		if (uuid == null) {
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1_SQL);
+		}
+		else if (uuid.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
+		}
+		else {
+			bindUuid = true;
+
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
+		}
+
+		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				DocumentationProject.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (bindUuid) {
+				qPos.add(uuid);
+			}
+
+			qPos.add(companyId);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "documentationProject.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "documentationProject.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(documentationProject.uuid IS NULL OR documentationProject.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "documentationProject.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "documentationProject.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(documentationProject.uuid_ IS NULL OR documentationProject.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "documentationProject.companyId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_NAME = new FinderPath(DocumentationProjectModelImpl.ENTITY_CACHE_ENABLED,
 			DocumentationProjectModelImpl.FINDER_CACHE_ENABLED,
@@ -2277,7 +3112,17 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 	private static final String _SQL_SELECT_DOCUMENTATIONPROJECT_WHERE = "SELECT documentationProject FROM DocumentationProject documentationProject WHERE ";
 	private static final String _SQL_COUNT_DOCUMENTATIONPROJECT = "SELECT COUNT(documentationProject) FROM DocumentationProject documentationProject";
 	private static final String _SQL_COUNT_DOCUMENTATIONPROJECT_WHERE = "SELECT COUNT(documentationProject) FROM DocumentationProject documentationProject WHERE ";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "documentationProject.documentationProjectId";
+	private static final String _FILTER_SQL_SELECT_DOCUMENTATIONPROJECT_WHERE = "SELECT DISTINCT {documentationProject.*} FROM OSB_LDN_DocumentationProject documentationProject WHERE ";
+	private static final String _FILTER_SQL_SELECT_DOCUMENTATIONPROJECT_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {OSB_LDN_DocumentationProject.*} FROM (SELECT DISTINCT documentationProject.documentationProjectId FROM OSB_LDN_DocumentationProject documentationProject WHERE ";
+	private static final String _FILTER_SQL_SELECT_DOCUMENTATIONPROJECT_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN OSB_LDN_DocumentationProject ON TEMP_TABLE.documentationProjectId = OSB_LDN_DocumentationProject.documentationProjectId";
+	private static final String _FILTER_SQL_COUNT_DOCUMENTATIONPROJECT_WHERE = "SELECT COUNT(DISTINCT documentationProject.documentationProjectId) AS COUNT_VALUE FROM OSB_LDN_DocumentationProject documentationProject WHERE ";
+	private static final String _FILTER_ENTITY_ALIAS = "documentationProject";
+	private static final String _FILTER_ENTITY_TABLE = "OSB_LDN_DocumentationProject";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "documentationProject.";
+	private static final String _ORDER_BY_ENTITY_TABLE = "OSB_LDN_DocumentationProject.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DocumentationProject exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DocumentationProject exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(DocumentationProjectPersistenceImpl.class);
