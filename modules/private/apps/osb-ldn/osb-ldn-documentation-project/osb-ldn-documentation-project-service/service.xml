@@ -4,7 +4,7 @@
 <service-builder auto-namespace-tables="true" package-path="com.liferay.osb.ldn.documentation.project">
 	<author>Ryan Park</author>
 	<namespace>OSB_LDN</namespace>
-	<entity local-service="true" name="DocumentationProject" remote-service="false" uuid="true">
+	<entity local-service="true" name="DocumentationProject" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
