@@ -1,5 +1,6 @@
 buildService {
 	apiDir = "../saml-persistence-api/src/main/java"
+	testDir = "../saml-persistence-test/src/testIntegration/java"
 }
 
 dependencies {
