@@ -1,8 +1,8 @@
 Bundle-ClassPath:\
 	.,\
 	lib/velocity.jar
-Bundle-Name: Liferay SAML Runtime Impl
-Bundle-SymbolicName: com.liferay.saml.runtime.impl
+Bundle-Name: Liferay SAML Impl
+Bundle-SymbolicName: com.liferay.saml.impl
 Bundle-Version: 1.0.0
 Export-Package: org.apache.velocity.*
 Import-Package:\
