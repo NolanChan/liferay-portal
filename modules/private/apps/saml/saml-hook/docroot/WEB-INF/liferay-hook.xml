@@ -37,36 +37,4 @@
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 	</servlet-filter-mapping>
-	<struts-action>
-		<struts-action-path>/portal/saml/acs</struts-action-path>
-		<struts-action-impl>com.liferay.saml.hook.action.AssertionConsumerServiceAction</struts-action-impl>
-	</struts-action>
-	<struts-action>
-		<struts-action-path>/portal/saml/auth_redirect</struts-action-path>
-		<struts-action-impl>com.liferay.saml.hook.action.AuthRedirectAction</struts-action-impl>
-	</struts-action>
-	<struts-action>
-		<struts-action-path>/portal/saml/keep_alive</struts-action-path>
-		<struts-action-impl>com.liferay.saml.hook.action.SessionKeepAliveAction</struts-action-impl>
-	</struts-action>
-	<struts-action>
-		<struts-action-path>/portal/saml/metadata</struts-action-path>
-		<struts-action-impl>com.liferay.saml.hook.action.MetadataAction</struts-action-impl>
-	</struts-action>
-	<struts-action>
-		<struts-action-path>/portal/saml/slo</struts-action-path>
-		<struts-action-impl>com.liferay.saml.hook.action.SingleLogoutAction</struts-action-impl>
-	</struts-action>
-	<struts-action>
-		<struts-action-path>/portal/saml/slo_logout</struts-action-path>
-		<struts-action-impl>com.liferay.saml.hook.action.SingleLogoutAction</struts-action-impl>
-	</struts-action>
-	<struts-action>
-		<struts-action-path>/portal/saml/slo_soap</struts-action-path>
-		<struts-action-impl>com.liferay.saml.hook.action.SingleLogoutAction</struts-action-impl>
-	</struts-action>
-	<struts-action>
-		<struts-action-path>/portal/saml/sso</struts-action-path>
-		<struts-action-impl>com.liferay.saml.hook.action.WebSsoAction</struts-action-impl>
-	</struts-action>
 </hook>
