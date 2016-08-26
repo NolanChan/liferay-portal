@@ -80,9 +80,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 			Map<String, Object> documentationProjectMap = new HashMap<>(2);
 
+			documentationProjectMap.put("iconURL", null);
 			documentationProjectMap.put("name", documentationProject.getName());
 			documentationProjectMap.put("siteURL", null);
-			documentationProjectMap.put("iconURL", null);
 
 			documentationProjectList.add(documentationProjectMap);
 		}
