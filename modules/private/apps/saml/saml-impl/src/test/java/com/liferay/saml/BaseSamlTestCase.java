@@ -36,19 +36,21 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.bootstrap.OpenSamlBootstrap;
 import com.liferay.saml.identifier.SamlIdentifierGenerator;
 import com.liferay.saml.provider.CachingChainingMetadataProvider;
 import com.liferay.saml.provider.DBMetadataProvider;
 import com.liferay.saml.runtime.binding.SamlBinding;
-import com.liferay.saml.runtime.binding.impl.HttpPostBinding;
-import com.liferay.saml.runtime.binding.impl.HttpRedirectBinding;
-import com.liferay.saml.runtime.binding.impl.HttpSoap11Binding;
 import com.liferay.saml.runtime.credential.KeyStoreManager;
-import com.liferay.saml.runtime.credential.impl.FileSystemKeyStoreManagerImpl;
-import com.liferay.saml.runtime.credential.impl.KeyStoreCredentialResolver;
-import com.liferay.saml.runtime.metadata.impl.MetadataGeneratorUtil;
-import com.liferay.saml.runtime.metadata.impl.MetadataManagerImpl;
+import com.liferay.saml.runtime.internal.binding.HttpPostBinding;
+import com.liferay.saml.runtime.internal.binding.HttpRedirectBinding;
+import com.liferay.saml.runtime.internal.binding.HttpSoap11Binding;
+import com.liferay.saml.runtime.internal.bootstrap.OpenSamlBootstrap;
+import com.liferay.saml.runtime.internal.credential.FileSystemKeyStoreManagerImpl;
+import com.liferay.saml.runtime.internal.credential.KeyStoreCredentialResolver;
+import com.liferay.saml.runtime.internal.metadata.MetadataGeneratorUtil;
+import com.liferay.saml.runtime.internal.metadata.MetadataManagerImpl;
+import com.liferay.saml.service.SamlIdpSpConnectionLocalService;
+import com.liferay.saml.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.util.PortletPropsKeys;
 import com.liferay.saml.velocity.VelocityEngineFactory;
 
@@ -375,7 +377,7 @@ public class BaseSamlTestCase extends PowerMockito {
 	}
 
 	protected void setupParserPool() throws Exception {
-		parserPool = org.opensaml.runtime.configuration.getParserPool();
+		parserPool = org.opensaml.Configuration.getParserPool();
 	}
 
 	protected void setupPortal() throws Exception {
@@ -588,6 +590,11 @@ public class BaseSamlTestCase extends PowerMockito {
 	protected List<Class<?>> serviceUtilClasses = new ArrayList<>();
 
 	private class MockMetadataProvider extends DBMetadataProvider {
+
+		public MockMetadataProvider() {
+
+			super(null, null);
+		}
 
 		@Override
 		public EntityDescriptor getEntityDescriptor(String entityId)

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.runtime.credential.impl;
+package com.liferay.saml.runtime.internal.credential;
 
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.saml.runtime.credential.KeyStoreManager;

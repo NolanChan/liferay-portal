@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.runtime.metadata.impl;
+package com.liferay.saml.runtime.internal.metadata;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.concurrent.ReadWriteLockKey;
@@ -54,6 +54,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.httpclient.HttpClient;
 
+import org.opensaml.Configuration;
 import org.opensaml.common.binding.security.SAMLProtocolMessageXMLSignatureSecurityPolicyRule;
 import org.opensaml.common.xml.SAMLConstants;
 import org.opensaml.saml2.binding.security.SAML2HTTPPostSimpleSignRule;

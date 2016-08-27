@@ -70,7 +70,8 @@ public interface SAMLConfiguration {
 	public int getMetadataMinRefreshDelay();
 
 	@Meta.AD(
-		deflt = "30", name = "saml.runtime.metadata.refresh.interval", required = false
+		deflt = "30", name = "saml.runtime.metadata.refresh.interval",
+		required = false
 	)
 	public int getMetadataRefreshInterval();
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.runtime.credential.impl;
+package com.liferay.saml.runtime.internal.credential;
 
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;

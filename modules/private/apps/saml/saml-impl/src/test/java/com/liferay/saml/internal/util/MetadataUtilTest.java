@@ -16,7 +16,7 @@ package com.liferay.saml.internal.util;
 
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
-import com.liferay.saml.bootstrap.OpenSamlBootstrap;
+import com.liferay.saml.runtime.internal.bootstrap.OpenSamlBootstrap;
 
 import java.io.InputStream;
 

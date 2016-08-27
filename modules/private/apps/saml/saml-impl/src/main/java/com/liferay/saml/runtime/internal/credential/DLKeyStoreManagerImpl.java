@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.runtime.credential.impl;
+package com.liferay.saml.runtime.internal.credential;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
