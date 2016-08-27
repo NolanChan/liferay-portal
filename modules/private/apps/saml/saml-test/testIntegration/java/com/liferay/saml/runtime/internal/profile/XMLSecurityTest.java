@@ -15,10 +15,10 @@
 package com.liferay.saml.runtime.internal.profile;
 
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.saml.BaseSamlTestCase;
 import com.liferay.saml.SamlSsoRequestContext;
 import com.liferay.saml.model.SamlSpIdpConnection;
 import com.liferay.saml.model.impl.SamlSpIdpConnectionImpl;
+import com.liferay.saml.runtime.internal.BaseSamlTestCase;
 import com.liferay.saml.runtime.metadata.MetadataManagerUtil;
 import com.liferay.saml.service.SamlSpAuthRequestLocalService;
 import com.liferay.saml.service.SamlSpAuthRequestLocalServiceUtil;

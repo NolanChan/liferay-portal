@@ -17,7 +17,7 @@ package com.liferay.saml.runtime.internal.resolver;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.saml.BaseSamlTestCase;
+import com.liferay.saml.runtime.internal.BaseSamlTestCase;
 import com.liferay.saml.runtime.metadata.MetadataManager;
 import com.liferay.saml.util.OpenSamlUtil;
 

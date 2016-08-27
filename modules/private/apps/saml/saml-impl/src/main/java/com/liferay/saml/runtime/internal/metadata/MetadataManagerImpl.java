@@ -620,6 +620,13 @@ public class MetadataManagerImpl implements MetadataManager {
 	}
 
 	@Reference(unbind = "-")
+	public void setDbMetadataProviderFactory(
+		DBMetadataProviderFactory dbMetadataProviderFactory) {
+
+		_dbMetadataProviderFactory = dbMetadataProviderFactory;
+	}
+
+	@Reference(unbind = "-")
 	public void setHttpClient(HttpClient httpClient) {
 		_httpClient = httpClient;
 	}
@@ -654,10 +661,7 @@ public class MetadataManagerImpl implements MetadataManager {
 		MetadataManagerImpl.class);
 
 	private CredentialResolver _credentialResolver;
-
-	@Reference
 	private DBMetadataProviderFactory _dbMetadataProviderFactory;
-
 	private HttpClient _httpClient;
 	private final ConcurrentHashMap<Long, MetadataProvider> _metadataProviders =
 		new ConcurrentHashMap<>();

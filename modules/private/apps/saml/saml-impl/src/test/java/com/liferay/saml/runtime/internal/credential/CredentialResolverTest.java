@@ -14,7 +14,7 @@
 
 package com.liferay.saml.runtime.internal.credential;
 
-import com.liferay.saml.BaseSamlTestCase;
+import com.liferay.saml.runtime.internal.BaseSamlTestCase;
 
 import org.junit.Assert;
 import org.junit.Test;

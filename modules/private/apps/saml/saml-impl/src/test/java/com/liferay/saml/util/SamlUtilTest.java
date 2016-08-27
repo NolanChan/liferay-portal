@@ -17,7 +17,7 @@ package com.liferay.saml.util;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.saml.BaseSamlTestCase;
+import com.liferay.saml.runtime.internal.BaseSamlTestCase;
 
 import java.io.Serializable;
 

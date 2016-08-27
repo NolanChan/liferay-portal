@@ -14,7 +14,7 @@
 
 package com.liferay.saml.runtime.internal.metadata;
 
-import com.liferay.saml.BaseSamlTestCase;
+import com.liferay.saml.runtime.internal.BaseSamlTestCase;
 import com.liferay.saml.util.PortletPropsKeys;
 
 import org.junit.Assert;

@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.identifier.SamlIdentifierGenerator;
 import com.liferay.saml.provider.CachingChainingMetadataProvider;
 import com.liferay.saml.provider.DBMetadataProvider;
+import com.liferay.saml.provider.DBMetadataProviderFactory;
 import com.liferay.saml.runtime.binding.SamlBinding;
 import com.liferay.saml.runtime.credential.KeyStoreManager;
 import com.liferay.saml.runtime.internal.binding.HttpPostBinding;
@@ -358,6 +359,9 @@ public class BaseSamlTestCase extends PowerMockito {
 		metadataManagerImpl.setCredentialResolver(credentialResolver);
 
 		metadataManagerImpl.setParserPool(new BasicParserPool());
+
+		metadataManagerImpl.setDbMetadataProviderFactory(
+			new DBMetadataProviderFactory());
 
 		CachingChainingMetadataProvider cachingChainingMetadataProvider =
 			(CachingChainingMetadataProvider)

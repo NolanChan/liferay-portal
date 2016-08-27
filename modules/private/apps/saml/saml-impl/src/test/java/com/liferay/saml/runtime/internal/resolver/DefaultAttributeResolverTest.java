@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.saml.BaseSamlTestCase;
+import com.liferay.saml.runtime.internal.BaseSamlTestCase;
 import com.liferay.saml.runtime.metadata.MetadataManager;
 import com.liferay.saml.util.SamlUtil;
 
