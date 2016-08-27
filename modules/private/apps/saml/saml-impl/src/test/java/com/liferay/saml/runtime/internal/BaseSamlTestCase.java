@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml;
+package com.liferay.saml.runtime.internal;
 
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
@@ -49,8 +49,6 @@ import com.liferay.saml.runtime.internal.credential.FileSystemKeyStoreManagerImp
 import com.liferay.saml.runtime.internal.credential.KeyStoreCredentialResolver;
 import com.liferay.saml.runtime.internal.metadata.MetadataGeneratorUtil;
 import com.liferay.saml.runtime.internal.metadata.MetadataManagerImpl;
-import com.liferay.saml.service.SamlIdpSpConnectionLocalService;
-import com.liferay.saml.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.util.PortletPropsKeys;
 import com.liferay.saml.velocity.VelocityEngineFactory;
 
@@ -592,7 +590,6 @@ public class BaseSamlTestCase extends PowerMockito {
 	private class MockMetadataProvider extends DBMetadataProvider {
 
 		public MockMetadataProvider() {
-
 			super(null, null);
 		}
 
