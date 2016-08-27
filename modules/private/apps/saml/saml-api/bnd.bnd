@@ -12,15 +12,15 @@ Bundle-ClassPath:\
 	lib/xmltooling.jar
 Bundle-Name: Liferay SAML API
 Bundle-SymbolicName: com.liferay.saml.api
-Bundle-Version: 1.0.5
+Bundle-Version: 1.1.0
 Export-Package:\
-	com.liferay.saml,\
-	com.liferay.saml.binding,\
-	com.liferay.saml.configuration,\
-	com.liferay.saml.credential,\
-	com.liferay.saml.metadata,\
-	com.liferay.saml.profile,\
-	com.liferay.saml.resolver,\
+	com.liferay.saml.runtime,\
+	com.liferay.saml.runtime.binding,\
+	com.liferay.saml.runtime.configuration,\
+	com.liferay.saml.runtime.credential,\
+	com.liferay.saml.runtime.metadata,\
+	com.liferay.saml.runtime.profile,\
+	com.liferay.saml.runtime.resolver,\
 	com.liferay.saml.util,\
 	\
 	org.bouncycastle.*,\
