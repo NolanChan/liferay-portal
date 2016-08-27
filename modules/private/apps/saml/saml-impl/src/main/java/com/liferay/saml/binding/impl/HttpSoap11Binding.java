@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.binding.impl;
+package com.liferay.saml.runtime.binding.impl;
 
 import org.apache.commons.httpclient.HttpClient;
 

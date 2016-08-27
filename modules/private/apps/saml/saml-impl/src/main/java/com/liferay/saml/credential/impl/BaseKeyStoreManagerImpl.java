@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.saml.credential.impl;
+package com.liferay.saml.runtime.credential.impl;
 
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.saml.credential.KeyStoreManager;
+import com.liferay.saml.runtime.credential.KeyStoreManager;
 import com.liferay.saml.util.PortletPropsKeys;
 
 /**

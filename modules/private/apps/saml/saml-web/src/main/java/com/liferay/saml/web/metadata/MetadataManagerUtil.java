@@ -15,7 +15,7 @@
 package com.liferay.saml.web.metadata;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.saml.metadata.MetadataManager;
+import com.liferay.saml.runtime.metadata.MetadataManager;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.saml.configuration.MetadataUtilConfiguration;
+import com.liferay.saml.runtime.configuration.MetadataUtilConfiguration;
 import com.liferay.saml.util.MetadataUtil;
 import com.liferay.saml.util.SamlUtil;
 

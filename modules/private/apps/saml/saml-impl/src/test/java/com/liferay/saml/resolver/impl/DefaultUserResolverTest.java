@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.saml.resolver.impl;
+package com.liferay.saml.runtime.resolver.impl;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.saml.BaseSamlTestCase;
-import com.liferay.saml.metadata.MetadataManager;
+import com.liferay.saml.runtime.metadata.MetadataManager;
 import com.liferay.saml.util.OpenSamlUtil;
 
 import java.util.List;

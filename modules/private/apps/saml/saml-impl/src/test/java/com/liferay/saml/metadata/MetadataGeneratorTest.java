@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.metadata;
+package com.liferay.saml.runtime.metadata;
 
 import com.liferay.saml.BaseSamlTestCase;
 import com.liferay.saml.util.PortletPropsKeys;

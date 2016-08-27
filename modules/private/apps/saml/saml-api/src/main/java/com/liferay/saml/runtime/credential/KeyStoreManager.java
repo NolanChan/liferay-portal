@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.credential;
+package com.liferay.saml.runtime.credential;
 
 import java.security.KeyStore;
 

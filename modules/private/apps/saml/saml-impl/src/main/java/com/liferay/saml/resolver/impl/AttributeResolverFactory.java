@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.resolver.impl;
+package com.liferay.saml.runtime.resolver.impl;
 
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.resolver.AttributeResolver;
+import com.liferay.saml.runtime.resolver.AttributeResolver;
 import com.liferay.saml.util.PortletPropsKeys;
 
 import java.util.Map;

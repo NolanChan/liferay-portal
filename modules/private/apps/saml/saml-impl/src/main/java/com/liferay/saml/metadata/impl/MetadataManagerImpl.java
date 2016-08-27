@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.metadata.impl;
+package com.liferay.saml.runtime.metadata.impl;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.concurrent.ReadWriteLockKey;
@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.configuration.SAMLConfiguration;
-import com.liferay.saml.metadata.MetadataManager;
 import com.liferay.saml.model.SamlIdpSpConnection;
 import com.liferay.saml.model.SamlSpIdpConnection;
 import com.liferay.saml.provider.CachingChainingMetadataProvider;
@@ -36,6 +34,8 @@ import com.liferay.saml.provider.DBMetadataProvider;
 import com.liferay.saml.provider.DBMetadataProviderFactory;
 import com.liferay.saml.provider.ReinitializingFilesystemMetadataProvider;
 import com.liferay.saml.provider.ReinitializingHttpMetadataProvider;
+import com.liferay.saml.runtime.configuration.SAMLConfiguration;
+import com.liferay.saml.runtime.metadata.MetadataManager;
 import com.liferay.saml.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.util.PortletPrefsPropsUtil;
@@ -54,7 +54,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.httpclient.HttpClient;
 
-import org.opensaml.Configuration;
 import org.opensaml.common.binding.security.SAMLProtocolMessageXMLSignatureSecurityPolicyRule;
 import org.opensaml.common.xml.SAMLConstants;
 import org.opensaml.saml2.binding.security.SAML2HTTPPostSimpleSignRule;
@@ -97,7 +96,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	configurationPid = "com.liferay.saml.configuration.SAMLConfiguration",
+	configurationPid = "com.liferay.saml.runtime.configuration.SAMLConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true
 )
 public class MetadataManagerImpl implements MetadataManager {

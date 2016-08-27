@@ -18,8 +18,8 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.saml.configuration.SAMLConfiguration;
 import com.liferay.saml.model.SamlSpAuthRequest;
+import com.liferay.saml.runtime.configuration.SAMLConfiguration;
 import com.liferay.saml.service.base.SamlSpAuthRequestLocalServiceBaseImpl;
 
 import java.io.IOException;
@@ -63,7 +63,7 @@ public class SamlSpAuthRequestLocalServiceImpl
 
 		try {
 			Configuration configuration = _configurationAdmin.getConfiguration(
-				"com.liferay.saml.configuration.SAMLConfiguration");
+				"com.liferay.saml.runtime.configuration.SAMLConfiguration");
 
 			Dictionary<String, Object> properties =
 				configuration.getProperties();

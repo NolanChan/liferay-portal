@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.resolver.impl;
+package com.liferay.saml.runtime.resolver.impl;
 
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,8 +32,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.exportimport.UserImporter;
-import com.liferay.saml.metadata.MetadataManager;
-import com.liferay.saml.resolver.UserResolver;
+import com.liferay.saml.runtime.metadata.MetadataManager;
+import com.liferay.saml.runtime.resolver.UserResolver;
 import com.liferay.saml.util.SamlUtil;
 
 import java.io.Serializable;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.configuration;
+package com.liferay.saml.runtime.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,8 +23,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.saml.configuration.SAMLConfiguration",
-	localization = "content/Language", name = "saml.configuration.name"
+	id = "com.liferay.saml.runtime.configuration.SAMLConfiguration",
+	localization = "content/Language", name = "saml.runtime.configuration.name"
 )
 public interface SAMLConfiguration {
 
@@ -54,7 +54,7 @@ public interface SAMLConfiguration {
 	 * metadata has no validity set.
 	 */
 	@Meta.AD(
-		deflt = "14400000", name = "saml.metadata.max.refresh.delay",
+		deflt = "14400000", name = "saml.runtime.metadata.max.refresh.delay",
 		required = false
 	)
 	public int getMetadataMaxRefreshDelay();
@@ -64,13 +64,13 @@ public interface SAMLConfiguration {
 	 * refresh.
 	 */
 	@Meta.AD(
-		deflt = "300000", name = "saml.metadata.min.refresh.delay",
+		deflt = "300000", name = "saml.runtime.metadata.min.refresh.delay",
 		required = false
 	)
 	public int getMetadataMinRefreshDelay();
 
 	@Meta.AD(
-		deflt = "30", name = "saml.metadata.refresh.interval", required = false
+		deflt = "30", name = "saml.runtime.metadata.refresh.interval", required = false
 	)
 	public int getMetadataRefreshInterval();
 

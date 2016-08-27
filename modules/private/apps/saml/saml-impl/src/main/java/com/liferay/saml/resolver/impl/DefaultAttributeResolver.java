@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.resolver.impl;
+package com.liferay.saml.runtime.resolver.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -35,8 +35,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.saml.metadata.MetadataManager;
-import com.liferay.saml.resolver.AttributeResolver;
+import com.liferay.saml.runtime.metadata.MetadataManager;
+import com.liferay.saml.runtime.resolver.AttributeResolver;
 import com.liferay.saml.util.OpenSamlUtil;
 import com.liferay.saml.util.PortletPropsKeys;
 import com.liferay.saml.util.SamlUtil;

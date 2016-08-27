@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.saml.resolver.impl;
+package com.liferay.saml.runtime.resolver.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.saml.BaseSamlTestCase;
-import com.liferay.saml.metadata.MetadataManager;
+import com.liferay.saml.runtime.metadata.MetadataManager;
 import com.liferay.saml.util.OpenSamlUtil;
 
 import org.junit.Assert;

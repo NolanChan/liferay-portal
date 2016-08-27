@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.profile.impl;
+package com.liferay.saml.runtime.profile.impl;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,9 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.saml.SamlException;
-import com.liferay.saml.binding.SamlBinding;
-import com.liferay.saml.configuration.SAMLConfiguration;
 import com.liferay.saml.exception.AssertionException;
 import com.liferay.saml.exception.AudienceException;
 import com.liferay.saml.exception.DestinationException;
@@ -48,16 +45,19 @@ import com.liferay.saml.exception.ReplayException;
 import com.liferay.saml.exception.SignatureException;
 import com.liferay.saml.exception.StatusException;
 import com.liferay.saml.exception.SubjectException;
-import com.liferay.saml.metadata.MetadataManager;
 import com.liferay.saml.model.SamlIdpSsoSession;
 import com.liferay.saml.model.SamlSpAuthRequest;
 import com.liferay.saml.model.SamlSpIdpConnection;
 import com.liferay.saml.model.SamlSpMessage;
 import com.liferay.saml.model.SamlSpSession;
-import com.liferay.saml.profile.WebSsoProfile;
-import com.liferay.saml.resolver.AttributeResolver;
-import com.liferay.saml.resolver.NameIdResolver;
-import com.liferay.saml.resolver.UserResolver;
+import com.liferay.saml.runtime.SamlException;
+import com.liferay.saml.runtime.binding.SamlBinding;
+import com.liferay.saml.runtime.configuration.SAMLConfiguration;
+import com.liferay.saml.runtime.metadata.MetadataManager;
+import com.liferay.saml.runtime.profile.WebSsoProfile;
+import com.liferay.saml.runtime.resolver.AttributeResolver;
+import com.liferay.saml.runtime.resolver.NameIdResolver;
+import com.liferay.saml.runtime.resolver.UserResolver;
 import com.liferay.saml.service.SamlIdpSpSessionLocalService;
 import com.liferay.saml.service.SamlIdpSsoSessionLocalService;
 import com.liferay.saml.service.SamlSpAuthRequestLocalService;
@@ -133,7 +133,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Mika Koivisto
  */
 @Component(
-	configurationPid = "com.liferay.saml.configuration.SAMLConfiguration",
+	configurationPid = "com.liferay.saml.runtime.configuration.SAMLConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true
 )
 public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {

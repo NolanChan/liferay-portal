@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.credential.impl;
+package com.liferay.saml.runtime.credential.impl;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.saml.credential.KeyStoreManager;
+import com.liferay.saml.runtime.credential.KeyStoreManager;
 
 import java.io.File;
 import java.io.FileInputStream;

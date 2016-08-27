@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.saml.credential.impl;
+package com.liferay.saml.runtime.credential.impl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.saml.credential.KeyStoreManager;
+import com.liferay.saml.runtime.credential.KeyStoreManager;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

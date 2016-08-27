@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.binding.impl;
+package com.liferay.saml.runtime.binding.impl;
 
 import org.opensaml.common.xml.SAMLConstants;
 import org.opensaml.saml2.binding.decoding.HTTPRedirectDeflateDecoder;

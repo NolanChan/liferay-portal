@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.saml.credential.impl;
+package com.liferay.saml.runtime.credential.impl;
 
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.saml.credential.KeyStoreManager;
+import com.liferay.saml.runtime.credential.KeyStoreManager;
 import com.liferay.saml.util.PortletPrefsPropsUtil;
 import com.liferay.saml.util.PortletPropsKeys;
 

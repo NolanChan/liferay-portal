@@ -85,12 +85,13 @@ public interface PortletPropsKeys {
 	public static final String SAML_KEYSTORE_TYPE = "saml.keystore.type";
 
 	public static final String SAML_METADATA_MAX_REFRESH_DELAY =
-		"saml.metadata.max.refresh.delay";
+		"saml.runtime.metadata.max.refresh.delay";
 
 	public static final String SAML_METADATA_MIN_REFRESH_DELAY =
-		"saml.metadata.min.refresh.delay";
+		"saml.runtime.metadata.min.refresh.delay";
 
-	public static final String SAML_METADATA_PATHS = "saml.metadata.paths";
+	public static final String SAML_METADATA_PATHS =
+		"saml.runtime.metadata.paths";
 
 	public static final String SAML_REPLAY_CACHE_DURATION =
 		"saml.replay.cache.duration";

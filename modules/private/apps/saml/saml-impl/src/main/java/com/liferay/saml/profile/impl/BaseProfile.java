@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.profile.impl;
+package com.liferay.saml.runtime.profile.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.SamlException;
-import com.liferay.saml.binding.SamlBinding;
-import com.liferay.saml.metadata.MetadataManager;
 import com.liferay.saml.model.SamlSpSession;
+import com.liferay.saml.runtime.SamlException;
+import com.liferay.saml.runtime.binding.SamlBinding;
+import com.liferay.saml.runtime.metadata.MetadataManager;
 import com.liferay.saml.service.SamlSpSessionLocalServiceUtil;
 import com.liferay.saml.util.OpenSamlUtil;
 import com.liferay.saml.util.PortletWebKeys;

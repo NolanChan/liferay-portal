@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.profile;
+package com.liferay.saml.runtime.profile;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.saml.BaseSamlTestCase;
 import com.liferay.saml.SamlSloContext;
 import com.liferay.saml.SamlSloRequestInfo;
-import com.liferay.saml.binding.SamlBinding;
 import com.liferay.saml.model.SamlIdpSpConnection;
 import com.liferay.saml.model.SamlIdpSpSession;
 import com.liferay.saml.model.SamlSpSession;
@@ -28,6 +27,7 @@ import com.liferay.saml.model.impl.SamlIdpSpConnectionImpl;
 import com.liferay.saml.model.impl.SamlIdpSpSessionImpl;
 import com.liferay.saml.model.impl.SamlIdpSsoSessionImpl;
 import com.liferay.saml.model.impl.SamlSpSessionImpl;
+import com.liferay.saml.runtime.binding.SamlBinding;
 import com.liferay.saml.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.service.SamlIdpSpConnectionLocalServiceUtil;
 import com.liferay.saml.service.SamlIdpSpSessionLocalService;

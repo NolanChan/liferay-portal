@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.saml.binding.impl;
+package com.liferay.saml.runtime.binding.impl;
 
-import com.liferay.saml.binding.SamlBinding;
+import com.liferay.saml.runtime.binding.SamlBinding;
 
 import org.opensaml.ws.message.decoder.MessageDecoder;
 import org.opensaml.ws.message.encoder.MessageEncoder;

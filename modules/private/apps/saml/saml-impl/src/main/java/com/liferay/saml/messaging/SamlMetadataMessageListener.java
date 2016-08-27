@@ -29,9 +29,9 @@ import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.configuration.SAMLConfiguration;
 import com.liferay.saml.model.SamlIdpSpConnection;
 import com.liferay.saml.model.SamlSpIdpConnection;
+import com.liferay.saml.runtime.configuration.SAMLConfiguration;
 import com.liferay.saml.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.util.SamlUtil;
@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	configurationPid = "com.liferay.saml.configuration.SAMLConfiguration",
+	configurationPid = "com.liferay.saml.runtime.configuration.SAMLConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = SamlMetadataMessageListener.class
 )

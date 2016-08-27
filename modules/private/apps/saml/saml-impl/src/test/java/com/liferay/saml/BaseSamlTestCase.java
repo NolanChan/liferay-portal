@@ -36,19 +36,19 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.binding.SamlBinding;
-import com.liferay.saml.binding.impl.HttpPostBinding;
-import com.liferay.saml.binding.impl.HttpRedirectBinding;
-import com.liferay.saml.binding.impl.HttpSoap11Binding;
 import com.liferay.saml.bootstrap.OpenSamlBootstrap;
-import com.liferay.saml.credential.KeyStoreManager;
-import com.liferay.saml.credential.impl.FileSystemKeyStoreManagerImpl;
-import com.liferay.saml.credential.impl.KeyStoreCredentialResolver;
 import com.liferay.saml.identifier.SamlIdentifierGenerator;
-import com.liferay.saml.metadata.impl.MetadataGeneratorUtil;
-import com.liferay.saml.metadata.impl.MetadataManagerImpl;
 import com.liferay.saml.provider.CachingChainingMetadataProvider;
 import com.liferay.saml.provider.DBMetadataProvider;
+import com.liferay.saml.runtime.binding.SamlBinding;
+import com.liferay.saml.runtime.binding.impl.HttpPostBinding;
+import com.liferay.saml.runtime.binding.impl.HttpRedirectBinding;
+import com.liferay.saml.runtime.binding.impl.HttpSoap11Binding;
+import com.liferay.saml.runtime.credential.KeyStoreManager;
+import com.liferay.saml.runtime.credential.impl.FileSystemKeyStoreManagerImpl;
+import com.liferay.saml.runtime.credential.impl.KeyStoreCredentialResolver;
+import com.liferay.saml.runtime.metadata.impl.MetadataGeneratorUtil;
+import com.liferay.saml.runtime.metadata.impl.MetadataManagerImpl;
 import com.liferay.saml.util.PortletPropsKeys;
 import com.liferay.saml.velocity.VelocityEngineFactory;
 
@@ -375,7 +375,7 @@ public class BaseSamlTestCase extends PowerMockito {
 	}
 
 	protected void setupParserPool() throws Exception {
-		parserPool = org.opensaml.Configuration.getParserPool();
+		parserPool = org.opensaml.runtime.configuration.getParserPool();
 	}
 
 	protected void setupPortal() throws Exception {

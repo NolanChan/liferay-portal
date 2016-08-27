@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.profile;
+package com.liferay.saml.runtime.profile;
 
 import com.liferay.saml.AudienceException;
 import com.liferay.saml.BaseSamlTestCase;
@@ -23,11 +23,11 @@ import com.liferay.saml.IssuerException;
 import com.liferay.saml.SamlSsoRequestContext;
 import com.liferay.saml.SignatureException;
 import com.liferay.saml.SubjectException;
-import com.liferay.saml.metadata.MetadataManagerUtil;
 import com.liferay.saml.model.SamlSpAuthRequest;
 import com.liferay.saml.model.SamlSpIdpConnection;
 import com.liferay.saml.model.impl.SamlSpAuthRequestImpl;
 import com.liferay.saml.model.impl.SamlSpIdpConnectionImpl;
+import com.liferay.saml.runtime.metadata.MetadataManagerUtil;
 import com.liferay.saml.service.SamlSpAuthRequestLocalService;
 import com.liferay.saml.service.SamlSpAuthRequestLocalServiceUtil;
 import com.liferay.saml.service.SamlSpIdpConnectionLocalService;

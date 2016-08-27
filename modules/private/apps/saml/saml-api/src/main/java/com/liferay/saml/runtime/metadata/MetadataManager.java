@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.metadata;
+package com.liferay.saml.runtime.metadata;
 
 import javax.servlet.http.HttpServletRequest;
 

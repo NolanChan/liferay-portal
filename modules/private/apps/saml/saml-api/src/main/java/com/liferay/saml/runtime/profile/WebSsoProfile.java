@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.profile;
+package com.liferay.saml.runtime.profile;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.saml.model.SamlSpSession;

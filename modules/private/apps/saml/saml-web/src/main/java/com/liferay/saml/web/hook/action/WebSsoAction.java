@@ -15,7 +15,7 @@
 package com.liferay.saml.web.hook.action;
 
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.saml.profile.WebSsoProfile;
+import com.liferay.saml.runtime.profile.WebSsoProfile;
 import com.liferay.saml.util.SamlUtil;
 
 import javax.servlet.http.HttpServletRequest;

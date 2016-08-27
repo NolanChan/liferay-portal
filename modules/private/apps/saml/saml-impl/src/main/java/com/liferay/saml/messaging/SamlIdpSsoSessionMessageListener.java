@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.saml.configuration.SAMLConfiguration;
+import com.liferay.saml.runtime.configuration.SAMLConfiguration;
 import com.liferay.saml.service.SamlIdpSsoSessionLocalService;
 
 import java.util.Map;
@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Christopher Kian
  */
 @Component(
-	configurationPid = "com.liferay.saml.configuration.SAMLConfiguration",
+	configurationPid = "com.liferay.saml.runtime.configuration.SAMLConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = SamlIdpSsoSessionMessageListener.class
 )

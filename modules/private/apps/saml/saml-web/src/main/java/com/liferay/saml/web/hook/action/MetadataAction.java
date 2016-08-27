@@ -16,7 +16,7 @@ package com.liferay.saml.web.hook.action;
 
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.saml.metadata.MetadataManager;
+import com.liferay.saml.runtime.metadata.MetadataManager;
 import com.liferay.saml.util.OpenSamlUtil;
 
 import java.io.PrintWriter;

@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.model.SamlSpSession;
-import com.liferay.saml.profile.SingleLogoutProfile;
-import com.liferay.saml.profile.WebSsoProfile;
+import com.liferay.saml.runtime.profile.SingleLogoutProfile;
+import com.liferay.saml.runtime.profile.WebSsoProfile;
 import com.liferay.saml.util.SamlUtil;
 
 import javax.servlet.Filter;

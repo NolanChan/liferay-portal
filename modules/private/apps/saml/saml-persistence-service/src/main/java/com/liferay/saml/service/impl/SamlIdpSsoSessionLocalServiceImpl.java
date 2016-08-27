@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.saml.configuration.SAMLConfiguration;
 import com.liferay.saml.exception.DuplicateSamlIdpSsoSessionException;
 import com.liferay.saml.model.SamlIdpSsoSession;
+import com.liferay.saml.runtime.configuration.SAMLConfiguration;
 import com.liferay.saml.service.base.SamlIdpSsoSessionLocalServiceBaseImpl;
 
 import java.io.IOException;
@@ -78,7 +78,7 @@ public class SamlIdpSsoSessionLocalServiceImpl
 
 		try {
 			Configuration configuration = _configurationAdmin.getConfiguration(
-				"com.liferay.saml.configuration.SAMLConfiguration");
+				"com.liferay.saml.runtime.configuration.SAMLConfiguration");
 
 			Dictionary<String, Object> properties =
 				configuration.getProperties();

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.resolver;
+package com.liferay.saml.runtime.resolver;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;

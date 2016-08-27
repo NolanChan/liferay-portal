@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.binding;
+package com.liferay.saml.runtime.binding;
 
 import org.opensaml.ws.message.decoder.MessageDecoder;
 import org.opensaml.ws.message.encoder.MessageEncoder;
