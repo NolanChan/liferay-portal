@@ -1,10 +1,6 @@
-Bundle-ClassPath:\
-	.,\
-	lib/velocity.jar
 Bundle-Name: Liferay SAML Impl
 Bundle-SymbolicName: com.liferay.saml.impl
 Bundle-Version: 1.0.0
-Export-Package: org.apache.velocity.*
 Import-Package:\
 	!com.werken.*,\
 	\
@@ -14,5 +10,4 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -includeresource:\
-	lib/velocity.jar=velocity-[0-9]*.jar,\
 	@opensaml-*.jar!/templates/*.vm

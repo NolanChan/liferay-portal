@@ -1,0 +1,68 @@
+Bundle-ClassPath:\
+	.,\
+	lib/bcpkix-jdk15on.jar,\
+	lib/bcprov-jdk15on.jar,\
+	lib/esapi.jar,\
+	lib/joda-convert.jar,\
+	lib/joda-time.jar,\
+	lib/not-yet-commons-ssl.jar,\
+	lib/opensaml.jar,\
+	lib/openws.jar,\
+	lib/velocity.jar,\
+	lib/xmltooling.jar
+Bundle-Name: Liferay SAML Common
+Bundle-SymbolicName: com.liferay.saml.common
+Bundle-Version: 1.0.0
+Export-Package:\
+	org.apache.velocity.*,\
+	\
+	org.bouncycastle.*,\
+	\
+	org.joda.time,\
+	org.joda.time.chrono,\
+	org.joda.time.format,\
+	\
+	org.opensaml.*,\
+	\
+	org.owasp.esapi.*
+Import-Package:\
+	!bsh,\
+	\
+	!com.google.common.*,\
+	\
+	!com.sun.*,\
+	\
+	!com.swabunga.*,\
+	\
+	!com.werken.*,\
+	\
+	!net.fortuna.*,\
+	\
+	!net.jcip.*,\
+	\
+	!nu.xom,\
+	\
+	!org.apache.axis.*,\
+	!org.apache.commons.configuration,\
+	!org.apache.commons.ssl,\
+	!org.apache.log.*,\
+	!org.apache.oro.*,\
+	!org.apache.poi.*,\
+	\
+	!org.joda.convert,\
+	\
+	!org.owasp.validator.html,\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-includeresource:\
+	lib/bcpkix-jdk15on.jar=bcpkix-jdk15on-[0-9]*.jar,\
+	lib/bcprov-jdk15on.jar=bcprov-jdk15on-[0-9]*.jar,\
+	lib/esapi.jar=esapi-[0-9]*.jar,\
+	lib/joda-convert.jar=joda-convert-[0-9]*.jar,\
+	lib/joda-time.jar=joda-time-[0-9]*.jar,\
+	lib/not-yet-commons-ssl.jar=not-yet-commons-ssl-[0-9]*.jar,\
+	lib/opensaml.jar=opensaml-[0-9]*.jar,\
+	lib/openws.jar=openws-[0-9]*.jar,\
+	lib/velocity.jar=velocity-[0-9]*.jar,\
+	lib/xmltooling.jar=xmltooling-[0-9]*.jar
