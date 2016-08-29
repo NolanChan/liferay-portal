@@ -18,11 +18,11 @@
 DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
 if (Validator.isNull(displayTerms.getKeywords())) {
-	total = DDLRecordLocalServiceUtil.getRecordsCount(kaleoProcess.getDDLRecordSetId(), WorkflowConstants.STATUS_ANY);
+	total = DDLRecordLocalServiceUtil.getRecordsCount(recordSet.getRecordSetId(), WorkflowConstants.STATUS_ANY);
 
 	searchContainer.setTotal(total);
 
-	results = DDLRecordLocalServiceUtil.getRecords(kaleoProcess.getDDLRecordSetId(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	results = DDLRecordLocalServiceUtil.getRecords(recordSet.getRecordSetId(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 	searchContainer.setResults(results);
 }
@@ -30,7 +30,8 @@ else {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
-	searchContext.setAttribute("recordSetId", kaleoProcess.getDDLRecordSetId());
+	searchContext.setAttribute("recordSetId", recordSet.getRecordSetId());
+	searchContext.setAttribute("recordSetScope", recordSet.getScope());
 	searchContext.setEnd(searchContainer.getEnd());
 	searchContext.setKeywords(displayTerms.getKeywords());
 	searchContext.setStart(searchContainer.getStart());
