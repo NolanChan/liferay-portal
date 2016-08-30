@@ -23,36 +23,44 @@ import com.liferay.portal.kernel.util.Validator;
 public class ProxyHostUtil {
 
 	public static String getProxyHostLogin() {
-		return PortletPropsValues.PROXY_HOST_LOGIN;
+		String proxyHostLogin = PortletPropsValues.PROXY_HOST_LOGIN;
+
+		if (Validator.isNull(proxyHostLogin)) {
+			proxyHostLogin = System.getProperty("http.proxyUser");
+		}
+
+		return proxyHostLogin;
 	}
 
 	public static String getProxyHostName() {
-		return System.getProperty("http.proxyHost");
+		String proxyHostName = PortletPropsValues.PROXY_HOST_NAME;
+
+		if (Validator.isNull(proxyHostName)) {
+			proxyHostName = System.getProperty("http.proxyHost");
+		}
+
+		return proxyHostName;
 	}
 
 	public static String getProxyHostPassword() {
-		return PortletPropsValues.PROXY_HOST_PASSWORD;
+		String proxyHostPassword = PortletPropsValues.PROXY_HOST_PASSWORD;
+
+		if (Validator.isNull(proxyHostPassword)) {
+			proxyHostPassword = System.getProperty("http.proxyPassword");
+		}
+
+		return proxyHostPassword;
 	}
 
 	public static int getProxyHostPort() {
-		return GetterUtil.getInteger(System.getProperty("http.proxyPort"));
-	}
+		int proxyHostPort = PortletPropsValues.PROXY_HOST_PORT;
 
-	static {
-		if (Validator.isNull(System.getProperty("http.proxyHost")) &&
-			Validator.isNotNull(PortletPropsValues.PROXY_HOST_NAME)) {
-
-			System.setProperty(
-				"http.proxyHost", PortletPropsValues.PROXY_HOST_NAME);
+		if (proxyHostPort == 0) {
+			proxyHostPort = GetterUtil.getInteger(
+				System.getProperty("http.proxyPort"));
 		}
 
-		if (Validator.isNull(System.getProperty("http.proxyPort")) &&
-			(PortletPropsValues.PROXY_HOST_PORT != 0)) {
-
-			System.setProperty(
-				"http.proxyPort",
-				String.valueOf(PortletPropsValues.PROXY_HOST_PORT));
-		}
+		return proxyHostPort;
 	}
 
 }
