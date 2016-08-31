@@ -85,9 +85,12 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		Future<?> future = stop(false, true);
 
 		try {
-			future.get();
+			if (future != null) {
+				future.get();
+			}
 		}
 		catch (Exception e) {
+			_log.error("Unable to stop communication with LCS gateway", e);
 		}
 
 		_scheduledExecutorService.shutdown();
