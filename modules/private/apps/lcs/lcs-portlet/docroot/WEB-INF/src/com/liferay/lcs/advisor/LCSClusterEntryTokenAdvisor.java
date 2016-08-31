@@ -28,6 +28,7 @@ import com.liferay.lcs.security.KeyStoreFactory;
 import com.liferay.lcs.util.KeyGenerator;
 import com.liferay.lcs.util.LCSAlert;
 import com.liferay.lcs.util.LCSUtil;
+import com.liferay.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.util.Encryptor;
-import com.liferay.util.portlet.PortletProps;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -297,15 +297,12 @@ public class LCSClusterEntryTokenAdvisor {
 	}
 
 	protected String decrypt(byte[] bytes) throws Exception {
-		String keyStorePassword = PortletProps.get(
-			"digital.signature.key.store.password");
-
 		KeyStore keyStore = KeyStoreFactory.getInstance(
-			PortletProps.get("digital.signature.key.store.path"),
-			PortletProps.get("digital.signature.key.store.type"),
-			keyStorePassword);
+			PortletPropsValues.DIGITAL_SIGNATURE_KEY_STORE_PATH,
+			PortletPropsValues.DIGITAL_SIGNATURE_KEY_STORE_TYPE,
+			"_k3y#5t0r3-p45S");
 
-		String keyName = PortletProps.get("digital.signature.key.name");
+		String keyName = PortletPropsValues.DIGITAL_SIGNATURE_KEY_NAME;
 
 		Key key = keyStore.getCertificate(keyName).getPublicKey();
 
