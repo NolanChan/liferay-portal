@@ -65,9 +65,6 @@ public class PortletPropsValues {
 	public static final String DIGITAL_SIGNATURE_KEY_NAME = PortletProps.get(
 		PortletPropsKeys.DIGITAL_SIGNATURE_KEY_NAME);
 
-	public static final String DIGITAL_SIGNATURE_KEY_STORE_PASSWORD =
-		PortletProps.get(PortletPropsKeys.DIGITAL_SIGNATURE_KEY_STORE_PASSWORD);
-
 	public static final String DIGITAL_SIGNATURE_KEY_STORE_PATH =
 		PortletProps.get(PortletPropsKeys.DIGITAL_SIGNATURE_KEY_STORE_PATH);
 
@@ -110,10 +107,6 @@ public class PortletPropsValues {
 	public static final String OSB_LCS_GATEWAY_WEB_HOST_PORT = PortletProps.get(
 		PortletPropsKeys.OSB_LCS_GATEWAY_WEB_HOST_PORT);
 
-	public static final String OSB_LCS_GATEWAY_WEB_KEY_STORE_PASSWORD =
-		PortletProps.get(
-			PortletPropsKeys.OSB_LCS_GATEWAY_WEB_KEY_STORE_PASSWORD);
-
 	public static final String OSB_LCS_GATEWAY_WEB_KEY_STORE_PATH =
 		PortletProps.get(PortletPropsKeys.OSB_LCS_GATEWAY_WEB_KEY_STORE_PATH);
 
@@ -131,9 +124,6 @@ public class PortletPropsValues {
 
 	public static final int OSB_LCS_PORTLET_HOST_PORT = GetterUtil.getInteger(
 		PortletProps.get(PortletPropsKeys.OSB_LCS_PORTLET_HOST_PORT));
-
-	public static final String OSB_LCS_PORTLET_KEY_STORE_PASSWORD =
-		PortletProps.get(PortletPropsKeys.OSB_LCS_PORTLET_KEY_STORE_PASSWORD);
 
 	public static final String OSB_LCS_PORTLET_KEY_STORE_PATH =
 		PortletProps.get(PortletPropsKeys.OSB_LCS_PORTLET_KEY_STORE_PATH);

@@ -53,9 +53,6 @@ public interface PortletPropsKeys {
 	public static final String DIGITAL_SIGNATURE_KEY_NAME =
 		"digital.signature.key.name";
 
-	public static final String DIGITAL_SIGNATURE_KEY_STORE_PASSWORD =
-		"digital.signature.key.store.password";
-
 	public static final String DIGITAL_SIGNATURE_KEY_STORE_PATH =
 		"digital.signature.key.store.path";
 
@@ -98,9 +95,6 @@ public interface PortletPropsKeys {
 	public static final String OSB_LCS_GATEWAY_WEB_HOST_PORT =
 		"osb.lcs.gateway.web.host.port";
 
-	public static final String OSB_LCS_GATEWAY_WEB_KEY_STORE_PASSWORD =
-		"osb.lcs.gateway.web.key.store.password";
-
 	public static final String OSB_LCS_GATEWAY_WEB_KEY_STORE_PATH =
 		"osb.lcs.gateway.web.key.store.path";
 
@@ -118,9 +112,6 @@ public interface PortletPropsKeys {
 
 	public static final String OSB_LCS_PORTLET_HOST_PORT =
 		"osb.lcs.portlet.host.port";
-
-	public static final String OSB_LCS_PORTLET_KEY_STORE_PASSWORD =
-		"osb.lcs.portlet.key.store.password";
 
 	public static final String OSB_LCS_PORTLET_KEY_STORE_PATH =
 		"osb.lcs.portlet.key.store.path";
