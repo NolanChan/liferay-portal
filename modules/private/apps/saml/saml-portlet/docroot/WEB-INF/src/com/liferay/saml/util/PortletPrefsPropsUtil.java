@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -65,7 +66,14 @@ public class PortletPrefsPropsUtil {
 	public static String getString(String key, Filter filter) {
 		String selector = filter.getSelectors()[0];
 
-		String value = getString(key.concat("[").concat(selector).concat("]"));
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(key);
+		sb.append("[");
+		sb.append(selector);
+		sb.append("[");
+
+		String value = getString(sb.toString());
 
 		if (Validator.isNotNull(value)) {
 			return value;

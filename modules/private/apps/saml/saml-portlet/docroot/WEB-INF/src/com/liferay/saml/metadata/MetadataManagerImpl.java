@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -125,9 +126,14 @@ public class MetadataManagerImpl implements MetadataManager {
 		catch (Exception e) {
 		}
 
-		String attributeNames = PortletPrefsPropsUtil.getString(
-			PortletPropsKeys.SAML_IDP_METADATA_ATTRIBUTE_NAMES.concat(
-				"[").concat(entityId).concat("]"));
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(PortletPropsKeys.SAML_IDP_METADATA_ATTRIBUTE_NAMES);
+		sb.append("[");
+		sb.append(entityId);
+		sb.append("]");
+
+		String attributeNames = PortletPrefsPropsUtil.getString(sb.toString());
 
 		if (Validator.isNotNull(attributeNames)) {
 			return StringUtil.splitLines(attributeNames);
