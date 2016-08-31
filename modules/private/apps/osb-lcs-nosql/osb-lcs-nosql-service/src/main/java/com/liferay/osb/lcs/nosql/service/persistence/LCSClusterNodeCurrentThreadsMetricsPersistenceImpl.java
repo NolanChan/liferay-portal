@@ -29,7 +29,8 @@ import java.util.List;
  * @author Igor Beslic
  */
 public class LCSClusterNodeCurrentThreadsMetricsPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl<LCSClusterNodeCurrentThreadsMetrics>
+	extends BaseLCSClusterNodePersistenceImpl
+		<LCSClusterNodeCurrentThreadsMetrics>
 	implements LCSClusterNodeCurrentThreadsMetricsPersistence {
 
 	@Override

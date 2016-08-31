@@ -29,7 +29,8 @@ import java.util.List;
  * @author Matija Petanjek
  */
 public class LCSClusterEntryPropertyDifferencesPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl<LCSClusterEntryPropertyDifferences>
+	extends BaseLCSClusterNodePersistenceImpl
+		<LCSClusterEntryPropertyDifferences>
 	implements LCSClusterEntryPropertyDifferencesPersistence {
 
 	@Override

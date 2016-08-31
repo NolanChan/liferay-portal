@@ -28,10 +28,10 @@ public interface LCSClusterNodeSitePersistence {
 	public LCSClusterNodeSite fetchByC_G_I(
 		long companyId, long groupId, long installationId);
 
-	public List<LCSClusterNodeSite> findByInstallationId(long installationId);
-
 	public List<LCSClusterNodeSite> findByC_I(
 		long companyId, long installationId);
+
+	public List<LCSClusterNodeSite> findByInstallationId(long installationId);
 
 	public LCSClusterNodeSite update(LCSClusterNodeSite lcsClusterNodeSite);
 

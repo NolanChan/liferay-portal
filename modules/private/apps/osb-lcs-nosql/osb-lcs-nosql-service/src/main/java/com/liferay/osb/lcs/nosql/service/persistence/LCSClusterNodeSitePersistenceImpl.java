@@ -48,16 +48,16 @@ public class LCSClusterNodeSitePersistenceImpl
 	}
 
 	@Override
-	public List<LCSClusterNodeSite> findByInstallationId(long installationId) {
-		return findByArray("installationId", installationId);
-	}
-
-	@Override
 	public List<LCSClusterNodeSite> findByC_I(
 		long companyId, long installationId) {
 
 		return findByArray(
 			"companyId", companyId, "installationId", installationId);
+	}
+
+	@Override
+	public List<LCSClusterNodeSite> findByInstallationId(long installationId) {
+		return findByArray("installationId", installationId);
 	}
 
 	@Override

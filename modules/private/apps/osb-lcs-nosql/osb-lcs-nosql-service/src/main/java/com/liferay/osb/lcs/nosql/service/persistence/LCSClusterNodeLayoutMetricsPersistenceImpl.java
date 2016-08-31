@@ -50,16 +50,16 @@ public class LCSClusterNodeLayoutMetricsPersistenceImpl
 	}
 
 	@Override
-	public List<LCSClusterNodeLayoutMetrics> findByKey(String key) {
-		return findByArray("key_", key);
-	}
-
-	@Override
 	public List<LCSClusterNodeLayoutMetrics> findByC_G_K(
 		long companyId, long groupId, String key) {
 
 		return findByArray(
 			"key_", key, "companyId", companyId, "groupId", groupId);
+	}
+
+	@Override
+	public List<LCSClusterNodeLayoutMetrics> findByKey(String key) {
+		return findByArray("key_", key);
 	}
 
 	@Override
