@@ -53,6 +53,12 @@ public class KeyStoreFactory {
 		return new String(digest);
 	}
 
+	public static KeyStore getInstance(String keyStorePath, String keyStoreType)
+		throws Exception {
+
+		return getInstance(keyStorePath, keyStoreType, "_k3y#5t0r3-p45S");
+	}
+
 	/**
 	 * Returns the {@link KeyStore} instance.
 	 *

@@ -37,6 +37,10 @@ import javax.xml.bind.DatatypeConverter;
  */
 public class DigitalSignatureImpl implements DigitalSignature {
 
+	public DigitalSignatureImpl() {
+		_keyStorePassword = "_k3y#5t0r3-p45S";
+	}
+
 	/**
 	 * Sets the algorithm provider. The algorithm provider must have the signing
 	 * algorithm.
