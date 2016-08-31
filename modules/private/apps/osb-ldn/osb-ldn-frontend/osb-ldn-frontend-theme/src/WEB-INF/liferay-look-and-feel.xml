@@ -5,7 +5,7 @@
 	<compatibility>
 		<version>7.0.0+</version>
 	</compatibility>
-	<theme id="osb-ldn-frontend-theme" name="OSB LDN Frontend Theme">
+	<theme id="osb-ldn" name="OSB LDN">
 		<template-extension>ftl</template-extension>
 		<portlet-decorator id="barebone" name="Barebone">
 			<portlet-decorator-css-class>portlet-barebone</portlet-decorator-css-class>
