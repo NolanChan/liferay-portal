@@ -32,7 +32,7 @@ import javax.xml.bind.DatatypeConverter;
  *
  * @author  Igor Beslic
  * @author  Ivica Cardic
- * @version LCS 1.7.1
+ * @version 2.1.1
  * @since   LCS 0.1
  */
 public class DigitalSignatureImpl implements DigitalSignature {

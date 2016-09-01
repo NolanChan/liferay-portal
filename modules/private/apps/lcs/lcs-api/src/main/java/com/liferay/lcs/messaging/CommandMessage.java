@@ -23,7 +23,7 @@ import java.util.Map;
  *
  * @author  Ivica Cardic
  * @author  Igor Beslic
- * @version LCS 1.7.1
+ * @version 2.1.1
  * @since   LCS 0.1
  */
 public class CommandMessage extends Message {

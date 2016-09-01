@@ -20,7 +20,7 @@ import java.util.Map;
  * Represents the response to a Liferay Cloud Services Protocol command message.
  *
  * @author  Ivica Cardic
- * @version LCS 1.7.1
+ * @version 2.1.1
  * @since   LCS 0.1
  */
 public class ResponseMessage extends Message {

@@ -18,7 +18,7 @@ import com.liferay.lcs.messaging.Message;
 
 /**
  * @author  Igor Beslic
- * @version LCS 1.7.1
+ * @version 2.1.1
  * @since   LCS 0.1
  */
 public interface DigitalSignature {

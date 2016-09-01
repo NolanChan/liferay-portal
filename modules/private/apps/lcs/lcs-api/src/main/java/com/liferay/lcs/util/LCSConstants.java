@@ -23,7 +23,7 @@ import java.util.Arrays;
  * @author  Igor Beslic
  * @author  Ivica Cardic
  * @author  Marko Cikos
- * @version LCS 1.7.1
+ * @version 2.1.1
  * @since   LCS 0.1
  */
 public class LCSConstants {

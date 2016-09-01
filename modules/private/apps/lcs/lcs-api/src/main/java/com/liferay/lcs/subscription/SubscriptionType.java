@@ -16,7 +16,7 @@ package com.liferay.lcs.subscription;
 
 /**
  * @author  Igor Beslic
- * @version LCS 1.7.1
+ * @version 2.1.1
  * @since   LCS 1.3
  */
 public enum SubscriptionType {
