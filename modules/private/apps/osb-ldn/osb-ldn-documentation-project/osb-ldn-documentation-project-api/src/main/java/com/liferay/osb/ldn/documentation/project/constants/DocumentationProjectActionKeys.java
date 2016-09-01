@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.osb.ldn.documentation.project.service.permission;
+package com.liferay.osb.ldn.documentation.project.constants;
 
 /**
  * @author Howie Chou
  */
-public class ActionKeys
-	extends com.liferay.portal.kernel.security.permission.ActionKeys {
+public class DocumentationProjectActionKeys {
 
 	public static final String ADD_DOCUMENTATION_PROJECT =
 		"ADD_DOCUMENTATION_PROJECT";
+
+	public static final String UPDATE_DOCUMENTATION_PROJECT =
+		"UPDATE_DOCUMENTATION_PROJECT";
 
 }

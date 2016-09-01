@@ -16,9 +16,9 @@ package com.liferay.osb.ldn.documentation.project.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.ldn.documentation.project.constants.DocumentationProjectActionKeys;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.base.DocumentationProjectServiceBaseImpl;
-import com.liferay.osb.ldn.documentation.project.service.permission.ActionKeys;
 import com.liferay.osb.ldn.documentation.project.service.permission.DocumentationProjectPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -34,7 +34,8 @@ public class DocumentationProjectServiceImpl
 		throws PortalException {
 
 		DocumentationProjectPermission.check(
-			getPermissionChecker(), ActionKeys.ADD_DOCUMENTATION_PROJECT);
+			getPermissionChecker(),
+			DocumentationProjectActionKeys.ADD_DOCUMENTATION_PROJECT);
 
 		return documentationProjectLocalService.addDocumentationProject(
 			userId, name, description);
@@ -45,7 +46,8 @@ public class DocumentationProjectServiceImpl
 		throws PortalException {
 
 		DocumentationProjectPermission.check(
-			getPermissionChecker(), ActionKeys.UPDATE);
+			getPermissionChecker(),
+			DocumentationProjectActionKeys.UPDATE_DOCUMENTATION_PROJECT);
 
 		return documentationProjectLocalService.updateDocumentationProject(
 			documentationProjectId, name, description);
