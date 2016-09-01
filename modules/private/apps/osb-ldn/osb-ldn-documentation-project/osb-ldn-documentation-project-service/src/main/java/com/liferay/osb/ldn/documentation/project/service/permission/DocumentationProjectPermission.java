@@ -14,70 +14,36 @@
 
 package com.liferay.osb.ldn.documentation.project.service.permission;
 
-import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Howie Chou
  */
-@Component(
-	immediate = true,
-	property = {"resource.name=" + DocumentationProjectPermission.RESOURCE_NAME},
-	service = ResourcePermissionChecker.class
-)
-public class DocumentationProjectPermission
-	extends BaseResourcePermissionChecker {
+public class DocumentationProjectPermission {
 
 	public static final String RESOURCE_NAME =
 		"com.liferay.osb.ldn.documentation.project";
 
 	public static void check(
-			PermissionChecker permissionChecker, long groupId, String actionId)
+			PermissionChecker permissionChecker, String actionKey)
 		throws PortalException {
 
-		if (!contains(permissionChecker, groupId, actionId)) {
+		if (!contains(permissionChecker, actionKey)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, RESOURCE_NAME, groupId, actionId);
+				permissionChecker, RESOURCE_NAME, 0, actionKey);
 		}
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
+		PermissionChecker permissionChecker, String actionKey) {
 
-		if (permissionChecker.isOmniadmin()) {
+		if (permissionChecker.isCompanyAdmin()) {
 			return true;
 		}
 
-		String portletId = null;
-
-		if (actionId.equals(ActionKeys.ADD_DOCUMENTATION_PROJECT)) {
-			portletId = PortletProviderUtil.getPortletId(
-				DocumentationProject.class.getName(),
-				PortletProvider.Action.ADD);
-		}
-		else if (actionId.equals(ActionKeys.UPDATE)) {
-			portletId = PortletProviderUtil.getPortletId(
-				DocumentationProject.class.getName(),
-				PortletProvider.Action.EDIT);
-		}
-
-		return contains(
-			permissionChecker, RESOURCE_NAME, portletId, classPK, actionId);
-	}
-
-	@Override
-	public Boolean checkResource(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
-
-		return contains(permissionChecker, classPK, actionId);
+		return false;
 	}
 
 }

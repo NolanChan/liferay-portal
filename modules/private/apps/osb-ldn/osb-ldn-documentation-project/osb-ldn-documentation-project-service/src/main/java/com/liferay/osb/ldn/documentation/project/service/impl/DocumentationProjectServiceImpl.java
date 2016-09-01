@@ -23,19 +23,7 @@ import com.liferay.osb.ldn.documentation.project.service.permission.Documentatio
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * The implementation of the documentation project remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.ldn.documentation.project.service.DocumentationProjectService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Ryan Park
  * @author Howie Chou
- * @see DocumentationProjectServiceBaseImpl
- * @see com.liferay.osb.ldn.documentation.project.service.DocumentationProjectServiceUtil
  */
 @ProviderType
 public class DocumentationProjectServiceImpl
@@ -46,7 +34,7 @@ public class DocumentationProjectServiceImpl
 		throws PortalException {
 
 		DocumentationProjectPermission.check(
-			getPermissionChecker(), 0, ActionKeys.ADD_DOCUMENTATION_PROJECT);
+			getPermissionChecker(), ActionKeys.ADD_DOCUMENTATION_PROJECT);
 
 		return documentationProjectLocalService.addDocumentationProject(
 			userId, name, description);
@@ -57,7 +45,7 @@ public class DocumentationProjectServiceImpl
 		throws PortalException {
 
 		DocumentationProjectPermission.check(
-			getPermissionChecker(), 0, ActionKeys.UPDATE);
+			getPermissionChecker(), ActionKeys.UPDATE);
 
 		return documentationProjectLocalService.updateDocumentationProject(
 			documentationProjectId, name, description);
