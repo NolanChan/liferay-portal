@@ -74,7 +74,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		Collections.shuffle(documentationProjects);
 
-		for (int i = 0; (i < 9) || (i < documentationProjects.size()); i++) {
+		for (int i = 0; (i < 9) && (i < documentationProjects.size()); i++) {
 			DocumentationProject documentationProject =
 				documentationProjects.get(i);
 
