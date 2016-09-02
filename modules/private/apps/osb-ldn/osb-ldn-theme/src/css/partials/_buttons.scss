@@ -1,0 +1,61 @@
+a {
+	color: $altFontColor;
+
+	&:active, &:focus, &:hover {
+		color: darken($altFontColor, 20%);
+		text-decoration: none;
+	}
+}
+
+a.btn, button, input.btn, input[type="button"], input[type="submit"], .btn, .field-input-button {
+	background: transparent;
+	border: 1px solid $fontColor;
+	border-radius: 0;
+	color: $fontColor;
+	cursor: pointer;
+	height: 48px;
+	line-height: 1.5;
+	margin-bottom: 0.3em;
+	padding: 1em 2.5em;
+	text-decoration: none;
+
+	@include small-caps();
+
+	&:active, &:focus, &:hover {
+		background: transparent;
+		border-color: darken($fontColor, 20%);
+		color: darken($fontColor, 20%);
+	}
+}
+
+.btn-light, form.form-light input[type="submit"] {
+	border-color: #FFF;
+	color: #FFF;
+
+	&:hover, &:focus {
+		background: #FFF;
+		border-color: $altFontColor;
+		color: $altFontColor;
+	}
+}
+
+.btn-large {
+	height: 64px;
+	letter-spacing: 1.6px;
+	padding: 1.75em 5.5em;
+}
+
+p {
+	a {
+		background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 50%);
+		background-position: 0 1.13em;
+		background-repeat: repeat-x;
+		background-size: 2px 0.1em;
+		color: $fontColor;
+
+		&:active, &:focus, &:hover {
+			color: darken($fontColor, 15%);
+			text-decoration: none;
+		}
+	}
+}

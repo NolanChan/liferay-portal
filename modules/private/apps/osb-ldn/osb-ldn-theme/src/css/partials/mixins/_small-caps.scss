@@ -1,0 +1,6 @@
+@mixin small-caps($letterSpacing: normal) {
+	font-size: smaller;
+	font-weight: 600;
+	letter-spacing: $letterSpacing;
+	text-transform: uppercase;
+}

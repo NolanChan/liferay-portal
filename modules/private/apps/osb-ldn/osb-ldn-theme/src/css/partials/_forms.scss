@@ -1,0 +1,62 @@
+#wrapper {
+	form {
+		label {
+			display: block;
+			font-size: 1em;
+			line-height: 1.5;
+		}
+
+		input[type='email'], input[type='password'], input[type='text'], select, textarea {
+			background-color: transparent;
+			border: 1px solid $fontColor;
+			border-radius: 0;
+			color: $fontColor;
+			font-size: 1em;
+			height: 3em;
+			max-width: none !important;
+			outline: none;
+			padding: 0.5em 1em;
+			width: 100%;
+
+			@include appearance(none);
+			@include box-sizing(border-box);
+
+			&:focus:invalid:focus {
+				@include box-shadow(none);
+			}
+		}
+
+		input.large {
+			font-size: 1.25em;
+			height: 48px;
+			line-height: 2;
+		}
+
+		select {
+			background-position-y: -40px;
+			padding-right: 2em;
+		}
+
+		textarea {
+			min-height: 5em;
+			resize: vertical;
+
+			@include appearance(textarea);
+		}
+
+		&.form-light {
+			&, legend, label {
+				color: #FFF;
+			}
+
+			input[type='email'], input[type='password'], input[type='text'], select, textarea {
+				border-color: #FFF;
+				color: #FFF;
+			}
+
+			select {
+				background-position-y: -10px;
+			}
+		}
+	}
+}
