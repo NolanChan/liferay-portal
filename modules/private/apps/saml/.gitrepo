@@ -4,7 +4,7 @@
 ;
 [subrepo]
 	cmdver = liferay
-	commit = 5be2d4826b26548239d69d6cc0b7c314c474e63f
+	commit = 6b88d809ad21243d3961b7747732b2e8de2efe58
 	mode = push
-	parent = 4976959699653b72816bc8987c0164e1192f39fb
+	parent = 2ac0222a259f687a53b0cb5f1045a85ce1d39d99
 	remote = git@github.com:liferay/com-liferay-saml-private.git
