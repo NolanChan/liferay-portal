@@ -15,7 +15,7 @@
 		"version": "7.0"
 	},
 	"main": "package.json",
-	"name": "osb-ldn-frontend-theme",
+	"name": "osb-ldn",
 	"publishConfig": {
 		"tag": "7_0_x"
 	},
