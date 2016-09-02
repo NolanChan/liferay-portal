@@ -23,7 +23,7 @@
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
 	name="user-name"
-	value="<%= HtmlUtil.escape(event.getUserName()) %>"
+	property="userName"
 />
 
 <liferay-ui:search-container-column-text
