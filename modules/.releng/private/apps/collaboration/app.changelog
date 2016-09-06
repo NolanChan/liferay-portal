@@ -334,9 +334,6 @@ app.artifacts-7.0.3=\
 	com.liferay.social.activity.api-1.0.1.jar,\
 	com.liferay.social.activity.web-2.0.3.jar,\
 	com.liferay.social.group.statistics.web-2.0.3.jar,\
-	com.liferay.social.privatemessaging.api-2.0.3.jar,\
-	com.liferay.social.privatemessaging.service-1.1.6.jar,\
-	com.liferay.social.privatemessaging.web-1.0.10.jar,\
 	com.liferay.social.requests.web-1.0.3.jar,\
 	com.liferay.social.user.statistics.web-2.1.1.jar,\
 	com.liferay.wiki.api-2.2.1.jar,\
@@ -350,6 +347,6 @@ app.artifacts-7.0.3=\
 	com.liferay.wiki.service-1.2.7.jar,\
 	com.liferay.wiki.web-2.1.4.jar
 
-app.change.log-7.0.3=LPS-60850 LPS-61099 LPS-61420 LPS-64031 LPS-64383 LPS-64713 LPS-64863 LPS-65012 LPS-65135 LPS-65225 LPS-65362 LPS-65660 LPS-65810 LPS-65909 LPS-66133 LPS-66356 LPS-66416 LPS-66448 LPS-66593 LPS-66697 LPS-66791 LPS-66853 LPS-66922 LPS-66923 LPS-66924 LPS-66974 LPS-66997 LPS-67049 LPS-67074 LPS-67197 LPS-67223 LPS-67230 LPS-67268 LPS-67326 LPS-67333 LPS-67346 LPS-67352 LPS-67469 LPS-67515 LPS-67664 LPS-67702 LPS-67737 LPS-67759
+app.change.log-7.0.3=LPS-60850 LPS-61099 LPS-61420 LPS-64031 LPS-64383 LPS-64713 LPS-64863 LPS-65012 LPS-65135 LPS-65225 LPS-65362 LPS-65660 LPS-65810 LPS-65909 LPS-66133 LPS-66356 LPS-66416 LPS-66448 LPS-66593 LPS-66697 LPS-66791 LPS-66853 LPS-66922 LPS-66923 LPS-66924 LPS-66974 LPS-66997 LPS-67049 LPS-67074 LPS-67197 LPS-67223 LPS-67268 LPS-67326 LPS-67333 LPS-67346 LPS-67352 LPS-67515 LPS-67664 LPS-67702 LPS-67737 LPS-67759
 
-app.git.id-7.0.3=be486404cec0f6048db3c07afd43f930f8118343
+app.git.id-7.0.3=e4e671c947f665e8f5b607c0c2096e5c6b25df69
