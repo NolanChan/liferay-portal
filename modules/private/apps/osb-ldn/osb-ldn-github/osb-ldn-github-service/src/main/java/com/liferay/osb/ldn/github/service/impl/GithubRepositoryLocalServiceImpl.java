@@ -42,13 +42,14 @@ public class GithubRepositoryLocalServiceImpl
 	public GithubRepository deleteGithubRepository(
 		GithubRepository githubRepository) {
 
-		try {
-			githubRepository = deleteGithubRepository(
-				githubRepository.getGithubRepositoryId());
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
+		// Github repository
+
+		githubRepositoryPersistence.remove(githubRepository);
+
+		// Github contributor
+
+		githubContributorPersistence.removeByGithubRepositoryId(
+			githubRepository.getGithubRepositoryId());
 
 		return githubRepository;
 	}
@@ -57,13 +58,10 @@ public class GithubRepositoryLocalServiceImpl
 	public GithubRepository deleteGithubRepository(long githubRepositoryId)
 		throws PortalException {
 
-		GithubRepository githubRepository = githubRepositoryPersistence.remove(
-			githubRepositoryId);
+		GithubRepository githubRepository =
+			githubRepositoryPersistence.findByPrimaryKey(githubRepositoryId);
 
-		githubContributorPersistence.removeByGithubRepositoryId(
-			githubRepositoryId);
-
-		return githubRepository;
+		return deleteGithubRepository(githubRepository);
 	}
 
 	public GithubRepository deleteGithubRepository(String owner, String name)
@@ -72,10 +70,7 @@ public class GithubRepositoryLocalServiceImpl
 		GithubRepository githubRepository =
 			githubRepositoryPersistence.findByO_N(owner, name);
 
-		githubRepository = deleteGithubRepository(
-			githubRepository.getGithubRepositoryId());
-
-		return githubRepository;
+		return deleteGithubRepository(githubRepository);
 	}
 
 	public GithubRepository getGithubRepository(
