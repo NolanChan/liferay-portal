@@ -14,10 +14,10 @@
 
 package com.liferay.osb.ldn.github.internal.util;
 
-import com.liferay.osb.ldn.github.model.GithubContributor;
-import com.liferay.osb.ldn.github.model.GithubRepository;
-import com.liferay.osb.ldn.github.service.GithubContributorLocalServiceUtil;
-import com.liferay.osb.ldn.github.service.GithubRepositoryLocalServiceUtil;
+import com.liferay.osb.ldn.github.model.GitHubContributor;
+import com.liferay.osb.ldn.github.model.GitHubRepository;
+import com.liferay.osb.ldn.github.service.GitHubContributorLocalServiceUtil;
+import com.liferay.osb.ldn.github.service.GitHubRepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -39,9 +39,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Howie Chou
  */
-public class GithubCommunicatorUtil {
+public class GitHubCommunicatorUtil {
 
-	public static GithubRepository getRepository(String owner, String name)
+	public static GitHubRepository getRepository(String owner, String name)
 		throws Exception {
 
 		Http.Options options = new Http.Options();
@@ -79,19 +79,19 @@ public class GithubCommunicatorUtil {
 
 		int commits = getCommits(owner, name, options, response);
 
-		GithubRepository githubRepository =
-			GithubRepositoryLocalServiceUtil.createGithubRepository(0);
+		GitHubRepository gitHubRepository =
+			GitHubRepositoryLocalServiceUtil.createGitHubRepository(0);
 
-		githubRepository.setCommits(commits);
-		githubRepository.setOpenIssues(openIssues);
-		githubRepository.setRepositoryCreateDate(repositoryCreateDate);
-		githubRepository.setStars(stars);
-		githubRepository.setUrl(url);
+		gitHubRepository.setCommits(commits);
+		gitHubRepository.setOpenIssues(openIssues);
+		gitHubRepository.setRepositoryCreateDate(repositoryCreateDate);
+		gitHubRepository.setStars(stars);
+		gitHubRepository.setUrl(url);
 
-		return githubRepository;
+		return gitHubRepository;
 	}
 
-	public static List<GithubContributor> getTopContributors(
+	public static List<GitHubContributor> getTopContributors(
 			String owner, String name, int count)
 		throws Exception {
 
@@ -116,9 +116,9 @@ public class GithubCommunicatorUtil {
 
 		JSONObject jsonObject = null;
 
-		GithubContributor githubContributor = null;
+		GitHubContributor gitHubContributor = null;
 
-		List<GithubContributor> githubContributors = new LinkedList<>();
+		List<GitHubContributor> gitHubContributors = new LinkedList<>();
 
 		for (int i = 0; i < count; i++) {
 			jsonObject = jsonArray.getJSONObject(i);
@@ -127,17 +127,17 @@ public class GithubCommunicatorUtil {
 			int contributions = jsonObject.getInt("contributions");
 			String contributorName = jsonObject.getString("login");
 
-			githubContributor =
-				GithubContributorLocalServiceUtil.createGithubContributor(0);
+			gitHubContributor =
+				GitHubContributorLocalServiceUtil.createGitHubContributor(0);
 
-			githubContributor.setAvatarURL(avatarURL);
-			githubContributor.setContributions(contributions);
-			githubContributor.setName(contributorName);
+			gitHubContributor.setAvatarURL(avatarURL);
+			gitHubContributor.setContributions(contributions);
+			gitHubContributor.setName(contributorName);
 
-			githubContributors.add(githubContributor);
+			gitHubContributors.add(gitHubContributor);
 		}
 
-		return githubContributors;
+		return gitHubContributors;
 	}
 
 	protected static int getCommits(
