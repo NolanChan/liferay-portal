@@ -1,4 +1,4 @@
-Bundle-Name: Liferay OSB LDN Github Service
+Bundle-Name: Liferay OSB LDN GitHub Service
 Bundle-SymbolicName: com.liferay.osb.ldn.github.service
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
