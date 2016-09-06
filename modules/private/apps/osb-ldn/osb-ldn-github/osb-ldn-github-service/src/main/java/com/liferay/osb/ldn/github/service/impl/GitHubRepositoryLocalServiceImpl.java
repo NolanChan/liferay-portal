@@ -24,7 +24,6 @@ import com.liferay.osb.ldn.github.internal.util.GitHubCommunicatorUtil;
 import com.liferay.osb.ldn.github.model.GitHubRepository;
 import com.liferay.osb.ldn.github.service.base.GitHubRepositoryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
