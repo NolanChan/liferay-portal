@@ -63,15 +63,16 @@ public class GitHubCommunicatorUtil {
 
 		String createAt = jsonObject.getString("created_at");
 
-		Calendar cal = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance();
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sdf.setCalendar(cal);
+		simpleDateFormat.setCalendar(calendar);
 
-		cal.setTime(sdf.parse(createAt));
+		calendar.setTime(simpleDateFormat.parse(createAt));
 
-		Date repositoryCreateDate = cal.getTime();
+		Date repositoryCreateDate = calendar.getTime();
 
 		String url = jsonObject.getString("html_url");
 		int openIssues = jsonObject.getInt("open_issues");
