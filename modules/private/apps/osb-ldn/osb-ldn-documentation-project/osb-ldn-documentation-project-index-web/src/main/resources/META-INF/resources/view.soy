@@ -6,11 +6,11 @@
  * @param documentationProjects
  */
 {template .render}
-	{length($documentationProjects)} PROJECTS
-	
-	<br><br>
-	
 	<div class="view">
+		<div class="count">
+			{length($documentationProjects)} PROJECTS
+		</div>
+
 		<ul class="documentation-project">
 			{foreach $documentationProject in $documentationProjects}
 				{call .render_documentation_project}
