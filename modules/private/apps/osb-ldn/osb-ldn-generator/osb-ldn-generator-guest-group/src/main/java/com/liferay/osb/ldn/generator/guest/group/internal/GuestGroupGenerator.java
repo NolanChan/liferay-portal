@@ -25,11 +25,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -42,46 +40,62 @@ import org.osgi.service.component.annotations.Reference;
 public class GuestGroupGenerator {
 
 	@Activate
-	public void start() throws Exception {
+	public void activate() throws Exception {
 		long userId = _userLocalService.getDefaultUserId(
 			PortalUtil.getDefaultCompanyId());
 
-		addPages(userId);
+		addLayouts(userId);
 	}
 
-	protected void addPages(long userId) throws PortalException {
+	protected void addLayouts(long userId) throws PortalException {
 		Locale locale = LocaleUtil.getDefault();
 
-		Map<Locale, String> nameMap = new HashMap<>();
-		nameMap.put(locale, "LDN Community");
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-		descriptionMap.put(locale, "Test LDN community");
-
-		Group group;
-
-		group = _groupLocalService.getGroup(
+		Group group = _groupLocalService.getGroup(
 			PortalUtil.getDefaultCompanyId(), _GUEST_GROUP);
 
-		ServiceContext serviceContext = new ServiceContext();
+		// Home
 
-		serviceContext.setUuid(PortalUUIDUtil.generate());
+		Layout layout = _layoutLocalService.addLayout(
+			userId, group.getGroupId(), false, 0, "Home", "Home",
+			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, "/home",
+			new ServiceContext());
 
-		for (int i = 1; i < 10; i++) {
-			Layout layout = _layoutLocalService.addLayout(
-				userId, group.getGroupId(), false, 0, "LDN Page " + i,
-				"LDN Page title " + i, "LDN page description",
-				LayoutConstants.TYPE_PORTLET, false, "/page" + i,
-				serviceContext);
-			addPortletToLayout(layout, userId);
-		}
+		addPortlet(layout, userId, _RANDOM_NINE_PORTLET_ID);
+
+		// Projects
+
+		layout = _layoutLocalService.addLayout(
+			userId, group.getGroupId(), false, 0, "Projects", "Projects",
+			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, "/projects",
+			new ServiceContext());
+
+		// Forums
+
+		layout = _layoutLocalService.addLayout(
+			userId, group.getGroupId(), false, 0, "Forums", "Forums",
+			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, "/forums",
+			new ServiceContext());
+
+		// Community
+
+		layout = _layoutLocalService.addLayout(
+			userId, group.getGroupId(), false, 0, "Community", "Community",
+			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, "/community",
+			new ServiceContext());
+
+		// Blogs
+
+		layout = _layoutLocalService.addLayout(
+			userId, group.getGroupId(), false, 0, "Blogs", "Blogs",
+			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, "/blogs",
+			new ServiceContext());
 	}
 
-	protected void addPortletToLayout(Layout layout, long userId) {
+	protected void addPortlet(Layout layout, long userId, String portletId) {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
-		layoutTypePortlet.addPortletId(userId, _RANDOM_NINE_PORTLET_ID);
+		layoutTypePortlet.addPortletId(userId, portletId);
 
 		_layoutLocalService.updateLayout(layout);
 	}
