@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -3282,12 +3281,14 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 	 */
 	@Override
 	public Source fetchByPrimaryKey(Serializable primaryKey) {
-		Source source = (Source)entityCache.getResult(SourceModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(SourceModelImpl.ENTITY_CACHE_ENABLED,
 				SourceImpl.class, primaryKey);
 
-		if (source == _nullSource) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Source source = (Source)serializable;
 
 		if (source == null) {
 			Session session = null;
@@ -3302,7 +3303,7 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 				}
 				else {
 					entityCache.putResult(SourceModelImpl.ENTITY_CACHE_ENABLED,
-						SourceImpl.class, primaryKey, _nullSource);
+						SourceImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3356,18 +3357,20 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Source source = (Source)entityCache.getResult(SourceModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(SourceModelImpl.ENTITY_CACHE_ENABLED,
 					SourceImpl.class, primaryKey);
 
-			if (source == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, source);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Source)serializable);
+				}
 			}
 		}
 
@@ -3409,7 +3412,7 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(SourceModelImpl.ENTITY_CACHE_ENABLED,
-					SourceImpl.class, primaryKey, _nullSource);
+					SourceImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3663,22 +3666,4 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final Source _nullSource = new SourceImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Source> toCacheModel() {
-				return _nullSourceCacheModel;
-			}
-		};
-
-	private static final CacheModel<Source> _nullSourceCacheModel = new CacheModel<Source>() {
-			@Override
-			public Source toEntityModel() {
-				return _nullSource;
-			}
-		};
 }

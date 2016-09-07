@@ -524,6 +524,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		return _scheduleRequest;
 	}
 
+	@JSON
 	@Override
 	public boolean isScheduleRequest() {
 		return _scheduleRequest;
@@ -562,6 +563,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		return _repeating;
 	}
 
+	@JSON
 	@Override
 	public boolean isRepeating() {
 		return _repeating;

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -3307,12 +3306,14 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 */
 	@Override
 	public Definition fetchByPrimaryKey(Serializable primaryKey) {
-		Definition definition = (Definition)entityCache.getResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
 				DefinitionImpl.class, primaryKey);
 
-		if (definition == _nullDefinition) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Definition definition = (Definition)serializable;
 
 		if (definition == null) {
 			Session session = null;
@@ -3328,7 +3329,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 				}
 				else {
 					entityCache.putResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-						DefinitionImpl.class, primaryKey, _nullDefinition);
+						DefinitionImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3382,18 +3383,20 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Definition definition = (Definition)entityCache.getResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
 					DefinitionImpl.class, primaryKey);
 
-			if (definition == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, definition);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Definition)serializable);
+				}
 			}
 		}
 
@@ -3435,7 +3438,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-					DefinitionImpl.class, primaryKey, _nullDefinition);
+					DefinitionImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3690,22 +3693,4 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final Definition _nullDefinition = new DefinitionImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Definition> toCacheModel() {
-				return _nullDefinitionCacheModel;
-			}
-		};
-
-	private static final CacheModel<Definition> _nullDefinitionCacheModel = new CacheModel<Definition>() {
-			@Override
-			public Definition toEntityModel() {
-				return _nullDefinition;
-			}
-		};
 }
