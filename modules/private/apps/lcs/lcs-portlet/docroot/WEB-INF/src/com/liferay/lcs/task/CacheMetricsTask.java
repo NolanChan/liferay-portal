@@ -47,7 +47,7 @@ public class CacheMetricsTask implements ScheduledTask {
 	@Override
 	public void run() {
 		try {
-			_doRun();
+			_run();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -164,7 +164,7 @@ public class CacheMetricsTask implements ScheduledTask {
 		return payload;
 	}
 
-	private void _doRun() throws Exception {
+	private void _run() throws Exception {
 		if (!_lcsConnectionManager.isReady()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Waiting for LCS connection manager");

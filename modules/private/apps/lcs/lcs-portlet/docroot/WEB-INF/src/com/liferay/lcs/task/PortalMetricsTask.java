@@ -34,7 +34,7 @@ public class PortalMetricsTask implements ScheduledTask {
 	@Override
 	public void run() {
 		try {
-			_doRun();
+			_run();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -57,7 +57,7 @@ public class PortalMetricsTask implements ScheduledTask {
 		_portalMetricsAggregator = portalMetricsAggregator;
 	}
 
-	private void _doRun() throws Exception {
+	private void _run() throws Exception {
 		if (_portalMetricsAggregator.isEmpty()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("No portal metrics to send");
