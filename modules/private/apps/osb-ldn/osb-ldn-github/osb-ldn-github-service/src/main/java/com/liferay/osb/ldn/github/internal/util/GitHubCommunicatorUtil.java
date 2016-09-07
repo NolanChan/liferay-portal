@@ -56,7 +56,7 @@ public class GitHubCommunicatorUtil {
 
 		if (response.getResponseCode() != HttpServletResponse.SC_OK) {
 			throw new Exception(
-				"Cannot get repository " + name + " from GitHub");
+				"Unable to get repository " + name + " from GitHub");
 		}
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(content);
@@ -109,7 +109,7 @@ public class GitHubCommunicatorUtil {
 
 		if (response.getResponseCode() != HttpServletResponse.SC_OK) {
 			throw new Exception(
-				"Cannot get contributors from GitHub repository " + name);
+				"Unable to get contributors from GitHub repository " + name);
 		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(content);
@@ -154,7 +154,7 @@ public class GitHubCommunicatorUtil {
 
 		if (response.getResponseCode() != 200) {
 			throw new Exception(
-				"Cannot get total commits from GitHub repository " + name);
+				"Unable to get total commits from GitHub repository " + name);
 		}
 
 		String pagenationInfo = response.getHeader("Link");
