@@ -18,14 +18,18 @@ import com.liferay.osb.ldn.documentation.project.index.web.internal.constants.Do
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -51,10 +55,21 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		Template template = (Template)renderRequest.getAttribute(
 			WebKeys.TEMPLATE);
 
-		template.put("documentationProjects", getDocumentationProjectList());
+		List<Map<String, Object>> documentationProjectList =
+			getDocumentationProjectList();
+
+		template.put("documentationProjects", documentationProjectList);
+
+		Map<String, Object> strings = getStringsMap(
+			themeDisplay.getLanguageId(), documentationProjectList.size());
+
+		template.put("strings", strings);
 
 		return "view";
 	}
@@ -67,7 +82,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (DocumentationProject documentationProject :
-			documentationProjects) {
+				documentationProjects) {
 
 			Map<String, Object> documentationProjectMap = new HashMap<>();
 
@@ -83,7 +98,34 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return documentationProjectList;
 	}
 
+	protected Map<String, Object> getStringsMap(
+		String languageId, int documentationProjectCount) {
+
+		Map<String, Object> strings = new HashMap<>();
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(languageId);
+
+		if (documentationProjectCount == 1) {
+			strings.put(
+				"x-project", LanguageUtil.get(resourceBundle, "1-project"));
+		}
+		else {
+			strings.put(
+				"x-project",
+				LanguageUtil.format(
+					resourceBundle, "x-projects", documentationProjectCount));
+		}
+
+		return strings;
+	}
+
 	@Reference
 	private DocumentationProjectLocalService _documentationProjectLocalService;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.osb.ldn.documentation.project.index.web)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

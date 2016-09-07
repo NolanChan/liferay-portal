@@ -4,11 +4,12 @@
  * Renders a list of documentation projects.
  *
  * @param documentationProjects
+ * @param strings
  */
 {template .render}
 	<div class="view">
 		<div class="count">
-			{length($documentationProjects)} PROJECTS
+			{$strings['x-projects']}
 		</div>
 
 		<ul class="documentation-project">
