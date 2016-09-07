@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.ldn.documentation.project;
+package com.liferay.osb.ldn.generator.guest.group.internal;
 
 import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Yury Butrymovich
  */
 @Component(immediate = true)
-public class OsbLdnInitializer {
+public class GuestGroupGenerator {
 
 	@Activate
 	public void start() throws Exception {
