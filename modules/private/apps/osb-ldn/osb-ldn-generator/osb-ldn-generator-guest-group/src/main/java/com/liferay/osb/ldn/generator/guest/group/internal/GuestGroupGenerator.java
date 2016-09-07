@@ -102,40 +102,22 @@ public class GuestGroupGenerator {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDocumentationProjectLocalService(
-		DocumentationProjectLocalService documentationProjectLocalService) {
-
-		this._documentationProjectLocalService =
-			documentationProjectLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		this._groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		this._layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		this._userLocalService = userLocalService;
-	}
-
 	private static final String _GUEST_GROUP = "Guest";
 
 	private static final String _RANDOM_NINE_PORTLET_ID =
 		"com_liferay_osb_ldn_documentation_project_random_nine_web_" +
 			"DocumentationProjectRandomNinePortlet";
 
+	@Reference
 	private DocumentationProjectLocalService _documentationProjectLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }
