@@ -14,7 +14,6 @@
 
 package com.liferay.osb.ldn.generator.guest.group.internal;
 
-import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -47,7 +46,6 @@ public class GuestGroupGenerator {
 		long userId = _userLocalService.getDefaultUserId(
 			PortalUtil.getDefaultCompanyId());
 
-		initProjects(userId);
 		addPages(userId);
 	}
 
@@ -88,28 +86,11 @@ public class GuestGroupGenerator {
 		_layoutLocalService.updateLayout(layout);
 	}
 
-	protected void initProjects(long userId) throws PortalException {
-		int projectsCount =
-			_documentationProjectLocalService.getDocumentationProjectsCount();
-
-		if (projectsCount <= 0) {
-			String uuid = PortalUUIDUtil.generate();
-
-			for (int i = 1; i < 10; i++) {
-				_documentationProjectLocalService.addDocumentationProject(
-					userId, "Project number " + uuid, "Description");
-			}
-		}
-	}
-
 	private static final String _GUEST_GROUP = "Guest";
 
 	private static final String _RANDOM_NINE_PORTLET_ID =
 		"com_liferay_osb_ldn_documentation_project_random_nine_web_" +
 			"DocumentationProjectRandomNinePortlet";
-
-	@Reference
-	private DocumentationProjectLocalService _documentationProjectLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
