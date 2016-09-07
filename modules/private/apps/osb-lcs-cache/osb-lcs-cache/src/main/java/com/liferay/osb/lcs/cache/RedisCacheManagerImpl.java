@@ -14,11 +14,12 @@
 
 package com.liferay.osb.lcs.cache;
 
+import com.liferay.portal.kernel.io.ProtectedObjectInputStream;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInput;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
@@ -215,7 +216,7 @@ public class RedisCacheManagerImpl<T> extends AbstractCacheManagerImpl<T> {
 		ObjectInput objectInput = null;
 
 		try {
-			objectInput = new ObjectInputStream(byteArrayInputStream);
+			objectInput = new ProtectedObjectInputStream(byteArrayInputStream);
 
 			return objectInput.readObject();
 		}
