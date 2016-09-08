@@ -56,7 +56,7 @@ public class EditDocumentationProjectMVCActionCommand
 		}
 		else {
 			_documentationProjectService.addDocumentationProject(
-				0, name, description);
+				name, description);
 		}
 	}
 

@@ -30,7 +30,7 @@ public class DocumentationProjectServiceImpl
 	extends DocumentationProjectServiceBaseImpl {
 
 	public DocumentationProject addDocumentationProject(
-			long userId, String name, String description)
+			String name, String description)
 		throws PortalException {
 
 		DocumentationProjectPermission.check(
@@ -38,7 +38,7 @@ public class DocumentationProjectServiceImpl
 			DocumentationProjectActionKeys.ADD_DOCUMENTATION_PROJECT);
 
 		return documentationProjectLocalService.addDocumentationProject(
-			userId, name, description);
+			getUserId(), name, description);
 	}
 
 	public DocumentationProject updateDocumentationProject(
