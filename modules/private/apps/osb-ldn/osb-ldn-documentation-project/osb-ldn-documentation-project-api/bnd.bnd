@@ -2,6 +2,7 @@ Bundle-Name: Liferay OSB LDN Documentation Project API
 Bundle-SymbolicName: com.liferay.osb.ldn.documentation.project.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.osb.ldn.documentation.project.constants,\
 	com.liferay.osb.ldn.documentation.project.exception,\
 	com.liferay.osb.ldn.documentation.project.model,\
 	com.liferay.osb.ldn.documentation.project.service,\
