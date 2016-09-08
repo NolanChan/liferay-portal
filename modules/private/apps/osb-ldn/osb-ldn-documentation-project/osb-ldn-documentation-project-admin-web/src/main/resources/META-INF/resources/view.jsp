@@ -43,7 +43,6 @@ portletURL.setParameter("mvcRenderCommandName", "/view");
 		id="documentationProjects"
 		iteratorURL="<%= portletURL %>"
 	>
-
 		<liferay-ui:search-container-results>
 
 			<%
@@ -63,7 +62,14 @@ portletURL.setParameter("mvcRenderCommandName", "/view");
 			keyProperty="documentationProjectId"
 			modelVar="documentationProject"
 		>
+			<liferay-portlet:renderURL varImpl="rowURL">
+				<portlet:param name="mvcRenderCommandName" value="/edit_documentation_project" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="documentationProjectId" value="<%= String.valueOf(documentationProject.getDocumentationProjectId()) %>" />
+			</liferay-portlet:renderURL>
+
 			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
 				name="name"
 				orderable="<%= false %>"
 				property="name"
