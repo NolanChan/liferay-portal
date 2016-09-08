@@ -17,9 +17,9 @@ package com.liferay.osb.ldn.documentation.project.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osb.ldn.documentation.project.constants.DocumentationProjectActionKeys;
+import com.liferay.osb.ldn.documentation.project.internal.service.permission.DocumentationProjectPermission;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.base.DocumentationProjectServiceBaseImpl;
-import com.liferay.osb.ldn.documentation.project.service.permission.DocumentationProjectPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**

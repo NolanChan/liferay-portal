@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.ldn.documentation.project.service.permission;
+package com.liferay.osb.ldn.documentation.project.internal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
