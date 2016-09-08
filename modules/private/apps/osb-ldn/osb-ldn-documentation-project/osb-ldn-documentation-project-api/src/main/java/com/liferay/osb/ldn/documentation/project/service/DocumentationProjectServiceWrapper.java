@@ -36,10 +36,10 @@ public class DocumentationProjectServiceWrapper
 
 	@Override
 	public com.liferay.osb.ldn.documentation.project.model.DocumentationProject addDocumentationProject(
-		long userId, java.lang.String name, java.lang.String description)
+		java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _documentationProjectService.addDocumentationProject(userId,
-			name, description);
+		return _documentationProjectService.addDocumentationProject(name,
+			description);
 	}
 
 	@Override

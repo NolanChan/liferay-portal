@@ -42,9 +42,9 @@ public class DocumentationProjectServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.osb.ldn.documentation.project.service.impl.DocumentationProjectServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject addDocumentationProject(
-		long userId, java.lang.String name, java.lang.String description)
+		java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addDocumentationProject(userId, name, description);
+		return getService().addDocumentationProject(name, description);
 	}
 
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject updateDocumentationProject(

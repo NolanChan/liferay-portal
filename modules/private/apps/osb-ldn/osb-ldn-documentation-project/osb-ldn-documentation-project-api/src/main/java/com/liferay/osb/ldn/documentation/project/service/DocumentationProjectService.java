@@ -51,9 +51,8 @@ public interface DocumentationProjectService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DocumentationProjectServiceUtil} to access the documentation project remote service. Add custom service methods to {@link com.liferay.osb.ldn.documentation.project.service.impl.DocumentationProjectServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public DocumentationProject addDocumentationProject(long userId,
-		java.lang.String name, java.lang.String description)
-		throws PortalException;
+	public DocumentationProject addDocumentationProject(java.lang.String name,
+		java.lang.String description) throws PortalException;
 
 	public DocumentationProject updateDocumentationProject(
 		long documentationProjectId, java.lang.String name,

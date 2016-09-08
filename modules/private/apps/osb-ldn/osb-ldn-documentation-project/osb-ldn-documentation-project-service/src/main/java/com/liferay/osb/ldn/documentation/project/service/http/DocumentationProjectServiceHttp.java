@@ -56,7 +56,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class DocumentationProjectServiceHttp {
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject addDocumentationProject(
-		HttpPrincipal httpPrincipal, long userId, java.lang.String name,
+		HttpPrincipal httpPrincipal, java.lang.String name,
 		java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -64,8 +64,8 @@ public class DocumentationProjectServiceHttp {
 					"addDocumentationProject",
 					_addDocumentationProjectParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
-					name, description);
+			MethodHandler methodHandler = new MethodHandler(methodKey, name,
+					description);
 
 			Object returnObj = null;
 
@@ -125,7 +125,7 @@ public class DocumentationProjectServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(DocumentationProjectServiceHttp.class);
 	private static final Class<?>[] _addDocumentationProjectParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class
+			java.lang.String.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateDocumentationProjectParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class

@@ -66,12 +66,12 @@ import java.rmi.RemoteException;
 @ProviderType
 public class DocumentationProjectServiceSoap {
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProjectSoap addDocumentationProject(
-		long userId, java.lang.String name, java.lang.String description)
+		java.lang.String name, java.lang.String description)
 		throws RemoteException {
 		try {
 			com.liferay.osb.ldn.documentation.project.model.DocumentationProject returnValue =
-				DocumentationProjectServiceUtil.addDocumentationProject(userId,
-					name, description);
+				DocumentationProjectServiceUtil.addDocumentationProject(name,
+					description);
 
 			return com.liferay.osb.ldn.documentation.project.model.DocumentationProjectSoap.toSoapModel(returnValue);
 		}
