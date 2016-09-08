@@ -1,16 +1,11 @@
 #wrapper {
 	form {
-		label {
-			display: block;
-			font-size: 1em;
-			line-height: 1.5;
-		}
-
 		input[type='email'], input[type='password'], input[type='text'], select, textarea {
 			background-color: transparent;
 			border: 1px solid $fontColor;
 			border-radius: 0;
 			color: $fontColor;
+			display: block;
 			font-size: 1em;
 			height: 3em;
 			max-width: none !important;
@@ -30,6 +25,15 @@
 			font-size: 1.25em;
 			height: 48px;
 			line-height: 2;
+		}
+
+		label {
+			font-size: 1em;
+			line-height: 1.5;
+		}
+
+		label.control-label {
+			display: block;
 		}
 
 		select {
