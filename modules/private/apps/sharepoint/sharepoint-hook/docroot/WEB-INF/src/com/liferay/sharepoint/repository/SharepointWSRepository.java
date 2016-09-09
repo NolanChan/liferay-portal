@@ -943,6 +943,14 @@ public class SharepointWSRepository
 		}
 	}
 
+	protected void pingSharepointConnection(
+			SharepointConnection sharepointConnection)
+		throws SharepointException {
+
+		sharepointConnection.getSharepointObjectsCount(
+			StringPool.SLASH, ObjectTypeFilter.FILES);
+	}
+
 	protected void processSharepointObjectException(
 			SharepointException sharepointException, boolean folder,
 			String path, String name)
@@ -1038,14 +1046,6 @@ public class SharepointWSRepository
 
 	protected static PathHelper pathHelper = new PathHelper();
 	protected static URLHelper urlHelper = new URLHelper();
-
-	protected void pingSharepointConnection(
-			SharepointConnection sharepointConnection)
-		throws SharepointException {
-
-		sharepointConnection.getSharepointObjectsCount(
-			StringPool.SLASH, ObjectTypeFilter.FILES);
-	}
 
 	private static final String _CONFIGURATION_WS = "SHAREPOINT_WS";
 
