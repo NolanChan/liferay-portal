@@ -752,7 +752,7 @@ public class SharepointWSRepository
 			SharepointConnection sharepointConnection =
 				getSharepointConnection();
 
-			_pingSharepointConnection(sharepointConnection);
+			pingSharepointConnection(sharepointConnection);
 
 			SharepointObject rootFolderSharepointObject =
 				sharepointConnection.getSharepointObject(StringPool.SLASH);
@@ -1039,7 +1039,7 @@ public class SharepointWSRepository
 	protected static PathHelper pathHelper = new PathHelper();
 	protected static URLHelper urlHelper = new URLHelper();
 
-	private void _pingSharepointConnection(
+	protected void pingSharepointConnection(
 			SharepointConnection sharepointConnection)
 		throws SharepointException {
 
