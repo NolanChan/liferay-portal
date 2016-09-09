@@ -36,51 +36,54 @@ h6 {
 	font-size: 1em;
 }
 
-#wrapper {
-	input, select, textarea {
-		border-radius: 0;
-		margin-bottom: 0.3em;
+input, select, textarea {
+	border-radius: 0;
+	margin-bottom: 0.3em;
+}
+
+input[type="text"], select {
+	height: 40px;
+	line-height: 1.5;
+	padding: 0.5em 1em;
+
+	@include box-sizing(border-box);
+}
+
+label {
+	font-size: 0.88em;
+	font-weight: 400;
+	line-height: 1.5;
+	margin: 0 1.5em 0.5em 0;
+}
+
+ol, ul {
+	padding-left: 20px;
+
+	li {
+		line-height: 1.6;
 	}
+}
 
-	input[type="text"], select {
-		height: 40px;
-		line-height: 1.5;
-		padding: 0.5em 1em;
+select {
+	background: url(../images/custom/form_dropdowns.svg) no-repeat right -42px;
+	cursor: pointer;
+	padding-right: 2em;
 
-		@include box-sizing(border-box);
+	@include appearance(none);
+}
+
+#content {
+	li {
+		padding-bottom: 1.5em;
 	}
+}
 
-	label {
-		font-size: 0.88em;
-		font-weight: 400;
-		line-height: 1.5;
-		margin: 0 1.5em 0.5em 0;
+.longform {
+	p {
+		font: 300 1.25em/2 Source Serif Pro, Arial, Helvetica, sans-serif;
 	}
+}
 
-	ol, ul {
-		padding-left: 20px;
-
-		li {
-			line-height: 1.6;
-			padding-bottom: 1.5em;
-		}
-	}
-
-	select {
-		background: url(../images/custom/form_dropdowns.svg) no-repeat right -42px;
-		cursor: pointer;
-		padding-right: 2em;
-
-		@include appearance(none);
-	}
-
-	.longform {
-		p {
-			font: 300 1.25em/2 Source Serif Pro, Arial, Helvetica, sans-serif;
-		}
-	}
-
-	.portlet-title-text {
-		display: none;
-	}
+#wrapper .portlet-title-text {
+	display: none;
 }
