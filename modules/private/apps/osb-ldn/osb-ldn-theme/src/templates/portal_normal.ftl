@@ -45,15 +45,11 @@
 		</div>
 	</header>
 
-	<section class="content" id="content">
+	<section class="container-fluid" id="content">
 		<@liferay_util["include"] page=content_include />
 	</section>
 
-	<footer class="footer" id="footer" role="contentinfo">
-		<div class="row">
-			<@liferay.language key="powered-by" /> <a href="http://www.liferay.com" rel="external">Liferay</a>
-		</div>
-	</footer>
+	<#include "${full_templates_path}/footer.ftl" />
 </div>
 
 <@liferay_util["include"] page=body_bottom_include />

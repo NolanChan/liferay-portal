@@ -1,0 +1,72 @@
+#footer {
+	background: #F7F9FA;
+	padding: 4em 2em;
+	box-sizing: border-box;
+
+	&, a {
+		color: $fontColor;
+	}
+
+	a:hover {
+		color: $altFontColor;
+		text-decoration: none;
+	}
+
+	.fine-print {
+		font-size: 0.9em;
+
+		@include display(flex);
+		@include justify-content(space-between);
+	}
+
+	.social-nav {
+		height: 200px;
+
+		@include display(flex);
+		@include justify-content(flex-end);
+
+		li {
+			padding: 0 1em;
+
+			&:last-of-type {
+				padding-right: 0;
+			}
+		}
+
+		svg {
+			fill: $altFontColor;
+			height: 20px;
+			width: 20px;
+
+			@include transition(all 0.25s ease-in-out);
+		}
+
+		.facebook:hover svg {
+			fill: #3B5998;
+		}
+
+		.github:hover svg {
+			fill: #181717;
+		}
+
+		.instagram:hover svg {
+			fill: #125688;
+		}
+
+		.linkedin:hover svg {
+			fill: #0077B5;
+		}
+
+		.twitter:hover svg {
+			fill: #55ACEE;
+		}
+
+		.youtube:hover svg {
+			fill: #CD201F;
+		}
+
+		@include media-query(null, $screen-xs-max) {
+			padding-top: 1em;
+		}
+	}
+}
