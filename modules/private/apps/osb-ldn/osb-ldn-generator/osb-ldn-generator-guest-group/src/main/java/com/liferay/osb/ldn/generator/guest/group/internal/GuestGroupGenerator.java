@@ -14,17 +14,18 @@
 
 package com.liferay.osb.ldn.generator.guest.group.internal;
 
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -41,6 +42,8 @@ public class GuestGroupGenerator {
 		long userId = _userLocalService.getDefaultUserId(
 			PortalUtil.getDefaultCompanyId());
 
+		createExpando();
+
 		addLayouts(userId);
 	}
 
@@ -48,64 +51,66 @@ public class GuestGroupGenerator {
 		Group group = _groupLocalService.getGroup(
 			PortalUtil.getDefaultCompanyId(), _GUEST_GROUP);
 
-		// Home
+		int[] pageTypes = {
+			_HOME_PAGE_TYPE, _PROJECTS_PAGE_TYPE, _FORUMS_PAGE_TYPE,
+			_COMMUNITY_PAGE_TYPE, _BLOGS_PAGE_TYPE
+		};
 
-		Layout layout = _layoutLocalService.addLayout(
-			userId, group.getGroupId(), false, 0, "Home", "Home",
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, "/home",
-			new ServiceContext());
+		for (int pageType : pageTypes) {
+			LayoutGenerator layoutGenerator =
+				_layoutGeneratorFactory.getLayoutGenrator(
+					userId, group.getGroupId(), pageType);
 
-		addPortlet(layout, userId, _RANDOM_NINE_PORTLET_ID);
-
-		// Projects
-
-		layout = _layoutLocalService.addLayout(
-			userId, group.getGroupId(), false, 0, "Projects", "Projects",
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, "/projects",
-			new ServiceContext());
-
-		// Forums
-
-		layout = _layoutLocalService.addLayout(
-			userId, group.getGroupId(), false, 0, "Forums", "Forums",
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, "/forums",
-			new ServiceContext());
-
-		// Community
-
-		layout = _layoutLocalService.addLayout(
-			userId, group.getGroupId(), false, 0, "Community", "Community",
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, "/community",
-			new ServiceContext());
-
-		// Blogs
-
-		layout = _layoutLocalService.addLayout(
-			userId, group.getGroupId(), false, 0, "Blogs", "Blogs",
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, "/blogs",
-			new ServiceContext());
+			layoutGenerator.generate(userId, group.getGroupId());
+		}
 	}
 
-	protected void addPortlet(Layout layout, long userId, String portletId) {
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
+	protected void createExpando() throws PortalException {
+		ExpandoTable expandoTable = null;
 
-		layoutTypePortlet.addPortletId(userId, portletId);
+		try {
+			expandoTable = _expandoTableLocalService.getTable(
+				PortalUtil.getDefaultCompanyId(), Layout.class.getName(),
+				ExpandoTableConstants.DEFAULT_TABLE_NAME);
+		}
+		catch (PortalException pe) {
+			expandoTable = _expandoTableLocalService.addDefaultTable(
+				PortalUtil.getDefaultCompanyId(), Layout.class.getName());
+		}
 
-		_layoutLocalService.updateLayout(layout);
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
+			expandoTable.getTableId(), "version");
+
+		if (expandoColumn == null) {
+			_expandoColumnLocalService.addColumn(
+				expandoTable.getTableId(), "version",
+				ExpandoColumnConstants.LONG);
+		}
 	}
+
+	private static final int _BLOGS_PAGE_TYPE = 5;
+
+	private static final int _COMMUNITY_PAGE_TYPE = 4;
+
+	private static final int _FORUMS_PAGE_TYPE = 3;
 
 	private static final String _GUEST_GROUP = "Guest";
 
-	private static final String _RANDOM_NINE_PORTLET_ID =
-		"com_liferay_osb_ldn_documentation_project_random_nine_web_" +
-			"DocumentationProjectRandomNinePortlet";
+	private static final int _HOME_PAGE_TYPE = 1;
+
+	private static final int _PROJECTS_PAGE_TYPE = 2;
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
+	private LayoutGeneratorFactory _layoutGeneratorFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;
