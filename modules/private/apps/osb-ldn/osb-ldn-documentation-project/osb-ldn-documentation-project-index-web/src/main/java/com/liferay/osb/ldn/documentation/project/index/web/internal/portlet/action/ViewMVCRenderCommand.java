@@ -108,11 +108,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		if (documentationProjectCount == 1) {
 			strings.put(
-				"x-project", LanguageUtil.get(resourceBundle, "1-project"));
+				"x-projects", LanguageUtil.get(resourceBundle, "1-project"));
 		}
 		else {
 			strings.put(
-				"x-project",
+				"x-projects",
 				LanguageUtil.format(
 					resourceBundle, "x-projects", documentationProjectCount));
 		}
