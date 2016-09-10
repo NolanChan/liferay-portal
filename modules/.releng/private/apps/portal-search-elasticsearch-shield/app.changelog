@@ -1,0 +1,11 @@
+#
+# Liferay App Version 1.0.0
+#
+
+app.artifacts-1.0.0=\
+	com.liferay.portal.search.elasticsearch.shield-1.0.1.jar,\
+	com.liferay.portal.search.elasticsearch.shield.fragment-1.0.1.jar
+
+app.change.log-1.0.0=LPS-64031 LPS-64414 LPS-65266 LPS-66064 LPS-66956
+
+app.git.id-1.0.0=1523474a590fd37ec8b75d8737f1f694c9637ba5
