@@ -89,6 +89,9 @@ public class PortletPropsValues {
 	public static final String KEY_GENERATOR_KEY_STORE_TYPE = PortletProps.get(
 		PortletPropsKeys.KEY_GENERATOR_KEY_STORE_TYPE);
 
+	public static final String LCS_CLIENT_VERSION = PortletProps.get(
+		PortletPropsKeys.LCS_CLIENT_VERSION);
+
 	public static final String LRDCOM_PRODUCT_PAGE_URL = PortletProps.get(
 		PortletPropsKeys.LRDCOM_PRODUCT_PAGE_URL);
 

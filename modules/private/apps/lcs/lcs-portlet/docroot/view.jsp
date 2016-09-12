@@ -80,7 +80,7 @@ if (LCSUtil.isLCSPortletAuthorized(liferayPortletRequest)) {
 <footer class="footer">
 	<div class="container-fluid-1280">
 		<div class="footer-note">
-			<liferay-ui:message arguments="<%= LCSUtil.getLCSPortletBuildNumber() %>" key="liferay-connected-services-client-x" />
+			<liferay-ui:message arguments="<%= PortletPropsValues.LCS_CLIENT_VERSION %>" key="liferay-connected-services-client-x" />
 		</div>
 
 		<div class="footer-note">

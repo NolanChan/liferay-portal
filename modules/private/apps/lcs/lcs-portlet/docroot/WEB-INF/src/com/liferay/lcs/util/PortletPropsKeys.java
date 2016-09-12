@@ -77,6 +77,8 @@ public interface PortletPropsKeys {
 	public static final String KEY_GENERATOR_KEY_STORE_TYPE =
 		"key.generator.key.store.type";
 
+	public static final String LCS_CLIENT_VERSION = "lcs.client.version";
+
 	public static final String LRDCOM_PRODUCT_PAGE_URL =
 		"lrdcom.product.page.url";
 
