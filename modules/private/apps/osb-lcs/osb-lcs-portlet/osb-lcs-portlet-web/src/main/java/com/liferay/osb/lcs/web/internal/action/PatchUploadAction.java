@@ -14,6 +14,7 @@
 
 package com.liferay.osb.lcs.web.internal.action;
 
+import com.liferay.osb.lcs.constants.OSBLCSConstants;
 import com.liferay.osb.lcs.exception.NoSuchLCSPatchEntryException;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodePatchesServiceUtil;
 import com.liferay.osb.lcs.service.LCSPatchEntryLocalServiceUtil;
@@ -21,6 +22,7 @@ import com.liferay.osb.lcs.storage.PatchStorageManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -50,6 +52,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import org.osgi.service.component.annotations.Component;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -59,6 +63,11 @@ import org.w3c.dom.NodeList;
  * @author Ivica Cardic
  * @author Igor Beslic
  */
+@Component(
+	immediate = true,
+	property = "path=" + OSBLCSConstants.PUBLIC_PATH_PATCH_UPLOAD,
+	service = StrutsAction.class
+)
 public class PatchUploadAction extends BaseStrutsAction {
 
 	@Override
@@ -290,11 +299,12 @@ public class PatchUploadAction extends BaseStrutsAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PatchUploadAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PatchUploadAction.class);
 
-	private static DocumentBuilderFactory _documentBuilderFactory =
+	private static final DocumentBuilderFactory _documentBuilderFactory =
 		DocumentBuilderFactory.newInstance();
-	private static File _tmpDir = new File(
+	private static final File _tmpDir = new File(
 		SystemProperties.get(SystemProperties.TMP_DIR));
 
 	private PatchStorageManager _patchStorageManager;

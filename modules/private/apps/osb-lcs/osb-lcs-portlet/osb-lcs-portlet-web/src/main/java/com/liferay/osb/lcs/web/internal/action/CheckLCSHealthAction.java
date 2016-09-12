@@ -14,16 +14,25 @@
 
 package com.liferay.osb.lcs.web.internal.action;
 
+import com.liferay.osb.lcs.constants.OSBLCSConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  */
+@Component(
+	immediate = true,
+	property = "path=" + OSBLCSConstants.PUBLIC_PATH_CHECK_LCS_HEALTH,
+	service = StrutsAction.class
+)
 public class CheckLCSHealthAction extends BaseStrutsAction {
 
 	@Override
@@ -38,6 +47,7 @@ public class CheckLCSHealthAction extends BaseStrutsAction {
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CheckLCSHealthAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CheckLCSHealthAction.class);
 
 }

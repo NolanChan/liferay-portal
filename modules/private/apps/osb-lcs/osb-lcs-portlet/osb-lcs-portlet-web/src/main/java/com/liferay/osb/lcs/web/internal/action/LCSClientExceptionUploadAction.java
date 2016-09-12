@@ -14,18 +14,27 @@
 
 package com.liferay.osb.lcs.web.internal.action;
 
+import com.liferay.osb.lcs.constants.OSBLCSConstants;
 import com.liferay.osb.lcs.storage.LogStorageManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.util.bean.PortletBeanLocatorUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mladen Cikara
  */
+@Component(
+	immediate = true,
+	property = "path=" + OSBLCSConstants.PUBLIC_PATH_UPLOAD_LCS_CLIENT_EXCEPTION,
+	service = StrutsAction.class
+)
 public class LCSClientExceptionUploadAction extends BaseStrutsAction {
 
 	@Override
@@ -66,7 +75,7 @@ public class LCSClientExceptionUploadAction extends BaseStrutsAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LCSClientExceptionUploadAction.class);
 
 	private LogStorageManager _logStorageManager;

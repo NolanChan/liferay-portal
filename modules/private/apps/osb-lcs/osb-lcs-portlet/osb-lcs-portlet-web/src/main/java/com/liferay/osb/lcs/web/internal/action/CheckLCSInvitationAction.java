@@ -15,10 +15,12 @@
 package com.liferay.osb.lcs.web.internal.action;
 
 import com.liferay.lcs.notification.LCSEventType;
-import com.liferay.osb.lcs.exception.NoSuchLCSInvitationException;
 import com.liferay.osb.lcs.advisor.LCSMessageAdvisor;
+import com.liferay.osb.lcs.constants.OSBLCSConstants;
+import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.email.EmailAdvisor;
 import com.liferay.osb.lcs.email.EmailContext;
+import com.liferay.osb.lcs.exception.NoSuchLCSInvitationException;
 import com.liferay.osb.lcs.model.LCSInvitation;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.navigation.util.NavigationUtil;
@@ -28,21 +30,21 @@ import com.liferay.osb.lcs.service.LCSInvitationLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSMembersLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil;
-import com.liferay.osb.lcs.util.PortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.util.bean.PortletBeanLocatorUtil;
 
 import java.io.IOException;
@@ -50,10 +52,17 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Igor Beslic
  * @author Marko Cikos
  */
+@Component(
+	immediate = true,
+	property = "path=" + OSBLCSConstants.PUBLIC_PATH_CHECK_LCS_INVITATION,
+	service = StrutsAction.class
+)
 public class CheckLCSInvitationAction extends BaseStrutsAction {
 
 	@Override
@@ -79,7 +88,7 @@ public class CheckLCSInvitationAction extends BaseStrutsAction {
 			LiferayPortletURL liferayPortletURL =
 				NavigationUtil.getPortletRenderURL(
 					companyId, NavigationUtil.FRIENDLY_URL_INFO,
-					PortletKeys.INFO, false, request, "errorMessage",
+					OSBLCSPortletKeys.INFO, false, request, "errorMessage",
 					"project-invitation-is-not-valid");
 
 			response.sendRedirect(liferayPortletURL.toString());
@@ -93,7 +102,7 @@ public class CheckLCSInvitationAction extends BaseStrutsAction {
 			LiferayPortletURL liferayPortletURL =
 				NavigationUtil.getPortletRenderURL(
 					companyId, NavigationUtil.FRIENDLY_URL_INFO,
-					PortletKeys.INFO, false, request, "errorMessage",
+					OSBLCSPortletKeys.INFO, false, request, "errorMessage",
 					"project-invitation-is-not-valid");
 
 			response.sendRedirect(liferayPortletURL.toString());
@@ -108,7 +117,7 @@ public class CheckLCSInvitationAction extends BaseStrutsAction {
 			LiferayPortletURL liferayPortletURL =
 				NavigationUtil.getPortletRenderURL(
 					companyId, NavigationUtil.FRIENDLY_URL_INFO,
-					PortletKeys.INFO, false, request, "errorMessage",
+					OSBLCSPortletKeys.INFO, false, request, "errorMessage",
 					"project-invitation-is-not-valid");
 
 			response.sendRedirect(liferayPortletURL.toString());
@@ -122,7 +131,7 @@ public class CheckLCSInvitationAction extends BaseStrutsAction {
 		LiferayPortletURL liferayPortletURL =
 			NavigationUtil.getPortletRenderURL(
 				companyId, NavigationUtil.FRIENDLY_URL_DASHBOARD,
-				PortletKeys.NAVIGATION, true, request, parameterName,
+				OSBLCSPortletKeys.NAVIGATION, true, request, parameterName,
 				String.valueOf(lcsProjectId));
 
 		response.sendRedirect(liferayPortletURL.toString());
@@ -204,7 +213,7 @@ public class CheckLCSInvitationAction extends BaseStrutsAction {
 			companyId, user.getUserId());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CheckLCSInvitationAction.class);
 
 	private EmailAdvisor _emailAdvisor;
