@@ -1,0 +1,199 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<portlet:actionURL name="generateLCSClusterEntryToken" var="generateLCSClusterEntryTokenURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="lcsClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
+</portlet:actionURL>
+
+<portlet:actionURL name="regenerateLCSClusterEntryToken" var="regenerateLCSClusterEntryTokenURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="lcsClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
+</portlet:actionURL>
+
+<%
+LCSClusterEntryToken lcsClusterEntryToken = LCSClusterEntryTokenServiceUtil.fetchLCSClusterEntryLCSClusterEntryToken(layoutLCSClusterEntryId);
+%>
+
+<aui:form action="<%= (lcsClusterEntryToken == null) ? generateLCSClusterEntryTokenURL : regenerateLCSClusterEntryTokenURL %>" method="post" name="fm">
+	<div class="lcs-note">
+		<liferay-ui:message key="to-register-a-server-in-this-environment-generate-a-token-file-and-place-it-in-your-liferay-instances-data-folder" />
+	</div>
+
+	<div class="lcs-section">
+		<div class="lcs-section-label">
+			<liferay-ui:message key="requirements" />
+		</div>
+
+		<div class="lcs-note">
+			<liferay-ui:message arguments="<%= PortletPropsValues.LCS_PORTLET_TOKEN_COMPATIBLE_BUILD_NUMBER %>" key="to-use-the-token-version-x-or-newer-of-the-liferay-connected-services-client-must-be-installed-in-your-liferay-instance" />
+		</div>
+	</div>
+
+	<div class="lcs-section">
+		<div class="lcs-section-label">
+			<liferay-ui:message key="activation" />
+		</div>
+
+		<div class="lcs-section-content">
+			<c:if test="<%= AdminUtil.isSubscriptionsEnabled() %>">
+
+				<%
+				LCSClusterEntry lcsClusterEntry = LCSClusterEntryServiceUtil.getLCSClusterEntry(layoutLCSClusterEntryId);
+
+				SubscriptionType subscriptionType = SubscriptionType.valueOf(lcsClusterEntry.getSubscriptionType());
+				%>
+
+				<c:choose>
+					<c:when test="<%= subscriptionType.equals(SubscriptionType.UNDEFINED) %>">
+						<div class="lcs-note">
+							<liferay-ui:message key="if-this-environment-has-a-subscription-type-and-you-have-a-valid-subscription-of-that-type-registering-the-server-will-activate-your-liferay-instance" />
+
+							<%
+							Layout subscriptionsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_SUBSCRIPTIONS);
+							%>
+
+							<liferay-portlet:renderURL plid="<%= subscriptionsLayout.getPlid() %>" portletName="<%= PortletKeys.SUBSCRIPTIONS %>" var="subscriptionsURL">
+								<portlet:param name="layoutLCSClusterEntryId" value="0" />
+								<portlet:param name="layoutLCSClusterNodeId" value="0" />
+								<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+							</liferay-portlet:renderURL>
+						</div>
+
+						<aui:a href="<%= subscriptionsURL %>" label="assign-subscription-type" />
+					</c:when>
+					<c:otherwise>
+						<div class="lcs-note">
+							<liferay-ui:message arguments="<%= EnvironmentUtil.getSubscriptionTypeLabel(pageContext, layoutLCSClusterEntryId) %>" key="registering-a-liferay-instance-in-this-environment-will-activate-the-instance-and-consume-a-x-activation-key" />
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</c:if>
+		</div>
+	</div>
+
+	<div class="lcs-section">
+		<div class="lcs-section-label">
+			<liferay-ui:message key="services" />
+		</div>
+
+		<div class="lcs-note">
+			<liferay-ui:message key="select-the-services-to-enable-in-this-environment" />
+		</div>
+
+		<%
+		LCSClusterEntryTokenContentAdvisor lcsClusterEntryTokenContentAdvisor = null;
+		Map<String, String> lcsServicesConfiguration = null;
+
+		if (lcsClusterEntryToken != null) {
+			lcsClusterEntryTokenContentAdvisor = new LCSClusterEntryTokenContentAdvisor(lcsClusterEntryToken.getContent());
+
+			lcsServicesConfiguration = lcsClusterEntryTokenContentAdvisor.getLCSServicesConfiguration();
+		}
+		%>
+
+		<div class="lcs-checkboxes-container lcs-section-content" id="<portlet:namespace />lcsServices">
+			<aui:field-wrapper>
+				<aui:input helpMessage="by-enabling-portal-analytics-you-will-be-able-to-see-metrics-data-of-your-portal-for-example-page-and-portlet-load-times-and-analyze-portal-performance" label="portal-analytics" name="<%= LCSConstants.METRICS_LCS_SERVICE_ENABLED %>" type="checkbox" value="<%= (lcsServicesConfiguration == null) ? true : lcsServicesConfiguration.get(LCSConstants.METRICS_LCS_SERVICE_ENABLED) %>" />
+			</aui:field-wrapper>
+
+			<aui:field-wrapper>
+				<aui:input helpMessage="by-enabling-fix-packs-management-you-will-be-able-to-see-if-there-are-updates-for-your-fix-packs-and-download-updates-to-your-portal" label="fix-packs-management" name="<%= LCSConstants.PATCHES_LCS_SERVICE_ENABLED %>" type="checkbox" value="<%= (lcsServicesConfiguration == null) ? true : lcsServicesConfiguration.get(LCSConstants.PATCHES_LCS_SERVICE_ENABLED) %>" />
+			</aui:field-wrapper>
+
+			<aui:field-wrapper>
+				<aui:input helpMessage="by-enabling-portal-properties-analysis-you-will-be-able-to-compare-your-portals-properties-to-default-properties-of-your-portal-version" label="portal-properties-analysis" name="<%= LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED %>" type="checkbox" value="<%= (lcsServicesConfiguration == null) ? true : lcsServicesConfiguration.get(LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED) %>" />
+			</aui:field-wrapper>
+		</div>
+
+		<div class="subsection" id="<portlet:namespace />sensitivePropertiesNote">
+			<div class="lcs-note">
+				<liferay-ui:message key="liferay-connected-services-does-not-access-sensitive-data-in-your-portal-properties" />
+			</div>
+
+			<aui:a href="javascript:;" id="sensitivePropertiesToggler" label="show-blacklisted-properties">
+				<i class="icon-chevron-sign-down"></i>
+			</aui:a>
+		</div>
+
+		<div class="hide panel" id="<portlet:namespace />sensitiveProperties">
+			<div class="fluid indent">
+				<div class="properties-title">
+					<liferay-ui:message key="blacklisted-properties" />
+				</div>
+
+				<%
+				String[] properties = LCSConstants.PORTAL_PROPERTIES_SECURITY_SENSITIVE;
+
+				for (int i = 0; i < properties.length; i++) {
+				%>
+
+					<div class="property">
+						<%= properties[i] %>
+					</div>
+
+				<%
+				}
+				%>
+
+			</div>
+
+			<aui:input helpMessage="additional-blacklisted-properties-help" label="additional-blacklisted-properties" name="<%= LCSConstants.PORTAL_PROPERTIES_BLACKLIST %>" type="textarea" value="<%= (lcsClusterEntryTokenContentAdvisor == null) ? StringPool.BLANK : lcsClusterEntryTokenContentAdvisor.getPortalPropertiesBlacklist() %>" wrapperCssClass="fluid" />
+		</div>
+
+		<c:if test="<%= lcsClusterEntryToken != null %>">
+			<div class="alert alert-info alert-update hide" id="<portlet:namespace />updateAlert">
+				<liferay-ui:message key="to-apply-your-changes-you-must-regenerate-the-token-and-then-use-it-to-reconnect-your-servers-to-this-environment" />
+			</div>
+		</c:if>
+	</div>
+
+	<aui:button-row>
+		<c:choose>
+			<c:when test="<%= lcsClusterEntryToken == null %>">
+				<aui:button name="generate" primary="<%= true %>" type="submit" value="generate-token" />
+			</c:when>
+			<c:otherwise>
+				<portlet:resourceURL id="downloadLCSEntryToken" var="downloadLCSEntryTokenURL">
+					<portlet:param name="p_auth" value="<%= AuthTokenUtil.getToken(request) %>" />
+					<portlet:param name="lcsClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
+				</portlet:resourceURL>
+
+				<aui:button href="<%= downloadLCSEntryTokenURL %>" name="download" primary="<%= true %>" value="download-token" />
+
+				<aui:button cssClass="btn-link" name="generate" value="regenerate-token" />
+			</c:otherwise>
+		</c:choose>
+	</aui:button-row>
+</aui:form>
+
+<aui:script use="lcs-environment">
+	var lcsEnvironment = new Liferay.Portlet.LCSEnvironment(
+		{
+			namespace: '<portlet:namespace />'
+		}
+	);
+
+	lcsEnvironment.initializeRegistrationPage(
+		{
+			labels: {
+				msgConfirmRegenerate: '<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-regenerate-this-environment-token") + UnicodeLanguageUtil.get(pageContext, StringPool.NEW_LINE + StringPool.NEW_LINE) + UnicodeLanguageUtil.get(pageContext, "any-servers-using-the-previous-token-will-be-disconnected-from-liferay-connected-services-and-will-not-be-able-to-reconnect-until-restarting-with-the-new-token") %>'
+			},
+			portalPropertiesLCSServiceEnabled: '<%= LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED %>',
+			tokenCreated: <%= lcsClusterEntryToken != null %>
+		}
+	);
+</aui:script>

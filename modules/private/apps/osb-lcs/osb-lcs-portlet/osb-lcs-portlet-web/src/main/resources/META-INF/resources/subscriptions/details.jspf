@@ -1,0 +1,163 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+List<LCSMessage> lcsMessages = LCSMessageServiceUtil.getLCSProjectLCSMessages(layoutLCSProjectId, LCSConstants.SOURCE_SYSTEM_NAME_OSB);
+%>
+
+<div id="<portlet:namespace />messageContainer"></div>
+
+<c:if test="<%= !lcsMessages.isEmpty() %>">
+	<div class="lcs-messages-container">
+		<h2>
+			<liferay-ui:message key="messages-from-liferay-support" />
+		</h2>
+
+		<%
+		for (LCSMessage lcsMessage : lcsMessages) {
+		%>
+
+			<div class="lcs-message">
+				<div class="header">
+					<%= mediumDateFormatDateTime.format(lcsMessage.getModifiedDate()) %>
+				</div>
+
+				<div class="alert alert-warning body">
+					<%= HtmlUtil.escape(lcsMessage.getContent()) %>
+				</div>
+			</div>
+
+		<%
+		}
+		%>
+
+	</div>
+</c:if>
+
+<div class="lcs-note">
+	<liferay-ui:message key="you-may-assign-an-available-subscription-type-to-an-environment" />
+</div>
+
+<div class="lcs-note">
+	<liferay-ui:message key="you-can-only-set-the-subscription-type-if-all-servers-in-the-environment-are-offline" />
+</div>
+
+<div class="updating" id="<portlet:namespace />updating"></div>
+
+<div class="fade-out table-container" id="<portlet:namespace />lcsClusterEntries">
+	<h2 class="title">
+		<liferay-ui:message key="assign-subscription-type" />
+
+		<div class="hide updating"></div>
+	</h2>
+
+	<div class="message-container"></div>
+
+	<div class="content"></div>
+</div>
+
+<div class="fade-out table-container" id="<portlet:namespace />subscriptions">
+	<div class="header">
+		<h2 class="title">
+			<liferay-ui:message key="subscriptions" />
+
+			<c:if test="<%= PortletPropsValues.APPLICATION_PROFILE != ApplicationProfile.PRODUCTION %>">
+				<aui:a cssClass="icon-refresh" href="javascript:;" id="refreshLCSSubscriptionEntries" />
+			</c:if>
+		</h2>
+	</div>
+
+	<div class="content"></div>
+</div>
+
+<div class="fade-out table-container" id="<portlet:namespace />subscriptionsUsage">
+	<h2>
+		<liferay-ui:message key="subscriptions-summary" />
+	</h2>
+
+	<div class="content"></div>
+</div>
+
+<div class="fade-out table-container" id="<portlet:namespace />lcsClusterNodes">
+	<div class="header">
+		<h2 class="title">
+			<liferay-ui:message key="project-servers" />
+		</h2>
+	</div>
+
+	<div class="content"></div>
+</div>
+
+<portlet:resourceURL id="getSubscriptionsDetails" var="getSubscriptionsDetailsURL">
+	<portlet:param name="p_auth" value="<%= AuthTokenUtil.getToken(request) %>" />
+	<portlet:param name="lcsProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+</portlet:resourceURL>
+
+<portlet:resourceURL id="updateLCSClusterEntry" var="updateLCSClusterEntryURL">
+	<portlet:param name="p_auth" value="<%= AuthTokenUtil.getToken(request) %>" />
+	<portlet:param name="lcsProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+</portlet:resourceURL>
+
+<aui:script use="lcs-subscriptions">
+	var lcsSubscriptions = new Liferay.Portlet.LCSSubscriptions(
+		{
+			errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+			lcsConstants: {
+				JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
+				JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',
+				JSON_KEY_RESULT: '<%= LCSConstants.JSON_KEY_RESULT %>',
+				JSON_VALUE_SUCCESS: '<%= LCSConstants.JSON_VALUE_SUCCESS %>'
+			},
+			namespace: '<portlet:namespace />',
+			successMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-completed-successfully") %>'
+		}
+	);
+
+	lcsSubscriptions.initializeSubscriptionsDetailsPage(
+		{
+			getSubscriptionsDetailsURL: '<%= getSubscriptionsDetailsURL %>',
+			labels: {
+				all: '<%= UnicodeLanguageUtil.get(pageContext, "all") %>',
+				cancel: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>',
+				elastic: '<%= UnicodeLanguageUtil.get(pageContext, "elastic") %>',
+				elasticHelp: '<%= UnicodeLanguageUtil.get(pageContext, "elastic-help") %>',
+				environment: '<%= UnicodeLanguageUtil.get(pageContext, "environment") %>',
+				environmentSubscriptionType: '<%= UnicodeLanguageUtil.get(pageContext, "environment-subscription-type") %>',
+				expirationDate: '<%= UnicodeLanguageUtil.get(pageContext, "expiration-date") %>',
+				msgConfirmSubscriptionType: '<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-update-the-subscription-type") + UnicodeLanguageUtil.get(pageContext, StringPool.NEW_LINE + StringPool.NEW_LINE) + UnicodeLanguageUtil.get(pageContext, "this-action-cannot-be-undone") %>',
+				msgNoOrders: '<%= UnicodeLanguageUtil.get(pageContext, "you-have-no-active-orders-on-this-project") %>',
+				msgNoSearchResults: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-search-results") %>',
+				msgRefreshOrders: '<%= UnicodeLanguageUtil.get(pageContext, "sync-your-orders-from-liferay") %>',
+				noSubscriptions: '<%= UnicodeLanguageUtil.get(pageContext, "no-subscriptions") %>',
+				platform: '<%= UnicodeLanguageUtil.get(pageContext, "platform") %>',
+				processorCoresAllowed: '<%= UnicodeLanguageUtil.get(pageContext, "processor-cores-allowed") %>',
+				product: '<%= UnicodeLanguageUtil.get(pageContext, "product") %>',
+				save: '<%= UnicodeLanguageUtil.get(pageContext, "save") %>',
+				search: '<%= UnicodeLanguageUtil.get(pageContext, "search") %>',
+				server: '<%= UnicodeLanguageUtil.get(pageContext, "server") %>',
+				serversAllowed: '<%= UnicodeLanguageUtil.get(pageContext, "servers-allowed") %>',
+				serversAvailable: '<%= UnicodeLanguageUtil.get(pageContext, "servers-available") %>',
+				serversUsed: '<%= UnicodeLanguageUtil.get(pageContext, "servers-used") %>',
+				startDate: '<%= UnicodeLanguageUtil.get(pageContext, "start-date") %>',
+				subscriptions: '<%= UnicodeLanguageUtil.get(pageContext, "subscriptions") %>',
+				subscriptionType: '<%= UnicodeLanguageUtil.get(pageContext, "subscription-type") %>',
+				supportEndDate: '<%= UnicodeLanguageUtil.get(pageContext, "support-end-date") %>'
+			},
+			subscriptionTypeElastic: '<%= SubscriptionType.ELASTIC %>',
+			updateLCSClusterEntryURL: '<%= updateLCSClusterEntryURL %>'
+		}
+	);
+</aui:script>

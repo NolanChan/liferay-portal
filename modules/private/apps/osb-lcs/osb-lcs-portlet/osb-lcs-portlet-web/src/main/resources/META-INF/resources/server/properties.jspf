@@ -1,0 +1,118 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<c:choose>
+	<c:when test="<%= !lcsClusterNode.isPortalPropertiesLCSServiceEnabled() %>">
+		<div class="alert alert-info">
+
+			<%
+			Layout environmentLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
+			%>
+
+			<liferay-portlet:renderURL plid="<%= environmentLayout.getPlid() %>" portletName="<%= PortletKeys.ENVIRONMENT %>" var="registrationURL">
+				<portlet:param name="environmentPage" value="registration" />
+				<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
+				<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+			</liferay-portlet:renderURL>
+
+			<liferay-ui:message arguments="<%= registrationURL %>" key="this-service-is-disabled" />
+		</div>
+	</c:when>
+	<c:otherwise>
+
+		<%
+		JSONObject portalPropertiesDifferenceJSONObject = ServerUtil.getPortalPropertiesDifferenceJSONObject(lcsClusterNode.getKey());
+
+		JSONArray portalPropertiesDifferenceDataJSONArray = portalPropertiesDifferenceJSONObject.getJSONArray("data");
+		%>
+
+		<c:choose>
+			<c:when test="<%= portalPropertiesDifferenceDataJSONArray.length() == 0 %>">
+				<h2>
+					<liferay-ui:message key="properties-differences" />
+
+					<liferay-ui:icon-help message="properties-differences-help" />
+				</h2>
+
+				<div class="alert alert-info">
+					<liferay-ui:message key="there-is-no-difference-between-the-default-portal-properties-and-the-current-portal-properties" />
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="block updating" id="<portlet:namespace />updating"></div>
+
+				<div class="fade-out properties table-container" id="<portlet:namespace />propertiesTableContainer">
+					<div class="header">
+						<h2 class="title">
+							<liferay-ui:message key="properties-differences" />
+
+							<liferay-ui:icon-help message="properties-differences-help" />
+						</h2>
+
+						<span class="dropdown-menu-toggler options-toggler" id="<portlet:namespace />propertiesTableOptionsToggler">
+							<i class="icon-cog"></i>
+						</span>
+
+						<div class="options-menu" id="<portlet:namespace />propertiesTableOptionsMenu">
+							<ul class="dropdown-menu">
+								<li class="item">
+									<aui:input checked="<%= false %>" label="show-default-values"  name="showDefaults" type="checkbox" value="<%= true %>" />
+								</li>
+								<li class="item">
+									<aui:input checked="<%= true %>" label="show-custom-values" name="showValues" type="checkbox" value="<%= true %>" />
+								</li>
+								<li class="item">
+									<aui:input checked="<%= false %>" label="show-dynamic-properties" name="showDynamicProperties" type="checkbox" value="<%= false %>" />
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="content" id="<portlet:namespace />propertiesTableContent"></div>
+				</div>
+
+				<aui:script use="lcs-server">
+					var lcsServer = new Liferay.Portlet.LCSServer(
+							{
+								errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+								lcsConstants: {
+									JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
+									JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',
+									JSON_KEY_RESULT: '<%= LCSConstants.JSON_KEY_RESULT %>',
+									JSON_VALUE_SUCCESS: '<%= LCSConstants.JSON_VALUE_SUCCESS %>'
+								},
+								namespace: '<portlet:namespace />'
+							}
+						);
+
+					lcsServer.initializePropertiesPage(
+						{
+							data: <%= portalPropertiesDifferenceDataJSONArray %>,
+							labels: {
+								all: '<%= UnicodeLanguageUtil.get(pageContext, "all") %>',
+								customValue: '<%= UnicodeLanguageUtil.get(pageContext, "custom-value") %>',
+								defaultValue: '<%= UnicodeLanguageUtil.get(pageContext, "default-value") %>',
+								msgNoSearchResults: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-search-results") %>',
+								propertyName: '<%= UnicodeLanguageUtil.get(pageContext, "property-name") %>',
+								search: '<%= UnicodeLanguageUtil.get(pageContext, "search") %>'
+							}
+						}
+					);
+				</aui:script>
+			</c:otherwise>
+		</c:choose>
+	</c:otherwise>
+</c:choose>

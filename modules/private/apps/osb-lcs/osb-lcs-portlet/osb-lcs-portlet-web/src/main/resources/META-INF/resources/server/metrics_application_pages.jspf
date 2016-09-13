@@ -1,0 +1,93 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-ui:search-container
+	emptyResultsMessage="there-are-no-metrics"
+	iteratorURL="<%= portletURL %>"
+	orderByCol="<%= orderByCol %>"
+	orderByType="<%= orderByType %>"
+>
+	<liferay-ui:search-container-results>
+
+		<%
+		results = LCSClusterNodeLayoutMetricsServiceUtil.getLCSClusterNodeLayoutMetricsList(CompanyConstants.SYSTEM, searchContainer.getEnd(), lcsClusterNode.getKey(), orderByCol, orderByType, searchContainer.getStart());
+		total = LCSClusterNodeLayoutMetricsServiceUtil.getLCSClusterNodeLayoutMetricsCount(CompanyConstants.SYSTEM, lcsClusterNode.getKey());
+
+		pageContext.setAttribute("results", results);
+		pageContext.setAttribute("total", total);
+		%>
+
+	</liferay-ui:search-container-results>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.osb.lcs.nosql.model.LCSClusterNodeLayoutMetrics"
+		escapedModel="<%= true %>"
+		modelVar="lcsClusterNodeLayoutMetrics"
+	>
+		<liferay-ui:search-container-column-text name="page" orderable="<%= true %>">
+			<c:choose>
+				<c:when test="<%= lcsClusterNode.getBuildNumber() >= ServerUtil.RELEASE_6_2_0_BUILD_NUMBER %>">
+
+					<%
+					Map<String, Object> data = new HashMap<String, Object>();
+
+					data.put("key", lcsClusterNodeLayoutMetrics.getKey());
+					data.put("layoutname", lcsClusterNodeLayoutMetrics.getName());
+					%>
+
+					<aui:a cssClass="lcs-layout-link" data="<%= data %>" href="javascript:;" label="<%= HtmlUtil.escape(lcsClusterNodeLayoutMetrics.getName()) %>" />
+				</c:when>
+				<c:otherwise>
+					<%= HtmlUtil.escape(lcsClusterNodeLayoutMetrics.getName()) %>
+				</c:otherwise>
+			</c:choose>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text align="right" orderable="<%= true %>" property="frequency" />
+
+		<liferay-ui:search-container-column-text align="right" name="average-load-time-ms" orderable="<%= true %>" property="averageLoadTime" />
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator />
+</liferay-ui:search-container>
+
+<c:if test="<%= lcsClusterNode.getBuildNumber() >= ServerUtil.RELEASE_6_2_0_BUILD_NUMBER %>">
+	<liferay-portlet:renderURL var="layoutPortletsDialogURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+		<portlet:param name="mvcPath" value="/server/layout_portlets.jsp" />
+	</liferay-portlet:renderURL>
+
+	<aui:script use="lcs-server">
+		var lcsServer = new Liferay.Portlet.LCSServer(
+			{
+				errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+				lcsConstants: {
+					JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
+					JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',
+					JSON_KEY_RESULT: '<%= LCSConstants.JSON_KEY_RESULT %>',
+					JSON_VALUE_SUCCESS: '<%= LCSConstants.JSON_VALUE_SUCCESS %>'
+				},
+				namespace: '<portlet:namespace />'
+			}
+		);
+
+		lcsServer.initializeApplicationMetrics(
+			{
+				layoutPortletsDialogTitle: '<%= UnicodeLanguageUtil.get(pageContext, "applications-on-the-page") %>: ',
+				layoutPortletsDialogUrl: '<%= layoutPortletsDialogURL %>'
+			}
+		);
+	</aui:script>
+</c:if>

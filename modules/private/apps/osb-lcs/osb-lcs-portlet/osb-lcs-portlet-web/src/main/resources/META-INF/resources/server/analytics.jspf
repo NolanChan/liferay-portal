@@ -1,0 +1,225 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+Map<Integer, String> companyIdsWebIds = ServerUtil.getCompanyIdsWebIds(lcsClusterNode.getKey());
+%>
+
+<c:choose>
+	<c:when test="<%= !lcsClusterNode.isMetricsLCSServiceEnabled() %>">
+		<div class="alert alert-info">
+
+			<%
+			Layout environmentLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
+			%>
+
+			<liferay-portlet:renderURL plid="<%= environmentLayout.getPlid() %>" portletName="<%= PortletKeys.ENVIRONMENT %>" var="registrationURL">
+				<portlet:param name="environmentPage" value="registration" />
+				<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
+				<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+			</liferay-portlet:renderURL>
+
+			<liferay-ui:message arguments="<%= registrationURL %>" key="this-service-is-disabled" />
+		</div>
+	</c:when>
+	<c:when test="<%= (companyIdsWebIds == null) || companyIdsWebIds.isEmpty() %>">
+
+		<%
+		Layout downloadsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_DOWNLOADS);
+		%>
+
+		<liferay-portlet:renderURL plid="<%= downloadsLayout.getPlid() %>" portletName="<%= PortletKeys.DOWNLOADS %>" var="downloadsURL">
+			<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+		</liferay-portlet:renderURL>
+
+		<div class="alert alert-info">
+			<liferay-ui:message arguments="<%= downloadsURL %>" key="if-you-want-to-see-your-latest-page-metrics-you-need-to-install-the-latest-liferay-connected-services-client-and-reconnect-your-portal" />
+		</div>
+	</c:when>
+	<c:otherwise>
+		<aui:form method="post" name="fm">
+			<aui:input name="layoutName" type="hidden" value="<%= LCSConstants.ALL_PORTAL_OBJECTS_NAME %>" />
+
+			<div class="controls-container" id="<portlet:namespace />metricsControls">
+				<c:choose>
+					<c:when test="<%= companyIdsWebIds.size() == 1 %>">
+
+						<%
+						for (Map.Entry<Integer, String> entry : companyIdsWebIds.entrySet() ) {
+						%>
+
+							<aui:input name="companyId" type="hidden" value="<%= entry.getKey() %>" />
+
+						<%
+						}
+						%>
+
+					</c:when>
+					<c:when test="<%= companyIdsWebIds.size() > 1 %>">
+						<aui:select inlineField="<%= true %>" label="portal-instance" name="companyId">
+
+							<%
+							for (Map.Entry<Integer, String> entry : companyIdsWebIds.entrySet()) {
+							%>
+
+								<aui:option label="<%= entry.getValue() %>" value="<%= entry.getKey() %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</c:when>
+				</c:choose>
+
+				<aui:select inlineField="<%= true %>" label="site" name="groupId">
+					<aui:option label="all" value="<%= LCSConstants.ALL_PORTAL_OBJECTS_NAME %>" />
+				</aui:select>
+
+				<aui:select inlineField="<%= true %>" name="period">
+					<aui:option label="one-hour" value="60" />
+					<aui:option label="one-day" value="1440" />
+					<aui:option label="one-week" value="10080" />
+				</aui:select>
+
+				<%
+				Calendar calendar = Calendar.getInstance();
+
+				calendar.setTimeZone(user.getTimeZone());
+
+				calendar.add(Calendar.HOUR, 1);
+				%>
+
+				<aui:field-wrapper cssClass="date-time" inlineField="<%= true %>" label="ending-at">
+					<aui:a cssClass="icon-circle-arrow-right" href="javascript:;" id="nextPeriod" />
+
+					<aui:a cssClass="icon-circle-arrow-left" href="javascript:;" id="previousPeriod" />
+
+					<div class="inputs">
+						<liferay-ui:input-date dayParam="endDay" dayValue="<%= calendar.get(Calendar.DATE) %>" monthParam="endMonth" monthValue="<%= calendar.get(Calendar.MONTH) %>" name="endDate" yearParam="endYear" yearValue="<%= calendar.get(Calendar.YEAR) %>" />
+
+						<liferay-ui:input-time amPmParam="endAmPm" amPmValue="<%= calendar.get(Calendar.AM_PM) %>" cssClass='<%= DateUtil.isFormatAmPm(locale) ? "ampm" : StringPool.BLANK %>' hourParam="endHour" hourValue="<%= calendar.get(Calendar.HOUR) %>" minuteInterval="<%= 60 %>" minuteParam="endMinutes" name="endTime" />
+					</div>
+				</aui:field-wrapper>
+
+				<div class="updating" id="<portlet:namespace />updating"></div>
+			</div>
+		</aui:form>
+
+		<c:if test="<%= LCSClusterNodeStatus.isInactive(lcsClusterNode.getStatus()) %>">
+			<div class="alert alert-warning">
+				<liferay-ui:message key="the-server-is-offline" />
+
+				<liferay-ui:message key="liferay-connected-services-are-not-receiving-metrics-updates" />
+			</div>
+		</c:if>
+
+		<c:if test="<%= LCSClusterNodeStatus.isActive(lcsClusterNode.getStatus()) && !LCSClusterNodeStatus.isDataInitalized(lcsClusterNode.getStatus()) %>">
+			<div class="alert alert-warning">
+				<liferay-ui:message key="liferay-connected-services-are-about-to-begin-receiving-metrics-updates" />
+			</div>
+		</c:if>
+
+		<div id="<portlet:namespace />metricsMessageContainer"></div>
+
+		<div class="tabs-container" id="<portlet:namespace />metricsTabsContainer"></div>
+
+		<div class="footer-note">
+
+			<%
+			Layout accountLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_ACCOUNT);
+			%>
+
+			<liferay-portlet:renderURL plid="<%= accountLayout.getPlid() %>" portletName="<%= PortletKeys.ACCOUNT %>" var="preferencesURL">
+				<portlet:param name="accountPage" value="preferences" />
+				<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
+				<portlet:param name="layoutLCSClusterNodeId" value="<%= String.valueOf(layoutLCSClusterNodeId) %>" />
+				<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+			</liferay-portlet:renderURL>
+
+			<liferay-ui:message arguments="<%= new Object[] {ServerUtil.getTimeZoneLabel(locale, timeZone), preferencesURL} %>" key="the-time-zone-is-x" />
+		</div>
+
+		<div class="footer-note">
+
+			<%
+			Layout feedbackLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_FEEDBACK);
+			%>
+
+			<liferay-portlet:renderURL plid="<%= feedbackLayout.getPlid() %>" portletName="<%= PortletKeys.NAVIGATION %>" var="feedbackURL">
+				<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+			</liferay-portlet:renderURL>
+
+			<liferay-ui:message arguments="<%= feedbackURL %>" key="do-you-find-these-metrics-useful" />
+		</div>
+
+		<portlet:resourceURL id="getPagesMetrics" var="getPagesMetricsURL">
+			<portlet:param name="p_auth" value="<%= AuthTokenUtil.getToken(request) %>" />
+			<portlet:param name="key" value="<%= lcsClusterNode.getKey() %>" />
+		</portlet:resourceURL>
+
+		<aui:script use="lcs-server">
+			var lcsServer = new Liferay.Portlet.LCSServer(
+				{
+					errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+					lcsConstants: {
+						ALL_PORTAL_OBJECTS_NAME: '<%= LCSConstants.ALL_PORTAL_OBJECTS_NAME %>',
+						JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
+						JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',
+						JSON_KEY_RESULT: '<%= LCSConstants.JSON_KEY_RESULT %>',
+						JSON_VALUE_SUCCESS: '<%= LCSConstants.JSON_VALUE_SUCCESS %>'
+					},
+					namespace: '<portlet:namespace />'
+				}
+			);
+
+			lcsServer.initializeAnalyticsPage(
+				{
+					ampm: <%= DateUtil.isFormatAmPm(locale) %>,
+					companies: <%= ServerUtil.getCompanySitesJSONArray(companyIdsWebIds, lcsClusterNode) %>,
+					labels: {
+						all: '<%= UnicodeLanguageUtil.get(pageContext, "all") %>',
+						allPages: '<%= UnicodeLanguageUtil.get(pageContext, "all-pages") %>',
+						averageLoadTime: '<%= UnicodeLanguageUtil.get(pageContext, "average-load-time-ms") %>',
+						loadTimes: '<%= UnicodeLanguageUtil.get(pageContext, "load-times-ms") %>',
+						maxLoadTime: '<%= UnicodeLanguageUtil.get(pageContext, "max-load-time-ms") %>',
+						minLoadTime: '<%= UnicodeLanguageUtil.get(pageContext, "min-load-time-ms") %>',
+						minMaxLoadTimes: '<%= UnicodeLanguageUtil.get(pageContext, "min-max-load-times-ms") %>',
+						msgHighLoadTime: '<%= UnicodeLanguageUtil.format(pageContext, "high-page-load-time-may-cause-a-poor-user-experience", PortletPropsValues.LRDCOM_PERFORMANCE_TUNING_URL) %>',
+						msgNoMetrics: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-metrics-in-the-selected-period") %>',
+						msgNoSearchResults: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-search-results") %>',
+						name: '<%= UnicodeLanguageUtil.get(pageContext, "name") %>',
+						organizationSite: '<%= UnicodeLanguageUtil.get(pageContext, "organization-site") %>',
+						pageName: '<%= UnicodeLanguageUtil.get(pageContext, "page-name") %>',
+						pages: '<%= UnicodeLanguageUtil.get(pageContext, "pages") %>',
+						pageViews: '<%= UnicodeLanguageUtil.get(pageContext, "page-views") %>',
+						portlets: '<%= UnicodeLanguageUtil.get(pageContext, "portlets") %>',
+						search: '<%= UnicodeLanguageUtil.get(pageContext, "search") %>',
+						standardDeviation: '<%= UnicodeLanguageUtil.get(pageContext, "standard-deviation-ms") %>',
+						summary: '<%= UnicodeLanguageUtil.get(pageContext, "summary") %>'
+					},
+					thresholds: {
+						'highPageLoadTime': 3000,
+						'warningPageLoadTime': 2000
+					},
+					urls: {
+						getPagesMetrics: '<%= getPagesMetricsURL %>'
+					}
+				}
+			);
+		</aui:script>
+	</c:otherwise>
+</c:choose>

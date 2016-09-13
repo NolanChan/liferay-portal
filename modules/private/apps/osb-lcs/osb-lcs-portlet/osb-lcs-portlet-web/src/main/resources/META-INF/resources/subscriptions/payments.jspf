@@ -1,0 +1,34 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<div class="controls-container" id="<portlet:namespace />paymentsControls">
+
+	<%
+	Calendar calendar = Calendar.getInstance();
+
+	calendar.add(Calendar.MONTH, -5);
+	%>
+
+	<lcs:monthpicker inlineField="<%= true %>" label="start-month" name="paymentsStartPeriod" valueMonth="<%= calendar.get(Calendar.MONTH) %>" valueYear="<%= calendar.get(Calendar.YEAR) %>" />
+
+	<lcs:monthpicker inlineField="<%= true %>" label="end-month" name="paymentsEndPeriod" />
+
+	<div class="updating"></div>
+</div>
+
+<div id="<portlet:namespace />paymentsMessageContainer"></div>
+
+<div class="chart-container" id="<portlet:namespace />paymentsChartContainer"></div>

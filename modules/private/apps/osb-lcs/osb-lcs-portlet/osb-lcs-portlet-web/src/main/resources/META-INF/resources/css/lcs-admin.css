@@ -1,0 +1,143 @@
+@import "compass";
+@import "compass/css3/user-interface";
+@import "mixins";
+
+/* ---------- Common variables ---------- */
+
+$dark-gray: #555;
+$green: #97CE68;
+$white: #FFF;
+
+.aui {
+	.osb-lcs-portlet-admin {
+		.lfr-search-container {
+			overflow: visible;
+
+			.table {
+				overflow: visible;
+
+				.table-cell {
+					.navbar {
+						.navbar-inner, .nav, .properties-difference.dropdown {
+							margin: 0;
+							min-height: 20px;
+							padding: 0;
+						}
+
+						.dropdown-toggle {
+							min-height: 20px;
+							padding: 5px 0 0 5px;
+							width: 100%;
+						}
+					}
+				}
+			}
+		}
+
+		.navbar {
+			margin-bottom: 0;
+		}
+
+		.nav-tabs > .active a {
+			cursor: pointer;
+		}
+	}
+
+	.lcs-cluster-node-properties-dialog {
+		.table {
+			overflow: visible;
+		}
+
+		.table-table {
+			min-width: 100%;
+		}
+
+		.table-data td {
+			background-color: $white;
+
+			.osb-lcs-properties-default, .osb-lcs-properties-value {
+				font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, sans-serif;
+				padding: 5px;
+				word-break: break-all;
+			}
+
+			h3 {
+				color: $dark-gray;
+				font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+				font-size: 14px;
+				font-weight: normal;
+				line-height: 20px;
+				margin: 5px 0;
+			}
+		}
+
+		.osb-lcs-properties-default {
+			background-color: #F9F9F9;
+			color: $dark-gray;
+		}
+
+		.osb-lcs-properties-value {
+			background-color: $white;
+			color: $green;
+		}
+	}
+}
+
+.osb-lcs-portlet-admin {
+	.status {
+		.icon {
+			text-decoration: none;
+		}
+
+		.status-item {
+			background-color: #FFF;
+			border: 1px solid #DDD;
+			margin-bottom: 5px;
+			padding: 2px 5px;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+
+			&.expected {
+				color: $green;
+			}
+
+			&.unexpected {
+				color: #B50303;
+			}
+		}
+	}
+
+	.togglers-container .row-fluid {
+		margin-bottom: 10px;
+
+		&:hover {
+			background-color: #E6F5FC;
+		}
+
+		.btn {
+			min-width: 60px;
+			outline: 0;
+			text-transform: uppercase;
+		}
+
+		.feature-name {
+			line-height: 30px;
+		}
+	}
+}
+
+/* ---------- Extras ---------- */
+
+.aui .lcs-cluster-node-properties-dialog {
+	.table-data td {
+		.osb-lcs-properties-default, .osb-lcs-properties-value {
+			@include user-select (text);
+		}
+
+		h3 {
+			@include opacity(0.75);
+		}
+	}
+}

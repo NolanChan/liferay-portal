@@ -1,0 +1,211 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+boolean cluster = false;
+
+if (!downloadablePatchObjectArrays.isEmpty()) {
+	Object samplePatchObjectArray = downloadablePatchObjectArrays.get(0)[0];
+
+	if (samplePatchObjectArray instanceof LCSClusterNode) {
+		LCSClusterNode lcsClusterNode = (LCSClusterNode)samplePatchObjectArray;
+
+		LCSClusterEntry lcsClusterEntry = LCSClusterEntryServiceUtil.getLCSClusterEntry(lcsClusterNode.getLcsClusterEntryId());
+
+		if (lcsClusterEntry.isCluster()) {
+			cluster = true;
+		}
+	}
+}
+
+int downloadsCount = 0;
+
+for (Object[] downloadablePatchObjectArray : downloadablePatchObjectArrays) {
+	List<Long> lcsClusterNodeIds = (List<Long>)downloadablePatchObjectArray[6];
+	LCSClusterEntry lcsClusterEntry = (LCSClusterEntry)downloadablePatchObjectArray[8];
+
+	if (!cluster && !lcsClusterNodeIds.isEmpty() && LCSClusterEntryPermission.contains(permissionChecker, lcsClusterEntry, ActionKeys.MANAGE_ENTRY)) {
+		downloadsCount = downloadsCount + 1;
+	}
+}
+%>
+
+<c:choose>
+	<c:when test="<%= downloadablePatchObjectArrays.isEmpty() %>">
+		<div class="alert alert-info">
+			<liferay-ui:message key="there-are-no-fix-packs-available-for-download" />
+		</div>
+	</c:when>
+	<c:when test="<%= cluster %>">
+		<div class="alert alert-info">
+
+			<%
+			Layout lcsClusterEntryLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
+			%>
+
+			<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" var="lcsClusterEntryURL">
+				<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
+				<portlet:param name="layoutLCSClusterNodeId" value="0" />
+				<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+			</liferay-portlet:renderURL>
+
+			<liferay-ui:message arguments="<%= lcsClusterEntryURL %>" key="fix-packs-for-clustered-environments-can-be-downloaded-from-the-environment-page" />
+		</div>
+	</c:when>
+</c:choose>
+
+<liferay-portlet:renderURL varImpl="iteratorURL" />
+
+<liferay-ui:search-container
+	curParam="cur1"
+	delta="<%= 10 %>"
+	deltaParam="delta1"
+	iteratorURL="<%= iteratorURL %>"
+	orderByCol="<%= patchesOrderByCol %>"
+	orderByColParam="patchesOrderByCol"
+	orderByType="<%= patchesOrderByType %>"
+	orderByTypeParam="patchesOrderByType"
+>
+	<liferay-ui:search-container-results>
+
+		<%
+		results = ListUtil.subList(downloadablePatchObjectArrays, searchContainer.getStart(), searchContainer.getEnd());
+		total = downloadablePatchObjectArrays.size();
+
+		pageContext.setAttribute("results", results);
+		pageContext.setAttribute("total", total);
+		%>
+
+	</liferay-ui:search-container-results>
+
+	<liferay-ui:search-container-row
+		className="java.lang.Object[]"
+		modelVar="downloadablePatchObjectArray"
+	>
+
+		<%
+		Object lcsClusterObject = downloadablePatchObjectArray[0];
+		String patchName = (String)downloadablePatchObjectArray[1];
+		Integer patchStatus = (Integer)downloadablePatchObjectArray[2];
+		String columnName = (String)downloadablePatchObjectArray[3];
+		String columnValue = (String)downloadablePatchObjectArray[4];
+		String location = (String)downloadablePatchObjectArray[5];
+		List<Long> lcsClusterNodeIds = (List<Long>)downloadablePatchObjectArray[6];
+		List<String> lcsClusterNodeKeys = (List<String>)downloadablePatchObjectArray[7];
+		LCSClusterEntry lcsClusterEntry = (LCSClusterEntry)downloadablePatchObjectArray[8];
+		Long size = (Long)downloadablePatchObjectArray[9];
+
+		String patchId = PatchUtil.getPatchId(patchName);
+		%>
+
+		<liferay-ui:search-container-row-parameter name="className" value="<%= LCSConstants.toPatchStatusLabel(patchStatus) %>" />
+
+		<liferay-ui:search-container-column-text name="name" orderable="<%= true %>">
+			<aui:a cssClass="fix-packs-name" href="<%= NotificationsUtil.getPatchReleaseNotesURL(patchId) %>" label="<%= HtmlUtil.escape(PatchUtil.getPatchHumanName(patchName)) %>" title="opens-release-notes" />
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text cssClass='<%= "lcs-download-status-" + LCSConstants.toPatchStatusLabel(patchStatus) + " status" %>' name="status" orderable="<%= true %>">
+			<liferay-ui:message key="<%= LCSConstants.toPatchStatusLabel(patchStatus) %>" />
+		</liferay-ui:search-container-column-text>
+
+		<c:if test="<%= Validator.isNotNull(columnName) %>">
+			<liferay-ui:search-container-column-text cssClass="<%= columnName %>" name="<%= columnName %>" orderable="<%= true %>" value="<%= HtmlUtil.escape(columnValue) %>" />
+		</c:if>
+
+		<c:if test="<%= layoutLCSClusterNodeId == 0 %>">
+			<liferay-ui:search-container-column-text name="server" orderable="<%= true %>">
+				<c:choose>
+					<c:when test="<%= (lcsClusterObject instanceof LCSClusterEntry) %>">
+
+						<%
+						Map<String, Object> data = new HashMap<String, Object>();
+
+						data.put("clusterentryid", lcsClusterEntry.getLcsClusterEntryId());
+						data.put("clusterentryname", HtmlUtil.escape(lcsClusterEntry.getName()));
+						data.put("lcsprojectid", lcsClusterEntry.getLcsProjectId());
+						data.put("patchname", HtmlUtil.escape(patchName));
+						%>
+
+						<aui:a cssClass="lcs-show-servers" data="<%= data %>" href="javascript:;" label="show-servers" />
+					</c:when>
+					<c:otherwise>
+
+						<%
+						LCSClusterNode lcsClusterNode = (LCSClusterNode)lcsClusterObject;
+
+						long lcsClusterNodelayoutLCSProjectId = layoutLCSProjectId;
+
+						if (layoutLCSProjectId == 0) {
+							lcsClusterNodelayoutLCSProjectId = lcsClusterEntry.getLcsProjectId();
+						}
+
+						Layout lcsClusterNodeLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_NODE);
+						%>
+
+						<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" portletName="<%= PortletKeys.NAVIGATION %>" var="lcsClusterNodeURL">
+							<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(lcsClusterNode.getLcsClusterEntryId()) %>" />
+							<portlet:param name="layoutLCSClusterNodeId" value="<%= String.valueOf(lcsClusterNode.getLcsClusterNodeId()) %>" />
+							<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(lcsClusterNodelayoutLCSProjectId) %>" />
+						</liferay-portlet:renderURL>
+
+						<aui:a href="<%= lcsClusterNodeURL %>" label="<%= HtmlUtil.escape(lcsClusterNode.getName()) %>" />
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text cssClass="location" name="location" orderable="<%= true %>" value="<%= HtmlUtil.escape(location) %>" />
+		</c:if>
+
+		<c:if test="<%= downloadsCount > 0 %>">
+			<liferay-ui:search-container-column-text cssClass="numeric" name="size-mb">
+				<c:choose>
+					<c:when test="<%= ((size == null) || (size == 0)) %>">
+						<liferay-ui:message key="unknown" />
+					</c:when>
+					<c:otherwise>
+						<%= decimalFormat.format((double)size / 1048576) %>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text cssClass="action" name="download">
+				<c:if test="<%= !cluster && !lcsClusterNodeIds.isEmpty() && LCSClusterEntryPermission.contains(permissionChecker, lcsClusterEntry, ActionKeys.MANAGE_ENTRY) %>">
+
+					<%
+					Map<String, Object> data = new HashMap<String, Object>();
+
+					data.put("lcsclusternodeids", HtmlUtil.escape(StringUtil.merge(lcsClusterNodeIds)));
+					data.put("lcsclusternodekeys", HtmlUtil.escape(StringUtil.merge(lcsClusterNodeKeys)));
+					data.put("patchid", HtmlUtil.escape(patchId));
+					data.put("patchname", HtmlUtil.escape(patchName));
+					%>
+
+					<aui:a cssClass="download-fix-pack icon-download" data="<%= data %>" href="javascript:;" title="download-fix-pack-to-server" />
+				</c:if>
+			</liferay-ui:search-container-column-text>
+		</c:if>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator />
+</liferay-ui:search-container>
+
+<aui:script use="aui-tooltip">
+	new A.TooltipDelegate(
+		{
+			trigger: '.osb-lcs-portlet-notifications .download-fix-pack'
+		}
+	);
+</aui:script>

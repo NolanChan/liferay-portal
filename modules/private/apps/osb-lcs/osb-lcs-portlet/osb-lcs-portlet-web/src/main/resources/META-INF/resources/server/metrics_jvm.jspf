@@ -1,0 +1,105 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<h2>
+	<liferay-ui:message key="garbage-collector-metrics" />
+</h2>
+
+<div class="lcs-garbage-collector-metrics-container">
+	<liferay-portlet:renderURL varImpl="iteratorURL" />
+
+	<liferay-ui:search-container
+		emptyResultsMessage="there-are-no-metrics"
+		iteratorURL="<%= iteratorURL %>"
+	>
+		<liferay-ui:search-container-results>
+
+			<%
+			List<Object[]> lcsGarbageCollectorMetricsList = ServerUtil.getGarbageCollectorMetricsList(layoutLCSClusterNodeId);
+
+			results = lcsGarbageCollectorMetricsList;
+			total = lcsGarbageCollectorMetricsList.size();
+
+			pageContext.setAttribute("results", results);
+			pageContext.setAttribute("total", total);
+			%>
+
+		</liferay-ui:search-container-results>
+
+		<liferay-ui:search-container-row
+			className="java.lang.Object[]"
+			modelVar="lcsGarbageCollectorMetric"
+		>
+
+			<%
+			String name = (String)lcsGarbageCollectorMetric[0];
+			Long runs = (Long)lcsGarbageCollectorMetric[1];
+			Long totalTime = (Long)lcsGarbageCollectorMetric[2];
+			Long averageTime = (Long)lcsGarbageCollectorMetric[3];
+			%>
+
+			<liferay-ui:search-container-column-text name="name" value="<%= HtmlUtil.escape(name) %>" />
+
+			<liferay-ui:search-container-column-text align="right" name="runs" value="<%= String.valueOf(runs) %>" />
+
+			<liferay-ui:search-container-column-text align="right" name="total-time-ms" value="<%= String.valueOf(totalTime) %>" />
+
+			<liferay-ui:search-container-column-text align="right" name="average-time-ms" value="<%= String.valueOf(averageTime) %>" />
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator paginate="<%= false %>" />
+	</liferay-ui:search-container>
+</div>
+
+<h2>
+	<liferay-ui:message key="memory-metrics" />
+</h2>
+
+<div class="lcs-memory-charts-container">
+	<div class="lcs-memory-chart" id="<portlet:namespace/>memoryPoolChartContainer"></div>
+	<div class="lcs-chart-overlay-container"></div>
+</div>
+
+<liferay-portlet:resourceURL id="getLCSClusterNodeJVMMetrics" var="getLCSClusterNodeJVMMetricsURL">
+	<portlet:param name="p_auth" value="<%= AuthTokenUtil.getToken(request) %>" />
+	<portlet:param name="key" value="<%= lcsClusterNode.getKey() %>" />
+</liferay-portlet:resourceURL>
+
+<aui:script use="lcs-server">
+	var lcsServer = new Liferay.Portlet.LCSServer(
+		{
+			errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+			lcsConstants: {
+				JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
+				JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',
+				JSON_KEY_RESULT: '<%= LCSConstants.JSON_KEY_RESULT %>',
+				JSON_VALUE_SUCCESS: '<%= LCSConstants.JSON_VALUE_SUCCESS %>'
+			},
+			namespace: '<portlet:namespace />'
+		}
+	);
+
+	lcsServer.initializeJVMMetrics(
+		{
+			dataUrl: '<%= getLCSClusterNodeJVMMetricsURL %>',
+			labels: {
+				metric: '<%= UnicodeLanguageUtil.get(pageContext, "metric") %>',
+				value: '<%= UnicodeLanguageUtil.get(pageContext, "value") %>'
+			},
+			msgNoData: '<%= UnicodeLanguageUtil.get(pageContext, "there-is-no-metrics-data") %>'
+		}
+	);
+</aui:script>

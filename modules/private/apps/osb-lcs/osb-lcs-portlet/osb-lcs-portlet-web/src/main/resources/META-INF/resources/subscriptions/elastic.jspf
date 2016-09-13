@@ -1,0 +1,120 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<div id="<portlet:namespace />messageContainer"></div>
+
+<c:choose>
+	<c:when test="<%= AdminUtil.isBillingEnabled() %>">
+		<div class="lcs-tabs-default">
+			<liferay-ui:tabs
+				names="uptimes,payment-history,bills"
+				refresh="<%= false %>"
+			>
+				<liferay-ui:section>
+					<%@ include file="/subscriptions/uptimes.jspf" %>
+				</liferay-ui:section>
+
+				<liferay-ui:section>
+					<%@ include file="/subscriptions/payments.jspf" %>
+				</liferay-ui:section>
+
+				<liferay-ui:section>
+					<%@ include file="/subscriptions/bills.jspf" %>
+				</liferay-ui:section>
+			</liferay-ui:tabs>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<%@ include file="/subscriptions/uptimes.jspf" %>
+	</c:otherwise>
+</c:choose>
+
+<portlet:resourceURL id="downloadLCSClusterNodeUptimesDelimitedReport" var="downloadLCSClusterNodeUptimesDelimitedReportURL">
+	<portlet:param name="p_auth" value="<%= AuthTokenUtil.getToken(request) %>" />
+	<portlet:param name="lcsProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+</portlet:resourceURL>
+
+<portlet:resourceURL id="downloadLCSClusterNodeUptimesInvoicePDFReport" var="downloadLCSClusterNodeUptimesInvoicePDFReportURL">
+	<portlet:param name="p_auth" value="<%= AuthTokenUtil.getToken(request) %>" />
+	<portlet:param name="lcsProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+</portlet:resourceURL>
+
+<portlet:resourceURL id="getBills" var="getBillsURL">
+	<portlet:param name="p_auth" value="<%= AuthTokenUtil.getToken(request) %>" />
+	<portlet:param name="lcsProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+</portlet:resourceURL>
+
+<portlet:resourceURL id="getElasticSubscriptionsDefaults" var="getElasticSubscriptionsDefaultsURL">
+	<portlet:param name="p_auth" value="<%= AuthTokenUtil.getToken(request) %>" />
+	<portlet:param name="lcsProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+</portlet:resourceURL>
+
+<portlet:resourceURL id="getLCSClusterNodeUptimes" var="getLCSClusterNodeUptimesURL">
+	<portlet:param name="p_auth" value="<%= AuthTokenUtil.getToken(request) %>" />
+	<portlet:param name="lcsProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+</portlet:resourceURL>
+
+<portlet:resourceURL id="getPayments" var="getPaymentsURL">
+	<portlet:param name="p_auth" value="<%= AuthTokenUtil.getToken(request) %>" />
+	<portlet:param name="lcsProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+</portlet:resourceURL>
+
+<aui:script use="lcs-subscriptions">
+	var lcsSubscriptions = new Liferay.Portlet.LCSSubscriptions(
+		{
+			errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+			lcsConstants: {
+				JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
+				JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',
+				JSON_KEY_RESULT: '<%= LCSConstants.JSON_KEY_RESULT %>',
+				JSON_VALUE_SUCCESS: '<%= LCSConstants.JSON_VALUE_SUCCESS %>'
+			},
+			namespace: '<portlet:namespace />'
+		}
+	);
+
+	lcsSubscriptions.initializeElasticSubscriptionsPage(
+		{
+			billingEnabled: <%= AdminUtil.isBillingEnabled() %>,
+			downloadLCSClusterNodeUptimesDelimitedReportURL: '<%= downloadLCSClusterNodeUptimesDelimitedReportURL %>',
+			downloadLCSClusterNodeUptimesInvoicePDFReportURL: '<%= downloadLCSClusterNodeUptimesInvoicePDFReportURL %>',
+			getBillsURL: '<%= getBillsURL %>',
+			getElasticSubscriptionsDefaultsURL: '<%= getElasticSubscriptionsDefaultsURL %>',
+			getLCSClusterNodeUptimesURL: '<%= getLCSClusterNodeUptimesURL %>',
+			getPaymentsURL: '<%= getPaymentsURL %>',
+			labels: {
+				all: '<%= UnicodeLanguageUtil.get(pageContext, "all") %>',
+				cost: '<%= UnicodeLanguageUtil.get(pageContext, "cost") %>',
+				daysAbbreviation: '<%= UnicodeLanguageUtil.get(pageContext, "days-abbreviation") %>',
+				duration: '<%= UnicodeLanguageUtil.get(pageContext, "duration") %>',
+				endTime: '<%= UnicodeLanguageUtil.format(pageContext, "end-time-x", "GMT") %>',
+				environment: '<%= UnicodeLanguageUtil.get(pageContext, "environment") %>',
+				hoursAbbreviation: '<%= UnicodeLanguageUtil.get(pageContext, "hours-abbreviation") %>',
+				minutesAbbreviation: '<%= UnicodeLanguageUtil.get(pageContext, "minutes-abbreviation") %>',
+				msgNoBills: '<%= UnicodeLanguageUtil.get(pageContext, "there-were-no-bills-in-the-selected-month") %>',
+				msgNoPaymentHistory: '<%= UnicodeLanguageUtil.get(pageContext, "there-were-no-payments-in-the-selected-date-range") %>',
+				msgNoUptimes: '<%= UnicodeLanguageUtil.get(pageContext, "there-were-no-online-servers-in-the-selected-month") %>',
+				onlineServers: '<%= UnicodeLanguageUtil.get(pageContext, "online-servers") %>',
+				paymentHistory: '<%= UnicodeLanguageUtil.get(pageContext, "payment-history") %>',
+				rate: '<%= UnicodeLanguageUtil.get(pageContext, "rate") %>',
+				server: '<%= UnicodeLanguageUtil.get(pageContext, "server") %>',
+				startTime: '<%= UnicodeLanguageUtil.format(pageContext, "start-time-x", "GMT") %>',
+				totalDuration: '<%= UnicodeLanguageUtil.get(pageContext, "total-duration") %>',
+				uptime: '<%= UnicodeLanguageUtil.get(pageContext, "uptime") %>'
+			}
+		}
+	);
+</aui:script>

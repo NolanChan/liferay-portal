@@ -1,0 +1,89 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<aui:form method="post" name="fm">
+	<div class="controls-container" id="<portlet:namespace />lcsMessagesControls">
+
+		<%
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTimeZone(user.getTimeZone());
+
+		calendar.add(Calendar.MONTH, -1);
+		%>
+
+		<aui:field-wrapper inlineField="<%= true %>" label="start-date">
+			<liferay-ui:input-date dayParam="startDay" dayValue="<%= calendar.get(Calendar.DATE) %>" monthParam="startMonth" monthValue="<%= calendar.get(Calendar.MONTH) %>" name="startDate" yearParam="startYear" yearValue="<%= calendar.get(Calendar.YEAR) %>" />
+		</aui:field-wrapper>
+
+		<%
+		calendar.setTime(new Date());
+		%>
+
+		<aui:field-wrapper inlineField="<%= true %>" label="end-date">
+			<liferay-ui:input-date dayParam="endDay" dayValue="<%= calendar.get(Calendar.DATE) %>" monthParam="endMonth" monthValue="<%= calendar.get(Calendar.MONTH) %>" name="endDate" yearParam="endYear" yearValue="<%= calendar.get(Calendar.YEAR) %>" />
+		</aui:field-wrapper>
+
+		<div class="updating" id="<portlet:namespace />updating"></div>
+	</div>
+</aui:form>
+
+<div id="<portlet:namespace />messageContainer"></div>
+
+<div class="fade-out fluid table-container" id="<portlet:namespace />lcsMessagesTableContainer">
+	<div class="header">
+		<h2>
+			<liferay-ui:message key="notifications" />
+		</h2>
+	</div>
+
+	<div class="content"></div>
+</div>
+
+<portlet:resourceURL id="getUserLCSMessages" var="getUserLCSMessagesURL">
+	<portlet:param name="p_auth" value="<%= AuthTokenUtil.getToken(request) %>" />
+</portlet:resourceURL>
+
+<aui:script use="lcs-account">
+	var lcsAccount = new Liferay.Portlet.LCSAccount(
+		{
+			lcsConstants: {
+				JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
+				JSON_KEY_RESULT: '<%= LCSConstants.JSON_KEY_RESULT %>',
+				JSON_VALUE_SUCCESS: '<%= LCSConstants.JSON_VALUE_SUCCESS %>'
+			},
+			namespace: '<portlet:namespace />'
+		}
+	);
+
+	lcsAccount.initializeMessagesPage(
+		{
+			labels: {
+				all: '<%= UnicodeLanguageUtil.get(pageContext, "all") %>',
+				content: '<%= UnicodeLanguageUtil.get(pageContext, "content") %>',
+				from: '<%= UnicodeLanguageUtil.get(pageContext, "from") %>',
+				msgError: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+				msgNoData: '<%= UnicodeLanguageUtil.get(pageContext, "there-were-no-notifications-in-the-selected-period") %>',
+				msgNoSearchResults: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-search-results") %>',
+				search: '<%= UnicodeLanguageUtil.get(pageContext, "search") %>',
+				time: '<%= UnicodeLanguageUtil.get(pageContext, "time") %>'
+			},
+			urls: {
+				getUserLCSMessages: '<%= getUserLCSMessagesURL %>'
+			}
+		}
+	);
+</aui:script>

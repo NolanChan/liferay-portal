@@ -1,0 +1,100 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<c:choose>
+	<c:when test="<%= !LCSClusterNodeStatus.isDataInitalized(lcsClusterNode.getStatus()) %>">
+		<div class="alert alert-warning">
+			<liferay-ui:message key="the-server-data-is-not-initialized" />
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="lcs-tabs-default">
+			<liferay-ui:tabs
+				names="software,java,hardware"
+				refresh="<%= false %>"
+			>
+				<liferay-ui:section>
+					<div class="block updating" id="<portlet:namespace />updating"></div>
+
+					<div class="fade-out fluid key-value table-container" id="<portlet:namespace />liferayMetadataTableContainer">
+						<h2>
+							<liferay-ui:message key="liferay" />
+						</h2>
+
+						<div class="content" id="<portlet:namespace />liferayMetadataTableContent"></div>
+					</div>
+
+					<div class="fade-out fluid key-value table-container" id="<portlet:namespace />softwareMetadataTableContainer">
+						<h2>
+							<liferay-ui:message key="system" />
+						</h2>
+
+						<div class="content" id="<portlet:namespace />softwareMetadataTableContent"></div>
+					</div>
+				</liferay-ui:section>
+
+				<liferay-ui:section>
+					<div class="fluid key-value table-container">
+						<h2>
+							<liferay-ui:message key="about-java" />
+						</h2>
+
+						<div class="content" id="<portlet:namespace />javaMetadataTableContent"></div>
+					</div>
+
+					<div class="fade-out fluid key-value table-container" id="<portlet:namespace />javaOptionsTableContainer">
+						<div class="header">
+							<h2 class="title">
+								<liferay-ui:message key="java-options" />
+							</h2>
+						</div>
+
+						<div class="content" id="<portlet:namespace />javaOptionsTableContent"></div>
+					</div>
+				</liferay-ui:section>
+
+				<liferay-ui:section>
+					<div class="key-value table-container">
+						<h2>
+							<liferay-ui:message key="system" />
+						</h2>
+
+						<div class="content" id="<portlet:namespace />hardwareMetadataTableContent"></div>
+					</div>
+				</liferay-ui:section>
+			</liferay-ui:tabs>
+		</div>
+
+		<aui:script use="lcs-server">
+			var lcsServer = new Liferay.Portlet.LCSServer(
+				{
+					namespace: '<portlet:namespace />'
+				}
+			);
+
+			lcsServer.initializeDetailsPage(
+				{
+					data: <%= ServerUtil.getLCSClusterNodeMetadataJSONObject(layoutLCSClusterNodeId, pageContext) %>,
+					labels: {
+						all: '<%= UnicodeLanguageUtil.get(pageContext, "all") %>',
+						msgNoSearchResults: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-search-results") %>',
+						search: '<%= UnicodeLanguageUtil.get(pageContext, "search") %>'
+					}
+				}
+			);
+		</aui:script>
+	</c:otherwise>
+</c:choose>
