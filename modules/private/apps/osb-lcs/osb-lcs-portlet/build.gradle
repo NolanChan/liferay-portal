@@ -1,38 +1,17 @@
 buildscript {
-	repositories {
-		maven {
-			url "https://repository.liferay.com/nexus/content/groups/public/"
-		}
-		maven {
-			url "https://repository.liferay.com/nexus/content/groups/liferay-ce/"
-		}
-	}
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "latest.release"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "latest.release"
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
 	}
 }
 
-subprojects {
-	buildscript {
-			repositories {
-				maven {
-					url "https://repository.liferay.com/nexus/content/groups/public/"
-				}
-				maven {
-					url "https://repository.liferay.com/nexus/content/groups/liferay-ce/"
-				}
-			}
-	}
-
-	apply plugin: "com.liferay.plugin"
-	sourceCompatibility = 1.7
-
-	repositories {		
-		maven {
-			url "https://repository.liferay.com/nexus/content/groups/public/"
-		}
-		maven {
-			url "https://repository.liferay.com/nexus/content/groups/liferay-ce/"
-		}
-	}
+configure(subprojects.findAll {!it.childProjects}) {
+	apply plugin: "com.liferay.defaults.plugin"
 }

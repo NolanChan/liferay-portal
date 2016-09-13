@@ -1,23 +1,14 @@
-buildscript {
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "latest.release"
-	}
-}
-
-apply plugin: "com.liferay.portal.tools.service.builder"
-
-dependencies {
-	compile 'biz.aQute.bnd:biz.aQute.bndlib:3.1.0'
-	compile 'com.liferay:com.liferay.portal.spring.extender:2.0.0'
-	compile 'com.liferay:com.liferay.osgi.util:3.0.0'
-	compile  project(':osb-lcs-portlet-api')
-	testCompile 'com.liferay:com.liferay.arquillian.extension.junit.bridge:1.0.0-SNAPSHOT'
-	testCompile 'junit:junit:4.+'
-}
 
 buildService {
 	apiDir = "../osb-lcs-portlet-api/src/main/java"
-	osgiModule = true
-	propsUtil = "com.liferay.osb.lcs.service.util.PropsUtil"
-	testDir = "src/main/test"
+	testDir = "../osb-lcs-portlet-test/src/testIntegration/java"
+}
+
+dependencies {
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	provided project(":private:apps:osb-lcs:osb-lcs-portlet:osb-lcs-portlet-api")
 }
