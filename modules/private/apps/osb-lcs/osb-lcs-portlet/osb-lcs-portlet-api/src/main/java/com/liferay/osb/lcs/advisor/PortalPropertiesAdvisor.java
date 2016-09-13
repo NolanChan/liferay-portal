@@ -14,32 +14,27 @@
 
 package com.liferay.osb.lcs.advisor;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.kernel.json.JSONArray;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Igor Beslic
  */
-public class CompanyAdvisor {
+@Component(immediate = true)
+public interface PortalPropertiesAdvisor {
 
-	public long getCompanyId() throws PortalException, SystemException {
-		if (_companyId != 0) {
-			return _companyId;
-		}
+	public String fetchLCSClusterNodePropertiesHashCode(String key);
 
-		Company company = _companyLocalService.getCompanyByWebId("liferay.com");
+	public JSONArray getPortalPropertiesDifference(String key)
+		throws PortalException;
 
-		_companyId = company.getCompanyId();
+	public void processLCSClusterEntryPropertyDifferences(
+		String key, long lcsClusterEntryId);
 
-		return _companyId;
-	}
-
-	@BeanReference(type = CompanyLocalService.class)
-	protected CompanyLocalService _companyLocalService;
-
-	private static long _companyId;
+	public void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(
+			String key)
+		throws PortalException;
 
 }

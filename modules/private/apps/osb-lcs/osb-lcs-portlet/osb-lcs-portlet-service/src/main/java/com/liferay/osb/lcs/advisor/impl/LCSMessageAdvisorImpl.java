@@ -12,28 +12,28 @@
  * details.
  */
 
-package com.liferay.osb.lcs.advisor;
+package com.liferay.osb.lcs.advisor.impl;
 
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.advisor.LCSMessageAdvisor;
+import com.liferay.osb.lcs.constants.LCSMessageConstants;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSMessage;
-import com.liferay.osb.lcs.model.LCSMessageConstants;
 import com.liferay.osb.lcs.service.LCSMessageLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.Date;
 
 /**
  * @author Matija Petanjek
  */
-public class LCSMessageAdvisor {
+public class LCSMessageAdvisorImpl implements LCSMessageAdvisor {
 
 	public void addClusterLCSMessage(
 			boolean cluster, LCSClusterNode lcsClusterNode,
 			LCSEventType lcsEventType)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (cluster) {
 			addLCSClusterEntryLCSMessage(
@@ -48,33 +48,31 @@ public class LCSMessageAdvisor {
 	public LCSMessage addLCSClusterEntryLCSMessage(
 			boolean generateUserLCSMessages, long lcsClusterEntryId,
 			LCSEventType lcsEventType)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		return
-			LCSMessageLocalServiceUtil.addLCSClusterEntryLCSMessage(
-				lcsClusterEntryId, LCSMessageConstants.LCS_SOURCE_MESSAGE_ID,
-				LCSConstants.SOURCE_SYSTEM_NAME_LCS, null,
-				new Date(LCSMessageConstants.END_DATE_INDEFINITE), false,
-				lcsEventType.getSeverityLevel(), lcsEventType.getType(),
-				generateUserLCSMessages);
+		return LCSMessageLocalServiceUtil.addLCSClusterEntryLCSMessage(
+			lcsClusterEntryId, LCSMessageConstants.LCS_SOURCE_MESSAGE_ID,
+			LCSConstants.SOURCE_SYSTEM_NAME_LCS, null,
+			new Date(LCSMessageConstants.END_DATE_INDEFINITE), false,
+			lcsEventType.getSeverityLevel(), lcsEventType.getType(),
+			generateUserLCSMessages);
 	}
 
 	public LCSMessage addLCSClusterNodeLCSMessage(
 			long lcsClusterNodeId, LCSEventType lcsEventType)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		return
-			LCSMessageLocalServiceUtil.addLCSClusterNodeLCSMessage(
-				lcsClusterNodeId, LCSMessageConstants.LCS_SOURCE_MESSAGE_ID,
-				LCSConstants.SOURCE_SYSTEM_NAME_LCS, null,
-				new Date(LCSMessageConstants.END_DATE_INDEFINITE), false,
-				lcsEventType.getSeverityLevel(), lcsEventType.getType());
+		return LCSMessageLocalServiceUtil.addLCSClusterNodeLCSMessage(
+			lcsClusterNodeId, LCSMessageConstants.LCS_SOURCE_MESSAGE_ID,
+			LCSConstants.SOURCE_SYSTEM_NAME_LCS, null,
+			new Date(LCSMessageConstants.END_DATE_INDEFINITE), false,
+			lcsEventType.getSeverityLevel(), lcsEventType.getType());
 	}
 
 	public void addLCSMessage(
 			boolean cluster, LCSClusterNode lcsClusterNode,
 			LCSEventType lcsEventType)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (lcsEventType == LCSEventType.MONITORING_UNAVAILABLE) {
 			addLCSClusterNodeLCSMessage(
@@ -106,7 +104,7 @@ public class LCSMessageAdvisor {
 	public LCSMessage addLCSProjectLCSMessage(
 			boolean adminsOnly, String content, boolean generateUserLCSMessages,
 			LCSEventType lcsEventType, long lcsProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return LCSMessageLocalServiceUtil.addLCSProjectLCSMessage(
 			lcsProjectId, LCSMessageConstants.LCS_SOURCE_MESSAGE_ID,

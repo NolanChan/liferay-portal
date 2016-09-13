@@ -12,37 +12,38 @@
  * details.
  */
 
-package com.liferay.osb.lcs.advisor;
+package com.liferay.osb.lcs.advisor.impl;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.osb.lcs.advisor.StringAdvisor;
+import com.liferay.osb.lcs.advisor.UserAdvisor;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.RoleLocalService;
-import com.liferay.portal.service.UserLocalService;
-import com.liferay.portlet.expando.model.ExpandoBridge;
-import com.liferay.portlet.expando.model.ExpandoColumnConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
  */
-public class UserAdvisor {
+public class UserAdvisorImpl implements UserAdvisor {
 
-	public User addLDAPUser(String uuid)
-		throws PortalException, SystemException {
-
+	public User addLDAPUser(String uuid) throws PortalException {
 		User user = _userLocalService.fetchUserByUuidAndCompanyId(
 			uuid, _companyAdvisor.getCompanyId());
 
 		if (user != null) {
 			throw new UnsupportedOperationException(
-				StringAdvisor.concat("User with UUID", uuid, "already exists"));
+				_stringAdvisor.concat(
+					"User with UUID", uuid, "already exists"));
 		}
 
 		User creatorUser = getAdminUser(_companyAdvisor.getCompanyId());
@@ -52,8 +53,8 @@ public class UserAdvisor {
 		user = _userLocalService.addUser(
 			creatorUser.getUserId(), _companyAdvisor.getCompanyId(), true, null,
 			null, true, null, emailAddress, 0, null, null, uuid, null, uuid, 0,
-			0, true, 9, 9, 2003, null, new long[] {}, new long[] {},
-			new long[] {}, new long[] {}, false, null);
+			0, true, 9, 9, 2003, null, new long[0], new long[0], new long[0],
+			new long[0], false, null);
 
 		user.setUuid(uuid);
 		user.setUserUuid(uuid);
@@ -67,9 +68,7 @@ public class UserAdvisor {
 		return user;
 	}
 
-	public User getAdminUser(long companyId)
-		throws PortalException, SystemException {
-
+	public User getAdminUser(long companyId) throws PortalException {
 		Role role = _roleLocalService.getRole(
 			companyId, RoleConstants.ADMINISTRATOR);
 
@@ -79,7 +78,7 @@ public class UserAdvisor {
 	}
 
 	public boolean hasUserDefaultLCSProject(long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
 
@@ -92,8 +91,28 @@ public class UserAdvisor {
 		return false;
 	}
 
+	@Reference(bind = "-")
+	public void setCompanyAdvisor(CompanyAdvisorImpl companyAdvisor) {
+		_companyAdvisor = companyAdvisor;
+	}
+
+	@Reference(bind = "-")
+	public void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(bind = "-")
+	public void setStringAdvisor(StringAdvisor stringAdvisor) {
+		_stringAdvisor = stringAdvisor;
+	}
+
+	@Reference(bind = "-")
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	public void updateDefaultLCSProject(long userId, long lcsProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
 
@@ -110,15 +129,13 @@ public class UserAdvisor {
 		}
 	}
 
-	@BeanReference(type = CompanyAdvisor.class)
-	protected CompanyAdvisor _companyAdvisor;
-
-	@BeanReference(type = RoleLocalService.class)
+	protected CompanyAdvisorImpl _companyAdvisor;
 	protected RoleLocalService _roleLocalService;
-
-	@BeanReference(type = UserLocalService.class)
 	protected UserLocalService _userLocalService;
 
-	private static Log _log = LogFactoryUtil.getLog(UserAdvisor.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserAdvisorImpl.class);
+
+	private StringAdvisor _stringAdvisor;
 
 }

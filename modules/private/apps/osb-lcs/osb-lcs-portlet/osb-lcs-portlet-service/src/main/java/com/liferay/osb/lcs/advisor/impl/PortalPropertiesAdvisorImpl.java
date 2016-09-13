@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.osb.lcs.advisor;
+package com.liferay.osb.lcs.advisor.impl;
 
-import com.liferay.osb.lcs.NoSuchLCSMetadataException;
+import com.liferay.osb.lcs.advisor.PortalPropertiesAdvisor;
+import com.liferay.osb.lcs.exception.NoSuchLCSMetadataException;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSMetadata;
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeProperties;
@@ -29,7 +30,6 @@ import com.liferay.osb.lcs.util.LCSClusterNodeUtil;
 import com.liferay.osb.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -48,7 +48,7 @@ import java.util.Set;
 /**
  * @author Igor Beslic
  */
-public class PortalPropertiesAdvisor {
+public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 
 	public String fetchLCSClusterNodePropertiesHashCode(String key) {
 		LCSClusterNodeProperties lcsClusterNodeProperties =
@@ -76,7 +76,7 @@ public class PortalPropertiesAdvisor {
 	}
 
 	public JSONArray getPortalPropertiesDifference(String key)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LCSClusterNode lcsClusterNode =
 			_lcsClusterNodeService.fetchLCSClusterNode(key);
@@ -168,7 +168,7 @@ public class PortalPropertiesAdvisor {
 
 	public void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(
 			String key)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LCSClusterNode lcsClusterNode =
 			_lcsClusterNodeService.getLCSClusterNode(key);
@@ -180,8 +180,7 @@ public class PortalPropertiesAdvisor {
 			return;
 		}
 
-		Map<String, Map<String, String>>
-			lcsClusterEntryPropertyDifferencesMap =
+		Map<String, Map<String, String>> lcsClusterEntryPropertyDifferencesMap =
 				_lcsClusterEntryPropertyDifferencesService.
 					getLCSClusterEntryPropertyDifferencesMap(
 						lcsClusterNode.getLcsClusterEntryId());
@@ -237,8 +236,7 @@ public class PortalPropertiesAdvisor {
 		additionalKeys.removeAll(portalProperties.keySet());
 
 		for (String additionalKey : additionalKeys) {
-			Map<String, String> propertyValuesMap =
-				new HashMap<String, String>();
+			Map<String, String> propertyValuesMap = new HashMap<>();
 
 			propertyValuesMap.put(key, newPortalProperties.get(additionalKey));
 
@@ -260,8 +258,7 @@ public class PortalPropertiesAdvisor {
 		changedPortalProperties.removeAll(portalProperties.entrySet());
 
 		for (Map.Entry<String, String> entry : changedPortalProperties) {
-			Map<String, String> propertyValuesMap =
-				new HashMap<String, String>();
+			Map<String, String> propertyValuesMap = new HashMap<>();
 
 			String value = entry.getValue();
 
@@ -284,7 +281,7 @@ public class PortalPropertiesAdvisor {
 				lcsClusterEntryPropertyDifferencesMap,
 			Map<String, String> newPortalProperties,
 			Map<String, String> portalProperties)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!lcsClusterEntryPropertyDifferencesMap.isEmpty()) {
 			updateLCSClusterEntryPropertyDifferencesMap(

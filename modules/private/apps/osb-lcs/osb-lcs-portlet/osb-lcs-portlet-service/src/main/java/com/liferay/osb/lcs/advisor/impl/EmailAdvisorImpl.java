@@ -12,28 +12,42 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.email;
+package com.liferay.osb.lcs.advisor.impl;
 
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.osb.lcs.admin.util.AdminUtil;
+import com.liferay.osb.lcs.advisor.EmailAdvisor;
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
+import com.liferay.osb.lcs.email.EmailContext;
+import com.liferay.osb.lcs.email.EmailTemplate;
+import com.liferay.osb.lcs.email.LCSClusterNodeClusterLinkFailedEmailTemplate;
+import com.liferay.osb.lcs.email.MembershipInvitationAcceptedEmailTemplate;
+import com.liferay.osb.lcs.email.MembershipInvitationEmailTemplate;
+import com.liferay.osb.lcs.email.MembershipRequestAcceptedEmailTemplate;
+import com.liferay.osb.lcs.email.MembershipRequestEmailTemplate;
+import com.liferay.osb.lcs.email.MonitoringUnavailableEmailTemplate;
+import com.liferay.osb.lcs.email.NewLCSPortletAvailableEmailTemplate;
+import com.liferay.osb.lcs.email.NewPatchAvailableEmailTemplate;
+import com.liferay.osb.lcs.email.NewPatchingToolAvailableEmailTemplate;
+import com.liferay.osb.lcs.email.NewProjectMemberEmailTemplate;
+import com.liferay.osb.lcs.email.PatchingToolUnavailableEmailTemplate;
+import com.liferay.osb.lcs.email.ServerManuallyShutdownEmailTemplate;
+import com.liferay.osb.lcs.email.ServerUnexpectedlyShutdownEmailTemplate;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.model.LCSRoleConstants;
 import com.liferay.osb.lcs.service.LCSNotificationAuditEntryLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil;
-import com.liferay.osb.lcs.util.PortletKeys;
 import com.liferay.osb.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.util.ContentUtil;
 
 import java.util.ArrayList;
@@ -41,23 +55,23 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Matija Petanjek
  */
-public class EmailAdvisor {
+public class EmailAdvisorImpl implements EmailAdvisor {
 
+	@Override
 	public void sendEmail(EmailContext emailContext) throws PortalException {
-		EmailTemplate emailTemplate = getEmailTemplate(emailContext);
+		EmailTemplate emailTemplate = _getEmailTemplate(emailContext);
 
 		User toUser = emailContext.getUser();
 
 		Object[] mailIds = {emailContext.getLCSProjectId(), toUser.getUserId()};
 
 		sendEmail(
-			emailTemplate.getSubjectMap(getPortletPreferences()),
-			emailTemplate.getBodyMap(getPortletPreferences()),
+			emailTemplate.getSubjectMap(), emailTemplate.getBodyMap(),
 			emailTemplate.getContextAttributes(), emailTemplate.getPopPrefix(),
 			mailIds, emailContext.getEmailAddress(), toUser);
 
@@ -82,18 +96,20 @@ public class EmailAdvisor {
 			toUser.getUserId(), lcsCLusterNodeId, lcsEventType.getType());
 	}
 
+	@Override
 	public void sendToLCSProjectAdminsEmail(EmailContext emailContext)
 		throws PortalException {
 
-		EmailTemplate emailTemplate = getEmailTemplate(emailContext);
+		EmailTemplate emailTemplate = _getEmailTemplate(emailContext);
 
-		List<User> lcsProjectAdministrators = getLCSProjectAdmins(emailContext);
+		List<User> lcsProjectAdministrators = _getLCSProjectAdmins(
+			emailContext);
 
 		for (User lcsProjectAdministrator : lcsProjectAdministrators) {
 			Object[] contextAttributes = emailTemplate.getContextAttributes();
 
-			contextAttributes[5] = emailContext.translate(
-				"dear-x", lcsProjectAdministrator.getFullName());
+			contextAttributes[5] = translate(
+				emailContext, "dear-x", lcsProjectAdministrator.getFullName());
 
 			Object[] mailIds = {
 				emailContext.getLCSProjectId(),
@@ -101,11 +117,15 @@ public class EmailAdvisor {
 			};
 
 			sendEmail(
-				emailTemplate.getSubjectMap(getPortletPreferences()),
-				emailTemplate.getBodyMap(getPortletPreferences()),
+				emailTemplate.getSubjectMap(), emailTemplate.getBodyMap(),
 				contextAttributes, emailTemplate.getPopPrefix(), mailIds, null,
 				lcsProjectAdministrator);
 		}
+	}
+
+	@Reference(bind = "-")
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
 	}
 
 	protected Map<Locale, String> getLocalizationMap(
@@ -126,18 +146,6 @@ public class EmailAdvisor {
 		map.put(defaultLocale, ContentUtil.get(templatePath));
 
 		return map;
-	}
-
-	protected PortletPreferences getPortletPreferences() {
-		long companyId = CompanyConstants.SYSTEM;
-		long ownerId = CompanyConstants.SYSTEM;
-		int ownerType = PortletKeys.PREFS_OWNER_TYPE_COMPANY;
-		long plid = PortletKeys.PREFS_PLID_SHARED;
-		String portletId = PortletKeys.MEMBERS;
-		String defaultPreferences = null;
-
-		return PortletPreferencesLocalServiceUtil.getPreferences(
-			companyId, ownerId, ownerType, plid, portletId, defaultPreferences);
 	}
 
 	protected void sendEmail(
@@ -185,7 +193,14 @@ public class EmailAdvisor {
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	private EmailTemplate getEmailTemplate(EmailContext emailContext) {
+	protected String translate(
+		EmailContext emailContext, String pattern, Object... arguments) {
+
+		return LanguageUtil.format(
+			emailContext.getLocale(), pattern, arguments);
+	}
+
+	private EmailTemplate _getEmailTemplate(EmailContext emailContext) {
 		if (emailContext.getLCSEventType() ==
 				LCSEventType.LCS_CLUSTER_NODE_CLUSTER_LINK_FAILED) {
 
@@ -260,7 +275,7 @@ public class EmailAdvisor {
 		throw new UnsupportedOperationException();
 	}
 
-	private List<User> getLCSProjectAdmins(EmailContext emailContext)
+	private List<User> _getLCSProjectAdmins(EmailContext emailContext)
 		throws PortalException {
 
 		List<User> lcsProjectAdmins = new ArrayList<>();
@@ -272,8 +287,7 @@ public class EmailAdvisor {
 
 		for (LCSRole lcsProjectLCSRole : lcsProjectLCSRoles) {
 			lcsProjectAdmins.add(
-				UserLocalServiceUtil.getUserById(
-					lcsProjectLCSRole.getUserId()));
+				_userLocalService.getUserById(lcsProjectLCSRole.getUserId()));
 		}
 
 		return lcsProjectAdmins;
@@ -295,6 +309,9 @@ public class EmailAdvisor {
 		PortletPropsValues.
 			OSB_LCS_PORTLET_MEMBERS_EMAIL_MEMBERSHIP_REQUEST_ENABLED;
 
-	private static final Log _log = LogFactoryUtil.getLog(EmailAdvisor.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		EmailAdvisorImpl.class);
+
+	private UserLocalService _userLocalService;
 
 }

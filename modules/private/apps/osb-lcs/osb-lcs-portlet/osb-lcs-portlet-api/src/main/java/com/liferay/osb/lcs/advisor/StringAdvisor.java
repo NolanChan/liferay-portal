@@ -14,34 +14,14 @@
 
 package com.liferay.osb.lcs.advisor;
 
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Igor Beslic
  */
-public class StringAdvisor {
+@Component(immediate = true)
+public interface StringAdvisor {
 
-	public static String concat(Object... args) {
-		if (args.length == 1) {
-			return String.valueOf(args[0]);
-		}
-		else if (args.length == 2) {
-			return String.valueOf(args[0]) + StringPool.SPACE +
-				String.valueOf(args[1]);
-		}
-
-		StringBundler sb = new StringBundler((args.length * 2) - 1);
-
-		for (int i = 0; i < args.length; i++) {
-			sb.append(args[i]);
-
-			if ((i + 1) < args.length) {
-				sb.append(StringPool.SPACE);
-			}
-		}
-
-		return sb.toString();
-	}
+	public String concat(Object... args);
 
 }

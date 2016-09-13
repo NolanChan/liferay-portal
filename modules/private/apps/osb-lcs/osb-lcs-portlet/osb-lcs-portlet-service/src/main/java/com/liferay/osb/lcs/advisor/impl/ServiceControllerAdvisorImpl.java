@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.osb.lcs.advisor;
+package com.liferay.osb.lcs.advisor.impl;
 
-import com.liferay.compat.portal.kernel.util.StringUtil;
-import com.liferay.osb.lcs.service.JSONWebServiceParameter;
+import com.liferay.osb.lcs.advisor.ServiceControllerAdvisor;
+import com.liferay.osb.lcs.annotation.JSONWebServiceParameter;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.UnsupportedEncodingException;
 
@@ -38,7 +39,7 @@ import java.util.Map;
 /**
  * @author Igor Beslic
  */
-public class ServiceControllerAdvisor {
+public class ServiceControllerAdvisorImpl implements ServiceControllerAdvisor {
 
 	public String execute(Map<String, String> serviceControllerMap)
 		throws Exception {
@@ -86,8 +87,7 @@ public class ServiceControllerAdvisor {
 	protected MethodConfiguration resolveMethod(
 		Class<?> controllerClass, Map<String, String> controllerMap) {
 
-		List<MethodConfiguration> methodConfigurations =
-			new ArrayList<MethodConfiguration>();
+		List<MethodConfiguration> methodConfigurations = new ArrayList<>();
 
 		for (Method method : controllerClass.getMethods()) {
 			if (!method.isAnnotationPresent(JSONWebService.class)) {
@@ -230,10 +230,10 @@ public class ServiceControllerAdvisor {
 		return bestMethodConfiguration;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		ServiceControllerAdvisor.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServiceControllerAdvisorImpl.class);
 
-	private Map<Class, Object> _controllers = new HashMap<Class, Object>();
+	private final Map<Class, Object> _controllers = new HashMap<>();
 
 	private class MethodConfiguration {
 
@@ -242,8 +242,8 @@ public class ServiceControllerAdvisor {
 			_arguments = arguments;
 		}
 
-		private Object[] _arguments;
-		private Method _method;
+		private final Object[] _arguments;
+		private final Method _method;
 
 	}
 

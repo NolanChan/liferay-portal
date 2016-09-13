@@ -12,25 +12,24 @@
  * details.
  */
 
-package com.liferay.osb.lcs.advisor;
+package com.liferay.osb.lcs.advisor.impl;
 
-import com.liferay.lcs.activation.LCSClusterEntryTokenContentAdvisor;
+import com.liferay.lcs.internal.activation.LCSClusterEntryTokenContentAdvisor;
 import com.liferay.lcs.security.KeyStoreAdvisor;
 import com.liferay.lcs.security.KeyStoreFactory;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.oauth.model.OAuthUser;
+import com.liferay.oauth.service.OAuthUserService;
+import com.liferay.osb.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.osb.lcs.model.LCSClusterEntryToken;
 import com.liferay.osb.lcs.service.LCSClusterEntryTokenService;
-import com.liferay.osb.lcs.util.OAuthUserUtil;
 import com.liferay.osb.lcs.util.PortletPropsValues;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.util.Encryptor;
 
 import java.security.Key;
@@ -38,18 +37,23 @@ import java.security.KeyStore;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Igor Beslic
  */
-public class LCSClusterEntryTokenAdvisor {
+public class LCSClusterEntryTokenAdvisorImpl
+	implements LCSClusterEntryTokenAdvisor {
 
 	public void generateLCSClusterEntryToken(
 			long lcsClusterEntryId,
 			Map<String, String> lcsServicesConfiguration,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		OAuthUser oAuthUser = OAuthUserUtil.getOAuthUser(serviceContext);
+		OAuthUser oAuthUser = _oAuthUserService.addOAuthUser(
+			PortletPropsValues.OSB_LCS_PORTLET_OAUTH_CONSUMER_KEY,
+			serviceContext);
 
 		boolean portalPropertiesLCSServiceEnabled = GetterUtil.getBoolean(
 			lcsServicesConfiguration.get(
@@ -123,7 +127,7 @@ public class LCSClusterEntryTokenAdvisor {
 			long lcsClusterEntryId,
 			Map<String, String> lcsServicesConfiguration,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LCSClusterEntryToken lcsClusterEntryToken =
 			_lcsClusterEntryTokenService.
@@ -136,7 +140,14 @@ public class LCSClusterEntryTokenAdvisor {
 			lcsClusterEntryId, lcsServicesConfiguration, serviceContext);
 	}
 
-	@BeanReference(type = LCSClusterEntryTokenService.class)
-	private static LCSClusterEntryTokenService _lcsClusterEntryTokenService;
+	@Reference(bind = "-", unbind = "-")
+	public void setLcsClusterEntryTokenService(
+		LCSClusterEntryTokenService lcsClusterEntryTokenService) {
+
+		_lcsClusterEntryTokenService = lcsClusterEntryTokenService;
+	}
+
+	private LCSClusterEntryTokenService _lcsClusterEntryTokenService;
+	private final OAuthUserService _oAuthUserService;
 
 }
