@@ -22,6 +22,8 @@ import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.base.DocumentationProjectServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.io.File;
+
 /**
  * @author Howie Chou
  */
@@ -30,7 +32,7 @@ public class DocumentationProjectServiceImpl
 	extends DocumentationProjectServiceBaseImpl {
 
 	public DocumentationProject addDocumentationProject(
-			String name, String description)
+			String name, String description, File icon)
 		throws PortalException {
 
 		DocumentationProjectPermission.check(
@@ -38,11 +40,12 @@ public class DocumentationProjectServiceImpl
 			DocumentationProjectActionKeys.ADD_DOCUMENTATION_PROJECT);
 
 		return documentationProjectLocalService.addDocumentationProject(
-			getUserId(), name, description);
+			getUserId(), name, description, icon);
 	}
 
 	public DocumentationProject updateDocumentationProject(
-			long documentationProjectId, String name, String description)
+			long documentationProjectId, String name, String description,
+			File icon)
 		throws PortalException {
 
 		DocumentationProjectPermission.check(
@@ -50,7 +53,7 @@ public class DocumentationProjectServiceImpl
 			DocumentationProjectActionKeys.UPDATE_DOCUMENTATION_PROJECT);
 
 		return documentationProjectLocalService.updateDocumentationProject(
-			documentationProjectId, name, description);
+			documentationProjectId, name, description, icon);
 	}
 
 }

@@ -22,6 +22,7 @@
 
 		<column name="name" type="String" />
 		<column name="description" type="String" />
+		<column name="iconId" type="long" />
 
 		<!-- Order -->
 
@@ -37,6 +38,8 @@
 	</entity>
 	<exceptions>
 		<exception>DocumentationProjectDescription</exception>
+		<exception>DocumentationProjectIcon</exception>
 		<exception>DocumentationProjectName</exception>
+		<exception>InvalidDocumentProjectIconExtension</exception>
 	</exceptions>
 </service-builder>

@@ -48,6 +48,24 @@ renderResponse.setTitle(headerTitle);
 					<aui:input autoFocus="<%= true %>" name="name" />
 
 					<aui:input name="description" />
+
+					<div class="control-label">
+						<liferay-ui:message key="icon" />
+					</div>
+
+					<c:if test="<%= documentationProject.getIconId() > 0 %>">
+						<div>
+							<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/serve_documentation_project_icon" var="iconURL">
+								<portlet:param name="iconId" value="<%= String.valueOf(documentationProject.getIconId()) %>" />
+							</liferay-portlet:resourceURL>
+
+							<div class="icon">
+								<img class="xsmall" src="<%= HtmlUtil.escapeAttribute(iconURL) %>" />
+							</div>
+						</div>
+					</c:if>
+
+					<aui:input accept="image/*" label="" name="icon" type="file" />
 				</aui:fieldset>
 			</aui:fieldset-group>
 		</div>

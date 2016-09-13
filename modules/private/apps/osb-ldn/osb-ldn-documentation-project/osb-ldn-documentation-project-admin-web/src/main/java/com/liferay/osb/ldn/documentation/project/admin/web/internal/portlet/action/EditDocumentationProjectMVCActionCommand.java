@@ -18,7 +18,11 @@ import com.liferay.osb.ldn.documentation.project.admin.web.internal.constants.Do
 import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.io.File;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -50,13 +54,18 @@ public class EditDocumentationProjectMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
+
+		File icon = uploadPortletRequest.getFile("icon");
+
 		if (documentationProjectId > 0) {
 			_documentationProjectService.updateDocumentationProject(
-				documentationProjectId, name, description);
+				documentationProjectId, name, description, icon);
 		}
 		else {
 			_documentationProjectService.addDocumentationProject(
-				name, description);
+				name, description, icon);
 		}
 	}
 
