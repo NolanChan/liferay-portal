@@ -34,7 +34,8 @@ import com.liferay.osb.lcs.service.base.LCSProjectLocalServiceBaseImpl;
  */
 @ProviderType
 public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil} to access the l c s project local service.

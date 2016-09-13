@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class LCSProjectImpl extends LCSProjectBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a l c s project model instance should use the {@link com.liferay.osb.lcs.model.LCSProject} interface instead.
 	 */
 	public LCSProjectImpl() {
 	}
+
 }

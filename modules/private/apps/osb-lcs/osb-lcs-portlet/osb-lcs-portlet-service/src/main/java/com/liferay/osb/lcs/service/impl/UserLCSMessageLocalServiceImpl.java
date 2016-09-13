@@ -35,7 +35,8 @@ import com.liferay.osb.lcs.service.base.UserLCSMessageLocalServiceBaseImpl;
 @ProviderType
 public class UserLCSMessageLocalServiceImpl
 	extends UserLCSMessageLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.UserLCSMessageLocalServiceUtil} to access the user l c s message local service.

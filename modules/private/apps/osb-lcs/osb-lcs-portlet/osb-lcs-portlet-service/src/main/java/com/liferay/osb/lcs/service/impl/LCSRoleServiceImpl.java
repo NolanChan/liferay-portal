@@ -34,7 +34,8 @@ import com.liferay.osb.lcs.service.base.LCSRoleServiceBaseImpl;
  */
 @ProviderType
 public class LCSRoleServiceImpl extends LCSRoleServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSRoleServiceUtil} to access the l c s role remote service.

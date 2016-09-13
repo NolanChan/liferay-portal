@@ -34,7 +34,8 @@ import com.liferay.osb.lcs.service.base.LCSMembersLocalServiceBaseImpl;
  */
 @ProviderType
 public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSMembersLocalServiceUtil} to access the l c s members local service.

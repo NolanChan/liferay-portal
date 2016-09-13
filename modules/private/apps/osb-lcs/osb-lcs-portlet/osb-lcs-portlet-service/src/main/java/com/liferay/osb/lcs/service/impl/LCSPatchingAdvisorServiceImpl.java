@@ -35,7 +35,8 @@ import com.liferay.osb.lcs.service.base.LCSPatchingAdvisorServiceBaseImpl;
 @ProviderType
 public class LCSPatchingAdvisorServiceImpl
 	extends LCSPatchingAdvisorServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSPatchingAdvisorServiceUtil} to access the l c s patching advisor remote service.

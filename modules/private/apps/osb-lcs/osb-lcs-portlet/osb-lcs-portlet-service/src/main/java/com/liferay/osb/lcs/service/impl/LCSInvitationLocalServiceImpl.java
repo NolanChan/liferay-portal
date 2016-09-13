@@ -35,7 +35,8 @@ import com.liferay.osb.lcs.service.base.LCSInvitationLocalServiceBaseImpl;
 @ProviderType
 public class LCSInvitationLocalServiceImpl
 	extends LCSInvitationLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSInvitationLocalServiceUtil} to access the l c s invitation local service.

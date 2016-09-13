@@ -35,7 +35,8 @@ import com.liferay.osb.lcs.service.base.LCSSubscriptionEntryServiceBaseImpl;
 @ProviderType
 public class LCSSubscriptionEntryServiceImpl
 	extends LCSSubscriptionEntryServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSSubscriptionEntryServiceUtil} to access the l c s subscription entry remote service.

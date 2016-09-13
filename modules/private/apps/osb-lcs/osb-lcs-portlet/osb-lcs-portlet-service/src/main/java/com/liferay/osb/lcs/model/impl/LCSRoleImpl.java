@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class LCSRoleImpl extends LCSRoleBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a l c s role model instance should use the {@link com.liferay.osb.lcs.model.LCSRole} interface instead.
 	 */
 	public LCSRoleImpl() {
 	}
+
 }

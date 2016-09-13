@@ -35,7 +35,8 @@ import com.liferay.osb.lcs.service.base.LCSClusterEntryTokenServiceBaseImpl;
 @ProviderType
 public class LCSClusterEntryTokenServiceImpl
 	extends LCSClusterEntryTokenServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSClusterEntryTokenServiceUtil} to access the l c s cluster entry token remote service.

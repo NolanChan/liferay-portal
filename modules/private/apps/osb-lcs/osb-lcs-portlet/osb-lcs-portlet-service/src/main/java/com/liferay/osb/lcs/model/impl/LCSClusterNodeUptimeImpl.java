@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class LCSClusterNodeUptimeImpl extends LCSClusterNodeUptimeBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a l c s cluster node uptime model instance should use the {@link com.liferay.osb.lcs.model.LCSClusterNodeUptime} interface instead.
 	 */
 	public LCSClusterNodeUptimeImpl() {
 	}
+
 }

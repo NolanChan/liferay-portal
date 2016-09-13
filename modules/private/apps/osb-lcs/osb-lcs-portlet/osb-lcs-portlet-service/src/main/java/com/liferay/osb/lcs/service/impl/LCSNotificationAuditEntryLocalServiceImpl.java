@@ -35,7 +35,8 @@ import com.liferay.osb.lcs.service.base.LCSNotificationAuditEntryLocalServiceBas
 @ProviderType
 public class LCSNotificationAuditEntryLocalServiceImpl
 	extends LCSNotificationAuditEntryLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSNotificationAuditEntryLocalServiceUtil} to access the l c s notification audit entry local service.

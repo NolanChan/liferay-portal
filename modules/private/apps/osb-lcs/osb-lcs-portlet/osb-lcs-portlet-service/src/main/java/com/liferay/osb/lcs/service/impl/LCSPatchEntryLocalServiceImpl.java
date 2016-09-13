@@ -35,7 +35,8 @@ import com.liferay.osb.lcs.service.base.LCSPatchEntryLocalServiceBaseImpl;
 @ProviderType
 public class LCSPatchEntryLocalServiceImpl
 	extends LCSPatchEntryLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSPatchEntryLocalServiceUtil} to access the l c s patch entry local service.

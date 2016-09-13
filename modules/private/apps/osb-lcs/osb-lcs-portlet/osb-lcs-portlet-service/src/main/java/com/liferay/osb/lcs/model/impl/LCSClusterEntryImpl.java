@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class LCSClusterEntryImpl extends LCSClusterEntryBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a l c s cluster entry model instance should use the {@link com.liferay.osb.lcs.model.LCSClusterEntry} interface instead.
 	 */
 	public LCSClusterEntryImpl() {
 	}
+
 }

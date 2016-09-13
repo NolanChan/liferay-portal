@@ -34,7 +34,8 @@ import com.liferay.osb.lcs.service.base.LCSMembersServiceBaseImpl;
  */
 @ProviderType
 public class LCSMembersServiceImpl extends LCSMembersServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSMembersServiceUtil} to access the l c s members remote service.

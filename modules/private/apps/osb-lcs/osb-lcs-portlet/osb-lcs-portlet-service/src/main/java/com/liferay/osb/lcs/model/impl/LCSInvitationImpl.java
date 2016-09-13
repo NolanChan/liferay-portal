@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class LCSInvitationImpl extends LCSInvitationBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a l c s invitation model instance should use the {@link com.liferay.osb.lcs.model.LCSInvitation} interface instead.
 	 */
 	public LCSInvitationImpl() {
 	}
+
 }

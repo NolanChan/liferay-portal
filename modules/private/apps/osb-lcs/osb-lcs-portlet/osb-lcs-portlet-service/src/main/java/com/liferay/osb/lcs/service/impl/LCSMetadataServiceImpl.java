@@ -34,7 +34,8 @@ import com.liferay.osb.lcs.service.base.LCSMetadataServiceBaseImpl;
  */
 @ProviderType
 public class LCSMetadataServiceImpl extends LCSMetadataServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSMetadataServiceUtil} to access the l c s metadata remote service.

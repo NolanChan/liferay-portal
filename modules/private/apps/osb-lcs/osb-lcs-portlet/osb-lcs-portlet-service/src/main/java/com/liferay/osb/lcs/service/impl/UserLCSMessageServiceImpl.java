@@ -34,7 +34,8 @@ import com.liferay.osb.lcs.service.base.UserLCSMessageServiceBaseImpl;
  */
 @ProviderType
 public class UserLCSMessageServiceImpl extends UserLCSMessageServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.UserLCSMessageServiceUtil} to access the user l c s message remote service.

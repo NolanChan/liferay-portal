@@ -28,11 +28,13 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public class LCSNotificationAuditEntryImpl
 	extends LCSNotificationAuditEntryBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a l c s notification audit entry model instance should use the {@link com.liferay.osb.lcs.model.LCSNotificationAuditEntry} interface instead.
 	 */
 	public LCSNotificationAuditEntryImpl() {
 	}
+
 }

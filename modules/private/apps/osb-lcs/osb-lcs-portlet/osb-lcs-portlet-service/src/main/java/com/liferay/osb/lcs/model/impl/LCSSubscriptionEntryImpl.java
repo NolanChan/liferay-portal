@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class LCSSubscriptionEntryImpl extends LCSSubscriptionEntryBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a l c s subscription entry model instance should use the {@link com.liferay.osb.lcs.model.LCSSubscriptionEntry} interface instead.
 	 */
 	public LCSSubscriptionEntryImpl() {
 	}
+
 }

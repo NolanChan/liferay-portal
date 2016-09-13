@@ -33,8 +33,10 @@ import com.liferay.osb.lcs.service.base.LCSMetadataLocalServiceBaseImpl;
  * @see com.liferay.osb.lcs.service.LCSMetadataLocalServiceUtil
  */
 @ProviderType
-public class LCSMetadataLocalServiceImpl extends LCSMetadataLocalServiceBaseImpl {
-	/*
+public class LCSMetadataLocalServiceImpl
+	extends LCSMetadataLocalServiceBaseImpl {
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSMetadataLocalServiceUtil} to access the l c s metadata local service.

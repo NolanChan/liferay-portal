@@ -34,7 +34,8 @@ import com.liferay.osb.lcs.service.base.LCSClusterNodeServiceBaseImpl;
  */
 @ProviderType
 public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSClusterNodeServiceUtil} to access the l c s cluster node remote service.

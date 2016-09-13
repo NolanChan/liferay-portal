@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class LCSMessageImpl extends LCSMessageBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a l c s message model instance should use the {@link com.liferay.osb.lcs.model.LCSMessage} interface instead.
 	 */
 	public LCSMessageImpl() {
 	}
+
 }

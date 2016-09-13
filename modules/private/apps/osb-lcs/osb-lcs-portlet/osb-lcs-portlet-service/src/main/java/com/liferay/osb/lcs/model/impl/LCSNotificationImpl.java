@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class LCSNotificationImpl extends LCSNotificationBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a l c s notification model instance should use the {@link com.liferay.osb.lcs.model.LCSNotification} interface instead.
 	 */
 	public LCSNotificationImpl() {
 	}
+
 }

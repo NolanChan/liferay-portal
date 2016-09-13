@@ -35,7 +35,8 @@ import com.liferay.osb.lcs.service.base.LCSClusterNodeUptimeServiceBaseImpl;
 @ProviderType
 public class LCSClusterNodeUptimeServiceImpl
 	extends LCSClusterNodeUptimeServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSClusterNodeUptimeServiceUtil} to access the l c s cluster node uptime remote service.

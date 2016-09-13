@@ -35,7 +35,8 @@ import com.liferay.osb.lcs.service.base.LCSClusterNodePatchesLocalServiceBaseImp
 @ProviderType
 public class LCSClusterNodePatchesLocalServiceImpl
 	extends LCSClusterNodePatchesLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSClusterNodePatchesLocalServiceUtil} to access the l c s cluster node patches local service.

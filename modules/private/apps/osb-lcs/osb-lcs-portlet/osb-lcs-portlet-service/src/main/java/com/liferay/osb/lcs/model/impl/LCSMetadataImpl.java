@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class LCSMetadataImpl extends LCSMetadataBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a l c s metadata model instance should use the {@link com.liferay.osb.lcs.model.LCSMetadata} interface instead.
 	 */
 	public LCSMetadataImpl() {
 	}
+
 }

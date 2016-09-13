@@ -34,7 +34,8 @@ import com.liferay.osb.lcs.service.base.LCSNotificationServiceBaseImpl;
  */
 @ProviderType
 public class LCSNotificationServiceImpl extends LCSNotificationServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSNotificationServiceUtil} to access the l c s notification remote service.

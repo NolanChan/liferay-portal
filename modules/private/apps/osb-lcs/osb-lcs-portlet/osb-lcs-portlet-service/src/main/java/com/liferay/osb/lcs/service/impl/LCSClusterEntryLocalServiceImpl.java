@@ -35,7 +35,8 @@ import com.liferay.osb.lcs.service.base.LCSClusterEntryLocalServiceBaseImpl;
 @ProviderType
 public class LCSClusterEntryLocalServiceImpl
 	extends LCSClusterEntryLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil} to access the l c s cluster entry local service.

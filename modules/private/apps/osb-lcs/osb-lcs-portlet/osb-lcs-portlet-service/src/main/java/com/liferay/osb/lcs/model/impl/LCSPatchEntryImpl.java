@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class LCSPatchEntryImpl extends LCSPatchEntryBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a l c s patch entry model instance should use the {@link com.liferay.osb.lcs.model.LCSPatchEntry} interface instead.
 	 */
 	public LCSPatchEntryImpl() {
 	}
+
 }
