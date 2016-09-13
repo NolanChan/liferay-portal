@@ -1,7 +1,12 @@
+Bundle-Name: Liferay Connected Services API
+Bundle-SymbolicName: com.liferay.osb.lcs.api
 Bundle-Version: 1.0.0
-Export-Package: \
+Export-Package:\
+	com.liferay.osb.lcs.advisor,\
+	com.liferay.osb.lcs.constants,\
 	com.liferay.osb.lcs.exception,\
 	com.liferay.osb.lcs.model,\
 	com.liferay.osb.lcs.service,\
 	com.liferay.osb.lcs.service.persistence
--sources: true
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: LCS Portal

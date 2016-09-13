@@ -1,6 +1,7 @@
+Bundle-Name: Liferay Connected Services Service
+Bundle-SymbolicName: com.liferay.osb.lcs.service
 Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: LCS Portal
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
-Liferay-Spring-Context: META-INF/spring
--plugin.service: com.liferay.ant.bnd.service.ServiceAnalyzerPlugin
--sources: true

@@ -1,4 +1,6 @@
 Bundle-Version: 1.0.0
--jsp: *.jsp,*.jspf
+Provide-Capability: liferay.resource.bundle;bundle.symbolic.name=com.liferay.osb.lcs;resource.bundle.base.name=content.Language
+Web-ContextPath: /osb-lcs-portlet-web
 -plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin
--sources: true
+-jsp: *.jsp,*.jspf
+-sources: true;
