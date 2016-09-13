@@ -4,12 +4,12 @@
 <service-builder package-path="com.liferay.osb.lcs">
 	<author>Igor Beslic</author>
 	<namespace>OSBLCS</namespace>
-	<entity name="CorpProject" local-service="false" remote-service="true" />
-	<entity name="LCSClusterEntry" local-service="true" remote-service="true">
+	<entity local-service="false" name="CorpProject" remote-service="true" />
+	<entity local-service="true" name="LCSClusterEntry" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="lcsClusterEntryId" type="long" primary="true" />
+		<column name="lcsClusterEntryId" primary="true" type="long" />
 
 		<!-- Other fields -->
 
@@ -48,11 +48,11 @@
 			<finder-column name="archived" />
 		</finder>
 	</entity>
-	<entity name="LCSClusterEntryToken" local-service="true" remote-service="true">
+	<entity local-service="true" name="LCSClusterEntryToken" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="lcsClusterEntryTokenId" type="long" primary="true" />
+		<column name="lcsClusterEntryTokenId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -70,11 +70,11 @@
 			<finder-column name="lcsClusterEntryId" />
 		</finder>
 	</entity>
-	<entity name="LCSClusterNode" local-service="true" remote-service="true">
+	<entity local-service="true" name="LCSClusterNode" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="lcsClusterNodeId" type="long" primary="true" />
+		<column name="lcsClusterNodeId" primary="true" type="long" />
 
 		<!-- Other fields -->
 
@@ -92,7 +92,7 @@
 		<!-- Finder methods -->
 
 		<finder name="LCSClusterEntryId" return-type="Collection">
-			<finder-column name="lcsClusterEntryId" comparator="=" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" comparator="=" name="lcsClusterEntryId" />
 		</finder>
 		<finder name="BuildNumber" return-type="Collection">
 			<finder-column name="buildNumber" />
@@ -105,7 +105,7 @@
 			<finder-column name="name" />
 		</finder>
 		<finder name="LCEI_A" return-type="Collection">
-			<finder-column name="lcsClusterEntryId" comparator="=" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" comparator="=" name="lcsClusterEntryId" />
 			<finder-column name="archived" />
 		</finder>
 		<finder name="BN_A" return-type="Collection">
@@ -118,12 +118,12 @@
 			<finder-column name="archived" />
 		</finder>
 	</entity>
-	<entity name="LCSClusterNodePatches" local-service="true" remote-service="false" />
-	<entity name="LCSClusterNodeUptime" local-service="true" remote-service="true">
+	<entity local-service="true" name="LCSClusterNodePatches" remote-service="false" />
+	<entity local-service="true" name="LCSClusterNodeUptime" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="lcsClusterNodeUptimeId" type="long" primary="true" />
+		<column name="lcsClusterNodeUptimeId" primary="true" type="long" />
 
 		<!-- Other fields -->
 
@@ -141,7 +141,7 @@
 		<!-- Finder methods -->
 
 		<finder name="LCSClusterNodeId" return-type="Collection">
-			<finder-column name="lcsClusterNodeId" comparator="=" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" comparator="=" name="lcsClusterNodeId" />
 		</finder>
 		<finder name="LCNI_ST" return-type="LCSClusterNodeUptime">
 			<finder-column name="lcsClusterNodeId" />
@@ -152,11 +152,11 @@
 			<finder-column name="endTime" />
 		</finder>
 	</entity>
-	<entity name="LCSInvitation" local-service="true" remote-service="true">
+	<entity local-service="true" name="LCSInvitation" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="lcsInvitationId" type="long" primary="true" />
+		<column name="lcsInvitationId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -190,18 +190,18 @@
 			<finder-column name="emailAddress" />
 		</finder>
 	</entity>
-	<entity name="LCSMembers" local-service="false" remote-service="true">
+	<entity local-service="false" name="LCSMembers" remote-service="true">
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="Role" />
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="Role" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="LCSMessage" local-service="true" remote-service="true">
+	<entity local-service="true" name="LCSMessage" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="lcsMessageId" type="long" primary="true" />
+		<column name="lcsMessageId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -255,13 +255,13 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="ClassName" />
+		<reference entity="ClassName" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="LCSMetadata" local-service="true" remote-service="true">
+	<entity local-service="true" name="LCSMetadata" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="lcsMetadataId" type="long" primary="true" />
+		<column name="lcsMetadataId" primary="true" type="long" />
 
 		<!-- Other fields -->
 
@@ -291,11 +291,11 @@
 			<finder-column name="portalEdition" />
 		</finder>
 	</entity>
-	<entity name="LCSNotification" local-service="true" remote-service="true">
+	<entity local-service="true" name="LCSNotification" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="lcsNotificationId" type="long" primary="true" />
+		<column name="lcsNotificationId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -341,13 +341,13 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="ClassName" />
+		<reference entity="ClassName" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="LCSNotificationAuditEntry" local-service="true" remote-service="false">
+	<entity local-service="true" name="LCSNotificationAuditEntry" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="lcsNotificationAuditEntryId" type="long" primary="true" />
+		<column name="lcsNotificationAuditEntryId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -369,7 +369,7 @@
 		<!-- Finder methods -->
 
 		<finder name="LCSClusterNodeId" return-type="Collection">
-			<finder-column name="lcsClusterNodeId" comparator="=" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" comparator="=" name="lcsClusterNodeId" />
 		</finder>
 		<finder name="U_LCNI_T" return-type="Collection">
 			<finder-column name="userId" />
@@ -377,11 +377,11 @@
 			<finder-column name="type" />
 		</finder>
 	</entity>
-	<entity name="LCSPatchEntry" local-service="true" remote-service="false">
+	<entity local-service="true" name="LCSPatchEntry" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="lcsPatchEntryId" type="long" primary="true" />
+		<column name="lcsPatchEntryId" primary="true" type="long" />
 
 		<!-- Other fields -->
 
@@ -411,16 +411,16 @@
 			<finder-column name="patchId" />
 		</finder>
 		<finder name="PTV_Product" return-type="Collection">
-			<finder-column name="patchingToolVersion" comparator="&lt;=" />
+			<finder-column comparator="&lt;=" name="patchingToolVersion" />
 			<finder-column name="product" />
 		</finder>
 	</entity>
-	<entity name="LCSPatchingAdvisor" local-service="false" remote-service="true" />
-	<entity name="LCSProject" local-service="true" remote-service="true">
+	<entity local-service="false" name="LCSPatchingAdvisor" remote-service="true" />
+	<entity local-service="true" name="LCSProject" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="lcsProjectId" type="long" primary="true" />
+		<column name="lcsProjectId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -435,8 +435,8 @@
 		<column name="addressId" type="long" />
 		<column name="accountEntryId" type="long" />
 		<column name="corpProjectId" type="long" />
-		<column name="contactEmailAddress" type="String" convert-null="false" />
-		<column name="phoneNumber" type="String" convert-null="false" />
+		<column convert-null="false" name="contactEmailAddress" type="String" />
+		<column convert-null="false" name="phoneNumber" type="String" />
 		<column name="subscriptionActive" type="boolean" />
 		<column name="archived" type="boolean" />
 
@@ -460,13 +460,13 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Company" />
+		<reference entity="Company" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="LCSRole" local-service="true" remote-service="true">
+	<entity local-service="true" name="LCSRole" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="lcsRoleId" type="long" primary="true" />
+		<column name="lcsRoleId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -507,23 +507,23 @@
 			<finder-column name="lcsClusterEntryId" />
 		</finder>
 	</entity>
-	<entity name="LCSSubscriptionEntry" local-service="true" remote-service="true">
+	<entity local-service="true" name="LCSSubscriptionEntry" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="lcsSubscriptionEntryId" type="long" primary="true" />
+		<column name="lcsSubscriptionEntryId" primary="true" type="long" />
 
 		<!-- Other fields -->
 
 		<column name="lcsProjectId" type="long" />
 		<column name="actualPrice" type="double" />
-		<column name="currencyCode" type="String" convert-null="false" />
+		<column convert-null="false" name="currencyCode" type="String" />
 		<column name="instanceSize" type="int" />
-		<column name="type" type="String" convert-null="false" />
-		<column name="platform" type="String" convert-null="false" />
+		<column convert-null="false" name="type" type="String" />
+		<column convert-null="false" name="platform" type="String" />
 		<column name="platformVersion" type="int" />
 		<column name="processorCoresAllowed" type="int" />
-		<column name="product" type="String" convert-null="false" />
+		<column convert-null="false" name="product" type="String" />
 		<column name="productVersion" type="int" />
 		<column name="serversAllowed" type="int" />
 		<column name="serversUsed" type="int" />
@@ -548,11 +548,11 @@
 			<finder-column name="active" />
 		</finder>
 	</entity>
-	<entity name="UserLCSMessage" local-service="true" remote-service="true">
+	<entity local-service="true" name="UserLCSMessage" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="userLcsMessageId" type="long" primary="true" />
+		<column name="userLcsMessageId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
