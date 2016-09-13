@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.osb.lcs.model.LCSClusterEntry" />
+	<import class="com.liferay.osb.lcs.model.LCSClusterEntryToken" />
+	<import class="com.liferay.osb.lcs.model.LCSClusterNode" />
+	<import class="com.liferay.osb.lcs.model.LCSClusterNodePatches" />
+	<import class="com.liferay.osb.lcs.model.LCSClusterNodeUptime" />
+	<import class="com.liferay.osb.lcs.model.LCSInvitation" />
+	<import class="com.liferay.osb.lcs.model.LCSMembers" />
+	<import class="com.liferay.osb.lcs.model.LCSMessage" />
+	<import class="com.liferay.osb.lcs.model.LCSMetadata" />
+	<import class="com.liferay.osb.lcs.model.LCSNotification" />
+	<import class="com.liferay.osb.lcs.model.LCSNotificationAuditEntry" />
+	<import class="com.liferay.osb.lcs.model.LCSPatchEntry" />
+	<import class="com.liferay.osb.lcs.model.LCSPatchingAdvisor" />
+	<import class="com.liferay.osb.lcs.model.LCSProject" />
+	<import class="com.liferay.osb.lcs.model.LCSRole" />
+	<import class="com.liferay.osb.lcs.model.LCSSubscriptionEntry" />
+	<import class="com.liferay.osb.lcs.model.UserLCSMessage" />
+	<class name="com.liferay.osb.lcs.model.impl.LCSClusterEntryImpl" table="OSBLCS_LCSClusterEntry">
+		<id name="lcsClusterEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="lcsProjectId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="elastic" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="highPageLoadTime" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="location" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="mediumPageLoadTime" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="subscriptionType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="archived" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="com.liferay.osb.lcs.model.impl.LCSClusterEntryTokenImpl" table="OSBLCS_LCSClusterEntryToken">
+		<id name="lcsClusterEntryTokenId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="lcsClusterEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.osb.lcs.model.impl.LCSClusterNodeImpl" table="OSBLCS_LCSClusterNode">
+		<id name="lcsClusterNodeId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="lcsClusterEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="installationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="buildNumber" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property column="key_" name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="location" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="processorCoresTotal" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="archived" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.liferay.osb.lcs.model.impl.LCSClusterNodeUptimeImpl" table="OSBLCS_LCSClusterNodeUptime">
+		<id name="lcsClusterNodeUptimeId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="lcsClusterNodeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="startTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="endTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.liferay.osb.lcs.model.impl.LCSInvitationImpl" table="OSBLCS_LCSInvitation">
+		<id name="lcsInvitationId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="lcsProjectId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="emailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lcsClusterEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="role" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.liferay.osb.lcs.model.impl.LCSMessageImpl" table="OSBLCS_LCSMessage">
+		<id name="lcsMessageId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="sourceMessageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="sourceSystemName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="endDate" type="org.hibernate.type.TimestampType" />
+		<property name="global" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="severityLevel" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.liferay.osb.lcs.model.impl.LCSMetadataImpl" table="OSBLCS_LCSMetadata">
+		<id name="lcsMetadataId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="availabilityIndex" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="buildNumber" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="gitTag" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="portalEdition" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="supportedLCSPortlet" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="supportedPatchingTool" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.liferay.osb.lcs.model.impl.LCSNotificationImpl" table="OSBLCS_LCSNotification">
+		<id name="lcsNotificationId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="enabled" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.liferay.osb.lcs.model.impl.LCSNotificationAuditEntryImpl" table="OSBLCS_LCSNotificationAuditEntry">
+		<id name="lcsNotificationAuditEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="lcsClusterNodeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.liferay.osb.lcs.model.impl.LCSPatchEntryImpl" table="OSBLCS_LCSPatchEntry">
+		<id name="lcsPatchEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="patchId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="patchingToolVersion" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="incremental" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="singular" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="version" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property column="size_" name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="rank" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="requirements" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="component" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="compatibleBuild" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="product" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fixedIssues" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="moduleName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="moduleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="tunnelWeb" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="buildDate" type="org.hibernate.type.TimestampType" />
+		<property name="builtFor" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.osb.lcs.model.impl.LCSProjectImpl" table="OSBLCS_LCSProject">
+		<id name="lcsProjectId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="sourceSystemName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="addressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="accountEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="corpProjectId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="contactEmailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="phoneNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="subscriptionActive" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="archived" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="com.liferay.osb.lcs.model.impl.LCSRoleImpl" table="OSBLCS_LCSRole">
+		<id name="lcsRoleId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="lcsProjectId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="lcsClusterEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="role" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.liferay.osb.lcs.model.impl.LCSSubscriptionEntryImpl" table="OSBLCS_LCSSubscriptionEntry">
+		<id name="lcsSubscriptionEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="lcsProjectId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="actualPrice" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="currencyCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="instanceSize" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="platform" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="platformVersion" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="processorCoresAllowed" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="product" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="productVersion" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="serversAllowed" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="serversUsed" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="startDate" type="org.hibernate.type.TimestampType" />
+		<property name="endDate" type="org.hibernate.type.TimestampType" />
+		<property name="supportStartDate" type="org.hibernate.type.TimestampType" />
+		<property name="supportEndDate" type="org.hibernate.type.TimestampType" />
+		<property column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="com.liferay.osb.lcs.model.impl.UserLCSMessageImpl" table="OSBLCS_UserLCSMessage">
+		<id name="userLcsMessageId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="lcsMessageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property column="hidden_" name="hidden" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property column="read_" name="read" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+</hibernate-mapping>

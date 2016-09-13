@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.osb.lcs.model.LCSClusterEntry">
+		<field name="lcsClusterEntryId" type="long" />
+		<field name="lcsProjectId" type="long" />
+		<field name="name" type="String" />
+		<field name="description" type="String" />
+		<field name="elastic" type="boolean" />
+		<field name="highPageLoadTime" type="int" />
+		<field name="location" type="String" />
+		<field name="mediumPageLoadTime" type="int" />
+		<field name="subscriptionType" type="String" />
+		<field name="type" type="int" />
+		<field name="archived" type="boolean" />
+	</model>
+	<model name="com.liferay.osb.lcs.model.LCSClusterEntryToken">
+		<field name="lcsClusterEntryTokenId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="lcsClusterEntryId" type="long" />
+		<field name="content" type="String" />
+	</model>
+	<model name="com.liferay.osb.lcs.model.LCSClusterNode">
+		<field name="lcsClusterNodeId" type="long" />
+		<field name="lcsClusterEntryId" type="long" />
+		<field name="installationId" type="long" />
+		<field name="name" type="String" />
+		<field name="description" type="String" />
+		<field name="buildNumber" type="int" />
+		<field name="key" type="String" />
+		<field name="location" type="String" />
+		<field name="processorCoresTotal" type="int" />
+		<field name="archived" type="boolean" />
+		<field name="status" type="int" />
+	</model>
+	<model name="com.liferay.osb.lcs.model.LCSClusterNodeUptime">
+		<field name="lcsClusterNodeUptimeId" type="long" />
+		<field name="lcsClusterNodeId" type="long" />
+		<field name="startTime" type="long" />
+		<field name="endTime" type="long" />
+	</model>
+	<model name="com.liferay.osb.lcs.model.LCSInvitation">
+		<field name="lcsInvitationId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="lcsProjectId" type="long" />
+		<field name="emailAddress" type="String" />
+		<field name="lcsClusterEntryId" type="long" />
+		<field name="role" type="int" />
+	</model>
+	<model name="com.liferay.osb.lcs.model.LCSMessage">
+		<field name="lcsMessageId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="sourceMessageId" type="long" />
+		<field name="sourceSystemName" type="String" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="content" type="String" />
+		<field name="endDate" type="Date" />
+		<field name="global" type="boolean" />
+		<field name="severityLevel" type="int" />
+		<field name="type" type="int" />
+	</model>
+	<model name="com.liferay.osb.lcs.model.LCSMetadata">
+		<field name="lcsMetadataId" type="long" />
+		<field name="availabilityIndex" type="long" />
+		<field name="buildNumber" type="int" />
+		<field name="gitTag" type="String" />
+		<field name="portalEdition" type="String" />
+		<field name="supportedLCSPortlet" type="int" />
+		<field name="supportedPatchingTool" type="int" />
+	</model>
+	<model name="com.liferay.osb.lcs.model.LCSNotification">
+		<field name="lcsNotificationId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="enabled" type="boolean" />
+		<field name="type" type="int" />
+	</model>
+	<model name="com.liferay.osb.lcs.model.LCSNotificationAuditEntry">
+		<field name="lcsNotificationAuditEntryId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="lcsClusterNodeId" type="long" />
+		<field name="type" type="int" />
+	</model>
+	<model name="com.liferay.osb.lcs.model.LCSPatchEntry">
+		<field name="lcsPatchEntryId" type="long" />
+		<field name="patchId" type="String" />
+		<field name="name" type="String" />
+		<field name="description" type="String" />
+		<field name="patchingToolVersion" type="int" />
+		<field name="incremental" type="boolean" />
+		<field name="singular" type="boolean" />
+		<field name="version" type="int" />
+		<field name="size" type="long" />
+		<field name="rank" type="long" />
+		<field name="requirements" type="String" />
+		<field name="component" type="String" />
+		<field name="compatibleBuild" type="String" />
+		<field name="product" type="String" />
+		<field name="fixedIssues" type="String" />
+		<field name="moduleName" type="String" />
+		<field name="moduleId" type="String" />
+		<field name="tunnelWeb" type="boolean" />
+		<field name="buildDate" type="Date" />
+		<field name="builtFor" type="String" />
+	</model>
+	<model name="com.liferay.osb.lcs.model.LCSProject">
+		<field name="lcsProjectId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="sourceSystemName" type="String" />
+		<field name="name" type="String" />
+		<field name="organizationId" type="long" />
+		<field name="addressId" type="long" />
+		<field name="accountEntryId" type="long" />
+		<field name="corpProjectId" type="long" />
+		<field name="contactEmailAddress" type="String" />
+		<field name="phoneNumber" type="String" />
+		<field name="subscriptionActive" type="boolean" />
+		<field name="archived" type="boolean" />
+	</model>
+	<model name="com.liferay.osb.lcs.model.LCSRole">
+		<field name="lcsRoleId" type="long" />
+		<field name="userId" type="long" />
+		<field name="lcsProjectId" type="long" />
+		<field name="lcsClusterEntryId" type="long" />
+		<field name="role" type="int" />
+	</model>
+	<model name="com.liferay.osb.lcs.model.LCSSubscriptionEntry">
+		<field name="lcsSubscriptionEntryId" type="long" />
+		<field name="lcsProjectId" type="long" />
+		<field name="actualPrice" type="double" />
+		<field name="currencyCode" type="String" />
+		<field name="instanceSize" type="int" />
+		<field name="type" type="String" />
+		<field name="platform" type="String" />
+		<field name="platformVersion" type="int" />
+		<field name="processorCoresAllowed" type="int" />
+		<field name="product" type="String" />
+		<field name="productVersion" type="int" />
+		<field name="serversAllowed" type="int" />
+		<field name="serversUsed" type="int" />
+		<field name="startDate" type="Date" />
+		<field name="endDate" type="Date" />
+		<field name="supportStartDate" type="Date" />
+		<field name="supportEndDate" type="Date" />
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.osb.lcs.model.UserLCSMessage">
+		<field name="userLcsMessageId" type="long" />
+		<field name="userId" type="long" />
+		<field name="lcsMessageId" type="long" />
+		<field name="hidden" type="boolean" />
+		<field name="read" type="boolean" />
+	</model>
+</model-hints>

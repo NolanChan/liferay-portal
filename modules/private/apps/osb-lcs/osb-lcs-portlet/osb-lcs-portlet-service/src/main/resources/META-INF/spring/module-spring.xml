@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.osb.lcs.service.impl.LCSClusterEntryLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSClusterEntryLocalService" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSClusterEntryServiceImpl" id="com.liferay.osb.lcs.service.LCSClusterEntryService" />
+	<bean class="com.liferay.osb.lcs.service.persistence.impl.LCSClusterEntryPersistenceImpl" id="com.liferay.osb.lcs.service.persistence.LCSClusterEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSClusterEntryTokenLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSClusterEntryTokenLocalService" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSClusterEntryTokenServiceImpl" id="com.liferay.osb.lcs.service.LCSClusterEntryTokenService" />
+	<bean class="com.liferay.osb.lcs.service.persistence.impl.LCSClusterEntryTokenPersistenceImpl" id="com.liferay.osb.lcs.service.persistence.LCSClusterEntryTokenPersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSClusterNodeLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSClusterNodeLocalService" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSClusterNodeServiceImpl" id="com.liferay.osb.lcs.service.LCSClusterNodeService" />
+	<bean class="com.liferay.osb.lcs.service.persistence.impl.LCSClusterNodePersistenceImpl" id="com.liferay.osb.lcs.service.persistence.LCSClusterNodePersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSClusterNodePatchesLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSClusterNodePatchesLocalService" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSClusterNodeUptimeLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSClusterNodeUptimeLocalService" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSClusterNodeUptimeServiceImpl" id="com.liferay.osb.lcs.service.LCSClusterNodeUptimeService" />
+	<bean class="com.liferay.osb.lcs.service.persistence.impl.LCSClusterNodeUptimePersistenceImpl" id="com.liferay.osb.lcs.service.persistence.LCSClusterNodeUptimePersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSInvitationLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSInvitationLocalService" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSInvitationServiceImpl" id="com.liferay.osb.lcs.service.LCSInvitationService" />
+	<bean class="com.liferay.osb.lcs.service.persistence.impl.LCSInvitationPersistenceImpl" id="com.liferay.osb.lcs.service.persistence.LCSInvitationPersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSMembersLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSMembersLocalService" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSMembersServiceImpl" id="com.liferay.osb.lcs.service.LCSMembersService" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSMessageLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSMessageLocalService" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSMessageServiceImpl" id="com.liferay.osb.lcs.service.LCSMessageService" />
+	<bean class="com.liferay.osb.lcs.service.persistence.impl.LCSMessagePersistenceImpl" id="com.liferay.osb.lcs.service.persistence.LCSMessagePersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSMetadataLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSMetadataLocalService" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSMetadataServiceImpl" id="com.liferay.osb.lcs.service.LCSMetadataService" />
+	<bean class="com.liferay.osb.lcs.service.persistence.impl.LCSMetadataPersistenceImpl" id="com.liferay.osb.lcs.service.persistence.LCSMetadataPersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSNotificationLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSNotificationLocalService" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSNotificationServiceImpl" id="com.liferay.osb.lcs.service.LCSNotificationService" />
+	<bean class="com.liferay.osb.lcs.service.persistence.impl.LCSNotificationPersistenceImpl" id="com.liferay.osb.lcs.service.persistence.LCSNotificationPersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSNotificationAuditEntryLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSNotificationAuditEntryLocalService" />
+	<bean class="com.liferay.osb.lcs.service.persistence.impl.LCSNotificationAuditEntryPersistenceImpl" id="com.liferay.osb.lcs.service.persistence.LCSNotificationAuditEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSPatchEntryLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSPatchEntryLocalService" />
+	<bean class="com.liferay.osb.lcs.service.persistence.impl.LCSPatchEntryPersistenceImpl" id="com.liferay.osb.lcs.service.persistence.LCSPatchEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSPatchingAdvisorServiceImpl" id="com.liferay.osb.lcs.service.LCSPatchingAdvisorService" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSProjectLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSProjectLocalService" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSProjectServiceImpl" id="com.liferay.osb.lcs.service.LCSProjectService" />
+	<bean class="com.liferay.osb.lcs.service.persistence.impl.LCSProjectPersistenceImpl" id="com.liferay.osb.lcs.service.persistence.LCSProjectPersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSRoleLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSRoleLocalService" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSRoleServiceImpl" id="com.liferay.osb.lcs.service.LCSRoleService" />
+	<bean class="com.liferay.osb.lcs.service.persistence.impl.LCSRolePersistenceImpl" id="com.liferay.osb.lcs.service.persistence.LCSRolePersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSSubscriptionEntryLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSSubscriptionEntryLocalService" />
+	<bean class="com.liferay.osb.lcs.service.impl.LCSSubscriptionEntryServiceImpl" id="com.liferay.osb.lcs.service.LCSSubscriptionEntryService" />
+	<bean class="com.liferay.osb.lcs.service.persistence.impl.LCSSubscriptionEntryPersistenceImpl" id="com.liferay.osb.lcs.service.persistence.LCSSubscriptionEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.lcs.service.impl.UserLCSMessageLocalServiceImpl" id="com.liferay.osb.lcs.service.UserLCSMessageLocalService" />
+	<bean class="com.liferay.osb.lcs.service.impl.UserLCSMessageServiceImpl" id="com.liferay.osb.lcs.service.UserLCSMessageService" />
+	<bean class="com.liferay.osb.lcs.service.persistence.impl.UserLCSMessagePersistenceImpl" id="com.liferay.osb.lcs.service.persistence.UserLCSMessagePersistence" parent="basePersistence" />
+</beans>
