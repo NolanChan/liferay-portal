@@ -1,0 +1,609 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder package-path="com.liferay.osb.lcs">
+	<author>Igor Beslic</author>
+	<namespace>OSBLCS</namespace>
+	<entity name="CorpProject" local-service="false" remote-service="true" />
+	<entity name="LCSClusterEntry" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="lcsClusterEntryId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="lcsProjectId" type="long" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="elastic" type="boolean" />
+		<column name="highPageLoadTime" type="int" />
+		<column name="location" type="String" />
+		<column name="mediumPageLoadTime" type="int" />
+		<column name="subscriptionType" type="String" />
+		<column name="type" type="int" />
+		<column name="archived" type="boolean" />
+
+		<!-- Finder methods -->
+
+		<finder name="LCSProjectId" return-type="Collection">
+			<finder-column name="lcsProjectId" />
+		</finder>
+		<finder name="LPI_N" return-type="Collection">
+			<finder-column name="lcsProjectId" />
+			<finder-column name="name" />
+		</finder>
+		<finder name="LPI_ST" return-type="Collection">
+			<finder-column name="lcsProjectId" />
+			<finder-column name="subscriptionType" />
+		</finder>
+		<finder name="LPI_N_A" return-type="Collection">
+			<finder-column name="lcsProjectId" />
+			<finder-column name="name" />
+			<finder-column name="archived" />
+		</finder>
+		<finder name="LPI_ST_A" return-type="Collection">
+			<finder-column name="lcsProjectId" />
+			<finder-column name="subscriptionType" />
+			<finder-column name="archived" />
+		</finder>
+	</entity>
+	<entity name="LCSClusterEntryToken" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="lcsClusterEntryTokenId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="lcsClusterEntryId" type="long" />
+		<column name="content" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="LCSClusterEntryId" return-type="LCSClusterEntryToken" unique="true">
+			<finder-column name="lcsClusterEntryId" />
+		</finder>
+	</entity>
+	<entity name="LCSClusterNode" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="lcsClusterNodeId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="lcsClusterEntryId" type="long" />
+		<column name="installationId" type="long" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="buildNumber" type="int" />
+		<column name="key" type="String" />
+		<column name="location" type="String" />
+		<column name="processorCoresTotal" type="int" />
+		<column name="archived" type="boolean" />
+		<column name="status" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="LCSClusterEntryId" return-type="Collection">
+			<finder-column name="lcsClusterEntryId" comparator="=" arrayable-operator="OR" />
+		</finder>
+		<finder name="BuildNumber" return-type="Collection">
+			<finder-column name="buildNumber" />
+		</finder>
+		<finder name="Key" return-type="LCSClusterNode" unique="true">
+			<finder-column name="key" />
+		</finder>
+		<finder name="LCEI_N" return-type="Collection">
+			<finder-column name="lcsClusterEntryId" />
+			<finder-column name="name" />
+		</finder>
+		<finder name="LCEI_A" return-type="Collection">
+			<finder-column name="lcsClusterEntryId" comparator="=" arrayable-operator="OR" />
+			<finder-column name="archived" />
+		</finder>
+		<finder name="BN_A" return-type="Collection">
+			<finder-column name="buildNumber" />
+			<finder-column name="archived" />
+		</finder>
+		<finder name="LCEI_N_A" return-type="Collection">
+			<finder-column name="lcsClusterEntryId" />
+			<finder-column name="name" />
+			<finder-column name="archived" />
+		</finder>
+	</entity>
+	<entity name="LCSClusterNodePatches" local-service="true" remote-service="false" />
+	<entity name="LCSClusterNodeUptime" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="lcsClusterNodeUptimeId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="lcsClusterNodeId" type="long" />
+		<column name="startTime" type="long" />
+		<column name="endTime" type="long" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="lcsClusterNodeId" />
+			<order-column name="startTime" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="LCSClusterNodeId" return-type="Collection">
+			<finder-column name="lcsClusterNodeId" comparator="=" arrayable-operator="OR" />
+		</finder>
+		<finder name="LCNI_ST" return-type="LCSClusterNodeUptime">
+			<finder-column name="lcsClusterNodeId" />
+			<finder-column name="startTime" />
+		</finder>
+		<finder name="LCNI_ET" return-type="LCSClusterNodeUptime">
+			<finder-column name="lcsClusterNodeId" />
+			<finder-column name="endTime" />
+		</finder>
+	</entity>
+	<entity name="LCSInvitation" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="lcsInvitationId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="lcsProjectId" type="long" />
+		<column name="emailAddress" type="String" />
+		<column name="lcsClusterEntryId" type="long" />
+		<column name="role" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="lcsProjectId" />
+			<order-column name="emailAddress" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="LCSProjectId" return-type="Collection">
+			<finder-column name="lcsProjectId" />
+		</finder>
+		<finder name="EmailAddress" return-type="Collection">
+			<finder-column name="emailAddress" />
+		</finder>
+		<finder name="LPI_EA" return-type="LCSInvitation" unique="true">
+			<finder-column name="lcsProjectId" />
+			<finder-column name="emailAddress" />
+		</finder>
+	</entity>
+	<entity name="LCSMembers" local-service="false" remote-service="true">
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portal" entity="Role" />
+	</entity>
+	<entity name="LCSMessage" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="lcsMessageId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="sourceMessageId" type="long" />
+		<column name="sourceSystemName" type="String" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="content" type="String" />
+		<column name="endDate" type="Date" />
+		<column name="global" type="boolean" />
+		<column name="severityLevel" type="int" />
+		<column name="type" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="ED_G" return-type="Collection">
+			<finder-column name="endDate" comparator=">=" />
+			<finder-column name="global" />
+		</finder>
+		<finder name="S_C_C" return-type="Collection">
+			<finder-column name="sourceSystemName" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="C_C_T" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="S_S_C_C" return-type="LCSMessage">
+			<finder-column name="sourceMessageId" />
+			<finder-column name="sourceSystemName" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="ClassName" />
+	</entity>
+	<entity name="LCSMetadata" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="lcsMetadataId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="availabilityIndex" type="long" />
+		<column name="buildNumber" type="int" />
+		<column name="gitTag" type="String" />
+		<column name="portalEdition" type="String" />
+		<column name="supportedLCSPortlet" type="int" />
+		<column name="supportedPatchingTool" type="int" />
+
+		<!-- Order by -->
+
+		<order by="desc">
+			<order-column name="buildNumber" />
+			<order-column name="gitTag" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="BN_PE" return-type="Collection">
+			<finder-column name="buildNumber" />
+			<finder-column name="portalEdition" />
+		</finder>
+		<finder name="BN_GT_PE" return-type="LCSMetadata" unique="true">
+			<finder-column name="buildNumber" />
+			<finder-column name="gitTag" />
+			<finder-column name="portalEdition" />
+		</finder>
+	</entity>
+	<entity name="LCSNotification" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="lcsNotificationId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="enabled" type="boolean" />
+		<column name="type" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="classNameId" />
+			<order-column name="classPK" />
+			<order-column name="userId" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="U_C_C" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="U_C_C_T" return-type="LCSNotification" unique="true">
+			<finder-column name="userId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="type" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="ClassName" />
+	</entity>
+	<entity name="LCSNotificationAuditEntry" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="lcsNotificationAuditEntryId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="lcsClusterNodeId" type="long" />
+		<column name="type" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+			<order-column name="lcsClusterNodeId" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="LCSClusterNodeId" return-type="Collection">
+			<finder-column name="lcsClusterNodeId" comparator="=" arrayable-operator="OR" />
+		</finder>
+		<finder name="U_LCNI_T" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="lcsClusterNodeId" />
+			<finder-column name="type" />
+		</finder>
+	</entity>
+	<entity name="LCSPatchEntry" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="lcsPatchEntryId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="patchId" type="String" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="patchingToolVersion" type="int" />
+		<column name="incremental" type="boolean" />
+		<column name="singular" type="boolean" />
+		<column name="version" type="int" />
+		<column name="size" type="long" />
+		<column name="rank" type="long" />
+		<column name="requirements" type="String" />
+		<column name="component" type="String" />
+		<column name="compatibleBuild" type="String" />
+		<column name="product" type="String" />
+		<column name="fixedIssues" type="String" />
+		<column name="moduleName" type="String" />
+		<column name="moduleId" type="String" />
+		<column name="tunnelWeb" type="boolean" />
+		<column name="buildDate" type="Date" />
+		<column name="builtFor" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="PatchId" return-type="LCSPatchEntry" unique="true">
+			<finder-column name="patchId" />
+		</finder>
+		<finder name="PTV_Product" return-type="Collection">
+			<finder-column name="patchingToolVersion" comparator="&lt;=" />
+			<finder-column name="product" />
+		</finder>
+	</entity>
+	<entity name="LCSPatchingAdvisor" local-service="false" remote-service="true" />
+	<entity name="LCSProject" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="lcsProjectId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="sourceSystemName" type="String" />
+		<column name="name" type="String" />
+		<column name="organizationId" type="long" />
+		<column name="addressId" type="long" />
+		<column name="accountEntryId" type="long" />
+		<column name="corpProjectId" type="long" />
+		<column name="contactEmailAddress" type="String" convert-null="false" />
+		<column name="phoneNumber" type="String" convert-null="false" />
+		<column name="subscriptionActive" type="boolean" />
+		<column name="archived" type="boolean" />
+
+		<!-- Finder methods -->
+
+		<finder name="Name" return-type="Collection">
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
+		</finder>
+		<finder name="CorpProjectId" return-type="LCSProject" unique="true">
+			<finder-column name="corpProjectId" />
+		</finder>
+		<finder name="CPI_A" return-type="Collection">
+			<finder-column name="corpProjectId" />
+			<finder-column name="archived" />
+		</finder>
+		<finder name="CPI_N_A" return-type="Collection">
+			<finder-column name="corpProjectId" />
+			<finder-column name="name" />
+			<finder-column name="archived" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Company" />
+	</entity>
+	<entity name="LCSRole" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="lcsRoleId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="lcsProjectId" type="long" />
+		<column name="lcsClusterEntryId" type="long" />
+		<column name="role" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="LCSProjectId" return-type="Collection">
+			<finder-column name="lcsProjectId" />
+		</finder>
+		<finder name="LCSClusterEntryId" return-type="Collection">
+			<finder-column name="lcsClusterEntryId" />
+		</finder>
+		<finder name="U_LPI" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="lcsProjectId" />
+		</finder>
+		<finder name="U_R" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="role" />
+		</finder>
+		<finder name="LPI_R" return-type="Collection">
+			<finder-column name="lcsProjectId" />
+			<finder-column name="role" />
+		</finder>
+		<finder name="U_LPI_LCEI" return-type="LCSRole" unique="true">
+			<finder-column name="userId" />
+			<finder-column name="lcsProjectId" />
+			<finder-column name="lcsClusterEntryId" />
+		</finder>
+	</entity>
+	<entity name="LCSSubscriptionEntry" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="lcsSubscriptionEntryId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="lcsProjectId" type="long" />
+		<column name="actualPrice" type="double" />
+		<column name="currencyCode" type="String" convert-null="false" />
+		<column name="instanceSize" type="int" />
+		<column name="type" type="String" convert-null="false" />
+		<column name="platform" type="String" convert-null="false" />
+		<column name="platformVersion" type="int" />
+		<column name="processorCoresAllowed" type="int" />
+		<column name="product" type="String" convert-null="false" />
+		<column name="productVersion" type="int" />
+		<column name="serversAllowed" type="int" />
+		<column name="serversUsed" type="int" />
+		<column name="startDate" type="Date" />
+		<column name="endDate" type="Date" />
+		<column name="supportStartDate" type="Date" />
+		<column name="supportEndDate" type="Date" />
+		<column name="active" type="boolean" />
+
+		<!-- Finder methods -->
+
+		<finder name="LCSProjectId" return-type="Collection">
+			<finder-column name="lcsProjectId" />
+		</finder>
+		<finder name="LPI_A" return-type="Collection">
+			<finder-column name="lcsProjectId" />
+			<finder-column name="active" />
+		</finder>
+		<finder name="LPI_T_A" return-type="Collection">
+			<finder-column name="lcsProjectId" />
+			<finder-column name="type" />
+			<finder-column name="active" />
+		</finder>
+	</entity>
+	<entity name="UserLCSMessage" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="userLcsMessageId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="lcsMessageId" type="long" />
+		<column name="hidden" type="boolean" />
+		<column name="read" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="lcsMessageId" />
+			<order-column name="read" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="LCSMessageId" return-type="Collection">
+			<finder-column name="lcsMessageId" />
+		</finder>
+		<finder name="U_LMI" return-type="UserLCSMessage" unique="true">
+			<finder-column name="userId" />
+			<finder-column name="lcsMessageId" />
+		</finder>
+		<finder name="U_H" return-type="Collection">
+			<finder-column name="userId"></finder-column>
+			<finder-column name="hidden"></finder-column>
+		</finder>
+		<finder name="U_R" return-type="Collection">
+			<finder-column name="userId"></finder-column>
+			<finder-column name="read"></finder-column>
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>DuplicateLCSClusterEntryName</exception>
+		<exception>DuplicateLCSClusterNodeName</exception>
+		<exception>DuplicateLCSInvitation</exception>
+		<exception>DuplicateLCSProjectCorpProjectId</exception>
+		<exception>DuplicateLCSProjectName</exception>
+		<exception>LCSClusterEntryType</exception>
+		<exception>LCSClusterNodeBuildNumber</exception>
+		<exception>LCSClusterNodeKey</exception>
+		<exception>LCSSubscriptionEntryProduct</exception>
+		<exception>LCSSubscriptionEntryType</exception>
+		<exception>RequiredLCSClusterEntryName</exception>
+		<exception>RequiredLCSClusterNodeName</exception>
+	</exceptions>
+</service-builder>
