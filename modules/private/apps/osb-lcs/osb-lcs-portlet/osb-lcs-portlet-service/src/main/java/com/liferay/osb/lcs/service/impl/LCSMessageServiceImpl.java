@@ -16,28 +16,138 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.lcs.notification.LCSEventType;
+import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.exception.NoSuchLCSProjectException;
+import com.liferay.osb.lcs.model.LCSMessage;
+import com.liferay.osb.lcs.constants.LCSMessageConstants;
+import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.service.base.LCSMessageServiceBaseImpl;
+import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
+import com.liferay.osb.lcs.util.ActionKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
+import java.util.Date;
+import java.util.List;
 
 /**
- * The implementation of the l c s message remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.lcs.service.LCSMessageService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Igor Beslic
- * @see LCSMessageServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSMessageServiceUtil
+ * @author  Igor Beslic
+ * @version LCS 1.7.1
+ * @since   LCS 1.6
  */
 @ProviderType
 public class LCSMessageServiceImpl extends LCSMessageServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSMessageServiceUtil} to access the l c s message remote service.
-	 */
+	@Override
+	public LCSMessage addCorpProjectLCSMessage(
+			long corpProjectId, long sourceMessageId, String content, int type)
+		throws PortalException {
+
+		LCSProject lcsProject = lcsProjectLocalService.fetchByCorpProject(
+			corpProjectId);
+
+		if (lcsProject == null) {
+			throw new NoSuchLCSProjectException(
+				"No LCS project exists with the corp project ID " +
+					corpProjectId);
+		}
+
+		LCSEventType lcsEventType = LCSEventType.valueOf(type);
+
+		return addLCSProjectLCSMessage(
+			lcsProject.getLcsProjectId(), sourceMessageId,
+			LCSConstants.SOURCE_SYSTEM_NAME_OSB, content,
+			new Date(LCSMessageConstants.END_DATE_INDEFINITE), true,
+			lcsEventType.getSeverityLevel(), type, true, true);
+	}
+
+	@Override
+	public LCSMessage addLCSProjectLCSMessage(
+			long lcsProjectId, long sourceMessageId, String sourceSystemName,
+			String content, Date endDate, boolean global, int severityLevel,
+			int type, boolean adminsOnly, boolean generateUserLCSMessages)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isSignedIn()) {
+			throw new PrincipalException();
+		}
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE);
+
+		return lcsMessageLocalService.addLCSProjectLCSMessage(
+			lcsProjectId, sourceMessageId, sourceSystemName, content, endDate,
+			global, severityLevel, type, adminsOnly, generateUserLCSMessages);
+	}
+
+	@Override
+	public void deleteCorpProjectLCSMessage(
+			long corpProjectId, long sourceMessageId)
+		throws PortalException {
+
+		LCSProject lcsProject = lcsProjectLocalService.fetchByCorpProject(
+			corpProjectId);
+
+		if (lcsProject == null) {
+			throw new NoSuchLCSProjectException(
+				"No LCS project exists with the corp project ID " +
+					corpProjectId);
+		}
+
+		deleteLCSProjectLCSMessage(
+			lcsProject.getLcsProjectId(), sourceMessageId,
+			LCSConstants.SOURCE_SYSTEM_NAME_OSB);
+	}
+
+	@Override
+	public void deleteLCSProjectLCSMessage(
+			long lcsProjectId, long sourceMessageId, String sourceSystemName)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isSignedIn()) {
+			throw new PrincipalException();
+		}
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE);
+
+		lcsMessageLocalService.deleteLCSProjectLCSMessage(
+			lcsProjectId, sourceMessageId, sourceSystemName,
+			classNameLocalService.getClassNameId(LCSProject.class.getName()));
+}
+
+	@Override
+	public List<LCSMessage> getLCSProjectLCSMessages(
+			long lcsProjectId, String sourceSystemName)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+
+		return lcsMessagePersistence.findByS_C_C(
+			sourceSystemName,
+			classNameLocalService.getClassNameId(LCSProject.class.getName()),
+			lcsProjectId);
+	}
+
+	@Override
+	public List<LCSMessage> getLCSMessages(Date modifyDateGT, Date modifyDateLT)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isSignedIn()) {
+			throw new PrincipalException();
+		}
+
+		return lcsMessageLocalService.getLCSMessages(
+			getUserId(), modifyDateGT, modifyDateLT);
+	}
+
 }

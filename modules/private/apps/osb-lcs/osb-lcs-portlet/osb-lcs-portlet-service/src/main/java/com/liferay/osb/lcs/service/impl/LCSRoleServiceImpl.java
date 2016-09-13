@@ -16,28 +16,229 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.model.LCSProject;
+import com.liferay.osb.lcs.model.LCSRole;
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
+import com.liferay.osb.lcs.osbportlet.service.OSBPortletServiceUtil;
+import com.liferay.osb.lcs.osbportlet.util.OSBPortletUtil;
 import com.liferay.osb.lcs.service.base.LCSRoleServiceBaseImpl;
+import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
+import com.liferay.osb.lcs.util.ActionKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
- * The implementation of the l c s role remote service.
+ * Provides the remote service for accessing, adding, deleting, updating, and
+ * validating LCS roles. Its methods include permission checks.
  *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.lcs.service.LCSRoleService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Igor Beslic
- * @see LCSRoleServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSRoleServiceUtil
+ * @author  Igor Beslic
+ * @version LCS 1.7.1
+ * @since   LCS 0.1
  */
 @ProviderType
 public class LCSRoleServiceImpl extends LCSRoleServiceBaseImpl {
 
 	/**
-	 * NOTE FOR DEVELOPERS:
+	 * Assigns the LCS role to the user.
 	 *
-	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSRoleServiceUtil} to access the l c s role remote service.
+	 * @param  userId the primary key of the user being assigned the role
+	 * @param  lcsProjectId the primary key of the LCS project the role is
+	 *         scoped to
+	 * @param  lcsClusterEntryId the primary key of the environment
+	 * @param  role the LCS role identifier
+	 * @return the LCS role
+	 * @throws PortalException if any of the LCS role attributes were invalid,
+	 *         or an operation wasn't allowed by the LCS project's membership
+	 *         policy
+	 * @since  LCS 0.1
 	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public LCSRole addLCSRole(
+			long userId, long lcsProjectId, long lcsClusterEntryId, int role)
+		throws PortalException {
+
+		if ((userId == getUserId()) && isFirstLCSRole(userId, lcsProjectId)) {
+			if (role != LCSRoleConstants.ROLE_LCS_ADMINISTRATOR) {
+				throw new UnsupportedOperationException();
+			}
+
+			return lcsRoleLocalService.addLCSRole(
+				userId, lcsProjectId, lcsClusterEntryId, role);
+		}
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_USERS);
+
+		return lcsRoleLocalService.addLCSRole(
+			userId, lcsProjectId, lcsClusterEntryId, role);
+	}
+
+	/**
+	 * Deletes the LCS role matching the LCS role identifier.
+	 *
+	 * @param  lcsRoleId the primary key of the LCS role
+	 * @return the deleted LCS role
+	 * @throws PortalException if the operation wasn't allowed by the LCS
+	 *         project's membership policy
+	 * @since  LCS 0.1
+	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public LCSRole deleteLCSRole(long lcsRoleId) throws PortalException {
+		LCSRole lcsRole = lcsRolePersistence.findByPrimaryKey(lcsRoleId);
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsRole.getLcsProjectId(),
+			ActionKeys.MANAGE_USERS);
+
+		return lcsRoleLocalService.deleteLCSRole(lcsRole);
+	}
+
+	/**
+	 * Returns all LCS roles scoped to the LCS project.
+	 *
+	 * @param  lcsProjectId the primary key of the LCS project
+	 * @return the LCS roles scoped to the LCS project
+	 * @throws PortalException if the operation wasn't allowed by the LCS
+	 *         project's membership policy
+	 * @since  LCS 0.1
+	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public List<LCSRole> getLCSProjectLCSRoles(long lcsProjectId)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isCompanyAdmin()) {
+			LCSProjectPermission.check(
+				getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_USERS);
+		}
+
+		return lcsRoleLocalService.getLCSProjectLCSRoles(lcsProjectId);
+	}
+
+	@Override
+	public List<LCSRole> getUserLCSRoles(long lcsProjectId)
+		throws PortalException {
+
+		return lcsRoleLocalService.getUserLCSRoles(getUserId(), lcsProjectId);
+	}
+
+	@Override
+	public List<LCSRole> getUserLCSRoles(long lcsProjectId, int role)
+		throws PortalException {
+
+		List<LCSRole> lcsRoles = new ArrayList<>();
+
+		lcsRoles.addAll(
+			lcsRoleLocalService.getUserLCSRoles(getUserId(), lcsProjectId));
+
+		Iterator<LCSRole> iterator = lcsRoles.iterator();
+
+		while (iterator.hasNext()) {
+			LCSRole lcsRole = iterator.next();
+
+			if (role == lcsRole.getRole()) {
+				continue;
+			}
+
+			iterator.remove();
+		}
+
+		return lcsRoles;
+	}
+
+	/**
+	 * Returns <code>true</code> if the user has the LCS Administrator role in
+	 * the LCS project, <code>false</code> otherwise.
+	 *
+	 * @param  lcsProjectId the primary key of the LCS project
+	 * @return <code>true</code> if the user has the LCS Administrator role in
+	 *         the LCS project, <code>false</code> otherwise
+	 * @throws PortalException if the operation wasn't allowed by the LCS
+	 *         project's membership policy
+	 * @since  LCS 1.0
+	 */
+	@Override
+	public boolean hasUserLCSAdministratorLCSRole(long lcsProjectId)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+
+		return lcsRoleLocalService.hasUserLCSAdministratorLCSRole(
+			getUserId(), lcsProjectId);
+	}
+
+	/**
+	 * Returns <code>true</code> if the user has an LCS role in the LCS project,
+	 * <code>false</code> otherwise.
+	 *
+	 * <p>
+	 * If <code>manageLCSClusterEntry</code> is <code>true</code>, this method
+	 * checks whether the role is adequate for environment management tasks.
+	 * </p>
+	 *
+	 * @param  lcsProjectId the primary key of the LCS project
+	 * @param  manageLCSClusterEntry whether the user can manage project
+	 *         environments
+	 * @return <code>true</code> if the user has a role in the LCS project or a
+	 *         role that lets them manage environments
+	 * @throws PortalException if the operation wasn't allowed by the LCS
+	 *         project's membership policy
+	 * @since  LCS 0.1
+	 */
+	@Override
+	public boolean hasUserLCSRole(
+			long lcsProjectId, boolean manageLCSClusterEntry)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+
+		return lcsRoleLocalService.hasUserLCSRole(
+			getUserId(), lcsProjectId, manageLCSClusterEntry);
+	}
+
+	/**
+	 * Returns <code>true</code> if the user can be the first LCS role owner in
+	 * the LCS project.
+	 *
+	 * <p>
+	 * This method checks the LCS project for the existence of any LCS role. If
+	 * no LCS role is found and the user is a LCS project member, the method
+	 * returns <code>true</code>. Otherwise it returns <code>false</code>.
+	 * </p>
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  lcsProjectId the primary key of the LCS project
+	 * @return <code>true</code> if the user can be the first LCS role owner in
+	 *         the LCS project, <code>false</code> otherwise
+	 * @throws PortalException if the operation wasn't allowed by the LCS
+	 *         project's membership policy
+	 * @since  LCS 0.1
+	 */
+	protected boolean isFirstLCSRole(long userId, long lcsProjectId)
+		throws PortalException {
+
+		if (lcsRolePersistence.countByLCSProjectId(lcsProjectId) > 0) {
+			return false;
+		}
+
+		LCSProject lcsProject = lcsProjectPersistence.findByPrimaryKey(
+			lcsProjectId);
+
+		return OSBPortletServiceUtil.hasUserCorpProjectRole(
+			userId, lcsProject.getCorpProjectId(),
+			OSBPortletUtil.ROLE_OSB_CORP_LCS_USER);
+	}
+
 }

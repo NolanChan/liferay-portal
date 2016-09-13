@@ -16,18 +16,15 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.model.LCSInvitation;
 import com.liferay.osb.lcs.service.base.LCSInvitationServiceBaseImpl;
+import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
+import com.liferay.osb.lcs.util.ActionKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
- * The implementation of the l c s invitation remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.lcs.service.LCSInvitationService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Igor Beslic
  * @see LCSInvitationServiceBaseImpl
  * @see com.liferay.osb.lcs.service.LCSInvitationServiceUtil
@@ -35,9 +32,54 @@ import com.liferay.osb.lcs.service.base.LCSInvitationServiceBaseImpl;
 @ProviderType
 public class LCSInvitationServiceImpl extends LCSInvitationServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSInvitationServiceUtil} to access the l c s invitation remote service.
-	 */
+	@Override
+	public LCSInvitation addLCSInvitation(
+			long lcsProjectId, String emailAddress, long lcsClusterEntryId,
+			int role)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_USERS);
+
+		return lcsInvitationLocalService.addLCSInvitation(
+			getUserId(), lcsProjectId, emailAddress, lcsClusterEntryId, role);
+	}
+
+	@Override
+	public LCSInvitation deleteLCSInvitation(long lcsInvitationId)
+		throws PortalException {
+
+		LCSInvitation lcsInvitation = lcsInvitationPersistence.findByPrimaryKey(
+			lcsInvitationId);
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsInvitation.getLcsProjectId(),
+			ActionKeys.MANAGE_USERS);
+
+		return lcsInvitationPersistence.remove(lcsInvitationId);
+	}
+
+	@Override
+	public LCSInvitation getLCSProjectLCSInvitation(
+			long lcsProjectId, String emailAddress)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_USERS);
+
+		return lcsInvitationLocalService.getLCSProjectLCSInvitation(
+			lcsProjectId, emailAddress);
+	}
+
+	@Override
+	public List<LCSInvitation> getLCSProjectLCSInvitations(long lcsProjectId)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_USERS);
+
+		return lcsInvitationLocalService.getLCSProjectLCSInvitations(
+			lcsProjectId);
+	}
+
 }

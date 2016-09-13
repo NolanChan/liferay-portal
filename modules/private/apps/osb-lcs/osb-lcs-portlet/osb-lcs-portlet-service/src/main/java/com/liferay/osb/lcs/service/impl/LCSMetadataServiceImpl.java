@@ -16,28 +16,49 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.model.LCSMetadata;
 import com.liferay.osb.lcs.service.base.LCSMetadataServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
+import java.util.List;
 
 /**
- * The implementation of the l c s metadata remote service.
+ * Provides the remote service for accessing LCS metadata. Its methods include
+ * permission checks.
  *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.lcs.service.LCSMetadataService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Igor Beslic
- * @see LCSMetadataServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSMetadataServiceUtil
+ * @author  Igor Beslic
+ * @version LCS 1.7.1
+ * @since   LCS 1.1
  */
 @ProviderType
 public class LCSMetadataServiceImpl extends LCSMetadataServiceBaseImpl {
 
 	/**
-	 * NOTE FOR DEVELOPERS:
+	 * Returns all LCS metadata matching the portal instance's build number and
+	 * edition.
 	 *
-	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSMetadataServiceUtil} to access the l c s metadata remote service.
+	 * @param  buildNumber the portal instance's build number
+	 * @param  portalEdition the portal instance's edition
+	 * @return the matching LCS metadata
+	 * @throws PortalException if the caller was not signed in to the LCS portal
+	 *         instance
+	 * @since  LCS 1.1
 	 */
+	@Override
+	public List<LCSMetadata> getLCSMetadatas(
+			int buildNumber, String portalEdition)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isSignedIn()) {
+			throw new PrincipalException();
+		}
+
+		return lcsMetadataLocalService.getLCSMetadatas(
+			buildNumber, portalEdition);
+	}
+
 }

@@ -16,18 +16,18 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.exception.NoSuchLCSClusterEntryTokenException;
+import com.liferay.osb.lcs.model.LCSClusterEntryToken;
 import com.liferay.osb.lcs.service.base.LCSClusterEntryTokenServiceBaseImpl;
+import com.liferay.osb.lcs.service.permission.LCSClusterEntryPermission;
+import com.liferay.osb.lcs.util.ActionKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
- * The implementation of the l c s cluster entry token remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.lcs.service.LCSClusterEntryTokenService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Igor Beslic
  * @see LCSClusterEntryTokenServiceBaseImpl
  * @see com.liferay.osb.lcs.service.LCSClusterEntryTokenServiceUtil
@@ -36,9 +36,94 @@ import com.liferay.osb.lcs.service.base.LCSClusterEntryTokenServiceBaseImpl;
 public class LCSClusterEntryTokenServiceImpl
 	extends LCSClusterEntryTokenServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSClusterEntryTokenServiceUtil} to access the l c s cluster entry token remote service.
-	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public LCSClusterEntryToken addLCSClusterEntryToken(
+			long lcsClusterEntryId, String content)
+		throws PortalException {
+
+		LCSClusterEntryPermission.check(
+			getPermissionChecker(), lcsClusterEntryId, ActionKeys.MANAGE_ENTRY);
+
+		return lcsClusterEntryTokenLocalService.addLCSClusterEntryToken(
+			getUserId(), lcsClusterEntryId, content);
+	}
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public LCSClusterEntryToken deleteLCSClusterEntryToken(
+			long lcsClusterEntryTokenId)
+		throws PortalException {
+
+		LCSClusterEntryToken lcsClusterEntryToken =
+			lcsClusterEntryTokenPersistence.findByPrimaryKey(
+				lcsClusterEntryTokenId);
+
+		LCSClusterEntryPermission.check(
+			getPermissionChecker(), lcsClusterEntryToken.getLcsClusterEntryId(),
+			ActionKeys.MANAGE_ENTRY);
+
+		return lcsClusterEntryTokenLocalService.deleteLCSClusterEntryToken(
+			lcsClusterEntryTokenId);
+	}
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public LCSClusterEntryToken fetchLCSClusterEntryLCSClusterEntryToken(
+			long lcsClusterEntryId)
+		throws PortalException {
+
+		LCSClusterEntryPermission.check(
+			getPermissionChecker(), lcsClusterEntryId, ActionKeys.MANAGE_ENTRY);
+
+		return lcsClusterEntryTokenLocalService.
+			fetchLCSClusterEntryLCSClusterEntryToken(lcsClusterEntryId);
+	}
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public LCSClusterEntryToken fetchLCSClusterEntryToken(
+			long lcsClusterEntryTokenId)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		LCSClusterEntryToken lcsClusterEntryToken =
+			lcsClusterEntryTokenLocalService.fetchLCSClusterEntryToken(
+				lcsClusterEntryTokenId);
+
+		if (lcsClusterEntryToken == null) {
+			throw new NoSuchLCSClusterEntryTokenException();
+		}
+
+		LCSClusterEntryPermission.check(
+			permissionChecker, lcsClusterEntryToken.getLcsClusterEntryId(),
+			ActionKeys.MANAGE_ENTRY);
+
+		return lcsClusterEntryToken;
+	}
+
+	@Override
+	public boolean isValid(long lcsClusterEntryTokenId) throws PortalException {
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isSignedIn()) {
+			throw new PrincipalException();
+		}
+
+		LCSClusterEntryToken lcsClusterEntryToken =
+			lcsClusterEntryTokenPersistence.fetchByPrimaryKey(
+				lcsClusterEntryTokenId);
+
+		if (lcsClusterEntryToken == null) {
+			return false;
+		}
+
+		LCSClusterEntryPermission.check(
+			permissionChecker, lcsClusterEntryToken.getLcsClusterEntryId(),
+			ActionKeys.MANAGE_ENTRY);
+
+		return true;
+	}
+
 }

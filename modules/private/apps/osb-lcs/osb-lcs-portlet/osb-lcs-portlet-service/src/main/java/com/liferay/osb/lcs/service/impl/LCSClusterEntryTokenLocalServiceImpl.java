@@ -16,18 +16,17 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.messaging.CommandMessageSenderUtil;
+import com.liferay.osb.lcs.model.LCSClusterEntryToken;
+import com.liferay.osb.lcs.model.LCSClusterNode;
+import com.liferay.osb.lcs.model.impl.LCSClusterEntryTokenImpl;
 import com.liferay.osb.lcs.service.base.LCSClusterEntryTokenLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Date;
+import java.util.List;
 
 /**
- * The implementation of the l c s cluster entry token local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.lcs.service.LCSClusterEntryTokenLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Igor Beslic
  * @see LCSClusterEntryTokenLocalServiceBaseImpl
  * @see com.liferay.osb.lcs.service.LCSClusterEntryTokenLocalServiceUtil
@@ -36,9 +35,64 @@ import com.liferay.osb.lcs.service.base.LCSClusterEntryTokenLocalServiceBaseImpl
 public class LCSClusterEntryTokenLocalServiceImpl
 	extends LCSClusterEntryTokenLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSClusterEntryTokenLocalServiceUtil} to access the l c s cluster entry token local service.
-	 */
+	@Override
+	public LCSClusterEntryToken addLCSClusterEntryToken(
+		long userId, long lcsClusterEntryId, String content) {
+
+		LCSClusterEntryToken lcsClusterEntryToken =
+			new LCSClusterEntryTokenImpl();
+
+		lcsClusterEntryToken.setLcsClusterEntryTokenId(
+			counterLocalService.increment(
+				LCSClusterEntryToken.class.getName()));
+
+		lcsClusterEntryToken.setUserId(userId);
+		lcsClusterEntryToken.setCreateDate(new Date());
+		lcsClusterEntryToken.setLcsClusterEntryId(lcsClusterEntryId);
+		lcsClusterEntryToken.setContent(content);
+
+		return lcsClusterEntryTokenPersistence.update(lcsClusterEntryToken);
+	}
+
+	@Override
+	public LCSClusterEntryToken deleteLCSClusterEntryToken(
+			long lcsClusterEntryTokenId)
+		throws PortalException {
+
+		LCSClusterEntryToken lcsClusterEntryToken =
+			lcsClusterEntryTokenPersistence.fetchByPrimaryKey(
+				lcsClusterEntryTokenId);
+
+		List<LCSClusterNode> lcsClusterNodes =
+			lcsClusterNodeLocalService.getLCSClusterEntryLCSClusterNodes(
+				lcsClusterEntryToken.getLcsClusterEntryId(), true);
+
+		for (LCSClusterNode lcsClusterNode : lcsClusterNodes) {
+			if (lcsClusterNode.isOffline()) {
+				continue;
+			}
+
+			CommandMessageSenderUtil.invalidateLCSClusterEntryToken(
+				lcsClusterNode.getKey());
+		}
+
+		return lcsClusterEntryTokenPersistence.remove(lcsClusterEntryTokenId);
+	}
+
+	@Override
+	public LCSClusterEntryToken fetchLCSClusterEntryLCSClusterEntryToken(
+		long lcsClusterEntryId) {
+
+		return lcsClusterEntryTokenPersistence.fetchByLCSClusterEntryId(
+			lcsClusterEntryId);
+	}
+
+	@Override
+	public LCSClusterEntryToken fetchLCSClusterEntryToken(
+		long lcsClusterEntryTokenId) {
+
+		return lcsClusterEntryTokenPersistence.fetchByPrimaryKey(
+			lcsClusterEntryTokenId);
+	}
+
 }

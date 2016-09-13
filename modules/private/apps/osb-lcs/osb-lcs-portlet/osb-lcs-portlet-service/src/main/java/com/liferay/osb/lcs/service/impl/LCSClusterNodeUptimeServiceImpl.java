@@ -16,18 +16,23 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.lcs.subscription.SubscriptionType;
+import com.liferay.osb.lcs.model.LCSClusterNodeUptime;
 import com.liferay.osb.lcs.service.base.LCSClusterNodeUptimeServiceBaseImpl;
+import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
+import com.liferay.osb.lcs.util.ActionKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
- * The implementation of the l c s cluster node uptime remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.lcs.service.LCSClusterNodeUptimeService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Igor Beslic
  * @see LCSClusterNodeUptimeServiceBaseImpl
  * @see com.liferay.osb.lcs.service.LCSClusterNodeUptimeServiceUtil
@@ -36,9 +41,92 @@ import com.liferay.osb.lcs.service.base.LCSClusterNodeUptimeServiceBaseImpl;
 public class LCSClusterNodeUptimeServiceImpl
 	extends LCSClusterNodeUptimeServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSClusterNodeUptimeServiceUtil} to access the l c s cluster node uptime remote service.
-	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public double getMonthlyElasticLCSClusterNodeUptimeTotal(
+			long lcsProjectId, int month, int year)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+
+		return lcsClusterNodeUptimeLocalService.
+			getMonthlyElasticLCSClusterNodeUptimeTotal(
+				lcsProjectId, month, year);
+	}
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public Map<Date, Double> getMonthlyElasticLCSClusterNodeUptimeTotalMap(
+			long lcsProjectId, int startMonth, int startYear, int endMonth,
+			int endYear)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+
+		return lcsClusterNodeUptimeLocalService.
+			getMonthlyElasticLCSClusterNodeUptimeTotalMap(
+				lcsProjectId, startMonth, startYear, endMonth, endYear);
+	}
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public List<LCSClusterNodeUptime>
+		getMonthlyElasticTotalLCSClusterNodeUptimes(
+			long lcsProjectId, int month, int year)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+
+		return lcsClusterNodeUptimeLocalService.
+			getMonthlyElasticTotalLCSClusterNodeUptimes(
+				lcsProjectId, month, year);
+	}
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public List<LCSClusterNodeUptime> getMonthlyLCSClusterNodeUptimes(
+			long lcsClusterEntryId, long lcsClusterNodeId, long lcsProjectId,
+			int month, int year, boolean details, boolean elastic)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+
+		return lcsClusterNodeUptimeLocalService.getMonthlyLCSClusterNodeUptimes(
+			lcsClusterEntryId, lcsClusterNodeId, lcsProjectId, month, year,
+			details, elastic, SubscriptionType.UNDEFINED);
+	}
+
+	@Override
+	public void updateLCSClusterNodeUptime(String key) throws PortalException {
+		checkPermission();
+
+		lcsClusterNodeUptimeLocalService.updateLCSClusterNodeUptime(key);
+	}
+
+	@Override
+	public void updateLCSClusterNodeUptimes(String key, String uptimesJSON)
+		throws PortalException {
+
+		checkPermission();
+
+		lcsClusterNodeUptimeLocalService.updateLCSClusterNodeUptimes(
+			key, uptimesJSON);
+	}
+
+	protected void checkPermission() throws PortalException {
+		User user = getUser();
+
+		if (StringUtil.equalsIgnoreCase(
+			user.getEmailAddress(), "system@liferay.com")) {
+
+			return;
+		}
+
+		throw new PrincipalException();
+	}
+
 }

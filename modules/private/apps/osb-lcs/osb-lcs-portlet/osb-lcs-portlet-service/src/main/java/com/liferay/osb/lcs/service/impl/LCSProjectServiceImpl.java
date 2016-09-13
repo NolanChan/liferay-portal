@@ -16,18 +16,32 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.model.LCSProject;
+import com.liferay.osb.lcs.model.LCSRole;
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
+import com.liferay.osb.lcs.osbportlet.service.OSBPortletServiceUtil;
+import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
 import com.liferay.osb.lcs.service.base.LCSProjectServiceBaseImpl;
+import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
+import com.liferay.osb.lcs.util.ActionKeys;
+import com.liferay.osb.lcs.util.ApplicationProfile;
+import com.liferay.osb.lcs.util.PortletPropsValues;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UniqueList;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
- * The implementation of the l c s project remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.lcs.service.LCSProjectService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Igor Beslic
  * @see LCSProjectServiceBaseImpl
  * @see com.liferay.osb.lcs.service.LCSProjectServiceUtil
@@ -35,9 +49,195 @@ import com.liferay.osb.lcs.service.base.LCSProjectServiceBaseImpl;
 @ProviderType
 public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSProjectServiceUtil} to access the l c s project remote service.
-	 */
+	@Override
+	public LCSProject addDefaultLCSProject() throws PortalException {
+		checkSignedIn();
+
+		User user = getUser();
+
+		LCSProject lcsProject = lcsProjectLocalService.addLCSProject(
+			"LCS", LCSConstants.CORP_PROJECT_DEFAULT_NAME, user.getUserId());
+
+		lcsClusterEntryLocalService.addLCSClusterEntry(
+			lcsProject.getLcsProjectId(),
+			LCSConstants.LCS_CLUSTER_ENTRY_DEFAULT_NAME, null, null, null,
+			LCSConstants.LCS_CLUSTER_ENTRY_TYPE_ENVIRONMENT);
+
+		return lcsProject;
+	}
+
+	@Override
+	public LCSProject addLCSProject(String sourceSystemName, String name)
+		throws PortalException {
+
+		checkSignedIn();
+
+		return lcsProjectLocalService.addLCSProject(
+			sourceSystemName, name, getUserId());
+	}
+
+	@Override
+	public boolean checkUserAccountEntryLCSProject() throws PortalException {
+		checkSignedIn();
+
+		return lcsProjectLocalService.checkUserAccountEntryLCSProject(
+			getUser());
+	}
+
+	@Override
+	public LCSProject deleteLCSProject(long lcsProjectId)
+		throws PortalException {
+
+		if (PortletPropsValues.APPLICATION_PROFILE ==
+				ApplicationProfile.PRODUCTION) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE);
+
+		return lcsProjectLocalService.deleteLCSProject(lcsProjectId);
+	}
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public LCSProject getLCSProject(long lcsProjectId) throws PortalException {
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+
+		return lcsProjectPersistence.findByPrimaryKey(lcsProjectId);
+	}
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public String getLCSProjectAdministratorEmailAddress(long lcsProjectId)
+		throws PortalException {
+
+		List<LCSRole> lcsProjectLCSRoles = lcsRolePersistence.findByLPI_R(
+			lcsProjectId, LCSRoleConstants.ROLE_LCS_ADMINISTRATOR);
+
+		LCSRole lcsRole = lcsProjectLCSRoles.get(0);
+
+		User user = userPersistence.findByPrimaryKey(lcsRole.getUserId());
+
+		return user.getEmailAddress();
+	}
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public long getUserDefaultLCSProjectId() throws PortalException {
+		checkSignedIn();
+
+		User user = userPersistence.findByPrimaryKey(getUserId());
+
+		ExpandoBridge expandoBridge = user.getExpandoBridge();
+
+		long defaultLCSProjectId = GetterUtil.getLong(
+			expandoBridge.getAttribute("defaultLCSProjectId", false));
+
+		if (defaultLCSProjectId > 0) {
+			LCSProject lcsProject = LCSProjectServiceUtil.getLCSProject(
+				defaultLCSProjectId);
+
+			if (lcsProject != null) {
+				return defaultLCSProjectId;
+			}
+		}
+
+		List<LCSProject> lcsProjects = getUserLCSProjects();
+
+		if (lcsProjects.isEmpty()) {
+			return 0;
+		}
+
+		for (LCSProject lcsProject : lcsProjects) {
+			if (StringUtil.equalsIgnoreCase(
+				lcsProject.getName(),
+				LCSConstants.CORP_PROJECT_DEFAULT_NAME)) {
+
+				return lcsProject.getLcsProjectId();
+			}
+		}
+
+		LCSProject defaultLCSProject = lcsProjects.get(0);
+
+		return defaultLCSProject.getLcsProjectId();
+	}
+
+	@Override
+	public List<LCSProject> getUserLCSProjects() throws PortalException {
+		return getUserLCSProjects(
+			false,
+			LCSRoleConstants.ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER);
+	}
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public List<LCSProject> getUserLCSProjects(boolean lcsRole)
+		throws PortalException {
+
+		checkSignedIn();
+
+		return lcsProjectLocalService.getUserLCSProjects(getUserId(), lcsRole);
+	}
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public List<LCSProject> getUserLCSProjects(boolean lcsRole, int role)
+		throws PortalException {
+
+		User user = getUser();
+
+		if (user.isDefaultUser()) {
+			return Collections.emptyList();
+		}
+
+		return lcsProjectLocalService.getUserLCSProjects(
+			getUserId(), lcsRole, role);
+	}
+
+	@Override
+	public List<LCSProject> getUserManageableLCSProjects()
+		throws PortalException {
+
+		List<LCSProject> manageableLCSProjects = new UniqueList<>();
+
+		manageableLCSProjects.addAll(
+			getUserLCSProjects(true, LCSRoleConstants.ROLE_LCS_ADMINISTRATOR));
+		manageableLCSProjects.addAll(
+			getUserLCSProjects(
+				true, LCSRoleConstants.ROLE_LCS_ENVIRONMENT_MANAGER));
+
+		return manageableLCSProjects;
+	}
+
+	@Override
+	public LCSProject updateLCSProjectName(long lcsProjectId, String name)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE);
+
+		LCSProject lcsProject = lcsProjectPersistence.findByPrimaryKey(
+			lcsProjectId);
+
+		lcsProject.setName(name);
+
+		lcsProject = lcsProjectLocalService.updateLCSProject(lcsProject);
+
+		OSBPortletServiceUtil.updateCorpProject(
+			lcsProject.getCorpProjectId(), name);
+
+		return lcsProject;
+	}
+
+	protected void checkSignedIn() throws PrincipalException {
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isSignedIn()) {
+			throw new PrincipalException();
+		}
+	}
+
 }

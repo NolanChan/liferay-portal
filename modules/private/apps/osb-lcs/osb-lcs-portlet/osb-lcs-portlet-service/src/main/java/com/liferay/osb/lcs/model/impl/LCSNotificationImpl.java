@@ -15,25 +15,44 @@
 package com.liferay.osb.lcs.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+import com.liferay.osb.lcs.model.LCSClusterEntry;
+import com.liferay.osb.lcs.model.LCSClusterNode;
+import com.liferay.osb.lcs.model.LCSProject;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
- * The extended model implementation for the LCSNotification service. Represents a row in the &quot;OSBLCS_LCSNotification&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.lcs.model.LCSNotification} interface.
- * </p>
- *
  * @author Igor Beslic
  */
 @ProviderType
 public class LCSNotificationImpl extends LCSNotificationBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a l c s notification model instance should use the {@link com.liferay.osb.lcs.model.LCSNotification} interface instead.
-	 */
 	public LCSNotificationImpl() {
+	}
+
+	@Override
+	public boolean isLCSClusterEntryNotification() {
+		return hasClassName(LCSClusterEntry.class);
+	}
+
+	@Override
+	public boolean isLCSClusterNodeNotification() {
+		return hasClassName(LCSClusterNode.class);
+	}
+
+	@Override
+	public boolean isLCSProjectNotification() {
+		return hasClassName(LCSProject.class);
+	}
+
+	protected boolean hasClassName(Class<?> clazz) {
+		long classNameId = getClassNameId();
+
+		if (classNameId == PortalUtil.getClassNameId(clazz)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 }

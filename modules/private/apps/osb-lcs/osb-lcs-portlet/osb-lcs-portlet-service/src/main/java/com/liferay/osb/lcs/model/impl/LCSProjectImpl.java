@@ -17,22 +17,11 @@ package com.liferay.osb.lcs.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the LCSProject service. Represents a row in the &quot;OSBLCS_LCSProject&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.lcs.model.LCSProject} interface.
- * </p>
- *
  * @author Igor Beslic
  */
 @ProviderType
 public class LCSProjectImpl extends LCSProjectBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a l c s project model instance should use the {@link com.liferay.osb.lcs.model.LCSProject} interface instead.
-	 */
 	public LCSProjectImpl() {
 	}
 

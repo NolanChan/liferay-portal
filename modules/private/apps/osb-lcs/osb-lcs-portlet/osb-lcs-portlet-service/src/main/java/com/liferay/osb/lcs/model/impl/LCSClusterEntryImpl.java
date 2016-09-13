@@ -15,25 +15,61 @@
 package com.liferay.osb.lcs.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.model.LCSClusterNode;
+import com.liferay.osb.lcs.service.LCSClusterNodeLocalServiceUtil;
+
+import java.util.List;
 
 /**
- * The extended model implementation for the LCSClusterEntry service. Represents a row in the &quot;OSBLCS_LCSClusterEntry&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.lcs.model.LCSClusterEntry} interface.
- * </p>
- *
  * @author Igor Beslic
+ * @author Peter Shin
  */
 @ProviderType
 public class LCSClusterEntryImpl extends LCSClusterEntryBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a l c s cluster entry model instance should use the {@link com.liferay.osb.lcs.model.LCSClusterEntry} interface instead.
-	 */
 	public LCSClusterEntryImpl() {
 	}
+
+	@Override
+	public boolean hasOfflineLCSClusterNode() {
+		if (_hasOfflineLCSClusterNode != null) {
+			return _hasOfflineLCSClusterNode;
+		}
+
+		List<LCSClusterNode> lcsClusterNodes =
+			LCSClusterNodeLocalServiceUtil.getLCSClusterEntryLCSClusterNodes(
+				getLcsClusterEntryId(), true);
+
+		_hasOfflineLCSClusterNode = false;
+
+		for (LCSClusterNode lcsClusterNode : lcsClusterNodes) {
+			if (lcsClusterNode.isOffline()) {
+				_hasOfflineLCSClusterNode = true;
+			}
+		}
+
+		return _hasOfflineLCSClusterNode;
+	}
+
+	@Override
+	public boolean isCluster() {
+		if (getType() == LCSConstants.LCS_CLUSTER_ENTRY_TYPE_CLUSTER) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isEnvironment() {
+		if (getType() == LCSConstants.LCS_CLUSTER_ENTRY_TYPE_ENVIRONMENT) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private Boolean _hasOfflineLCSClusterNode;
 
 }

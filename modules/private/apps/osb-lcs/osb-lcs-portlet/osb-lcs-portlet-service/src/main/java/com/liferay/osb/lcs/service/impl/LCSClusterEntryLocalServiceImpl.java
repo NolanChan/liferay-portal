@@ -16,18 +16,33 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.lcs.subscription.SubscriptionType;
+import com.liferay.osb.lcs.exception.DuplicateLCSClusterEntryNameException;
+import com.liferay.osb.lcs.exception.RequiredLCSClusterEntryNameException;
+import com.liferay.osb.lcs.model.LCSClusterEntry;
+import com.liferay.osb.lcs.constants.LCSClusterEntryConstants;
+import com.liferay.osb.lcs.model.LCSClusterEntryToken;
+import com.liferay.osb.lcs.model.LCSInvitation;
+import com.liferay.osb.lcs.model.LCSRole;
 import com.liferay.osb.lcs.service.base.LCSClusterEntryLocalServiceBaseImpl;
+import com.liferay.osb.lcs.util.ApplicationProfile;
+import com.liferay.osb.lcs.util.PortletPropsValues;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
- * The implementation of the l c s cluster entry local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.lcs.service.LCSClusterEntryLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Igor Beslic
  * @see LCSClusterEntryLocalServiceBaseImpl
  * @see com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil
@@ -36,9 +51,432 @@ import com.liferay.osb.lcs.service.base.LCSClusterEntryLocalServiceBaseImpl;
 public class LCSClusterEntryLocalServiceImpl
 	extends LCSClusterEntryLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil} to access the l c s cluster entry local service.
-	 */
+	@Override
+	public LCSClusterEntry addLCSClusterEntry(
+			long lcsProjectId, String name, String description,
+			int highPageLoadTime, String location, int mediumPageLoadTime,
+			String subscriptionType, int type)
+		throws PortalException {
+
+		validate(lcsProjectId, name);
+
+		long lcsClusterEntryId = counterLocalService.increment();
+
+		LCSClusterEntry lcsClusterEntry = createLCSClusterEntry(
+			lcsClusterEntryId);
+
+		lcsClusterEntry.setLcsProjectId(lcsProjectId);
+		lcsClusterEntry.setName(name);
+		lcsClusterEntry.setDescription(description);
+		lcsClusterEntry.setHighPageLoadTime(highPageLoadTime);
+		lcsClusterEntry.setLocation(location);
+		lcsClusterEntry.setMediumPageLoadTime(mediumPageLoadTime);
+		lcsClusterEntry.setSubscriptionType(subscriptionType);
+		lcsClusterEntry.setType(type);
+
+		checkDefaults(lcsClusterEntry);
+
+		return lcsClusterEntryPersistence.update(lcsClusterEntry);
+	}
+
+	@Deprecated
+	@Override
+	public LCSClusterEntry addLCSClusterEntry(
+			long lcsProjectId, String name, String description, String location,
+			int type)
+		throws PortalException {
+
+		return addLCSClusterEntry(
+			lcsProjectId, name, description, location, null, type);
+	}
+
+	@Override
+	public LCSClusterEntry addLCSClusterEntry(
+			long lcsProjectId, String name, String description, String location,
+			String subscriptionType, int type)
+		throws PortalException {
+
+		return addLCSClusterEntry(
+			lcsProjectId, name, description,
+			LCSClusterEntryConstants.HIGH_PAGE_LOAD_TIME_DEFAULT, location,
+			LCSClusterEntryConstants.MEDIUM_PAGE_LOAD_TIME_DEFAULT,
+			subscriptionType, type);
+	}
+
+	@Override
+	public LCSClusterEntry deleteLCSClusterEntry(
+			LCSClusterEntry lcsClusterEntry)
+		throws PortalException {
+
+		SubscriptionType subscriptionType = SubscriptionType.valueOf(
+			lcsClusterEntry.getSubscriptionType());
+
+		lcsClusterNodeLocalService.deleteLCSClusterEntryLCSClusterNodes(
+			lcsClusterEntry.getLcsClusterEntryId());
+
+		if (!lcsClusterEntry.isElastic()) {
+			lcsClusterEntry = lcsClusterEntryPersistence.remove(
+				lcsClusterEntry);
+		}
+		else {
+			lcsClusterEntry.setArchived(true);
+
+			lcsClusterEntry = lcsClusterEntryPersistence.update(
+				lcsClusterEntry);
+		}
+
+		List<LCSInvitation> lcsInvitations =
+			lcsInvitationPersistence.findByLCSProjectId(
+				lcsClusterEntry.getLcsProjectId());
+
+		for (LCSInvitation lcsInvitation : lcsInvitations) {
+			if (lcsClusterEntry.getLcsClusterEntryId() !=
+					lcsInvitation.getLcsClusterEntryId()) {
+
+				continue;
+			}
+
+			lcsInvitationPersistence.remove(lcsInvitation);
+		}
+
+		lcsMessageLocalService.deleteLCSClusterEntryLCSMessages(
+			lcsClusterEntry.getLcsClusterEntryId());
+
+		lcsNotificationLocalService.deleteLCSClusterEntryLCSNotification(
+			lcsClusterEntry.getLcsClusterEntryId());
+
+		List<LCSRole> lcsRoles = lcsRolePersistence.findByLCSClusterEntryId(
+			lcsClusterEntry.getLcsClusterEntryId());
+
+		for (LCSRole lcsRole : lcsRoles) {
+			lcsRolePersistence.remove(lcsRole);
+		}
+
+		LCSClusterEntryToken lcsClusterEntryToken =
+			lcsClusterEntryTokenPersistence.fetchByLCSClusterEntryId(
+				lcsClusterEntry.getLcsClusterEntryId());
+
+		if (lcsClusterEntryToken != null) {
+			lcsClusterEntryTokenPersistence.remove(lcsClusterEntryToken);
+		}
+
+		return lcsClusterEntry;
+	}
+
+	@Override
+	public LCSClusterEntry deleteLCSClusterEntry(long lcsClusterEntryId)
+		throws PortalException {
+
+		LCSClusterEntry lcsClusterEntry =
+			lcsClusterEntryPersistence.findByPrimaryKey(lcsClusterEntryId);
+
+		return deleteLCSClusterEntry(lcsClusterEntry);
+	}
+
+	@Override
+	public void deleteLCSProjectClusters(long lcsProjectId)
+		throws PortalException {
+
+		List<LCSClusterEntry> lcsClusterEntries =
+			lcsClusterEntryPersistence.findByLCSProjectId(lcsProjectId);
+
+		for (LCSClusterEntry lcsClusterEntry : lcsClusterEntries) {
+			deleteLCSClusterEntry(lcsClusterEntry);
+		}
+	}
+
+	@Override
+	public List<LCSClusterEntry> getArchivedLCSProjectLCSClusterEntries(
+		long lcsProjectId, String subscriptionType) {
+
+		return lcsClusterEntryPersistence.findByLPI_ST_A(
+			lcsProjectId, subscriptionType, true);
+	}
+
+	@Override
+	public List<LCSClusterEntry> getLCSProjectLCSClusterEntries(
+		long lcsProjectId) {
+
+		return getLCSProjectLCSClusterEntries(
+			lcsProjectId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	@Override
+	public List<LCSClusterEntry> getLCSProjectLCSClusterEntries(
+		long lcsProjectId, int start, int end,
+		OrderByComparator orderByComparator) {
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LCSClusterEntry.class, getClassLoader());
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("lcsProjectId", lcsProjectId));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("archived", false));
+
+		return dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<LCSClusterEntry> getLCSProjectLCSClusterEntries(
+		long lcsProjectId, String subscriptionType) {
+
+		return lcsClusterEntryPersistence.findByLPI_ST_A(
+			lcsProjectId, subscriptionType, false);
+	}
+
+	@Override
+	public long[] getLCSProjectLCSClusterEntryIds(long lcsProjectId) {
+		List<LCSClusterEntry> lcsClusterEntries =
+			getLCSProjectLCSClusterEntries(lcsProjectId);
+
+		long[] lcsClusterEntryIds = new long[lcsClusterEntries.size()];
+
+		for (int i = 0; i < lcsClusterEntries.size(); i++) {
+			LCSClusterEntry lcsClusterEntry = lcsClusterEntries.get(i);
+
+			lcsClusterEntryIds[i] = lcsClusterEntry.getLcsClusterEntryId();
+		}
+
+		return lcsClusterEntryIds;
+	}
+
+	@Override
+	public List<LCSClusterEntry> getUserLCSClusterEntries(long userId) {
+		return getUserLCSClusterEntries(userId, 0);
+	}
+
+	@Override
+	public List<LCSClusterEntry> getUserLCSClusterEntries(
+		long userId, long lcsProjectId) {
+
+		long[] lcsClusterEntryIds = getUserLCSClusterEntryIds(
+			userId, lcsProjectId);
+
+		if (lcsClusterEntryIds.length == 0) {
+			return Collections.emptyList();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LCSClusterEntry.class, getClassLoader());
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"lcsClusterEntryId", ArrayUtil.toArray(lcsClusterEntryIds)));
+
+		if (lcsProjectId > 0) {
+			dynamicQuery.add(
+				RestrictionsFactoryUtil.eq("lcsProjectId", lcsProjectId));
+		}
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("archived", false));
+
+		return dynamicQuery(dynamicQuery);
+	}
+
+	@Override
+	public long[] getUserLCSClusterEntryIds(long userId, long lcsProjectId) {
+		Set<Long> lcsClusterEntryIdsSet = new HashSet<>();
+
+		List<LCSRole> lcsRoles = lcsRolePersistence.findByUserId(userId);
+
+		for (LCSRole lcsRole : lcsRoles) {
+			if ((lcsProjectId > 0) &&
+				(lcsProjectId != lcsRole.getLcsProjectId())) {
+
+				continue;
+			}
+
+			if (lcsRole.getLcsClusterEntryId() == 0) {
+				long[] lcsClusterEntryIds = getLCSProjectLCSClusterEntryIds(
+					lcsRole.getLcsProjectId());
+
+				for (long lcsClusterEntryId : lcsClusterEntryIds) {
+					lcsClusterEntryIdsSet.add(lcsClusterEntryId);
+				}
+			}
+			else {
+				lcsClusterEntryIdsSet.add(lcsRole.getLcsClusterEntryId());
+			}
+		}
+
+		return ArrayUtil.toArray(
+			lcsClusterEntryIdsSet.toArray(
+				new Long[lcsClusterEntryIdsSet.size()]));
+	}
+
+	@Override
+	public LCSClusterEntry updateElastic(
+			long lcsClusterEntryId, boolean elastic)
+		throws PortalException {
+
+		LCSClusterEntry lcsClusterEntry =
+			lcsClusterEntryPersistence.findByPrimaryKey(lcsClusterEntryId);
+
+		if (lcsClusterEntry.isElastic() ||
+			(SubscriptionType.valueOf(
+				lcsClusterEntry.getSubscriptionType()) ==
+					SubscriptionType.UNDEFINED)) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		if (lcsClusterNodePersistence.countByLCSClusterEntryId(
+				lcsClusterEntryId) != 0) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		lcsClusterEntry.setElastic(elastic);
+
+		return lcsClusterEntryPersistence.update(lcsClusterEntry);
+	}
+
+	@Override
+	public LCSClusterEntry updateHighPageLoadTime(
+			long lcsClusterEntryId, int highPageLoadTime)
+		throws PortalException {
+
+		LCSClusterEntry lcsClusterEntry =
+			lcsClusterEntryPersistence.findByPrimaryKey(lcsClusterEntryId);
+
+		lcsClusterEntry.setHighPageLoadTime(highPageLoadTime);
+
+		return lcsClusterEntryPersistence.update(lcsClusterEntry);
+	}
+
+	@Override
+	public LCSClusterEntry updateLCSClusterEntry(
+		LCSClusterEntry lcsClusterEntry) {
+
+		if (PortletPropsValues.APPLICATION_PROFILE ==
+				ApplicationProfile.PRODUCTION) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		return lcsClusterEntryPersistence.update(lcsClusterEntry);
+	}
+
+	@Deprecated
+	@Override
+	public LCSClusterEntry updateLCSClusterEntry(
+			long lcsClusterEntryId, String name, String description,
+			String location)
+		throws PortalException {
+
+		return updateLCSClusterEntry(
+			lcsClusterEntryId, name, description, null, location);
+	}
+
+	@Override
+	public LCSClusterEntry updateLCSClusterEntry(
+			long lcsClusterEntryId, String name, String description,
+			String subscriptionType, String location)
+		throws PortalException {
+
+		LCSClusterEntry lcsClusterEntry =
+			lcsClusterEntryPersistence.findByPrimaryKey(lcsClusterEntryId);
+
+		if (!StringUtil.equalsIgnoreCase(lcsClusterEntry.getName(), name)) {
+			validate(lcsClusterEntry.getLcsProjectId(), name);
+		}
+
+		lcsClusterEntry.setName(name);
+		lcsClusterEntry.setDescription(description);
+		lcsClusterEntry.setLocation(location);
+
+		lcsClusterEntry = lcsClusterEntryPersistence.update(lcsClusterEntry);
+
+		return updateSubscriptionType(lcsClusterEntry, subscriptionType);
+	}
+
+	@Override
+	public LCSClusterEntry updateMediumPageLoadTime(
+			long lcsClusterEntryId, int mediumPageLoadTime)
+		throws PortalException {
+
+		LCSClusterEntry lcsClusterEntry =
+			lcsClusterEntryPersistence.findByPrimaryKey(lcsClusterEntryId);
+
+		lcsClusterEntry.setMediumPageLoadTime(mediumPageLoadTime);
+
+		return lcsClusterEntryPersistence.update(lcsClusterEntry);
+	}
+
+	@Override
+	public LCSClusterEntry updateSubscriptionType(
+			long lcsClusterEntryId, String subscriptionType)
+		throws PortalException {
+
+		LCSClusterEntry lcsClusterEntry =
+			lcsClusterEntryPersistence.findByPrimaryKey(lcsClusterEntryId);
+
+		return updateSubscriptionType(lcsClusterEntry, subscriptionType);
+	}
+
+	protected void checkDefaults(LCSClusterEntry lcsClusterEntry) {
+		if (Validator.isNull(lcsClusterEntry.getSubscriptionType())) {
+			lcsClusterEntry.setSubscriptionType(
+				SubscriptionType.UNDEFINED.name());
+		}
+	}
+
+	protected LCSClusterEntry updateSubscriptionType(
+			LCSClusterEntry lcsClusterEntry, String subscriptionType)
+		throws PortalException {
+
+		SubscriptionType newSubscriptionType = SubscriptionType.UNDEFINED;
+
+		if (Validator.isNotNull(subscriptionType)) {
+			newSubscriptionType = SubscriptionType.valueOf(subscriptionType);
+		}
+
+		if (newSubscriptionType == SubscriptionType.UNDEFINED) {
+			return lcsClusterEntry;
+		}
+
+		SubscriptionType curSubscriptionType = SubscriptionType.valueOf(
+			lcsClusterEntry.getSubscriptionType());
+
+		if (curSubscriptionType != SubscriptionType.UNDEFINED) {
+			throw new UnsupportedOperationException(
+				"LCS cluster environment has defined subscription");
+		}
+
+		boolean hasInactiveLCSClusterEntryAllLCSClusterNodes =
+			lcsClusterNodeLocalService.
+				hasLCSClusterEntryAllInactiveLCSClusterNodes(
+					lcsClusterEntry.getLcsClusterEntryId());
+
+		if (!hasInactiveLCSClusterEntryAllLCSClusterNodes) {
+			throw new UnsupportedOperationException(
+				"LCS cluster environment has active nodes");
+		}
+
+		lcsClusterEntry.setSubscriptionType(subscriptionType);
+
+		lcsClusterEntry = lcsClusterEntryPersistence.update(lcsClusterEntry);
+
+		lcsProjectLocalService.updateSubscriptionActive(
+			lcsClusterEntry.getLcsProjectId(), true);
+
+		return lcsClusterEntry;
+	}
+
+	protected void validate(long lcsProjectId, String name)
+		throws PortalException {
+
+		if (Validator.isNull(name)) {
+			throw new RequiredLCSClusterEntryNameException();
+		}
+
+		int lcsProjectLCSClusterEntriesCount =
+			lcsClusterEntryPersistence.countByLPI_N_A(
+				lcsProjectId, name, false);
+
+		if (lcsProjectLCSClusterEntriesCount > 0) {
+			throw new DuplicateLCSClusterEntryNameException();
+		}
+	}
+
 }

@@ -16,18 +16,17 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.exception.DuplicateLCSInvitationException;
+import com.liferay.osb.lcs.model.LCSInvitation;
 import com.liferay.osb.lcs.service.base.LCSInvitationLocalServiceBaseImpl;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+
+import java.util.Date;
+import java.util.List;
 
 /**
- * The implementation of the l c s invitation local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.lcs.service.LCSInvitationLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Igor Beslic
  * @see LCSInvitationLocalServiceBaseImpl
  * @see com.liferay.osb.lcs.service.LCSInvitationLocalServiceUtil
@@ -36,9 +35,73 @@ import com.liferay.osb.lcs.service.base.LCSInvitationLocalServiceBaseImpl;
 public class LCSInvitationLocalServiceImpl
 	extends LCSInvitationLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSInvitationLocalServiceUtil} to access the l c s invitation local service.
-	 */
+	@Override
+	public LCSInvitation addLCSInvitation(
+				long userId, long lcsProjectId, String emailAddress,
+				long lcsClusterEntryId, int role)
+			throws PortalException {
+
+			validate(lcsProjectId, emailAddress);
+
+			long lcsInvitationId = counterLocalService.increment(
+				LCSInvitation.class.getName());
+
+			LCSInvitation lcsInvitation = createLCSInvitation(lcsInvitationId);
+
+			lcsInvitation.setUserId(userId);
+			lcsInvitation.setCreateDate(new Date());
+			lcsInvitation.setLcsProjectId(lcsProjectId);
+			lcsInvitation.setEmailAddress(emailAddress);
+			lcsInvitation.setLcsClusterEntryId(lcsClusterEntryId);
+			lcsInvitation.setRole(role);
+
+			return lcsInvitationPersistence.update(lcsInvitation);
+		}
+
+		@Override
+		public LCSInvitation getLCSProjectLCSInvitation(
+				long lcsProjectId, String emailAddress)
+			throws PortalException {
+
+			return lcsInvitationPersistence.findByLPI_EA(
+				lcsProjectId, emailAddress);
+		}
+
+		@Override
+		public List<LCSInvitation> getLCSProjectLCSInvitations(long lcsProjectId) {
+			return lcsInvitationPersistence.findByLCSProjectId(
+				lcsProjectId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+
+		@Override
+		public List<LCSInvitation> getUserLCSInvitations(String emailAddress)
+			throws PortalException {
+
+			return lcsInvitationPersistence.findByEmailAddress(emailAddress);
+		}
+
+		@Override
+		public boolean hasUserLCSInvitation(long userId) throws PortalException {
+			User user = userPersistence.findByPrimaryKey(userId);
+
+			if (lcsInvitationPersistence.countByEmailAddress(
+					user.getEmailAddress()) > 0) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		protected void validate(long lcsProjectId, String emailAddress)
+			throws PortalException {
+
+			LCSInvitation lcsInvitation = lcsInvitationPersistence.fetchByLPI_EA(
+				lcsProjectId, emailAddress);
+
+			if (lcsInvitation != null) {
+				throw new DuplicateLCSInvitationException();
+			}
+		}
+
 }

@@ -15,25 +15,30 @@
 package com.liferay.osb.lcs.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+import com.liferay.osb.lcs.model.LCSMessage;
+import com.liferay.osb.lcs.service.LCSMessageLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * The extended model implementation for the UserLCSMessage service. Represents a row in the &quot;OSBLCS_UserLCSMessage&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.lcs.model.UserLCSMessage} interface.
- * </p>
- *
  * @author Igor Beslic
  */
 @ProviderType
 public class UserLCSMessageImpl extends UserLCSMessageBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a user l c s message model instance should use the {@link com.liferay.osb.lcs.model.UserLCSMessage} interface instead.
-	 */
 	public UserLCSMessageImpl() {
 	}
+
+	public LCSMessage getLcsMessage() throws PortalException {
+		if (_lcsMessage != null) {
+			return _lcsMessage;
+		}
+
+		_lcsMessage = LCSMessageLocalServiceUtil.getLCSMessage(
+			getLcsMessageId());
+
+		return _lcsMessage;
+	}
+
+	private LCSMessage _lcsMessage;
 
 }

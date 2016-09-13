@@ -16,18 +16,25 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.lcs.subscription.SubscriptionType;
+import com.liferay.osb.lcs.exception.NoSuchLCSProjectException;
+import com.liferay.osb.lcs.model.LCSClusterEntry;
+import com.liferay.osb.lcs.model.LCSClusterNode;
+import com.liferay.osb.lcs.model.LCSProject;
+import com.liferay.osb.lcs.model.LCSSubscriptionEntry;
 import com.liferay.osb.lcs.service.base.LCSSubscriptionEntryServiceBaseImpl;
+import com.liferay.osb.lcs.service.permission.LCSClusterEntryPermission;
+import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
+import com.liferay.osb.lcs.util.ActionKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
+import java.util.List;
 
 /**
- * The implementation of the l c s subscription entry remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.osb.lcs.service.LCSSubscriptionEntryService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Igor Beslic
  * @see LCSSubscriptionEntryServiceBaseImpl
  * @see com.liferay.osb.lcs.service.LCSSubscriptionEntryServiceUtil
@@ -36,9 +43,161 @@ import com.liferay.osb.lcs.service.base.LCSSubscriptionEntryServiceBaseImpl;
 public class LCSSubscriptionEntryServiceImpl
 	extends LCSSubscriptionEntryServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.osb.lcs.service.LCSSubscriptionEntryServiceUtil} to access the l c s subscription entry remote service.
-	 */
+	@Override
+	public void addCorpProjectLCSSubscriptionEntries(
+			long corpProjectId, String lcsSubscriptionEntriesJSON)
+		throws PortalException {
+
+		LCSProject lcsProject = lcsProjectLocalService.fetchByCorpProject(
+			corpProjectId);
+
+		if (lcsProject == null) {
+			lcsProject = lcsProjectLocalService.addLCSProject(corpProjectId);
+		}
+
+		addLCSSubscriptionEntries(
+			lcsProject.getLcsProjectId(), lcsSubscriptionEntriesJSON);
+	}
+
+	@Override
+	public void addLCSSubscriptionEntries(
+			long lcsProjectId, String lcsSubscriptionEntriesJSON)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isSignedIn()) {
+			throw new PrincipalException();
+		}
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE);
+
+		lcsSubscriptionEntryLocalService.addLCSSubscriptionEntries(
+			lcsProjectId, lcsSubscriptionEntriesJSON);
+	}
+
+	@Override
+	public LCSSubscriptionEntry fetchLCSClusterNodeActiveLCSSubscriptionEntry(
+			String key)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isSignedIn()) {
+			throw new PrincipalException();
+		}
+
+		LCSClusterNode lcsClusterNode = lcsClusterNodePersistence.fetchByKey(
+			key);
+
+		if (lcsClusterNode == null) {
+			return null;
+		}
+
+		LCSClusterEntryPermission.check(
+			permissionChecker, lcsClusterNode.getLcsClusterEntryId(),
+			ActionKeys.MANAGE);
+
+		LCSClusterEntry lcsClusterEntry =
+			lcsClusterEntryPersistence.findByPrimaryKey(
+				lcsClusterNode.getLcsClusterEntryId());
+
+		SubscriptionType lcsClusterEntrySubscriptionType =
+			SubscriptionType.valueOf(lcsClusterEntry.getSubscriptionType());
+
+		LCSSubscriptionEntry lcsClusterEntryLCSSubscriptionEntry =
+			lcsSubscriptionEntryLocalService.
+				fetchLCSProjectLCSSubscriptionEntry(
+					lcsClusterEntry.getLcsProjectId(),
+					lcsClusterNode.getProcessorCoresTotal(),
+					lcsClusterEntrySubscriptionType);
+
+		if (lcsClusterEntryLCSSubscriptionEntry == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No LCS subscription entries");
+			}
+		}
+
+		return lcsClusterEntryLCSSubscriptionEntry;
+	}
+
+	@Deprecated
+	@Override
+	public List<LCSSubscriptionEntry> getCorpProjectLCSSubscriptionEntries(
+			long corpProjectId)
+		throws PortalException {
+
+		LCSProject lcsProject = lcsProjectLocalService.fetchByCorpProject(
+			corpProjectId);
+
+		if (lcsProject == null) {
+			throw new NoSuchLCSProjectException();
+		}
+
+		return getLCSProjectLCSSubscriptionEntries(
+			lcsProject.getLcsProjectId());
+	}
+
+	@Override
+	public List<LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
+			long lcsProjectId)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_ENTRY);
+
+		return lcsSubscriptionEntryLocalService.
+			getLCSProjectLCSSubscriptionEntries(lcsProjectId);
+	}
+
+	@Override
+	public List<LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
+			long lcsProjectId, boolean status)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_ENTRY);
+
+		return lcsSubscriptionEntryLocalService.
+			getLCSProjectLCSSubscriptionEntries(lcsProjectId, status);
+	}
+
+	@Override
+	public boolean hasLCSProjectElasticLCSSubscriptionEntry(long lcsProjectId)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_ENTRY);
+
+		return lcsSubscriptionEntryLocalService.
+			hasLCSProjectElasticLCSSubscriptionEntry(lcsProjectId);
+	}
+
+	@Override
+	public void refreshLCSProjectLCSSubscriptionEntries()
+		throws PortalException {
+
+		if (!getPermissionChecker().isCompanyAdmin()) {
+			throw new PrincipalException();
+		}
+
+		lcsSubscriptionEntryLocalService.
+			refreshLCSProjectLCSSubscriptionEntries();
+	}
+
+	@Override
+	public void refreshLCSProjectLCSSubscriptionEntries(long lcsProjectId)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE);
+
+		lcsSubscriptionEntryLocalService.
+			refreshLCSProjectLCSSubscriptionEntries(lcsProjectId);
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		LCSSubscriptionEntryServiceImpl.class);
+
 }
