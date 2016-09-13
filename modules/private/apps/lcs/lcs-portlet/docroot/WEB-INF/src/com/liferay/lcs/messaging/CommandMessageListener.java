@@ -17,6 +17,7 @@ package com.liferay.lcs.messaging;
 import com.liferay.lcs.command.Command;
 import com.liferay.lcs.security.DigitalSignature;
 import com.liferay.lcs.util.LCSConnectionManager;
+import com.liferay.lcs.util.LCSUtil;
 import com.liferay.lcs.util.ResponseMessageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,7 +38,9 @@ public class CommandMessageListener implements MessageListener {
 
 		String error = null;
 
-		if (_digitalSignature.verifyMessage(commandMessage)) {
+		if (_digitalSignature.verifyMessage(
+				LCSUtil.getLCSPortletBuildNumber(), commandMessage)) {
+
 			try {
 				Command command = _commands.get(
 					commandMessage.getCommandType());
