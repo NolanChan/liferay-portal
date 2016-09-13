@@ -103,6 +103,16 @@ public class DigitalSignatureImpl implements DigitalSignature {
 		_signingAlgorithm = signingAlgorithm;
 	}
 
+	@Override
+	public void signMessage(int buildNumber, Message message) {
+		try {
+			doSignMessage(buildNumber, message);
+		}
+		catch (Exception e) {
+			throw new RuntimeException("Unable to sign message", e);
+		}
+	}
+
 	/**
 	 * Signs the message, if possible.
 	 *
@@ -117,10 +127,24 @@ public class DigitalSignatureImpl implements DigitalSignature {
 	@Override
 	public void signMessage(Message message) {
 		try {
-			doSignMessage(message);
+			doSignMessage(0, message);
 		}
 		catch (Exception e) {
 			throw new RuntimeException("Unable to sign message", e);
+		}
+	}
+
+	@Override
+	public boolean verifyMessage(int buildNumber, Message message) {
+		if (!(message instanceof CommandMessage)) {
+			return true;
+		}
+
+		try {
+			return doVerifyMessage(buildNumber, (CommandMessage)message);
+		}
+		catch (Exception e) {
+			throw new RuntimeException("Unable to verify message", e);
 		}
 	}
 
@@ -140,7 +164,7 @@ public class DigitalSignatureImpl implements DigitalSignature {
 		}
 
 		try {
-			return doVerifyMessage((CommandMessage)message);
+			return doVerifyMessage(0, (CommandMessage)message);
 		}
 		catch (Exception e) {
 			throw new RuntimeException("Unable to verify message", e);
@@ -156,10 +180,15 @@ public class DigitalSignatureImpl implements DigitalSignature {
 	 *         recover the key (e.g. wrong password) or if an exception occurred
 	 * @since  LCS 0.1
 	 */
-	protected void doSignMessage(Message message) throws Exception {
+	protected void doSignMessage(int buildNumber, Message message)
+		throws Exception {
+
 		if (!(message instanceof CommandMessage)) {
 			return;
 		}
+
+		String keyAlias = _keyStoreAdvisor.getKeyAlias(
+			buildNumber, _keyAlias, getKeyStore());
 
 		CommandMessage commandMessage = (CommandMessage)message;
 
@@ -173,7 +202,7 @@ public class DigitalSignatureImpl implements DigitalSignature {
 
 		KeyStore.PrivateKeyEntry privateKeyEntry =
 			(KeyStore.PrivateKeyEntry)keyStore.getEntry(
-				_keyAlias, protectionParameter);
+				keyAlias, protectionParameter);
 
 		signature.initSign(privateKeyEntry.getPrivateKey());
 
@@ -199,7 +228,8 @@ public class DigitalSignatureImpl implements DigitalSignature {
 	 *         occurred
 	 * @since  LCS 0.1
 	 */
-	protected boolean doVerifyMessage(CommandMessage commandMessage)
+	protected boolean doVerifyMessage(
+			int buildNumber, CommandMessage commandMessage)
 		throws Exception {
 
 		Map<String, Object> values = commandMessage.getValues();
@@ -213,7 +243,10 @@ public class DigitalSignatureImpl implements DigitalSignature {
 
 		KeyStore keyStore = getKeyStore();
 
-		Certificate certificate = keyStore.getCertificate(_keyAlias);
+		String keyAlias = _keyStoreAdvisor.getKeyAlias(
+			buildNumber, _keyAlias, keyStore);
+
+		Certificate certificate = keyStore.getCertificate(keyAlias);
 
 		signature.initVerify(certificate);
 
@@ -281,6 +314,7 @@ public class DigitalSignatureImpl implements DigitalSignature {
 	private String _algorithmProvider;
 	private String _keyAlias;
 	private KeyStore _keyStore;
+	private KeyStoreAdvisor _keyStoreAdvisor = new KeyStoreAdvisor();
 	private String _keyStorePassword;
 	private String _keyStorePath;
 	private String _keyStoreType;

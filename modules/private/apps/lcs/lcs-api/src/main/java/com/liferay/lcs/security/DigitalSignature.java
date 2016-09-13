@@ -23,7 +23,11 @@ import com.liferay.lcs.messaging.Message;
  */
 public interface DigitalSignature {
 
+	public void signMessage(int buildNumber, Message message);
+
 	public void signMessage(Message message);
+
+	public boolean verifyMessage(int buildNumber, Message message);
 
 	public boolean verifyMessage(Message message);
 
