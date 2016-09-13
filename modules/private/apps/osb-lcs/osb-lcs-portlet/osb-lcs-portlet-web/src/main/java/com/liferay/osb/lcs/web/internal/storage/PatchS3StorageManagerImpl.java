@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.storage;
+package com.liferay.osb.lcs.web.internal.storage;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -76,7 +76,7 @@ public class PatchS3StorageManagerImpl
 
 	@Override
 	public List<String> getPatchFileNames(Date sinceModifiedDate) {
-		List<String> patchFileNames = new ArrayList<String>();
+		List<String> patchFileNames = new ArrayList<>();
 
 		ObjectListing objectListing = _amazonS3.listObjects(
 			_bucketName, _prefix);
@@ -113,7 +113,7 @@ public class PatchS3StorageManagerImpl
 
 	@Override
 	public List<String> getPatchFileNames(int buildNumber) {
-		List<String> patchFileNames = new ArrayList<String>();
+		List<String> patchFileNames = new ArrayList<>();
 
 		for (String patchFileName : _activePatchFileNames) {
 			if (!patchFileName.contains(String.valueOf(buildNumber))) {
@@ -128,7 +128,7 @@ public class PatchS3StorageManagerImpl
 
 	@Override
 	public Map<String, Long> getPatchFileNamesSizes() {
-		Map<String, Long> patchFileNamesSizes = new HashMap<String, Long>();
+		Map<String, Long> patchFileNamesSizes = new HashMap<>();
 
 		ObjectListing objectListing = _amazonS3.listObjects(
 			_bucketName, _prefix);
@@ -197,7 +197,7 @@ public class PatchS3StorageManagerImpl
 			_log.debug("Reset a list of active patch file names");
 		}
 
-		List<String> patchFileNames = new ArrayList<String>();
+		List<String> patchFileNames = new ArrayList<>();
 
 		ObjectListing objectListing = _amazonS3.listObjects(
 			_bucketName, _prefix);
@@ -218,10 +218,10 @@ public class PatchS3StorageManagerImpl
 		_activePatchFileNames = patchFileNames;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PatchS3StorageManagerImpl.class);
 
-	private static ScheduledExecutorService _scheduledExecutorService =
+	private static final ScheduledExecutorService _scheduledExecutorService =
 		Executors.newSingleThreadScheduledExecutor();
 
 	private String _accessKey;

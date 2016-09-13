@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.storage;
+package com.liferay.osb.lcs.web.internal.storage;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -96,7 +96,7 @@ public class LogS3StorageManagerImpl
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LogS3StorageManagerImpl.class);
 
 	private String _accessKey;

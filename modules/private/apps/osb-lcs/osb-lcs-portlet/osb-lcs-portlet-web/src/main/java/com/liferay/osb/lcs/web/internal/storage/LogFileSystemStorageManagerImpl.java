@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.storage;
+package com.liferay.osb.lcs.web.internal.storage;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -56,7 +56,7 @@ public class LogFileSystemStorageManagerImpl
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LogFileSystemStorageManagerImpl.class);
 
 	private String _path;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.storage;
+package com.liferay.osb.lcs.web.internal.storage;
 
 import com.liferay.osb.lcs.util.ApplicationProfile;
 import com.liferay.osb.lcs.util.PortletPropsValues;
@@ -41,7 +41,7 @@ public class PatchFileSystemStorageManagerImpl
 
 	@Override
 	public List<String> getPatchFileNames(Date sinceModifiedDate) {
-		List<String> patchFileNames = new ArrayList<String>();
+		List<String> patchFileNames = new ArrayList<>();
 
 		File patchesDir = new File(_path);
 
@@ -79,7 +79,7 @@ public class PatchFileSystemStorageManagerImpl
 
 	@Override
 	public Map<String, Long> getPatchFileNamesSizes() {
-		Map<String, Long> patchFileNamesSizes = new HashMap<String, Long>();
+		Map<String, Long> patchFileNamesSizes = new HashMap<>();
 
 		File patchesDir = new File(_path);
 
@@ -119,7 +119,7 @@ public class PatchFileSystemStorageManagerImpl
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PatchFileSystemStorageManagerImpl.class);
 
 	private String _path;
@@ -139,7 +139,7 @@ public class PatchFileSystemStorageManagerImpl
 			return false;
 		}
 
-		private int _buildNumber;
+		private final int _buildNumber;
 
 	}
 
@@ -162,7 +162,7 @@ public class PatchFileSystemStorageManagerImpl
 			return false;
 		}
 
-		private Date _sinceModifiedDate;
+		private final Date _sinceModifiedDate;
 
 	}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.storage;
+package com.liferay.osb.lcs.web.internal.storage;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -42,8 +42,8 @@ import org.apache.http.util.EntityUtils;
 /**
  * @author Ivica Cardic
  */
-public abstract class BasePatchStorageManager extends BaseStorageManagerImpl
-	implements PatchStorageManager {
+public abstract class BasePatchStorageManager
+	extends BaseStorageManagerImpl implements PatchStorageManager {
 
 	@Override
 	public void afterPropertiesSet() {
@@ -186,7 +186,7 @@ public abstract class BasePatchStorageManager extends BaseStorageManagerImpl
 		return true;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BasePatchStorageManager.class);
 
 	private String _contextPath;
