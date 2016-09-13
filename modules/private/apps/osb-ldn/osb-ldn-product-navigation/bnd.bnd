@@ -1,0 +1,6 @@
+Bundle-Name: Liferay OSB LDN Product Navigation
+Bundle-SymbolicName: com.liferay.osb.ldn.product.navigation
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.osb.ldn.product.navigation.application.list.constants
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

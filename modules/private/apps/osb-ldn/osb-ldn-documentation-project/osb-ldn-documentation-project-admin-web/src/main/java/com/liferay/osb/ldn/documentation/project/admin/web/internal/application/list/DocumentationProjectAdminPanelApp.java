@@ -16,8 +16,8 @@ package com.liferay.osb.ldn.documentation.project.admin.web.internal.application
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
-import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.osb.ldn.documentation.project.admin.web.internal.constants.DocumentationProjectPortletKeys;
+import com.liferay.osb.ldn.product.navigation.application.list.constants.LDNPanelCategoryKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.app.order:Integer=100",
-		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION
+		"panel.category.key=" + LDNPanelCategoryKeys.CONTROL_PANEL_LDN
 	},
 	service = PanelApp.class
 )
