@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + DocumentationProjectPortletKeys.DOCUMENTATION_PROJECT_ADMIN,
-		"mvc.command.name=/flags/edit_entry"
+		"mvc.command.name=/edit_documentation_project"
 	},
 	service = MVCActionCommand.class
 )
