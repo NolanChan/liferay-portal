@@ -24,6 +24,7 @@ import com.liferay.lcs.rest.LCSClusterEntryTokenImpl;
 import com.liferay.lcs.rest.LCSClusterEntryTokenService;
 import com.liferay.lcs.rest.LCSClusterNode;
 import com.liferay.lcs.rest.LCSClusterNodeServiceUtil;
+import com.liferay.lcs.security.KeyStoreAdvisor;
 import com.liferay.lcs.security.KeyStoreFactory;
 import com.liferay.lcs.util.KeyGenerator;
 import com.liferay.lcs.util.LCSAlert;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.util.Encryptor;
+import com.liferay.util.EncryptorException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -308,8 +310,32 @@ public class LCSClusterEntryTokenAdvisor {
 
 		byte[] symmetricKeyEncrypted = ArrayUtil.subset(bytes, 0, 256);
 
-		byte[] symmetricKeyBytes = Encryptor.decryptUnencodedAsBytes(
-			key, symmetricKeyEncrypted);
+		byte[] symmetricKeyBytes = null;
+
+		try {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Decrypt with default key " + keyName);
+			}
+
+			symmetricKeyBytes = Encryptor.decryptUnencodedAsBytes(
+				key, symmetricKeyEncrypted);
+		}
+		catch (EncryptorException ee) {
+			KeyStoreAdvisor keyStoreAdvisor = new KeyStoreAdvisor();
+
+			keyName = keyStoreAdvisor.getKeyAlias(
+				LCSUtil.getLCSPortletBuildNumber(),
+				PortletPropsValues.DIGITAL_SIGNATURE_KEY_NAME, keyStore);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Decrypt with key " + keyName);
+			}
+
+			key = keyStore.getCertificate(keyName).getPublicKey();
+
+			symmetricKeyBytes = Encryptor.decryptUnencodedAsBytes(
+				key, symmetricKeyEncrypted);
+		}
 
 		Key symmetricKey = new SecretKeySpec(symmetricKeyBytes, "AES");
 
