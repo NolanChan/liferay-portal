@@ -90,4 +90,13 @@ portletURL.setParameter("mvcRenderCommandName", "/view");
 
 		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 	</liferay-ui:search-container>
+
+	<portlet:renderURL var="addDocumentationProjectURL">
+		<portlet:param name="mvcRenderCommandName" value="/edit_documentation_project" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-documentation-project") %>' url="<%= addDocumentationProjectURL %>" />
+	</liferay-frontend:add-menu>
 </div>
