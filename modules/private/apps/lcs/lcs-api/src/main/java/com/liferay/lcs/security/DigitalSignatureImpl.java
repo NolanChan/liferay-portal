@@ -314,7 +314,7 @@ public class DigitalSignatureImpl implements DigitalSignature {
 	private String _algorithmProvider;
 	private String _keyAlias;
 	private KeyStore _keyStore;
-	private KeyStoreAdvisor _keyStoreAdvisor = new KeyStoreAdvisor();
+	private final KeyStoreAdvisor _keyStoreAdvisor = new KeyStoreAdvisor();
 	private String _keyStorePassword;
 	private String _keyStorePath;
 	private String _keyStoreType;
