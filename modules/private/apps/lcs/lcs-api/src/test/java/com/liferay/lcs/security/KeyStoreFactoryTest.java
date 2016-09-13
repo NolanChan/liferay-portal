@@ -27,7 +27,7 @@ public class KeyStoreFactoryTest extends BaseTest {
 	@Test
 	public void testGetInstance() throws Exception {
 		KeyStore keyStore = KeyStoreFactory.getInstance(
-					"keyStoreCustomPassword.jks", "JCEKS", "keystorepass");
+			"keyStoreCustomPassword.jks", "JCEKS", "keystorepass");
 
 		Assert.assertTrue(keyStore.containsAlias("testalias"));
 	}
