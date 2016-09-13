@@ -4,7 +4,6 @@
 <service-builder package-path="com.liferay.osb.lcs">
 	<author>Igor Beslic</author>
 	<namespace>OSBLCS</namespace>
-	<entity local-service="false" name="CorpProject" remote-service="true" />
 	<entity local-service="true" name="LCSClusterEntry" remote-service="true">
 
 		<!-- PK fields -->
@@ -190,7 +189,7 @@
 			<finder-column name="emailAddress" />
 		</finder>
 	</entity>
-	<entity local-service="false" name="LCSMembers" remote-service="true">
+	<entity local-service="true" name="LCSMembers" remote-service="true">
 
 		<!-- References -->
 
