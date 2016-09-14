@@ -16,6 +16,8 @@ package com.liferay.osb.lcs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.model.LCSMetadata;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -23,7 +25,10 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for LCSMetadata. Methods of this
@@ -56,4 +61,19 @@ public interface LCSMetadataService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	/**
+	* Returns all LCS metadata matching the portal instance's build number and
+	* edition.
+	*
+	* @param buildNumber the portal instance's build number
+	* @param portalEdition the portal instance's edition
+	* @return the matching LCS metadata
+	* @throws PortalException if the caller was not signed in to the LCS portal
+	instance
+	* @since LCS 1.1
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSMetadata> getLCSMetadatas(int buildNumber,
+		java.lang.String portalEdition) throws PortalException;
 }

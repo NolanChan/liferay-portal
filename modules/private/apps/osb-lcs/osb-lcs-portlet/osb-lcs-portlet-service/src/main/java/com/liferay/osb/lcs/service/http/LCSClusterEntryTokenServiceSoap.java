@@ -16,9 +16,16 @@ package com.liferay.osb.lcs.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.service.LCSClusterEntryTokenServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.osb.lcs.service.LCSClusterEntryTokenServiceUtil} service utility. The
+ * {@link LCSClusterEntryTokenServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,82 @@ import aQute.bnd.annotation.ProviderType;
  * @author Igor Beslic
  * @see LCSClusterEntryTokenServiceHttp
  * @see com.liferay.osb.lcs.model.LCSClusterEntryTokenSoap
- * @see com.liferay.osb.lcs.service.LCSClusterEntryTokenServiceUtil
+ * @see LCSClusterEntryTokenServiceUtil
  * @generated
  */
 @ProviderType
 public class LCSClusterEntryTokenServiceSoap {
+	public static com.liferay.osb.lcs.model.LCSClusterEntryTokenSoap addLCSClusterEntryToken(
+		long lcsClusterEntryId, java.lang.String content)
+		throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterEntryToken returnValue = LCSClusterEntryTokenServiceUtil.addLCSClusterEntryToken(lcsClusterEntryId,
+					content);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntryTokenSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntryTokenSoap deleteLCSClusterEntryToken(
+		long lcsClusterEntryTokenId) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterEntryToken returnValue = LCSClusterEntryTokenServiceUtil.deleteLCSClusterEntryToken(lcsClusterEntryTokenId);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntryTokenSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntryTokenSoap fetchLCSClusterEntryLCSClusterEntryToken(
+		long lcsClusterEntryId) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterEntryToken returnValue = LCSClusterEntryTokenServiceUtil.fetchLCSClusterEntryLCSClusterEntryToken(lcsClusterEntryId);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntryTokenSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntryTokenSoap fetchLCSClusterEntryToken(
+		long lcsClusterEntryTokenId) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterEntryToken returnValue = LCSClusterEntryTokenServiceUtil.fetchLCSClusterEntryToken(lcsClusterEntryTokenId);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntryTokenSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static boolean isValid(long lcsClusterEntryTokenId)
+		throws RemoteException {
+		try {
+			boolean returnValue = LCSClusterEntryTokenServiceUtil.isValid(lcsClusterEntryTokenId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LCSClusterEntryTokenServiceSoap.class);
 }

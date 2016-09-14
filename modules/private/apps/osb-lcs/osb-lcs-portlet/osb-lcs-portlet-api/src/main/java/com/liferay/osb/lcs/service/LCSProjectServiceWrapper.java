@@ -32,6 +32,52 @@ public class LCSProjectServiceWrapper implements LCSProjectService,
 		_lcsProjectService = lcsProjectService;
 	}
 
+	@Override
+	public boolean checkUserAccountEntryLCSProject()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectService.checkUserAccountEntryLCSProject();
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSProject addDefaultLCSProject()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectService.addDefaultLCSProject();
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSProject addLCSProject(
+		java.lang.String sourceSystemName, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectService.addLCSProject(sourceSystemName, name);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSProject deleteLCSProject(
+		long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectService.deleteLCSProject(lcsProjectId);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSProject getLCSProject(long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectService.getLCSProject(lcsProjectId);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSProject updateLCSProjectName(
+		long lcsProjectId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectService.updateLCSProjectName(lcsProjectId, name);
+	}
+
+	@Override
+	public java.lang.String getLCSProjectAdministratorEmailAddress(
+		long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectService.getLCSProjectAdministratorEmailAddress(lcsProjectId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -40,6 +86,38 @@ public class LCSProjectServiceWrapper implements LCSProjectService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _lcsProjectService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectService.getUserLCSProjects();
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects(
+		boolean lcsRole)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectService.getUserLCSProjects(lcsRole);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects(
+		boolean lcsRole, int role)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectService.getUserLCSProjects(lcsRole, role);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserManageableLCSProjects()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectService.getUserManageableLCSProjects();
+	}
+
+	@Override
+	public long getUserDefaultLCSProjectId()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectService.getUserDefaultLCSProjectId();
 	}
 
 	@Override

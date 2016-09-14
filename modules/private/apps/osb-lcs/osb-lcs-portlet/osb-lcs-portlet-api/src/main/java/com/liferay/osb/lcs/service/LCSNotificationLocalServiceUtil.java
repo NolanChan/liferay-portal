@@ -54,6 +54,57 @@ public class LCSNotificationLocalServiceUtil {
 	}
 
 	/**
+	* Adds an LCS notification for the LCS cluster entry.
+	*
+	* @param userId the primary key of the user
+	* @param lcsClusterEntry the notification's LCS cluster entry
+	* @param enabled whether to enable the notification
+	* @param type the notification type as defined in {@link
+	com.liferay.osb.lcs.notifications.util.LCSEventType}
+	* @return the LCS notification
+	*/
+	public static com.liferay.osb.lcs.model.LCSNotification addLCSNotification(
+		long userId, com.liferay.osb.lcs.model.LCSClusterEntry lcsClusterEntry,
+		boolean enabled, int type) {
+		return getService()
+				   .addLCSNotification(userId, lcsClusterEntry, enabled, type);
+	}
+
+	/**
+	* Adds an LCS notification for the LCS cluster node.
+	*
+	* @param userId the primary key of the user
+	* @param lcsClusterNode the notification's LCS cluster node
+	* @param enabled whether to enable the notification
+	* @param type the notification type as defined in {@link
+	com.liferay.osb.lcs.notifications.util.LCSEventType}
+	* @return the LCS notification
+	*/
+	public static com.liferay.osb.lcs.model.LCSNotification addLCSNotification(
+		long userId, com.liferay.osb.lcs.model.LCSClusterNode lcsClusterNode,
+		boolean enabled, int type) {
+		return getService()
+				   .addLCSNotification(userId, lcsClusterNode, enabled, type);
+	}
+
+	/**
+	* Adds an LCS notification for the LCS project.
+	*
+	* @param userId the primary key of the user
+	* @param lcsProjectId the primary key of the notification's LCS project
+	* @param enabled whether to enable the notification
+	* @param type the notification type as defined in {@link
+	com.liferay.osb.lcs.notifications.util.LCSEventType}
+	* @return the LCS notification
+	*/
+	public static com.liferay.osb.lcs.model.LCSNotification addLCSProjectLCSNotification(
+		long userId, long lcsProjectId, boolean enabled, int type) {
+		return getService()
+				   .addLCSProjectLCSNotification(userId, lcsProjectId, enabled,
+			type);
+	}
+
+	/**
 	* Creates a new l c s notification with the primary key. Does not add the l c s notification to the database.
 	*
 	* @param lcsNotificationId the primary key for the new l c s notification
@@ -88,9 +139,61 @@ public class LCSNotificationLocalServiceUtil {
 		return getService().deleteLCSNotification(lcsNotificationId);
 	}
 
+	/**
+	* Returns the LCS notification of the user, LCS cluster entry, and LCS
+	* notification type.
+	*
+	* @param userId the primary key of the user
+	* @param lcsClusterEntryId the primary key of the notification's LCS
+	cluster entry
+	* @param type the notification type as defined in {@link
+	com.liferay.osb.lcs.notifications.util.LCSEventType}
+	* @return the matching LCS notification
+	*/
+	public static com.liferay.osb.lcs.model.LCSNotification fetchLCSClusterEntryLCSNotification(
+		long userId, long lcsClusterEntryId, int type) {
+		return getService()
+				   .fetchLCSClusterEntryLCSNotification(userId,
+			lcsClusterEntryId, type);
+	}
+
+	/**
+	* Returns the LCS notification of the user, LCS cluster node, and LCS
+	* notification type.
+	*
+	* @param userId the primary key of the user
+	* @param lcsClusterNodeId the primary key of the notification's LCS
+	cluster node
+	* @param type the notification type as defined in {@link
+	com.liferay.osb.lcs.notifications.util.LCSEventType}
+	* @return the matching LCS notification
+	*/
+	public static com.liferay.osb.lcs.model.LCSNotification fetchLCSClusterNodeLCSNotification(
+		long userId, long lcsClusterNodeId, int type) {
+		return getService()
+				   .fetchLCSClusterNodeLCSNotification(userId,
+			lcsClusterNodeId, type);
+	}
+
 	public static com.liferay.osb.lcs.model.LCSNotification fetchLCSNotification(
 		long lcsNotificationId) {
 		return getService().fetchLCSNotification(lcsNotificationId);
+	}
+
+	/**
+	* Returns the LCS notification for the user, LCS project, and LCS
+	* notification type.
+	*
+	* @param userId the primary key of the user
+	* @param lcsProjectId the primary key of the notification's LCS project
+	* @param type the notification type as defined in {@link
+	com.liferay.osb.lcs.notifications.util.LCSEventType}
+	* @return the matching LCS notification
+	*/
+	public static com.liferay.osb.lcs.model.LCSNotification fetchLCSProjectLCSNotification(
+		long userId, long lcsProjectId, int type) {
+		return getService()
+				   .fetchLCSProjectLCSNotification(userId, lcsProjectId, type);
 	}
 
 	/**
@@ -250,6 +353,57 @@ public class LCSNotificationLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	/**
+	* Deletes the LCS notification for the LCS cluster entry.
+	*
+	* @param lcsClusterEntryId the primary key of the LCS cluster entry
+	*/
+	public static void deleteLCSClusterEntryLCSNotification(
+		long lcsClusterEntryId) {
+		getService().deleteLCSClusterEntryLCSNotification(lcsClusterEntryId);
+	}
+
+	/**
+	* Deletes the LCS notification for the LCS cluster node.
+	*
+	* @param lcsClusterNodeId the primary key of the LCS cluster node
+	*/
+	public static void deleteLCSClusterNodeLCSNotification(
+		long lcsClusterNodeId) {
+		getService().deleteLCSClusterNodeLCSNotification(lcsClusterNodeId);
+	}
+
+	/**
+	* Deletes the LCS notification for the LCS project.
+	*
+	* @param lcsProjectId the primary key of the LCS project
+	*/
+	public static void deleteLCSProjectLCSNotification(long lcsProjectId) {
+		getService().deleteLCSProjectLCSNotification(lcsProjectId);
+	}
+
+	/**
+	* Deletes the LCS notifications of the user.
+	*
+	* @param userId the primary key of the user
+	*/
+	public static void deleteUserLCSNotifications(long userId) {
+		getService().deleteUserLCSNotifications(userId);
+	}
+
+	/**
+	* Deletes the LCS notifications of the user, for the name and primary key
+	* of the class.
+	*
+	* @param userId the primary key of the user
+	* @param classNameValue the class name
+	* @param classPK the primary key for the object of class
+	*/
+	public static void deleteUserLCSNotifications(long userId,
+		java.lang.String classNameValue, long classPK) {
+		getService().deleteUserLCSNotifications(userId, classNameValue, classPK);
 	}
 
 	public static LCSNotificationLocalService getService() {

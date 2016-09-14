@@ -41,6 +41,13 @@ public class LCSClusterNodePatchesLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSClusterNodePatchesLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static java.lang.String getDownloadPatchStatus(
+		long[] lcsClusterNodeIds, java.lang.String lcsClusterNodeKeys,
+		java.lang.String patchId) {
+		return getService()
+				   .getDownloadPatchStatus(lcsClusterNodeIds,
+			lcsClusterNodeKeys, patchId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +56,12 @@ public class LCSClusterNodePatchesLocalServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static void downloadPatch(long[] lcsClusterNodeIds,
+		java.lang.String patchName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().downloadPatch(lcsClusterNodeIds, patchName);
 	}
 
 	public static LCSClusterNodePatchesLocalService getService() {

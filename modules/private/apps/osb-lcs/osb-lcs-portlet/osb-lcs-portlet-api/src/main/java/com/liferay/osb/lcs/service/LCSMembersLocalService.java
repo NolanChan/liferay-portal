@@ -16,6 +16,8 @@ package com.liferay.osb.lcs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.lcs.notification.LCSEventType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -50,4 +52,22 @@ public interface LCSMembersLocalService extends BaseLocalService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	/**
+	* Publishes a message to the LCS event queue at the portal's message bus.
+	*
+	* @param key the portal instance key provided by the LCS key generator
+	* @param lcsEventType the event type that occurred in the portal instance
+	* @since LCS 1.3
+	*/
+	public void fireLCSEvent(java.lang.String key, LCSEventType lcsEventType);
+
+	public void invalidateLCSSiteMembership(long companyId, long userId)
+		throws PortalException;
+
+	public void validateCorpProjectUsers(long corpProjectId, long[] userIds)
+		throws PortalException;
+
+	public void validateLCSSiteMembership(long companyId, long userId)
+		throws PortalException;
 }

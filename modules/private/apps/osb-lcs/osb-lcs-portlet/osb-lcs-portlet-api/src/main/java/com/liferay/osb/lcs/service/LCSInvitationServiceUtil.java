@@ -41,6 +41,27 @@ public class LCSInvitationServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSInvitationServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.osb.lcs.model.LCSInvitation addLCSInvitation(
+		long lcsProjectId, java.lang.String emailAddress,
+		long lcsClusterEntryId, int role)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLCSInvitation(lcsProjectId, emailAddress,
+			lcsClusterEntryId, role);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSInvitation deleteLCSInvitation(
+		long lcsInvitationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteLCSInvitation(lcsInvitationId);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSInvitation getLCSProjectLCSInvitation(
+		long lcsProjectId, java.lang.String emailAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLCSProjectLCSInvitation(lcsProjectId, emailAddress);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +70,12 @@ public class LCSInvitationServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSInvitation> getLCSProjectLCSInvitations(
+		long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLCSProjectLCSInvitations(lcsProjectId);
 	}
 
 	public static LCSInvitationService getService() {

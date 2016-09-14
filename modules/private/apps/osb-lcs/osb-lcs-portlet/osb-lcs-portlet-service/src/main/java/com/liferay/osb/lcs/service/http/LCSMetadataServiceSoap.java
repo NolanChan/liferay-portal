@@ -16,9 +16,16 @@ package com.liferay.osb.lcs.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.service.LCSMetadataServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.osb.lcs.service.LCSMetadataServiceUtil} service utility. The
+ * {@link LCSMetadataServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,37 @@ import aQute.bnd.annotation.ProviderType;
  * @author Igor Beslic
  * @see LCSMetadataServiceHttp
  * @see com.liferay.osb.lcs.model.LCSMetadataSoap
- * @see com.liferay.osb.lcs.service.LCSMetadataServiceUtil
+ * @see LCSMetadataServiceUtil
  * @generated
  */
 @ProviderType
 public class LCSMetadataServiceSoap {
+	/**
+	* Returns all LCS metadata matching the portal instance's build number and
+	* edition.
+	*
+	* @param buildNumber the portal instance's build number
+	* @param portalEdition the portal instance's edition
+	* @return the matching LCS metadata
+	* @throws PortalException if the caller was not signed in to the LCS portal
+	instance
+	* @since LCS 1.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSMetadataSoap[] getLCSMetadatas(
+		int buildNumber, java.lang.String portalEdition)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSMetadata> returnValue = LCSMetadataServiceUtil.getLCSMetadatas(buildNumber,
+					portalEdition);
+
+			return com.liferay.osb.lcs.model.LCSMetadataSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LCSMetadataServiceSoap.class);
 }

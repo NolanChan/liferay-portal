@@ -16,12 +16,21 @@ package com.liferay.osb.lcs.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.service.LCSSubscriptionEntryServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * {@link com.liferay.osb.lcs.service.LCSSubscriptionEntryServiceUtil} service utility. The
+ * {@link LCSSubscriptionEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.kernel.security.auth.HttpPrincipal} parameter.
+ * {@link HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -40,10 +49,310 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Igor Beslic
  * @see LCSSubscriptionEntryServiceSoap
- * @see com.liferay.portal.kernel.security.auth.HttpPrincipal
- * @see com.liferay.osb.lcs.service.LCSSubscriptionEntryServiceUtil
+ * @see HttpPrincipal
+ * @see LCSSubscriptionEntryServiceUtil
  * @generated
  */
 @ProviderType
 public class LCSSubscriptionEntryServiceHttp {
+	public static void addCorpProjectLCSSubscriptionEntries(
+		HttpPrincipal httpPrincipal, long corpProjectId,
+		java.lang.String lcsSubscriptionEntriesJSON)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSSubscriptionEntryServiceUtil.class,
+					"addCorpProjectLCSSubscriptionEntries",
+					_addCorpProjectLCSSubscriptionEntriesParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					corpProjectId, lcsSubscriptionEntriesJSON);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void addLCSSubscriptionEntries(HttpPrincipal httpPrincipal,
+		long lcsProjectId, java.lang.String lcsSubscriptionEntriesJSON)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSSubscriptionEntryServiceUtil.class,
+					"addLCSSubscriptionEntries",
+					_addLCSSubscriptionEntriesParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					lcsProjectId, lcsSubscriptionEntriesJSON);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSSubscriptionEntry fetchLCSClusterNodeActiveLCSSubscriptionEntry(
+		HttpPrincipal httpPrincipal, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSSubscriptionEntryServiceUtil.class,
+					"fetchLCSClusterNodeActiveLCSSubscriptionEntry",
+					_fetchLCSClusterNodeActiveLCSSubscriptionEntryParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, key);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.osb.lcs.model.LCSSubscriptionEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getCorpProjectLCSSubscriptionEntries(
+		HttpPrincipal httpPrincipal, long corpProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSSubscriptionEntryServiceUtil.class,
+					"getCorpProjectLCSSubscriptionEntries",
+					_getCorpProjectLCSSubscriptionEntriesParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					corpProjectId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
+		HttpPrincipal httpPrincipal, long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSSubscriptionEntryServiceUtil.class,
+					"getLCSProjectLCSSubscriptionEntries",
+					_getLCSProjectLCSSubscriptionEntriesParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					lcsProjectId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
+		HttpPrincipal httpPrincipal, long lcsProjectId, boolean status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSSubscriptionEntryServiceUtil.class,
+					"getLCSProjectLCSSubscriptionEntries",
+					_getLCSProjectLCSSubscriptionEntriesParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					lcsProjectId, status);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static boolean hasLCSProjectElasticLCSSubscriptionEntry(
+		HttpPrincipal httpPrincipal, long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSSubscriptionEntryServiceUtil.class,
+					"hasLCSProjectElasticLCSSubscriptionEntry",
+					_hasLCSProjectElasticLCSSubscriptionEntryParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					lcsProjectId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Boolean)returnObj).booleanValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void refreshLCSProjectLCSSubscriptionEntries(
+		HttpPrincipal httpPrincipal)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSSubscriptionEntryServiceUtil.class,
+					"refreshLCSProjectLCSSubscriptionEntries",
+					_refreshLCSProjectLCSSubscriptionEntriesParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void refreshLCSProjectLCSSubscriptionEntries(
+		HttpPrincipal httpPrincipal, long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSSubscriptionEntryServiceUtil.class,
+					"refreshLCSProjectLCSSubscriptionEntries",
+					_refreshLCSProjectLCSSubscriptionEntriesParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					lcsProjectId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LCSSubscriptionEntryServiceHttp.class);
+	private static final Class<?>[] _addCorpProjectLCSSubscriptionEntriesParameterTypes0 =
+		new Class[] { long.class, java.lang.String.class };
+	private static final Class<?>[] _addLCSSubscriptionEntriesParameterTypes1 = new Class[] {
+			long.class, java.lang.String.class
+		};
+	private static final Class<?>[] _fetchLCSClusterNodeActiveLCSSubscriptionEntryParameterTypes2 =
+		new Class[] { java.lang.String.class };
+	private static final Class<?>[] _getCorpProjectLCSSubscriptionEntriesParameterTypes3 =
+		new Class[] { long.class };
+	private static final Class<?>[] _getLCSProjectLCSSubscriptionEntriesParameterTypes4 =
+		new Class[] { long.class };
+	private static final Class<?>[] _getLCSProjectLCSSubscriptionEntriesParameterTypes5 =
+		new Class[] { long.class, boolean.class };
+	private static final Class<?>[] _hasLCSProjectElasticLCSSubscriptionEntryParameterTypes6 =
+		new Class[] { long.class };
+	private static final Class<?>[] _refreshLCSProjectLCSSubscriptionEntriesParameterTypes7 =
+		new Class[] {  };
+	private static final Class<?>[] _refreshLCSProjectLCSSubscriptionEntriesParameterTypes8 =
+		new Class[] { long.class };
 }

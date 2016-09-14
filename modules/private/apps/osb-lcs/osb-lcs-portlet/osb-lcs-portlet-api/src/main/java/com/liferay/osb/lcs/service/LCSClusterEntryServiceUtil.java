@@ -41,6 +41,82 @@ public class LCSClusterEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSClusterEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static byte[] exportLCSClusterEntryToken(long lcsProjectId,
+		java.lang.String lcsClusterEntryName,
+		java.lang.String subscriptionType, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .exportLCSClusterEntryToken(lcsProjectId,
+			lcsClusterEntryName, subscriptionType, type);
+	}
+
+	@Deprecated
+	public static com.liferay.osb.lcs.model.LCSClusterEntry addLCSClusterEntry(
+		long lcsProjectId, java.lang.String name, java.lang.String description,
+		java.lang.String location, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLCSClusterEntry(lcsProjectId, name, description,
+			location, type);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntry addLCSClusterEntry(
+		long lcsProjectId, java.lang.String name, java.lang.String description,
+		java.lang.String location, java.lang.String subscriptionType, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLCSClusterEntry(lcsProjectId, name, description,
+			location, subscriptionType, type);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntry deleteLCSClusterEntry(
+		long lcsClusterEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteLCSClusterEntry(lcsClusterEntryId);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntry getLCSClusterEntry(
+		long lcsClusterEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLCSClusterEntry(lcsClusterEntryId);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntry updateElastic(
+		long lcsClusterEntryId, boolean elastic)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateElastic(lcsClusterEntryId, elastic);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntry updateHighPageLoadTime(
+		long lcsClusterEntryId, int highPageLoadTime)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateHighPageLoadTime(lcsClusterEntryId, highPageLoadTime);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntry updateLCSClusterEntry(
+		long lcsClusterEntryId, java.lang.String name,
+		java.lang.String description, java.lang.String location)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateLCSClusterEntry(lcsClusterEntryId, name, description,
+			location);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntry updateMediumPageLoadTime(
+		long lcsClusterEntryId, int mediumPageLoadTime)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateMediumPageLoadTime(lcsClusterEntryId,
+			mediumPageLoadTime);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntry updateSubscriptionType(
+		long lcsClusterEntryId, java.lang.String subscriptionType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateSubscriptionType(lcsClusterEntryId, subscriptionType);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +125,51 @@ public class LCSClusterEntryServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> getArchivedLCSProjectLCSClusterEntries(
+		long lcsProjectId, java.lang.String subscriptionType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getArchivedLCSProjectLCSClusterEntries(lcsProjectId,
+			subscriptionType);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> getLCSProjectLCSClusterEntries(
+		long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLCSProjectLCSClusterEntries(lcsProjectId);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> getLCSProjectLCSClusterEntries(
+		long lcsProjectId, java.lang.String subscriptionType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLCSProjectLCSClusterEntries(lcsProjectId,
+			subscriptionType);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> getLCSProjectManageableLCSClusterEntries(
+		long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLCSProjectManageableLCSClusterEntries(lcsProjectId);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> getUserLCSClusterEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserLCSClusterEntries();
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> getUserLCSClusterEntries(
+		long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserLCSClusterEntries(lcsProjectId);
+	}
+
+	public static void deleteLCSProjectClusters(long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteLCSProjectClusters(lcsProjectId);
 	}
 
 	public static LCSClusterEntryService getService() {

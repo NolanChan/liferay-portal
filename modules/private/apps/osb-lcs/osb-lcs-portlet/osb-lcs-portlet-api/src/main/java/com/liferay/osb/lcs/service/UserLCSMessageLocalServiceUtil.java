@@ -53,6 +53,12 @@ public class UserLCSMessageLocalServiceUtil {
 		return getService().addUserLCSMessage(userLCSMessage);
 	}
 
+	public static com.liferay.osb.lcs.model.UserLCSMessage addUserLCSMessage(
+		long userId, long lcsMessageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addUserLCSMessage(userId, lcsMessageId);
+	}
+
 	/**
 	* Creates a new user l c s message with the primary key. Does not add the user l c s message to the database.
 	*
@@ -106,6 +112,12 @@ public class UserLCSMessageLocalServiceUtil {
 		return getService().getUserLCSMessage(userLcsMessageId);
 	}
 
+	public static com.liferay.osb.lcs.model.UserLCSMessage updateRead(
+		long userLCSMessageId, boolean read)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateRead(userLCSMessageId, read);
+	}
+
 	/**
 	* Updates the user l c s message in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -151,6 +163,10 @@ public class UserLCSMessageLocalServiceUtil {
 	*/
 	public static int getUserLCSMessagesCount() {
 		return getService().getUserLCSMessagesCount();
+	}
+
+	public static int getUserLCSMessagesCount(long userId) {
+		return getService().getUserLCSMessagesCount(userId);
 	}
 
 	/**
@@ -228,6 +244,18 @@ public class UserLCSMessageLocalServiceUtil {
 		return getService().getUserLCSMessages(start, end);
 	}
 
+	public static java.util.List<com.liferay.osb.lcs.model.UserLCSMessage> getUserLCSMessages(
+		long userId, boolean hidden)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserLCSMessages(userId, hidden);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.UserLCSMessage> getUserLCSMessages(
+		long userId, int max)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserLCSMessages(userId, max);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -250,6 +278,16 @@ public class UserLCSMessageLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteUserLCSMessages(
+		com.liferay.osb.lcs.model.LCSRole lcsRole)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteUserLCSMessages(lcsRole);
+	}
+
+	public static void deleteUserLCSMessages(long userId) {
+		getService().deleteUserLCSMessages(userId);
 	}
 
 	public static UserLCSMessageLocalService getService() {

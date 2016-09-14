@@ -51,6 +51,34 @@ public class LCSMembersLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	* Publishes a message to the LCS event queue at the portal's message bus.
+	*
+	* @param key the portal instance key provided by the LCS key generator
+	* @param lcsEventType the event type that occurred in the portal instance
+	* @since LCS 1.3
+	*/
+	public static void fireLCSEvent(java.lang.String key,
+		com.liferay.lcs.notification.LCSEventType lcsEventType) {
+		getService().fireLCSEvent(key, lcsEventType);
+	}
+
+	public static void invalidateLCSSiteMembership(long companyId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().invalidateLCSSiteMembership(companyId, userId);
+	}
+
+	public static void validateCorpProjectUsers(long corpProjectId,
+		long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().validateCorpProjectUsers(corpProjectId, userIds);
+	}
+
+	public static void validateLCSSiteMembership(long companyId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().validateLCSSiteMembership(companyId, userId);
+	}
+
 	public static LCSMembersLocalService getService() {
 		return _serviceTracker.getService();
 	}

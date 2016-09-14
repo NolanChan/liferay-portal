@@ -54,4 +54,10 @@ public interface LCSClusterEntry extends LCSClusterEntryModel, PersistedModel {
 				return LCSClusterEntry.class;
 			}
 		};
+
+	public boolean hasOfflineLCSClusterNode();
+
+	public boolean isCluster();
+
+	public boolean isEnvironment();
 }

@@ -54,6 +54,13 @@ public class LCSNotificationAuditEntryLocalServiceUtil {
 				   .addLCSNotificationAuditEntry(lcsNotificationAuditEntry);
 	}
 
+	public static com.liferay.osb.lcs.model.LCSNotificationAuditEntry addLCSNotificationAuditEntry(
+		long userId, long lcsClusterNodeId, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLCSNotificationAuditEntry(userId, lcsClusterNodeId, type);
+	}
+
 	/**
 	* Creates a new l c s notification audit entry with the primary key. Does not add the l c s notification audit entry to the database.
 	*
@@ -233,6 +240,37 @@ public class LCSNotificationAuditEntryLocalServiceUtil {
 	public static java.util.List<com.liferay.osb.lcs.model.LCSNotificationAuditEntry> getLCSNotificationAuditEntries(
 		int start, int end) {
 		return getService().getLCSNotificationAuditEntries(start, end);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSNotificationAuditEntry> getLCSNotificationAuditEntries(
+		int start, int end, boolean details)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLCSNotificationAuditEntries(start, end, details);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSNotificationAuditEntry> getLCSNotificationAuditEntries(
+		long corpProjectId, long lcsClusterEntryId, long lcsClusterNodeId,
+		boolean details)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLCSNotificationAuditEntries(corpProjectId,
+			lcsClusterEntryId, lcsClusterNodeId, details);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSNotificationAuditEntry> getLCSNotificationAuditEntries(
+		long lcsProjectId, long lcsClusterEntryId, long lcsClusterNodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLCSNotificationAuditEntries(lcsProjectId,
+			lcsClusterEntryId, lcsClusterNodeId);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSNotificationAuditEntry> getUserLCSNotificationAuditEntries(
+		long userId, long lcsClusterNodeId, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getUserLCSNotificationAuditEntries(userId,
+			lcsClusterNodeId, type);
 	}
 
 	/**

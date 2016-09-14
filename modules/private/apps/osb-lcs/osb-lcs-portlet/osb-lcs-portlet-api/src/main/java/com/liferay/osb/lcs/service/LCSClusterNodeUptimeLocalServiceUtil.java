@@ -117,6 +117,18 @@ public class LCSClusterNodeUptimeLocalServiceUtil {
 		return getService().updateLCSClusterNodeUptime(lcsClusterNodeUptime);
 	}
 
+	public static com.liferay.osb.lcs.model.LCSClusterNodeUptime updateLCSClusterNodeUptime(
+		java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateLCSClusterNodeUptime(key);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterNodeUptime updateLCSClusterNodeUptime(
+		long lcsClusterNodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateLCSClusterNodeUptime(lcsClusterNodeId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -142,6 +154,14 @@ public class LCSClusterNodeUptimeLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static double getMonthlyElasticLCSClusterNodeUptimeTotal(
+		long lcsProjectId, int month, int year)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMonthlyElasticLCSClusterNodeUptimeTotal(lcsProjectId,
+			month, year);
 	}
 
 	/**
@@ -228,6 +248,59 @@ public class LCSClusterNodeUptimeLocalServiceUtil {
 		return getService().getLCSClusterNodeUptimes(start, end);
 	}
 
+	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterNodeUptime> getLCSClusterNodeUptimes(
+		int start, int end, boolean details)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLCSClusterNodeUptimes(start, end, details);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterNodeUptime> getMonthlyElasticTotalLCSClusterNodeUptimes(
+		long lcsProjectId, int month, int year)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMonthlyElasticTotalLCSClusterNodeUptimes(lcsProjectId,
+			month, year);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterNodeUptime> getMonthlyLCSClusterNodeUptimes(
+		long lcsClusterEntryId, long lcsClusterNodeId, long lcsProjectId,
+		int month, int year, boolean details, boolean elastic,
+		com.liferay.lcs.subscription.SubscriptionType subscriptionType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMonthlyLCSClusterNodeUptimes(lcsClusterEntryId,
+			lcsClusterNodeId, lcsProjectId, month, year, details, elastic,
+			subscriptionType);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterNodeUptime> getMonthlyLCSClusterNodeUptimes(
+		long lcsClusterEntryId, long lcsClusterNodeId, long lcsProjectId,
+		int startMonth, int startYear, int endMonth, int endYear,
+		boolean elastic,
+		com.liferay.lcs.subscription.SubscriptionType subscriptionType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMonthlyLCSClusterNodeUptimes(lcsClusterEntryId,
+			lcsClusterNodeId, lcsProjectId, startMonth, startYear, endMonth,
+			endYear, elastic, subscriptionType);
+	}
+
+	public static java.util.Map<java.util.Date, java.lang.Double> getMonthlyElasticLCSClusterNodeUptimeTotalMap(
+		long lcsProjectId, int range)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMonthlyElasticLCSClusterNodeUptimeTotalMap(lcsProjectId,
+			range);
+	}
+
+	public static java.util.Map<java.util.Date, java.lang.Double> getMonthlyElasticLCSClusterNodeUptimeTotalMap(
+		long lcsProjectId, int startMonth, int startYear, int endMonth,
+		int endYear) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMonthlyElasticLCSClusterNodeUptimeTotalMap(lcsProjectId,
+			startMonth, startYear, endMonth, endYear);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -250,6 +323,12 @@ public class LCSClusterNodeUptimeLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void updateLCSClusterNodeUptimes(java.lang.String key,
+		java.lang.String uptimesJSON)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateLCSClusterNodeUptimes(key, uptimesJSON);
 	}
 
 	public static LCSClusterNodeUptimeLocalService getService() {

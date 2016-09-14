@@ -54,6 +54,57 @@ public class LCSPatchEntryLocalServiceUtil {
 	}
 
 	/**
+	* Adds a new LCS patch entry.
+	*
+	* @param patchId the patch ID specified by Liferay support
+	* @param name the patch name
+	* @param description the patch description
+	* @param patchingToolVersion the minimum version of the patching tool
+	compatible with this patch
+	* @param incremental whether the patch is incremental
+	* @param singular whether the patch is singular
+	* @param version the patch version
+	* @param size
+	* @param rank the patch rank. This is necessary during the install phase
+	to determine the chronology of the fixes.
+	* @param requirements the patch requirements. This is only applicable when
+	the patch isn't singular.
+	* @param component the patch component. Examples include hotfix, portal,
+	and collaboration.
+	* @param compatibleBuild the build number of the portal instance
+	compatible with this patch. This is used for patches to Liferay
+	6.1.20 and older.
+	* @param product the build number of the portal instance compatible with
+	this patch. This is used for patches to Liferay versions newer
+	than 6.1.20.
+	* @param fixedIssues the comma delimited list of JIRA ticket IDs addressed
+	in the patch
+	* @param moduleName the portal module name fixed by the patch
+	* @param moduleId the portal module ID
+	* @param tunnelWeb whether the patch requires the Tunnel Web plugin. This
+	isn't used in patches newer than 6.1.20.
+	* @param buildDate the patch's build date
+	* @param builtFor the name of the customer the patch was built for
+	* @return the new LCS patch entry
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSPatchEntry addLCSPatchEntry(
+		java.lang.String patchId, java.lang.String name,
+		java.lang.String description, int patchingToolVersion,
+		boolean incremental, boolean singular, int version, long size,
+		long rank, java.lang.String requirements, java.lang.String component,
+		java.lang.String compatibleBuild, java.lang.String product,
+		java.lang.String fixedIssues, java.lang.String moduleName,
+		java.lang.String moduleId, boolean tunnelWeb, java.util.Date buildDate,
+		java.lang.String builtFor) {
+		return getService()
+				   .addLCSPatchEntry(patchId, name, description,
+			patchingToolVersion, incremental, singular, version, size, rank,
+			requirements, component, compatibleBuild, product, fixedIssues,
+			moduleName, moduleId, tunnelWeb, buildDate, builtFor);
+	}
+
+	/**
 	* Creates a new l c s patch entry with the primary key. Does not add the l c s patch entry to the database.
 	*
 	* @param lcsPatchEntryId the primary key for the new l c s patch entry
@@ -91,6 +142,20 @@ public class LCSPatchEntryLocalServiceUtil {
 	public static com.liferay.osb.lcs.model.LCSPatchEntry fetchLCSPatchEntry(
 		long lcsPatchEntryId) {
 		return getService().fetchLCSPatchEntry(lcsPatchEntryId);
+	}
+
+	/**
+	* Returns the LCS patch entry matching the patch ID.
+	*
+	* @param patchId the patch ID defined by Liferay support
+	* @return the LCS patch entry matching the patch ID
+	* @throws NoSuchLCSPatchEntryException
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSPatchEntry getLCSPatchEntry(
+		java.lang.String patchId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLCSPatchEntry(patchId);
 	}
 
 	/**
@@ -210,6 +275,21 @@ public class LCSPatchEntryLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns all LCS patch entries matching the patching tool version and
+	* product.
+	*
+	* @param patchingToolVersion the patching tool version
+	* @param product the portal instance build number
+	* @return all LCS patch entries matching the patching tool version and
+	product
+	* @since LCS 0.1
+	*/
+	public static java.util.List<com.liferay.osb.lcs.model.LCSPatchEntry> getLCSPatchEntries(
+		int patchingToolVersion, java.lang.String product) {
+		return getService().getLCSPatchEntries(patchingToolVersion, product);
 	}
 
 	/**

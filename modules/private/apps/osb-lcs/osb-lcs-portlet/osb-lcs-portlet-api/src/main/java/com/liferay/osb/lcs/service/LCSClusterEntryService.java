@@ -16,14 +16,20 @@ package com.liferay.osb.lcs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.model.LCSClusterEntry;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for LCSClusterEntry. Methods of this
@@ -49,6 +55,44 @@ public interface LCSClusterEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LCSClusterEntryServiceUtil} to access the l c s cluster entry remote service. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSClusterEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public byte[] exportLCSClusterEntryToken(long lcsProjectId,
+		java.lang.String lcsClusterEntryName,
+		java.lang.String subscriptionType, int type) throws PortalException;
+
+	@java.lang.Deprecated
+	public LCSClusterEntry addLCSClusterEntry(long lcsProjectId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String location, int type) throws PortalException;
+
+	public LCSClusterEntry addLCSClusterEntry(long lcsProjectId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String location, java.lang.String subscriptionType, int type)
+		throws PortalException;
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	public LCSClusterEntry deleteLCSClusterEntry(long lcsClusterEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSClusterEntry getLCSClusterEntry(long lcsClusterEntryId)
+		throws PortalException;
+
+	public LCSClusterEntry updateElastic(long lcsClusterEntryId, boolean elastic)
+		throws PortalException;
+
+	public LCSClusterEntry updateHighPageLoadTime(long lcsClusterEntryId,
+		int highPageLoadTime) throws PortalException;
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	public LCSClusterEntry updateLCSClusterEntry(long lcsClusterEntryId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String location) throws PortalException;
+
+	public LCSClusterEntry updateMediumPageLoadTime(long lcsClusterEntryId,
+		int mediumPageLoadTime) throws PortalException;
+
+	public LCSClusterEntry updateSubscriptionType(long lcsClusterEntryId,
+		java.lang.String subscriptionType) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +100,36 @@ public interface LCSClusterEntryService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterEntry> getArchivedLCSProjectLCSClusterEntries(
+		long lcsProjectId, java.lang.String subscriptionType)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterEntry> getLCSProjectLCSClusterEntries(
+		long lcsProjectId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterEntry> getLCSProjectLCSClusterEntries(
+		long lcsProjectId, java.lang.String subscriptionType)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterEntry> getLCSProjectManageableLCSClusterEntries(
+		long lcsProjectId) throws PortalException;
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterEntry> getUserLCSClusterEntries()
+		throws PortalException;
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterEntry> getUserLCSClusterEntries(long lcsProjectId)
+		throws PortalException;
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	public void deleteLCSProjectClusters(long lcsProjectId)
+		throws PortalException;
 }

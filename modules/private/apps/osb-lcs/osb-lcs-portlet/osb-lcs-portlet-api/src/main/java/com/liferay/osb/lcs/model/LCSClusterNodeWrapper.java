@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -162,6 +163,11 @@ public class LCSClusterNodeWrapper implements LCSClusterNode,
 		return _lcsClusterNode.getArchived();
 	}
 
+	@Override
+	public boolean hasStatus(int status) {
+		return _lcsClusterNode.hasStatus(status);
+	}
+
 	/**
 	* Returns <code>true</code> if this l c s cluster node is archived.
 	*
@@ -183,8 +189,48 @@ public class LCSClusterNodeWrapper implements LCSClusterNode,
 	}
 
 	@Override
+	public boolean isLCSCLusterNodeClusterLinkHealthy() {
+		return _lcsClusterNode.isLCSCLusterNodeClusterLinkHealthy();
+	}
+
+	@Override
+	public boolean isLCSNotificationEnabled(long userId, int type) {
+		return _lcsClusterNode.isLCSNotificationEnabled(userId, type);
+	}
+
+	@Override
+	public boolean isMetricsLCSServiceEnabled() {
+		return _lcsClusterNode.isMetricsLCSServiceEnabled();
+	}
+
+	@Override
+	public boolean isMonitoringUnavailable() {
+		return _lcsClusterNode.isMonitoringUnavailable();
+	}
+
+	@Override
 	public boolean isNew() {
 		return _lcsClusterNode.isNew();
+	}
+
+	@Override
+	public boolean isOffline() {
+		return _lcsClusterNode.isOffline();
+	}
+
+	@Override
+	public boolean isPatchesLCSServiceEnabled() {
+		return _lcsClusterNode.isPatchesLCSServiceEnabled();
+	}
+
+	@Override
+	public boolean isPatchingToolUnavailable() {
+		return _lcsClusterNode.isPatchingToolUnavailable();
+	}
+
+	@Override
+	public boolean isPortalPropertiesLCSServiceEnabled() {
+		return _lcsClusterNode.isPortalPropertiesLCSServiceEnabled();
 	}
 
 	@Override
@@ -210,6 +256,41 @@ public class LCSClusterNodeWrapper implements LCSClusterNode,
 	@Override
 	public int getBuildNumber() {
 		return _lcsClusterNode.getBuildNumber();
+	}
+
+	@Override
+	public int getLCSClusterNodeClusterLinkStatus() {
+		return _lcsClusterNode.getLCSClusterNodeClusterLinkStatus();
+	}
+
+	@Override
+	public int getMetricsLCSServiceStatus() {
+		return _lcsClusterNode.getMetricsLCSServiceStatus();
+	}
+
+	@Override
+	public int getMonitoringStatus() {
+		return _lcsClusterNode.getMonitoringStatus();
+	}
+
+	@Override
+	public int getPatchesLCSServiceStatus() {
+		return _lcsClusterNode.getPatchesLCSServiceStatus();
+	}
+
+	@Override
+	public int getPatchingToolStatus() {
+		return _lcsClusterNode.getPatchingToolStatus();
+	}
+
+	@Override
+	public int getPatchingToolVersion() {
+		return _lcsClusterNode.getPatchingToolVersion();
+	}
+
+	@Override
+	public int getPortalPropertiesLCSServiceStatus() {
+		return _lcsClusterNode.getPortalPropertiesLCSServiceStatus();
 	}
 
 	/**
@@ -288,6 +369,11 @@ public class LCSClusterNodeWrapper implements LCSClusterNode,
 	}
 
 	@Override
+	public java.lang.String getPortalEdition() {
+		return _lcsClusterNode.getPortalEdition();
+	}
+
+	@Override
 	public java.lang.String toString() {
 		return _lcsClusterNode.toString();
 	}
@@ -295,6 +381,21 @@ public class LCSClusterNodeWrapper implements LCSClusterNode,
 	@Override
 	public java.lang.String toXmlString() {
 		return _lcsClusterNode.toXmlString();
+	}
+
+	@Override
+	public Date getConfigurationModifiedDate() {
+		return _lcsClusterNode.getConfigurationModifiedDate();
+	}
+
+	@Override
+	public java.util.List<java.lang.String> getInstallablePatchNames() {
+		return _lcsClusterNode.getInstallablePatchNames();
+	}
+
+	@Override
+	public Map<java.lang.String, java.lang.Integer> getPatchIdsStatuses() {
+		return _lcsClusterNode.getPatchIdsStatuses();
 	}
 
 	/**
@@ -367,6 +468,11 @@ public class LCSClusterNodeWrapper implements LCSClusterNode,
 		_lcsClusterNode.setCachedModel(cachedModel);
 	}
 
+	@Override
+	public void setConfigurationModifiedDate(Date configurationModifiedDate) {
+		_lcsClusterNode.setConfigurationModifiedDate(configurationModifiedDate);
+	}
+
 	/**
 	* Sets the description of this l c s cluster node.
 	*
@@ -391,6 +497,12 @@ public class LCSClusterNodeWrapper implements LCSClusterNode,
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_lcsClusterNode.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	@Override
+	public void setInstallablePatchNames(
+		java.util.List<java.lang.String> installablePatchNames) {
+		_lcsClusterNode.setInstallablePatchNames(installablePatchNames);
 	}
 
 	/**
@@ -456,6 +568,22 @@ public class LCSClusterNodeWrapper implements LCSClusterNode,
 	@Override
 	public void setNew(boolean n) {
 		_lcsClusterNode.setNew(n);
+	}
+
+	@Override
+	public void setPatchIdsStatuses(
+		Map<java.lang.String, java.lang.Integer> patchIdsStatuses) {
+		_lcsClusterNode.setPatchIdsStatuses(patchIdsStatuses);
+	}
+
+	@Override
+	public void setPatchingToolVersion(int patchingToolVersion) {
+		_lcsClusterNode.setPatchingToolVersion(patchingToolVersion);
+	}
+
+	@Override
+	public void setPortalEdition(java.lang.String portalEdition) {
+		_lcsClusterNode.setPortalEdition(portalEdition);
 	}
 
 	/**

@@ -16,9 +16,16 @@ package com.liferay.osb.lcs.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.service.LCSMembersServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.osb.lcs.service.LCSMembersServiceUtil} service utility. The
+ * {@link LCSMembersServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -42,9 +49,90 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Igor Beslic
  * @see LCSMembersServiceHttp
- * @see com.liferay.osb.lcs.service.LCSMembersServiceUtil
+ * @see LCSMembersServiceUtil
  * @generated
  */
 @ProviderType
 public class LCSMembersServiceSoap {
+	/**
+	* Publishes a monitoring unavailable event that targets all watchers of the
+	* portal instance specified by the key.
+	*
+	* @param key the portal instance key provided by the LCS key generator
+	* @throws PortalException if a portal exception occurred
+	* @since LCS 1.3
+	*/
+	public static void sendMonitoringUnavailableEmail(java.lang.String key)
+		throws RemoteException {
+		try {
+			LCSMembersServiceUtil.sendMonitoringUnavailableEmail(key);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Publishes a patching tool unavailable event that targets all watchers of
+	* the portal instance specified by the key.
+	*
+	* @param key the portal instance key provided by the LCS key generator
+	* @throws PortalException if a portal exception occurred
+	* @since LCS 1.3
+	*/
+	public static void sendPatchingToolUnavailableEmail(java.lang.String key)
+		throws RemoteException {
+		try {
+			LCSMembersServiceUtil.sendPatchingToolUnavailableEmail(key);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Publishes a server manually shut down event that targets all watchers of
+	* the portal instance identified by the key.
+	*
+	* @param key the portal instance key provided by the LCS key generator
+	* @throws PortalException if a portal exception occurred
+	* @since LCS 1.3
+	*/
+	public static void sendServerManuallyShutdownEmail(java.lang.String key)
+		throws RemoteException {
+		try {
+			LCSMembersServiceUtil.sendServerManuallyShutdownEmail(key);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Publishes a server unexpectedly shut down event that targets all watchers
+	* of the portal instance specified by the key.
+	*
+	* @param key the portal instance key provided by the LCS key generator
+	* @throws PortalException if a portal exception occurred
+	* @since LCS 1.3
+	*/
+	public static void sendServerUnexpectedlyShutdownEmail(java.lang.String key)
+		throws RemoteException {
+		try {
+			LCSMembersServiceUtil.sendServerUnexpectedlyShutdownEmail(key);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LCSMembersServiceSoap.class);
 }

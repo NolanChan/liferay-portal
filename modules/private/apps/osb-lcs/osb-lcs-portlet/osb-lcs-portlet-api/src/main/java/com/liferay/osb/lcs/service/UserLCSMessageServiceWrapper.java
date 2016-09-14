@@ -33,6 +33,26 @@ public class UserLCSMessageServiceWrapper implements UserLCSMessageService,
 		_userLCSMessageService = userLCSMessageService;
 	}
 
+	@Override
+	public com.liferay.osb.lcs.model.UserLCSMessage deleteUserLCSMessage(
+		long userLCSMessageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userLCSMessageService.deleteUserLCSMessage(userLCSMessageId);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.UserLCSMessage updateRead(
+		long userLCSMessageId, boolean read)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userLCSMessageService.updateRead(userLCSMessageId, read);
+	}
+
+	@Override
+	public int getUserLCSMessagesCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userLCSMessageService.getUserLCSMessagesCount();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -41,6 +61,25 @@ public class UserLCSMessageServiceWrapper implements UserLCSMessageService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _userLCSMessageService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.UserLCSMessage> getUserLCSMessages(
+		boolean hidden)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userLCSMessageService.getUserLCSMessages(hidden);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.UserLCSMessage> getUserLCSMessages(
+		int max) throws com.liferay.portal.kernel.exception.PortalException {
+		return _userLCSMessageService.getUserLCSMessages(max);
+	}
+
+	@Override
+	public void deleteUserLCSMessages()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userLCSMessageService.deleteUserLCSMessages();
 	}
 
 	@Override

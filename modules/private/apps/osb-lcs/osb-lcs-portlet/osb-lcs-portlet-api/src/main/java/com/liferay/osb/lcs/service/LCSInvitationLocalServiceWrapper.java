@@ -34,6 +34,12 @@ public class LCSInvitationLocalServiceWrapper
 		_lcsInvitationLocalService = lcsInvitationLocalService;
 	}
 
+	@Override
+	public boolean hasUserLCSInvitation(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsInvitationLocalService.hasUserLCSInvitation(userId);
+	}
+
 	/**
 	* Adds the l c s invitation to the database. Also notifies the appropriate model listeners.
 	*
@@ -44,6 +50,15 @@ public class LCSInvitationLocalServiceWrapper
 	public com.liferay.osb.lcs.model.LCSInvitation addLCSInvitation(
 		com.liferay.osb.lcs.model.LCSInvitation lcsInvitation) {
 		return _lcsInvitationLocalService.addLCSInvitation(lcsInvitation);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSInvitation addLCSInvitation(
+		long userId, long lcsProjectId, java.lang.String emailAddress,
+		long lcsClusterEntryId, int role)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsInvitationLocalService.addLCSInvitation(userId,
+			lcsProjectId, emailAddress, lcsClusterEntryId, role);
 	}
 
 	/**
@@ -102,6 +117,14 @@ public class LCSInvitationLocalServiceWrapper
 		long lcsInvitationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _lcsInvitationLocalService.getLCSInvitation(lcsInvitationId);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSInvitation getLCSProjectLCSInvitation(
+		long lcsProjectId, java.lang.String emailAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsInvitationLocalService.getLCSProjectLCSInvitation(lcsProjectId,
+			emailAddress);
 	}
 
 	/**
@@ -236,6 +259,19 @@ public class LCSInvitationLocalServiceWrapper
 	public java.util.List<com.liferay.osb.lcs.model.LCSInvitation> getLCSInvitations(
 		int start, int end) {
 		return _lcsInvitationLocalService.getLCSInvitations(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSInvitation> getLCSProjectLCSInvitations(
+		long lcsProjectId) {
+		return _lcsInvitationLocalService.getLCSProjectLCSInvitations(lcsProjectId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSInvitation> getUserLCSInvitations(
+		java.lang.String emailAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsInvitationLocalService.getUserLCSInvitations(emailAddress);
 	}
 
 	/**

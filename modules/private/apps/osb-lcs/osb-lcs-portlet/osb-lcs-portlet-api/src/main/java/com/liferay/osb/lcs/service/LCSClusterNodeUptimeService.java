@@ -16,14 +16,22 @@ package com.liferay.osb.lcs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.model.LCSClusterNodeUptime;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for LCSClusterNodeUptime. Methods of this
@@ -49,6 +57,10 @@ public interface LCSClusterNodeUptimeService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LCSClusterNodeUptimeServiceUtil} to access the l c s cluster node uptime remote service. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSClusterNodeUptimeServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public double getMonthlyElasticLCSClusterNodeUptimeTotal(
+		long lcsProjectId, int month, int year) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +68,28 @@ public interface LCSClusterNodeUptimeService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNodeUptime> getMonthlyElasticTotalLCSClusterNodeUptimes(
+		long lcsProjectId, int month, int year) throws PortalException;
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNodeUptime> getMonthlyLCSClusterNodeUptimes(
+		long lcsClusterEntryId, long lcsClusterNodeId, long lcsProjectId,
+		int month, int year, boolean details, boolean elastic)
+		throws PortalException;
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Date, java.lang.Double> getMonthlyElasticLCSClusterNodeUptimeTotalMap(
+		long lcsProjectId, int startMonth, int startYear, int endMonth,
+		int endYear) throws PortalException;
+
+	public void updateLCSClusterNodeUptime(java.lang.String key)
+		throws PortalException;
+
+	public void updateLCSClusterNodeUptimes(java.lang.String key,
+		java.lang.String uptimesJSON) throws PortalException;
 }

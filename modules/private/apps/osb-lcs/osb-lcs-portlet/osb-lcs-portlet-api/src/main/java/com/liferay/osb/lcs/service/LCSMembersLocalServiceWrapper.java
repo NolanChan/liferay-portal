@@ -43,6 +43,37 @@ public class LCSMembersLocalServiceWrapper implements LCSMembersLocalService,
 		return _lcsMembersLocalService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	* Publishes a message to the LCS event queue at the portal's message bus.
+	*
+	* @param key the portal instance key provided by the LCS key generator
+	* @param lcsEventType the event type that occurred in the portal instance
+	* @since LCS 1.3
+	*/
+	@Override
+	public void fireLCSEvent(java.lang.String key,
+		com.liferay.lcs.notification.LCSEventType lcsEventType) {
+		_lcsMembersLocalService.fireLCSEvent(key, lcsEventType);
+	}
+
+	@Override
+	public void invalidateLCSSiteMembership(long companyId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_lcsMembersLocalService.invalidateLCSSiteMembership(companyId, userId);
+	}
+
+	@Override
+	public void validateCorpProjectUsers(long corpProjectId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_lcsMembersLocalService.validateCorpProjectUsers(corpProjectId, userIds);
+	}
+
+	@Override
+	public void validateLCSSiteMembership(long companyId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_lcsMembersLocalService.validateLCSSiteMembership(companyId, userId);
+	}
+
 	@Override
 	public LCSMembersLocalService getWrappedService() {
 		return _lcsMembersLocalService;

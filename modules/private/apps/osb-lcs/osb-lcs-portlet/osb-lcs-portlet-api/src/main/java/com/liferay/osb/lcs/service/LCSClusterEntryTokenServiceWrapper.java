@@ -34,6 +34,41 @@ public class LCSClusterEntryTokenServiceWrapper
 		_lcsClusterEntryTokenService = lcsClusterEntryTokenService;
 	}
 
+	@Override
+	public boolean isValid(long lcsClusterEntryTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterEntryTokenService.isValid(lcsClusterEntryTokenId);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterEntryToken addLCSClusterEntryToken(
+		long lcsClusterEntryId, java.lang.String content)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterEntryTokenService.addLCSClusterEntryToken(lcsClusterEntryId,
+			content);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterEntryToken deleteLCSClusterEntryToken(
+		long lcsClusterEntryTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterEntryTokenService.deleteLCSClusterEntryToken(lcsClusterEntryTokenId);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterEntryToken fetchLCSClusterEntryLCSClusterEntryToken(
+		long lcsClusterEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterEntryTokenService.fetchLCSClusterEntryLCSClusterEntryToken(lcsClusterEntryId);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterEntryToken fetchLCSClusterEntryToken(
+		long lcsClusterEntryTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterEntryTokenService.fetchLCSClusterEntryToken(lcsClusterEntryTokenId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

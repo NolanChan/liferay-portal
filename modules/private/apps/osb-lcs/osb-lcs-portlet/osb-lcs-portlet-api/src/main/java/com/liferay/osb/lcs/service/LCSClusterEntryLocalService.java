@@ -70,6 +70,22 @@ public interface LCSClusterEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public LCSClusterEntry addLCSClusterEntry(LCSClusterEntry lcsClusterEntry);
 
+	public LCSClusterEntry addLCSClusterEntry(long lcsProjectId,
+		java.lang.String name, java.lang.String description,
+		int highPageLoadTime, java.lang.String location,
+		int mediumPageLoadTime, java.lang.String subscriptionType, int type)
+		throws PortalException;
+
+	@java.lang.Deprecated
+	public LCSClusterEntry addLCSClusterEntry(long lcsProjectId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String location, int type) throws PortalException;
+
+	public LCSClusterEntry addLCSClusterEntry(long lcsProjectId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String location, java.lang.String subscriptionType, int type)
+		throws PortalException;
+
 	/**
 	* Creates a new l c s cluster entry with the primary key. Does not add the l c s cluster entry to the database.
 	*
@@ -83,10 +99,11 @@ public interface LCSClusterEntryLocalService extends BaseLocalService,
 	*
 	* @param lcsClusterEntry the l c s cluster entry
 	* @return the l c s cluster entry that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public LCSClusterEntry deleteLCSClusterEntry(
-		LCSClusterEntry lcsClusterEntry);
+		LCSClusterEntry lcsClusterEntry) throws PortalException;
 
 	/**
 	* Deletes the l c s cluster entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -113,6 +130,12 @@ public interface LCSClusterEntryLocalService extends BaseLocalService,
 	public LCSClusterEntry getLCSClusterEntry(long lcsClusterEntryId)
 		throws PortalException;
 
+	public LCSClusterEntry updateElastic(long lcsClusterEntryId, boolean elastic)
+		throws PortalException;
+
+	public LCSClusterEntry updateHighPageLoadTime(long lcsClusterEntryId,
+		int highPageLoadTime) throws PortalException;
+
 	/**
 	* Updates the l c s cluster entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -122,6 +145,22 @@ public interface LCSClusterEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public LCSClusterEntry updateLCSClusterEntry(
 		LCSClusterEntry lcsClusterEntry);
+
+	@java.lang.Deprecated
+	public LCSClusterEntry updateLCSClusterEntry(long lcsClusterEntryId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String location) throws PortalException;
+
+	public LCSClusterEntry updateLCSClusterEntry(long lcsClusterEntryId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String subscriptionType, java.lang.String location)
+		throws PortalException;
+
+	public LCSClusterEntry updateMediumPageLoadTime(long lcsClusterEntryId,
+		int mediumPageLoadTime) throws PortalException;
+
+	public LCSClusterEntry updateSubscriptionType(long lcsClusterEntryId,
+		java.lang.String subscriptionType) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -197,6 +236,10 @@ public interface LCSClusterEntryLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterEntry> getArchivedLCSProjectLCSClusterEntries(
+		long lcsProjectId, java.lang.String subscriptionType);
+
 	/**
 	* Returns a range of all the l c s cluster entries.
 	*
@@ -210,6 +253,26 @@ public interface LCSClusterEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LCSClusterEntry> getLCSClusterEntries(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterEntry> getLCSProjectLCSClusterEntries(
+		long lcsProjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterEntry> getLCSProjectLCSClusterEntries(
+		long lcsProjectId, int start, int end,
+		OrderByComparator orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterEntry> getLCSProjectLCSClusterEntries(
+		long lcsProjectId, java.lang.String subscriptionType);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterEntry> getUserLCSClusterEntries(long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterEntry> getUserLCSClusterEntries(long userId,
+		long lcsProjectId);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -228,4 +291,13 @@ public interface LCSClusterEntryLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getLCSProjectLCSClusterEntryIds(long lcsProjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getUserLCSClusterEntryIds(long userId, long lcsProjectId);
+
+	public void deleteLCSProjectClusters(long lcsProjectId)
+		throws PortalException;
 }

@@ -42,6 +42,24 @@ public class LCSMetadataServiceWrapper implements LCSMetadataService,
 		return _lcsMetadataService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	* Returns all LCS metadata matching the portal instance's build number and
+	* edition.
+	*
+	* @param buildNumber the portal instance's build number
+	* @param portalEdition the portal instance's edition
+	* @return the matching LCS metadata
+	* @throws PortalException if the caller was not signed in to the LCS portal
+	instance
+	* @since LCS 1.1
+	*/
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSMetadata> getLCSMetadatas(
+		int buildNumber, java.lang.String portalEdition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsMetadataService.getLCSMetadatas(buildNumber, portalEdition);
+	}
+
 	@Override
 	public LCSMetadataService getWrappedService() {
 		return _lcsMetadataService;

@@ -41,6 +41,13 @@ public class LCSClusterNodeUptimeServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSClusterNodeUptimeServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static double getMonthlyElasticLCSClusterNodeUptimeTotal(
+		long lcsProjectId, int month, int year)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMonthlyElasticLCSClusterNodeUptimeTotal(lcsProjectId,
+			month, year);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +56,42 @@ public class LCSClusterNodeUptimeServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterNodeUptime> getMonthlyElasticTotalLCSClusterNodeUptimes(
+		long lcsProjectId, int month, int year)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMonthlyElasticTotalLCSClusterNodeUptimes(lcsProjectId,
+			month, year);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterNodeUptime> getMonthlyLCSClusterNodeUptimes(
+		long lcsClusterEntryId, long lcsClusterNodeId, long lcsProjectId,
+		int month, int year, boolean details, boolean elastic)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMonthlyLCSClusterNodeUptimes(lcsClusterEntryId,
+			lcsClusterNodeId, lcsProjectId, month, year, details, elastic);
+	}
+
+	public static java.util.Map<java.util.Date, java.lang.Double> getMonthlyElasticLCSClusterNodeUptimeTotalMap(
+		long lcsProjectId, int startMonth, int startYear, int endMonth,
+		int endYear) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMonthlyElasticLCSClusterNodeUptimeTotalMap(lcsProjectId,
+			startMonth, startYear, endMonth, endYear);
+	}
+
+	public static void updateLCSClusterNodeUptime(java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateLCSClusterNodeUptime(key);
+	}
+
+	public static void updateLCSClusterNodeUptimes(java.lang.String key,
+		java.lang.String uptimesJSON)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateLCSClusterNodeUptimes(key, uptimesJSON);
 	}
 
 	public static LCSClusterNodeUptimeService getService() {

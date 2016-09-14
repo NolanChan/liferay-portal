@@ -41,6 +41,35 @@ public class LCSClusterEntryTokenServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSClusterEntryTokenServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean isValid(long lcsClusterEntryTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().isValid(lcsClusterEntryTokenId);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntryToken addLCSClusterEntryToken(
+		long lcsClusterEntryId, java.lang.String content)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addLCSClusterEntryToken(lcsClusterEntryId, content);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntryToken deleteLCSClusterEntryToken(
+		long lcsClusterEntryTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteLCSClusterEntryToken(lcsClusterEntryTokenId);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntryToken fetchLCSClusterEntryLCSClusterEntryToken(
+		long lcsClusterEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchLCSClusterEntryLCSClusterEntryToken(lcsClusterEntryId);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntryToken fetchLCSClusterEntryToken(
+		long lcsClusterEntryTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchLCSClusterEntryToken(lcsClusterEntryTokenId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.

@@ -16,9 +16,16 @@ package com.liferay.osb.lcs.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.service.UserLCSMessageServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.osb.lcs.service.UserLCSMessageServiceUtil} service utility. The
+ * {@link UserLCSMessageServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,93 @@ import aQute.bnd.annotation.ProviderType;
  * @author Igor Beslic
  * @see UserLCSMessageServiceHttp
  * @see com.liferay.osb.lcs.model.UserLCSMessageSoap
- * @see com.liferay.osb.lcs.service.UserLCSMessageServiceUtil
+ * @see UserLCSMessageServiceUtil
  * @generated
  */
 @ProviderType
 public class UserLCSMessageServiceSoap {
+	public static com.liferay.osb.lcs.model.UserLCSMessageSoap deleteUserLCSMessage(
+		long userLCSMessageId) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.UserLCSMessage returnValue = UserLCSMessageServiceUtil.deleteUserLCSMessage(userLCSMessageId);
+
+			return com.liferay.osb.lcs.model.UserLCSMessageSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteUserLCSMessages() throws RemoteException {
+		try {
+			UserLCSMessageServiceUtil.deleteUserLCSMessages();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.UserLCSMessageSoap[] getUserLCSMessages(
+		boolean hidden) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.UserLCSMessage> returnValue =
+				UserLCSMessageServiceUtil.getUserLCSMessages(hidden);
+
+			return com.liferay.osb.lcs.model.UserLCSMessageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.UserLCSMessageSoap[] getUserLCSMessages(
+		int max) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.UserLCSMessage> returnValue =
+				UserLCSMessageServiceUtil.getUserLCSMessages(max);
+
+			return com.liferay.osb.lcs.model.UserLCSMessageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getUserLCSMessagesCount() throws RemoteException {
+		try {
+			int returnValue = UserLCSMessageServiceUtil.getUserLCSMessagesCount();
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.UserLCSMessageSoap updateRead(
+		long userLCSMessageId, boolean read) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.UserLCSMessage returnValue = UserLCSMessageServiceUtil.updateRead(userLCSMessageId,
+					read);
+
+			return com.liferay.osb.lcs.model.UserLCSMessageSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(UserLCSMessageServiceSoap.class);
 }

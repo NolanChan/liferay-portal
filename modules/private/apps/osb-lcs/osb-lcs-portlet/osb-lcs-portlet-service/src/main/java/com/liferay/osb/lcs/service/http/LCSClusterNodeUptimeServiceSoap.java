@@ -16,9 +16,16 @@ package com.liferay.osb.lcs.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.service.LCSClusterNodeUptimeServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.osb.lcs.service.LCSClusterNodeUptimeServiceUtil} service utility. The
+ * {@link LCSClusterNodeUptimeServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,85 @@ import aQute.bnd.annotation.ProviderType;
  * @author Igor Beslic
  * @see LCSClusterNodeUptimeServiceHttp
  * @see com.liferay.osb.lcs.model.LCSClusterNodeUptimeSoap
- * @see com.liferay.osb.lcs.service.LCSClusterNodeUptimeServiceUtil
+ * @see LCSClusterNodeUptimeServiceUtil
  * @generated
  */
 @ProviderType
 public class LCSClusterNodeUptimeServiceSoap {
+	public static double getMonthlyElasticLCSClusterNodeUptimeTotal(
+		long lcsProjectId, int month, int year) throws RemoteException {
+		try {
+			double returnValue = LCSClusterNodeUptimeServiceUtil.getMonthlyElasticLCSClusterNodeUptimeTotal(lcsProjectId,
+					month, year);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterNodeUptimeSoap[] getMonthlyElasticTotalLCSClusterNodeUptimes(
+		long lcsProjectId, int month, int year) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSClusterNodeUptime> returnValue =
+				LCSClusterNodeUptimeServiceUtil.getMonthlyElasticTotalLCSClusterNodeUptimes(lcsProjectId,
+					month, year);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeUptimeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterNodeUptimeSoap[] getMonthlyLCSClusterNodeUptimes(
+		long lcsClusterEntryId, long lcsClusterNodeId, long lcsProjectId,
+		int month, int year, boolean details, boolean elastic)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSClusterNodeUptime> returnValue =
+				LCSClusterNodeUptimeServiceUtil.getMonthlyLCSClusterNodeUptimes(lcsClusterEntryId,
+					lcsClusterNodeId, lcsProjectId, month, year, details,
+					elastic);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeUptimeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void updateLCSClusterNodeUptime(java.lang.String key)
+		throws RemoteException {
+		try {
+			LCSClusterNodeUptimeServiceUtil.updateLCSClusterNodeUptime(key);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void updateLCSClusterNodeUptimes(java.lang.String key,
+		java.lang.String uptimesJSON) throws RemoteException {
+		try {
+			LCSClusterNodeUptimeServiceUtil.updateLCSClusterNodeUptimes(key,
+				uptimesJSON);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LCSClusterNodeUptimeServiceSoap.class);
 }

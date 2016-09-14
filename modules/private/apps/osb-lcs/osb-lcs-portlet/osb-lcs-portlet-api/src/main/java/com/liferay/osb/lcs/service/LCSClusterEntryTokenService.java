@@ -16,13 +16,17 @@ package com.liferay.osb.lcs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.model.LCSClusterEntryToken;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 /**
@@ -49,6 +53,28 @@ public interface LCSClusterEntryTokenService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LCSClusterEntryTokenServiceUtil} to access the l c s cluster entry token remote service. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSClusterEntryTokenServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isValid(long lcsClusterEntryTokenId)
+		throws PortalException;
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	public LCSClusterEntryToken addLCSClusterEntryToken(
+		long lcsClusterEntryId, java.lang.String content)
+		throws PortalException;
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	public LCSClusterEntryToken deleteLCSClusterEntryToken(
+		long lcsClusterEntryTokenId) throws PortalException;
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSClusterEntryToken fetchLCSClusterEntryLCSClusterEntryToken(
+		long lcsClusterEntryId) throws PortalException;
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSClusterEntryToken fetchLCSClusterEntryToken(
+		long lcsClusterEntryTokenId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

@@ -16,6 +16,8 @@ package com.liferay.osb.lcs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.model.LCSSubscriptionEntry;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -23,7 +25,10 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for LCSSubscriptionEntry. Methods of this
@@ -49,6 +54,13 @@ public interface LCSSubscriptionEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LCSSubscriptionEntryServiceUtil} to access the l c s subscription entry remote service. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSSubscriptionEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLCSProjectElasticLCSSubscriptionEntry(long lcsProjectId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSSubscriptionEntry fetchLCSClusterNodeActiveLCSSubscriptionEntry(
+		java.lang.String key) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +68,29 @@ public interface LCSSubscriptionEntryService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSSubscriptionEntry> getCorpProjectLCSSubscriptionEntries(
+		long corpProjectId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
+		long lcsProjectId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
+		long lcsProjectId, boolean status) throws PortalException;
+
+	public void addCorpProjectLCSSubscriptionEntries(long corpProjectId,
+		java.lang.String lcsSubscriptionEntriesJSON) throws PortalException;
+
+	public void addLCSSubscriptionEntries(long lcsProjectId,
+		java.lang.String lcsSubscriptionEntriesJSON) throws PortalException;
+
+	public void refreshLCSProjectLCSSubscriptionEntries()
+		throws PortalException;
+
+	public void refreshLCSProjectLCSSubscriptionEntries(long lcsProjectId)
+		throws PortalException;
 }

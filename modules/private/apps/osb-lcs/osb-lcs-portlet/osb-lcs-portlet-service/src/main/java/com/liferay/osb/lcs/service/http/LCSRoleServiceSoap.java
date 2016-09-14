@@ -16,9 +16,16 @@ package com.liferay.osb.lcs.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.service.LCSRoleServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.osb.lcs.service.LCSRoleServiceUtil} service utility. The
+ * {@link LCSRoleServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,173 @@ import aQute.bnd.annotation.ProviderType;
  * @author Igor Beslic
  * @see LCSRoleServiceHttp
  * @see com.liferay.osb.lcs.model.LCSRoleSoap
- * @see com.liferay.osb.lcs.service.LCSRoleServiceUtil
+ * @see LCSRoleServiceUtil
  * @generated
  */
 @ProviderType
 public class LCSRoleServiceSoap {
+	/**
+	* Assigns the LCS role to the user.
+	*
+	* @param userId the primary key of the user being assigned the role
+	* @param lcsProjectId the primary key of the LCS project the role is
+	scoped to
+	* @param lcsClusterEntryId the primary key of the environment
+	* @param role the LCS role identifier
+	* @return the LCS role
+	* @throws PortalException if any of the LCS role attributes were invalid,
+	or an operation wasn't allowed by the LCS project's membership
+	policy
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSRoleSoap addLCSRole(
+		long userId, long lcsProjectId, long lcsClusterEntryId, int role)
+		throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSRole returnValue = LCSRoleServiceUtil.addLCSRole(userId,
+					lcsProjectId, lcsClusterEntryId, role);
+
+			return com.liferay.osb.lcs.model.LCSRoleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Deletes the LCS role matching the LCS role identifier.
+	*
+	* @param lcsRoleId the primary key of the LCS role
+	* @return the deleted LCS role
+	* @throws PortalException if the operation wasn't allowed by the LCS
+	project's membership policy
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSRoleSoap deleteLCSRole(
+		long lcsRoleId) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSRole returnValue = LCSRoleServiceUtil.deleteLCSRole(lcsRoleId);
+
+			return com.liferay.osb.lcs.model.LCSRoleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns all LCS roles scoped to the LCS project.
+	*
+	* @param lcsProjectId the primary key of the LCS project
+	* @return the LCS roles scoped to the LCS project
+	* @throws PortalException if the operation wasn't allowed by the LCS
+	project's membership policy
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSRoleSoap[] getLCSProjectLCSRoles(
+		long lcsProjectId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSRole> returnValue = LCSRoleServiceUtil.getLCSProjectLCSRoles(lcsProjectId);
+
+			return com.liferay.osb.lcs.model.LCSRoleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSRoleSoap[] getUserLCSRoles(
+		long lcsProjectId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSRole> returnValue = LCSRoleServiceUtil.getUserLCSRoles(lcsProjectId);
+
+			return com.liferay.osb.lcs.model.LCSRoleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSRoleSoap[] getUserLCSRoles(
+		long lcsProjectId, int role) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSRole> returnValue = LCSRoleServiceUtil.getUserLCSRoles(lcsProjectId,
+					role);
+
+			return com.liferay.osb.lcs.model.LCSRoleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns <code>true</code> if the user has the LCS Administrator role in
+	* the LCS project, <code>false</code> otherwise.
+	*
+	* @param lcsProjectId the primary key of the LCS project
+	* @return <code>true</code> if the user has the LCS Administrator role in
+	the LCS project, <code>false</code> otherwise
+	* @throws PortalException if the operation wasn't allowed by the LCS
+	project's membership policy
+	* @since LCS 1.0
+	*/
+	public static boolean hasUserLCSAdministratorLCSRole(long lcsProjectId)
+		throws RemoteException {
+		try {
+			boolean returnValue = LCSRoleServiceUtil.hasUserLCSAdministratorLCSRole(lcsProjectId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns <code>true</code> if the user has an LCS role in the LCS project,
+	* <code>false</code> otherwise.
+	*
+	* <p>
+	* If <code>manageLCSClusterEntry</code> is <code>true</code>, this method
+	* checks whether the role is adequate for environment management tasks.
+	* </p>
+	*
+	* @param lcsProjectId the primary key of the LCS project
+	* @param manageLCSClusterEntry whether the user can manage project
+	environments
+	* @return <code>true</code> if the user has a role in the LCS project or a
+	role that lets them manage environments
+	* @throws PortalException if the operation wasn't allowed by the LCS
+	project's membership policy
+	* @since LCS 0.1
+	*/
+	public static boolean hasUserLCSRole(long lcsProjectId,
+		boolean manageLCSClusterEntry) throws RemoteException {
+		try {
+			boolean returnValue = LCSRoleServiceUtil.hasUserLCSRole(lcsProjectId,
+					manageLCSClusterEntry);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LCSRoleServiceSoap.class);
 }

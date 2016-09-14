@@ -60,6 +60,25 @@ public interface LCSClusterNodeLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LCSClusterNodeLocalServiceUtil} to access the l c s cluster node local service. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSClusterNodeLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLCSClusterEntryAllInactiveLCSClusterNodes(
+		long lcsClusterEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLCSClusterEntryAllLCSClusterNodes(
+		long lcsClusterEntryId, int status);
+
+	/**
+	* Returns <code>true</code> if any one of the user's corporate projects has
+	* at least one LCS cluster node.
+	*
+	* @param userId the primary key of the user
+	* @return <code>true</code> if any one of the user's corporate projects has
+	at least one LCS cluster node; <code>false</code> otherwise
+	* @since LCS 1.2
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserLCSClusterNodes(long userId);
 
 	/**
 	* Adds the l c s cluster node to the database. Also notifies the appropriate model listeners.
@@ -69,6 +88,25 @@ public interface LCSClusterNodeLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public LCSClusterNode addLCSClusterNode(LCSClusterNode lcsClusterNode);
+
+	/**
+	* Adds a new LCS cluster node.
+	*
+	* @param lcsClusterEntryId the primary key of the parent environment
+	* @param name the portal instance's friendly name
+	* @param description the portal instance's description
+	* @param buildNumber the portal instance's build number
+	* @param key the key of the portal instance provided by the license tool
+	* @param location the portal instance's physical location
+	* @param processorCoresTotal
+	* @return the LCS cluster node
+	* @throws PortalException if any LCS cluster node attributes were invalid
+	* @since LCS 0.1
+	*/
+	public LCSClusterNode addLCSClusterNode(long lcsClusterEntryId,
+		java.lang.String name, java.lang.String description, int buildNumber,
+		java.lang.String key, java.lang.String location, int processorCoresTotal)
+		throws PortalException;
 
 	/**
 	* Creates a new l c s cluster node with the primary key. Does not add the l c s cluster node to the database.
@@ -83,9 +121,11 @@ public interface LCSClusterNodeLocalService extends BaseLocalService,
 	*
 	* @param lcsClusterNode the l c s cluster node
 	* @return the l c s cluster node that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public LCSClusterNode deleteLCSClusterNode(LCSClusterNode lcsClusterNode);
+	public LCSClusterNode deleteLCSClusterNode(LCSClusterNode lcsClusterNode)
+		throws PortalException;
 
 	/**
 	* Deletes the l c s cluster node with the primary key from the database. Also notifies the appropriate model listeners.
@@ -101,6 +141,21 @@ public interface LCSClusterNodeLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LCSClusterNode fetchLCSClusterNode(long lcsClusterNodeId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSClusterNode getLCSClusterNode(java.lang.String key,
+		boolean details);
+
+	/**
+	* Returns the LCS cluster node matching the portal instance key.
+	*
+	* @param lcsClusterNodeKey the portal instance key provided by the license
+	tool
+	* @return the LCS cluster node matching the portal instance key
+	* @since LCS 0.1
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSClusterNode getLCSClusterNode(java.lang.String lcsClusterNodeKey);
+
 	/**
 	* Returns the l c s cluster node with the primary key.
 	*
@@ -113,6 +168,19 @@ public interface LCSClusterNodeLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Returns the LCS cluster node matching the primary key.
+	*
+	* @param lcsClusterNodeId the primary key of the LCS cluster node
+	* @param details whether to include the LCS cluster node's transient
+	details
+	* @return the LCS cluster node matching the primary key
+	* @since LCS 0.1
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSClusterNode getLCSClusterNode(long lcsClusterNodeId,
+		boolean details);
+
+	/**
 	* Updates the l c s cluster node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param lcsClusterNode the l c s cluster node
@@ -120,6 +188,13 @@ public interface LCSClusterNodeLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public LCSClusterNode updateLCSClusterNode(LCSClusterNode lcsClusterNode);
+
+	public LCSClusterNode updateLCSClusterNode(long lcsClusterNodeId,
+		java.lang.String name, java.lang.String description, int buildNumber,
+		java.lang.String location) throws PortalException;
+
+	public LCSClusterNode updateStatus(LCSClusterNode lcsClusterNode)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -195,6 +270,53 @@ public interface LCSClusterNodeLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNode> getArchivedLCSClusterNodes(int buildNumber);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNode> getArchivedLCSProjectLCSClusterNodes(
+		long userId, long lcsProjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNode> getArchivedLCSProjectLCSClusterNodes(
+		long userId, long lcsProjectId, boolean details);
+
+	/**
+	* Returns all LCS cluster nodes in the LCS cluster entry. The LCS cluster
+	* nodes' transient details are excluded.
+	*
+	* @param lcsClusterEntryId the primary key of the LCS cluster entry
+	* @return the LCS cluster nodes in the LCS cluster entry
+	* @since LCS 0.1
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNode> getLCSClusterEntryLCSClusterNodes(
+		long lcsClusterEntryId);
+
+	/**
+	* Returns all LCS cluster nodes in the LCS cluster entry.
+	*
+	* @param lcsClusterEntryId the primary key of the LCS cluster entry
+	* @param details whether to include the LCS cluster nodes' transient
+	details
+	* @return the LCS cluster nodes in the LCS cluster entry
+	* @since LCS 0.1
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNode> getLCSClusterEntryLCSClusterNodes(
+		long lcsClusterEntryId, boolean details);
+
+	/**
+	* Returns the LCS cluster nodes that have the specified portal instance
+	* build number.
+	*
+	* @param buildNumber the portal instance build number
+	* @return the LCS cluster nodes that have the portal instance build number
+	* @since LCS 0.1
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNode> getLCSClusterNodes(int buildNumber);
+
 	/**
 	* Returns a range of all the l c s cluster nodes.
 	*
@@ -208,6 +330,69 @@ public interface LCSClusterNodeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LCSClusterNode> getLCSClusterNodes(int start, int end);
+
+	/**
+	* Returns a range of the LCS cluster nodes.
+	*
+	* <p>
+	* This method is useful when paginating results. The start and end values
+	* are not primary keys: they are indices in the result set. Therefore, a
+	* start value of <code>0</code> refers to the first result in the set. The
+	* maximum number of instances returned is the end index minus the start
+	* index. Setting both indices to {@link
+	* QueryUtil#ALL_POS} returns the full
+	* result set.
+	* </p>
+	*
+	* @param start the lower bound of the range
+	* @param end the upper bound of the range. This is not inclusive.
+	* @param details whether to include the LCS cluster nodes' transient
+	details
+	* @return the range of the LCS cluster nodes
+	* @since LCS 0.1
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNode> getLCSClusterNodes(int start, int end,
+		boolean details);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNode> getLCSClusterNodes(
+		java.lang.String lcsClusterEntryName, java.lang.String lcsProjectName,
+		boolean andOperator, boolean details) throws PortalException;
+
+	/**
+	* Returns all LCS cluster nodes accessible to the user and belonging to the
+	* corporate project. The LCS cluster nodes' transient details are excluded.
+	*
+	* @param userId the primary key of the user
+	* @param lcsProjectId the primary key of the LCS project
+	* @return the LCS cluster nodes accessible to the user and belonging to the
+	corporate project
+	* @since LCS 0.1
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNode> getLCSProjectLCSClusterNodes(long userId,
+		long lcsProjectId);
+
+	/**
+	* Returns all LCS cluster nodes accessible to the user and belonging to the
+	* corporate project, optionally including the LCS nodes' transient details.
+	*
+	* @param userId the primary key of the user
+	* @param lcsProjectId the primary key of the LCS project
+	* @param details whether to include the LCS cluster nodes' transient
+	details
+	* @return the LCS cluster nodes accessible to the user and belonging to the
+	corporate project
+	* @since LCS 0.1
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNode> getLCSProjectLCSClusterNodes(long userId,
+		long lcsProjectId, boolean details);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNode> getSiblingLCSClusterNodes(java.lang.String key)
+		throws PortalException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -226,4 +411,15 @@ public interface LCSClusterNodeLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	/**
+	* Deletes all LCS cluster nodes in the LCS cluster entry.
+	*
+	* @param lcsClusterEntryId the primary key of the LCS cluster entry
+	* @throws PortalException if an LCS cluster node could not be found in the
+	LCS cluster entry
+	* @since LCS 0.1
+	*/
+	public void deleteLCSClusterEntryLCSClusterNodes(long lcsClusterEntryId)
+		throws PortalException;
 }

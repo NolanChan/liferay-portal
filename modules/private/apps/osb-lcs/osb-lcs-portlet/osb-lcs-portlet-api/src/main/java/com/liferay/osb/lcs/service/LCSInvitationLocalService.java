@@ -60,6 +60,8 @@ public interface LCSInvitationLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LCSInvitationLocalServiceUtil} to access the l c s invitation local service. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSInvitationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserLCSInvitation(long userId) throws PortalException;
 
 	/**
 	* Adds the l c s invitation to the database. Also notifies the appropriate model listeners.
@@ -69,6 +71,10 @@ public interface LCSInvitationLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public LCSInvitation addLCSInvitation(LCSInvitation lcsInvitation);
+
+	public LCSInvitation addLCSInvitation(long userId, long lcsProjectId,
+		java.lang.String emailAddress, long lcsClusterEntryId, int role)
+		throws PortalException;
 
 	/**
 	* Creates a new l c s invitation with the primary key. Does not add the l c s invitation to the database.
@@ -111,6 +117,10 @@ public interface LCSInvitationLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LCSInvitation getLCSInvitation(long lcsInvitationId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSInvitation getLCSProjectLCSInvitation(long lcsProjectId,
+		java.lang.String emailAddress) throws PortalException;
 
 	/**
 	* Updates the l c s invitation in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -208,6 +218,13 @@ public interface LCSInvitationLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LCSInvitation> getLCSInvitations(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSInvitation> getLCSProjectLCSInvitations(long lcsProjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSInvitation> getUserLCSInvitations(
+		java.lang.String emailAddress) throws PortalException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.

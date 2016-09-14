@@ -100,6 +100,12 @@ public class UserLCSMessageWrapper implements UserLCSMessage,
 	}
 
 	@Override
+	public LCSMessage getLcsMessage()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userLCSMessage.getLcsMessage();
+	}
+
+	@Override
 	public UserLCSMessage toEscapedModel() {
 		return new UserLCSMessageWrapper(_userLCSMessage.toEscapedModel());
 	}

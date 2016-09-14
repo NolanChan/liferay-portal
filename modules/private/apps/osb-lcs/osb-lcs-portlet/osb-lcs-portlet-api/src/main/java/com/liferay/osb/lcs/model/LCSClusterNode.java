@@ -54,4 +54,57 @@ public interface LCSClusterNode extends LCSClusterNodeModel, PersistedModel {
 				return LCSClusterNode.class;
 			}
 		};
+
+	public java.util.Date getConfigurationModifiedDate();
+
+	public java.util.List<java.lang.String> getInstallablePatchNames();
+
+	public int getLCSClusterNodeClusterLinkStatus();
+
+	public int getMetricsLCSServiceStatus();
+
+	public int getMonitoringStatus();
+
+	public int getPatchesLCSServiceStatus();
+
+	public java.util.Map<java.lang.String, java.lang.Integer> getPatchIdsStatuses();
+
+	public int getPatchingToolStatus();
+
+	public int getPatchingToolVersion();
+
+	public java.lang.String getPortalEdition();
+
+	public int getPortalPropertiesLCSServiceStatus();
+
+	public boolean hasStatus(int status);
+
+	public boolean isLCSCLusterNodeClusterLinkHealthy();
+
+	public boolean isLCSNotificationEnabled(long userId, int type);
+
+	public boolean isMetricsLCSServiceEnabled();
+
+	public boolean isMonitoringUnavailable();
+
+	public boolean isOffline();
+
+	public boolean isPatchesLCSServiceEnabled();
+
+	public boolean isPatchingToolUnavailable();
+
+	public boolean isPortalPropertiesLCSServiceEnabled();
+
+	public void setConfigurationModifiedDate(
+		java.util.Date configurationModifiedDate);
+
+	public void setInstallablePatchNames(
+		java.util.List<java.lang.String> installablePatchNames);
+
+	public void setPatchIdsStatuses(
+		java.util.Map<java.lang.String, java.lang.Integer> patchIdsStatuses);
+
+	public void setPatchingToolVersion(int patchingToolVersion);
+
+	public void setPortalEdition(java.lang.String portalEdition);
 }

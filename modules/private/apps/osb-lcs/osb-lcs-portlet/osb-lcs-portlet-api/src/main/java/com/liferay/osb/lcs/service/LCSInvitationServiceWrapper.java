@@ -33,6 +33,30 @@ public class LCSInvitationServiceWrapper implements LCSInvitationService,
 		_lcsInvitationService = lcsInvitationService;
 	}
 
+	@Override
+	public com.liferay.osb.lcs.model.LCSInvitation addLCSInvitation(
+		long lcsProjectId, java.lang.String emailAddress,
+		long lcsClusterEntryId, int role)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsInvitationService.addLCSInvitation(lcsProjectId,
+			emailAddress, lcsClusterEntryId, role);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSInvitation deleteLCSInvitation(
+		long lcsInvitationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsInvitationService.deleteLCSInvitation(lcsInvitationId);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSInvitation getLCSProjectLCSInvitation(
+		long lcsProjectId, java.lang.String emailAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsInvitationService.getLCSProjectLCSInvitation(lcsProjectId,
+			emailAddress);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -41,6 +65,13 @@ public class LCSInvitationServiceWrapper implements LCSInvitationService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _lcsInvitationService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSInvitation> getLCSProjectLCSInvitations(
+		long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsInvitationService.getLCSProjectLCSInvitations(lcsProjectId);
 	}
 
 	@Override

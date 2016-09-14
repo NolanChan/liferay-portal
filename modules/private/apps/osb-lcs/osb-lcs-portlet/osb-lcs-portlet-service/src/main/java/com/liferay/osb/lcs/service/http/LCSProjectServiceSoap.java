@@ -16,9 +16,16 @@ package com.liferay.osb.lcs.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.osb.lcs.service.LCSProjectServiceUtil} service utility. The
+ * {@link LCSProjectServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,181 @@ import aQute.bnd.annotation.ProviderType;
  * @author Igor Beslic
  * @see LCSProjectServiceHttp
  * @see com.liferay.osb.lcs.model.LCSProjectSoap
- * @see com.liferay.osb.lcs.service.LCSProjectServiceUtil
+ * @see LCSProjectServiceUtil
  * @generated
  */
 @ProviderType
 public class LCSProjectServiceSoap {
+	public static com.liferay.osb.lcs.model.LCSProjectSoap addDefaultLCSProject()
+		throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSProject returnValue = LCSProjectServiceUtil.addDefaultLCSProject();
+
+			return com.liferay.osb.lcs.model.LCSProjectSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProjectSoap addLCSProject(
+		java.lang.String sourceSystemName, java.lang.String name)
+		throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSProject returnValue = LCSProjectServiceUtil.addLCSProject(sourceSystemName,
+					name);
+
+			return com.liferay.osb.lcs.model.LCSProjectSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static boolean checkUserAccountEntryLCSProject()
+		throws RemoteException {
+		try {
+			boolean returnValue = LCSProjectServiceUtil.checkUserAccountEntryLCSProject();
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProjectSoap deleteLCSProject(
+		long lcsProjectId) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSProject returnValue = LCSProjectServiceUtil.deleteLCSProject(lcsProjectId);
+
+			return com.liferay.osb.lcs.model.LCSProjectSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProjectSoap getLCSProject(
+		long lcsProjectId) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSProject returnValue = LCSProjectServiceUtil.getLCSProject(lcsProjectId);
+
+			return com.liferay.osb.lcs.model.LCSProjectSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String getLCSProjectAdministratorEmailAddress(
+		long lcsProjectId) throws RemoteException {
+		try {
+			java.lang.String returnValue = LCSProjectServiceUtil.getLCSProjectAdministratorEmailAddress(lcsProjectId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static long getUserDefaultLCSProjectId() throws RemoteException {
+		try {
+			long returnValue = LCSProjectServiceUtil.getUserDefaultLCSProjectId();
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProjectSoap[] getUserLCSProjects()
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSProject> returnValue = LCSProjectServiceUtil.getUserLCSProjects();
+
+			return com.liferay.osb.lcs.model.LCSProjectSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProjectSoap[] getUserLCSProjects(
+		boolean lcsRole) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSProject> returnValue = LCSProjectServiceUtil.getUserLCSProjects(lcsRole);
+
+			return com.liferay.osb.lcs.model.LCSProjectSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProjectSoap[] getUserLCSProjects(
+		boolean lcsRole, int role) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSProject> returnValue = LCSProjectServiceUtil.getUserLCSProjects(lcsRole,
+					role);
+
+			return com.liferay.osb.lcs.model.LCSProjectSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProjectSoap[] getUserManageableLCSProjects()
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSProject> returnValue = LCSProjectServiceUtil.getUserManageableLCSProjects();
+
+			return com.liferay.osb.lcs.model.LCSProjectSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProjectSoap updateLCSProjectName(
+		long lcsProjectId, java.lang.String name) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSProject returnValue = LCSProjectServiceUtil.updateLCSProjectName(lcsProjectId,
+					name);
+
+			return com.liferay.osb.lcs.model.LCSProjectSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LCSProjectServiceSoap.class);
 }

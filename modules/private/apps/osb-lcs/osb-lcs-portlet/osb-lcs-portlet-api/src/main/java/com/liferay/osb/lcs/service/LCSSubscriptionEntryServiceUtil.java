@@ -41,6 +41,18 @@ public class LCSSubscriptionEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSSubscriptionEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean hasLCSProjectElasticLCSSubscriptionEntry(
+		long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .hasLCSProjectElasticLCSSubscriptionEntry(lcsProjectId);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSSubscriptionEntry fetchLCSClusterNodeActiveLCSSubscriptionEntry(
+		java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchLCSClusterNodeActiveLCSSubscriptionEntry(key);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +61,52 @@ public class LCSSubscriptionEntryServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	@Deprecated
+	public static java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getCorpProjectLCSSubscriptionEntries(
+		long corpProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCorpProjectLCSSubscriptionEntries(corpProjectId);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
+		long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLCSProjectLCSSubscriptionEntries(lcsProjectId);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
+		long lcsProjectId, boolean status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLCSProjectLCSSubscriptionEntries(lcsProjectId, status);
+	}
+
+	public static void addCorpProjectLCSSubscriptionEntries(
+		long corpProjectId, java.lang.String lcsSubscriptionEntriesJSON)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addCorpProjectLCSSubscriptionEntries(corpProjectId,
+			lcsSubscriptionEntriesJSON);
+	}
+
+	public static void addLCSSubscriptionEntries(long lcsProjectId,
+		java.lang.String lcsSubscriptionEntriesJSON)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addLCSSubscriptionEntries(lcsProjectId, lcsSubscriptionEntriesJSON);
+	}
+
+	public static void refreshLCSProjectLCSSubscriptionEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().refreshLCSProjectLCSSubscriptionEntries();
+	}
+
+	public static void refreshLCSProjectLCSSubscriptionEntries(
+		long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().refreshLCSProjectLCSSubscriptionEntries(lcsProjectId);
 	}
 
 	public static LCSSubscriptionEntryService getService() {

@@ -130,10 +130,12 @@ public abstract class LCSClusterNodeLocalServiceBaseImpl
 	 *
 	 * @param lcsClusterNode the l c s cluster node
 	 * @return the l c s cluster node that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public LCSClusterNode deleteLCSClusterNode(LCSClusterNode lcsClusterNode) {
+	public LCSClusterNode deleteLCSClusterNode(LCSClusterNode lcsClusterNode)
+		throws PortalException {
 		return lcsClusterNodePersistence.remove(lcsClusterNode);
 	}
 

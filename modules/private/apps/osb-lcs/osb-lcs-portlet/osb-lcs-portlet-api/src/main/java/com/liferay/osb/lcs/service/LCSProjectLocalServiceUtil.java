@@ -41,6 +41,17 @@ public class LCSProjectLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSProjectLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean checkUserAccountEntryLCSProject(
+		com.liferay.portal.kernel.model.User user)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().checkUserAccountEntryLCSProject(user);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProject addLCSProject(
+		com.liferay.osb.lcs.model.CorpProject corpProject, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addLCSProject(corpProject, userId);
+	}
 
 	/**
 	* Adds the l c s project to the database. Also notifies the appropriate model listeners.
@@ -51,6 +62,18 @@ public class LCSProjectLocalServiceUtil {
 	public static com.liferay.osb.lcs.model.LCSProject addLCSProject(
 		com.liferay.osb.lcs.model.LCSProject lcsProject) {
 		return getService().addLCSProject(lcsProject);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProject addLCSProject(
+		java.lang.String sourceSystemName, java.lang.String name, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addLCSProject(sourceSystemName, name, userId);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProject addLCSProject(
+		long corpProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addLCSProject(corpProjectId);
 	}
 
 	/**
@@ -88,9 +111,20 @@ public class LCSProjectLocalServiceUtil {
 		return getService().deleteLCSProject(lcsProjectId);
 	}
 
+	public static com.liferay.osb.lcs.model.LCSProject fetchByCorpProject(
+		long corpProjectId) {
+		return getService().fetchByCorpProject(corpProjectId);
+	}
+
 	public static com.liferay.osb.lcs.model.LCSProject fetchLCSProject(
 		long lcsProjectId) {
 		return getService().fetchLCSProject(lcsProjectId);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProject findByCorpProject(
+		long corpProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().findByCorpProject(corpProjectId);
 	}
 
 	/**
@@ -115,6 +149,13 @@ public class LCSProjectLocalServiceUtil {
 	public static com.liferay.osb.lcs.model.LCSProject updateLCSProject(
 		com.liferay.osb.lcs.model.LCSProject lcsProject) {
 		return getService().updateLCSProject(lcsProject);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProject updateSubscriptionActive(
+		long lcsProjectId, boolean subscriptionActive)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateSubscriptionActive(lcsProjectId, subscriptionActive);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -212,6 +253,11 @@ public class LCSProjectLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.osb.lcs.model.LCSProject> findByName(
+		java.lang.String name) {
+		return getService().findByName(name);
+	}
+
 	/**
 	* Returns a range of all the l c s projects.
 	*
@@ -226,6 +272,23 @@ public class LCSProjectLocalServiceUtil {
 	public static java.util.List<com.liferay.osb.lcs.model.LCSProject> getLCSProjects(
 		int start, int end) {
 		return getService().getLCSProjects(start, end);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects(
+		long userId) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserLCSProjects(userId);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects(
+		long userId, boolean lcsRole)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserLCSProjects(userId, lcsRole);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects(
+		long userId, boolean lcsRole, int role)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserLCSProjects(userId, lcsRole, role);
 	}
 
 	/**
@@ -250,6 +313,11 @@ public class LCSProjectLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static long[] getLocalCorpProjectIds()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLocalCorpProjectIds();
 	}
 
 	public static LCSProjectLocalService getService() {

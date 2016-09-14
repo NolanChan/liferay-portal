@@ -71,6 +71,9 @@ public interface LCSClusterEntryTokenLocalService extends BaseLocalService,
 	public LCSClusterEntryToken addLCSClusterEntryToken(
 		LCSClusterEntryToken lcsClusterEntryToken);
 
+	public LCSClusterEntryToken addLCSClusterEntryToken(long userId,
+		long lcsClusterEntryId, java.lang.String content);
+
 	/**
 	* Creates a new l c s cluster entry token with the primary key. Does not add the l c s cluster entry token to the database.
 	*
@@ -100,6 +103,10 @@ public interface LCSClusterEntryTokenLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public LCSClusterEntryToken deleteLCSClusterEntryToken(
 		long lcsClusterEntryTokenId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSClusterEntryToken fetchLCSClusterEntryLCSClusterEntryToken(
+		long lcsClusterEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LCSClusterEntryToken fetchLCSClusterEntryToken(

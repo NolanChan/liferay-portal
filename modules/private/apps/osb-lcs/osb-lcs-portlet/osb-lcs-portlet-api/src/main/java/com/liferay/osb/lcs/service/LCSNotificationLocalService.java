@@ -16,6 +16,8 @@ package com.liferay.osb.lcs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.model.LCSClusterEntry;
+import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSNotification;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -71,6 +73,45 @@ public interface LCSNotificationLocalService extends BaseLocalService,
 	public LCSNotification addLCSNotification(LCSNotification lcsNotification);
 
 	/**
+	* Adds an LCS notification for the LCS cluster entry.
+	*
+	* @param userId the primary key of the user
+	* @param lcsClusterEntry the notification's LCS cluster entry
+	* @param enabled whether to enable the notification
+	* @param type the notification type as defined in {@link
+	com.liferay.osb.lcs.notifications.util.LCSEventType}
+	* @return the LCS notification
+	*/
+	public LCSNotification addLCSNotification(long userId,
+		LCSClusterEntry lcsClusterEntry, boolean enabled, int type);
+
+	/**
+	* Adds an LCS notification for the LCS cluster node.
+	*
+	* @param userId the primary key of the user
+	* @param lcsClusterNode the notification's LCS cluster node
+	* @param enabled whether to enable the notification
+	* @param type the notification type as defined in {@link
+	com.liferay.osb.lcs.notifications.util.LCSEventType}
+	* @return the LCS notification
+	*/
+	public LCSNotification addLCSNotification(long userId,
+		LCSClusterNode lcsClusterNode, boolean enabled, int type);
+
+	/**
+	* Adds an LCS notification for the LCS project.
+	*
+	* @param userId the primary key of the user
+	* @param lcsProjectId the primary key of the notification's LCS project
+	* @param enabled whether to enable the notification
+	* @param type the notification type as defined in {@link
+	com.liferay.osb.lcs.notifications.util.LCSEventType}
+	* @return the LCS notification
+	*/
+	public LCSNotification addLCSProjectLCSNotification(long userId,
+		long lcsProjectId, boolean enabled, int type);
+
+	/**
 	* Creates a new l c s notification with the primary key. Does not add the l c s notification to the database.
 	*
 	* @param lcsNotificationId the primary key for the new l c s notification
@@ -99,8 +140,52 @@ public interface LCSNotificationLocalService extends BaseLocalService,
 	public LCSNotification deleteLCSNotification(long lcsNotificationId)
 		throws PortalException;
 
+	/**
+	* Returns the LCS notification of the user, LCS cluster entry, and LCS
+	* notification type.
+	*
+	* @param userId the primary key of the user
+	* @param lcsClusterEntryId the primary key of the notification's LCS
+	cluster entry
+	* @param type the notification type as defined in {@link
+	com.liferay.osb.lcs.notifications.util.LCSEventType}
+	* @return the matching LCS notification
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSNotification fetchLCSClusterEntryLCSNotification(long userId,
+		long lcsClusterEntryId, int type);
+
+	/**
+	* Returns the LCS notification of the user, LCS cluster node, and LCS
+	* notification type.
+	*
+	* @param userId the primary key of the user
+	* @param lcsClusterNodeId the primary key of the notification's LCS
+	cluster node
+	* @param type the notification type as defined in {@link
+	com.liferay.osb.lcs.notifications.util.LCSEventType}
+	* @return the matching LCS notification
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSNotification fetchLCSClusterNodeLCSNotification(long userId,
+		long lcsClusterNodeId, int type);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LCSNotification fetchLCSNotification(long lcsNotificationId);
+
+	/**
+	* Returns the LCS notification for the user, LCS project, and LCS
+	* notification type.
+	*
+	* @param userId the primary key of the user
+	* @param lcsProjectId the primary key of the notification's LCS project
+	* @param type the notification type as defined in {@link
+	com.liferay.osb.lcs.notifications.util.LCSEventType}
+	* @return the matching LCS notification
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSNotification fetchLCSProjectLCSNotification(long userId,
+		long lcsProjectId, int type);
 
 	/**
 	* Returns the l c s notification with the primary key.
@@ -228,4 +313,43 @@ public interface LCSNotificationLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	/**
+	* Deletes the LCS notification for the LCS cluster entry.
+	*
+	* @param lcsClusterEntryId the primary key of the LCS cluster entry
+	*/
+	public void deleteLCSClusterEntryLCSNotification(long lcsClusterEntryId);
+
+	/**
+	* Deletes the LCS notification for the LCS cluster node.
+	*
+	* @param lcsClusterNodeId the primary key of the LCS cluster node
+	*/
+	public void deleteLCSClusterNodeLCSNotification(long lcsClusterNodeId);
+
+	/**
+	* Deletes the LCS notification for the LCS project.
+	*
+	* @param lcsProjectId the primary key of the LCS project
+	*/
+	public void deleteLCSProjectLCSNotification(long lcsProjectId);
+
+	/**
+	* Deletes the LCS notifications of the user.
+	*
+	* @param userId the primary key of the user
+	*/
+	public void deleteUserLCSNotifications(long userId);
+
+	/**
+	* Deletes the LCS notifications of the user, for the name and primary key
+	* of the class.
+	*
+	* @param userId the primary key of the user
+	* @param classNameValue the class name
+	* @param classPK the primary key for the object of class
+	*/
+	public void deleteUserLCSNotifications(long userId,
+		java.lang.String classNameValue, long classPK);
 }

@@ -43,6 +43,63 @@ public class LCSRoleLocalServiceUtil {
 	 */
 
 	/**
+	* Returns <code>true</code> if the user has the LCS Administrator role in
+	* the specified LCS project.
+	*
+	* @param userId the primary key of the user
+	* @param lcsProjectId the primary key of the LCS project
+	* @return <code>true</code> if the user has the LCS Administrator role in
+	the LCS project; <code>false</code> otherwise
+	* @since LCS 1.0
+	*/
+	public static boolean hasUserLCSAdministratorLCSRole(long userId,
+		long lcsProjectId) {
+		return getService().hasUserLCSAdministratorLCSRole(userId, lcsProjectId);
+	}
+
+	/**
+	* Returns <code>true</code> if the user has an LCS role.
+	*
+	* <p>
+	* This method checks for the presence of any LCS role except the role
+	* {@link
+	* LCSRoleConstants#ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER}.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @return <code>true</code> if the user has an LCS role; <code>false</code>
+	otherwise
+	* @since LCS 0.1
+	*/
+	public static boolean hasUserLCSRole(long userId) {
+		return getService().hasUserLCSRole(userId);
+	}
+
+	/**
+	* Returns <code>true</code> if the user has an LCS role in the specified
+	* LCS project, or a role that lets the user manage environments.
+	*
+	* <p>
+	* If <code>manageLCSClusterEntry</code> is <code>true</code>, this method
+	* checks whether the role is adequate for environment management tasks.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @param lcsProjectId the primary key of the LCS project
+	* @param manageLCSClusterEntry whether the user can manage project
+	environments
+	* @return <code>true</code> if the user has an LCS role in the LCS project,
+	or a role that lets the user manage environments;
+	<code>false</code> otherwise
+	* @since LCS 0.1
+	*/
+	public static boolean hasUserLCSRole(long userId, long lcsProjectId,
+		boolean manageLCSClusterEntry) {
+		return getService()
+				   .hasUserLCSRole(userId, lcsProjectId, manageLCSClusterEntry);
+	}
+
+	/**
 	* Adds the l c s role to the database. Also notifies the appropriate model listeners.
 	*
 	* @param lcsRole the l c s role
@@ -51,6 +108,25 @@ public class LCSRoleLocalServiceUtil {
 	public static com.liferay.osb.lcs.model.LCSRole addLCSRole(
 		com.liferay.osb.lcs.model.LCSRole lcsRole) {
 		return getService().addLCSRole(lcsRole);
+	}
+
+	/**
+	* Assigns the LCS role to the user.
+	*
+	* @param userId the primary key of the user the role is assigned to
+	* @param lcsProjectId the primary key of the LCS project the role is
+	scoped to
+	* @param lcsClusterEntryId the primary key of the environment
+	* @param role the LCS role identifier
+	* @return the LCS role
+	* @throws PortalException
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSRole addLCSRole(long userId,
+		long lcsProjectId, long lcsClusterEntryId, int role)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLCSRole(userId, lcsProjectId, lcsClusterEntryId, role);
 	}
 
 	/**
@@ -69,10 +145,18 @@ public class LCSRoleLocalServiceUtil {
 	*
 	* @param lcsRole the l c s role
 	* @return the l c s role that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.osb.lcs.model.LCSRole deleteLCSRole(
-		com.liferay.osb.lcs.model.LCSRole lcsRole) {
+		com.liferay.osb.lcs.model.LCSRole lcsRole)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteLCSRole(lcsRole);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSRole deleteLCSRole(
+		com.liferay.osb.lcs.model.LCSRole lcsRole, boolean force)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteLCSRole(lcsRole, force);
 	}
 
 	/**
@@ -93,6 +177,38 @@ public class LCSRoleLocalServiceUtil {
 	}
 
 	/**
+	* Returns the user's LCS role in the LCS project.
+	*
+	* @param userId the primary key of the user
+	* @param lcsProjectId the primary key of the LCS project
+	* @return the LCS role in the LCS project, or <code>null</code> if no
+	matching LCS role is found
+	* @since LCS 0.1
+	* @deprecated As of LCS 1.1, replaced by {@link
+	#hasUserLCSAdministratorLCSRole(long, long)}
+	*/
+	@Deprecated
+	public static com.liferay.osb.lcs.model.LCSRole fetchLCSRole(long userId,
+		long lcsProjectId) {
+		return getService().fetchLCSRole(userId, lcsProjectId);
+	}
+
+	/**
+	* Returns the user's LCS role in the LCS project and environment.
+	*
+	* @param userId the primary key of the user
+	* @param lcsProjectId the primary key of the LCS project
+	* @param lcsClusterEntryId the primary key of the environment
+	* @return the LCS role matching the criteria, or <code>null</code> if no
+	matching LCS role is found
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSRole fetchLCSRole(long userId,
+		long lcsProjectId, long lcsClusterEntryId) {
+		return getService().fetchLCSRole(userId, lcsProjectId, lcsClusterEntryId);
+	}
+
+	/**
 	* Returns the l c s role with the primary key.
 	*
 	* @param lcsRoleId the primary key of the l c s role
@@ -102,6 +218,26 @@ public class LCSRoleLocalServiceUtil {
 	public static com.liferay.osb.lcs.model.LCSRole getLCSRole(long lcsRoleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLCSRole(lcsRoleId);
+	}
+
+	/**
+	* Converts the LCS invitation into the LCS role.
+	*
+	* <p>
+	* This method converts the LCS invitation into the LCS role, using
+	* attributes common to both classes. The new role is persisted and the
+	* invitation is then removed.
+	* </p>
+	*
+	* @param lcsInvitation the LCS invitation
+	* @return the LCS role
+	* @throws PortalException
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSRole toLCSRole(
+		com.liferay.osb.lcs.model.LCSInvitation lcsInvitation)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().toLCSRole(lcsInvitation);
 	}
 
 	/**
@@ -140,6 +276,16 @@ public class LCSRoleLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the number of LCS roles in the LCS project.
+	*
+	* @param lcsProjectId the primary key of the LCS project
+	* @return the number of LCS roles in the LCS project
+	*/
+	public static int getLCSProjectLCSRolesCount(long lcsProjectId) {
+		return getService().getLCSProjectLCSRolesCount(lcsProjectId);
 	}
 
 	/**
@@ -211,6 +357,50 @@ public class LCSRoleLocalServiceUtil {
 	}
 
 	/**
+	* Returns all LCS roles that allow access to the environment.
+	*
+	* <p>
+	* This method is provided to get the LCS roles that have access to the
+	* environment specified by the LCS cluster entry ID.
+	* </p>
+	*
+	* @param lcsClusterEntryId the primary key of the environment
+	* @return the LCS roles that allow access to the environment
+	* @since LCS 1.1
+	*/
+	public static java.util.List<com.liferay.osb.lcs.model.LCSRole> getLCSClusterEntryLCSRoles(
+		long lcsClusterEntryId) {
+		return getService().getLCSClusterEntryLCSRoles(lcsClusterEntryId);
+	}
+
+	/**
+	* Returns all the LCS project's LCS roles.
+	*
+	* @param lcsProjectId the primary key of the LCS project
+	* @return the LCS roles in the LCS project
+	* @since LCS 0.1
+	*/
+	public static java.util.List<com.liferay.osb.lcs.model.LCSRole> getLCSProjectLCSRoles(
+		long lcsProjectId) {
+		return getService().getLCSProjectLCSRoles(lcsProjectId);
+	}
+
+	/**
+	* Returns all the LCS project's LCS roles, that also match the role
+	* identifier.
+	*
+	* @param lcsProjectId the primary key of the LCS project
+	* @param role the role identifier
+	* @return the LCS roles in the LCS project, that also match the role
+	identifier
+	* @since LCS 0.1
+	*/
+	public static java.util.List<com.liferay.osb.lcs.model.LCSRole> getLCSProjectLCSRoles(
+		long lcsProjectId, int role) {
+		return getService().getLCSProjectLCSRoles(lcsProjectId, role);
+	}
+
+	/**
 	* Returns a range of all the l c s roles.
 	*
 	* <p>
@@ -224,6 +414,73 @@ public class LCSRoleLocalServiceUtil {
 	public static java.util.List<com.liferay.osb.lcs.model.LCSRole> getLCSRoles(
 		int start, int end) {
 		return getService().getLCSRoles(start, end);
+	}
+
+	/**
+	* Returns all the user's LCS roles.
+	*
+	* <p>
+	* This method finds the user's LCS roles in all their LCS projects.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @return the user's LCS roles
+	* @since LCS 0.1
+	*/
+	public static java.util.List<com.liferay.osb.lcs.model.LCSRole> getUserLCSRoles(
+		long userId) {
+		return getService().getUserLCSRoles(userId);
+	}
+
+	/**
+	* Returns all the user's LCS roles that also match the role identifier.
+	*
+	* <p>
+	* This method finds the user's LCS roles in all their LCS projects, that
+	* also match the role identifier.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @param role the role identifier
+	* @return the user's LCS roles, that also match the role identifier
+	* @since LCS 0.1
+	*/
+	public static java.util.List<com.liferay.osb.lcs.model.LCSRole> getUserLCSRoles(
+		long userId, int role) {
+		return getService().getUserLCSRoles(userId, role);
+	}
+
+	/**
+	* Returns all the user's LCS roles in the LCS project.
+	*
+	* @param userId the primary key of the user
+	* @param lcsProjectId the primary key of the LCS project
+	* @return the user's LCS roles in the LCS project
+	* @since LCS 0.1
+	*/
+	public static java.util.List<com.liferay.osb.lcs.model.LCSRole> getUserLCSRoles(
+		long userId, long lcsProjectId) {
+		return getService().getUserLCSRoles(userId, lcsProjectId);
+	}
+
+	/**
+	* Converts all the LCS invitations into LCS roles.
+	*
+	* <p>
+	* This method converts each LCS invitation into its corresponding LCS role,
+	* using attributes common to both classes. Each new role is persisted and
+	* each invitation is then removed.
+	* </p>
+	*
+	* @param lcsInvitations the LCS invitations
+	* @return the LCS roles converted from the LCS invitations
+	* @throws PortalException
+	* @since LCS 0.1
+	*/
+	public static java.util.List<com.liferay.osb.lcs.model.LCSRole> toLCSRoles(
+		java.util.List<com.liferay.osb.lcs.model.LCSInvitation> lcsInvitations)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().toLCSRoles(lcsInvitations);
 	}
 
 	/**

@@ -172,6 +172,11 @@ public class LCSClusterEntryWrapper implements LCSClusterEntry,
 		return _lcsClusterEntry.getElastic();
 	}
 
+	@Override
+	public boolean hasOfflineLCSClusterNode() {
+		return _lcsClusterEntry.hasOfflineLCSClusterNode();
+	}
+
 	/**
 	* Returns <code>true</code> if this l c s cluster entry is archived.
 	*
@@ -187,6 +192,11 @@ public class LCSClusterEntryWrapper implements LCSClusterEntry,
 		return _lcsClusterEntry.isCachedModel();
 	}
 
+	@Override
+	public boolean isCluster() {
+		return _lcsClusterEntry.isCluster();
+	}
+
 	/**
 	* Returns <code>true</code> if this l c s cluster entry is elastic.
 	*
@@ -195,6 +205,11 @@ public class LCSClusterEntryWrapper implements LCSClusterEntry,
 	@Override
 	public boolean isElastic() {
 		return _lcsClusterEntry.isElastic();
+	}
+
+	@Override
+	public boolean isEnvironment() {
+		return _lcsClusterEntry.isEnvironment();
 	}
 
 	@Override

@@ -162,6 +162,21 @@ public class LCSNotificationWrapper implements LCSNotification,
 	}
 
 	@Override
+	public boolean isLCSClusterEntryNotification() {
+		return _lcsNotification.isLCSClusterEntryNotification();
+	}
+
+	@Override
+	public boolean isLCSClusterNodeNotification() {
+		return _lcsNotification.isLCSClusterNodeNotification();
+	}
+
+	@Override
+	public boolean isLCSProjectNotification() {
+		return _lcsNotification.isLCSProjectNotification();
+	}
+
+	@Override
 	public boolean isNew() {
 		return _lcsNotification.isNew();
 	}

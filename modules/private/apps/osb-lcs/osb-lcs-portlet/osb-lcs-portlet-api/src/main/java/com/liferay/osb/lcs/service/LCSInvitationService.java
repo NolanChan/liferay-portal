@@ -16,6 +16,8 @@ package com.liferay.osb.lcs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.model.LCSInvitation;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -23,7 +25,10 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for LCSInvitation. Methods of this
@@ -49,6 +54,16 @@ public interface LCSInvitationService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LCSInvitationServiceUtil} to access the l c s invitation remote service. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSInvitationServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public LCSInvitation addLCSInvitation(long lcsProjectId,
+		java.lang.String emailAddress, long lcsClusterEntryId, int role)
+		throws PortalException;
+
+	public LCSInvitation deleteLCSInvitation(long lcsInvitationId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSInvitation getLCSProjectLCSInvitation(long lcsProjectId,
+		java.lang.String emailAddress) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +71,8 @@ public interface LCSInvitationService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSInvitation> getLCSProjectLCSInvitations(long lcsProjectId)
+		throws PortalException;
 }

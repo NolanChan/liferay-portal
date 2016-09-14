@@ -16,6 +16,8 @@ package com.liferay.osb.lcs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.lcs.subscription.SubscriptionType;
+
 import com.liferay.osb.lcs.model.LCSClusterNodeUptime;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -36,7 +38,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for LCSClusterNodeUptime. Methods of this
@@ -126,6 +130,12 @@ public interface LCSClusterNodeUptimeLocalService extends BaseLocalService,
 	public LCSClusterNodeUptime updateLCSClusterNodeUptime(
 		LCSClusterNodeUptime lcsClusterNodeUptime);
 
+	public LCSClusterNodeUptime updateLCSClusterNodeUptime(java.lang.String key)
+		throws PortalException;
+
+	public LCSClusterNodeUptime updateLCSClusterNodeUptime(
+		long lcsClusterNodeId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -145,6 +155,10 @@ public interface LCSClusterNodeUptimeLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public double getMonthlyElasticLCSClusterNodeUptimeTotal(
+		long lcsProjectId, int month, int year) throws PortalException;
 
 	/**
 	* Returns the number of l c s cluster node uptimes.
@@ -215,6 +229,36 @@ public interface LCSClusterNodeUptimeLocalService extends BaseLocalService,
 	public List<LCSClusterNodeUptime> getLCSClusterNodeUptimes(int start,
 		int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNodeUptime> getLCSClusterNodeUptimes(int start,
+		int end, boolean details) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNodeUptime> getMonthlyElasticTotalLCSClusterNodeUptimes(
+		long lcsProjectId, int month, int year) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNodeUptime> getMonthlyLCSClusterNodeUptimes(
+		long lcsClusterEntryId, long lcsClusterNodeId, long lcsProjectId,
+		int month, int year, boolean details, boolean elastic,
+		SubscriptionType subscriptionType) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNodeUptime> getMonthlyLCSClusterNodeUptimes(
+		long lcsClusterEntryId, long lcsClusterNodeId, long lcsProjectId,
+		int startMonth, int startYear, int endMonth, int endYear,
+		boolean elastic, SubscriptionType subscriptionType)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Date, java.lang.Double> getMonthlyElasticLCSClusterNodeUptimeTotalMap(
+		long lcsProjectId, int range) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Date, java.lang.Double> getMonthlyElasticLCSClusterNodeUptimeTotalMap(
+		long lcsProjectId, int startMonth, int startYear, int endMonth,
+		int endYear) throws PortalException;
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -232,4 +276,7 @@ public interface LCSClusterNodeUptimeLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void updateLCSClusterNodeUptimes(java.lang.String key,
+		java.lang.String uptimesJSON) throws PortalException;
 }

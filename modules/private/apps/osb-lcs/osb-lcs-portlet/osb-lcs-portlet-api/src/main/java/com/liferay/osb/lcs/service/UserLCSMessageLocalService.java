@@ -16,6 +16,7 @@ package com.liferay.osb.lcs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.model.LCSRole;
 import com.liferay.osb.lcs.model.UserLCSMessage;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -70,6 +71,9 @@ public interface UserLCSMessageLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public UserLCSMessage addUserLCSMessage(UserLCSMessage userLCSMessage);
 
+	public UserLCSMessage addUserLCSMessage(long userId, long lcsMessageId)
+		throws PortalException;
+
 	/**
 	* Creates a new user l c s message with the primary key. Does not add the user l c s message to the database.
 	*
@@ -112,6 +116,9 @@ public interface UserLCSMessageLocalService extends BaseLocalService,
 	public UserLCSMessage getUserLCSMessage(long userLcsMessageId)
 		throws PortalException;
 
+	public UserLCSMessage updateRead(long userLCSMessageId, boolean read)
+		throws PortalException;
+
 	/**
 	* Updates the user l c s message in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -148,6 +155,9 @@ public interface UserLCSMessageLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserLCSMessagesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserLCSMessagesCount(long userId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -209,6 +219,14 @@ public interface UserLCSMessageLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<UserLCSMessage> getUserLCSMessages(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserLCSMessage> getUserLCSMessages(long userId, boolean hidden)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserLCSMessage> getUserLCSMessages(long userId, int max)
+		throws PortalException;
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -226,4 +244,9 @@ public interface UserLCSMessageLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteUserLCSMessages(LCSRole lcsRole)
+		throws PortalException;
+
+	public void deleteUserLCSMessages(long userId);
 }

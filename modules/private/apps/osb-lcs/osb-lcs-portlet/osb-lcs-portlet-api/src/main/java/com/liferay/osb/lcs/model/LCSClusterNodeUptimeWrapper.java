@@ -130,6 +130,21 @@ public class LCSClusterNodeUptimeWrapper implements LCSClusterNodeUptime,
 	}
 
 	@Override
+	public double getAmount() {
+		return _lcsClusterNodeUptime.getAmount();
+	}
+
+	@Override
+	public double getRate() {
+		return _lcsClusterNodeUptime.getRate();
+	}
+
+	@Override
+	public double getUptime() {
+		return _lcsClusterNodeUptime.getUptime();
+	}
+
+	@Override
 	public int compareTo(LCSClusterNodeUptime lcsClusterNodeUptime) {
 		return _lcsClusterNodeUptime.compareTo(lcsClusterNodeUptime);
 	}
@@ -150,6 +165,26 @@ public class LCSClusterNodeUptimeWrapper implements LCSClusterNodeUptime,
 	}
 
 	@Override
+	public java.lang.String getLcsClusterEntryName() {
+		return _lcsClusterNodeUptime.getLcsClusterEntryName();
+	}
+
+	@Override
+	public java.lang.String getLcsClusterNodeKey() {
+		return _lcsClusterNodeUptime.getLcsClusterNodeKey();
+	}
+
+	@Override
+	public java.lang.String getLcsClusterNodeName() {
+		return _lcsClusterNodeUptime.getLcsClusterNodeName();
+	}
+
+	@Override
+	public java.lang.String getLcsProjectName() {
+		return _lcsClusterNodeUptime.getLcsProjectName();
+	}
+
+	@Override
 	public java.lang.String toString() {
 		return _lcsClusterNodeUptime.toString();
 	}
@@ -167,6 +202,11 @@ public class LCSClusterNodeUptimeWrapper implements LCSClusterNodeUptime,
 	@Override
 	public long getEndTime() {
 		return _lcsClusterNodeUptime.getEndTime();
+	}
+
+	@Override
+	public long getLcsClusterEntryId() {
+		return _lcsClusterNodeUptime.getLcsClusterEntryId();
 	}
 
 	/**
@@ -215,6 +255,11 @@ public class LCSClusterNodeUptimeWrapper implements LCSClusterNodeUptime,
 	}
 
 	@Override
+	public void setAmount(double amount) {
+		_lcsClusterNodeUptime.setAmount(amount);
+	}
+
+	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_lcsClusterNodeUptime.setCachedModel(cachedModel);
 	}
@@ -245,6 +290,16 @@ public class LCSClusterNodeUptimeWrapper implements LCSClusterNodeUptime,
 		_lcsClusterNodeUptime.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	@Override
+	public void setLcsClusterEntryId(long lcsClusterEntryId) {
+		_lcsClusterNodeUptime.setLcsClusterEntryId(lcsClusterEntryId);
+	}
+
+	@Override
+	public void setLcsClusterEntryName(java.lang.String lcsClusterEntryName) {
+		_lcsClusterNodeUptime.setLcsClusterEntryName(lcsClusterEntryName);
+	}
+
 	/**
 	* Sets the lcs cluster node ID of this l c s cluster node uptime.
 	*
@@ -255,6 +310,16 @@ public class LCSClusterNodeUptimeWrapper implements LCSClusterNodeUptime,
 		_lcsClusterNodeUptime.setLcsClusterNodeId(lcsClusterNodeId);
 	}
 
+	@Override
+	public void setLcsClusterNodeKey(java.lang.String lcsClusterNodeKey) {
+		_lcsClusterNodeUptime.setLcsClusterNodeKey(lcsClusterNodeKey);
+	}
+
+	@Override
+	public void setLcsClusterNodeName(java.lang.String lcsClusterNodeName) {
+		_lcsClusterNodeUptime.setLcsClusterNodeName(lcsClusterNodeName);
+	}
+
 	/**
 	* Sets the lcs cluster node uptime ID of this l c s cluster node uptime.
 	*
@@ -263,6 +328,11 @@ public class LCSClusterNodeUptimeWrapper implements LCSClusterNodeUptime,
 	@Override
 	public void setLcsClusterNodeUptimeId(long lcsClusterNodeUptimeId) {
 		_lcsClusterNodeUptime.setLcsClusterNodeUptimeId(lcsClusterNodeUptimeId);
+	}
+
+	@Override
+	public void setLcsProjectName(java.lang.String lcsProjectName) {
+		_lcsClusterNodeUptime.setLcsProjectName(lcsProjectName);
 	}
 
 	@Override
@@ -285,6 +355,11 @@ public class LCSClusterNodeUptimeWrapper implements LCSClusterNodeUptime,
 		_lcsClusterNodeUptime.setPrimaryKeyObj(primaryKeyObj);
 	}
 
+	@Override
+	public void setRate(double rate) {
+		_lcsClusterNodeUptime.setRate(rate);
+	}
+
 	/**
 	* Sets the start time of this l c s cluster node uptime.
 	*
@@ -293,6 +368,11 @@ public class LCSClusterNodeUptimeWrapper implements LCSClusterNodeUptime,
 	@Override
 	public void setStartTime(long startTime) {
 		_lcsClusterNodeUptime.setStartTime(startTime);
+	}
+
+	@Override
+	public void setUptime(double uptime) {
+		_lcsClusterNodeUptime.setUptime(uptime);
 	}
 
 	@Override

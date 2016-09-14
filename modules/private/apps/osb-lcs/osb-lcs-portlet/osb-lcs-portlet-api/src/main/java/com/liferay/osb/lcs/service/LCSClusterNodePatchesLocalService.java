@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 /**
@@ -43,6 +44,9 @@ public interface LCSClusterNodePatchesLocalService extends BaseLocalService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LCSClusterNodePatchesLocalServiceUtil} to access the l c s cluster node patches local service. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSClusterNodePatchesLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getDownloadPatchStatus(long[] lcsClusterNodeIds,
+		java.lang.String lcsClusterNodeKeys, java.lang.String patchId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -50,4 +54,7 @@ public interface LCSClusterNodePatchesLocalService extends BaseLocalService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public void downloadPatch(long[] lcsClusterNodeIds,
+		java.lang.String patchName) throws PortalException;
 }

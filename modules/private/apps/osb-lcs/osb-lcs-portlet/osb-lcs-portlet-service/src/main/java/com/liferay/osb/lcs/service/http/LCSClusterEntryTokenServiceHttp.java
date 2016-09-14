@@ -16,12 +16,21 @@ package com.liferay.osb.lcs.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.service.LCSClusterEntryTokenServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * {@link com.liferay.osb.lcs.service.LCSClusterEntryTokenServiceUtil} service utility. The
+ * {@link LCSClusterEntryTokenServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.kernel.security.auth.HttpPrincipal} parameter.
+ * {@link HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -40,10 +49,190 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Igor Beslic
  * @see LCSClusterEntryTokenServiceSoap
- * @see com.liferay.portal.kernel.security.auth.HttpPrincipal
- * @see com.liferay.osb.lcs.service.LCSClusterEntryTokenServiceUtil
+ * @see HttpPrincipal
+ * @see LCSClusterEntryTokenServiceUtil
  * @generated
  */
 @ProviderType
 public class LCSClusterEntryTokenServiceHttp {
+	public static com.liferay.osb.lcs.model.LCSClusterEntryToken addLCSClusterEntryToken(
+		HttpPrincipal httpPrincipal, long lcsClusterEntryId,
+		java.lang.String content)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSClusterEntryTokenServiceUtil.class,
+					"addLCSClusterEntryToken",
+					_addLCSClusterEntryTokenParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					lcsClusterEntryId, content);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.osb.lcs.model.LCSClusterEntryToken)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntryToken deleteLCSClusterEntryToken(
+		HttpPrincipal httpPrincipal, long lcsClusterEntryTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSClusterEntryTokenServiceUtil.class,
+					"deleteLCSClusterEntryToken",
+					_deleteLCSClusterEntryTokenParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					lcsClusterEntryTokenId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.osb.lcs.model.LCSClusterEntryToken)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntryToken fetchLCSClusterEntryLCSClusterEntryToken(
+		HttpPrincipal httpPrincipal, long lcsClusterEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSClusterEntryTokenServiceUtil.class,
+					"fetchLCSClusterEntryLCSClusterEntryToken",
+					_fetchLCSClusterEntryLCSClusterEntryTokenParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					lcsClusterEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.osb.lcs.model.LCSClusterEntryToken)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntryToken fetchLCSClusterEntryToken(
+		HttpPrincipal httpPrincipal, long lcsClusterEntryTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSClusterEntryTokenServiceUtil.class,
+					"fetchLCSClusterEntryToken",
+					_fetchLCSClusterEntryTokenParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					lcsClusterEntryTokenId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.osb.lcs.model.LCSClusterEntryToken)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static boolean isValid(HttpPrincipal httpPrincipal,
+		long lcsClusterEntryTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSClusterEntryTokenServiceUtil.class,
+					"isValid", _isValidParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					lcsClusterEntryTokenId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Boolean)returnObj).booleanValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LCSClusterEntryTokenServiceHttp.class);
+	private static final Class<?>[] _addLCSClusterEntryTokenParameterTypes0 = new Class[] {
+			long.class, java.lang.String.class
+		};
+	private static final Class<?>[] _deleteLCSClusterEntryTokenParameterTypes1 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _fetchLCSClusterEntryLCSClusterEntryTokenParameterTypes2 =
+		new Class[] { long.class };
+	private static final Class<?>[] _fetchLCSClusterEntryTokenParameterTypes3 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _isValidParameterTypes4 = new Class[] {
+			long.class
+		};
 }

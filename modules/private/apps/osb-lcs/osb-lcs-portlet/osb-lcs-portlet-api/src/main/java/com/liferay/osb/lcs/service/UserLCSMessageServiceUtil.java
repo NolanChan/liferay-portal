@@ -41,6 +41,22 @@ public class UserLCSMessageServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.UserLCSMessageServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.osb.lcs.model.UserLCSMessage deleteUserLCSMessage(
+		long userLCSMessageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteUserLCSMessage(userLCSMessageId);
+	}
+
+	public static com.liferay.osb.lcs.model.UserLCSMessage updateRead(
+		long userLCSMessageId, boolean read)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateRead(userLCSMessageId, read);
+	}
+
+	public static int getUserLCSMessagesCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserLCSMessagesCount();
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +65,22 @@ public class UserLCSMessageServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.UserLCSMessage> getUserLCSMessages(
+		boolean hidden)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserLCSMessages(hidden);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.UserLCSMessage> getUserLCSMessages(
+		int max) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserLCSMessages(max);
+	}
+
+	public static void deleteUserLCSMessages()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteUserLCSMessages();
 	}
 
 	public static UserLCSMessageService getService() {

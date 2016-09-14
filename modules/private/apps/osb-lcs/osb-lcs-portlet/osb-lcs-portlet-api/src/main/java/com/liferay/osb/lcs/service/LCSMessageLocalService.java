@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,6 +61,16 @@ public interface LCSMessageLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LCSMessageLocalServiceUtil} to access the l c s message local service. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSMessageLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public LCSMessage addLCSClusterEntryLCSMessage(long lcsClusterEntryId,
+		long sourceMessageId, java.lang.String sourceSystemName,
+		java.lang.String content, Date endDate, boolean global,
+		int severityLevel, int type, boolean addUserLCSMessages)
+		throws PortalException;
+
+	public LCSMessage addLCSClusterNodeLCSMessage(long lcsClusterNodeId,
+		long sourceMessageId, java.lang.String sourceSystemName,
+		java.lang.String content, Date endDate, boolean global,
+		int severityLevel, int type) throws PortalException;
 
 	/**
 	* Adds the l c s message to the database. Also notifies the appropriate model listeners.
@@ -69,6 +80,17 @@ public interface LCSMessageLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public LCSMessage addLCSMessage(LCSMessage lcsMessage);
+
+	public LCSMessage addLCSMessage(long sourceMessageId,
+		java.lang.String sourceSystemName, long classNameId, long classPK,
+		java.lang.String content, Date endDate, boolean global,
+		int severityLevel, int type);
+
+	public LCSMessage addLCSProjectLCSMessage(long lcsProjectId,
+		long sourceMessageId, java.lang.String sourceSystemName,
+		java.lang.String content, Date endDate, boolean global,
+		int severityLevel, int type, boolean adminsOnly,
+		boolean generateUserLCSMessages) throws PortalException;
 
 	/**
 	* Creates a new l c s message with the primary key. Does not add the l c s message to the database.
@@ -100,6 +122,9 @@ public interface LCSMessageLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LCSMessage fetchLCSMessage(long lcsMessageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSMessage fetchLastLCSProjectLCSMessage(long lcsProjectId, int type);
 
 	/**
 	* Returns the l c s message with the primary key.
@@ -209,6 +234,10 @@ public interface LCSMessageLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LCSMessage> getLCSMessages(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSMessage> getLCSMessages(long userId, Date modifyDateGT,
+		Date modifyDateLT) throws PortalException;
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -226,4 +255,17 @@ public interface LCSMessageLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteLCSClusterEntryLCSMessages(long lcsClusterEntryId)
+		throws PortalException;
+
+	public void deleteLCSClusterNodeLCSMessages(long lcsClusterNodeId)
+		throws PortalException;
+
+	public void deleteLCSProjectLCSMessage(long lcsProjectId,
+		long sourceMessageId, java.lang.String sourceSystemName,
+		long classNameId) throws PortalException;
+
+	public void deleteLCSProjectLCSMessages(long lcsProjectId)
+		throws PortalException;
 }

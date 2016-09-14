@@ -16,9 +16,16 @@ package com.liferay.osb.lcs.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.service.LCSMessageServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.osb.lcs.service.LCSMessageServiceUtil} service utility. The
+ * {@link LCSMessageServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,106 @@ import aQute.bnd.annotation.ProviderType;
  * @author Igor Beslic
  * @see LCSMessageServiceHttp
  * @see com.liferay.osb.lcs.model.LCSMessageSoap
- * @see com.liferay.osb.lcs.service.LCSMessageServiceUtil
+ * @see LCSMessageServiceUtil
  * @generated
  */
 @ProviderType
 public class LCSMessageServiceSoap {
+	public static com.liferay.osb.lcs.model.LCSMessageSoap addCorpProjectLCSMessage(
+		long corpProjectId, long sourceMessageId, java.lang.String content,
+		int type) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSMessage returnValue = LCSMessageServiceUtil.addCorpProjectLCSMessage(corpProjectId,
+					sourceMessageId, content, type);
+
+			return com.liferay.osb.lcs.model.LCSMessageSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSMessageSoap addLCSProjectLCSMessage(
+		long lcsProjectId, long sourceMessageId,
+		java.lang.String sourceSystemName, java.lang.String content,
+		java.util.Date endDate, boolean global, int severityLevel, int type,
+		boolean adminsOnly, boolean generateUserLCSMessages)
+		throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSMessage returnValue = LCSMessageServiceUtil.addLCSProjectLCSMessage(lcsProjectId,
+					sourceMessageId, sourceSystemName, content, endDate,
+					global, severityLevel, type, adminsOnly,
+					generateUserLCSMessages);
+
+			return com.liferay.osb.lcs.model.LCSMessageSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteCorpProjectLCSMessage(long corpProjectId,
+		long sourceMessageId) throws RemoteException {
+		try {
+			LCSMessageServiceUtil.deleteCorpProjectLCSMessage(corpProjectId,
+				sourceMessageId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteLCSProjectLCSMessage(long lcsProjectId,
+		long sourceMessageId, java.lang.String sourceSystemName)
+		throws RemoteException {
+		try {
+			LCSMessageServiceUtil.deleteLCSProjectLCSMessage(lcsProjectId,
+				sourceMessageId, sourceSystemName);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSMessageSoap[] getLCSProjectLCSMessages(
+		long lcsProjectId, java.lang.String sourceSystemName)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSMessage> returnValue = LCSMessageServiceUtil.getLCSProjectLCSMessages(lcsProjectId,
+					sourceSystemName);
+
+			return com.liferay.osb.lcs.model.LCSMessageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSMessageSoap[] getLCSMessages(
+		java.util.Date modifyDateGT, java.util.Date modifyDateLT)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSMessage> returnValue = LCSMessageServiceUtil.getLCSMessages(modifyDateGT,
+					modifyDateLT);
+
+			return com.liferay.osb.lcs.model.LCSMessageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LCSMessageServiceSoap.class);
 }

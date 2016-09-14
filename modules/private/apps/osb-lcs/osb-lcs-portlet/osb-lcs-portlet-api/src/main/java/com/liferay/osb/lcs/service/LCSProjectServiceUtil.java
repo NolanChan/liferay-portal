@@ -41,6 +41,45 @@ public class LCSProjectServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSProjectServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean checkUserAccountEntryLCSProject()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().checkUserAccountEntryLCSProject();
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProject addDefaultLCSProject()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addDefaultLCSProject();
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProject addLCSProject(
+		java.lang.String sourceSystemName, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addLCSProject(sourceSystemName, name);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProject deleteLCSProject(
+		long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteLCSProject(lcsProjectId);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProject getLCSProject(
+		long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLCSProject(lcsProjectId);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSProject updateLCSProjectName(
+		long lcsProjectId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateLCSProjectName(lcsProjectId, name);
+	}
+
+	public static java.lang.String getLCSProjectAdministratorEmailAddress(
+		long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLCSProjectAdministratorEmailAddress(lcsProjectId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +88,33 @@ public class LCSProjectServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserLCSProjects();
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects(
+		boolean lcsRole)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserLCSProjects(lcsRole);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects(
+		boolean lcsRole, int role)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserLCSProjects(lcsRole, role);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserManageableLCSProjects()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserManageableLCSProjects();
+	}
+
+	public static long getUserDefaultLCSProjectId()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserDefaultLCSProjectId();
 	}
 
 	public static LCSProjectService getService() {

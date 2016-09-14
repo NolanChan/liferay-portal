@@ -71,6 +71,9 @@ public interface LCSNotificationAuditEntryLocalService extends BaseLocalService,
 	public LCSNotificationAuditEntry addLCSNotificationAuditEntry(
 		LCSNotificationAuditEntry lcsNotificationAuditEntry);
 
+	public LCSNotificationAuditEntry addLCSNotificationAuditEntry(long userId,
+		long lcsClusterNodeId, int type) throws PortalException;
+
 	/**
 	* Creates a new l c s notification audit entry with the primary key. Does not add the l c s notification audit entry to the database.
 	*
@@ -214,6 +217,24 @@ public interface LCSNotificationAuditEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LCSNotificationAuditEntry> getLCSNotificationAuditEntries(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSNotificationAuditEntry> getLCSNotificationAuditEntries(
+		int start, int end, boolean details) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSNotificationAuditEntry> getLCSNotificationAuditEntries(
+		long corpProjectId, long lcsClusterEntryId, long lcsClusterNodeId,
+		boolean details) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSNotificationAuditEntry> getLCSNotificationAuditEntries(
+		long lcsProjectId, long lcsClusterEntryId, long lcsClusterNodeId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSNotificationAuditEntry> getUserLCSNotificationAuditEntries(
+		long userId, long lcsClusterNodeId, int type) throws PortalException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.

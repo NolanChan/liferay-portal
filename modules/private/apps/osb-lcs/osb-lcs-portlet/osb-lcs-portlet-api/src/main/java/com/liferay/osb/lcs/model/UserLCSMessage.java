@@ -54,4 +54,7 @@ public interface UserLCSMessage extends UserLCSMessageModel, PersistedModel {
 				return UserLCSMessage.class;
 			}
 		};
+
+	public LCSMessage getLcsMessage()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

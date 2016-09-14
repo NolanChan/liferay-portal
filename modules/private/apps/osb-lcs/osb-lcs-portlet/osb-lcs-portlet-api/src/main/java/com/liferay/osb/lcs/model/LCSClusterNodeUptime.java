@@ -55,4 +55,36 @@ public interface LCSClusterNodeUptime extends LCSClusterNodeUptimeModel,
 				return LCSClusterNodeUptime.class;
 			}
 		};
+
+	public double getAmount();
+
+	public long getLcsClusterEntryId();
+
+	public java.lang.String getLcsClusterEntryName();
+
+	public java.lang.String getLcsClusterNodeKey();
+
+	public java.lang.String getLcsClusterNodeName();
+
+	public java.lang.String getLcsProjectName();
+
+	public double getRate();
+
+	public double getUptime();
+
+	public void setAmount(double amount);
+
+	public void setLcsClusterEntryId(long lcsClusterEntryId);
+
+	public void setLcsClusterEntryName(java.lang.String lcsClusterEntryName);
+
+	public void setLcsClusterNodeKey(java.lang.String lcsClusterNodeKey);
+
+	public void setLcsClusterNodeName(java.lang.String lcsClusterNodeName);
+
+	public void setLcsProjectName(java.lang.String lcsProjectName);
+
+	public void setRate(double rate);
+
+	public void setUptime(double uptime);
 }

@@ -16,9 +16,16 @@ package com.liferay.osb.lcs.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.service.LCSClusterNodeServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.osb.lcs.service.LCSClusterNodeServiceUtil} service utility. The
+ * {@link LCSClusterNodeServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,443 @@ import aQute.bnd.annotation.ProviderType;
  * @author Igor Beslic
  * @see LCSClusterNodeServiceHttp
  * @see com.liferay.osb.lcs.model.LCSClusterNodeSoap
- * @see com.liferay.osb.lcs.service.LCSClusterNodeServiceUtil
+ * @see LCSClusterNodeServiceUtil
  * @generated
  */
 @ProviderType
 public class LCSClusterNodeServiceSoap {
+	/**
+	* Adds a new LCS cluster node.
+	*
+	* @param lcsClusterEntryId the primary key of the parent environment
+	* @param name              the portal instance friendly name
+	* @param description       the portal instance description
+	* @param buildNumber       the portal instance build number
+	* @param key               the portal instance key provided by the licence tool
+	* @param location          the portal instance physical location
+	* @return LCS cluster node
+	* @throws PortalException if any one of the LCS cluster node attributes was
+	        invalid or an operation was not allowed by the LCS cluster entry
+	        membership policy
+	* @since LCS 0.1
+	*/
+	@Deprecated
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap addLCSClusterNode(
+		long lcsClusterEntryId, java.lang.String name,
+		java.lang.String description, int buildNumber, java.lang.String key,
+		java.lang.String location) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterNode returnValue = LCSClusterNodeServiceUtil.addLCSClusterNode(lcsClusterEntryId,
+					name, description, buildNumber, key, location);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap addLCSClusterNode(
+		long lcsClusterEntryId, java.lang.String name,
+		java.lang.String description, int buildNumber, java.lang.String key,
+		java.lang.String location, int processorCoresTotal)
+		throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterNode returnValue = LCSClusterNodeServiceUtil.addLCSClusterNode(lcsClusterEntryId,
+					name, description, buildNumber, key, location,
+					processorCoresTotal);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Adds a new LCS cluster node.
+	* <p>
+	* <p>
+	* This method uses sibling LCS cluster node attributes
+	* <code>lcsClusterEntryId</code> and <code>buildNumber</code> to add a new
+	* LCS cluster node.
+	* </p>
+	*
+	* @param siblingKey  the portal key of sibling portal instance
+	* @param name        the portal instance friendly name
+	* @param description the portal instance description
+	* @param key         the portal instance key provided by the licence tool
+	* @param location    the portal instance physical location
+	* @return LCS cluster node
+	* @throws PortalException if any one of the LCS cluster node attributes was
+	        invalid or an operation was not allowed by the LCS cluster entry
+	        membership policy
+	* @since LCS 0.1
+	*/
+	@Deprecated
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap addLCSClusterNode(
+		java.lang.String siblingKey, java.lang.String name,
+		java.lang.String description, java.lang.String key,
+		java.lang.String location) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterNode returnValue = LCSClusterNodeServiceUtil.addLCSClusterNode(siblingKey,
+					name, description, key, location);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap addLCSClusterNode(
+		java.lang.String siblingKey, java.lang.String name,
+		java.lang.String description, java.lang.String key,
+		java.lang.String location, int processorCoresTotal)
+		throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterNode returnValue = LCSClusterNodeServiceUtil.addLCSClusterNode(siblingKey,
+					name, description, key, location, processorCoresTotal);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Deletes the LCS cluster node.
+	* <p>
+	* <p>
+	* This method assures that the LCS cluster node connected to LCS is
+	* properly disconnected. All NoSQL data is deleted.
+	* </p>
+	*
+	* @param lcsClusterNodeId the primary key of the LCS cluster node
+	* @throws PortalException if an LCS cluster node associated with the LCS
+	        cluster entry could not be found or an operation was not allowed
+	        by the LCS cluster entry membership policy
+	* @since LCS 0.1
+	*/
+	public static void deleteLCSClusterNode(long lcsClusterNodeId)
+		throws RemoteException {
+		try {
+			LCSClusterNodeServiceUtil.deleteLCSClusterNode(lcsClusterNodeId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns an LCS cluster node matching the key.
+	*
+	* @param key the portal instance key provided by the licence tool
+	* @return an LCS cluster node matching the key or <code>null</code> if no
+	matching LCS cluster node was found
+	* @throws PortalException if operation was not allowed by the LCS cluster
+	        entry membership policy
+	* @since LCS 1.0
+	*/
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap fetchLCSClusterNode(
+		java.lang.String key) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterNode returnValue = LCSClusterNodeServiceUtil.fetchLCSClusterNode(key);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns all LCS cluster nodes (excluding their transient details)
+	* belonging to the LCS cluster entry.
+	*
+	* @param lcsClusterEntryId the primary key of the LCS cluster entry
+	* @return the LCS cluster nodes belonging to the LCS cluster entry
+	* @throws PortalException if an operation was not allowed by the LCS
+	        cluster entry membership policy
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap[] getLCSClusterEntryLCSClusterNodes(
+		long lcsClusterEntryId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSClusterNode> returnValue =
+				LCSClusterNodeServiceUtil.getLCSClusterEntryLCSClusterNodes(lcsClusterEntryId);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns all LCS cluster nodes belonging to the LCS cluster entry.
+	*
+	* @param lcsClusterEntryId the primary key of the LCS cluster entry
+	* @param details           whether to include transient details in the nodes
+	* @return the LCS cluster nodes belonging to the LCS cluster entry
+	* @throws PortalException if an operation was not allowed by the LCS
+	        cluster entry membership policy
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap[] getLCSClusterEntryLCSClusterNodes(
+		long lcsClusterEntryId, boolean details) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSClusterNode> returnValue =
+				LCSClusterNodeServiceUtil.getLCSClusterEntryLCSClusterNodes(lcsClusterEntryId,
+					details);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns the LCS cluster node (excluding its transient details) with
+	* primary key.
+	*
+	* @param lcsClusterNodeId the primary key of the LCS cluster node
+	* @return the LCS cluster node with primary key
+	* @throws PortalException if an LCS cluster node associated with the LCS
+	        cluster entry could not be found or an operation was not allowed
+	        by the LCS cluster entry membership policy
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap getLCSClusterNode(
+		long lcsClusterNodeId) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterNode returnValue = LCSClusterNodeServiceUtil.getLCSClusterNode(lcsClusterNodeId);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns the LCS cluster node with primary key.
+	*
+	* @param lcsClusterNodeId the primary key of the LCS cluster node
+	* @param details          whether to include transient details in the nodes
+	* @return the LCS cluster node with primary key
+	* @throws PortalException if an LCS cluster node associated with the LCS
+	        cluster entry could not be found or an operation was not allowed
+	        by the LCS cluster entry membership policy
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap getLCSClusterNode(
+		long lcsClusterNodeId, boolean details) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterNode returnValue = LCSClusterNodeServiceUtil.getLCSClusterNode(lcsClusterNodeId,
+					details);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns the LCS cluster node matching the key.
+	*
+	* @param key the portal instance key provided by the licence tool
+	* @return the LCS cluster node matching the key
+	* @throws PortalException if an LCS cluster node associated with the LCS
+	        cluster entry could not be found or an operation was not allowed
+	        by the LCS cluster entry membership policy
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap getLCSClusterNode(
+		java.lang.String key) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterNode returnValue = LCSClusterNodeServiceUtil.getLCSClusterNode(key);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap getLCSClusterNode(
+		java.lang.String key, boolean details) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterNode returnValue = LCSClusterNodeServiceUtil.getLCSClusterNode(key,
+					details);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns all LCS cluster nodes (excluding their transient details)
+	* accessible to the user and belonging to the LCS project.
+	*
+	* @param lcsProjectId the primary key of LCS project
+	* @return the LCS cluster nodes belonging to the LCS project and accessible
+	to the current user
+	* @throws PortalException if an operation was not allowed by the LCS
+	        cluster entry membership policy
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap[] getLCSProjectLCSClusterNodes(
+		long lcsProjectId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSClusterNode> returnValue =
+				LCSClusterNodeServiceUtil.getLCSProjectLCSClusterNodes(lcsProjectId);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns all LCS cluster nodes accessible to the current user and
+	* belonging to the corp project.
+	*
+	* @param lcsProjectId the primary key of corp project
+	* @param details      whether to include transient details in the nodes
+	* @return the LCS cluster nodes belonging to the corp project and
+	accessible to the current user
+	* @throws PortalException if an operation was not allowed by the LCS
+	        cluster entry membership policy
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap[] getLCSProjectLCSClusterNodes(
+		long lcsProjectId, boolean details) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSClusterNode> returnValue =
+				LCSClusterNodeServiceUtil.getLCSProjectLCSClusterNodes(lcsProjectId,
+					details);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void updateBuildNumber(long lcsClusterNodeId, int buildNumber)
+		throws RemoteException {
+		try {
+			LCSClusterNodeServiceUtil.updateBuildNumber(lcsClusterNodeId,
+				buildNumber);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void updateBuildNumber(java.lang.String key, int buildNumber)
+		throws RemoteException {
+		try {
+			LCSClusterNodeServiceUtil.updateBuildNumber(key, buildNumber);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Updates the LCS cluster node.
+	*
+	* @param lcsClusterNodeId the primary key of LCS cluster node
+	* @param name             the portal instance friendly name
+	* @param description      the portal instance description
+	* @param location         the portal instance location
+	* @return the LCS cluster node
+	* @throws PortalException if a matching LCS cluster node could not be
+	        found, or new attributes were invalid, or an operation was not
+	        allowed by the LCS cluster entry membership policy
+	* @since LCS 0.1
+	*/
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap updateLCSClusterNode(
+		long lcsClusterNodeId, java.lang.String name,
+		java.lang.String description, java.lang.String location)
+		throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterNode returnValue = LCSClusterNodeServiceUtil.updateLCSClusterNode(lcsClusterNodeId,
+					name, description, location);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(
+		java.lang.String key) throws RemoteException {
+		try {
+			LCSClusterNodeServiceUtil.verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(key);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void verifyLCSClusterNodeClusterLink(java.lang.String key,
+		java.lang.String siblingKeys) throws RemoteException {
+		try {
+			LCSClusterNodeServiceUtil.verifyLCSClusterNodeClusterLink(key,
+				siblingKeys);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LCSClusterNodeServiceSoap.class);
 }

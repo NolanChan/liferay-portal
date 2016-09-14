@@ -128,10 +128,11 @@ public abstract class LCSRoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param lcsRole the l c s role
 	 * @return the l c s role that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public LCSRole deleteLCSRole(LCSRole lcsRole) {
+	public LCSRole deleteLCSRole(LCSRole lcsRole) throws PortalException {
 		return lcsRolePersistence.remove(lcsRole);
 	}
 

@@ -33,6 +33,20 @@ public class LCSProjectLocalServiceWrapper implements LCSProjectLocalService,
 		_lcsProjectLocalService = lcsProjectLocalService;
 	}
 
+	@Override
+	public boolean checkUserAccountEntryLCSProject(
+		com.liferay.portal.kernel.model.User user)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectLocalService.checkUserAccountEntryLCSProject(user);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSProject addLCSProject(
+		com.liferay.osb.lcs.model.CorpProject corpProject, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectLocalService.addLCSProject(corpProject, userId);
+	}
+
 	/**
 	* Adds the l c s project to the database. Also notifies the appropriate model listeners.
 	*
@@ -43,6 +57,21 @@ public class LCSProjectLocalServiceWrapper implements LCSProjectLocalService,
 	public com.liferay.osb.lcs.model.LCSProject addLCSProject(
 		com.liferay.osb.lcs.model.LCSProject lcsProject) {
 		return _lcsProjectLocalService.addLCSProject(lcsProject);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSProject addLCSProject(
+		java.lang.String sourceSystemName, java.lang.String name, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectLocalService.addLCSProject(sourceSystemName, name,
+			userId);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSProject addLCSProject(
+		long corpProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectLocalService.addLCSProject(corpProjectId);
 	}
 
 	/**
@@ -84,9 +113,22 @@ public class LCSProjectLocalServiceWrapper implements LCSProjectLocalService,
 	}
 
 	@Override
+	public com.liferay.osb.lcs.model.LCSProject fetchByCorpProject(
+		long corpProjectId) {
+		return _lcsProjectLocalService.fetchByCorpProject(corpProjectId);
+	}
+
+	@Override
 	public com.liferay.osb.lcs.model.LCSProject fetchLCSProject(
 		long lcsProjectId) {
 		return _lcsProjectLocalService.fetchLCSProject(lcsProjectId);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSProject findByCorpProject(
+		long corpProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectLocalService.findByCorpProject(corpProjectId);
 	}
 
 	/**
@@ -112,6 +154,14 @@ public class LCSProjectLocalServiceWrapper implements LCSProjectLocalService,
 	public com.liferay.osb.lcs.model.LCSProject updateLCSProject(
 		com.liferay.osb.lcs.model.LCSProject lcsProject) {
 		return _lcsProjectLocalService.updateLCSProject(lcsProject);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSProject updateSubscriptionActive(
+		long lcsProjectId, boolean subscriptionActive)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectLocalService.updateSubscriptionActive(lcsProjectId,
+			subscriptionActive);
 	}
 
 	@Override
@@ -219,6 +269,12 @@ public class LCSProjectLocalServiceWrapper implements LCSProjectLocalService,
 			orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSProject> findByName(
+		java.lang.String name) {
+		return _lcsProjectLocalService.findByName(name);
+	}
+
 	/**
 	* Returns a range of all the l c s projects.
 	*
@@ -234,6 +290,26 @@ public class LCSProjectLocalServiceWrapper implements LCSProjectLocalService,
 	public java.util.List<com.liferay.osb.lcs.model.LCSProject> getLCSProjects(
 		int start, int end) {
 		return _lcsProjectLocalService.getLCSProjects(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects(
+		long userId) throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectLocalService.getUserLCSProjects(userId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects(
+		long userId, boolean lcsRole)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectLocalService.getUserLCSProjects(userId, lcsRole);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects(
+		long userId, boolean lcsRole, int role)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectLocalService.getUserLCSProjects(userId, lcsRole, role);
 	}
 
 	/**
@@ -261,6 +337,12 @@ public class LCSProjectLocalServiceWrapper implements LCSProjectLocalService,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _lcsProjectLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public long[] getLocalCorpProjectIds()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _lcsProjectLocalService.getLocalCorpProjectIds();
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.osb.lcs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.model.CorpProject;
 import com.liferay.osb.lcs.model.LCSProject;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -60,6 +62,11 @@ public interface LCSProjectLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LCSProjectLocalServiceUtil} to access the l c s project local service. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSProjectLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public boolean checkUserAccountEntryLCSProject(User user)
+		throws PortalException;
+
+	public LCSProject addLCSProject(CorpProject corpProject, long userId)
+		throws PortalException;
 
 	/**
 	* Adds the l c s project to the database. Also notifies the appropriate model listeners.
@@ -69,6 +76,12 @@ public interface LCSProjectLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public LCSProject addLCSProject(LCSProject lcsProject);
+
+	public LCSProject addLCSProject(java.lang.String sourceSystemName,
+		java.lang.String name, long userId) throws PortalException;
+
+	public LCSProject addLCSProject(long corpProjectId)
+		throws PortalException;
 
 	/**
 	* Creates a new l c s project with the primary key. Does not add the l c s project to the database.
@@ -99,7 +112,13 @@ public interface LCSProjectLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSProject fetchByCorpProject(long corpProjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LCSProject fetchLCSProject(long lcsProjectId);
+
+	public LCSProject findByCorpProject(long corpProjectId)
+		throws PortalException;
 
 	/**
 	* Returns the l c s project with the primary key.
@@ -120,6 +139,9 @@ public interface LCSProjectLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public LCSProject updateLCSProject(LCSProject lcsProject);
+
+	public LCSProject updateSubscriptionActive(long lcsProjectId,
+		boolean subscriptionActive) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -195,6 +217,8 @@ public interface LCSProjectLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<LCSProject> findByName(java.lang.String name);
+
 	/**
 	* Returns a range of all the l c s projects.
 	*
@@ -208,6 +232,18 @@ public interface LCSProjectLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LCSProject> getLCSProjects(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSProject> getUserLCSProjects(long userId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSProject> getUserLCSProjects(long userId, boolean lcsRole)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSProject> getUserLCSProjects(long userId, boolean lcsRole,
+		int role) throws PortalException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -226,4 +262,7 @@ public interface LCSProjectLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getLocalCorpProjectIds() throws SystemException;
 }

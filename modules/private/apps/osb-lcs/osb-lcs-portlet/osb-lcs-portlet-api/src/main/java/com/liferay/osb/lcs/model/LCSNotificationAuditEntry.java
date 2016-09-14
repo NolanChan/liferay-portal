@@ -55,4 +55,24 @@ public interface LCSNotificationAuditEntry
 				return LCSNotificationAuditEntry.class;
 			}
 		};
+
+	public java.lang.String getLcsClusterEntryName();
+
+	public java.lang.String getLcsClusterNodeKey();
+
+	public java.lang.String getLcsClusterNodeName();
+
+	public java.lang.String getLcsProjectName();
+
+	public java.lang.String getUserEmailAddress();
+
+	public void setLcsClusterEntryName(java.lang.String lcsClusterEntryName);
+
+	public void setLcsClusterNodeKey(java.lang.String lcsClusterNodeKey);
+
+	public void setLcsClusterNodeName(java.lang.String lcsClusterNodeName);
+
+	public void setLcsProjectName(java.lang.String lcsProjectName);
+
+	public void setUserEmailAddress(java.lang.String userEmailAddress);
 }

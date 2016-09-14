@@ -46,6 +46,36 @@ public class LCSClusterEntryLocalServiceWrapper
 		return _lcsClusterEntryLocalService.addLCSClusterEntry(lcsClusterEntry);
 	}
 
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterEntry addLCSClusterEntry(
+		long lcsProjectId, java.lang.String name, java.lang.String description,
+		int highPageLoadTime, java.lang.String location,
+		int mediumPageLoadTime, java.lang.String subscriptionType, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterEntryLocalService.addLCSClusterEntry(lcsProjectId,
+			name, description, highPageLoadTime, location, mediumPageLoadTime,
+			subscriptionType, type);
+	}
+
+	@Deprecated
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterEntry addLCSClusterEntry(
+		long lcsProjectId, java.lang.String name, java.lang.String description,
+		java.lang.String location, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterEntryLocalService.addLCSClusterEntry(lcsProjectId,
+			name, description, location, type);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterEntry addLCSClusterEntry(
+		long lcsProjectId, java.lang.String name, java.lang.String description,
+		java.lang.String location, java.lang.String subscriptionType, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterEntryLocalService.addLCSClusterEntry(lcsProjectId,
+			name, description, location, subscriptionType, type);
+	}
+
 	/**
 	* Creates a new l c s cluster entry with the primary key. Does not add the l c s cluster entry to the database.
 	*
@@ -63,10 +93,12 @@ public class LCSClusterEntryLocalServiceWrapper
 	*
 	* @param lcsClusterEntry the l c s cluster entry
 	* @return the l c s cluster entry that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.osb.lcs.model.LCSClusterEntry deleteLCSClusterEntry(
-		com.liferay.osb.lcs.model.LCSClusterEntry lcsClusterEntry) {
+		com.liferay.osb.lcs.model.LCSClusterEntry lcsClusterEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _lcsClusterEntryLocalService.deleteLCSClusterEntry(lcsClusterEntry);
 	}
 
@@ -104,6 +136,22 @@ public class LCSClusterEntryLocalServiceWrapper
 		return _lcsClusterEntryLocalService.getLCSClusterEntry(lcsClusterEntryId);
 	}
 
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterEntry updateElastic(
+		long lcsClusterEntryId, boolean elastic)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterEntryLocalService.updateElastic(lcsClusterEntryId,
+			elastic);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterEntry updateHighPageLoadTime(
+		long lcsClusterEntryId, int highPageLoadTime)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterEntryLocalService.updateHighPageLoadTime(lcsClusterEntryId,
+			highPageLoadTime);
+	}
+
 	/**
 	* Updates the l c s cluster entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -114,6 +162,42 @@ public class LCSClusterEntryLocalServiceWrapper
 	public com.liferay.osb.lcs.model.LCSClusterEntry updateLCSClusterEntry(
 		com.liferay.osb.lcs.model.LCSClusterEntry lcsClusterEntry) {
 		return _lcsClusterEntryLocalService.updateLCSClusterEntry(lcsClusterEntry);
+	}
+
+	@Deprecated
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterEntry updateLCSClusterEntry(
+		long lcsClusterEntryId, java.lang.String name,
+		java.lang.String description, java.lang.String location)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterEntryLocalService.updateLCSClusterEntry(lcsClusterEntryId,
+			name, description, location);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterEntry updateLCSClusterEntry(
+		long lcsClusterEntryId, java.lang.String name,
+		java.lang.String description, java.lang.String subscriptionType,
+		java.lang.String location)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterEntryLocalService.updateLCSClusterEntry(lcsClusterEntryId,
+			name, description, subscriptionType, location);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterEntry updateMediumPageLoadTime(
+		long lcsClusterEntryId, int mediumPageLoadTime)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterEntryLocalService.updateMediumPageLoadTime(lcsClusterEntryId,
+			mediumPageLoadTime);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterEntry updateSubscriptionType(
+		long lcsClusterEntryId, java.lang.String subscriptionType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterEntryLocalService.updateSubscriptionType(lcsClusterEntryId,
+			subscriptionType);
 	}
 
 	@Override
@@ -222,6 +306,13 @@ public class LCSClusterEntryLocalServiceWrapper
 			end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> getArchivedLCSProjectLCSClusterEntries(
+		long lcsProjectId, java.lang.String subscriptionType) {
+		return _lcsClusterEntryLocalService.getArchivedLCSProjectLCSClusterEntries(lcsProjectId,
+			subscriptionType);
+	}
+
 	/**
 	* Returns a range of all the l c s cluster entries.
 	*
@@ -237,6 +328,40 @@ public class LCSClusterEntryLocalServiceWrapper
 	public java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> getLCSClusterEntries(
 		int start, int end) {
 		return _lcsClusterEntryLocalService.getLCSClusterEntries(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> getLCSProjectLCSClusterEntries(
+		long lcsProjectId) {
+		return _lcsClusterEntryLocalService.getLCSProjectLCSClusterEntries(lcsProjectId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> getLCSProjectLCSClusterEntries(
+		long lcsProjectId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _lcsClusterEntryLocalService.getLCSProjectLCSClusterEntries(lcsProjectId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> getLCSProjectLCSClusterEntries(
+		long lcsProjectId, java.lang.String subscriptionType) {
+		return _lcsClusterEntryLocalService.getLCSProjectLCSClusterEntries(lcsProjectId,
+			subscriptionType);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> getUserLCSClusterEntries(
+		long userId) {
+		return _lcsClusterEntryLocalService.getUserLCSClusterEntries(userId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> getUserLCSClusterEntries(
+		long userId, long lcsProjectId) {
+		return _lcsClusterEntryLocalService.getUserLCSClusterEntries(userId,
+			lcsProjectId);
 	}
 
 	/**
@@ -264,6 +389,23 @@ public class LCSClusterEntryLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _lcsClusterEntryLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public long[] getLCSProjectLCSClusterEntryIds(long lcsProjectId) {
+		return _lcsClusterEntryLocalService.getLCSProjectLCSClusterEntryIds(lcsProjectId);
+	}
+
+	@Override
+	public long[] getUserLCSClusterEntryIds(long userId, long lcsProjectId) {
+		return _lcsClusterEntryLocalService.getUserLCSClusterEntryIds(userId,
+			lcsProjectId);
+	}
+
+	@Override
+	public void deleteLCSProjectClusters(long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_lcsClusterEntryLocalService.deleteLCSProjectClusters(lcsProjectId);
 	}
 
 	@Override

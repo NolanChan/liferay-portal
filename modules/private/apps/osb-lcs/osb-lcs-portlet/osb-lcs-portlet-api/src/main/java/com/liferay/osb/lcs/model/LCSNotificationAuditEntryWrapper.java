@@ -169,6 +169,31 @@ public class LCSNotificationAuditEntryWrapper
 		return new LCSNotificationAuditEntryWrapper((LCSNotificationAuditEntry)_lcsNotificationAuditEntry.clone());
 	}
 
+	@Override
+	public java.lang.String getLcsClusterEntryName() {
+		return _lcsNotificationAuditEntry.getLcsClusterEntryName();
+	}
+
+	@Override
+	public java.lang.String getLcsClusterNodeKey() {
+		return _lcsNotificationAuditEntry.getLcsClusterNodeKey();
+	}
+
+	@Override
+	public java.lang.String getLcsClusterNodeName() {
+		return _lcsNotificationAuditEntry.getLcsClusterNodeName();
+	}
+
+	@Override
+	public java.lang.String getLcsProjectName() {
+		return _lcsNotificationAuditEntry.getLcsProjectName();
+	}
+
+	@Override
+	public java.lang.String getUserEmailAddress() {
+		return _lcsNotificationAuditEntry.getUserEmailAddress();
+	}
+
 	/**
 	* Returns the user uuid of this l c s notification audit entry.
 	*
@@ -275,6 +300,11 @@ public class LCSNotificationAuditEntryWrapper
 		_lcsNotificationAuditEntry.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	@Override
+	public void setLcsClusterEntryName(java.lang.String lcsClusterEntryName) {
+		_lcsNotificationAuditEntry.setLcsClusterEntryName(lcsClusterEntryName);
+	}
+
 	/**
 	* Sets the lcs cluster node ID of this l c s notification audit entry.
 	*
@@ -285,6 +315,16 @@ public class LCSNotificationAuditEntryWrapper
 		_lcsNotificationAuditEntry.setLcsClusterNodeId(lcsClusterNodeId);
 	}
 
+	@Override
+	public void setLcsClusterNodeKey(java.lang.String lcsClusterNodeKey) {
+		_lcsNotificationAuditEntry.setLcsClusterNodeKey(lcsClusterNodeKey);
+	}
+
+	@Override
+	public void setLcsClusterNodeName(java.lang.String lcsClusterNodeName) {
+		_lcsNotificationAuditEntry.setLcsClusterNodeName(lcsClusterNodeName);
+	}
+
 	/**
 	* Sets the lcs notification audit entry ID of this l c s notification audit entry.
 	*
@@ -293,6 +333,11 @@ public class LCSNotificationAuditEntryWrapper
 	@Override
 	public void setLcsNotificationAuditEntryId(long lcsNotificationAuditEntryId) {
 		_lcsNotificationAuditEntry.setLcsNotificationAuditEntryId(lcsNotificationAuditEntryId);
+	}
+
+	@Override
+	public void setLcsProjectName(java.lang.String lcsProjectName) {
+		_lcsNotificationAuditEntry.setLcsProjectName(lcsProjectName);
 	}
 
 	@Override
@@ -323,6 +368,11 @@ public class LCSNotificationAuditEntryWrapper
 	@Override
 	public void setType(int type) {
 		_lcsNotificationAuditEntry.setType(type);
+	}
+
+	@Override
+	public void setUserEmailAddress(java.lang.String userEmailAddress) {
+		_lcsNotificationAuditEntry.setUserEmailAddress(userEmailAddress);
 	}
 
 	/**

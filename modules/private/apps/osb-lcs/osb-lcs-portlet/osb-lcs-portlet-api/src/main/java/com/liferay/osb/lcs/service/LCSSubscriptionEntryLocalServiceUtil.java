@@ -41,6 +41,15 @@ public class LCSSubscriptionEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSSubscriptionEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean hasLCSProjectElasticLCSSubscriptionEntry(
+		long lcsProjectId) {
+		return getService()
+				   .hasLCSProjectElasticLCSSubscriptionEntry(lcsProjectId);
+	}
+
+	public static boolean hasLCSProjectLCSSubscriptionEntry(long lcsProjectId) {
+		return getService().hasLCSProjectLCSSubscriptionEntry(lcsProjectId);
+	}
 
 	/**
 	* Adds the l c s subscription entry to the database. Also notifies the appropriate model listeners.
@@ -86,6 +95,14 @@ public class LCSSubscriptionEntryLocalServiceUtil {
 		long lcsSubscriptionEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteLCSSubscriptionEntry(lcsSubscriptionEntryId);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSSubscriptionEntry fetchLCSProjectLCSSubscriptionEntry(
+		long lcsProjectId, int processorCoresTotal,
+		com.liferay.lcs.subscription.SubscriptionType subscriptionType) {
+		return getService()
+				   .fetchLCSProjectLCSSubscriptionEntry(lcsProjectId,
+			processorCoresTotal, subscriptionType);
 	}
 
 	public static com.liferay.osb.lcs.model.LCSSubscriptionEntry fetchLCSSubscriptionEntry(
@@ -212,6 +229,25 @@ public class LCSSubscriptionEntryLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
+		long lcsProjectId) {
+		return getService().getLCSProjectLCSSubscriptionEntries(lcsProjectId);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
+		long lcsProjectId, boolean active) {
+		return getService()
+				   .getLCSProjectLCSSubscriptionEntries(lcsProjectId, active);
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
+		long lcsProjectId, java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getLCSProjectLCSSubscriptionEntries(lcsProjectId, type,
+			orderByComparator);
+	}
+
 	/**
 	* Returns a range of all the l c s subscription entries.
 	*
@@ -226,6 +262,11 @@ public class LCSSubscriptionEntryLocalServiceUtil {
 	public static java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getLCSSubscriptionEntries(
 		int start, int end) {
 		return getService().getLCSSubscriptionEntries(start, end);
+	}
+
+	public static java.util.List<java.lang.Long> getLCSSubscriptionEntryIds(
+		long lcsProjectId) {
+		return getService().getLCSSubscriptionEntryIds(lcsProjectId);
 	}
 
 	/**
@@ -250,6 +291,47 @@ public class LCSSubscriptionEntryLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void addLCSSubscriptionEntries(long lcsProjectId,
+		java.lang.String lcsSubscriptionEntriesJSON)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addLCSSubscriptionEntries(lcsProjectId, lcsSubscriptionEntriesJSON);
+	}
+
+	public static void decrementServerUsed(long lcsProjectId,
+		java.lang.String licenseType, int processorCoresTotal)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.decrementServerUsed(lcsProjectId, licenseType, processorCoresTotal);
+	}
+
+	public static void deleteLCSProjectLCSSubscriptionEntries(long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteLCSProjectLCSSubscriptionEntries(lcsProjectId);
+	}
+
+	public static void incrementServerUsed(long lcsProjectId,
+		java.lang.String licenseType, int processorCoresTotal)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.incrementServerUsed(lcsProjectId, licenseType, processorCoresTotal);
+	}
+
+	public static void refreshLCSProjectLCSSubscriptionEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().refreshLCSProjectLCSSubscriptionEntries();
+	}
+
+	public static void refreshLCSProjectLCSSubscriptionEntries(
+		long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().refreshLCSProjectLCSSubscriptionEntries(lcsProjectId);
+	}
+
+	public static void reorganizeLCSSubsriptionsServersUsed(long lcsProjectId) {
+		getService().reorganizeLCSSubsriptionsServersUsed(lcsProjectId);
 	}
 
 	public static LCSSubscriptionEntryLocalService getService() {

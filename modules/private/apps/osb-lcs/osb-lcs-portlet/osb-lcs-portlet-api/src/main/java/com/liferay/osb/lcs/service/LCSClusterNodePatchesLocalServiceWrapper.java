@@ -34,6 +34,13 @@ public class LCSClusterNodePatchesLocalServiceWrapper
 		_lcsClusterNodePatchesLocalService = lcsClusterNodePatchesLocalService;
 	}
 
+	@Override
+	public java.lang.String getDownloadPatchStatus(long[] lcsClusterNodeIds,
+		java.lang.String lcsClusterNodeKeys, java.lang.String patchId) {
+		return _lcsClusterNodePatchesLocalService.getDownloadPatchStatus(lcsClusterNodeIds,
+			lcsClusterNodeKeys, patchId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -42,6 +49,14 @@ public class LCSClusterNodePatchesLocalServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _lcsClusterNodePatchesLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public void downloadPatch(long[] lcsClusterNodeIds,
+		java.lang.String patchName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_lcsClusterNodePatchesLocalService.downloadPatch(lcsClusterNodeIds,
+			patchName);
 	}
 
 	@Override

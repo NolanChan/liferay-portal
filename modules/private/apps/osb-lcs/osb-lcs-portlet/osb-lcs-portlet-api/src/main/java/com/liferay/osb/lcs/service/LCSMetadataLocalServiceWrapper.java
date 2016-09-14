@@ -46,6 +46,28 @@ public class LCSMetadataLocalServiceWrapper implements LCSMetadataLocalService,
 	}
 
 	/**
+	* Adds new LCS metadata.
+	*
+	* @param buildNumber the portal instance's build number
+	* @param gitTag the Git tag of the portal instance's source code
+	* @param portalEdition the portal instance's edition
+	* @param supportedLCSPortlet the latest supported LCS portlet's build
+	number
+	* @param supportedPatchingTool the latest supported patching tool's build
+	number
+	* @return the LCS metadata
+	* @since LCS 1.1
+	*/
+	@Override
+	public com.liferay.osb.lcs.model.LCSMetadata addLCSMetadata(
+		int buildNumber, java.lang.String gitTag,
+		java.lang.String portalEdition, int supportedLCSPortlet,
+		int supportedPatchingTool) {
+		return _lcsMetadataLocalService.addLCSMetadata(buildNumber, gitTag,
+			portalEdition, supportedLCSPortlet, supportedPatchingTool);
+	}
+
+	/**
 	* Creates a new l c s metadata with the primary key. Does not add the l c s metadata to the database.
 	*
 	* @param lcsMetadataId the primary key for the new l c s metadata
@@ -83,6 +105,23 @@ public class LCSMetadataLocalServiceWrapper implements LCSMetadataLocalService,
 		return _lcsMetadataLocalService.deleteLCSMetadata(lcsMetadataId);
 	}
 
+	/**
+	* Returns the LCS metadata matching the build number, Git tag, and portal
+	* edition.
+	*
+	* @param buildNumber the portal instance's build number
+	* @param gitTag the Git tag of the portal instance's source code
+	* @param portalEdition the portal instance's edition
+	* @return the matching LCS metadata
+	* @since LCS 1.1
+	*/
+	@Override
+	public com.liferay.osb.lcs.model.LCSMetadata fetchLCSMetadata(
+		int buildNumber, java.lang.String gitTag, java.lang.String portalEdition) {
+		return _lcsMetadataLocalService.fetchLCSMetadata(buildNumber, gitTag,
+			portalEdition);
+	}
+
 	@Override
 	public com.liferay.osb.lcs.model.LCSMetadata fetchLCSMetadata(
 		long lcsMetadataId) {
@@ -104,6 +143,33 @@ public class LCSMetadataLocalServiceWrapper implements LCSMetadataLocalService,
 	}
 
 	/**
+	* Updates the availability index bit mask for the LCS metadata that matches
+	* the LCS metadata ID.
+	*
+	* <p>
+	* If the availability index {@link
+	* com.liferay.osb.lcs.util.LCSMetadataAvailabilityIndex} bit is turned on,
+	* a particular service is available either within the LCS metadata or
+	* {@link com.liferay.osb.lcs.nosql.model.LCSMetadataDetails}. Use {@link
+	* com.liferay.osb.lcs.util.LCSMetadataAvailabilityIndex#merge(long)} to
+	* encode the bit mask, and {@link
+	* com.liferay.osb.lcs.util.LCSMetadataAvailabilityIndex#isAvailable(long)}
+	* to decode it.
+	* </p>
+	*
+	* @param lcsMetadataId the primary key of the LCS metadata
+	* @param availabilityIndex the bit mask
+	* @return the updated LCS metadata
+	* @since LCS 1.1
+	*/
+	@Override
+	public com.liferay.osb.lcs.model.LCSMetadata updateAvailabilityIndex(
+		long lcsMetadataId, long availabilityIndex) {
+		return _lcsMetadataLocalService.updateAvailabilityIndex(lcsMetadataId,
+			availabilityIndex);
+	}
+
+	/**
 	* Updates the l c s metadata in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param lcsMetadata the l c s metadata
@@ -113,6 +179,39 @@ public class LCSMetadataLocalServiceWrapper implements LCSMetadataLocalService,
 	public com.liferay.osb.lcs.model.LCSMetadata updateLCSMetadata(
 		com.liferay.osb.lcs.model.LCSMetadata lcsMetadata) {
 		return _lcsMetadataLocalService.updateLCSMetadata(lcsMetadata);
+	}
+
+	/**
+	* Updates the supported LCS portlet build number in the LCS metadata
+	* matching the primary key.
+	*
+	* @param lcsMetadataId the primary key of the LCS metadata
+	* @param supportedLCSPortlet the supported LCS portlet's build number
+	* @return the updated LCS metadata
+	* @since LCS 1.1
+	*/
+	@Override
+	public com.liferay.osb.lcs.model.LCSMetadata updateSupportedLCSPortlet(
+		long lcsMetadataId, int supportedLCSPortlet) {
+		return _lcsMetadataLocalService.updateSupportedLCSPortlet(lcsMetadataId,
+			supportedLCSPortlet);
+	}
+
+	/**
+	* Updates the latest supported portal patching tool's build number in the
+	* LCS metadata matching the primary key.
+	*
+	* @param lcsMetadataId the primary key of the LCS metadata
+	* @param supportedPatchingToolVersion the latest supported patching tool's
+	build number
+	* @return the updated LCS metadata
+	* @since LCS 1.1
+	*/
+	@Override
+	public com.liferay.osb.lcs.model.LCSMetadata updateSupportedPatchingTool(
+		long lcsMetadataId, int supportedPatchingToolVersion) {
+		return _lcsMetadataLocalService.updateSupportedPatchingTool(lcsMetadataId,
+			supportedPatchingToolVersion);
 	}
 
 	@Override
@@ -218,6 +317,21 @@ public class LCSMetadataLocalServiceWrapper implements LCSMetadataLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _lcsMetadataLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
+	}
+
+	/**
+	* Returns all LCS metadata that match the build number and portal edition.
+	*
+	* @param buildNumber the portal instance's build number
+	* @param portalEdition the portal instance's edition
+	* @return the matching LCS metadata
+	* @since LCS 1.1
+	*/
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSMetadata> getLCSMetadatas(
+		int buildNumber, java.lang.String portalEdition) {
+		return _lcsMetadataLocalService.getLCSMetadatas(buildNumber,
+			portalEdition);
 	}
 
 	/**

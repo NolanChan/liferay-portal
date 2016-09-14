@@ -16,9 +16,16 @@ package com.liferay.osb.lcs.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.service.LCSInvitationServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.osb.lcs.service.LCSInvitationServiceUtil} service utility. The
+ * {@link LCSInvitationServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,70 @@ import aQute.bnd.annotation.ProviderType;
  * @author Igor Beslic
  * @see LCSInvitationServiceHttp
  * @see com.liferay.osb.lcs.model.LCSInvitationSoap
- * @see com.liferay.osb.lcs.service.LCSInvitationServiceUtil
+ * @see LCSInvitationServiceUtil
  * @generated
  */
 @ProviderType
 public class LCSInvitationServiceSoap {
+	public static com.liferay.osb.lcs.model.LCSInvitationSoap addLCSInvitation(
+		long lcsProjectId, java.lang.String emailAddress,
+		long lcsClusterEntryId, int role) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSInvitation returnValue = LCSInvitationServiceUtil.addLCSInvitation(lcsProjectId,
+					emailAddress, lcsClusterEntryId, role);
+
+			return com.liferay.osb.lcs.model.LCSInvitationSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSInvitationSoap deleteLCSInvitation(
+		long lcsInvitationId) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSInvitation returnValue = LCSInvitationServiceUtil.deleteLCSInvitation(lcsInvitationId);
+
+			return com.liferay.osb.lcs.model.LCSInvitationSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSInvitationSoap getLCSProjectLCSInvitation(
+		long lcsProjectId, java.lang.String emailAddress)
+		throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSInvitation returnValue = LCSInvitationServiceUtil.getLCSProjectLCSInvitation(lcsProjectId,
+					emailAddress);
+
+			return com.liferay.osb.lcs.model.LCSInvitationSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSInvitationSoap[] getLCSProjectLCSInvitations(
+		long lcsProjectId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSInvitation> returnValue = LCSInvitationServiceUtil.getLCSProjectLCSInvitations(lcsProjectId);
+
+			return com.liferay.osb.lcs.model.LCSInvitationSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LCSInvitationServiceSoap.class);
 }

@@ -54,4 +54,10 @@ public interface LCSNotification extends LCSNotificationModel, PersistedModel {
 				return LCSNotification.class;
 			}
 		};
+
+	public boolean isLCSClusterEntryNotification();
+
+	public boolean isLCSClusterNodeNotification();
+
+	public boolean isLCSProjectNotification();
 }

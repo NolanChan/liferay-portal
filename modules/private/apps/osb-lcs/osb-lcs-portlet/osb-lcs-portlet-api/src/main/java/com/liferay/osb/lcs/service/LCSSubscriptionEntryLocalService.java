@@ -16,6 +16,8 @@ package com.liferay.osb.lcs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.lcs.subscription.SubscriptionType;
+
 import com.liferay.osb.lcs.model.LCSSubscriptionEntry;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -60,6 +62,11 @@ public interface LCSSubscriptionEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LCSSubscriptionEntryLocalServiceUtil} to access the l c s subscription entry local service. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSSubscriptionEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLCSProjectElasticLCSSubscriptionEntry(long lcsProjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLCSProjectLCSSubscriptionEntry(long lcsProjectId);
 
 	/**
 	* Adds the l c s subscription entry to the database. Also notifies the appropriate model listeners.
@@ -100,6 +107,11 @@ public interface LCSSubscriptionEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public LCSSubscriptionEntry deleteLCSSubscriptionEntry(
 		long lcsSubscriptionEntryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSSubscriptionEntry fetchLCSProjectLCSSubscriptionEntry(
+		long lcsProjectId, int processorCoresTotal,
+		SubscriptionType subscriptionType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LCSSubscriptionEntry fetchLCSSubscriptionEntry(
@@ -200,6 +212,19 @@ public interface LCSSubscriptionEntryLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
+		long lcsProjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
+		long lcsProjectId, boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
+		long lcsProjectId, java.lang.String type,
+		OrderByComparator orderByComparator);
+
 	/**
 	* Returns a range of all the l c s subscription entries.
 	*
@@ -214,6 +239,9 @@ public interface LCSSubscriptionEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LCSSubscriptionEntry> getLCSSubscriptionEntries(int start,
 		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Long> getLCSSubscriptionEntryIds(long lcsProjectId);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -232,4 +260,26 @@ public interface LCSSubscriptionEntryLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void addLCSSubscriptionEntries(long lcsProjectId,
+		java.lang.String lcsSubscriptionEntriesJSON) throws PortalException;
+
+	public void decrementServerUsed(long lcsProjectId,
+		java.lang.String licenseType, int processorCoresTotal)
+		throws PortalException;
+
+	public void deleteLCSProjectLCSSubscriptionEntries(long lcsProjectId)
+		throws PortalException;
+
+	public void incrementServerUsed(long lcsProjectId,
+		java.lang.String licenseType, int processorCoresTotal)
+		throws PortalException;
+
+	public void refreshLCSProjectLCSSubscriptionEntries()
+		throws PortalException;
+
+	public void refreshLCSProjectLCSSubscriptionEntries(long lcsProjectId)
+		throws PortalException;
+
+	public void reorganizeLCSSubsriptionsServersUsed(long lcsProjectId);
 }

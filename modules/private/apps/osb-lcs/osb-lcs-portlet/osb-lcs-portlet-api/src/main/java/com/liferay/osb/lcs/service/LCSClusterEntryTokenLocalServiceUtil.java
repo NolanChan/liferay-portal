@@ -53,6 +53,12 @@ public class LCSClusterEntryTokenLocalServiceUtil {
 		return getService().addLCSClusterEntryToken(lcsClusterEntryToken);
 	}
 
+	public static com.liferay.osb.lcs.model.LCSClusterEntryToken addLCSClusterEntryToken(
+		long userId, long lcsClusterEntryId, java.lang.String content) {
+		return getService()
+				   .addLCSClusterEntryToken(userId, lcsClusterEntryId, content);
+	}
+
 	/**
 	* Creates a new l c s cluster entry token with the primary key. Does not add the l c s cluster entry token to the database.
 	*
@@ -86,6 +92,12 @@ public class LCSClusterEntryTokenLocalServiceUtil {
 		long lcsClusterEntryTokenId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteLCSClusterEntryToken(lcsClusterEntryTokenId);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntryToken fetchLCSClusterEntryLCSClusterEntryToken(
+		long lcsClusterEntryId) {
+		return getService()
+				   .fetchLCSClusterEntryLCSClusterEntryToken(lcsClusterEntryId);
 	}
 
 	public static com.liferay.osb.lcs.model.LCSClusterEntryToken fetchLCSClusterEntryToken(

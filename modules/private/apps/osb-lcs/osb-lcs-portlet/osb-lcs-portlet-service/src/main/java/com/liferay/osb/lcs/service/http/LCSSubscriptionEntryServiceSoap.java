@@ -16,9 +16,16 @@ package com.liferay.osb.lcs.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.service.LCSSubscriptionEntryServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.osb.lcs.service.LCSSubscriptionEntryServiceUtil} service utility. The
+ * {@link LCSSubscriptionEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,136 @@ import aQute.bnd.annotation.ProviderType;
  * @author Igor Beslic
  * @see LCSSubscriptionEntryServiceHttp
  * @see com.liferay.osb.lcs.model.LCSSubscriptionEntrySoap
- * @see com.liferay.osb.lcs.service.LCSSubscriptionEntryServiceUtil
+ * @see LCSSubscriptionEntryServiceUtil
  * @generated
  */
 @ProviderType
 public class LCSSubscriptionEntryServiceSoap {
+	public static void addCorpProjectLCSSubscriptionEntries(
+		long corpProjectId, java.lang.String lcsSubscriptionEntriesJSON)
+		throws RemoteException {
+		try {
+			LCSSubscriptionEntryServiceUtil.addCorpProjectLCSSubscriptionEntries(corpProjectId,
+				lcsSubscriptionEntriesJSON);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void addLCSSubscriptionEntries(long lcsProjectId,
+		java.lang.String lcsSubscriptionEntriesJSON) throws RemoteException {
+		try {
+			LCSSubscriptionEntryServiceUtil.addLCSSubscriptionEntries(lcsProjectId,
+				lcsSubscriptionEntriesJSON);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSSubscriptionEntrySoap fetchLCSClusterNodeActiveLCSSubscriptionEntry(
+		java.lang.String key) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSSubscriptionEntry returnValue = LCSSubscriptionEntryServiceUtil.fetchLCSClusterNodeActiveLCSSubscriptionEntry(key);
+
+			return com.liferay.osb.lcs.model.LCSSubscriptionEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	@Deprecated
+	public static com.liferay.osb.lcs.model.LCSSubscriptionEntrySoap[] getCorpProjectLCSSubscriptionEntries(
+		long corpProjectId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> returnValue =
+				LCSSubscriptionEntryServiceUtil.getCorpProjectLCSSubscriptionEntries(corpProjectId);
+
+			return com.liferay.osb.lcs.model.LCSSubscriptionEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSSubscriptionEntrySoap[] getLCSProjectLCSSubscriptionEntries(
+		long lcsProjectId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> returnValue =
+				LCSSubscriptionEntryServiceUtil.getLCSProjectLCSSubscriptionEntries(lcsProjectId);
+
+			return com.liferay.osb.lcs.model.LCSSubscriptionEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSSubscriptionEntrySoap[] getLCSProjectLCSSubscriptionEntries(
+		long lcsProjectId, boolean status) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> returnValue =
+				LCSSubscriptionEntryServiceUtil.getLCSProjectLCSSubscriptionEntries(lcsProjectId,
+					status);
+
+			return com.liferay.osb.lcs.model.LCSSubscriptionEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static boolean hasLCSProjectElasticLCSSubscriptionEntry(
+		long lcsProjectId) throws RemoteException {
+		try {
+			boolean returnValue = LCSSubscriptionEntryServiceUtil.hasLCSProjectElasticLCSSubscriptionEntry(lcsProjectId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void refreshLCSProjectLCSSubscriptionEntries()
+		throws RemoteException {
+		try {
+			LCSSubscriptionEntryServiceUtil.refreshLCSProjectLCSSubscriptionEntries();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void refreshLCSProjectLCSSubscriptionEntries(
+		long lcsProjectId) throws RemoteException {
+		try {
+			LCSSubscriptionEntryServiceUtil.refreshLCSProjectLCSSubscriptionEntries(lcsProjectId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LCSSubscriptionEntryServiceSoap.class);
 }

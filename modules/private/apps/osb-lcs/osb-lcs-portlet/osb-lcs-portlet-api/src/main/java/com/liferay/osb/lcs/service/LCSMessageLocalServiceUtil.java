@@ -41,6 +41,28 @@ public class LCSMessageLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSMessageLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.osb.lcs.model.LCSMessage addLCSClusterEntryLCSMessage(
+		long lcsClusterEntryId, long sourceMessageId,
+		java.lang.String sourceSystemName, java.lang.String content,
+		java.util.Date endDate, boolean global, int severityLevel, int type,
+		boolean addUserLCSMessages)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLCSClusterEntryLCSMessage(lcsClusterEntryId,
+			sourceMessageId, sourceSystemName, content, endDate, global,
+			severityLevel, type, addUserLCSMessages);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSMessage addLCSClusterNodeLCSMessage(
+		long lcsClusterNodeId, long sourceMessageId,
+		java.lang.String sourceSystemName, java.lang.String content,
+		java.util.Date endDate, boolean global, int severityLevel, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLCSClusterNodeLCSMessage(lcsClusterNodeId,
+			sourceMessageId, sourceSystemName, content, endDate, global,
+			severityLevel, type);
+	}
 
 	/**
 	* Adds the l c s message to the database. Also notifies the appropriate model listeners.
@@ -51,6 +73,27 @@ public class LCSMessageLocalServiceUtil {
 	public static com.liferay.osb.lcs.model.LCSMessage addLCSMessage(
 		com.liferay.osb.lcs.model.LCSMessage lcsMessage) {
 		return getService().addLCSMessage(lcsMessage);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSMessage addLCSMessage(
+		long sourceMessageId, java.lang.String sourceSystemName,
+		long classNameId, long classPK, java.lang.String content,
+		java.util.Date endDate, boolean global, int severityLevel, int type) {
+		return getService()
+				   .addLCSMessage(sourceMessageId, sourceSystemName,
+			classNameId, classPK, content, endDate, global, severityLevel, type);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSMessage addLCSProjectLCSMessage(
+		long lcsProjectId, long sourceMessageId,
+		java.lang.String sourceSystemName, java.lang.String content,
+		java.util.Date endDate, boolean global, int severityLevel, int type,
+		boolean adminsOnly, boolean generateUserLCSMessages)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLCSProjectLCSMessage(lcsProjectId, sourceMessageId,
+			sourceSystemName, content, endDate, global, severityLevel, type,
+			adminsOnly, generateUserLCSMessages);
 	}
 
 	/**
@@ -91,6 +134,11 @@ public class LCSMessageLocalServiceUtil {
 	public static com.liferay.osb.lcs.model.LCSMessage fetchLCSMessage(
 		long lcsMessageId) {
 		return getService().fetchLCSMessage(lcsMessageId);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSMessage fetchLastLCSProjectLCSMessage(
+		long lcsProjectId, int type) {
+		return getService().fetchLastLCSProjectLCSMessage(lcsProjectId, type);
 	}
 
 	/**
@@ -228,6 +276,12 @@ public class LCSMessageLocalServiceUtil {
 		return getService().getLCSMessages(start, end);
 	}
 
+	public static java.util.List<com.liferay.osb.lcs.model.LCSMessage> getLCSMessages(
+		long userId, java.util.Date modifyDateGT, java.util.Date modifyDateLT)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLCSMessages(userId, modifyDateGT, modifyDateLT);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -250,6 +304,30 @@ public class LCSMessageLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteLCSClusterEntryLCSMessages(long lcsClusterEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteLCSClusterEntryLCSMessages(lcsClusterEntryId);
+	}
+
+	public static void deleteLCSClusterNodeLCSMessages(long lcsClusterNodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteLCSClusterNodeLCSMessages(lcsClusterNodeId);
+	}
+
+	public static void deleteLCSProjectLCSMessage(long lcsProjectId,
+		long sourceMessageId, java.lang.String sourceSystemName,
+		long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.deleteLCSProjectLCSMessage(lcsProjectId, sourceMessageId,
+			sourceSystemName, classNameId);
+	}
+
+	public static void deleteLCSProjectLCSMessages(long lcsProjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteLCSProjectLCSMessages(lcsProjectId);
 	}
 
 	public static LCSMessageLocalService getService() {

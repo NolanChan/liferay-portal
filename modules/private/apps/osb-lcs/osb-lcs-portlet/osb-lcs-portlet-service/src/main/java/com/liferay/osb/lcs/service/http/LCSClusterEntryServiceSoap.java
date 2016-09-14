@@ -16,9 +16,16 @@ package com.liferay.osb.lcs.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.service.LCSClusterEntryServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.osb.lcs.service.LCSClusterEntryServiceUtil} service utility. The
+ * {@link LCSClusterEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,273 @@ import aQute.bnd.annotation.ProviderType;
  * @author Igor Beslic
  * @see LCSClusterEntryServiceHttp
  * @see com.liferay.osb.lcs.model.LCSClusterEntrySoap
- * @see com.liferay.osb.lcs.service.LCSClusterEntryServiceUtil
+ * @see LCSClusterEntryServiceUtil
  * @generated
  */
 @ProviderType
 public class LCSClusterEntryServiceSoap {
+	@Deprecated
+	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap addLCSClusterEntry(
+		long lcsProjectId, java.lang.String name, java.lang.String description,
+		java.lang.String location, int type) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterEntry returnValue = LCSClusterEntryServiceUtil.addLCSClusterEntry(lcsProjectId,
+					name, description, location, type);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap addLCSClusterEntry(
+		long lcsProjectId, java.lang.String name, java.lang.String description,
+		java.lang.String location, java.lang.String subscriptionType, int type)
+		throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterEntry returnValue = LCSClusterEntryServiceUtil.addLCSClusterEntry(lcsProjectId,
+					name, description, location, subscriptionType, type);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap deleteLCSClusterEntry(
+		long lcsClusterEntryId) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterEntry returnValue = LCSClusterEntryServiceUtil.deleteLCSClusterEntry(lcsClusterEntryId);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteLCSProjectClusters(long lcsProjectId)
+		throws RemoteException {
+		try {
+			LCSClusterEntryServiceUtil.deleteLCSProjectClusters(lcsProjectId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static byte[] exportLCSClusterEntryToken(long lcsProjectId,
+		java.lang.String lcsClusterEntryName,
+		java.lang.String subscriptionType, int type) throws RemoteException {
+		try {
+			byte[] returnValue = LCSClusterEntryServiceUtil.exportLCSClusterEntryToken(lcsProjectId,
+					lcsClusterEntryName, subscriptionType, type);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap[] getArchivedLCSProjectLCSClusterEntries(
+		long lcsProjectId, java.lang.String subscriptionType)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> returnValue =
+				LCSClusterEntryServiceUtil.getArchivedLCSProjectLCSClusterEntries(lcsProjectId,
+					subscriptionType);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap getLCSClusterEntry(
+		long lcsClusterEntryId) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterEntry returnValue = LCSClusterEntryServiceUtil.getLCSClusterEntry(lcsClusterEntryId);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap[] getLCSProjectLCSClusterEntries(
+		long lcsProjectId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> returnValue =
+				LCSClusterEntryServiceUtil.getLCSProjectLCSClusterEntries(lcsProjectId);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap[] getLCSProjectLCSClusterEntries(
+		long lcsProjectId, java.lang.String subscriptionType)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> returnValue =
+				LCSClusterEntryServiceUtil.getLCSProjectLCSClusterEntries(lcsProjectId,
+					subscriptionType);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap[] getLCSProjectManageableLCSClusterEntries(
+		long lcsProjectId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> returnValue =
+				LCSClusterEntryServiceUtil.getLCSProjectManageableLCSClusterEntries(lcsProjectId);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap[] getUserLCSClusterEntries()
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> returnValue =
+				LCSClusterEntryServiceUtil.getUserLCSClusterEntries();
+
+			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap[] getUserLCSClusterEntries(
+		long lcsProjectId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSClusterEntry> returnValue =
+				LCSClusterEntryServiceUtil.getUserLCSClusterEntries(lcsProjectId);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap updateElastic(
+		long lcsClusterEntryId, boolean elastic) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterEntry returnValue = LCSClusterEntryServiceUtil.updateElastic(lcsClusterEntryId,
+					elastic);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap updateHighPageLoadTime(
+		long lcsClusterEntryId, int highPageLoadTime) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterEntry returnValue = LCSClusterEntryServiceUtil.updateHighPageLoadTime(lcsClusterEntryId,
+					highPageLoadTime);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap updateLCSClusterEntry(
+		long lcsClusterEntryId, java.lang.String name,
+		java.lang.String description, java.lang.String location)
+		throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterEntry returnValue = LCSClusterEntryServiceUtil.updateLCSClusterEntry(lcsClusterEntryId,
+					name, description, location);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap updateMediumPageLoadTime(
+		long lcsClusterEntryId, int mediumPageLoadTime)
+		throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterEntry returnValue = LCSClusterEntryServiceUtil.updateMediumPageLoadTime(lcsClusterEntryId,
+					mediumPageLoadTime);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap updateSubscriptionType(
+		long lcsClusterEntryId, java.lang.String subscriptionType)
+		throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterEntry returnValue = LCSClusterEntryServiceUtil.updateSubscriptionType(lcsClusterEntryId,
+					subscriptionType);
+
+			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LCSClusterEntryServiceSoap.class);
 }

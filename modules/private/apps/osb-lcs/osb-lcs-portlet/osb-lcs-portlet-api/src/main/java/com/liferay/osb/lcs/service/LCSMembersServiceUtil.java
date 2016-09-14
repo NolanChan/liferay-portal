@@ -51,6 +51,58 @@ public class LCSMembersServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	* Publishes a monitoring unavailable event that targets all watchers of the
+	* portal instance specified by the key.
+	*
+	* @param key the portal instance key provided by the LCS key generator
+	* @throws PortalException if a portal exception occurred
+	* @since LCS 1.3
+	*/
+	public static void sendMonitoringUnavailableEmail(java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().sendMonitoringUnavailableEmail(key);
+	}
+
+	/**
+	* Publishes a patching tool unavailable event that targets all watchers of
+	* the portal instance specified by the key.
+	*
+	* @param key the portal instance key provided by the LCS key generator
+	* @throws PortalException if a portal exception occurred
+	* @since LCS 1.3
+	*/
+	public static void sendPatchingToolUnavailableEmail(java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().sendPatchingToolUnavailableEmail(key);
+	}
+
+	/**
+	* Publishes a server manually shut down event that targets all watchers of
+	* the portal instance identified by the key.
+	*
+	* @param key the portal instance key provided by the LCS key generator
+	* @throws PortalException if a portal exception occurred
+	* @since LCS 1.3
+	*/
+	public static void sendServerManuallyShutdownEmail(java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().sendServerManuallyShutdownEmail(key);
+	}
+
+	/**
+	* Publishes a server unexpectedly shut down event that targets all watchers
+	* of the portal instance specified by the key.
+	*
+	* @param key the portal instance key provided by the LCS key generator
+	* @throws PortalException if a portal exception occurred
+	* @since LCS 1.3
+	*/
+	public static void sendServerUnexpectedlyShutdownEmail(java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().sendServerUnexpectedlyShutdownEmail(key);
+	}
+
 	public static LCSMembersService getService() {
 		return _serviceTracker.getService();
 	}

@@ -32,6 +32,26 @@ public class LCSMessageServiceWrapper implements LCSMessageService,
 		_lcsMessageService = lcsMessageService;
 	}
 
+	@Override
+	public com.liferay.osb.lcs.model.LCSMessage addCorpProjectLCSMessage(
+		long corpProjectId, long sourceMessageId, java.lang.String content,
+		int type) throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsMessageService.addCorpProjectLCSMessage(corpProjectId,
+			sourceMessageId, content, type);
+	}
+
+	@Override
+	public com.liferay.osb.lcs.model.LCSMessage addLCSProjectLCSMessage(
+		long lcsProjectId, long sourceMessageId,
+		java.lang.String sourceSystemName, java.lang.String content,
+		java.util.Date endDate, boolean global, int severityLevel, int type,
+		boolean adminsOnly, boolean generateUserLCSMessages)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsMessageService.addLCSProjectLCSMessage(lcsProjectId,
+			sourceMessageId, sourceSystemName, content, endDate, global,
+			severityLevel, type, adminsOnly, generateUserLCSMessages);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -40,6 +60,37 @@ public class LCSMessageServiceWrapper implements LCSMessageService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _lcsMessageService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSMessage> getLCSMessages(
+		java.util.Date modifyDateGT, java.util.Date modifyDateLT)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsMessageService.getLCSMessages(modifyDateGT, modifyDateLT);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSMessage> getLCSProjectLCSMessages(
+		long lcsProjectId, java.lang.String sourceSystemName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsMessageService.getLCSProjectLCSMessages(lcsProjectId,
+			sourceSystemName);
+	}
+
+	@Override
+	public void deleteCorpProjectLCSMessage(long corpProjectId,
+		long sourceMessageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_lcsMessageService.deleteCorpProjectLCSMessage(corpProjectId,
+			sourceMessageId);
+	}
+
+	@Override
+	public void deleteLCSProjectLCSMessage(long lcsProjectId,
+		long sourceMessageId, java.lang.String sourceSystemName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_lcsMessageService.deleteLCSProjectLCSMessage(lcsProjectId,
+			sourceMessageId, sourceSystemName);
 	}
 
 	@Override
