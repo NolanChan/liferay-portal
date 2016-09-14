@@ -44,6 +44,7 @@ public class KaleoFormsViewRecordsDisplayContext {
 		throws PortalException {
 
 		_liferayPortletRequest = liferayPortletRequest;
+
 		_kaleoProcess = (KaleoProcess)_liferayPortletRequest.getAttribute(
 			KaleoFormsWebKeys.KALEO_PROCESS);
 

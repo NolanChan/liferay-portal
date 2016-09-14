@@ -40,6 +40,7 @@ public class SyncEncryptor {
 
 		for (int i = 0; i < _ITERATIONS; i++) {
 			byte[] decodedBytes = Base64.decode(value);
+
 			byte[] decryptedBytes = cipher.doFinal(decodedBytes);
 
 			value = new String(decryptedBytes, _UTF8_CHARSET);

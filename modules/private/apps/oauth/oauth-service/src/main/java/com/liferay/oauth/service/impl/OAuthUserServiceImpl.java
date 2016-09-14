@@ -49,6 +49,7 @@ public class OAuthUserServiceImpl extends OAuthUserServiceBaseImpl {
 
 		String accessToken = OAuthUtil.randomizeToken(
 			oAuthApplication.getConsumerKey());
+
 		String accessSecret = OAuthUtil.randomizeToken(
 			consumerKey.concat(accessToken));
 

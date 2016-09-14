@@ -50,12 +50,17 @@ public class SharepointConnectionTest {
 
 	public SharepointConnectionTest() {
 		_fileExtension1 = "txt";
+
 		_fileName1 =
 			"File1 " + _TIMESTAMP + StringPool.PERIOD + _fileExtension1;
+
 		_fileName2 = "File2 " + _TIMESTAMP + ".txt";
+
 		_filePath1 = StringPool.SLASH + _fileName1;
+
 		_folderName1 = "Folder1 " + _TIMESTAMP;
 		_folderName2 = "Folder2 " + _TIMESTAMP;
+
 		_folderPath1 = StringPool.SLASH + _folderName1;
 		_folderPath2 = StringPool.SLASH + _folderName2;
 	}
