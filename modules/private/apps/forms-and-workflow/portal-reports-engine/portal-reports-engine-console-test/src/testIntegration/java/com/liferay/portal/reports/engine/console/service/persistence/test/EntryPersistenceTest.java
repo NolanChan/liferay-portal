@@ -226,14 +226,14 @@ public class EntryPersistenceTest {
 	}
 
 	protected OrderByComparator<Entry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Entry", "entryId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "definitionId",
-			true, "format", true, "scheduleRequest", true, "startDate", true,
-			"endDate", true, "repeating", true, "recurrence", true,
-			"emailNotifications", true, "emailDelivery", true, "portletId",
-			true, "pageURL", true, "reportParameters", true, "status", true,
-			"errorMessage", true);
+		return OrderByComparatorFactoryUtil.create("Reports_Entry", "entryId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"definitionId", true, "format", true, "scheduleRequest", true,
+			"startDate", true, "endDate", true, "repeating", true,
+			"recurrence", true, "emailNotifications", true, "emailDelivery",
+			true, "portletId", true, "pageURL", true, "reportParameters", true,
+			"status", true, "errorMessage", true);
 	}
 
 	@Test
