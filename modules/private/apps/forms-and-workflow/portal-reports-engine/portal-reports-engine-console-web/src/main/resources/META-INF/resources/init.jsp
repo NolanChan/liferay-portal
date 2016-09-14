@@ -102,9 +102,8 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
+ReportsGroupServiceEmailConfiguration reportsGroupServiceEmailConfiguration = ReportWebRequestHelper.getReportsGroupServiceEmailConfiguration(request);
+
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-
-ReportsGroupServiceEmailConfiguration reportsGroupServiceEmailConfiguration =
-	ReportWebRequestHelper.getReportsGroupServiceEmailConfiguration(request);
 %>
