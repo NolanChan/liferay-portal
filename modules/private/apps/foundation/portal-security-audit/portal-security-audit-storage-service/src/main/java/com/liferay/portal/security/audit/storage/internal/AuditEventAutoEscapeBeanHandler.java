@@ -37,14 +37,15 @@ public class AuditEventAutoEscapeBeanHandler extends AutoEscapeBeanHandler {
 		com.liferay.portal.security.audit.storage.model.AuditEvent
 			auditEventModel, boolean isEscaping) {
 
-		AuditEventAutoEscapeBeanHandler invocationHandler =
+		AuditEventAutoEscapeBeanHandler auditEventAutoEscapeBeanHandler =
 			new AuditEventAutoEscapeBeanHandler(auditEventModel);
 
-		invocationHandler._escaping = isEscaping;
+		auditEventAutoEscapeBeanHandler._escaping = isEscaping;
 
 		return (AuditEvent)ProxyUtil.newProxyInstance(
 			AuditEventAutoEscapeBeanHandler.class.getClassLoader(),
-			new Class[] {AuditEvent.class, BaseModel.class}, invocationHandler);
+			new Class[] {AuditEvent.class, BaseModel.class},
+			auditEventAutoEscapeBeanHandler);
 	}
 
 	public AuditEventAutoEscapeBeanHandler(
