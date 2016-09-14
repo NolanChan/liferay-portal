@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.email;
+package com.liferay.osb.lcs.web.internal.email;
 
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
@@ -24,7 +24,6 @@ import com.liferay.osb.lcs.service.LCSClusterNodeLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil;
 import com.liferay.osb.lcs.util.PortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
@@ -47,7 +46,7 @@ public class EmailContext {
 	public EmailContext(
 			boolean cluster, String lcsClusterNodeKey,
 			LCSEventType lcsEventType, long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		this(lcsEventType, userId);
 
@@ -64,7 +63,7 @@ public class EmailContext {
 	}
 
 	public EmailContext(LCSEventType lcsEventType, LCSRole lcsRole)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		this(lcsEventType, lcsRole.getUserId());
 
@@ -73,7 +72,7 @@ public class EmailContext {
 	}
 
 	public EmailContext(LCSEventType lcsEventType, long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_lcsEventType = lcsEventType;
 
@@ -90,7 +89,7 @@ public class EmailContext {
 	public EmailContext(
 			String lcsClusterNodeKey, LCSEventType lcsEventType,
 			List<String> siblingLCSClusterNodeKeys, long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		this(false, lcsClusterNodeKey, lcsEventType, userId);
 
@@ -100,7 +99,7 @@ public class EmailContext {
 	public EmailContext(
 			String customMessage, String emailAddress,
 			LCSEventType lcsEventType, long lcsProjectId, long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		this(lcsEventType, userId);
 
@@ -183,16 +182,16 @@ public class EmailContext {
 		return LanguageUtil.format(_portletConfig, _locale, pattern, arguments);
 	}
 
-	private boolean _cluster;
-	private String _customMessage;
-	private String _emailAddress;
-	private LCSClusterEntry _lcsClusterEntry;
-	private LCSClusterNode _lcsClusterNode;
-	private LCSEventType _lcsEventType;
-	private LCSProject _lcsProject;
-	private Locale _locale;
-	private PortletConfig _portletConfig;
-	private List<String> _siblingLCSClusterNodeKeys = new ArrayList<String>();
-	private User _user;
+	private final boolean _cluster;
+	private final String _customMessage;
+	private final String _emailAddress;
+	private final LCSClusterEntry _lcsClusterEntry;
+	private final LCSClusterNode _lcsClusterNode;
+	private final LCSEventType _lcsEventType;
+	private final LCSProject _lcsProject;
+	private final Locale _locale;
+	private final PortletConfig _portletConfig;
+	private final List<String> _siblingLCSClusterNodeKeys = new ArrayList<>();
+	private final User _user;
 
 }

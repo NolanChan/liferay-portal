@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.osb.lcs.email;
+package com.liferay.osb.lcs.web.internal.email;
 
 import com.liferay.osb.lcs.navigation.util.NavigationUtil;
 import com.liferay.osb.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,10 +48,8 @@ public abstract class BaseEmailTemplate implements EmailTemplate {
 		this.emailContext = emailContext;
 	}
 
-	protected List<Object> getBaseContextAttributes()
-		throws PortalException, SystemException {
-
-		List<Object> contextAttributes = new ArrayList<Object>();
+	protected List<Object> getBaseContextAttributes() throws PortalException {
+		List<Object> contextAttributes = new ArrayList<>();
 
 		User user = emailContext.getUser();
 

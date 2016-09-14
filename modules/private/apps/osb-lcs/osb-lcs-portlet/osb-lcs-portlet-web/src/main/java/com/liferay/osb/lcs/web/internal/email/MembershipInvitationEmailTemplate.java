@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.osb.lcs.email;
+package com.liferay.osb.lcs.web.internal.email;
 
 import com.liferay.osb.lcs.navigation.util.NavigationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,9 +48,7 @@ public class MembershipInvitationEmailTemplate extends BaseEmailTemplate {
 	}
 
 	@Override
-	public Object[] getContextAttributes()
-		throws PortalException, SystemException {
-
+	public Object[] getContextAttributes() throws PortalException {
 		List<Object> contextAttributes = getBaseContextAttributes();
 
 		String invitationMessage = emailContext.getCustomMessage();

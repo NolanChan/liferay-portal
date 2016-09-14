@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.email;
+package com.liferay.osb.lcs.web.internal.email;
 
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.osb.lcs.admin.util.AdminUtil;
@@ -48,16 +48,12 @@ import javax.portlet.PortletPreferences;
  */
 public class EmailAdvisor {
 
-	public void sendEmail(EmailContext emailContext)
-		throws PortalException, SystemException {
-
+	public void sendEmail(EmailContext emailContext) throws PortalException {
 		EmailTemplate emailTemplate = getEmailTemplate(emailContext);
 
 		User toUser = emailContext.getUser();
 
-		Object[] mailIds = {
-			emailContext.getLCSProjectId(), toUser.getUserId()
-		};
+		Object[] mailIds = {emailContext.getLCSProjectId(), toUser.getUserId()};
 
 		sendEmail(
 			emailTemplate.getSubjectMap(getPortletPreferences()),
@@ -87,7 +83,7 @@ public class EmailAdvisor {
 	}
 
 	public void sendToLCSProjectAdminsEmail(EmailContext emailContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		EmailTemplate emailTemplate = getEmailTemplate(emailContext);
 
@@ -132,9 +128,7 @@ public class EmailAdvisor {
 		return map;
 	}
 
-	protected PortletPreferences getPortletPreferences()
-		throws SystemException {
-
+	protected PortletPreferences getPortletPreferences() {
 		long companyId = CompanyConstants.SYSTEM;
 		long ownerId = CompanyConstants.SYSTEM;
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_COMPANY;
@@ -160,8 +154,8 @@ public class EmailAdvisor {
 				return;
 			}
 		}
-		catch (SystemException e) {
-			_log.error(e.getMessage(), e);
+		catch (SystemException se) {
+			_log.error(se.getMessage(), se);
 
 			return;
 		}
@@ -267,9 +261,9 @@ public class EmailAdvisor {
 	}
 
 	private List<User> getLCSProjectAdmins(EmailContext emailContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		List<User> lcsProjectAdmins = new ArrayList<User>();
+		List<User> lcsProjectAdmins = new ArrayList<>();
 
 		List<LCSRole> lcsProjectLCSRoles =
 			LCSRoleLocalServiceUtil.getLCSProjectLCSRoles(
@@ -301,6 +295,6 @@ public class EmailAdvisor {
 		PortletPropsValues.
 			OSB_LCS_PORTLET_MEMBERS_EMAIL_MEMBERSHIP_REQUEST_ENABLED;
 
-	private static Log _log = LogFactoryUtil.getLog(EmailAdvisor.class);
+	private static final Log _log = LogFactoryUtil.getLog(EmailAdvisor.class);
 
 }

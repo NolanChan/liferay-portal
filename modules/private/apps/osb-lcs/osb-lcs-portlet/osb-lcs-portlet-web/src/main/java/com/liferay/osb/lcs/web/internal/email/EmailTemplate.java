@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.osb.lcs.email;
+package com.liferay.osb.lcs.web.internal.email;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.Locale;
 import java.util.Map;
@@ -31,8 +30,7 @@ public interface EmailTemplate {
 	public Map<Locale, String> getBodyMap(
 		PortletPreferences portletPreferences);
 
-	public Object[] getContextAttributes()
-		throws PortalException, SystemException;
+	public Object[] getContextAttributes() throws PortalException;
 
 	public String getPopPrefix();
 

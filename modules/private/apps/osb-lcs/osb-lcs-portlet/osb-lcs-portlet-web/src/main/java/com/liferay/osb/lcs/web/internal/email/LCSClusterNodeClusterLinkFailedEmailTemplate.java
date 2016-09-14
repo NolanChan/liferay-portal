@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.osb.lcs.email;
+package com.liferay.osb.lcs.web.internal.email;
 
 import com.liferay.osb.lcs.navigation.util.NavigationUtil;
 import com.liferay.osb.lcs.util.LCSClusterNodeUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.List;
 import java.util.Locale;
@@ -49,9 +48,7 @@ public class LCSClusterNodeClusterLinkFailedEmailTemplate
 	}
 
 	@Override
-	public Object[] getContextAttributes()
-		throws PortalException, SystemException {
-
+	public Object[] getContextAttributes() throws PortalException {
 		List<Object> contextAttributes = getBaseContextAttributes();
 
 		String lcsClusterEntryName = emailContext.getLCSClusterEntryName();
