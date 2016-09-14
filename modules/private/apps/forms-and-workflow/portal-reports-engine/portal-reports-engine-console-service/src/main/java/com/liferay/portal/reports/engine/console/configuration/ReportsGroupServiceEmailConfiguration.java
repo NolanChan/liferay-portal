@@ -68,4 +68,5 @@ public interface ReportsGroupServiceEmailConfiguration {
 		required = false
 	)
 	public String emailFromName();
+
 }
