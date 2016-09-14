@@ -331,17 +331,17 @@ public class LCSUtil {
 		Boolean metricsServiceEnabled = Boolean.valueOf(
 			jxPortletPreferences.getValue(
 				LCSConstants.METRICS_LCS_SERVICE_ENABLED,
-				Boolean.TRUE.toString()));
+				Boolean.FALSE.toString()));
 
 		Boolean patchesServiceEnabled = Boolean.valueOf(
 			jxPortletPreferences.getValue(
 				LCSConstants.PATCHES_LCS_SERVICE_ENABLED,
-				Boolean.TRUE.toString()));
+				Boolean.FALSE.toString()));
 
 		Boolean portalPropertiesServiceEnabled = Boolean.valueOf(
 			jxPortletPreferences.getValue(
 				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED,
-				Boolean.TRUE.toString()));
+				Boolean.FALSE.toString()));
 
 		Boolean enableAllLCSServices =
 			metricsServiceEnabled && portalPropertiesServiceEnabled &&
