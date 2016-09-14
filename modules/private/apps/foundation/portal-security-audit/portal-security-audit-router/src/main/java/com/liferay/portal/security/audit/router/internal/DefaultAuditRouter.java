@@ -14,9 +14,12 @@
 
 package com.liferay.portal.security.audit.router.internal;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditException;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
@@ -25,6 +28,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
+import com.liferay.portal.security.audit.configuration.AuditConfiguration;
 import com.liferay.portal.security.audit.router.internal.constants.AuditConstants;
 
 import java.util.Dictionary;
@@ -40,6 +44,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -70,6 +75,15 @@ public class DefaultAuditRouter implements AuditRouter {
 
 	@Override
 	public void route(AuditMessage auditMessage) throws AuditException {
+		if (!_auditConfiguration.enabled()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Audit disabled, not processing message: " + auditMessage);
+			}
+
+			return;
+		}
+
 		for (AuditMessageProcessor globalAuditMessageProcessor :
 				_globalAuditMessageProcessors) {
 
@@ -91,18 +105,25 @@ public class DefaultAuditRouter implements AuditRouter {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		modified(properties);
+
 		ProxyMessageListener proxyMessageListener = new ProxyMessageListener();
 
 		proxyMessageListener.setManager(this);
 		proxyMessageListener.setMessageBus(_messageBus);
 
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
+		Dictionary<String, Object> proxyMessageListenerProperties =
+			new HashMapDictionary<>();
 
-		properties.put("destination.name", DestinationNames.AUDIT);
+		proxyMessageListenerProperties.put(
+			"destination.name", DestinationNames.AUDIT);
 
 		_serviceRegistration = bundleContext.registerService(
-			ProxyMessageListener.class, proxyMessageListener, properties);
+			ProxyMessageListener.class, proxyMessageListener,
+			proxyMessageListenerProperties);
 	}
 
 	@Deactivate
@@ -124,6 +145,12 @@ public class DefaultAuditRouter implements AuditRouter {
 		}
 
 		return StringUtil.split(eventTypes);
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_auditConfiguration = ConfigurableUtil.createConfigurable(
+			AuditConfiguration.class, properties);
 	}
 
 	@Reference (
@@ -183,6 +210,10 @@ public class DefaultAuditRouter implements AuditRouter {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultAuditRouter.class);
+
+	private volatile AuditConfiguration _auditConfiguration;
 	private final Map<String, Set<AuditMessageProcessor>>
 		_auditMessageProcessors = new ConcurrentHashMap<>();
 	private final List<AuditMessageProcessor> _globalAuditMessageProcessors =
