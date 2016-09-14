@@ -23,11 +23,9 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -48,8 +46,6 @@ public class GuestGroupGenerator {
 	}
 
 	protected void addLayouts(long userId) throws PortalException {
-		Locale locale = LocaleUtil.getDefault();
-
 		Group group = _groupLocalService.getGroup(
 			PortalUtil.getDefaultCompanyId(), _GUEST_GROUP);
 
