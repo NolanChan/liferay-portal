@@ -34,4 +34,5 @@ public interface ReportsPortletMessagingConfiguration {
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean enabled();
+
 }
