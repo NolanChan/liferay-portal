@@ -18,7 +18,7 @@ package com.liferay.osb.lcs.constants;
  * @author Igor Beslic
  * @author Marko Cikos
  */
-public class ActionKeys {
+public class OSBLCSActionKeys {
 
 	public static final String ADD_LCS_CLUSTER_ENTRY = "ADD_LCS_CLUSTER_ENTRY";
 
