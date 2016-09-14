@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.lcs.InvalidLCSClusterEntryTokenException;
 import com.liferay.lcs.NoLCSClusterEntryTokenException;
-import com.liferay.lcs.activation.LCSClusterEntryTokenContentAdvisor;
+import com.liferay.lcs.internal.activation.LCSClusterEntryTokenContentAdvisor;
 import com.liferay.lcs.rest.LCSClusterEntryToken;
 import com.liferay.lcs.rest.LCSClusterEntryTokenImpl;
 import com.liferay.lcs.rest.LCSClusterEntryTokenService;
