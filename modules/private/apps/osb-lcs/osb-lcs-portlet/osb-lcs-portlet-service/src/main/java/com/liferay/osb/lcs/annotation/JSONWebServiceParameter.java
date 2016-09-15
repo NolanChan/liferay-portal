@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.annotation;
+package com.liferay.osb.lcs.annotation;
 
 import com.liferay.portal.kernel.util.StringPool;
 
