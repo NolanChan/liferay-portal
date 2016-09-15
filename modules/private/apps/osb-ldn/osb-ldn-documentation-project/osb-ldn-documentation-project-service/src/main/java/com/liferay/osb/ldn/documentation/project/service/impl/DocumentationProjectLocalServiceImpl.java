@@ -16,9 +16,6 @@ package com.liferay.osb.ldn.documentation.project.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.document.library.kernel.exception.DuplicateDirectoryException;
-import com.liferay.document.library.kernel.exception.NoSuchFileException;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectDescriptionException;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconException;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconExtensionException;
@@ -26,10 +23,7 @@ import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectN
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.base.DocumentationProjectLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -67,24 +61,13 @@ public class DocumentationProjectLocalServiceImpl
 		documentationProject.setModifiedDate(now);
 		documentationProject.setName(name);
 		documentationProject.setDescription(description);
-
-		long iconId = counterLocalService.increment();
-
-		try {
-			DLStoreUtil.addDirectory(
-				PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-				_ICON_DIR);
-		}
-		catch (DuplicateDirectoryException dde) {
-		}
-
-		DLStoreUtil.addFile(
-			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-			_ICON_DIR + StringPool.SLASH + iconId, icon);
-
-		documentationProject.setIconId(iconId);
+		documentationProject.setIconFileName(getIconFileName(icon));
 
 		documentationProjectPersistence.update(documentationProject);
+
+		// File
+
+		// TODO: Write file.
 
 		return documentationProject;
 	}
@@ -105,36 +88,21 @@ public class DocumentationProjectLocalServiceImpl
 		documentationProject.setName(name);
 		documentationProject.setDescription(description);
 
-		try {
-			DLStoreUtil.addDirectory(
-				PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-				_ICON_DIR);
+		if ((icon != null) && icon.exists()) {
+			documentationProject.setIconFileName(getIconFileName(icon));
 		}
-		catch (DuplicateDirectoryException dde) {
-		}
-
-		if (documentationProject.getIconId() > 0) {
-			try {
-				DLStoreUtil.deleteFile(
-					PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-					_ICON_DIR + StringPool.SLASH +
-					documentationProject.getIconId());
-			}
-			catch (NoSuchFileException nsfe) {
-			}
-		}
-		else {
-			documentationProject.setIconId(counterLocalService.increment());
-		}
-
-		DLStoreUtil.addFile(
-			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-			_ICON_DIR + StringPool.SLASH + documentationProject.getIconId(),
-			icon);
 
 		documentationProjectPersistence.update(documentationProject);
 
+		// File
+
+		// TODO: Write file.
+
 		return documentationProject;
+	}
+
+	protected String getIconFileName(File file) {
+		return null;
 	}
 
 	protected void validate(String name, String description, File icon)

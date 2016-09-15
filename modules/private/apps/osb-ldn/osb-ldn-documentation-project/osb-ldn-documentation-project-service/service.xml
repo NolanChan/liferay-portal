@@ -22,7 +22,7 @@
 
 		<column name="name" type="String" />
 		<column name="description" type="String" />
-		<column name="iconId" type="long" />
+		<column name="iconFileName" type="String" />
 
 		<!-- Order -->
 
