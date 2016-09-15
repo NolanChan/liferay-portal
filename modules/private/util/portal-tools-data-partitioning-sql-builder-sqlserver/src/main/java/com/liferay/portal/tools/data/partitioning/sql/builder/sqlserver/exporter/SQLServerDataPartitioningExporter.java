@@ -15,16 +15,19 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.sqlserver.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataPartitioningExporter;
+import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.InsertSQLBuilder;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
-
-import java.sql.Date;
-import java.sql.Timestamp;
+import com.liferay.portal.tools.data.partitioning.sql.builder.sqlserver.exporter.serializer.SQLServerFieldSerializer;
 
 /**
  * @author Manuel de la Peña
  */
 public class SQLServerDataPartitioningExporter
 	extends BaseDataPartitioningExporter {
+
+	public SQLServerDataPartitioningExporter() {
+		super(new InsertSQLBuilder(new SQLServerFieldSerializer()));
+	}
 
 	@Override
 	public String getControlTableNamesSQL(ExportContext exportContext) {
@@ -45,11 +48,6 @@ public class SQLServerDataPartitioningExporter
 	}
 
 	@Override
-	public String getDateTimeFormat() {
-		return "yyyy-MM-dd HH:mm:ss.SSS";
-	}
-
-	@Override
 	public String getPartitionedTableNamesSQL(ExportContext exportContext) {
 		StringBuilder sb = new StringBuilder(5);
 
@@ -65,40 +63,6 @@ public class SQLServerDataPartitioningExporter
 	@Override
 	public String getTableNameFieldName() {
 		return "name";
-	}
-
-	@Override
-	public String serializeTableField(Object field) {
-		StringBuilder sb = new StringBuilder();
-
-		if (field == null) {
-			sb.append("null");
-		}
-		else if (field instanceof Number) {
-			sb.append(field);
-		}
-		else if ((field instanceof Date) || (field instanceof Timestamp)) {
-			sb.append("CONVERT(datetime, ");
-			sb.append("'");
-			sb.append(formatDateTime(field));
-			sb.append("', 121)");
-		}
-		else if (field instanceof String) {
-			String value = (String)field;
-
-			value = value.replace("'", "''");
-
-			sb.append("'");
-			sb.append(value);
-			sb.append("'");
-		}
-		else {
-			sb.append("'");
-			sb.append(field);
-			sb.append("'");
-		}
-
-		return sb.toString();
 	}
 
 }
