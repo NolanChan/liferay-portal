@@ -48,10 +48,11 @@ public class DocumentationProjectLocalServiceWrapper
 
 	@Override
 	public com.liferay.osb.ldn.documentation.project.model.DocumentationProject addDocumentationProject(
-		long userId, java.lang.String name, java.lang.String description)
+		long userId, java.lang.String name, java.lang.String description,
+		java.lang.String iconFileName, java.io.File icon)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _documentationProjectLocalService.addDocumentationProject(userId,
-			name, description);
+			name, description, iconFileName, icon);
 	}
 
 	/**
@@ -71,10 +72,12 @@ public class DocumentationProjectLocalServiceWrapper
 	*
 	* @param documentationProject the documentation project
 	* @return the documentation project that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.osb.ldn.documentation.project.model.DocumentationProject deleteDocumentationProject(
-		com.liferay.osb.ldn.documentation.project.model.DocumentationProject documentationProject) {
+		com.liferay.osb.ldn.documentation.project.model.DocumentationProject documentationProject)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _documentationProjectLocalService.deleteDocumentationProject(documentationProject);
 	}
 
@@ -157,10 +160,11 @@ public class DocumentationProjectLocalServiceWrapper
 	@Override
 	public com.liferay.osb.ldn.documentation.project.model.DocumentationProject updateDocumentationProject(
 		long documentationProjectId, java.lang.String name,
-		java.lang.String description)
+		java.lang.String description, java.lang.String iconFileName,
+		java.io.File icon)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _documentationProjectLocalService.updateDocumentationProject(documentationProjectId,
-			name, description);
+			name, description, iconFileName, icon);
 	}
 
 	@Override

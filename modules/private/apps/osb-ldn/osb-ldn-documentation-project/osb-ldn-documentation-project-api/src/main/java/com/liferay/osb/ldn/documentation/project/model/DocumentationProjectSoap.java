@@ -44,6 +44,7 @@ public class DocumentationProjectSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setIconFileName(model.getIconFileName());
 
 		return soapModel;
 	}
@@ -171,6 +172,14 @@ public class DocumentationProjectSoap implements Serializable {
 		_description = description;
 	}
 
+	public String getIconFileName() {
+		return _iconFileName;
+	}
+
+	public void setIconFileName(String iconFileName) {
+		_iconFileName = iconFileName;
+	}
+
 	private String _uuid;
 	private long _documentationProjectId;
 	private long _companyId;
@@ -180,4 +189,5 @@ public class DocumentationProjectSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private String _description;
+	private String _iconFileName;
 }

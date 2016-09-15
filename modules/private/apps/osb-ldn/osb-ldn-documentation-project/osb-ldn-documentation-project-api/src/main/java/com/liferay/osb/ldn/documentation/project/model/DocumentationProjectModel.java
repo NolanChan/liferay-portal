@@ -223,6 +223,21 @@ public interface DocumentationProjectModel extends BaseModel<DocumentationProjec
 	 */
 	public void setDescription(String description);
 
+	/**
+	 * Returns the icon file name of this documentation project.
+	 *
+	 * @return the icon file name of this documentation project
+	 */
+	@AutoEscape
+	public String getIconFileName();
+
+	/**
+	 * Sets the icon file name of this documentation project.
+	 *
+	 * @param iconFileName the icon file name of this documentation project
+	 */
+	public void setIconFileName(String iconFileName);
+
 	@Override
 	public boolean isNew();
 

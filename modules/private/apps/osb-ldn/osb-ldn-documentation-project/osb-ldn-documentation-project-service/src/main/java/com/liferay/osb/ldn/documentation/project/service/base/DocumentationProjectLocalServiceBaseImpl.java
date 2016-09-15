@@ -126,11 +126,12 @@ public abstract class DocumentationProjectLocalServiceBaseImpl
 	 *
 	 * @param documentationProject the documentation project
 	 * @return the documentation project that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public DocumentationProject deleteDocumentationProject(
-		DocumentationProject documentationProject) {
+		DocumentationProject documentationProject) throws PortalException {
 		return documentationProjectPersistence.remove(documentationProject);
 	}
 

@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.io.File;
+
 /**
  * Provides the remote service interface for DocumentationProject. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -52,11 +54,13 @@ public interface DocumentationProjectService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link DocumentationProjectServiceUtil} to access the documentation project remote service. Add custom service methods to {@link com.liferay.osb.ldn.documentation.project.service.impl.DocumentationProjectServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public DocumentationProject addDocumentationProject(java.lang.String name,
-		java.lang.String description) throws PortalException;
+		java.lang.String description, java.lang.String iconFileName, File icon)
+		throws PortalException;
 
 	public DocumentationProject updateDocumentationProject(
 		long documentationProjectId, java.lang.String name,
-		java.lang.String description) throws PortalException;
+		java.lang.String description, java.lang.String iconFileName, File icon)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

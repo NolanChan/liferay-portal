@@ -70,6 +70,7 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("iconFileName", getIconFileName());
 
 		return attributes;
 	}
@@ -130,6 +131,12 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 		if (description != null) {
 			setDescription(description);
 		}
+
+		String iconFileName = (String)attributes.get("iconFileName");
+
+		if (iconFileName != null) {
+			setIconFileName(iconFileName);
+		}
 	}
 
 	@Override
@@ -178,6 +185,12 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 	}
 
 	@Override
+	public java.io.InputStream getIconInputStream()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _documentationProject.getIconInputStream();
+	}
+
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _documentationProject.getPrimaryKeyObj();
 	}
@@ -195,6 +208,16 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 	@Override
 	public java.lang.String getDescription() {
 		return _documentationProject.getDescription();
+	}
+
+	/**
+	* Returns the icon file name of this documentation project.
+	*
+	* @return the icon file name of this documentation project
+	*/
+	@Override
+	public java.lang.String getIconFileName() {
+		return _documentationProject.getIconFileName();
 	}
 
 	/**
@@ -371,6 +394,16 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_documentationProject.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the icon file name of this documentation project.
+	*
+	* @param iconFileName the icon file name of this documentation project
+	*/
+	@Override
+	public void setIconFileName(java.lang.String iconFileName) {
+		_documentationProject.setIconFileName(iconFileName);
 	}
 
 	/**

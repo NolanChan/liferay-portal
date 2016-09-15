@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.File;
 import java.io.Serializable;
 
 import java.util.List;
@@ -75,8 +76,8 @@ public interface DocumentationProjectLocalService extends BaseLocalService,
 		DocumentationProject documentationProject);
 
 	public DocumentationProject addDocumentationProject(long userId,
-		java.lang.String name, java.lang.String description)
-		throws PortalException;
+		java.lang.String name, java.lang.String description,
+		java.lang.String iconFileName, File icon) throws PortalException;
 
 	/**
 	* Creates a new documentation project with the primary key. Does not add the documentation project to the database.
@@ -92,10 +93,11 @@ public interface DocumentationProjectLocalService extends BaseLocalService,
 	*
 	* @param documentationProject the documentation project
 	* @return the documentation project that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DocumentationProject deleteDocumentationProject(
-		DocumentationProject documentationProject);
+		DocumentationProject documentationProject) throws PortalException;
 
 	/**
 	* Deletes the documentation project with the primary key from the database. Also notifies the appropriate model listeners.
@@ -158,7 +160,8 @@ public interface DocumentationProjectLocalService extends BaseLocalService,
 
 	public DocumentationProject updateDocumentationProject(
 		long documentationProjectId, java.lang.String name,
-		java.lang.String description) throws PortalException;
+		java.lang.String description, java.lang.String iconFileName, File icon)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

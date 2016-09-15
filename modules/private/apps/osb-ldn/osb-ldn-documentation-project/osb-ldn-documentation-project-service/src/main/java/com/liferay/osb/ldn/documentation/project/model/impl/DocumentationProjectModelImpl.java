@@ -81,7 +81,8 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR }
+			{ "description", Types.VARCHAR },
+			{ "iconFileName", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -95,9 +96,10 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("iconFileName", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OSB_LDN_DocumentationProject (uuid_ VARCHAR(75) null,documentationProjectId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table OSB_LDN_DocumentationProject (uuid_ VARCHAR(75) null,documentationProjectId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,iconFileName VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table OSB_LDN_DocumentationProject";
 	public static final String ORDER_BY_JPQL = " ORDER BY documentationProject.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OSB_LDN_DocumentationProject.name ASC";
@@ -140,6 +142,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
+		model.setIconFileName(soapModel.getIconFileName());
 
 		return model;
 	}
@@ -214,6 +217,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("iconFileName", getIconFileName());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -276,6 +280,12 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		String iconFileName = (String)attributes.get("iconFileName");
+
+		if (iconFileName != null) {
+			setIconFileName(iconFileName);
 		}
 	}
 
@@ -450,6 +460,22 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		_description = description;
 	}
 
+	@JSON
+	@Override
+	public String getIconFileName() {
+		if (_iconFileName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _iconFileName;
+		}
+	}
+
+	@Override
+	public void setIconFileName(String iconFileName) {
+		_iconFileName = iconFileName;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -496,6 +522,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		documentationProjectImpl.setModifiedDate(getModifiedDate());
 		documentationProjectImpl.setName(getName());
 		documentationProjectImpl.setDescription(getDescription());
+		documentationProjectImpl.setIconFileName(getIconFileName());
 
 		documentationProjectImpl.resetOriginalValues();
 
@@ -629,12 +656,20 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 			documentationProjectCacheModel.description = null;
 		}
 
+		documentationProjectCacheModel.iconFileName = getIconFileName();
+
+		String iconFileName = documentationProjectCacheModel.iconFileName;
+
+		if ((iconFileName != null) && (iconFileName.length() == 0)) {
+			documentationProjectCacheModel.iconFileName = null;
+		}
+
 		return documentationProjectCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -654,6 +689,8 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", iconFileName=");
+		sb.append(getIconFileName());
 		sb.append("}");
 
 		return sb.toString();
@@ -661,7 +698,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -704,6 +741,10 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>iconFileName</column-name><column-value><![CDATA[");
+		sb.append(getIconFileName());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -728,6 +769,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 	private String _name;
 	private String _originalName;
 	private String _description;
+	private String _iconFileName;
 	private long _columnBitmask;
 	private DocumentationProject _escapedModel;
 }

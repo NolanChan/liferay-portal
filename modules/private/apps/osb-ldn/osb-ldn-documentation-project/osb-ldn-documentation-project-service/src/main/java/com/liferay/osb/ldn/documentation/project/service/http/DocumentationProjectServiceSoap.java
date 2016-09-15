@@ -16,16 +16,9 @@ package com.liferay.osb.ldn.documentation.project.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectServiceUtil;
-
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import java.rmi.RemoteException;
-
 /**
  * Provides the SOAP utility for the
- * {@link DocumentationProjectServiceUtil} service utility. The
+ * {@link com.liferay.osb.ldn.documentation.project.service.DocumentationProjectServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -60,44 +53,9 @@ import java.rmi.RemoteException;
  * @author Ryan Park
  * @see DocumentationProjectServiceHttp
  * @see com.liferay.osb.ldn.documentation.project.model.DocumentationProjectSoap
- * @see DocumentationProjectServiceUtil
+ * @see com.liferay.osb.ldn.documentation.project.service.DocumentationProjectServiceUtil
  * @generated
  */
 @ProviderType
 public class DocumentationProjectServiceSoap {
-	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProjectSoap addDocumentationProject(
-		java.lang.String name, java.lang.String description)
-		throws RemoteException {
-		try {
-			com.liferay.osb.ldn.documentation.project.model.DocumentationProject returnValue =
-				DocumentationProjectServiceUtil.addDocumentationProject(name,
-					description);
-
-			return com.liferay.osb.ldn.documentation.project.model.DocumentationProjectSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProjectSoap updateDocumentationProject(
-		long documentationProjectId, java.lang.String name,
-		java.lang.String description) throws RemoteException {
-		try {
-			com.liferay.osb.ldn.documentation.project.model.DocumentationProject returnValue =
-				DocumentationProjectServiceUtil.updateDocumentationProject(documentationProjectId,
-					name, description);
-
-			return com.liferay.osb.ldn.documentation.project.model.DocumentationProjectSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(DocumentationProjectServiceSoap.class);
 }

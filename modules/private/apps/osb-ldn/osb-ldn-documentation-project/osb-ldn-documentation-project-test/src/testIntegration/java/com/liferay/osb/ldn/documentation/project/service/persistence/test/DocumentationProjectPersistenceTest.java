@@ -140,6 +140,8 @@ public class DocumentationProjectPersistenceTest {
 
 		newDocumentationProject.setDescription(RandomTestUtil.randomString());
 
+		newDocumentationProject.setIconFileName(RandomTestUtil.randomString());
+
 		_documentationProjects.add(_persistence.update(newDocumentationProject));
 
 		DocumentationProject existingDocumentationProject = _persistence.findByPrimaryKey(newDocumentationProject.getPrimaryKey());
@@ -164,6 +166,8 @@ public class DocumentationProjectPersistenceTest {
 			newDocumentationProject.getName());
 		Assert.assertEquals(existingDocumentationProject.getDescription(),
 			newDocumentationProject.getDescription());
+		Assert.assertEquals(existingDocumentationProject.getIconFileName(),
+			newDocumentationProject.getIconFileName());
 	}
 
 	@Test
@@ -220,7 +224,8 @@ public class DocumentationProjectPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("OSB_LDN_DocumentationProject",
 			"uuid", true, "documentationProjectId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true);
+			"modifiedDate", true, "name", true, "description", true,
+			"iconFileName", true);
 	}
 
 	@Test
@@ -456,6 +461,8 @@ public class DocumentationProjectPersistenceTest {
 		documentationProject.setName(RandomTestUtil.randomString());
 
 		documentationProject.setDescription(RandomTestUtil.randomString());
+
+		documentationProject.setIconFileName(RandomTestUtil.randomString());
 
 		_documentationProjects.add(_persistence.update(documentationProject));
 
