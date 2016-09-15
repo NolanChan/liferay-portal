@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.reports.engine.console.messaging;
+package com.liferay.portal.reports.engine.console.constants;
 
 /**
  * @author Prathima Shreenath
  */
-public class DestinationNames {
+public class ReportsEngineConsoleDestinationNames {
 
 	public static final String REPORTS_ADMIN = "liferay/reports_admin";
 
