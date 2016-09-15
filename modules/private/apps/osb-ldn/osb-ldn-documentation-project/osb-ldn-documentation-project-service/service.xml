@@ -39,7 +39,7 @@
 	<exceptions>
 		<exception>DocumentationProjectDescription</exception>
 		<exception>DocumentationProjectIcon</exception>
+		<exception>DocumentationProjectIconExtension</exception>
 		<exception>DocumentationProjectName</exception>
-		<exception>InvalidDocumentProjectIconExtension</exception>
 	</exceptions>
 </service-builder>

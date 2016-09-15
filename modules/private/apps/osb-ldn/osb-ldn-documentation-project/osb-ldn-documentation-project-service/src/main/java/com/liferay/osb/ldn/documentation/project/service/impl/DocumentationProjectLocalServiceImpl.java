@@ -21,8 +21,8 @@ import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectDescriptionException;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconException;
+import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconExtensionException;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectNameException;
-import com.liferay.osb.ldn.documentation.project.exception.InvalidDocumentProjectIconExtensionException;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.base.DocumentationProjectLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -165,9 +165,9 @@ public class DocumentationProjectLocalServiceImpl
 		}
 
 		if (!validExtension) {
-			throw new InvalidDocumentProjectIconExtensionException(
-				"Invalid icon file extension. Valid extensions : " +
-				Arrays.toString(validIconExtensions));
+			throw new DocumentationProjectIconExtensionException(
+				"Invalid icon file extension. Valid extensions: " +
+					Arrays.toString(validIconExtensions));
 		}
 	}
 
