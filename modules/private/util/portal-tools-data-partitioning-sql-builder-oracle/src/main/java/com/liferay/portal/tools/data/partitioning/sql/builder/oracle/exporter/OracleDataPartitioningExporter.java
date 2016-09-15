@@ -15,26 +15,19 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.oracle.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataPartitioningExporter;
+import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.InsertSQLBuilder;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-
-import java.nio.charset.Charset;
-
-import java.sql.Clob;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import com.liferay.portal.tools.data.partitioning.sql.builder.oracle.exporter.serializer.OracleFieldSerializer;
 
 /**
  * @author Manuel de la Peña
  */
 public class OracleDataPartitioningExporter
 	extends BaseDataPartitioningExporter {
+
+	public OracleDataPartitioningExporter() {
+		super(new InsertSQLBuilder(new OracleFieldSerializer()));
+	}
 
 	@Override
 	public String getControlTableNamesSQL(ExportContext exportContext) {
@@ -55,11 +48,6 @@ public class OracleDataPartitioningExporter
 	}
 
 	@Override
-	public String getDateTimeFormat() {
-		return "yyyy-MM-dd HH:mm:ss.FFF";
-	}
-
-	@Override
 	public String getPartitionedTableNamesSQL(ExportContext exportContext) {
 		StringBuilder sb = new StringBuilder(4);
 
@@ -74,89 +62,6 @@ public class OracleDataPartitioningExporter
 	@Override
 	public String getTableNameFieldName() {
 		return "table_name";
-	}
-
-	@Override
-	public String serializeTableField(Object field) {
-		StringBuilder sb = new StringBuilder();
-
-		if (field == null) {
-			sb.append("null");
-		}
-		else if (field instanceof Clob) {
-			sb.append("TO_CLOB('");
-
-			try (InputStream inputStream = ((Clob)field).getAsciiStream()) {
-				Reader reader = new InputStreamReader(
-					inputStream, Charset.forName("UTF-8"));
-
-				StringWriter stringWriter = new StringWriter();
-
-				int c = -1;
-
-				while ((c = reader.read()) != -1) {
-					stringWriter.write(c);
-				}
-
-				String value = stringWriter.toString();
-
-				value = value.replace("'", "''");
-
-				sb.append(value);
-			}
-			catch (IOException | SQLException e) {
-				throw new RuntimeException("Unable to read the CLOB value", e);
-			}
-
-			sb.append("')");
-		}
-		else if ((field instanceof Date) || (field instanceof Timestamp) ||
-				 (field instanceof oracle.sql.TIMESTAMP)) {
-
-			sb.append("to_timestamp('");
-			sb.append(formatDateTime(field));
-			sb.append("', '");
-			sb.append("yyyy-MM-dd HH24:MI:SS.FF");
-			sb.append("')");
-		}
-		else if (field instanceof Number) {
-			sb.append(field);
-		}
-		else if (field instanceof String) {
-			String value = (String)field;
-
-			value = value.replace("'", "''");
-
-			sb.append("'");
-			sb.append(value);
-			sb.append("'");
-		}
-		else {
-			sb.append("'");
-			sb.append(field);
-			sb.append("'");
-		}
-
-		return sb.toString();
-	}
-
-	protected String formatDateTime(Object date) {
-		if (date instanceof oracle.sql.TIMESTAMP) {
-			try {
-				oracle.sql.TIMESTAMP oracleTimestamp =
-					(oracle.sql.TIMESTAMP)date;
-
-				Timestamp timestamp = oracleTimestamp.timestampValue();
-
-				return super.formatDateTime(timestamp);
-			}
-			catch (SQLException sqle) {
-				throw new RuntimeException(
-					"Unable to get the timestamp value of " + date, sqle);
-			}
-		}
-
-		return super.formatDateTime(date);
 	}
 
 }
