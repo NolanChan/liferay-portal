@@ -20,10 +20,13 @@ import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectD
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconException;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconExtensionException;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectNameException;
+import com.liferay.osb.ldn.documentation.project.internal.file.util.DocumentationProjectFileUtil;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.base.DocumentationProjectLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -49,6 +52,8 @@ public class DocumentationProjectLocalServiceImpl
 
 		validate(name, description, icon);
 
+		// Documentation project
+
 		long documentationProjectId = counterLocalService.increment();
 
 		DocumentationProject documentationProject =
@@ -65,11 +70,45 @@ public class DocumentationProjectLocalServiceImpl
 
 		documentationProjectPersistence.update(documentationProject);
 
-		// File
+		// Files
 
-		// TODO: Write file.
+		DocumentationProjectFileUtil.initDocumentationProjectDirectory(
+			documentationProjectId);
+
+		DocumentationProjectFileUtil.addDocumentationProjectFile(
+			documentationProjectId, documentationProject.getIconFileName(),
+			icon);
 
 		return documentationProject;
+	}
+
+	@Override
+	public DocumentationProject deleteDocumentationProject(
+			DocumentationProject documentationProject)
+		throws PortalException {
+
+		// Documentation project
+
+		documentationProjectPersistence.remove(documentationProject);
+
+		// Files
+
+		DocumentationProjectFileUtil.destroyDocumentationProjectDirectory(
+			documentationProject.getDocumentationProjectId());
+
+		return documentationProject;
+	}
+
+	@Override
+	public DocumentationProject deleteDocumentationProject(
+			long documentationProjectId)
+		throws PortalException {
+
+		DocumentationProject documentationProject =
+			documentationProjectPersistence.findByPrimaryKey(
+				documentationProjectId);
+
+		return deleteDocumentationProject(documentationProject);
 	}
 
 	@Override
@@ -94,15 +133,21 @@ public class DocumentationProjectLocalServiceImpl
 
 		documentationProjectPersistence.update(documentationProject);
 
-		// File
+		// Files
 
-		// TODO: Write file.
+		if ((icon != null) && icon.exists()) {
+			DocumentationProjectFileUtil.updateDocumentationProjectFile(
+				documentationProjectId, documentationProject.getIconFileName(),
+				icon);
+		}
 
 		return documentationProject;
 	}
 
 	protected String getIconFileName(File file) {
-		return null;
+		String extension = FileUtil.getExtension(file.getName());
+
+		return StringUtil.replace(_ICON_FILE_NAME, "{extension}", extension);
 	}
 
 	protected void validate(String name, String description, File icon)
@@ -139,7 +184,6 @@ public class DocumentationProjectLocalServiceImpl
 		}
 	}
 
-	private static final String _ICON_DIR =
-		"osb-ldn-documentation-project/icons";
+	private static final String _ICON_FILE_NAME = "icon.{extension}";
 
 }

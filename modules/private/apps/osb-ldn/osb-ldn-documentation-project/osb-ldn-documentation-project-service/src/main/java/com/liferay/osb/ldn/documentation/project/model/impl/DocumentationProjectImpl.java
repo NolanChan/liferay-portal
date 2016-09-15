@@ -15,6 +15,10 @@
 package com.liferay.osb.ldn.documentation.project.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+import com.liferay.osb.ldn.documentation.project.internal.file.util.DocumentationProjectFileUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.io.InputStream;
 
 /**
  * @author Ryan Park
@@ -23,6 +27,12 @@ import aQute.bnd.annotation.ProviderType;
 public class DocumentationProjectImpl extends DocumentationProjectBaseImpl {
 
 	public DocumentationProjectImpl() {
+	}
+
+	@Override
+	public InputStream getIconInputStream() throws PortalException {
+		return DocumentationProjectFileUtil.getDocumentProjectFileAsStream(
+			getDocumentationProjectId(), getIconFileName());
 	}
 
 }
