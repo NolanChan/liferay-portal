@@ -30,4 +30,6 @@ public class ActionKeys {
 
 	public static final String MANAGE_SUBSCRIPTIONS = "MANAGE_SUBSCRIPTIONS";
 
+	public static final String VIEW = "VIEW";
+
 }
