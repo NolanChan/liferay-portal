@@ -19,13 +19,13 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.constants.LCSRoleConstants;
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletServiceUtil;
 import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
 import com.liferay.osb.lcs.service.base.LCSProjectServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
-import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.osb.lcs.util.ApplicationProfile;
 import com.liferay.osb.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -95,7 +95,7 @@ public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {
 		}
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.MANAGE);
 
 		return lcsProjectLocalService.deleteLCSProject(lcsProjectId);
 	}
@@ -104,7 +104,7 @@ public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {
 	@Override
 	public LCSProject getLCSProject(long lcsProjectId) throws PortalException {
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
 
 		return lcsProjectPersistence.findByPrimaryKey(lcsProjectId);
 	}
@@ -217,7 +217,7 @@ public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.MANAGE);
 
 		LCSProject lcsProject = lcsProjectPersistence.findByPrimaryKey(
 			lcsProjectId);

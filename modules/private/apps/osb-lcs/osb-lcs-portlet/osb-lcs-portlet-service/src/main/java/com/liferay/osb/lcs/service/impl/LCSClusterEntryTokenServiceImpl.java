@@ -16,11 +16,11 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.exception.NoSuchLCSClusterEntryTokenException;
 import com.liferay.osb.lcs.model.LCSClusterEntryToken;
 import com.liferay.osb.lcs.service.base.LCSClusterEntryTokenServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSClusterEntryPermission;
-import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
@@ -43,7 +43,8 @@ public class LCSClusterEntryTokenServiceImpl
 		throws PortalException {
 
 		LCSClusterEntryPermission.check(
-			getPermissionChecker(), lcsClusterEntryId, ActionKeys.MANAGE_ENTRY);
+			getPermissionChecker(), lcsClusterEntryId,
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterEntryTokenLocalService.addLCSClusterEntryToken(
 			getUserId(), lcsClusterEntryId, content);
@@ -61,7 +62,7 @@ public class LCSClusterEntryTokenServiceImpl
 
 		LCSClusterEntryPermission.check(
 			getPermissionChecker(), lcsClusterEntryToken.getLcsClusterEntryId(),
-			ActionKeys.MANAGE_ENTRY);
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterEntryTokenLocalService.deleteLCSClusterEntryToken(
 			lcsClusterEntryTokenId);
@@ -74,7 +75,8 @@ public class LCSClusterEntryTokenServiceImpl
 		throws PortalException {
 
 		LCSClusterEntryPermission.check(
-			getPermissionChecker(), lcsClusterEntryId, ActionKeys.MANAGE_ENTRY);
+			getPermissionChecker(), lcsClusterEntryId,
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterEntryTokenLocalService.
 			fetchLCSClusterEntryLCSClusterEntryToken(lcsClusterEntryId);
@@ -98,7 +100,7 @@ public class LCSClusterEntryTokenServiceImpl
 
 		LCSClusterEntryPermission.check(
 			permissionChecker, lcsClusterEntryToken.getLcsClusterEntryId(),
-			ActionKeys.MANAGE_ENTRY);
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterEntryToken;
 	}
@@ -121,7 +123,7 @@ public class LCSClusterEntryTokenServiceImpl
 
 		LCSClusterEntryPermission.check(
 			permissionChecker, lcsClusterEntryToken.getLcsClusterEntryId(),
-			ActionKeys.MANAGE_ENTRY);
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return true;
 	}

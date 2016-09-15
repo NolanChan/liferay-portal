@@ -16,10 +16,10 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.UserLCSMessage;
 import com.liferay.osb.lcs.service.base.UserLCSMessageServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.UserLCSMessagePermission;
-import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -39,7 +39,7 @@ public class UserLCSMessageServiceImpl extends UserLCSMessageServiceBaseImpl {
 		throws PortalException {
 
 		UserLCSMessagePermission.check(
-			getPermissionChecker(), userLCSMessageId, ActionKeys.MANAGE);
+			getPermissionChecker(), userLCSMessageId, OSBLCSActionKeys.MANAGE);
 
 		return
 			userLCSMessageLocalService.deleteUserLCSMessage(userLCSMessageId);
@@ -99,7 +99,7 @@ public class UserLCSMessageServiceImpl extends UserLCSMessageServiceBaseImpl {
 		throws PortalException {
 
 		UserLCSMessagePermission.check(
-			getPermissionChecker(), userLCSMessageId, ActionKeys.MANAGE);
+			getPermissionChecker(), userLCSMessageId, OSBLCSActionKeys.MANAGE);
 
 		return userLCSMessageLocalService.updateRead(userLCSMessageId, read);
 	}

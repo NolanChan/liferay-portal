@@ -17,13 +17,13 @@ package com.liferay.osb.lcs.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osb.lcs.constants.LCSRoleConstants;
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletServiceUtil;
 import com.liferay.osb.lcs.osbportlet.util.OSBPortletUtil;
 import com.liferay.osb.lcs.service.base.LCSRoleServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
-import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
@@ -74,7 +74,8 @@ public class LCSRoleServiceImpl extends LCSRoleServiceBaseImpl {
 		}
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_USERS);
+			getPermissionChecker(), lcsProjectId,
+			OSBLCSActionKeys.MANAGE_USERS);
 
 		return lcsRoleLocalService.addLCSRole(
 			userId, lcsProjectId, lcsClusterEntryId, role);
@@ -96,7 +97,7 @@ public class LCSRoleServiceImpl extends LCSRoleServiceBaseImpl {
 
 		LCSProjectPermission.check(
 			getPermissionChecker(), lcsRole.getLcsProjectId(),
-			ActionKeys.MANAGE_USERS);
+			OSBLCSActionKeys.MANAGE_USERS);
 
 		return lcsRoleLocalService.deleteLCSRole(lcsRole);
 	}
@@ -119,7 +120,8 @@ public class LCSRoleServiceImpl extends LCSRoleServiceBaseImpl {
 
 		if (!permissionChecker.isCompanyAdmin()) {
 			LCSProjectPermission.check(
-				getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_USERS);
+				getPermissionChecker(), lcsProjectId,
+				OSBLCSActionKeys.MANAGE_USERS);
 		}
 
 		return lcsRoleLocalService.getLCSProjectLCSRoles(lcsProjectId);
@@ -172,7 +174,7 @@ public class LCSRoleServiceImpl extends LCSRoleServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
 
 		return lcsRoleLocalService.hasUserLCSAdministratorLCSRole(
 			getUserId(), lcsProjectId);
@@ -202,7 +204,7 @@ public class LCSRoleServiceImpl extends LCSRoleServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
 
 		return lcsRoleLocalService.hasUserLCSRole(
 			getUserId(), lcsProjectId, manageLCSClusterEntry);

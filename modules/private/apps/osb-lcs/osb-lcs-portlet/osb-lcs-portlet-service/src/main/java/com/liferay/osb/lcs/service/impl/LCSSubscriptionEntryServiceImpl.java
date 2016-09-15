@@ -17,6 +17,7 @@ package com.liferay.osb.lcs.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.lcs.subscription.SubscriptionType;
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.exception.NoSuchLCSProjectException;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSClusterNode;
@@ -25,7 +26,6 @@ import com.liferay.osb.lcs.model.LCSSubscriptionEntry;
 import com.liferay.osb.lcs.service.base.LCSSubscriptionEntryServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSClusterEntryPermission;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
-import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -71,7 +71,7 @@ public class LCSSubscriptionEntryServiceImpl
 		}
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.MANAGE);
 
 		lcsSubscriptionEntryLocalService.addLCSSubscriptionEntries(
 			lcsProjectId, lcsSubscriptionEntriesJSON);
@@ -97,7 +97,7 @@ public class LCSSubscriptionEntryServiceImpl
 
 		LCSClusterEntryPermission.check(
 			permissionChecker, lcsClusterNode.getLcsClusterEntryId(),
-			ActionKeys.MANAGE);
+			OSBLCSActionKeys.MANAGE);
 
 		LCSClusterEntry lcsClusterEntry =
 			lcsClusterEntryPersistence.findByPrimaryKey(
@@ -145,7 +145,8 @@ public class LCSSubscriptionEntryServiceImpl
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_ENTRY);
+			getPermissionChecker(), lcsProjectId,
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsSubscriptionEntryLocalService.
 			getLCSProjectLCSSubscriptionEntries(lcsProjectId);
@@ -157,7 +158,8 @@ public class LCSSubscriptionEntryServiceImpl
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_ENTRY);
+			getPermissionChecker(), lcsProjectId,
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsSubscriptionEntryLocalService.
 			getLCSProjectLCSSubscriptionEntries(lcsProjectId, status);
@@ -168,7 +170,8 @@ public class LCSSubscriptionEntryServiceImpl
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_ENTRY);
+			getPermissionChecker(), lcsProjectId,
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsSubscriptionEntryLocalService.
 			hasLCSProjectElasticLCSSubscriptionEntry(lcsProjectId);
@@ -191,7 +194,7 @@ public class LCSSubscriptionEntryServiceImpl
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.MANAGE);
 
 		lcsSubscriptionEntryLocalService.
 			refreshLCSProjectLCSSubscriptionEntries(lcsProjectId);

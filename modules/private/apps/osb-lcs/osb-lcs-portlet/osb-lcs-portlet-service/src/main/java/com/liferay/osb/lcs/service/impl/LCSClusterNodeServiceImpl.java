@@ -19,11 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.lcs.util.LCSClusterNodeStatus;
 import com.liferay.osb.lcs.advisor.PortalPropertiesAdvisor;
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodeDetailsService;
 import com.liferay.osb.lcs.service.base.LCSClusterNodeServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSClusterEntryPermission;
-import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -83,7 +83,8 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 		throws PortalException {
 
 		LCSClusterEntryPermission.check(
-			getPermissionChecker(), lcsClusterEntryId, ActionKeys.MANAGE_ENTRY);
+			getPermissionChecker(), lcsClusterEntryId,
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterNodeLocalService.addLCSClusterNode(
 			lcsClusterEntryId, name, description, buildNumber, key, location,
@@ -132,7 +133,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 		LCSClusterEntryPermission.check(
 			getPermissionChecker(),
 			siblingLCSClusterNode.getLcsClusterEntryId(),
-			ActionKeys.MANAGE_ENTRY);
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterNodeLocalService.addLCSClusterNode(
 			siblingLCSClusterNode.getLcsClusterEntryId(), name, description,
@@ -164,7 +165,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 
 		LCSClusterEntryPermission.check(
 			getPermissionChecker(), lcsClusterNode.getLcsClusterEntryId(),
-			ActionKeys.MANAGE_ENTRY);
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		lcsClusterNodeLocalService.deleteLCSClusterNode(lcsClusterNode);
 	}
@@ -189,7 +190,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 		if (lcsClusterNode != null) {
 			LCSClusterEntryPermission.check(
 				getPermissionChecker(), lcsClusterNode.getLcsClusterEntryId(),
-				ActionKeys.VIEW);
+				OSBLCSActionKeys.VIEW);
 		}
 
 		return lcsClusterNode;
@@ -211,7 +212,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 		throws PortalException {
 
 		LCSClusterEntryPermission.check(
-			getPermissionChecker(), lcsClusterEntryId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsClusterEntryId, OSBLCSActionKeys.VIEW);
 
 		return lcsClusterNodeLocalService.getLCSClusterEntryLCSClusterNodes(
 			lcsClusterEntryId);
@@ -234,7 +235,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 		throws PortalException {
 
 		LCSClusterEntryPermission.check(
-			getPermissionChecker(), lcsClusterEntryId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsClusterEntryId, OSBLCSActionKeys.VIEW);
 
 		return lcsClusterNodeLocalService.getLCSClusterEntryLCSClusterNodes(
 			lcsClusterEntryId, details);
@@ -261,7 +262,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 
 		LCSClusterEntryPermission.check(
 			getPermissionChecker(), lcsClusterNode.getLcsClusterEntryId(),
-			ActionKeys.VIEW);
+			OSBLCSActionKeys.VIEW);
 
 		return lcsClusterNode;
 	}
@@ -289,7 +290,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 
 		LCSClusterEntryPermission.check(
 			getPermissionChecker(), lcsClusterNode.getLcsClusterEntryId(),
-			ActionKeys.VIEW);
+			OSBLCSActionKeys.VIEW);
 
 		return lcsClusterNode;
 	}
@@ -311,7 +312,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 
 		LCSClusterEntryPermission.check(
 			getPermissionChecker(), lcsClusterNode.getLcsClusterEntryId(),
-			ActionKeys.VIEW);
+			OSBLCSActionKeys.VIEW);
 
 		return lcsClusterNode;
 	}
@@ -325,7 +326,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 
 		LCSClusterEntryPermission.check(
 			getPermissionChecker(), lcsClusterNode.getLcsClusterEntryId(),
-			ActionKeys.VIEW);
+			OSBLCSActionKeys.VIEW);
 
 		return lcsClusterNode;
 	}
@@ -381,7 +382,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 
 		LCSClusterEntryPermission.check(
 			getPermissionChecker(), lcsClusterNode.getLcsClusterEntryId(),
-			ActionKeys.MANAGE_ENTRY);
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		lcsClusterNodeLocalService.updateLCSClusterNode(
 			lcsClusterNodeId, lcsClusterNode.getName(),
@@ -424,7 +425,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 
 		LCSClusterEntryPermission.check(
 			getPermissionChecker(), lcsClusterNode.getLcsClusterEntryId(),
-			ActionKeys.MANAGE_ENTRY);
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterNodeLocalService.updateLCSClusterNode(
 			lcsClusterNodeId, name, description,

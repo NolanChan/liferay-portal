@@ -17,10 +17,10 @@ package com.liferay.osb.lcs.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.lcs.subscription.SubscriptionType;
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSClusterNodeUptime;
 import com.liferay.osb.lcs.service.base.LCSClusterNodeUptimeServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
-import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
@@ -48,7 +48,7 @@ public class LCSClusterNodeUptimeServiceImpl
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
 
 		return lcsClusterNodeUptimeLocalService.
 			getMonthlyElasticLCSClusterNodeUptimeTotal(
@@ -63,7 +63,7 @@ public class LCSClusterNodeUptimeServiceImpl
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
 
 		return lcsClusterNodeUptimeLocalService.
 			getMonthlyElasticLCSClusterNodeUptimeTotalMap(
@@ -78,7 +78,7 @@ public class LCSClusterNodeUptimeServiceImpl
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
 
 		return lcsClusterNodeUptimeLocalService.
 			getMonthlyElasticTotalLCSClusterNodeUptimes(
@@ -93,7 +93,7 @@ public class LCSClusterNodeUptimeServiceImpl
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
 
 		return lcsClusterNodeUptimeLocalService.getMonthlyLCSClusterNodeUptimes(
 			lcsClusterEntryId, lcsClusterNodeId, lcsProjectId, month, year,

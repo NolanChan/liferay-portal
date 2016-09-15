@@ -16,10 +16,10 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSInvitation;
 import com.liferay.osb.lcs.service.base.LCSInvitationServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
-import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -39,7 +39,8 @@ public class LCSInvitationServiceImpl extends LCSInvitationServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_USERS);
+			getPermissionChecker(), lcsProjectId,
+			OSBLCSActionKeys.MANAGE_USERS);
 
 		return lcsInvitationLocalService.addLCSInvitation(
 			getUserId(), lcsProjectId, emailAddress, lcsClusterEntryId, role);
@@ -54,7 +55,7 @@ public class LCSInvitationServiceImpl extends LCSInvitationServiceBaseImpl {
 
 		LCSProjectPermission.check(
 			getPermissionChecker(), lcsInvitation.getLcsProjectId(),
-			ActionKeys.MANAGE_USERS);
+			OSBLCSActionKeys.MANAGE_USERS);
 
 		return lcsInvitationPersistence.remove(lcsInvitationId);
 	}
@@ -65,7 +66,8 @@ public class LCSInvitationServiceImpl extends LCSInvitationServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_USERS);
+			getPermissionChecker(), lcsProjectId,
+			OSBLCSActionKeys.MANAGE_USERS);
 
 		return lcsInvitationLocalService.getLCSProjectLCSInvitation(
 			lcsProjectId, emailAddress);
@@ -76,7 +78,8 @@ public class LCSInvitationServiceImpl extends LCSInvitationServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_USERS);
+			getPermissionChecker(), lcsProjectId,
+			OSBLCSActionKeys.MANAGE_USERS);
 
 		return lcsInvitationLocalService.getLCSProjectLCSInvitations(
 			lcsProjectId);

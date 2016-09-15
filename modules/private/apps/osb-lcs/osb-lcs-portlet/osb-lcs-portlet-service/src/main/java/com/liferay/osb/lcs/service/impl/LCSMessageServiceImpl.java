@@ -19,12 +19,12 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.constants.LCSMessageConstants;
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.exception.NoSuchLCSProjectException;
 import com.liferay.osb.lcs.model.LCSMessage;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.service.base.LCSMessageServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
-import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -77,7 +77,7 @@ public class LCSMessageServiceImpl extends LCSMessageServiceBaseImpl {
 		}
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.MANAGE);
 
 		return lcsMessageLocalService.addLCSProjectLCSMessage(
 			lcsProjectId, sourceMessageId, sourceSystemName, content, endDate,
@@ -115,7 +115,7 @@ public class LCSMessageServiceImpl extends LCSMessageServiceBaseImpl {
 		}
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.MANAGE);
 
 		lcsMessageLocalService.deleteLCSProjectLCSMessage(
 			lcsProjectId, sourceMessageId, sourceSystemName,
@@ -128,7 +128,7 @@ public class LCSMessageServiceImpl extends LCSMessageServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
 
 		return lcsMessagePersistence.findByS_C_C(
 			sourceSystemName,

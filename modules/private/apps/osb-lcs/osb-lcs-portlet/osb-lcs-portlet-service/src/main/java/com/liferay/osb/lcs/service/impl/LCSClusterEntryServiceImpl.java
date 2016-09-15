@@ -17,11 +17,11 @@ package com.liferay.osb.lcs.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osb.lcs.advisor.LCSClusterEntryTokenAdvisor;
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.service.base.LCSClusterEntryServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSClusterEntryPermission;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
-import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.osb.lcs.util.ApplicationProfile;
 import com.liferay.osb.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -52,7 +52,8 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_ENTRY);
+			getPermissionChecker(), lcsProjectId,
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterEntryLocalService.addLCSClusterEntry(
 			lcsProjectId, name, description, location, null, type);
@@ -65,7 +66,8 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_ENTRY);
+			getPermissionChecker(), lcsProjectId,
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterEntryLocalService.addLCSClusterEntry(
 			lcsProjectId, name, description, location, subscriptionType, type);
@@ -81,7 +83,7 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 
 		LCSProjectPermission.check(
 			getPermissionChecker(), lcsClusterEntry.getLcsProjectId(),
-			ActionKeys.MANAGE_ENTRY);
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterEntryLocalService.deleteLCSClusterEntry(
 			lcsClusterEntryId);
@@ -93,7 +95,8 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.MANAGE_ENTRY);
+			getPermissionChecker(), lcsProjectId,
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		lcsClusterEntryLocalService.deleteLCSProjectClusters(lcsProjectId);
 	}
@@ -134,7 +137,7 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
 
 		List<LCSClusterEntry> lcsClusterEntries =
 			lcsClusterEntryLocalService.getArchivedLCSProjectLCSClusterEntries(
@@ -152,7 +155,7 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 
 		LCSClusterEntryPermission.check(
 			getPermissionChecker(), lcsClusterEntry.getLcsClusterEntryId(),
-			ActionKeys.VIEW);
+			OSBLCSActionKeys.VIEW);
 
 		return lcsClusterEntry;
 	}
@@ -163,7 +166,7 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
 
 		List<LCSClusterEntry> lcsClusterEntries =
 			lcsClusterEntryLocalService.getLCSProjectLCSClusterEntries(
@@ -178,7 +181,7 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
 
 		List<LCSClusterEntry> lcsClusterEntries =
 			lcsClusterEntryLocalService.getLCSProjectLCSClusterEntries(
@@ -193,14 +196,14 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
 
 		List<LCSClusterEntry> lcsClusterEntries =
 			lcsClusterEntryLocalService.getLCSProjectLCSClusterEntries(
 				lcsProjectId);
 
 		return filterLCSClusterEntries(
-			lcsClusterEntries, ActionKeys.MANAGE_ENTRY);
+			lcsClusterEntries, OSBLCSActionKeys.MANAGE_ENTRY);
 	}
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
@@ -232,7 +235,8 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 		throws PortalException {
 
 		LCSClusterEntryPermission.check(
-			getPermissionChecker(), lcsClusterEntryId, ActionKeys.MANAGE_ENTRY);
+			getPermissionChecker(), lcsClusterEntryId,
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterEntryLocalService.updateElastic(
 			lcsClusterEntryId, elastic);
@@ -244,7 +248,8 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 		throws PortalException {
 
 		LCSClusterEntryPermission.check(
-			getPermissionChecker(), lcsClusterEntryId, ActionKeys.MANAGE_ENTRY);
+			getPermissionChecker(), lcsClusterEntryId,
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterEntryLocalService.updateHighPageLoadTime(
 			lcsClusterEntryId, highPageLoadTime);
@@ -258,7 +263,8 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 		throws PortalException {
 
 		LCSClusterEntryPermission.check(
-			getPermissionChecker(), lcsClusterEntryId, ActionKeys.MANAGE_ENTRY);
+			getPermissionChecker(), lcsClusterEntryId,
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterEntryLocalService.updateLCSClusterEntry(
 			lcsClusterEntryId, name, description, location);
@@ -270,7 +276,8 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 		throws PortalException {
 
 		LCSClusterEntryPermission.check(
-			getPermissionChecker(), lcsClusterEntryId, ActionKeys.MANAGE_ENTRY);
+			getPermissionChecker(), lcsClusterEntryId,
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterEntryLocalService.updateMediumPageLoadTime(
 			lcsClusterEntryId, mediumPageLoadTime);
@@ -282,7 +289,8 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 		throws PortalException {
 
 		LCSClusterEntryPermission.check(
-			getPermissionChecker(), lcsClusterEntryId, ActionKeys.MANAGE_ENTRY);
+			getPermissionChecker(), lcsClusterEntryId,
+			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterEntryLocalService.updateSubscriptionType(
 			lcsClusterEntryId, subscriptionType);
@@ -292,7 +300,8 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 			List<LCSClusterEntry> lcsClusterEntries)
 		throws PrincipalException {
 
-		return filterLCSClusterEntries(lcsClusterEntries, ActionKeys.VIEW);
+		return filterLCSClusterEntries(
+			lcsClusterEntries, OSBLCSActionKeys.VIEW);
 	}
 
 	protected List<LCSClusterEntry> filterLCSClusterEntries(

@@ -16,6 +16,7 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSNotification;
@@ -23,7 +24,6 @@ import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.service.base.LCSNotificationServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSClusterEntryPermission;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
-import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
@@ -59,7 +59,7 @@ public class LCSNotificationServiceImpl extends LCSNotificationServiceBaseImpl {
 			lcsClusterEntryPersistence.findByPrimaryKey(lcsClusterEntryId);
 
 		LCSClusterEntryPermission.check(
-			getPermissionChecker(), lcsClusterEntry, ActionKeys.VIEW);
+			getPermissionChecker(), lcsClusterEntry, OSBLCSActionKeys.VIEW);
 
 		return lcsNotificationLocalService.addLCSNotification(
 			getUserId(), lcsClusterEntry, enabled, type);
@@ -85,7 +85,7 @@ public class LCSNotificationServiceImpl extends LCSNotificationServiceBaseImpl {
 
 		LCSClusterEntryPermission.check(
 			getPermissionChecker(), lcsClusterNode.getLcsClusterEntryId(),
-			ActionKeys.VIEW);
+			OSBLCSActionKeys.VIEW);
 
 		return lcsNotificationLocalService.addLCSNotification(
 			getUserId(), lcsClusterNode, enabled, type);
@@ -107,7 +107,7 @@ public class LCSNotificationServiceImpl extends LCSNotificationServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
 
 		return lcsNotificationLocalService.addLCSProjectLCSNotification(
 			getUserId(), lcsProjectId, enabled, type);
@@ -162,7 +162,7 @@ public class LCSNotificationServiceImpl extends LCSNotificationServiceBaseImpl {
 			lcsClusterEntryPersistence.findByPrimaryKey(lcsClusterEntryId);
 
 		LCSClusterEntryPermission.check(
-			getPermissionChecker(), lcsClusterEntry, ActionKeys.VIEW);
+			getPermissionChecker(), lcsClusterEntry, OSBLCSActionKeys.VIEW);
 
 		return lcsNotificationPersistence.fetchByU_C_C_T(
 			getUserId(),
@@ -189,7 +189,7 @@ public class LCSNotificationServiceImpl extends LCSNotificationServiceBaseImpl {
 
 		LCSClusterEntryPermission.check(
 			getPermissionChecker(), lcsClusterNode.getLcsClusterEntryId(),
-			ActionKeys.VIEW);
+			OSBLCSActionKeys.VIEW);
 
 		return lcsNotificationPersistence.fetchByU_C_C_T(
 			getUserId(),
@@ -212,7 +212,7 @@ public class LCSNotificationServiceImpl extends LCSNotificationServiceBaseImpl {
 		throws PortalException {
 
 		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, ActionKeys.VIEW);
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
 
 		return lcsNotificationPersistence.fetchByU_C_C_T(
 			getUserId(), classNameLocalService.getClassNameId(LCSProject.class),
