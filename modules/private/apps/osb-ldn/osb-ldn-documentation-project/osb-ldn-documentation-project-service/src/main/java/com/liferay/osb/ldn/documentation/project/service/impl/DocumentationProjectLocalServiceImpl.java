@@ -25,8 +25,8 @@ import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.base.DocumentationProjectLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -44,13 +44,14 @@ public class DocumentationProjectLocalServiceImpl
 
 	@Override
 	public DocumentationProject addDocumentationProject(
-			long userId, String name, String description, File icon)
+			long userId, String name, String description, String iconFileName,
+			File icon)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
 
-		validate(name, description, icon);
+		validate(name, description, iconFileName, icon);
 
 		// Documentation project
 
@@ -66,7 +67,7 @@ public class DocumentationProjectLocalServiceImpl
 		documentationProject.setModifiedDate(now);
 		documentationProject.setName(name);
 		documentationProject.setDescription(description);
-		documentationProject.setIconFileName(getIconFileName(icon));
+		documentationProject.setIconFileName(getIconFileName(iconFileName));
 
 		documentationProjectPersistence.update(documentationProject);
 
@@ -114,21 +115,21 @@ public class DocumentationProjectLocalServiceImpl
 	@Override
 	public DocumentationProject updateDocumentationProject(
 			long documentationProjectId, String name, String description,
-			File icon)
+			String iconFileName, File icon)
 		throws PortalException {
 
 		DocumentationProject documentationProject =
 			documentationProjectPersistence.findByPrimaryKey(
 				documentationProjectId);
 
-		validate(name, description, icon);
+		validate(name, description, iconFileName, icon);
 
 		documentationProject.setModifiedDate(new Date());
 		documentationProject.setName(name);
 		documentationProject.setDescription(description);
 
 		if ((icon != null) && icon.exists()) {
-			documentationProject.setIconFileName(getIconFileName(icon));
+			documentationProject.setIconFileName(getIconFileName(iconFileName));
 		}
 
 		documentationProjectPersistence.update(documentationProject);
@@ -144,13 +145,14 @@ public class DocumentationProjectLocalServiceImpl
 		return documentationProject;
 	}
 
-	protected String getIconFileName(File file) {
-		String extension = FileUtil.getExtension(file.getName());
+	protected String getIconFileName(String fileName) {
+		String extension = FileUtil.getExtension(fileName);
 
-		return StringUtil.replace(_ICON_FILE_NAME, "{extension}", extension);
+		return "icon." + extension;
 	}
 
-	protected void validate(String name, String description, File icon)
+	protected void validate(
+			String name, String description, String iconFileName, File icon)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -166,24 +168,15 @@ public class DocumentationProjectLocalServiceImpl
 			throw new DocumentationProjectIconException("Icon doesn't exist");
 		}
 
-		String[] validIconExtensions = {"svg", "png"};
+		String extension = FileUtil.getExtension(iconFileName);
 
-		boolean validExtension = false;
-
-		for (String extension : validIconExtensions) {
-			if (icon.getName().endsWith(extension)) {
-				validExtension = true;
-				break;
-			}
-		}
-
-		if (!validExtension) {
+		if (!ArrayUtil.contains(_ICON_EXTENSIONS, extension)) {
 			throw new DocumentationProjectIconExtensionException(
 				"Invalid icon file extension. Valid extensions: " +
-					Arrays.toString(validIconExtensions));
+					Arrays.toString(_ICON_EXTENSIONS));
 		}
 	}
 
-	private static final String _ICON_FILE_NAME = "icon.{extension}";
+	private static final String[] _ICON_EXTENSIONS = {"svg", "png"};
 
 }

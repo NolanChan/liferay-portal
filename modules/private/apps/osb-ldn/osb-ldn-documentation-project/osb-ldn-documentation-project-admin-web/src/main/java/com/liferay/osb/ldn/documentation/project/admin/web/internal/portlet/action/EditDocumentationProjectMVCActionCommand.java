@@ -48,24 +48,25 @@ public class EditDocumentationProjectMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long documentationProjectId = ParamUtil.getLong(
-			actionRequest, "documentationProjectId");
-
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-
 		UploadPortletRequest uploadPortletRequest =
 			PortalUtil.getUploadPortletRequest(actionRequest);
 
+		long documentationProjectId = ParamUtil.getLong(
+			uploadPortletRequest, "documentationProjectId");
+
+		String name = ParamUtil.getString(uploadPortletRequest, "name");
+		String description = ParamUtil.getString(
+			uploadPortletRequest, "description");
+		String iconFileName = uploadPortletRequest.getFileName("icon");
 		File icon = uploadPortletRequest.getFile("icon");
 
 		if (documentationProjectId > 0) {
 			_documentationProjectService.updateDocumentationProject(
-				documentationProjectId, name, description, icon);
+				documentationProjectId, name, description, iconFileName, icon);
 		}
 		else {
 			_documentationProjectService.addDocumentationProject(
-				name, description, icon);
+				name, description, iconFileName, icon);
 		}
 	}
 

@@ -37,8 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 		immediate = true,
 		property = {
-			"javax.portlet.name=" +
-			DocumentationProjectPortletKeys.DOCUMENTATION_PROJECT_ADMIN,
+			"javax.portlet.name=" + DocumentationProjectPortletKeys.DOCUMENTATION_PROJECT_ADMIN,
 			"mvc.command.name=/serve_documentation_project_icon"
 		},
 		service = MVCResourceCommand.class
