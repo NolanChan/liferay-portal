@@ -75,7 +75,7 @@ public class DefaultAuditRouter implements AuditRouter {
 
 	@Override
 	public void route(AuditMessage auditMessage) throws AuditException {
-		if (!_auditConfiguration.enabled()) {
+		if (!_auditEnabled) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Audit disabled, not processing message: " + auditMessage);
@@ -149,8 +149,11 @@ public class DefaultAuditRouter implements AuditRouter {
 
 	@Modified
 	protected void modified(Map<String, Object> properties) {
-		_auditConfiguration = ConfigurableUtil.createConfigurable(
-			AuditConfiguration.class, properties);
+		AuditConfiguration auditConfiguration =
+			ConfigurableUtil.createConfigurable(
+				AuditConfiguration.class, properties);
+
+		_auditEnabled = auditConfiguration.enabled();
 	}
 
 	@Reference (
@@ -213,7 +216,7 @@ public class DefaultAuditRouter implements AuditRouter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultAuditRouter.class);
 
-	private volatile AuditConfiguration _auditConfiguration;
+	private volatile boolean _auditEnabled;
 	private final Map<String, Set<AuditMessageProcessor>>
 		_auditMessageProcessors = new ConcurrentHashMap<>();
 	private final List<AuditMessageProcessor> _globalAuditMessageProcessors =
