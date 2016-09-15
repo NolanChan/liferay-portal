@@ -15,15 +15,19 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.sybase.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataPartitioningExporter;
+import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.InsertSQLBuilder;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
-
-import java.sql.Date;
+import com.liferay.portal.tools.data.partitioning.sql.builder.sybase.exporter.serializer.SybaseFieldSerializer;
 
 /**
  * @author Manuel de la Peña
  */
 public class SybaseDataPartitioningExporter
 	extends BaseDataPartitioningExporter {
+
+	public SybaseDataPartitioningExporter() {
+		super(new InsertSQLBuilder(new SybaseFieldSerializer()));
+	}
 
 	@Override
 	public String getControlTableNamesSQL(ExportContext exportContext) {
@@ -44,11 +48,6 @@ public class SybaseDataPartitioningExporter
 	}
 
 	@Override
-	public String getDateTimeFormat() {
-		return "mon dd yyyy hh:mm:sss";
-	}
-
-	@Override
 	public String getPartitionedTableNamesSQL(ExportContext exportContext) {
 		StringBuilder sb = new StringBuilder(5);
 
@@ -64,34 +63,6 @@ public class SybaseDataPartitioningExporter
 	@Override
 	public String getTableNameFieldName() {
 		return "name";
-	}
-
-	@Override
-	public String serializeTableField(Object field) {
-		StringBuilder sb = new StringBuilder();
-
-		if (field instanceof Date) {
-			sb.append(formatDateTime(field));
-		}
-		else if (field instanceof Number) {
-			sb.append(field);
-		}
-		else if (field instanceof String) {
-			String value = (String)field;
-
-			value = value.replace("'", "''");
-
-			sb.append("'");
-			sb.append(value);
-			sb.append("'");
-		}
-		else {
-			sb.append("'");
-			sb.append(field);
-			sb.append("'");
-		}
-
-		return sb.toString();
 	}
 
 }
