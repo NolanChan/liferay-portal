@@ -14,26 +14,22 @@
 
 package com.liferay.osb.ldn.documentation.project.admin.web.internal.portlet.action;
 
-import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.osb.ldn.documentation.project.admin.web.internal.constants.DocumentationProjectPortletKeys;
+import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
+import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
-
-import java.io.File;
-import java.io.InputStream;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Yury Butrymovich
@@ -55,28 +51,27 @@ public class ServeDocumentationProjectIconMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
-		long iconId = ParamUtil.getLong(resourceRequest, "iconId");
+		long documentationProjectId = ParamUtil.getLong(
+			resourceRequest, "documentationProjectId");
 
 		try {
-			String filePath = _ICON_DIR + StringPool.SLASH + iconId;
+			DocumentationProject documentationProject =
+				_documentationProjectLocalService.getDocumentationProject(
+					documentationProjectId);
 
-			File icon = DLStoreUtil.getFile(
-				PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-				filePath);
-
-			String contentType = MimeTypesUtil.getContentType(icon.getName());
-
-			InputStream fileStream = DLStoreUtil.getFileAsStream(
-				PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-				filePath);
+			String contentType = MimeTypesUtil.getContentType(
+				documentationProject.getIconFileName());
 
 			PortletResponseUtil.sendFile(
-				resourceRequest, resourceResponse, icon.getName(), fileStream,
-				contentType);
+				resourceRequest, resourceResponse,
+				documentationProject.getIconFileName(),
+				documentationProject.getIconInputStream(), contentType);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to serve icon with id " + iconId);
+				_log.debug(
+					"Unable to serve icon for documentation project id " +
+						documentationProjectId);
 			}
 
 			return true;
@@ -85,10 +80,10 @@ public class ServeDocumentationProjectIconMVCResourceCommand
 		return false;
 	}
 
-	private static final String _ICON_DIR =
-		"osb-ldn-documentation-project/icons";
+	@Reference
+	private DocumentationProjectLocalService _documentationProjectLocalService;
 
-	private static final Log _log = LogFactoryUtil.getLog(
+	private final Log _log = LogFactoryUtil.getLog(
 		ServeDocumentationProjectIconMVCResourceCommand.class);
 
 }
