@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.reports.engine.console.configuration.ReportsPortletMessagingConfiguration;
-import com.liferay.portal.reports.engine.console.messaging.DestinationNames;
+import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleDestinationNames;
 import com.liferay.portal.reports.engine.console.service.EntryLocalService;
 
 import java.util.ArrayList;
@@ -166,7 +166,7 @@ public class ReportsPortletMessagingConfigurator {
 		_registerDestination(
 			adminMessageListener,
 			DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-			DestinationNames.REPORTS_ADMIN);
+			ReportsEngineConsoleDestinationNames.REPORTS_ADMIN);
 	}
 
 	private void _registerReportsSchedulerEventDestination() {
@@ -176,7 +176,7 @@ public class ReportsPortletMessagingConfigurator {
 		_registerDestination(
 			schedulerEventMessageListener,
 			DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-			DestinationNames.REPORTS_SCHEDULER_EVENT);
+			ReportsEngineConsoleDestinationNames.REPORTS_SCHEDULER_EVENT);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
