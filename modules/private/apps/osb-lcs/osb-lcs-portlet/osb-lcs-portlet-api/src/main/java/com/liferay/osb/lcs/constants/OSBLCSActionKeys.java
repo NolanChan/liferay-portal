@@ -26,9 +26,13 @@ public class OSBLCSActionKeys {
 
 	public static final String EXECUTE_COMMAND = "EXECUTE_COMMAND";
 
+	public static final String MANAGE = "MANAGE";
+
 	public static final String MANAGE_ENTRY = "MANAGE_ENTRY";
 
 	public static final String MANAGE_SUBSCRIPTIONS = "MANAGE_SUBSCRIPTIONS";
+
+	public static final String MANAGE_USERS = "MANAGE_USERS";
 
 	public static final String VIEW = "VIEW";
 
