@@ -14,13 +14,12 @@
 
 package com.liferay.osb.lcs.service.permission;
 
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.UserLCSMessage;
 import com.liferay.osb.lcs.service.UserLCSMessageLocalServiceUtil;
-import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
  * @author Matija Petanjek
@@ -30,7 +29,7 @@ public class UserLCSMessagePermission {
 	public static void check(
 			PermissionChecker permissionChecker, long userLCSMessageId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, userLCSMessageId, actionId)) {
 			throw new PrincipalException();
@@ -38,17 +37,16 @@ public class UserLCSMessagePermission {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long userLCSMessageId,
-			String actionId)
-		throws SystemException {
+		PermissionChecker permissionChecker, long userLCSMessageId,
+		String actionId) {
 
 		UserLCSMessage userLCSMessage =
 			UserLCSMessageLocalServiceUtil.fetchUserLCSMessage(
 				userLCSMessageId);
 
 		if ((permissionChecker.getUserId() == userLCSMessage.getUserId()) &&
-			(actionId.equals(ActionKeys.MANAGE) ||
-			 actionId.equals(ActionKeys.VIEW))) {
+			(actionId.equals(OSBLCSActionKeys.MANAGE_ENTRY) ||
+			 actionId.equals(OSBLCSActionKeys.VIEW))) {
 
 			return true;
 		}

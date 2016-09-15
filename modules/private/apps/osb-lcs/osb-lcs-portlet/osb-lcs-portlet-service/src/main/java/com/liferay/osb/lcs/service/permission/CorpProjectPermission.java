@@ -14,14 +14,13 @@
 
 package com.liferay.osb.lcs.service.permission;
 
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.model.LCSRoleConstants;
 import com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil;
-import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
  * @author Igor Beslic
@@ -31,7 +30,7 @@ public class CorpProjectPermission {
 	public static void check(
 			PermissionChecker permissionChecker, long corpProjectId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, corpProjectId, actionId)) {
 			throw new PrincipalException();
@@ -39,9 +38,8 @@ public class CorpProjectPermission {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long corpProjectId,
-			String actionId)
-		throws SystemException {
+		PermissionChecker permissionChecker, long corpProjectId,
+		String actionId) {
 
 		LCSRole lcsRole = LCSRoleLocalServiceUtil.fetchLCSRole(
 			permissionChecker.getUserId(), corpProjectId);
@@ -58,7 +56,7 @@ public class CorpProjectPermission {
 			return false;
 		}
 
-		if (actionId.equals(ActionKeys.VIEW)) {
+		if (actionId.equals(OSBLCSActionKeys.VIEW)) {
 			return true;
 		}
 

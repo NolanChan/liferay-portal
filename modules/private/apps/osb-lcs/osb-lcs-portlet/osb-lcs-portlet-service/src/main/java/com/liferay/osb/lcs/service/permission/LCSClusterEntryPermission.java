@@ -14,18 +14,18 @@
 
 package com.liferay.osb.lcs.service.permission;
 
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.model.LCSRoleConstants;
 import com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil;
-import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
+import java.util.Objects;
 
 /**
  * @author Igor Beslic
@@ -35,7 +35,7 @@ public class LCSClusterEntryPermission {
 	public static void check(
 			PermissionChecker permissionChecker,
 			LCSClusterEntry lcsClusterEntry, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, lcsClusterEntry, actionId)) {
 			throw new PrincipalException();
@@ -45,7 +45,7 @@ public class LCSClusterEntryPermission {
 	public static void check(
 			PermissionChecker permissionChecker, long lcsClusterEntryId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LCSClusterEntry lcsClusterEntry =
 			LCSClusterEntryLocalServiceUtil.getLCSClusterEntry(
@@ -57,9 +57,8 @@ public class LCSClusterEntryPermission {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker,
-			LCSClusterEntry lcsClusterEntry, String actionId)
-		throws SystemException {
+		PermissionChecker permissionChecker, LCSClusterEntry lcsClusterEntry,
+		String actionId) {
 
 		LCSRole lcsRole = LCSRoleLocalServiceUtil.fetchLCSRole(
 			permissionChecker.getUserId(), lcsClusterEntry.getLcsProjectId(),
@@ -69,14 +68,14 @@ public class LCSClusterEntryPermission {
 			if (lcsRole.getRole() ==
 					LCSRoleConstants.ROLE_LCS_ENVIRONMENT_MANAGER) {
 
-				if (actionId.equals(ActionKeys.MANAGE_USERS)) {
+				if (actionId.equals(OSBLCSActionKeys.MANAGE_USERS)) {
 					return false;
 				}
 
 				return true;
 			}
 
-			if (actionId.equals(ActionKeys.VIEW)) {
+			if (actionId.equals(OSBLCSActionKeys.VIEW)) {
 				return true;
 			}
 
@@ -92,7 +91,7 @@ public class LCSClusterEntryPermission {
 
 		User user = permissionChecker.getUser();
 
-		if (Validator.equals("system@liferay.com", user.getEmailAddress())) {
+		if (Objects.equals("system@liferay.com", user.getEmailAddress())) {
 			return true;
 		}
 
@@ -100,9 +99,8 @@ public class LCSClusterEntryPermission {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long lcsClusterEntryId,
-			String actionId)
-		throws SystemException {
+		PermissionChecker permissionChecker, long lcsClusterEntryId,
+		String actionId) {
 
 		LCSClusterEntry lcsClusterEntry =
 			LCSClusterEntryLocalServiceUtil.fetchLCSClusterEntry(
