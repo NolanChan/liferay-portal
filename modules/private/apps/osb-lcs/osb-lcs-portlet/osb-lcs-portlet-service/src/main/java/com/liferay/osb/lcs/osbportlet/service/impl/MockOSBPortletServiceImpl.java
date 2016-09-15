@@ -14,40 +14,39 @@
 
 package com.liferay.osb.lcs.osbportlet.service.impl;
 
-import com.liferay.jsonwebserviceclient.JSONWebServiceClient;
 import com.liferay.lcs.subscription.SubscriptionType;
-import com.liferay.osb.NoSuchCorpProjectException;
-import com.liferay.osb.lcs.NoSuchLCSProjectException;
+import com.liferay.osb.lcs.constants.OSBPortletConstants;
+import com.liferay.osb.lcs.exception.NoSuchLCSProjectException;
+import com.liferay.osb.lcs.model.AccountEntry;
+import com.liferay.osb.lcs.model.CorpProject;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSSubscriptionEntry;
-import com.liferay.osb.lcs.osbportlet.util.OSBPortletUtil;
+import com.liferay.osb.lcs.model.impl.AccountEntryImpl;
+import com.liferay.osb.lcs.model.impl.CorpProjectImpl;
 import com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSSubscriptionEntryLocalServiceUtil;
-import com.liferay.osb.model.AccountEntry;
-import com.liferay.osb.model.AccountEntryClp;
-import com.liferay.osb.model.CorpProject;
-import com.liferay.osb.model.CorpProjectClp;
-import com.liferay.portal.NoSuchOrganizationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.ListTypeConstants;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.OrganizationConstants;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextThreadLocal;
-import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,14 +62,14 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public void addAccountCustomers(long accountEntryId, long[] userIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		UserLocalServiceUtil.addOrganizationUsers(accountEntryId, userIds);
+		_userLocalService.addOrganizationUsers(accountEntryId, userIds);
 	}
 
 	@Override
 	public AccountEntry addAccountEntry(long corpProjectId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Organization organization =
 			OrganizationLocalServiceUtil.addOrganization(
@@ -90,7 +89,7 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public CorpProject addCorpProject(long userId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Organization organization =
 			OrganizationLocalServiceUtil.addOrganization(
@@ -99,7 +98,7 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
 				false, new ServiceContext());
 
-		UserLocalServiceUtil.setOrganizationUsers(
+		_userLocalService.setOrganizationUsers(
 			organization.getOrganizationId(), new long[] {userId});
 
 		CorpProject corpProject = getCorpProject(organization);
@@ -110,9 +109,7 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	}
 
 	@Override
-	public CorpProject addCorpProject(String name)
-		throws PortalException, SystemException {
-
+	public CorpProject addCorpProject(String name) throws PortalException {
 		Organization organization =
 			OrganizationLocalServiceUtil.addOrganization(
 				getUser().getUserId(), 0, getLCSOrganizationName(name),
@@ -129,18 +126,18 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public void addCorpProjectUsers(long corpProjectId, long[] userIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CorpProject corpProject = getCorpProject(corpProjectId);
 
-		UserLocalServiceUtil.addOrganizationUsers(
+		_userLocalService.addOrganizationUsers(
 			corpProject.getOrganizationId(), userIds);
 	}
 
 	@Override
 	public void addUserCorpProjectRoles(
 			long corpProjectId, long[] userIds, String roleName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CorpProject corpProject = getCorpProject(corpProjectId);
 
@@ -161,7 +158,7 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public void deleteUserCorpProjectRoles(long corpProjectId, long[] userIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CorpProject corpProject = getCorpProject(corpProjectId);
 
@@ -182,7 +179,7 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 			return getAccountEntry(corpProject);
 		}
-		catch (NoSuchCorpProjectException nscpe) {
+		catch (NoSuchModelException nsme) {
 			return null;
 		}
 	}
@@ -204,10 +201,10 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 			corpProject = getCorpProject(organization);
 		}
 		catch (NoSuchOrganizationException nsoe) {
-			throw new NoSuchCorpProjectException();
+			throw new NoSuchModelException(nsoe);
 		}
 		catch (SystemException se) {
-			throw new NoSuchCorpProjectException();
+			throw new NoSuchModelException(se);
 		}
 
 		_allCorpProjects.put(corpProjectId, corpProject);
@@ -218,9 +215,9 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public List<String> getCorpProjectAccountCustomerUUIDs(long corpProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		List<String> uuids = new ArrayList<String>();
+		List<String> uuids = new ArrayList<>();
 
 		AccountEntry corpProjectAccountEntry = null;
 
@@ -248,7 +245,7 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public String getCorpProjectLCSSubscriptionEntriesJSON(long corpProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LCSProject lcsProject = LCSProjectLocalServiceUtil.fetchByCorpProject(
 			corpProjectId);
@@ -337,12 +334,12 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public List<? extends CorpProject> getUserCorpProjects(long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<Organization> userLCSOrganizations = getUserLCSOrganizations(
 			userId);
 
-		List<CorpProject> corpProjects = new ArrayList<CorpProject>();
+		List<CorpProject> corpProjects = new ArrayList<>();
 
 		for (Organization organization : userLCSOrganizations) {
 			long organizationId = organization.getOrganizationId();
@@ -376,7 +373,7 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public boolean hasUserCorpProject(long userId, long corpProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CorpProject corpProject = getCorpProject(corpProjectId);
 
@@ -387,7 +384,7 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	@Override
 	public boolean hasUserCorpProjectRole(
 			long userId, long corpProjectId, String roleName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CorpProject corpProject = getCorpProject(corpProjectId);
 
@@ -397,7 +394,7 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 		long osbCorpRoleId = getRoleId();
 
-		if (!OSBPortletUtil.ROLE_OSB_CORP_LCS_USER.equals(roleName)) {
+		if (!OSBPortletConstants.ROLE_OSB_CORP_LCS_USER.equals(roleName)) {
 			Role role = getRole(roleName);
 
 			osbCorpRoleId = role.getRoleId();
@@ -409,17 +406,17 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public void unsetCorpProjectUsers(long corpProjectId, long[] userIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CorpProject corpProject = getCorpProject(corpProjectId);
 
-		UserLocalServiceUtil.unsetOrganizationUsers(
+		_userLocalService.unsetOrganizationUsers(
 			corpProject.getOrganizationId(), userIds);
 	}
 
 	@Override
 	public CorpProject updateCorpProject(long corpProjectId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CorpProject corpProject = getCorpProject(corpProjectId);
 
@@ -468,10 +465,10 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 			accountEntry = getAccountEntry(organization);
 		}
 		catch (NoSuchOrganizationException nsoe) {
-			throw new NoSuchCorpProjectException();
+			throw new NoSuchModelException(nsoe);
 		}
 		catch (SystemException se) {
-			throw new NoSuchCorpProjectException();
+			throw new NoSuchModelException(se);
 		}
 
 		_allAccountEntries.put(accountEntryId, accountEntry);
@@ -480,7 +477,7 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	}
 
 	protected AccountEntry getAccountEntry(Organization organization) {
-		AccountEntry accountEntry = new AccountEntryClp();
+		AccountEntry accountEntry = new AccountEntryImpl();
 
 		accountEntry.setAccountEntryId(organization.getOrganizationId());
 		accountEntry.setName(organization.getName());
@@ -489,7 +486,7 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	}
 
 	protected CorpProject getCorpProject(Organization organization) {
-		CorpProject corpProject = new CorpProjectClp();
+		CorpProject corpProject = new CorpProjectImpl();
 
 		corpProject.setCorpProjectId(organization.getOrganizationId());
 		corpProject.setName(organization.getName());
@@ -503,22 +500,20 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	}
 
 	@Override
-	protected List<User> getOrganizationUsers(long organizationId)
-		throws SystemException {
-
+	protected List<User> getOrganizationUsers(long organizationId) {
 		return ListUtil.copy(
-			UserLocalServiceUtil.getOrganizationUsers(organizationId));
+			_userLocalService.getOrganizationUsers(organizationId));
 	}
 
 	protected String getOSBOrganizationName(String name) {
 		return _ORGANIZATION_NAMESPACE_OSB + StringPool.SPACE + name;
 	}
 
-	protected long getRoleId() throws PortalException, SystemException {
+	protected long getRoleId() throws PortalException {
 		if (_roleId == 0) {
 			Role lcsUserRole = RoleLocalServiceUtil.getRole(
 				PortalUtil.getDefaultCompanyId(),
-				OSBPortletUtil.ROLE_OSB_CORP_LCS_USER);
+				OSBPortletConstants.ROLE_OSB_CORP_LCS_USER);
 
 			_roleId = lcsUserRole.getRoleId();
 		}
@@ -526,7 +521,7 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 		return _roleId;
 	}
 
-	protected User getUser() throws PortalException, SystemException {
+	protected User getUser() throws PortalException {
 		if (_user != null) {
 			return _user;
 		}
@@ -534,7 +529,7 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 		Role role = RoleLocalServiceUtil.getRole(
 			PortalUtil.getDefaultCompanyId(), RoleConstants.ADMINISTRATOR);
 
-		List<User> users = UserLocalServiceUtil.getRoleUsers(role.getRoleId());
+		List<User> users = _userLocalService.getRoleUsers(role.getRoleId());
 
 		_user = users.get(0);
 
@@ -542,9 +537,9 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	}
 
 	protected List<Organization> getUserLCSOrganizations(long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		List<Organization> organizations = new ArrayList<Organization>();
+		List<Organization> organizations = new ArrayList<>();
 
 		List<Organization> userOrganizations =
 			OrganizationLocalServiceUtil.getUserOrganizations(userId);
@@ -564,12 +559,10 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	private static final String _ORGANIZATION_NAMESPACE_OSB = "OSBORG";
 
-	private Map<Long, AccountEntry> _allAccountEntries =
-		new HashMap<Long, AccountEntry>();
-	private Map<Long, CorpProject> _allCorpProjects =
-		new HashMap<Long, CorpProject>();
-	private Map<Long, CorpProject> _organizationCorpProjects =
-		new HashMap<Long, CorpProject>();
+	private final Map<Long, AccountEntry> _allAccountEntries = new HashMap<>();
+	private final Map<Long, CorpProject> _allCorpProjects = new HashMap<>();
+	private final Map<Long, CorpProject> _organizationCorpProjects =
+		new HashMap<>();
 	private long _roleId;
 	private User _user;
 

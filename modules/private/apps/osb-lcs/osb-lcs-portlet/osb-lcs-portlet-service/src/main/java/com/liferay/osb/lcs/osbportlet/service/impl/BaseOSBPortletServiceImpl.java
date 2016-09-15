@@ -14,23 +14,24 @@
 
 package com.liferay.osb.lcs.osbportlet.service.impl;
 
-import com.liferay.jsonwebserviceclient.BaseJSONWebServiceClientHandler;
-import com.liferay.osb.NoSuchCorpProjectException;
 import com.liferay.osb.lcs.advisor.StringAdvisor;
+import com.liferay.osb.lcs.model.AccountEntry;
+import com.liferay.osb.lcs.model.CorpProject;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
-import com.liferay.osb.model.AccountEntry;
-import com.liferay.osb.model.CorpProject;
-import com.liferay.portal.NoSuchRoleException;
+import com.liferay.petra.json.web.service.client.BaseJSONWebServiceClientHandler;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -40,55 +41,53 @@ public abstract class BaseOSBPortletServiceImpl
 
 	@Override
 	public void addAccountCustomers(long accountEntryId, long[] userIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public AccountEntry addAccountEntry(long corpProjectId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public CorpProject addCorpProject(long userId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public CorpProject addCorpProject(String name)
-		throws PortalException, SystemException {
-
+	public CorpProject addCorpProject(String name) throws PortalException {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void addCorpProjectUsers(long corpProjectId, long[] userIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void addOrganizationUsers(long organizationId, long[] userIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void addRole(String name) throws PortalException, SystemException {
+	public void addRole(String name) throws PortalException {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void addUserCorpProjectRoles(
 			long corpProjectId, long[] userIds, String roleName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
@@ -100,32 +99,32 @@ public abstract class BaseOSBPortletServiceImpl
 
 	@Override
 	public void deleteUserCorpProjectRoles(long corpProjectId, long[] userIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public CorpProject fetchCorpProject(long corpProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		try {
 			return getCorpProject(corpProjectId);
 		}
-		catch (NoSuchCorpProjectException nscpe) {
+		catch (NoSuchModelException nsme) {
 			return null;
 		}
 	}
 
 	@Override
 	public AccountEntry fetchCorpProjectAccountEntry(long corpProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Role fetchRole(String name) throws PortalException, SystemException {
+	public Role fetchRole(String name) throws PortalException {
 		try {
 			return getRole(name);
 		}
@@ -136,41 +135,41 @@ public abstract class BaseOSBPortletServiceImpl
 
 	@Override
 	public CorpProject getCorpProject(long corpProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public List<String> getCorpProjectAccountCustomerUUIDs(long corpProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String getCorpProjectLCSSubscriptionEntriesJSON(long corpProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public List<User> getCorpProjectUsers(long corpProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public List<User> getCorpProjectUsers(long corpProjectId, boolean active)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CorpProject corpProject = getCorpProject(corpProjectId);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				StringAdvisor.concat(
+				_stringAdvisor.concat(
 					"Get remote users for corp project ID", corpProjectId));
 		}
 
@@ -181,7 +180,7 @@ public abstract class BaseOSBPortletServiceImpl
 			return users;
 		}
 
-		List<User> corpProjectUsers = new ArrayList<User>(users.size());
+		List<User> corpProjectUsers = new ArrayList<>(users.size());
 
 		for (User user : users) {
 			if (hasUserCorpProject(user.getUserId(), corpProjectId)) {
@@ -193,27 +192,25 @@ public abstract class BaseOSBPortletServiceImpl
 	}
 
 	@Override
-	public User getRemoteUser(String emailAddress)
-		throws PortalException, SystemException {
-
+	public User getRemoteUser(String emailAddress) throws PortalException {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Role getRole(String name) throws PortalException, SystemException {
+	public Role getRole(String name) throws PortalException {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public List<? extends CorpProject> getUserCorpProjects(long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean hasUserCorpProject(long userId, long corpProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
@@ -221,41 +218,49 @@ public abstract class BaseOSBPortletServiceImpl
 	@Override
 	public boolean hasUserCorpProjectRole(
 			long userId, long corpProjectId, String roleName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean isCorpProjectLicenseKeyActive(long corpProjectId, String key)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
+	@Reference(bind = "-")
+	public void setStringAdvisor(StringAdvisor stringAdvisor) {
+		_stringAdvisor = stringAdvisor;
+	}
+
+	@Reference(bind = "-")
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	@Override
 	public void unsetCorpProjectUsers(long corpProjectId, long[] userIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	public CorpProject updateCorpProject(long corpProjectId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
 
 	protected abstract List<User> getOrganizationUsers(long organizationId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	protected String[] getUserUuids(long[] userIds)
-		throws PortalException, SystemException {
-
+	protected String[] getUserUuids(long[] userIds) throws PortalException {
 		String[] userUuids = new String[userIds.length];
 
 		for (int i = 0; i < userIds.length; i++) {
-			User user = UserLocalServiceUtil.getUserById(userIds[i]);
+			User user = _userLocalService.getUserById(userIds[i]);
 
 			userUuids[i] = user.getUserUuid();
 		}
@@ -263,7 +268,10 @@ public abstract class BaseOSBPortletServiceImpl
 		return userUuids;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	protected StringAdvisor _stringAdvisor;
+	protected UserLocalService _userLocalService;
+
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseOSBPortletServiceImpl.class);
 
 }

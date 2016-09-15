@@ -14,10 +14,8 @@
 
 package com.liferay.osb.lcs.osbportlet.service.impl;
 
-import com.liferay.jsonwebserviceclient.JSONWebServiceClient;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
+import com.liferay.portal.kernel.model.User;
 
 import java.util.List;
 
@@ -32,10 +30,8 @@ public class LocalOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	}
 
 	@Override
-	protected List<User> getOrganizationUsers(long organizationId)
-		throws SystemException {
-
-		return UserLocalServiceUtil.getOrganizationUsers(organizationId);
+	protected List<User> getOrganizationUsers(long organizationId) {
+		return _userLocalService.getOrganizationUsers(organizationId);
 	}
 
 }

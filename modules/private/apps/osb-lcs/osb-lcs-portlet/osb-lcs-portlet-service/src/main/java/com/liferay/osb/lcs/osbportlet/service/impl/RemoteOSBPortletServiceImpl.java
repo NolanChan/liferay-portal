@@ -16,44 +16,43 @@ package com.liferay.osb.lcs.osbportlet.service.impl;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
-import com.liferay.jsonwebserviceclient.JSONWebServiceClient;
-import com.liferay.jsonwebserviceclient.JSONWebServiceInvocationException;
-import com.liferay.jsonwebserviceclient.JSONWebServiceTransportException;
-import com.liferay.osb.NoSuchCorpProjectException;
-import com.liferay.osb.lcs.advisor.StringAdvisor;
+import com.liferay.osb.lcs.constants.OSBPortletConstants;
 import com.liferay.osb.lcs.json.CompanyDeserializer;
 import com.liferay.osb.lcs.json.CorpProjectDeserializer;
 import com.liferay.osb.lcs.json.UserDeserializer;
-import com.liferay.osb.lcs.osbportlet.util.OSBPortletUtil;
-import com.liferay.osb.model.AccountEntry;
-import com.liferay.osb.model.AccountEntryClp;
-import com.liferay.osb.model.CorpProject;
-import com.liferay.osb.model.CorpProjectClp;
-import com.liferay.portal.NoSuchOrganizationException;
-import com.liferay.portal.NoSuchRoleException;
-import com.liferay.portal.NoSuchUserException;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.osb.lcs.model.AccountEntry;
+import com.liferay.osb.lcs.model.CorpProject;
+import com.liferay.osb.lcs.model.impl.AccountEntryImpl;
+import com.liferay.osb.lcs.model.impl.CorpProjectImpl;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
+import com.liferay.portal.kernel.exception.NoSuchRoleException;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -71,29 +70,28 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 				getClass("com.liferay.portal.model.impl.UserImpl"),
 				new UserDeserializer());
 		}
-		catch (SystemException e) {
-			throw new RuntimeException(e);
+		catch (SystemException se) {
+			throw new RuntimeException(se);
 		}
 
 		simpleModule.addDeserializer(
-			CorpProjectClp.class, new CorpProjectDeserializer());
+			CorpProjectImpl.class, new CorpProjectDeserializer());
 
 		objectMapper.registerModule(simpleModule);
 	}
 
 	@Override
 	public CorpProject addCorpProject(long userId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String serviceURL =
-			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT +
-				"/add-corp-project";
+			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT + "/add-corp-project";
 
-		User user = UserLocalServiceUtil.getUserById(userId);
+		User user = _userLocalService.getUserById(userId);
 
 		try {
 			CorpProject corpProject = doGetToObject(
-				CorpProjectClp.class, serviceURL, "name", name, "userUuid",
+				CorpProjectImpl.class, serviceURL, "name", name, "userUuid",
 				user.getUserUuid());
 
 			_portalCache.put(corpProject.getCorpProjectId(), corpProject);
@@ -109,16 +107,13 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	}
 
 	@Override
-	public CorpProject addCorpProject(String name)
-		throws PortalException, SystemException {
-
+	public CorpProject addCorpProject(String name) throws PortalException {
 		String serviceURL =
-			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT +
-				"/add-corp-project";
+			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT + "/add-corp-project";
 
 		try {
 			CorpProject corpProject = doGetToObject(
-				CorpProjectClp.class, serviceURL, "name", name);
+				CorpProjectImpl.class, serviceURL, "name", name);
 
 			_portalCache.put(corpProject.getCorpProjectId(), corpProject);
 
@@ -133,7 +128,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public void addCorpProjectUsers(long corpProjectId, long[] userIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String serviceURL =
 			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT +
@@ -157,7 +152,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public void addOrganizationUsers(long organizationId, long[] userIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String serviceURL = _URL_API_JSONWS_ORGANIZATION + "/get-organization";
 
@@ -168,11 +163,11 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 				getClass("com.liferay.portal.model.impl.OrganizationImpl"),
 				serviceURL, "organizationId", String.valueOf(organizationId));
 
-			List<Long> remoteUserIds = new ArrayList<Long>();
+			List<Long> remoteUserIds = new ArrayList<>();
 			serviceURL = _URL_API_JSONWS_USER + "/get-user-by-email-address";
 
 			for (int i = 0; i < userIds.length; i++) {
-				User localUser = UserLocalServiceUtil.getUser(userIds[i]);
+				User localUser = _userLocalService.getUser(userIds[i]);
 
 				User remoteUser = (User)doGetToObject(
 					getClass("com.liferay.portal.model.impl.UserImpl"),
@@ -203,7 +198,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	}
 
 	@Override
-	public void addRole(String name) throws PortalException, SystemException {
+	public void addRole(String name) throws PortalException {
 		String serviceURL = _URL_API_JSONWS_ROLE + "/add-role";
 
 		try {
@@ -228,7 +223,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	@Override
 	public void addUserCorpProjectRoles(
 			long corpProjectId, long[] userIds, String roleName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String serviceURL =
 			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT +
@@ -256,9 +251,9 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public void deleteUserCorpProjectRoles(long corpProjectId, long[] userIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		Role remoteRole = getRole(OSBPortletUtil.ROLE_OSB_CORP_LCS_USER);
+		Role remoteRole = getRole(OSBPortletConstants.ROLE_OSB_CORP_LCS_USER);
 		String serviceURL =
 			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT +
 				"/delete-user-corp-project-roles";
@@ -282,7 +277,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public AccountEntry fetchCorpProjectAccountEntry(long corpProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String serviceURL =
 			_URL_API_JSONWS_OSB_PORTLET_ACCOUNT_ENTRY +
@@ -290,7 +285,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 		try {
 			return doGetToObject(
-				AccountEntryClp.class, serviceURL, "corpProjectId",
+				AccountEntryImpl.class, serviceURL, "corpProjectId",
 				String.valueOf(corpProjectId));
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
@@ -308,7 +303,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public CorpProject getCorpProject(long corpProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String serviceURL =
 			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT + "/get-corp-project";
@@ -320,7 +315,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 			if (corpProject != null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						StringAdvisor.concat(
+						_stringAdvisor.concat(
 							"Returning cached corp project", corpProject));
 				}
 
@@ -328,14 +323,14 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 			}
 
 			corpProject = doGetToObject(
-				CorpProjectClp.class, serviceURL, "corpProjectId",
+				CorpProjectImpl.class, serviceURL, "corpProjectId",
 				String.valueOf(corpProjectId));
 
 			_portalCache.put(corpProjectId, corpProject);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					StringAdvisor.concat(
+					_stringAdvisor.concat(
 						"Returning corp project: ", corpProject));
 			}
 
@@ -351,7 +346,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public List<String> getCorpProjectAccountCustomerUUIDs(long corpProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String serviceURL =
 			_URL_API_JSONWS_OSB_PORTLET_ACCOUNT_CUSTOMER +
@@ -372,7 +367,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public String getCorpProjectLCSSubscriptionEntriesJSON(long corpProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String serviceURL =
 			_URL_API_JSONWS_OSB_PORTLET_LCS_SUBSCRIPTION_ENTRY +
@@ -408,9 +403,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	}
 
 	@Override
-	public User getRemoteUser(String emailAddress)
-		throws PortalException, SystemException {
-
+	public User getRemoteUser(String emailAddress) throws PortalException {
 		String serviceURL = _URL_API_JSONWS_USER + "/get-user-by-email-address";
 
 		try {
@@ -433,7 +426,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	}
 
 	@Override
-	public Role getRole(String name) throws PortalException, SystemException {
+	public Role getRole(String name) throws PortalException {
 		Company company = getCompany("liferay.com");
 
 		String serviceURL = _URL_API_JSONWS_ROLE + "/get-role/";
@@ -455,23 +448,23 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public List<? extends CorpProject> getUserCorpProjects(long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String serviceURL =
 			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT +
 				"/get-user-corp-projects";
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		try {
 			return doGetToList(
-				CorpProjectClp.class, serviceURL, "roleName",
-				OSBPortletUtil.ROLE_OSB_CORP_LCS_USER, "userUuid",
+				CorpProjectImpl.class, serviceURL, "roleName",
+				OSBPortletConstants.ROLE_OSB_CORP_LCS_USER, "userUuid",
 				user.getUuid());
 		}
 		catch (Exception e) {
 			processException(
 				e, serviceURL, "roleName",
-				OSBPortletUtil.ROLE_OSB_CORP_LCS_USER, "userUuid",
+				OSBPortletConstants.ROLE_OSB_CORP_LCS_USER, "userUuid",
 				user.getUuid());
 
 			throw new SystemException(e);
@@ -480,12 +473,11 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public boolean hasUserCorpProject(long userId, long corpProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String serviceURL =
-			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT +
-				"/has-user-corp-project";
-		User user = UserLocalServiceUtil.getUser(userId);
+			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT + "/has-user-corp-project";
+		User user = _userLocalService.getUser(userId);
 
 		try {
 			return doGetToObject(
@@ -504,12 +496,12 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	@Override
 	public boolean hasUserCorpProjectRole(
 			long userId, long corpProjectId, String roleName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String serviceURL =
 			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT +
 				"/has-user-corp-project-role";
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		try {
 			return doGetToObject(
@@ -528,7 +520,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public boolean isCorpProjectLicenseKeyActive(long corpProjectId, String key)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String serviceURL =
 			_URL_API_JSONWS_OSB_PORTLET_LICENSE_KEY + "/is-active";
@@ -555,7 +547,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public void unsetCorpProjectUsers(long corpProjectId, long[] userIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String serviceURL =
 			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT +
@@ -578,15 +570,14 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	public CorpProject updateCorpProject(long corpProjectId, String name)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String serviceURL =
-			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT +
-				"/update-corp-project";
+			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT + "/update-corp-project";
 
 		try {
 			CorpProject corpProject = doGetToObject(
-				CorpProjectClp.class, serviceURL, "corpProjectId",
+				CorpProjectImpl.class, serviceURL, "corpProjectId",
 				String.valueOf(corpProjectId), "name", name);
 
 			_portalCache.put(corpProjectId, corpProject);
@@ -605,12 +596,12 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	protected void checkOrganizationId(long organizationId, String url) {
 		if (organizationId == 0) {
 			throw new UnsupportedOperationException(
-				StringAdvisor.concat(
+				_stringAdvisor.concat(
 					"Organization ID value of 0 is invalid for invoking", url));
 		}
 	}
 
-	protected Class<?> getClass(String className) throws SystemException {
+	protected Class<?> getClass(String className) {
 		Class<?> clazz = _classes.get(className);
 
 		if (clazz == null) {
@@ -628,9 +619,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 		return clazz;
 	}
 
-	protected Company getCompany(String webId)
-		throws PortalException, SystemException {
-
+	protected Company getCompany(String webId) throws PortalException {
 		try {
 			return (Company)doGetToObject(
 				getClass("com.liferay.portal.model.impl.CompanyImpl"),
@@ -663,9 +652,9 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	protected List<User> getOrganizationUsers(long organizationId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		List<User> localUsers = new ArrayList<User>();
+		List<User> localUsers = new ArrayList<>();
 
 		List<User> remoteUsers = null;
 
@@ -686,7 +675,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 		for (User remoteUser : remoteUsers) {
 			try {
-				User localUser = UserLocalServiceUtil.getUserByUuid(
+				User localUser = _userLocalService.getUserByUuid(
 					remoteUser.getUuid());
 
 				localUsers.add(localUser);
@@ -705,7 +694,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 		String message = jsonwsie.getMessage();
 
 		if (message.contains("NoSuchCorpProjectException")) {
-			return new NoSuchCorpProjectException(jsonwsie);
+			return new NoSuchModelException(jsonwsie);
 		}
 		else if (message.contains("NoSuchUserException")) {
 			return new NoSuchUserException(jsonwsie);
@@ -722,7 +711,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	protected void processException(
 			Exception e, String url, String... parameters)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String[] strings = new String[parameters.length + 1];
 
@@ -732,7 +721,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 			strings[i + 1] = parameters[i];
 		}
 
-		_log.error(StringAdvisor.concat(strings));
+		_log.error(_stringAdvisor.concat(strings));
 
 		if (e instanceof JSONWebServiceInvocationException) {
 			throw getPortalException((JSONWebServiceInvocationException)e);
@@ -755,13 +744,11 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	private static final String _URL_API_JSONWS_ORGANIZATION =
 		_URL_API_JSONWS + "/organization";
 
-	private static final String
-		_URL_API_JSONWS_OSB_PORTLET_ACCOUNT_CUSTOMER =
-			"/osb-portlet" + _URL_API_JSONWS + "/accountcustomer";
+	private static final String _URL_API_JSONWS_OSB_PORTLET_ACCOUNT_CUSTOMER =
+		"/osb-portlet" + _URL_API_JSONWS + "/accountcustomer";
 
-	private static final String
-		_URL_API_JSONWS_OSB_PORTLET_ACCOUNT_ENTRY =
-			"/osb-portlet" + _URL_API_JSONWS + "/accountentry";
+	private static final String _URL_API_JSONWS_OSB_PORTLET_ACCOUNT_ENTRY =
+		"/osb-portlet" + _URL_API_JSONWS + "/accountentry";
 
 	private static final String _URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT =
 		"/osb-portlet" + _URL_API_JSONWS + "/corpproject";
@@ -779,15 +766,15 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	private static final String _URL_API_JSONWS_USER =
 		_URL_API_JSONWS + "/user";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteOSBPortletServiceImpl.class);
 
-	private static PortalCache _portalCache = MultiVMPoolUtil.getCache(
+	private static final PortalCache _portalCache = MultiVMPoolUtil.getCache(
 		RemoteOSBPortletServiceImpl.class.getName());
 
-	private Map<String, Class<?>> _classes = new HashMap<String, Class<?>>();
+	private final Map<String, Class<?>> _classes = new HashMap<>();
 
-	@BeanReference(name = "osbPortletJSONWebServiceClient")
+	@Reference(bind = "-")
 	private JSONWebServiceClient _jsonWebServiceClient;
 
 }

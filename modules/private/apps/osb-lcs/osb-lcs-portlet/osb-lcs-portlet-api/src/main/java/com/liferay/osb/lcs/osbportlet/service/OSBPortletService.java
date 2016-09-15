@@ -14,12 +14,11 @@
 
 package com.liferay.osb.lcs.osbportlet.service;
 
-import com.liferay.osb.model.AccountEntry;
-import com.liferay.osb.model.CorpProject;
+import com.liferay.osb.lcs.model.AccountEntry;
+import com.liferay.osb.lcs.model.CorpProject;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 
 import java.util.List;
 
@@ -29,81 +28,77 @@ import java.util.List;
 public interface OSBPortletService {
 
 	public void addAccountCustomers(long accountEntryId, long[] userIds)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public AccountEntry addAccountEntry(long corpProjectId, String name)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public CorpProject addCorpProject(long userId, String name)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public CorpProject addCorpProject(String name)
-		throws PortalException, SystemException;
+	public CorpProject addCorpProject(String name) throws PortalException;
 
 	public void addCorpProjectUsers(long corpProjectId, long[] userIds)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void addOrganizationUsers(long organizationId, long[] userIds)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public void addRole(String name)
-		throws PortalException, SystemException;
+	public void addRole(String name) throws PortalException;
 
 	public void addUserCorpProjectRoles(
 			long corpProjectId, long[] userIds, String roleName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void clearCache();
 
 	public void deleteUserCorpProjectRoles(long corpProjectId, long[] userIds)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public CorpProject fetchCorpProject(long corpProjectId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public AccountEntry fetchCorpProjectAccountEntry(long corpProjectId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public Role fetchRole(String name) throws PortalException, SystemException;
+	public Role fetchRole(String name) throws PortalException;
 
 	public CorpProject getCorpProject(long corpProjectId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<String> getCorpProjectAccountCustomerUUIDs(long corpProjectId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public String getCorpProjectLCSSubscriptionEntriesJSON(long corpProjectId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<User> getCorpProjectUsers(long corpProjectId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public List<User> getCorpProjectUsers(long corpProjectId, boolean active)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public User getRemoteUser(String emailAddress)
-		throws PortalException, SystemException;
+	public User getRemoteUser(String emailAddress) throws PortalException;
 
-	public Role getRole(String name)
-		throws PortalException, SystemException;
+	public Role getRole(String name) throws PortalException;
 
 	public List<? extends CorpProject> getUserCorpProjects(long userId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean hasUserCorpProject(long userId, long corpProjectId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean hasUserCorpProjectRole(
 			long userId, long corpProjectId, String roleName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean isCorpProjectLicenseKeyActive(long corpProjectId, String key)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void unsetCorpProjectUsers(long corpProjectId, long[] userIds)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public CorpProject updateCorpProject(long corpProjectId, String name)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }
