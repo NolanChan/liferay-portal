@@ -22,7 +22,7 @@ import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.osbportlet.service.OSBPortletServiceUtil;
+import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
 import com.liferay.osb.lcs.service.base.LCSProjectServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.UniqueList;
 
 import java.util.Collections;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -212,6 +214,11 @@ public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {
 		return manageableLCSProjects;
 	}
 
+	@Reference(bind = "-")
+	public void setOSBPortletService(OSBPortletService osbPortletService) {
+		_osbPortletService = osbPortletService;
+	}
+
 	@Override
 	public LCSProject updateLCSProjectName(long lcsProjectId, String name)
 		throws PortalException {
@@ -226,7 +233,7 @@ public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {
 
 		lcsProject = lcsProjectLocalService.updateLCSProject(lcsProject);
 
-		OSBPortletServiceUtil.updateCorpProject(
+		_osbPortletService.updateCorpProject(
 			lcsProject.getCorpProjectId(), name);
 
 		return lcsProject;
@@ -239,5 +246,7 @@ public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {
 			throw new PrincipalException();
 		}
 	}
+
+	private OSBPortletService _osbPortletService;
 
 }

@@ -18,10 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
+import com.liferay.osb.lcs.constants.OSBPortletConstants;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.osbportlet.service.OSBPortletServiceUtil;
-import com.liferay.osb.lcs.osbportlet.util.OSBPortletUtil;
+import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.service.base.LCSRoleServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the remote service for accessing, adding, deleting, updating, and
@@ -210,6 +212,11 @@ public class LCSRoleServiceImpl extends LCSRoleServiceBaseImpl {
 			getUserId(), lcsProjectId, manageLCSClusterEntry);
 	}
 
+	@Reference(bind = "-")
+	public void setOSBPortletService(OSBPortletService osbPortletService) {
+		_osbPortletService = osbPortletService;
+	}
+
 	/**
 	 * Returns <code>true</code> if the user can be the first LCS role owner in
 	 * the LCS project.
@@ -238,9 +245,11 @@ public class LCSRoleServiceImpl extends LCSRoleServiceBaseImpl {
 		LCSProject lcsProject = lcsProjectPersistence.findByPrimaryKey(
 			lcsProjectId);
 
-		return OSBPortletServiceUtil.hasUserCorpProjectRole(
+		return _osbPortletService.hasUserCorpProjectRole(
 			userId, lcsProject.getCorpProjectId(),
-			OSBPortletUtil.ROLE_OSB_CORP_LCS_USER);
+			OSBPortletConstants.ROLE_OSB_CORP_LCS_USER);
 	}
+
+	private OSBPortletService _osbPortletService;
 
 }

@@ -37,7 +37,6 @@ import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.service.base.LCSProjectLocalServiceBaseImpl;
 import com.liferay.osb.lcs.util.ApplicationProfile;
 import com.liferay.osb.lcs.util.PortletPropsValues;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Projection;
@@ -56,6 +55,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -112,7 +113,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				StringAdvisor.concat(
+				_stringAdvisor.concat(
 					"Resolving users for corp project", corpProjectId,
 					"using account entry"));
 		}
@@ -123,7 +124,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 
 		if (uuids.isEmpty()) {
 			throw new UnsupportedOperationException(
-				StringAdvisor.concat(
+				_stringAdvisor.concat(
 					"There are no remote account customer users to join LCS",
 					"project with the corp project ID", corpProjectId));
 		}
@@ -144,7 +145,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 
 		if (users.isEmpty()) {
 			throw new UnsupportedOperationException(
-				StringAdvisor.concat(
+				_stringAdvisor.concat(
 					"There are no local users to join LCS project with the",
 					"corp project ID", corpProjectId));
 		}
@@ -153,7 +154,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				StringAdvisor.concat(
+				_stringAdvisor.concat(
 					"Creating LCS project for corp project ID", corpProjectId,
 					"using user with UUID", user.getUserUuid()));
 		}
@@ -170,7 +171,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				StringAdvisor.concat(
+				_stringAdvisor.concat(
 					"LCS project created. Setting up LCS project for",
 					(users.size() - 1), "other corp project members."));
 		}
@@ -195,7 +196,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 				ApplicationProfile.PRODUCTION) {
 
 			throw new UnsupportedOperationException(
-				StringAdvisor.concat(
+				_stringAdvisor.concat(
 					"Manual LCS project creation is not allowed in",
 					ApplicationProfile.PRODUCTION, "runtime environment"));
 		}
@@ -373,7 +374,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 
 		if (lcsProject.getArchived()) {
 			throw new NoSuchLCSProjectException(
-				StringAdvisor.concat(
+				_stringAdvisor.concat(
 					"LCS project with corp project ID", corpProjectId,
 					"is archived"));
 		}
@@ -472,6 +473,31 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 		return lcsProjects;
 	}
 
+	@Reference(bind = "-")
+	public void setEmailAdvisor(EmailAdvisor emailAdvisor) {
+		_emailAdvisor = emailAdvisor;
+	}
+
+	@Reference(bind = "-")
+	public void setLCSMessageAdvisor(LCSMessageAdvisor lcsMessageAdvisor) {
+		_lcsMessageAdvisor = lcsMessageAdvisor;
+	}
+
+	@Reference(bind = "-")
+	public void setOSBPortletService(OSBPortletService osbPortletService) {
+		_osbPortletService = osbPortletService;
+	}
+
+	@Reference(bind = "-")
+	public void setStringAdvisor(StringAdvisor stringAdvisor) {
+		_stringAdvisor = stringAdvisor;
+	}
+
+	@Reference(bind = "-")
+	public void setUserAdvisor(UserAdvisor userAdvisor) {
+		_userAdvisor = userAdvisor;
+	}
+
 	@Override
 	public LCSProject updateSubscriptionActive(
 			long lcsProjectId, boolean subscriptionActive)
@@ -506,7 +532,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				StringAdvisor.concat(
+				_stringAdvisor.concat(
 					"LCS project setup and ready for user with UUID",
 					user.getUserUuid()));
 		}
@@ -515,16 +541,10 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LCSProjectLocalServiceImpl.class);
 
-	@BeanReference(type = EmailAdvisor.class)
 	private EmailAdvisor _emailAdvisor;
-
-	@BeanReference(type = LCSMessageAdvisor.class)
 	private LCSMessageAdvisor _lcsMessageAdvisor;
-
-	@BeanReference(type = OSBPortletService.class)
 	private OSBPortletService _osbPortletService;
-
-	@BeanReference(type = UserAdvisor.class)
+	private StringAdvisor _stringAdvisor;
 	private UserAdvisor _userAdvisor;
 
 }

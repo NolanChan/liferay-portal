@@ -32,7 +32,7 @@ import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSSubscriptionEntry;
 import com.liferay.osb.lcs.model.impl.LCSSubscriptionEntryImpl;
-import com.liferay.osb.lcs.osbportlet.service.OSBPortletServiceUtil;
+import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.service.base.LCSSubscriptionEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -60,6 +60,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -243,7 +245,7 @@ public class LCSSubscriptionEntryLocalServiceImpl
 			lcsProjectId);
 
 		String lcsSubscriptionEntriesJSON =
-			OSBPortletServiceUtil.getCorpProjectLCSSubscriptionEntriesJSON(
+			_osbPortletService.getCorpProjectLCSSubscriptionEntriesJSON(
 				lcsProject.getCorpProjectId());
 
 		refreshLCSProjectLCSSubscriptionEntries(
@@ -349,6 +351,11 @@ public class LCSSubscriptionEntryLocalServiceImpl
 				lcsSubscriptionEntryPersistence.update(lcsSubscriptionEntry);
 			}
 		}
+	}
+
+	@Reference(bind = "-")
+	public void setOSBPortletService(OSBPortletService osbPortletService) {
+		_osbPortletService = osbPortletService;
 	}
 
 	protected List<LCSSubscriptionEntry> doGetToList(String json)
@@ -635,5 +642,6 @@ public class LCSSubscriptionEntryLocalServiceImpl
 		LCSSubscriptionEntryLocalServiceImpl.class);
 
 	private ObjectMapper _objectMapper;
+	private OSBPortletService _osbPortletService;
 
 }

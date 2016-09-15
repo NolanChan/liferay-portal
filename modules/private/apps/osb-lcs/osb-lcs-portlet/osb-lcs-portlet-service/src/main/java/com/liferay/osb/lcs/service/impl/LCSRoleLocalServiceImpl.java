@@ -20,12 +20,12 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.osb.lcs.advisor.CompanyAdvisor;
 import com.liferay.osb.lcs.advisor.UserAdvisor;
 import com.liferay.osb.lcs.constants.LCSRoleConstants;
+import com.liferay.osb.lcs.constants.OSBPortletConstants;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSInvitation;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
-import com.liferay.osb.lcs.osbportlet.util.OSBPortletUtil;
 import com.liferay.osb.lcs.service.base.LCSRoleLocalServiceBaseImpl;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -126,11 +126,12 @@ public class LCSRoleLocalServiceImpl extends LCSRoleLocalServiceBaseImpl {
 		}
 
 		if (!_osbPortletService.hasUserCorpProjectRole(
-				userId, corpProjectId, OSBPortletUtil.ROLE_OSB_CORP_LCS_USER)) {
+				userId, corpProjectId,
+				OSBPortletConstants.ROLE_OSB_CORP_LCS_USER)) {
 
 			_osbPortletService.addUserCorpProjectRoles(
 				lcsProject.getCorpProjectId(), new long[] {userId},
-				OSBPortletUtil.ROLE_OSB_CORP_LCS_USER);
+				OSBPortletConstants.ROLE_OSB_CORP_LCS_USER);
 		}
 
 		if (!_userAdvisor.hasUserDefaultLCSProject(userId)) {

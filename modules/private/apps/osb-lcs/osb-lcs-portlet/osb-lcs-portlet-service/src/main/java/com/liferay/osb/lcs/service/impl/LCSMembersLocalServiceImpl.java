@@ -17,8 +17,8 @@ package com.liferay.osb.lcs.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.lcs.notification.LCSEventType;
-import com.liferay.osb.lcs.osbportlet.service.OSBPortletServiceUtil;
-import com.liferay.osb.lcs.osbportlet.util.OSBPortletUtil;
+import com.liferay.osb.lcs.constants.OSBPortletConstants;
+import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.service.base.LCSMembersLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -75,6 +77,11 @@ public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {
 		}
 	}
 
+	@Reference(bind = "-")
+	public void setOSBPortletService(OSBPortletService osbPortletService) {
+		_osbPortletService = osbPortletService;
+	}
+
 	@Override
 	public void validateCorpProjectUsers(long corpProjectId, long[] userIds)
 		throws PortalException {
@@ -83,17 +90,15 @@ public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {
 		List<Long> noCorpProjectRoleUserIds = new ArrayList<>();
 
 		for (long userId : userIds) {
-			if (!OSBPortletServiceUtil.hasUserCorpProject(
-					userId, corpProjectId)) {
-
+			if (!_osbPortletService.hasUserCorpProject(userId, corpProjectId)) {
 				noCorpProjectUserIds.add(userId);
 
 				continue;
 			}
 
-			if (OSBPortletServiceUtil.hasUserCorpProjectRole(
+			if (_osbPortletService.hasUserCorpProjectRole(
 					userId, corpProjectId,
-					OSBPortletUtil.ROLE_OSB_CORP_LCS_USER)) {
+					OSBPortletConstants.ROLE_OSB_CORP_LCS_USER)) {
 
 				continue;
 			}
@@ -101,14 +106,14 @@ public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {
 			noCorpProjectRoleUserIds.add(userId);
 		}
 
-		OSBPortletServiceUtil.addCorpProjectUsers(
+		_osbPortletService.addCorpProjectUsers(
 			corpProjectId, ArrayUtil.toLongArray(noCorpProjectUserIds));
 
 		noCorpProjectRoleUserIds.addAll(noCorpProjectUserIds);
 
-		OSBPortletServiceUtil.addUserCorpProjectRoles(
+		_osbPortletService.addUserCorpProjectRoles(
 			corpProjectId, ArrayUtil.toLongArray(noCorpProjectRoleUserIds),
-			OSBPortletUtil.ROLE_OSB_CORP_LCS_USER);
+			OSBPortletConstants.ROLE_OSB_CORP_LCS_USER);
 	}
 
 	@Override
@@ -133,5 +138,7 @@ public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {
 		UserLocalServiceUtil.addGroupUsers(
 			group.getGroupId(), new long[] {userId});
 	}
+
+	private OSBPortletService _osbPortletService;
 
 }
