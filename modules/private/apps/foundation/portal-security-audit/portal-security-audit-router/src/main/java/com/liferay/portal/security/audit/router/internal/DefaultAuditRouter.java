@@ -60,7 +60,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(
 	configurationPid = "com.liferay.portal.security.audit.configuration.AuditConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = DefaultAuditRouter.class)
+	service = DefaultAuditRouter.class
+)
 public class DefaultAuditRouter implements AuditRouter {
 
 	@Override
