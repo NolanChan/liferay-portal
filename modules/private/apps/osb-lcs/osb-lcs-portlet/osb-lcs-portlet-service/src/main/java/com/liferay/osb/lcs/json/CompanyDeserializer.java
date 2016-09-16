@@ -20,8 +20,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.model.Company;
 
 import java.io.IOException;
 

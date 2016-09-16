@@ -14,10 +14,9 @@
 
 package com.liferay.osb.lcs.json;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.kernel.model.BaseModel;
 
 import java.util.Date;
 import java.util.Map;
@@ -27,9 +26,7 @@ import java.util.Map;
  */
 public class LCSJSONSerializer {
 
-	public static <T> JSONObject toJSONObject(BaseModel<T> baseModel)
-		throws SystemException {
-
+	public static <T> JSONObject toJSONObject(BaseModel<T> baseModel) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		Map<String, Object> modelAttributes = baseModel.getModelAttributes();
@@ -65,9 +62,7 @@ public class LCSJSONSerializer {
 		return jsonObject;
 	}
 
-	public static <T extends BaseModel> String toJSONString(T baseModel)
-		throws SystemException {
-
+	public static <T extends BaseModel> String toJSONString(T baseModel) {
 		return toJSONObject(baseModel).toString();
 	}
 

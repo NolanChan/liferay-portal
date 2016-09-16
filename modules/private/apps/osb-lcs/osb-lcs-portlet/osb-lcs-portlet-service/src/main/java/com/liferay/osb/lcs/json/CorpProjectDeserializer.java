@@ -20,22 +20,22 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import com.liferay.osb.model.CorpProjectClp;
+import com.liferay.osb.lcs.model.impl.CorpProjectImpl;
 
 import java.io.IOException;
 
 /**
  * @author Ivica Cardic
  */
-public class CorpProjectDeserializer extends JsonDeserializer<CorpProjectClp> {
+public class CorpProjectDeserializer extends JsonDeserializer<CorpProjectImpl> {
 
 	@Override
-	public CorpProjectClp deserialize(
+	public CorpProjectImpl deserialize(
 			JsonParser jsonParser,
 			DeserializationContext deserializationContext)
 		throws IOException {
 
-		CorpProjectClp corpProjectClp = new CorpProjectClp();
+		CorpProjectImpl corpProjectImpl = new CorpProjectImpl();
 
 		ObjectCodec objectCodec = jsonParser.getCodec();
 
@@ -43,17 +43,17 @@ public class CorpProjectDeserializer extends JsonDeserializer<CorpProjectClp> {
 
 		JsonNode corpProjectIdJsonNode = jsonNode.get("corpProjectId");
 
-		corpProjectClp.setCorpProjectId(corpProjectIdJsonNode.asLong());
+		corpProjectImpl.setCorpProjectId(corpProjectIdJsonNode.asLong());
 
 		JsonNode nameJsonNode = jsonNode.get("name");
 
-		corpProjectClp.setName(nameJsonNode.asText());
+		corpProjectImpl.setName(nameJsonNode.asText());
 
 		JsonNode organizationIdJsonNode = jsonNode.get("organizationId");
 
-		corpProjectClp.setOrganizationId(organizationIdJsonNode.asLong());
+		corpProjectImpl.setOrganizationId(organizationIdJsonNode.asLong());
 
-		return corpProjectClp;
+		return corpProjectImpl;
 	}
 
 }
