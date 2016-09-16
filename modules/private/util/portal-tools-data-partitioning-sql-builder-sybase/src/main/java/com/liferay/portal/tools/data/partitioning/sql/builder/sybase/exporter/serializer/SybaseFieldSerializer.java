@@ -17,6 +17,7 @@ package com.liferay.portal.tools.data.partitioning.sql.builder.sybase.exporter.s
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.serializer.FieldSerializer;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,7 +31,7 @@ public class SybaseFieldSerializer implements FieldSerializer {
 	public String serialize(Object object) {
 		StringBuilder sb = new StringBuilder();
 
-		if (object instanceof Date) {
+		if (object instanceof Date || object instanceof Timestamp) {
 			sb.append(_dateFormat.format(object));
 		}
 		else if (object instanceof Number) {
