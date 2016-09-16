@@ -26,7 +26,7 @@ import org.junit.Test;
 public class DataPartitioningExporterFactoryTest {
 
 	@Test
-	public void testGetDataPartitioningExporterReturnsDB2Provider()
+	public void testGetDataPartitioningExporterReturnsSQLServerProvider()
 		throws Exception {
 
 		DataPartitioningExporter dataPartitioningExporter =
