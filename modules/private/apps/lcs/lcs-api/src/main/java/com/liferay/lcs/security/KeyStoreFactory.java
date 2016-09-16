@@ -125,9 +125,10 @@ public class KeyStoreFactory {
 	}
 
 	public static Date getSigningKeyExpirationDate(
-			String keyStorePath, String keyStoreType, String keyStorePassword,
-			String keyAlias)
+			String keyStorePath, String keyStoreType, String keyAlias)
 		throws Exception {
+
+		String keyStorePassword = "_k3y#5t0r3-p45S";
 
 		KeyStore.ProtectionParameter protectionParameter =
 			new KeyStore.PasswordProtection(keyStorePassword.toCharArray());
@@ -135,9 +136,12 @@ public class KeyStoreFactory {
 		KeyStore keyStore = KeyStoreFactory.getInstance(
 			keyStorePath, keyStoreType, keyStorePassword);
 
+		KeyStoreAdvisor keyStoreAdvisor = new KeyStoreAdvisor();
+
 		KeyStore.PrivateKeyEntry privateKeyEntry =
 			(KeyStore.PrivateKeyEntry)keyStore.getEntry(
-				keyAlias, protectionParameter);
+				keyStoreAdvisor.getLatestKeyAlias(keyAlias, keyStore),
+				protectionParameter);
 
 		X509Certificate x509Certificate =
 			(X509Certificate)privateKeyEntry.getCertificate();
