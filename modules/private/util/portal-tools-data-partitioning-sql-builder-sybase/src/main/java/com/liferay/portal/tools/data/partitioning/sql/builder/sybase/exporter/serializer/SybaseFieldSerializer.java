@@ -55,6 +55,6 @@ public class SybaseFieldSerializer implements FieldSerializer {
 	}
 
 	private final DateFormat _dateFormat = new SimpleDateFormat(
-		"mon dd yyyy hh:mm:sss");
+		"MM dd yyyy hh:mm:sss");
 
 }
