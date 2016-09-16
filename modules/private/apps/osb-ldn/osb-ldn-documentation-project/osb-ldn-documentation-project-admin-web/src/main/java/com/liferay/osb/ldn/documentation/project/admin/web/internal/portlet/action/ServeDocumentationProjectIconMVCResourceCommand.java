@@ -69,7 +69,7 @@ public class ServeDocumentationProjectIconMVCResourceCommand
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to serve icon for documentation project id " +
+					"Unable to serve icon for documentation project " +
 						documentationProjectId);
 			}
 
