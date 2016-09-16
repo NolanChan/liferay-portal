@@ -44,5 +44,3 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--includeresource:\
-	lib/com.liferay.util.java.jar=com.liferay.util.java-[0-9]*.jar
