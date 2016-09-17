@@ -124,7 +124,8 @@ import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * This class contains logic for the handling the render, action, and resource serving phases of the Kaleo Forms Admin portlet.
+ * This class contains logic for the handling the render, action, and resource
+ * serving phases of the Kaleo Forms Admin portlet.
  *
  * @author Marcellus Tavares
  * @author Eduardo Lundgren
@@ -159,11 +160,11 @@ import org.osgi.service.component.annotations.Reference;
 public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 	/**
-	 * Deactivate the <code>WorkflowDefinition</code> by the name and version 
+	 * Deactivate the <code>WorkflowDefinition</code> by the name and version
 	 * from the <code>ActionRequest</code> object.
 	 *
 	 * <p>
-	 * If deactivation fails, an error key is submitted to 
+	 * If deactivation fails, an error key is submitted to
 	 * <code>SessionErrors</code>.
 	 * </p>
 	 *
@@ -204,11 +205,11 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Deletes the <code>DDLRecord</code> associated with the record IDs from 
-	 * the <code>ActionRequest</code> object. Also deletes the 
-	 * <code>WorkflowInstanceLink</code>s associated with each record ID and 
-	 * matching the name of the <code>KaleoProcess</code> implementation. This 
-	 * method uses <code>TransactionInvokerUtil</code> to ensure all tasks are 
+	 * Deletes the <code>DDLRecord</code> associated with the record IDs from
+	 * the <code>ActionRequest</code> object. Also deletes the
+	 * <code>WorkflowInstanceLink</code>s associated with each record ID and
+	 * matching the name of the <code>KaleoProcess</code> implementation. This
+	 * method uses <code>TransactionInvokerUtil</code> to ensure all tasks are
 	 * performed in a single transaction.
 	 *
 	 * @param  actionRequest the request from which to get the request
@@ -257,8 +258,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Deletes the <code>KaleoDraftDefinition</code> by the name and version from the <code>ActionRequest</code> object.
-
+	 * Deletes the <code>KaleoDraftDefinition</code> by the name and version
+	 * from the <code>ActionRequest</code> object.
 	 *
 	 * @param  actionRequest the request from which to get the request
 	 *         parameters
@@ -280,7 +281,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Deletes the <code>KaleoProcess</code> associated with the kaleo process 
+	 * Deletes the <code>KaleoProcess</code> associated with the kaleo process
 	 * IDs from the <code>ActionRequest</code> object.
 	 *
 	 * @param  actionRequest the request from which to get the request
@@ -354,7 +355,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Starts a <code>WorkflowInstance</code> if the user has the SUBMIT 
+	 * Starts a <code>WorkflowInstance</code> if the user has the SUBMIT
 	 * permission. Updates the <code>DDLRecord</code>.
 	 *
 	 * @param  actionRequest the request from which to get the request
@@ -383,8 +384,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Updates the <code>DDLRecord</code>, checking permission
-	 * for the action ID <code>KaleoFormsActionKeys.COMPLETE_FORM</code>.
+	 * Updates the <code>DDLRecord</code>, checking permission for the action ID
+	 * <code>KaleoFormsActionKeys.COMPLETE_FORM</code>.
 	 *
 	 * @param  actionRequest the request from which to get the request
 	 *         parameters
@@ -408,9 +409,9 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Creates or updates the <code>KaleoProcess</code> based on the Kaleo process
-	 * ID returned from the <code>ActionRequest</code> object. Then updates the
-	 * process's <code>WorkflowDefinitionLink</code>.
+	 * Creates or updates the <code>KaleoProcess</code> based on the Kaleo
+	 * process ID returned from the <code>ActionRequest</code> object. Then
+	 * updates the process's <code>WorkflowDefinitionLink</code>.
 	 *
 	 * @param  actionRequest the request from which to get the request
 	 *         parameters
@@ -597,8 +598,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Returns the value of the first element identified by name in the
-	 * xml content. If no name is read, returns the <code>defaultName</code>.
+	 * Returns the value of the first element identified by name in the xml
+	 * content. If no name is read, returns the <code>defaultName</code>.
 	 *
 	 * @param  content the content in xml format
 	 * @param  defaultName the default name
@@ -642,11 +643,11 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Stores the <code>KaleoProcess</code>, <code>WorkflowInstance</code>, and <code>
-	 * <code>WorkflowTask</code> as an attribute in this request, if the parameters
-	 * <code>kaleoProcessId</code>, <code>workflowInstanceId</code> and
-	 * <code>workflowTaskId</code> are present in the <code>renderRequest</code>,
-	 * respectively.
+	 * Stores the <code>KaleoProcess</code>, <code>WorkflowInstance</code>, and
+	 * <code> <code>WorkflowTask</code> as an attribute in this request, if the
+	 * parameters <code>kaleoProcessId</code>, <code>workflowInstanceId</code>
+	 * and <code>workflowTaskId</code> are present in the
+	 * <code>renderRequest</code>, respectively.
 	 *
 	 * @param  renderRequest the render request
 	 * @param  renderResponse the render response
@@ -695,13 +696,13 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Binds the workflow definition to the portlet session, in the format <code>
-	 * KaleoDraftDefinition.getName() + "@" + 
+	 * Binds the workflow definition to the portlet session, in the format
+	 * <code> KaleoDraftDefinition.getName() + "@" +
 	 * KaleoDraftDefinition.getVersion()</code>.
 	 *
 	 * @param actionRequest the request from which to get the request parameters
-	 * @param kaleoDraftDefinition the instance of the object to be
-	 *        bound to the portlet session
+	 * @param kaleoDraftDefinition the instance of the object to be bound to the
+	 *        portlet session
 	 */
 	protected void saveInPortletSession(
 		ActionRequest actionRequest,
@@ -716,8 +717,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Binds all parameters in the request except
-	 * <code>doAsUserId</code> to this portlet session.
+	 * Binds all parameters in the request except <code>doAsUserId</code> to
+	 * this portlet session.
 	 *
 	 * @param  resourceRequest the resource request
 	 * @param  resourceResponse the resource response
@@ -745,8 +746,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Sends the <code>KaleoDraftDefinition</code> in JSON format if the name and the
-	 * draft version exist. Otherwise sends an empty JSON object.
+	 * Sends the <code>KaleoDraftDefinition</code> in JSON format if the name
+	 * and the draft version exist. Otherwise sends an empty JSON object.
 	 *
 	 * @param  resourceRequest the resource request
 	 * @param  resourceResponse the resource response
@@ -788,10 +789,10 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Sends a file with the exported records. If 
-	 * <code>exportOnlyApproved</code> is true, only records with the status 
-	 * of approved are included. File format will be determined by file 
-	 * extension.
+	 * Sends a file with the exported records. If
+	 * <code>exportOnlyApproved</code> is <code>true</code>, only records with
+	 * the status of approved are included. File format will be determined by
+	 * file extension.
 	 *
 	 * @param  resourceRequest the resource request
 	 * @param  resourceResponse the resource response
@@ -893,7 +894,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Stores {@link KaleoFormsAdminDisplayContext} as an attribute in this request.
+	 * Stores {@link KaleoFormsAdminDisplayContext} as an attribute in this
+	 * request.
 	 *
 	 * @param renderRequest the render request
 	 * @param renderResponse the render response
@@ -945,10 +947,11 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Updates the kaleo process's asset entry with new asset categories, tag names,
-	 * and link entries, removing and adding them as necessary.
+	 * Updates the kaleo process's asset entry with new asset categories, tag
+	 * names, and link entries, removing and adding them as necessary.
 	 *
-	 * @param  userId the primary key of the user updating the record's asset entry
+	 * @param  userId the primary key of the user updating the record's asset
+	 *         entry
 	 * @param  ddlRecord the DDL record
 	 * @param  kaleoProcess the kaleo process
 	 * @param  assetCategoryIds the primary keys of the new asset categories
@@ -985,8 +988,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Creates or updates the DDL record, replacing its values. Updates the kaleo
-	 * process's asset entry.
+	 * Creates or updates the DDL record, replacing its values. Updates the
+	 * kaleo process's asset entry.
 	 *
 	 * @param  serviceContext the service context to be applied
 	 * @return the DDL record
