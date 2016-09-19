@@ -18,7 +18,6 @@ import com.liferay.lcs.util.ClusterNodeUtil;
 import com.liferay.lcs.util.LCSConnectionManagerUtil;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.lcs.util.LCSUtil;
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -94,13 +93,7 @@ public class ConnectedServicesPortlet extends MVCPortlet {
 		try {
 			String resourceID = resourceRequest.getResourceID();
 
-			if (resourceID.equals("connect")) {
-				connect(resourceRequest, resourceResponse);
-			}
-			else if (resourceID.equals("disconnect")) {
-				disconnect(resourceRequest, resourceResponse);
-			}
-			else if (resourceID.equals("serveConnectionStatus")) {
+			if (resourceID.equals("serveConnectionStatus")) {
 				serveConnectionStatus(resourceRequest, resourceResponse);
 			}
 			else {
@@ -119,50 +112,6 @@ public class ConnectedServicesPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void connect(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		if (ClusterExecutorUtil.isEnabled()) {
-			boolean applyToSiblingClusterNodes = ParamUtil.getBoolean(
-				resourceRequest, "applyToSiblingClusterNodes");
-
-			ClusterNodeUtil.startPosts(applyToSiblingClusterNodes);
-		}
-		else {
-			LCSConnectionManagerUtil.start();
-		}
-
-		jsonObject.put(
-			LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_SUCCESS);
-
-		writeJSON(resourceRequest, resourceResponse, jsonObject);
-	}
-
-	protected void disconnect(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		if (ClusterExecutorUtil.isEnabled()) {
-			boolean applyToSiblingClusterNodes = ParamUtil.getBoolean(
-				resourceRequest, "applyToSiblingClusterNodes");
-
-			ClusterNodeUtil.stopPosts(applyToSiblingClusterNodes);
-		}
-		else {
-			LCSConnectionManagerUtil.stop();
-		}
-
-		jsonObject.put(
-			LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_SUCCESS);
-
-		writeJSON(resourceRequest, resourceResponse, jsonObject);
-	}
-
 	protected void serveConnectionStatus(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
@@ -177,6 +126,9 @@ public class ConnectedServicesPortlet extends MVCPortlet {
 			LCSConnectionManagerUtil.isLCSGatewayAvailable());
 		jsonObject.put("pending", LCSConnectionManagerUtil.isPending());
 		jsonObject.put("ready", LCSConnectionManagerUtil.isReady());
+
+		jsonObject.put(
+			LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_SUCCESS);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}

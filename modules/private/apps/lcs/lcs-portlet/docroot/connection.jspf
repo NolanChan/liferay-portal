@@ -40,12 +40,9 @@ try {
 			}
 		}
 
-		lcsProjectLayoutURL = LCSUtil.getLCSProjectLayoutURL(lcsProject);
-
 		lcsClusterEntryLayoutURL = LCSUtil.getLCSClusterEntryLayoutURL(lcsProject, lcsClusterNode);
-
 		lcsClusterNodeLayoutURL = LCSUtil.getLCSClusterNodeLayoutURL(lcsProject, lcsClusterNode);
-
+		lcsProjectLayoutURL = LCSUtil.getLCSProjectLayoutURL(lcsProject);
 		registrationLayoutURL = LCSUtil.getRegistrationLayoutURL(lcsProject, lcsClusterNode);
 	}
 }
@@ -351,15 +348,7 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 				%>
 
 			</ul>
-
-			<aui:input checked="<%= true %>" id="applyToSiblingClusterNodes" label="when-connecting-or-disconnecting-this-node-connect-or-disconnect-all-nodes-in-the-cluster" name="applyToSiblingClusterNodes" type="checkbox" />
 		</c:if>
-
-		<aui:button-row>
-			<aui:button cssClass='<%= ready ? "hide" : StringPool.BLANK %>' disabled="<%= pending %>" name="connect" primary="<%= true %>" value="connect" />
-
-			<aui:button cssClass='<%= ready ? StringPool.BLANK : "hide" %>' disabled="<%= pending %>" name="disconnect" value="disconnect" />
-		</aui:button-row>
 
 		<aui:script use="lcs">
 			var lcsPortlet = new Liferay.Portlet.LCS(
@@ -370,19 +359,16 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 
 			lcsPortlet.initializeConnectionPage(
 				{
-					cluster: <%= ClusterExecutorUtil.isEnabled() %>,
 					connectionStatusURL: '<portlet:resourceURL id="serveConnectionStatus" />',
-					connectURL: '<portlet:resourceURL id="connect" />',
-					disconnectURL: '<portlet:resourceURL id="disconnect" />',
 					handshakeTime: <%= handshakeTime %>,
 					labels: {
 						connected: '<%= UnicodeLanguageUtil.get(request, "connected") %>',
 						disconnected: '<%= UnicodeLanguageUtil.get(request, "disconnected") %>',
-						pending: '<%= UnicodeLanguageUtil.get(request, "synchronizing") %>'
+						unableToDisplayConnectionStatus: '<%= UnicodeLanguageUtil.get(request, "unable-to-display-connection-status") %>'
 					},
 					lcsConstants: {
 						JSON_KEY_RESULT: '<%= LCSConstants.JSON_KEY_RESULT %>',
-						JSON_VALUE_SUCCESS: '<%= LCSConstants.JSON_VALUE_SUCCESS %>'
+						JSON_VALUE_FAILURE: '<%= LCSConstants.JSON_VALUE_FAILURE %>'
 					},
 					pending: <%= pending %>,
 					ready: <%= ready %>
