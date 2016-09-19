@@ -58,7 +58,7 @@ public class DocumentationProjectServiceHttp {
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject addDocumentationProject(
 		HttpPrincipal httpPrincipal, java.lang.String name,
 		java.lang.String description, java.lang.String iconFileName,
-		java.io.File icon)
+		java.io.File iconFile)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DocumentationProjectServiceUtil.class,
@@ -66,7 +66,7 @@ public class DocumentationProjectServiceHttp {
 					_addDocumentationProjectParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name,
-					description, iconFileName, icon);
+					description, iconFileName, iconFile);
 
 			Object returnObj = null;
 
@@ -93,7 +93,7 @@ public class DocumentationProjectServiceHttp {
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject updateDocumentationProject(
 		HttpPrincipal httpPrincipal, long documentationProjectId,
 		java.lang.String name, java.lang.String description,
-		java.lang.String iconFileName, java.io.File icon)
+		java.lang.String iconFileName, java.io.File iconFile)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DocumentationProjectServiceUtil.class,
@@ -102,7 +102,7 @@ public class DocumentationProjectServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					documentationProjectId, name, description, iconFileName,
-					icon);
+					iconFile);
 
 			Object returnObj = null;
 

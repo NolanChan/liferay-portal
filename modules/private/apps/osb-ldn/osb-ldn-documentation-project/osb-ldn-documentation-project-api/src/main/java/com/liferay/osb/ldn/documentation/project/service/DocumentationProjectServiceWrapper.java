@@ -37,20 +37,20 @@ public class DocumentationProjectServiceWrapper
 	@Override
 	public com.liferay.osb.ldn.documentation.project.model.DocumentationProject addDocumentationProject(
 		java.lang.String name, java.lang.String description,
-		java.lang.String iconFileName, java.io.File icon)
+		java.lang.String iconFileName, java.io.File iconFile)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _documentationProjectService.addDocumentationProject(name,
-			description, iconFileName, icon);
+			description, iconFileName, iconFile);
 	}
 
 	@Override
 	public com.liferay.osb.ldn.documentation.project.model.DocumentationProject updateDocumentationProject(
 		long documentationProjectId, java.lang.String name,
 		java.lang.String description, java.lang.String iconFileName,
-		java.io.File icon)
+		java.io.File iconFile)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _documentationProjectService.updateDocumentationProject(documentationProjectId,
-			name, description, iconFileName, icon);
+			name, description, iconFileName, iconFile);
 	}
 
 	/**

@@ -55,11 +55,11 @@ public class DocumentationProjectLocalServiceUtil {
 
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject addDocumentationProject(
 		long userId, java.lang.String name, java.lang.String description,
-		java.lang.String iconFileName, java.io.File icon)
+		java.lang.String iconFileName, java.io.File iconFile)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addDocumentationProject(userId, name, description,
-			iconFileName, icon);
+			iconFileName, iconFile);
 	}
 
 	/**
@@ -159,11 +159,11 @@ public class DocumentationProjectLocalServiceUtil {
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject updateDocumentationProject(
 		long documentationProjectId, java.lang.String name,
 		java.lang.String description, java.lang.String iconFileName,
-		java.io.File icon)
+		java.io.File iconFile)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateDocumentationProject(documentationProjectId, name,
-			description, iconFileName, icon);
+			description, iconFileName, iconFile);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
