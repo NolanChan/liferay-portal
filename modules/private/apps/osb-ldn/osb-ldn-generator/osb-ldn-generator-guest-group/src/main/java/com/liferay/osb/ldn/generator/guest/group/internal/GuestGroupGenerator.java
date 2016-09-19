@@ -58,7 +58,7 @@ public class GuestGroupGenerator {
 
 		for (int pageType : pageTypes) {
 			LayoutGenerator layoutGenerator =
-				_layoutGeneratorFactory.getLayoutGenrator(
+				_layoutGeneratorFactory.getLayoutGenerator(
 					userId, group.getGroupId(), pageType);
 
 			layoutGenerator.generate(userId, group.getGroupId());

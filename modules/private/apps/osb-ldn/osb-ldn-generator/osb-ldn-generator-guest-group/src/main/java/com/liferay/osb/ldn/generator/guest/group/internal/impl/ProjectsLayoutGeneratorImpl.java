@@ -35,8 +35,6 @@ public class ProjectsLayoutGeneratorImpl extends AbstractLayoutGenerator {
 
 	@Override
 	public Layout generate(long userId, long groupId) throws PortalException {
-		Layout layout = null;
-
 		String name = "Projects";
 		String title = "Projects";
 		String url = "/projects";

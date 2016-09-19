@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface LayoutGeneratorFactory {
 
-	public LayoutGenerator getLayoutGenrator(
+	public LayoutGenerator getLayoutGenerator(
 			long userId, long groupId, int type)
 		throws PortalException;
 

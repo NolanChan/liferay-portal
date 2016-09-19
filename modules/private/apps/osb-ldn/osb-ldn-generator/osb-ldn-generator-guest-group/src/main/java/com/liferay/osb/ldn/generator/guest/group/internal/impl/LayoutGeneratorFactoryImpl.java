@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutGeneratorFactoryImpl implements LayoutGeneratorFactory {
 
 	@Override
-	public LayoutGenerator getLayoutGenrator(
+	public LayoutGenerator getLayoutGenerator(
 			long userId, long groupId, int type)
 		throws PortalException {
 
