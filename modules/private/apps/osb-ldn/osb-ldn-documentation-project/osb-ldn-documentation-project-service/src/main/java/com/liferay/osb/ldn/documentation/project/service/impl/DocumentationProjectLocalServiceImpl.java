@@ -45,13 +45,13 @@ public class DocumentationProjectLocalServiceImpl
 	@Override
 	public DocumentationProject addDocumentationProject(
 			long userId, String name, String description, String iconFileName,
-			File icon)
+			File iconFile)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
 
-		validate(name, description, iconFileName, icon);
+		validate(name, description, iconFileName, iconFile);
 
 		// Documentation project
 
@@ -78,7 +78,7 @@ public class DocumentationProjectLocalServiceImpl
 
 		DocumentationProjectFileUtil.addDocumentationProjectFile(
 			documentationProjectId, documentationProject.getIconFileName(),
-			icon);
+			iconFile);
 
 		return documentationProject;
 	}
@@ -115,20 +115,20 @@ public class DocumentationProjectLocalServiceImpl
 	@Override
 	public DocumentationProject updateDocumentationProject(
 			long documentationProjectId, String name, String description,
-			String iconFileName, File icon)
+			String iconFileName, File iconFile)
 		throws PortalException {
 
 		DocumentationProject documentationProject =
 			documentationProjectPersistence.findByPrimaryKey(
 				documentationProjectId);
 
-		validate(name, description, iconFileName, icon);
+		validate(name, description, iconFileName, iconFile);
 
 		documentationProject.setModifiedDate(new Date());
 		documentationProject.setName(name);
 		documentationProject.setDescription(description);
 
-		if ((icon != null) && icon.exists()) {
+		if ((iconFile != null) && iconFile.exists()) {
 			documentationProject.setIconFileName(getIconFileName(iconFileName));
 		}
 
@@ -136,10 +136,10 @@ public class DocumentationProjectLocalServiceImpl
 
 		// Files
 
-		if ((icon != null) && icon.exists()) {
+		if ((iconFile != null) && iconFile.exists()) {
 			DocumentationProjectFileUtil.updateDocumentationProjectFile(
 				documentationProjectId, documentationProject.getIconFileName(),
-				icon);
+				iconFile);
 		}
 
 		return documentationProject;
@@ -152,7 +152,7 @@ public class DocumentationProjectLocalServiceImpl
 	}
 
 	protected void validate(
-			String name, String description, String iconFileName, File icon)
+			String name, String description, String iconFileName, File iconFile)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -164,8 +164,9 @@ public class DocumentationProjectLocalServiceImpl
 				"Description is null");
 		}
 
-		if ((icon == null) || !icon.exists()) {
-			throw new DocumentationProjectIconException("Icon doesn't exist");
+		if ((iconFile == null) || !iconFile.exists()) {
+			throw new DocumentationProjectIconException(
+				"Icon file doesn't exist");
 		}
 
 		String extension = FileUtil.getExtension(iconFileName);

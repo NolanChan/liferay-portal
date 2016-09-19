@@ -58,15 +58,16 @@ public class EditDocumentationProjectMVCActionCommand
 		String description = ParamUtil.getString(
 			uploadPortletRequest, "description");
 		String iconFileName = uploadPortletRequest.getFileName("icon");
-		File icon = uploadPortletRequest.getFile("icon");
+		File iconFile = uploadPortletRequest.getFile("icon");
 
 		if (documentationProjectId > 0) {
 			_documentationProjectService.updateDocumentationProject(
-				documentationProjectId, name, description, iconFileName, icon);
+				documentationProjectId, name, description, iconFileName,
+				iconFile);
 		}
 		else {
 			_documentationProjectService.addDocumentationProject(
-				name, description, iconFileName, icon);
+				name, description, iconFileName, iconFile);
 		}
 	}
 

@@ -34,11 +34,12 @@ public class DocumentationProjectFileUtil {
 			long documentationProjectId, String fileName, File file)
 		throws PortalException {
 
-		String filePath = getFilePath(documentationProjectId, fileName);
+		String dlStoreFileName = getDLStoreFileName(
+			documentationProjectId, fileName);
 
 		DLStoreUtil.addFile(
-			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM, filePath,
-			file);
+			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
+			dlStoreFileName, file);
 	}
 
 	public static void destroyDocumentationProjectDirectory(
@@ -47,18 +48,19 @@ public class DocumentationProjectFileUtil {
 
 		DLStoreUtil.deleteDirectory(
 			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-			getDirPath(documentationProjectId));
+			getDLStoreDir(documentationProjectId));
 	}
 
 	public static InputStream getDocumentProjectFileAsStream(
 			long documentationProjectId, String fileName)
 		throws PortalException {
 
-		String filePath = getFilePath(documentationProjectId, fileName);
+		String dlStoreFileName = getDLStoreFileName(
+			documentationProjectId, fileName);
 
 		return DLStoreUtil.getFileAsStream(
 			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-			filePath);
+			dlStoreFileName);
 	}
 
 	public static void initDocumentationProjectDirectory(
@@ -67,37 +69,38 @@ public class DocumentationProjectFileUtil {
 
 		DLStoreUtil.addDirectory(
 			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-			getDirPath(documentationProjectId));
+			getDLStoreDir(documentationProjectId));
 	}
 
 	public static void updateDocumentationProjectFile(
 			long documentationProjectId, String fileName, File file)
 		throws PortalException {
 
-		String filePath = getFilePath(documentationProjectId, fileName);
+		String dlStoreFileName = getDLStoreFileName(
+			documentationProjectId, fileName);
 
 		DLStoreUtil.deleteFile(
 			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-			filePath);
+			dlStoreFileName);
 
 		DLStoreUtil.addFile(
-			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM, filePath,
-			file);
+			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
+			dlStoreFileName, file);
 	}
 
-	protected static String getDirPath(long documentationProjectId) {
+	protected static String getDLStoreDir(long documentationProjectId) {
 		return StringUtil.replace(
-			_DOCUMENTATION_PROJECT_DIR_PATH, "{documentationProjectId}",
+			_DL_STORE_DIR, "{documentationProjectId}",
 			String.valueOf(documentationProjectId));
 	}
 
-	protected static String getFilePath(
+	protected static String getDLStoreFileName(
 			long documentationProjectId, String fileName)
 		throws PortalException {
 
 		validate(fileName);
 
-		String dirPath = getDirPath(documentationProjectId);
+		String dirPath = getDLStoreDir(documentationProjectId);
 
 		return dirPath + StringPool.FORWARD_SLASH + fileName;
 	}
@@ -109,7 +112,7 @@ public class DocumentationProjectFileUtil {
 		}
 	}
 
-	private static final String _DOCUMENTATION_PROJECT_DIR_PATH =
+	private static final String _DL_STORE_DIR =
 		"osb-ldn/documentation-project/{documentProjectId}";
 
 }
