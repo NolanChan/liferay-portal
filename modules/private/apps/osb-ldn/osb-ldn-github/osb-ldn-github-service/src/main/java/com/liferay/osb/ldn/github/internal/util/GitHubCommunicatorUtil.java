@@ -14,6 +14,7 @@
 
 package com.liferay.osb.ldn.github.internal.util;
 
+import com.liferay.osb.ldn.github.exception.GitHubAPIException;
 import com.liferay.osb.ldn.github.model.GitHubContributor;
 import com.liferay.osb.ldn.github.model.GitHubRepository;
 import com.liferay.osb.ldn.github.service.GitHubContributorLocalServiceUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.util.Http.Options;
 import com.liferay.portal.kernel.util.Http.Response;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.text.SimpleDateFormat;
 
@@ -41,12 +43,21 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class GitHubCommunicatorUtil {
 
-	public static GitHubRepository getRepository(String owner, String name)
+	public static GitHubRepository getRepository(
+			String owner, String name, String apiKey)
 		throws Exception {
+
+		if (Validator.isNull(apiKey)) {
+			throw new GitHubAPIException("API key is null");
+		}
 
 		Http.Options options = new Http.Options();
 
-		options.setLocation(_API_CALL_PREFIX + owner + StringPool.SLASH + name);
+		String apiCallURL = _API_CALL_PREFIX + owner + StringPool.SLASH + name;
+
+		apiCallURL = HttpUtil.addParameter(apiCallURL, "access_token", apiKey);
+
+		options.setLocation(apiCallURL);
 
 		options.setPost(false);
 
@@ -93,14 +104,25 @@ public class GitHubCommunicatorUtil {
 	}
 
 	public static List<GitHubContributor> getTopContributors(
-			String owner, String name, int count)
+			String owner, String name, int count, String apiKey)
 		throws Exception {
+
+		if (Validator.isNull(apiKey)) {
+			throw new GitHubAPIException("API key is null");
+		}
 
 		Http.Options options = new Http.Options();
 
-		options.setLocation(
+		String apiCallURL =
 			_API_CALL_PREFIX + owner + StringPool.SLASH + name +
-				"/contributors");
+			"/contributors";
+
+		apiCallURL = HttpUtil.addParameter(apiCallURL, "access_token", apiKey);
+
+		apiCallURL = HttpUtil.addParameter(
+			apiCallURL, "per_page", String.valueOf(count));
+
+		options.setLocation(apiCallURL);
 
 		options.setPost(false);
 
