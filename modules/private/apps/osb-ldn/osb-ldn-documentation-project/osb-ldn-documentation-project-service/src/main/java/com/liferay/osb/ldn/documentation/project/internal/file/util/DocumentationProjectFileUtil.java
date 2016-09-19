@@ -42,6 +42,18 @@ public class DocumentationProjectFileUtil {
 			dlStoreFileName, file);
 	}
 
+	public static void deleteDocumentationProjectFile(
+			long documentationProjectId, String fileName)
+		throws PortalException {
+
+		String dlStoreFileName = getDLStoreFileName(
+			documentationProjectId, fileName);
+
+		DLStoreUtil.deleteFile(
+			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
+			dlStoreFileName);
+	}
+
 	public static void destroyDocumentationProjectDirectory(
 			long documentationProjectId)
 		throws PortalException {
@@ -70,22 +82,6 @@ public class DocumentationProjectFileUtil {
 		DLStoreUtil.addDirectory(
 			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
 			getDLStoreDir(documentationProjectId));
-	}
-
-	public static void updateDocumentationProjectFile(
-			long documentationProjectId, String fileName, File file)
-		throws PortalException {
-
-		String dlStoreFileName = getDLStoreFileName(
-			documentationProjectId, fileName);
-
-		DLStoreUtil.deleteFile(
-			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-			dlStoreFileName);
-
-		DLStoreUtil.addFile(
-			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-			dlStoreFileName, file);
 	}
 
 	protected static String getDLStoreDir(long documentationProjectId) {

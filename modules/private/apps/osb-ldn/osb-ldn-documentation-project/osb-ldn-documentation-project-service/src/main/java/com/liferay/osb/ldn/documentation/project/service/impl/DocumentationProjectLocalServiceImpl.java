@@ -128,6 +128,8 @@ public class DocumentationProjectLocalServiceImpl
 		documentationProject.setName(name);
 		documentationProject.setDescription(description);
 
+		String oldIconFileName = documentationProject.getIconFileName();
+
 		if ((iconFile != null) && iconFile.exists()) {
 			documentationProject.setIconFileName(getIconFileName(iconFileName));
 		}
@@ -137,7 +139,10 @@ public class DocumentationProjectLocalServiceImpl
 		// Files
 
 		if ((iconFile != null) && iconFile.exists()) {
-			DocumentationProjectFileUtil.updateDocumentationProjectFile(
+			DocumentationProjectFileUtil.deleteDocumentationProjectFile(
+				documentationProjectId, oldIconFileName);
+
+			DocumentationProjectFileUtil.addDocumentationProjectFile(
 				documentationProjectId, documentationProject.getIconFileName(),
 				iconFile);
 		}
