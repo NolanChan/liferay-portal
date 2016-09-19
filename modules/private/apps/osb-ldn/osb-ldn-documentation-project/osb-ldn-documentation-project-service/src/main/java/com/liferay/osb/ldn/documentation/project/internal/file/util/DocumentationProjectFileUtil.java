@@ -60,7 +60,7 @@ public class DocumentationProjectFileUtil {
 
 		DLStoreUtil.deleteDirectory(
 			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-			getDLStoreDir(documentationProjectId));
+			getDirName(documentationProjectId));
 	}
 
 	public static InputStream getDocumentProjectFileAsStream(
@@ -81,12 +81,12 @@ public class DocumentationProjectFileUtil {
 
 		DLStoreUtil.addDirectory(
 			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-			getDLStoreDir(documentationProjectId));
+			getDirName(documentationProjectId));
 	}
 
-	protected static String getDLStoreDir(long documentationProjectId) {
+	protected static String getDirName(long documentationProjectId) {
 		return StringUtil.replace(
-			_DL_STORE_DIR, "{documentationProjectId}",
+			_DIR_NAME, "{documentationProjectId}",
 			String.valueOf(documentationProjectId));
 	}
 
@@ -96,7 +96,7 @@ public class DocumentationProjectFileUtil {
 
 		validate(fileName);
 
-		String dirPath = getDLStoreDir(documentationProjectId);
+		String dirPath = getDirName(documentationProjectId);
 
 		return dirPath + StringPool.FORWARD_SLASH + fileName;
 	}
@@ -108,7 +108,7 @@ public class DocumentationProjectFileUtil {
 		}
 	}
 
-	private static final String _DL_STORE_DIR =
+	private static final String _DIR_NAME =
 		"osb-ldn/documentation-project/{documentProjectId}";
 
 }
