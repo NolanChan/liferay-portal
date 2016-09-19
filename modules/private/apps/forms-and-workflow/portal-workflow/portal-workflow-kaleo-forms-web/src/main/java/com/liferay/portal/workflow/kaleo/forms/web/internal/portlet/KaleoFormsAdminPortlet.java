@@ -563,7 +563,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Returns the DDM form in JSON format, using the definition obtained from
+	 * Returns the DDM form, using the definition in JSON format obtained from
 	 * the <code>ActionRequest</code> object.
 	 *
 	 * @param  actionRequest the request from which to get the request
