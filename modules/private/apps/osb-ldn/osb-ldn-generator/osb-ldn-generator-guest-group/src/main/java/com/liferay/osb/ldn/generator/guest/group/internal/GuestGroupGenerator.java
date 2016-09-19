@@ -20,6 +20,7 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.osb.ldn.generator.guest.group.internal.constants.LayoutGeneratorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -39,24 +40,19 @@ public class GuestGroupGenerator {
 
 	@Activate
 	public void activate() throws Exception {
+		createExpando();
+
+		addLayouts();
+	}
+
+	protected void addLayouts() throws PortalException {
 		long userId = _userLocalService.getDefaultUserId(
 			PortalUtil.getDefaultCompanyId());
 
-		createExpando();
-
-		addLayouts(userId);
-	}
-
-	protected void addLayouts(long userId) throws PortalException {
 		Group group = _groupLocalService.getGroup(
 			PortalUtil.getDefaultCompanyId(), _GUEST_GROUP);
 
-		int[] pageTypes = {
-			_HOME_PAGE_TYPE, _PROJECTS_PAGE_TYPE, _FORUMS_PAGE_TYPE,
-			_COMMUNITY_PAGE_TYPE, _BLOGS_PAGE_TYPE
-		};
-
-		for (int pageType : pageTypes) {
+		for (int pageType : LayoutGeneratorConstants.PAGE_TYPES) {
 			LayoutGenerator layoutGenerator =
 				_layoutGeneratorFactory.getLayoutGenerator(
 					userId, group.getGroupId(), pageType);
@@ -88,17 +84,7 @@ public class GuestGroupGenerator {
 		}
 	}
 
-	private static final int _BLOGS_PAGE_TYPE = 5;
-
-	private static final int _COMMUNITY_PAGE_TYPE = 4;
-
-	private static final int _FORUMS_PAGE_TYPE = 3;
-
 	private static final String _GUEST_GROUP = "Guest";
-
-	private static final int _HOME_PAGE_TYPE = 1;
-
-	private static final int _PROJECTS_PAGE_TYPE = 2;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

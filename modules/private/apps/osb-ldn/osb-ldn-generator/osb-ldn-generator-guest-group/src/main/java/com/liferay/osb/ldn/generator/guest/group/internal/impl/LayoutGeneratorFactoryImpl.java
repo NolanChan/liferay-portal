@@ -17,6 +17,7 @@ package com.liferay.osb.ldn.generator.guest.group.internal.impl;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.osb.ldn.generator.guest.group.internal.LayoutGenerator;
 import com.liferay.osb.ldn.generator.guest.group.internal.LayoutGeneratorFactory;
+import com.liferay.osb.ldn.generator.guest.group.internal.constants.LayoutGeneratorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 
@@ -36,34 +37,24 @@ public class LayoutGeneratorFactoryImpl implements LayoutGeneratorFactory {
 
 		LayoutGenerator layoutGenerator = null;
 
-		if (type == _HOME_PAGE_TYPE) {
+		if (type == LayoutGeneratorConstants.HOME_PAGE_TYPE) {
 			layoutGenerator = _homeLayoutGenerator;
 		}
-		else if (type == _PROJECTS_PAGE_TYPE) {
+		else if (type == LayoutGeneratorConstants.PROJECTS_PAGE_TYPE) {
 			layoutGenerator = _projectsLayoutGenerator;
 		}
-		else if (type == _COMMUNITY_PAGE_TYPE) {
+		else if (type == LayoutGeneratorConstants.COMMUNITY_PAGE_TYPE) {
 			layoutGenerator = _communityLayoutGenerator;
 		}
-		else if (type == _BLOGS_PAGE_TYPE) {
+		else if (type == LayoutGeneratorConstants.BLOGS_PAGE_TYPE) {
 			layoutGenerator = _blogsLayoutGenerator;
 		}
-		else if (type == _FORUMS_PAGE_TYPE) {
+		else if (type == LayoutGeneratorConstants.FORUMS_PAGE_TYPE) {
 			layoutGenerator = _forumsLayoutGenerator;
 		}
 
 		return layoutGenerator;
 	}
-
-	private static final int _BLOGS_PAGE_TYPE = 5;
-
-	private static final int _COMMUNITY_PAGE_TYPE = 4;
-
-	private static final int _FORUMS_PAGE_TYPE = 3;
-
-	private static final int _HOME_PAGE_TYPE = 1;
-
-	private static final int _PROJECTS_PAGE_TYPE = 2;
 
 	@Reference(target = "(ldn.page.generator.type=blogs)", unbind = "-")
 	private LayoutGenerator _blogsLayoutGenerator;
