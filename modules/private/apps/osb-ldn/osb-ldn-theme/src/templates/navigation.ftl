@@ -4,7 +4,7 @@
 			<div class="navbar-right">
 				<#assign
 					VOID = freeMarkerPortletPreferences.setValue("displayDepth", "1")
-					VOID = freeMarkerPortletPreferences.setValue("displayTemplate", "list-menu")
+					VOID = freeMarkerPortletPreferences.setValue("displayStyle", "ddmTemplate_LIST-MENU-FTL")
 					VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone")
 				/>
 
