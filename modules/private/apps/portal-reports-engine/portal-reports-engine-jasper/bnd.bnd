@@ -112,7 +112,6 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Reports Engine
--include: ../../../../../../modules/apps/forms-and-workflow/app.bnd
 -includeresource:\
 	lib/antlr.jar=antlr-[0-9]*.jar,\
 	lib/commons-collections.jar=commons-collections-[0-9]*.jar,\

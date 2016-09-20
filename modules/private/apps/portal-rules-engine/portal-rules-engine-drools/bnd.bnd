@@ -41,7 +41,6 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--include: ../../../../../../modules/apps/forms-and-workflow/app.bnd
 -includeresource:\
 	lib/antlr-runtime.jar=antlr-runtime-[0-9]*.jar,\
 	lib/drools-compiler.jar=drools-compiler-[0-9]*.jar,\

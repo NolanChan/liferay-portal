@@ -10,4 +10,3 @@ Export-Package:\
 	com.liferay.portal.reports.engine.console.status
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Reports Engine Console
--include: ../../../../../../modules/apps/forms-and-workflow/app.bnd
