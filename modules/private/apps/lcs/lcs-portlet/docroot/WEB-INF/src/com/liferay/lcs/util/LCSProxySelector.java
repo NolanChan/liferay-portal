@@ -130,7 +130,7 @@ public class LCSProxySelector extends ProxySelector {
 
 			String localProxyHostName = PortletPropsValues.PROXY_HOST_NAME;
 
-			if ((localProxyHostName != null) &&
+			if (Validator.isNotNull(localProxyHostName) &&
 				StringUtil.equalsIgnoreCase(
 					localProxyHostName, requestingHost)) {
 
@@ -158,7 +158,7 @@ public class LCSProxySelector extends ProxySelector {
 			String globalProxyHostName = System.getProperty(
 				protocol + ".proxyHost");
 
-			if ((globalProxyHostName != null) &&
+			if (Validator.isNotNull(globalProxyHostName) &&
 				StringUtil.equalsIgnoreCase(
 					globalProxyHostName, requestingHost)) {
 
