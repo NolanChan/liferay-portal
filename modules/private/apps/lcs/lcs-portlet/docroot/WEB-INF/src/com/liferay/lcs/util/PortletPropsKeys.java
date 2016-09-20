@@ -157,6 +157,10 @@ public interface PortletPropsKeys {
 	public static final String PORTAL_PROPERTIES_BLACKLIST =
 		"portal.properties.blacklist";
 
+	public static final String PROXY_AUTH_TYPE = "proxy.auth.type";
+
+	public static final String PROXY_DOMAIN = "proxy.domain";
+
 	public static final String PROXY_HOST_LOGIN = "proxy.host.login";
 
 	public static final String PROXY_HOST_NAME = "proxy.host.name";
@@ -164,6 +168,8 @@ public interface PortletPropsKeys {
 	public static final String PROXY_HOST_PASSWORD = "proxy.host.password";
 
 	public static final String PROXY_HOST_PORT = "proxy.host.port";
+
+	public static final String PROXY_WORKSTATION = "proxy.workstation";
 
 	public static final String SCHEDULED_TASK_PAGE_SIZE =
 		"scheduled.task.page.size";

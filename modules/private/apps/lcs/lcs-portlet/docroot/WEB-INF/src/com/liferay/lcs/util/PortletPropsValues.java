@@ -176,6 +176,12 @@ public class PortletPropsValues {
 	public static final String PORTAL_PROPERTIES_BLACKLIST = PortletProps.get(
 		PortletPropsKeys.PORTAL_PROPERTIES_BLACKLIST);
 
+	public static final String PROXY_AUTH_TYPE = PortletProps.get(
+		PortletPropsKeys.PROXY_AUTH_TYPE);
+
+	public static final String PROXY_DOMAIN = PortletProps.get(
+		PortletPropsKeys.PROXY_DOMAIN);
+
 	public static final String PROXY_HOST_LOGIN = PortletProps.get(
 		PortletPropsKeys.PROXY_HOST_LOGIN);
 
@@ -187,6 +193,9 @@ public class PortletPropsValues {
 
 	public static final int PROXY_HOST_PORT = GetterUtil.getInteger(
 		PortletProps.get(PortletPropsKeys.PROXY_HOST_PORT));
+
+	public static final String PROXY_WORKSTATION = PortletProps.get(
+		PortletPropsKeys.PROXY_WORKSTATION);
 
 	public static final int SCHEDULED_TASK_PAGE_SIZE = GetterUtil.getInteger(
 		PortletProps.get(PortletPropsKeys.SCHEDULED_TASK_PAGE_SIZE));
