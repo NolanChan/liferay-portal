@@ -1,1 +1,32 @@
-{namespace view}/** * Renders a list of documentation projects. * * @param documentationProjects */{template .render}	<div class="view">		<ul class="documentation-project">			{foreach $documentationProject in $documentationProjects}				{call .render_documentation_project}					{param documentationProject: $documentationProject /}				{/call}			{/foreach}		</ul>	</div>{/template}/** * Renders a documentation project. * * @param documentationProject */{template .render_documentation_project}	<li>		<a href="{$documentationProject.siteURL}">			<span class="icon"><img src="{$documentationProject.iconURL}" /></span>			<span class="name">{$documentationProject.name}</span>		</a>	</li>{/template}
+{namespace view}
+
+/**
+ * Renders a list of documentation projects.
+ *
+ * @param documentationProjects
+ */
+{template .render}
+	<div class="view">
+		<ul class="documentation-project">
+			{foreach $documentationProject in $documentationProjects}
+				{call .render_documentation_project}
+					{param documentationProject: $documentationProject /}
+				{/call}
+			{/foreach}
+		</ul>
+	</div>
+{/template}
+
+/**
+ * Renders a documentation project.
+ *
+ * @param documentationProject
+ */
+{template .render_documentation_project}
+	<li>
+		<a href="{$documentationProject.siteURL}">
+			<span class="icon"><img src="{$documentationProject.iconURL}" /></span>
+			<span class="name">{$documentationProject.name}</span>
+		</a>
+	</li>
+{/template}
