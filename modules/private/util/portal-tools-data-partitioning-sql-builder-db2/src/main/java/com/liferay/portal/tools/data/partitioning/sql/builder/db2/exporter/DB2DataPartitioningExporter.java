@@ -19,6 +19,21 @@ import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataP
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.InsertSQLBuilder;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Manuel de la Peña
  */
@@ -26,6 +41,13 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 
 	public DB2DataPartitioningExporter() {
 		super(new InsertSQLBuilder(new DB2FieldSerializer()));
+	}
+
+	@Override
+	public void export(final ExportContext exportContext) {
+		_exportContext = exportContext;
+
+		super.export(exportContext);
 	}
 
 	@Override
@@ -73,5 +95,145 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 	public String getTableNameFieldName() {
 		return "table_name";
 	}
+
+	@Override
+	public void write(
+		long companyId, String tableName, OutputStream outputStream) {
+
+		DataSource dataSource = getDataSource();
+
+		String sql = "select * from " + tableName;
+
+		if (companyId > 0) {
+			sql += " where companyId = ?";
+		}
+
+		try (Connection connection = dataSource.getConnection();
+			PreparedStatement preparedStatement = buildPreparedStatement(
+				connection, sql, companyId);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
+			int columnCount = resultSetMetaData.getColumnCount();
+
+			boolean hasClob = false;
+
+			if (resultSet.next()) {
+				for (int i = 0; i < columnCount; i++) {
+					Object object = resultSet.getObject(i + 1);
+
+					if (object instanceof Clob) {
+						hasClob = true;
+
+						break;
+					}
+				}
+
+				StringBuilder sb = new StringBuilder(4);
+
+				if (hasClob) {
+					sb.append(_getExportBlobCommand(companyId, tableName));
+					sb.append("\n");
+					sb.append(_getImportBlobCommand(tableName));
+				}
+				else {
+					sb.append(_getExportCommand(companyId, tableName));
+					sb.append("\n");
+					sb.append(_getImportCommand(tableName));
+				}
+
+				sb.append("\n\n");
+
+				String commands = sb.toString();
+
+				outputStream.write(commands.getBytes());
+			}
+		}
+		catch (IOException | SQLException e) {
+			_logger.error(
+				"Unable to generate export/import statements for table " +
+					tableName,
+				e);
+		}
+	}
+
+	private String _getExportBlobCommand(long companyId, String tableName) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("export to ");
+		sb.append(_exportContext.getOutputDirName());
+		sb.append(tableName);
+		sb.append(".del of del lobs to ");
+		sb.append(_exportContext.getOutputDirName());
+		sb.append(" lobfile lobfile1, lobfile2 ");
+		sb.append("modified by lobsinfile ");
+		sb.append("select * from ");
+		sb.append(tableName);
+
+		if (companyId > 0) {
+			sb.append(" where companyId = ");
+			sb.append(companyId);
+		}
+
+		return sb.toString();
+	}
+
+	private String _getExportCommand(long companyId, String tableName) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("export to ");
+		sb.append(_exportContext.getOutputDirName());
+		sb.append(tableName);
+		sb.append(".ifx of ifx messages ");
+		sb.append(_exportContext.getOutputDirName());
+		sb.append(tableName);
+		sb.append(".txt ");
+		sb.append("select * from ");
+		sb.append(tableName);
+
+		if (companyId > 0) {
+			sb.append(" where companyId = ");
+			sb.append(companyId);
+		}
+
+		return sb.toString();
+	}
+
+	private String _getImportBlobCommand(String tableName) {
+		StringBuilder sb = new StringBuilder(7);
+
+		sb.append("import from ");
+		sb.append(_exportContext.getOutputDirName());
+		sb.append(tableName);
+		sb.append(".del of del lobs from ");
+		sb.append(_exportContext.getOutputDirName());
+		sb.append(" modified by lobsinfile ");
+		sb.append("insert into ");
+		sb.append(tableName);
+
+		return sb.toString();
+	}
+
+	private String _getImportCommand(String tableName) {
+		StringBuilder sb = new StringBuilder(9);
+
+		sb.append("import from ");
+		sb.append(_exportContext.getOutputDirName());
+		sb.append(tableName);
+		sb.append(".ixf of ixf messages ");
+		sb.append(_exportContext.getOutputDirName());
+		sb.append(tableName);
+		sb.append(".txt ");
+		sb.append("insert into ");
+		sb.append(tableName);
+
+		return sb.toString();
+	}
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		DB2DataPartitioningExporter.class);
+
+	private ExportContext _exportContext;
 
 }
