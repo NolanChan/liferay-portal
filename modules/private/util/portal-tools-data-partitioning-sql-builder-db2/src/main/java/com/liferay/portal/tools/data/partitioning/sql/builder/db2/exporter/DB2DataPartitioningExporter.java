@@ -73,6 +73,11 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 	}
 
 	@Override
+	public String getOutputFileExtension() {
+		return ".sh";
+	}
+
+	@Override
 	public String getPartitionedTableNamesSQL(ExportContext exportContext) {
 		StringBuilder sb = new StringBuilder(11);
 
