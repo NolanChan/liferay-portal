@@ -18,29 +18,16 @@ import com.liferay.lcs.oauth.OAuthUtil;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClientImpl;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.net.URI;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
-import javax.servlet.http.HttpServletResponse;
+import oauth.signpost.OAuthConsumer;
+import oauth.signpost.exception.OAuthException;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
-
-import org.scribe.exceptions.OAuthConnectionException;
-import org.scribe.model.OAuthRequest;
-import org.scribe.model.Response;
-import org.scribe.model.Token;
-import org.scribe.model.Verb;
-import org.scribe.oauth.OAuthService;
 
 /**
  * @author Igor Beslic
@@ -80,118 +67,31 @@ public class OAuthJSONWebServiceClientImpl extends JSONWebServiceClientImpl {
 	protected String execute(HttpRequestBase httpRequestBase)
 		throws JSONWebServiceTransportException {
 
+
+		if ((_accessToken == null) && (_accessSecret == null)) {
+			throw new JSONWebServiceTransportException.
+				AuthenticationFailure("OAuth credentials are not set");
+		}
+
+		OAuthConsumer oAuthConsumer = OAuthUtil.getOAuthConsumer(
+			_accessToken, _accessSecret);
+
+
+		String requestURL = OAuthUtil.buildURL(
+			getHostName(), getHostPort(), getProtocol(),
+			String.valueOf(httpRequestBase.getURI()));
+
+		httpRequestBase.setURI(URI.create(requestURL));
+
 		try {
-			if ((_accessToken == null) && (_accessSecret == null)) {
-				throw new JSONWebServiceTransportException.
-					AuthenticationFailure("OAuth credentials are not set");
-			}
-
-			OAuthService oAuthService = OAuthUtil.getOAuthService();
-
-			Verb verb = Verb.valueOf(
-				StringUtil.toUpperCase(httpRequestBase.getMethod()));
-
-			String requestURL = OAuthUtil.buildURL(
-				getHostName(), getHostPort(), getProtocol(),
-				String.valueOf(httpRequestBase.getURI()));
-
-			OAuthRequest oAuthRequest = new OAuthRequest(verb, requestURL);
-
-			if (httpRequestBase instanceof HttpPost) {
-				HttpEntity httpEntity = ((HttpPost)httpRequestBase).getEntity();
-
-				BufferedReader bufferedReader = null;
-				String line = null;
-				StringBundler sb = new StringBundler();
-
-				try {
-					bufferedReader = new BufferedReader(
-						new InputStreamReader(httpEntity.getContent()));
-
-					while ((line = bufferedReader.readLine()) != null) {
-						sb.append(line);
-					}
-				}
-				catch (IOException ioe) {
-					throw new RuntimeException(ioe);
-				}
-				finally {
-					if (bufferedReader != null) {
-						try {
-							bufferedReader.close();
-						}
-						catch (IOException ioe) {
-							throw new RuntimeException(ioe);
-						}
-					}
-				}
-
-				Scanner contentScanner = new Scanner(sb.toString());
-
-				contentScanner.useDelimiter("&");
-
-				while (contentScanner.hasNext()) {
-					Scanner keyValueScanner = new Scanner(
-						contentScanner.next());
-
-					if (!keyValueScanner.hasNext()) {
-						continue;
-					}
-
-					keyValueScanner.useDelimiter("=");
-
-					String key = keyValueScanner.next();
-
-					String value = "";
-
-					if (keyValueScanner.hasNext()) {
-						value = keyValueScanner.next();
-					}
-
-					oAuthRequest.addQuerystringParameter(key, value);
-				}
-			}
-
-			oAuthService.signRequest(
-				new Token(_accessToken, _accessSecret), oAuthRequest);
-
-			Response response = null;
-
-			try {
-				response = oAuthRequest.send();
-			}
-			catch (OAuthConnectionException oace) {
-				throw new JSONWebServiceTransportException.CommunicationFailure(
-					"Unable to establish connection to remote service", oace);
-			}
-
-			if (response.getCode() == HttpServletResponse.SC_UNAUTHORIZED) {
-				String value = response.getHeader("WWW-Authenticate");
-
-				throw new JSONWebServiceTransportException.
-					AuthenticationFailure(value);
-			}
-
-			int responseCode = response.getCode();
-
-			if (responseCode == HttpServletResponse.SC_OK) {
-				return response.getBody();
-			}
-			else if ((responseCode == HttpServletResponse.SC_BAD_REQUEST) ||
-					 (responseCode == HttpServletResponse.SC_FORBIDDEN) ||
-					 (responseCode == HttpServletResponse.SC_NOT_ACCEPTABLE) ||
-					 (responseCode == HttpServletResponse.SC_NOT_FOUND)) {
-
-				return response.getBody();
-			}
-			else {
-				return "{\"exception\":\"Server returned " + responseCode +
-					".\"}";
-			}
+			oAuthConsumer.sign(httpRequestBase);
 		}
-		finally {
-			httpRequestBase.releaseConnection();
+		catch (OAuthException e) {
+			throw new JSONWebServiceTransportException.CommunicationFailure(
+				"Unable to sign HTTP request", e);
 		}
+
+		return super.execute(httpRequestBase);
 	}
 
 	private static final String _URL_CLASSNAME = "/api/jsonws/classname/";

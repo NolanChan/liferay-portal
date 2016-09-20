@@ -17,19 +17,14 @@ package com.liferay.lcs.oauth;
 import com.liferay.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletRequest;
 
-import org.scribe.builder.ServiceBuilder;
-import org.scribe.exceptions.OAuthException;
-import org.scribe.model.Token;
-import org.scribe.model.Verifier;
-import org.scribe.oauth.OAuthService;
+import oauth.signpost.OAuthConsumer;
+import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 
 /**
  * @author Igor Beslic
@@ -58,67 +53,16 @@ public class OAuthUtil {
 		return sb.toString();
 	}
 
-	public static Token extractAccessToken(
-		Token requestToken, String oAuthVerifier) {
+	public static OAuthConsumer getOAuthConsumer(
+		String accessToken, String accessSecret) {
 
-		Verifier verifier = new Verifier(oAuthVerifier);
+		OAuthConsumer oAuthConsumer = new CommonsHttpOAuthConsumer(
+			PortletPropsValues.OSB_LCS_PORTLET_OAUTH_CONSUMER_KEY,
+			PortletPropsValues.OSB_LCS_PORTLET_OAUTH_CONSUMER_SECRET);
 
-		OAuthService oAuthService = getOAuthService();
+		oAuthConsumer.setTokenWithSecret(accessToken, accessSecret);
 
-		return oAuthService.getAccessToken(requestToken, verifier);
-	}
-
-	public static String getAuthorizeURL(
-		String callbackURL, Token requestToken) {
-
-		String authorizeRequestURL = getOAuthService().getAuthorizationUrl(
-			requestToken);
-
-		if (Validator.isNotNull(callbackURL)) {
-			authorizeRequestURL = HttpUtil.addParameter(
-				authorizeRequestURL, "oauth_callback", callbackURL);
-		}
-
-		return authorizeRequestURL.replace("{0}", requestToken.getToken());
-	}
-
-	public static OAuthService getOAuthService() {
-		if (_oAuthService == null) {
-			ServiceBuilder oAuthServiceBuilder = new ServiceBuilder();
-
-			oAuthServiceBuilder.apiKey(
-				PortletPropsValues.OSB_LCS_PORTLET_OAUTH_CONSUMER_KEY);
-			oAuthServiceBuilder.apiSecret(
-				PortletPropsValues.OSB_LCS_PORTLET_OAUTH_CONSUMER_SECRET);
-			oAuthServiceBuilder.provider(OAuthAPIImpl.class);
-
-			_oAuthService = oAuthServiceBuilder.build();
-		}
-
-		return _oAuthService;
-	}
-
-	public static Token getRequestToken() {
-		OAuthService oAuthService = getOAuthService();
-
-		return oAuthService.getRequestToken();
-	}
-
-	public static Token getRequestToken(PortletRequest portletRequest) {
-		try {
-			return getRequestToken();
-		}
-		catch (OAuthException oae) {
-			if (hasOAuthException(oae)) {
-				processOAuthException(portletRequest, oae);
-
-				return null;
-			}
-
-			SessionErrors.add(portletRequest, "oAuthGeneralError");
-
-			throw oae;
-		}
+		return oAuthConsumer;
 	}
 
 	public static boolean hasOAuthException(Exception e) {
@@ -170,7 +114,5 @@ public class OAuthUtil {
 			}
 		}
 	}
-
-	private static OAuthService _oAuthService;
 
 }
