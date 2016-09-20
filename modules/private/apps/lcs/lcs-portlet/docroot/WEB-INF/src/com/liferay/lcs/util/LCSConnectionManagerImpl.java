@@ -509,6 +509,9 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 				else {
 					setLCSGatewayAvailable(true);
 					setReady(true);
+
+					LCSUtil.sendServiceAvailabilityNotification(
+						LCSPortletState.NO_SUBSCRIPTION);
 				}
 			}
 
