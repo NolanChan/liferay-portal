@@ -32,6 +32,8 @@ public interface LCSClusterNodeService {
 	public java.util.List<LCSClusterNode> getLCSClusterEntryLCSClusterNodes(
 		long lcsClusterEntryId);
 
+	public void mergeStatus(String key, int status);
+
 	public void updateBuildNumber(String key, int buildNumber);
 
 	public void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(

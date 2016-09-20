@@ -40,6 +40,8 @@ public interface LCSClusterNode {
 
 	public String getPortalEdition();
 
+	public int getStatus();
+
 	public boolean isArchived();
 
 	public void setArchived(boolean archived);
@@ -61,5 +63,7 @@ public interface LCSClusterNode {
 	public void setName(String name);
 
 	public void setPortalEdition(String portalEdition);
+
+	public void setStatus(int status);
 
 }

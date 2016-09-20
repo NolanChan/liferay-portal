@@ -71,6 +71,11 @@ public class LCSClusterNodeImpl implements LCSClusterNode {
 	}
 
 	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
 	public boolean isArchived() {
 		return _archived;
 	}
@@ -125,6 +130,11 @@ public class LCSClusterNodeImpl implements LCSClusterNode {
 		_portalEdition = portalEdition;
 	}
 
+	@Override
+	public void setStatus(int status) {
+		_status = status;
+	}
+
 	private boolean _archived;
 	private int _buildNumber;
 	private String _description;
@@ -135,5 +145,6 @@ public class LCSClusterNodeImpl implements LCSClusterNode {
 	private String _location;
 	private String _name;
 	private String _portalEdition;
+	private int _status;
 
 }

@@ -125,6 +125,13 @@ public class LCSClusterNodeServiceImpl
 	}
 
 	@Override
+	public void mergeStatus(String key, int status) {
+		doPut(
+			_URL_LCS_CLUSTER_NODE, "key", key, "status",
+			String.valueOf(status));
+	}
+
+	@Override
 	public void updateBuildNumber(String key, int buildNumber) {
 		doPut(
 			_URL_LCS_CLUSTER_NODE, "key", key, "buildNumber",
