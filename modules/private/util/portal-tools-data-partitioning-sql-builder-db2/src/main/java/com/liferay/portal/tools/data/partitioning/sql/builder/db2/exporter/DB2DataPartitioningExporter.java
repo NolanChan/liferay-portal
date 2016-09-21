@@ -42,6 +42,17 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 
 	public DB2DataPartitioningExporter() {
 		super(new InsertSQLBuilder(new DB2FieldSerializer()));
+
+		String osName = System.getProperty("os.name");
+
+		if (osName.contains("windows")) {
+			_osComment = "::";
+			_osExtension = ".bat";
+		}
+		else {
+			_osComment = "#";
+			_osExtension = ".sh";
+		}
 	}
 
 	@Override
@@ -81,7 +92,7 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 
 	@Override
 	public String getOutputFileExtension() {
-		return ".sh";
+		return _osExtension;
 	}
 
 	@Override
@@ -142,7 +153,12 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 					}
 				}
 
-				StringBuilder sb = new StringBuilder(4);
+				StringBuilder sb = new StringBuilder(8);
+
+				sb.append(_osComment);
+				sb.append(" Commands to export/import ");
+				sb.append(tableName);
+				sb.append(" table.\n");
 
 				if (hasClob) {
 					sb.append(_getExportBlobCommand(companyId, tableName));
@@ -247,6 +263,8 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 		DB2DataPartitioningExporter.class);
 
 	private ExportContext _exportContext;
+	private final String _osComment;
+	private final String _osExtension;
 	private String _outputDirName;
 
 }
