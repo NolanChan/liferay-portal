@@ -289,6 +289,7 @@ public class OracleDB extends BaseDB {
 		line = StringUtil.replace(line, "sysdate, ", "20050101, ");
 
 		sb.append(line);
+
 		sb.append("\n");
 	}
 

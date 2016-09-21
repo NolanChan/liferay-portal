@@ -203,6 +203,7 @@ public class LCSClusterNodePortletMetricsServiceImpl
 		lcsClusterNodePortletMetrics.setAverageLoadTime(
 			(int)(((averageLoadTime * count) + duration) / (count + 1)));
 		lcsClusterNodePortletMetrics.setCount(count);
+
 		lcsClusterNodePortletMetrics.setFrequency(
 			lcsClusterNodePortletMetrics.getFrequency() + frequency);
 

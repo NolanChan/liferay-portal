@@ -285,6 +285,7 @@ public class AdminPortlet extends MVCPortlet {
 		boolean assertionSignatureRequired = ParamUtil.getBoolean(
 			uploadPortletRequest, "assertionSignatureRequired");
 		long clockSkew = ParamUtil.getLong(uploadPortletRequest, "clockSkew");
+
 		boolean enabled = true;
 		boolean forceAuthn = ParamUtil.getBoolean(
 			uploadPortletRequest, "forceAuthn");

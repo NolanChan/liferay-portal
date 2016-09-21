@@ -32,6 +32,7 @@ public class CommunityDirectory extends Directory {
 
 		addAttribute("cn", community.getName(locale));
 		addAttribute("description", community.getDescription(locale));
+
 		addAttribute("objectclass", "groupOfNames");
 		addAttribute("objectclass", "liferayCommunity");
 		addAttribute("objectclass", "organizationalUnit");

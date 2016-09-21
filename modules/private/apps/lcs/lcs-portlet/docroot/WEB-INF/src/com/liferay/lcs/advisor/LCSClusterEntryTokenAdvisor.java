@@ -120,6 +120,7 @@ public class LCSClusterEntryTokenAdvisor {
 			lcsClusterEntryTokenContentAdvisor.getAccessSecret();
 		String lcsAccessToken =
 			lcsClusterEntryTokenContentAdvisor.getAccessToken();
+
 		long lcsClusterEntryId = lcsClusterEntryToken.getLcsClusterEntryId();
 		long lcsClusterEntryTokenId =
 			lcsClusterEntryToken.getLcsClusterEntryTokenId();

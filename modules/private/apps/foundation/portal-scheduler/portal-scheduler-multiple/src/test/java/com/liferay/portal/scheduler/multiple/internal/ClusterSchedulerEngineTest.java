@@ -109,6 +109,7 @@ public class ClusterSchedulerEngineTest {
 				StorageType.MEMORY_CLUSTERED);
 
 		Assert.assertEquals(4, schedulerResponses.size());
+
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
 		_clusterSchedulerEngine.delete(
@@ -119,6 +120,7 @@ public class ClusterSchedulerEngineTest {
 			StorageType.MEMORY_CLUSTERED);
 
 		Assert.assertEquals(3, schedulerResponses.size());
+
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
 		ClusterInvokeThreadLocal.setEnabled(false);
@@ -136,6 +138,7 @@ public class ClusterSchedulerEngineTest {
 			StorageType.MEMORY_CLUSTERED);
 
 		Assert.assertTrue(schedulerResponses.isEmpty());
+
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
 		ClusterInvokeThreadLocal.setEnabled(false);
@@ -150,6 +153,7 @@ public class ClusterSchedulerEngineTest {
 			StorageType.PERSISTED);
 
 		Assert.assertEquals(4, schedulerResponses.size());
+
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
 		_clusterSchedulerEngine.delete(
@@ -160,6 +164,7 @@ public class ClusterSchedulerEngineTest {
 			StorageType.PERSISTED);
 
 		Assert.assertEquals(3, schedulerResponses.size());
+
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
 		ClusterInvokeThreadLocal.setEnabled(false);
@@ -177,6 +182,7 @@ public class ClusterSchedulerEngineTest {
 			StorageType.PERSISTED);
 
 		Assert.assertTrue(schedulerResponses.isEmpty());
+
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
 		ClusterInvokeThreadLocal.setEnabled(false);
@@ -203,6 +209,7 @@ public class ClusterSchedulerEngineTest {
 				StorageType.MEMORY_CLUSTERED);
 
 		Assert.assertTrue(schedulerResponses.isEmpty());
+
 		Assert.assertEquals(4, _memoryClusteredJobs.size());
 
 		_clusterSchedulerEngine.delete(
@@ -213,6 +220,7 @@ public class ClusterSchedulerEngineTest {
 			StorageType.MEMORY_CLUSTERED);
 
 		Assert.assertTrue(schedulerResponses.isEmpty());
+
 		Assert.assertEquals(3, _memoryClusteredJobs.size());
 
 		ClusterInvokeThreadLocal.setEnabled(false);
@@ -259,6 +267,7 @@ public class ClusterSchedulerEngineTest {
 			StorageType.MEMORY_CLUSTERED);
 
 		Assert.assertTrue(schedulerResponses.isEmpty());
+
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
 		ClusterInvokeThreadLocal.setEnabled(false);
@@ -300,6 +309,7 @@ public class ClusterSchedulerEngineTest {
 				StorageType.MEMORY_CLUSTERED);
 
 		Assert.assertEquals(4, schedulerResponses.size());
+
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
 		try (CaptureHandler captureHandler =
@@ -318,12 +328,14 @@ public class ClusterSchedulerEngineTest {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertTrue(logRecords.isEmpty());
+
 			Assert.assertFalse(_mockClusterMasterExecutor.isMaster());
 
 			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
 				StorageType.MEMORY_CLUSTERED);
 
 			Assert.assertTrue(schedulerResponses.isEmpty());
+
 			Assert.assertEquals(4, _memoryClusteredJobs.size());
 
 			// Test 2, with log enabled
@@ -342,6 +354,7 @@ public class ClusterSchedulerEngineTest {
 				StorageType.MEMORY_CLUSTERED);
 
 			Assert.assertEquals(4, schedulerResponses.size());
+
 			Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
 			logRecords = captureHandler.resetLogLevel(Level.ALL);
@@ -361,12 +374,14 @@ public class ClusterSchedulerEngineTest {
 			Assert.assertEquals(
 				"MEMORY_CLUSTERED jobs stopped running on this node",
 				logRecord.getMessage());
+
 			Assert.assertFalse(_mockClusterMasterExecutor.isMaster());
 
 			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
 				StorageType.MEMORY_CLUSTERED);
 
 			Assert.assertTrue(schedulerResponses.isEmpty());
+
 			Assert.assertEquals(4, _memoryClusteredJobs.size());
 		}
 	}
@@ -762,6 +777,7 @@ public class ClusterSchedulerEngineTest {
 				StorageType.MEMORY_CLUSTERED);
 
 		Assert.assertEquals(1, schedulerResponses.size());
+
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
 		Trigger trigger = getTrigger(
@@ -776,6 +792,7 @@ public class ClusterSchedulerEngineTest {
 			StorageType.MEMORY_CLUSTERED);
 
 		Assert.assertEquals(2, schedulerResponses.size());
+
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
 		ClusterInvokeThreadLocal.setEnabled(false);
@@ -790,6 +807,7 @@ public class ClusterSchedulerEngineTest {
 			StorageType.PERSISTED);
 
 		Assert.assertEquals(1, schedulerResponses.size());
+
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
 		trigger = getTrigger(
@@ -804,6 +822,7 @@ public class ClusterSchedulerEngineTest {
 			StorageType.PERSISTED);
 
 		Assert.assertEquals(2, schedulerResponses.size());
+
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
 		ClusterInvokeThreadLocal.setEnabled(false);
@@ -827,6 +846,7 @@ public class ClusterSchedulerEngineTest {
 				StorageType.MEMORY_CLUSTERED);
 
 		Assert.assertTrue(schedulerResponses.isEmpty());
+
 		Assert.assertEquals(1, _memoryClusteredJobs.size());
 
 		_mockClusterMasterExecutor.reset(false, 2, 0);
@@ -843,6 +863,7 @@ public class ClusterSchedulerEngineTest {
 			StorageType.MEMORY_CLUSTERED);
 
 		Assert.assertTrue(schedulerResponses.isEmpty());
+
 		Assert.assertEquals(2, _memoryClusteredJobs.size());
 
 		ClusterInvokeThreadLocal.setEnabled(false);
@@ -885,6 +906,7 @@ public class ClusterSchedulerEngineTest {
 				StorageType.MEMORY_CLUSTERED);
 
 		Assert.assertTrue(schedulerResponses.isEmpty());
+
 		Assert.assertEquals(4, _memoryClusteredJobs.size());
 
 		_clusterSchedulerEngine.pause(
@@ -907,6 +929,7 @@ public class ClusterSchedulerEngineTest {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertTrue(logRecords.isEmpty());
+
 			Assert.assertTrue(_mockClusterMasterExecutor.isMaster());
 
 			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
@@ -937,6 +960,7 @@ public class ClusterSchedulerEngineTest {
 				StorageType.MEMORY_CLUSTERED);
 
 			Assert.assertTrue(schedulerResponses.isEmpty());
+
 			Assert.assertEquals(4, _memoryClusteredJobs.size());
 
 			logRecords = captureHandler.resetLogLevel(Level.ALL);
@@ -956,12 +980,14 @@ public class ClusterSchedulerEngineTest {
 			Assert.assertEquals(
 				"MEMORY_CLUSTERED jobs are running on this node",
 				logRecord.getMessage());
+
 			Assert.assertTrue(_mockClusterMasterExecutor.isMaster());
 
 			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
 				StorageType.MEMORY_CLUSTERED);
 
 			Assert.assertEquals(4, schedulerResponses.size());
+
 			Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 		}
 	}
@@ -1468,6 +1494,7 @@ public class ClusterSchedulerEngineTest {
 			_MEMORY_CLUSTER_TEST_GROUP_NAME, StorageType.MEMORY_CLUSTERED);
 
 		Assert.assertTrue(schedulerResponses.isEmpty());
+
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
 		ClusterInvokeThreadLocal.setEnabled(false);

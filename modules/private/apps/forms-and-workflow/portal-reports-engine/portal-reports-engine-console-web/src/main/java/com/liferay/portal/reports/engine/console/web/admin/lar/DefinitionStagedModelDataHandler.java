@@ -169,6 +169,7 @@ public class DefinitionStagedModelDataHandler
 					"full-file-name");
 
 				fileName = FileUtil.getShortFileName(fullFileName);
+
 				inputStream = portletDataContext.getZipEntryAsInputStream(
 					binPath);
 			}

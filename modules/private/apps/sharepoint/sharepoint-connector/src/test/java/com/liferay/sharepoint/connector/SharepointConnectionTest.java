@@ -194,6 +194,7 @@ public class SharepointConnectionTest {
 
 		Assert.assertNotNull(
 			_sharepointConnection.getSharepointObject(copiedFilePath));
+
 		Assert.assertNotNull(
 			_sharepointConnection.getSharepointObject(_filePath1));
 	}
@@ -524,6 +525,7 @@ public class SharepointConnectionTest {
 
 		Assert.assertNotNull(
 			_sharepointConnection.getSharepointObject(movedFilePath));
+
 		Assert.assertNull(
 			_sharepointConnection.getSharepointObject(_filePath1));
 	}

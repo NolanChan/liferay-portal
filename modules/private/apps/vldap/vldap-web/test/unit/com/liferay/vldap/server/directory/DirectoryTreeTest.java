@@ -807,6 +807,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		Attribute topAttribute = attributes.get(0);
 
 		Assert.assertEquals("Liferay", topAttribute.getValue());
+
 		Assert.assertTrue(
 			searchBase.getDirectoryBuilder() instanceof TopBuilder);
 		Assert.assertEquals("Liferay", searchBase.getTop());
@@ -866,6 +867,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		Attribute webIdAttribute = attributes.get(0);
 
 		Assert.assertEquals("liferay.com", webIdAttribute.getValue());
+
 		Assert.assertTrue(
 			searchBase.getDirectoryBuilder() instanceof CompanyBuilder);
 		Assert.assertEquals("Liferay", searchBase.getTop());

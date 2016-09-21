@@ -244,6 +244,7 @@ public class ClusterLinkImpl implements ClusterLink {
 					channelPropertiesString, channelName, clusterReceiver);
 
 			_clusterChannels.add(clusterChannel);
+
 			_clusterReceivers.add(clusterReceiver);
 			_localAddresses.add(clusterChannel.getLocalAddress());
 		}

@@ -84,6 +84,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			TestClusterChannel.getClusterChannels();
 
 		Assert.assertTrue(clusterChannels.isEmpty());
+
 		Assert.assertNull(clusterLinkImpl.getExecutorService());
 
 		// Test 2, send unicast message
@@ -190,6 +191,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 				Assert.assertEquals(
 					"Unable to initialize channels", logRecord.getMessage());
+
 				Assert.assertEquals(
 					"java.lang.IllegalArgumentException: Channel count must " +
 						"be between 1 and " + ClusterLinkImpl.MAX_CHANNEL_COUNT,

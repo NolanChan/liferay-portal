@@ -176,6 +176,7 @@ public class LCSClusterNodeLayoutMetricsServiceImpl
 		lcsClusterNodeLayoutMetrics.setAverageLoadTime(
 			(int)(((averageLoadTime * count) + duration) / (count + 1)));
 		lcsClusterNodeLayoutMetrics.setCount(count);
+
 		lcsClusterNodeLayoutMetrics.setFrequency(
 			lcsClusterNodeLayoutMetrics.getFrequency() + frequency);
 

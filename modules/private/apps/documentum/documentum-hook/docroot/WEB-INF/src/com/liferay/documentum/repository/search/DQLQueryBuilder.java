@@ -191,6 +191,7 @@ public class DQLQueryBuilder {
 			BooleanQuery booleanQuery = (BooleanQuery)query;
 
 			List<BooleanClause<Query>> booleanClauses = booleanQuery.clauses();
+
 			DQLConjunction anyDQLConjunction = new DQLConjunction();
 			DQLConjunction notDQLConjunction = new DQLConjunction();
 			DQLDisjunction dqlDisjunction = new DQLDisjunction();

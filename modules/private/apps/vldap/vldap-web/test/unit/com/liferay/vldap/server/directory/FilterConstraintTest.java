@@ -51,6 +51,7 @@ public class FilterConstraintTest {
 			"description", "test2");
 
 		Assert.assertFalse(leftFilterConstraint.merge(rightFilterConstraint));
+
 		Assert.assertEquals("test1", leftFilterConstraint.getValue("cn"));
 		Assert.assertEquals(
 			"test2", leftFilterConstraint.getValue("description"));
@@ -82,6 +83,7 @@ public class FilterConstraintTest {
 		rightFilterConstraint = getFilterConstraint("description", "test2");
 
 		Assert.assertFalse(leftFilterConstraint.equals(rightFilterConstraint));
+
 		Assert.assertFalse(leftFilterConstraint.equals(null));
 	}
 
@@ -170,6 +172,7 @@ public class FilterConstraintTest {
 			"cn", "test");
 
 		Assert.assertFalse(leftFilterConstraint.merge(rightFilterConstraint));
+
 		Assert.assertEquals("test", leftFilterConstraint.getValue("cn"));
 	}
 
@@ -180,6 +183,7 @@ public class FilterConstraintTest {
 		FilterConstraint rightFilterConstraint = getFilterConstraint("cn", "*");
 
 		Assert.assertFalse(leftFilterConstraint.merge(rightFilterConstraint));
+
 		Assert.assertEquals("test", leftFilterConstraint.getValue("cn"));
 	}
 
@@ -191,6 +195,7 @@ public class FilterConstraintTest {
 			"cn", "test");
 
 		Assert.assertFalse(leftFilterConstraint.merge(rightFilterConstraint));
+
 		Assert.assertEquals("test", leftFilterConstraint.getValue("cn"));
 	}
 

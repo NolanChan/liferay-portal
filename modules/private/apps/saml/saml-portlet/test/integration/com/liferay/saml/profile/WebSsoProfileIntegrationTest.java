@@ -133,6 +133,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			samlMessageContext.getPeerEntityRoleMetadata() instanceof
 				SPSSODescriptor);
 		Assert.assertEquals(RELAY_STATE, samlMessageContext.getRelayState());
+
 		Assert.assertTrue(samlSsoRequestContext.isNewSession());
 	}
 
@@ -173,6 +174,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			samlMessageContext.getPeerEntityRoleMetadata() instanceof
 				SPSSODescriptor);
 		Assert.assertEquals(RELAY_STATE, samlMessageContext.getRelayState());
+
 		Assert.assertTrue(samlSsoRequestContext.isNewSession());
 	}
 
@@ -245,6 +247,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		Assert.assertEquals(
 			inboundSamlMessageId, samlMessageContext.getInboundSAMLMessageId());
 		Assert.assertEquals(RELAY_STATE, samlMessageContext.getRelayState());
+
 		Assert.assertNull(
 			mockSession.getAttribute(PortletWebKeys.SAML_SSO_REQUEST_CONTEXT));
 		Assert.assertEquals(
@@ -329,6 +332,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		AuthnRequest authnRequest = samlMessageContext.getInboundSAMLMessage();
 
 		Assert.assertEquals(identifiers.get(0), authnRequest.getID());
+
 		Assert.assertEquals(2, identifiers.size());
 		Assert.assertFalse(authnRequest.isForceAuthn());
 		Assert.assertTrue(samlSsoRequestContext.isNewSession());

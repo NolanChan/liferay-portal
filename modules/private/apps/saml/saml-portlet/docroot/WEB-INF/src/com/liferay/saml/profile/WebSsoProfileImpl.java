@@ -374,6 +374,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlSsoRequestContext.getSAMLMessageContext();
 
 		AuthnRequest authnRequest = samlMessageContext.getInboundSAMLMessage();
+
 		User user = samlSsoRequestContext.getUser();
 
 		if ((authnRequest != null) && authnRequest.isPassive() &&
@@ -597,6 +598,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			WebKeys.THEME_DISPLAY);
 
 		sb.append(themeDisplay.getPathMain());
+
 		sb.append("/portal/saml/auth_redirect?redirect=");
 
 		String relayState = PortalUtil.escapeRedirect(
@@ -985,6 +987,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			WebKeys.THEME_DISPLAY);
 
 		sb.append(themeDisplay.getPathMain());
+
 		sb.append("/portal/login?redirect=");
 		sb.append(themeDisplay.getPathMain());
 		sb.append("/portal/saml/sso");
@@ -1235,6 +1238,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		Issuer issuer = samlResponse.getIssuer();
 
 		String issuerEntityId = issuer.getValue();
+
 		String inResponseTo = samlResponse.getInResponseTo();
 
 		SamlSpAuthRequest samlSpAuthRequest =
@@ -1292,6 +1296,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		Issuer issuer = assertion.getIssuer();
 
 		String idpEntityId = issuer.getValue();
+
 		String messageKey = assertion.getID();
 
 		DateTime notOnOrAfter = new DateTime();

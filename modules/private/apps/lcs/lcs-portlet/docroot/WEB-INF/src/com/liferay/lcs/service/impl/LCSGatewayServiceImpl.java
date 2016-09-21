@@ -136,6 +136,7 @@ public class LCSGatewayServiceImpl
 
 		headers.put("HASH_CODE", String.valueOf(key.hashCode()));
 		headers.put("KEY", key);
+
 		headers.put("MESSAGE_TYPE_CODE", _getMessageNameHashCode(message));
 		headers.put("PROTOCOL_VERSION", LCSConstants.PROTOCOL_VERSION_CURRENT);
 

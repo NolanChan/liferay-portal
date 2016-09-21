@@ -117,6 +117,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 			clusterExecutorImpl.getExecutorService();
 
 		Assert.assertFalse(executorService.isShutdown());
+
 		Assert.assertFalse(clusterChannel.isClosed());
 
 		clusterExecutorImpl.deactivate();
@@ -168,6 +169,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 			TestClusterChannel.getClusterChannels();
 
 		Assert.assertTrue(clusterChannels.isEmpty());
+
 		Assert.assertNull(clusterExecutorImpl.getExecutorService());
 
 		// Test 2, send unitcast message
@@ -366,6 +368,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 					new MethodKey(TestBean.class, "testMethod5"))));
 
 		Assert.assertFalse((Boolean)clusterNodeResponse.getResult());
+
 		Assert.assertTrue(ClusterInvokeThreadLocal.isEnabled());
 	}
 

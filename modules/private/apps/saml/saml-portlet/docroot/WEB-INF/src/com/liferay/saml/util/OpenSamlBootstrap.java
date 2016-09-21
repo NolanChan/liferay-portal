@@ -74,6 +74,7 @@ public class OpenSamlBootstrap extends DefaultBootstrap {
 			Boolean.FALSE);
 
 		parserPool.setBuilderFeatures(builderFeatures);
+
 		parserPool.setDTDValidating(false);
 		parserPool.setExpandEntityReferences(false);
 		parserPool.setMaxPoolSize(50);
