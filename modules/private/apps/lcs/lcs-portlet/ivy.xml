@@ -20,5 +20,8 @@
 		<dependency name="signpost-commonshttp4" org="oauth.signpost" rev="1.2.1.2" />
 		<dependency name="httpclient" org="org.apache.httpcomponents" rev="4.5.2" />
 		<dependency name="sigar" org="org.fusesource" rev="1.6.4" />
+		<dependency name="jcifs" org="jcifs" rev="1.3.17">
+			<exclude module="servlet-api" />
+		</dependency>
 	</dependencies>
 </ivy-module>
