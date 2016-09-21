@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
 
@@ -57,8 +58,12 @@ public class EditDocumentationProjectMVCActionCommand
 		String name = ParamUtil.getString(uploadPortletRequest, "name");
 		String description = ParamUtil.getString(
 			uploadPortletRequest, "description");
+		File iconFile = null;
 		String iconFileName = uploadPortletRequest.getFileName("icon");
-		File iconFile = uploadPortletRequest.getFile("icon");
+
+		if (!iconFileName.equals(StringPool.BLANK)) {
+			iconFile = uploadPortletRequest.getFile("icon");
+		}
 
 		int status = ParamUtil.getInteger(uploadPortletRequest, "status");
 

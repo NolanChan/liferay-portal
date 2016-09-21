@@ -123,16 +123,26 @@ public class DocumentationProjectLocalServiceImpl
 			documentationProjectPersistence.findByPrimaryKey(
 				documentationProjectId);
 
-		validate(name, description, iconFileName, iconFile);
+		String oldIconFileName = documentationProject.getIconFileName();
+
+		boolean skipIconUpdate = false;
+
+		if (((iconFile == null) || Validator.isNull(iconFileName)) &&
+			Validator.isNotNull(oldIconFileName)) {
+
+			skipIconUpdate = true;
+			validate(name, description);
+		}
+		else {
+			validate(name, description, iconFileName, iconFile);
+		}
 
 		documentationProject.setModifiedDate(new Date());
 		documentationProject.setName(name);
 		documentationProject.setDescription(description);
 		documentationProject.setStatus(status);
 
-		String oldIconFileName = documentationProject.getIconFileName();
-
-		if ((iconFile != null) && iconFile.exists()) {
+		if (!skipIconUpdate) {
 			documentationProject.setIconFileName(getIconFileName(iconFileName));
 		}
 
@@ -140,7 +150,7 @@ public class DocumentationProjectLocalServiceImpl
 
 		// Files
 
-		if ((iconFile != null) && iconFile.exists()) {
+		if (!skipIconUpdate) {
 			DocumentationProjectFileUtil.deleteDocumentationProjectFile(
 				documentationProjectId, oldIconFileName);
 
@@ -158,8 +168,7 @@ public class DocumentationProjectLocalServiceImpl
 		return "icon." + extension;
 	}
 
-	protected void validate(
-			String name, String description, String iconFileName, File iconFile)
+	protected void validate(String name, String description)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -170,6 +179,13 @@ public class DocumentationProjectLocalServiceImpl
 			throw new DocumentationProjectDescriptionException(
 				"Description is null");
 		}
+	}
+
+	protected void validate(
+			String name, String description, String iconFileName, File iconFile)
+		throws PortalException {
+
+		validate(name, description);
 
 		if ((iconFile == null) || !iconFile.exists()) {
 			throw new DocumentationProjectIconException(
