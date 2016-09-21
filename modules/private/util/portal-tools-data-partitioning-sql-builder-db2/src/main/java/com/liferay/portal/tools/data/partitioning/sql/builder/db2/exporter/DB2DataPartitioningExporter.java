@@ -19,6 +19,7 @@ import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataP
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.InsertSQLBuilder;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -46,6 +47,12 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 	@Override
 	public void export(final ExportContext exportContext) {
 		_exportContext = exportContext;
+
+		_outputDirName = _exportContext.getOutputDirName();
+
+		if (!_outputDirName.endsWith(File.separator)) {
+			_outputDirName += File.separator;
+		}
 
 		super.export(exportContext);
 	}
@@ -167,10 +174,10 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("export to ");
-		sb.append(_exportContext.getOutputDirName());
+		sb.append(_outputDirName);
 		sb.append(tableName);
 		sb.append(".del of del lobs to ");
-		sb.append(_exportContext.getOutputDirName());
+		sb.append(_outputDirName);
 		sb.append(" lobfile lobfile1, lobfile2 ");
 		sb.append("modified by lobsinfile ");
 		sb.append("select * from ");
@@ -188,10 +195,10 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("export to ");
-		sb.append(_exportContext.getOutputDirName());
+		sb.append(_outputDirName);
 		sb.append(tableName);
 		sb.append(".ifx of ifx messages ");
-		sb.append(_exportContext.getOutputDirName());
+		sb.append(_outputDirName);
 		sb.append(tableName);
 		sb.append(".txt ");
 		sb.append("select * from ");
@@ -206,13 +213,13 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 	}
 
 	private String _getImportBlobCommand(String tableName) {
-		StringBuilder sb = new StringBuilder(7);
+		StringBuilder sb = new StringBuilder(8);
 
 		sb.append("import from ");
-		sb.append(_exportContext.getOutputDirName());
+		sb.append(_outputDirName);
 		sb.append(tableName);
 		sb.append(".del of del lobs from ");
-		sb.append(_exportContext.getOutputDirName());
+		sb.append(_outputDirName);
 		sb.append(" modified by lobsinfile ");
 		sb.append("insert into ");
 		sb.append(tableName);
@@ -224,10 +231,10 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 		StringBuilder sb = new StringBuilder(9);
 
 		sb.append("import from ");
-		sb.append(_exportContext.getOutputDirName());
+		sb.append(_outputDirName);
 		sb.append(tableName);
 		sb.append(".ixf of ixf messages ");
-		sb.append(_exportContext.getOutputDirName());
+		sb.append(_outputDirName);
 		sb.append(tableName);
 		sb.append(".txt ");
 		sb.append("insert into ");
@@ -240,5 +247,6 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 		DB2DataPartitioningExporter.class);
 
 	private ExportContext _exportContext;
+	private String _outputDirName;
 
 }
