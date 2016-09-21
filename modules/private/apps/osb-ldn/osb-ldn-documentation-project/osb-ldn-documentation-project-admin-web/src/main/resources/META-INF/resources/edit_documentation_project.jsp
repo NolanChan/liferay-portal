@@ -66,6 +66,11 @@ renderResponse.setTitle(headerTitle);
 					</c:if>
 
 					<aui:input accept="image/*" label="" name="icon" type="file" />
+
+					<aui:select name="status">
+						<aui:option label="offline" value="<%= DocumentationProjectStatusConstants.STATUS_OFFLINE %>" />
+						<aui:option label="live" value="<%= DocumentationProjectStatusConstants.STATUS_LIVE %>" />
+					</aui:select>
 				</aui:fieldset>
 			</aui:fieldset-group>
 		</div>

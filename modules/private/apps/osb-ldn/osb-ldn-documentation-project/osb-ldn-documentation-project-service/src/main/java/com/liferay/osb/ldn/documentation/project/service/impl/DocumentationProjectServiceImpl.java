@@ -32,7 +32,8 @@ public class DocumentationProjectServiceImpl
 	extends DocumentationProjectServiceBaseImpl {
 
 	public DocumentationProject addDocumentationProject(
-			String name, String description, String iconFileName, File iconFile)
+			String name, String description, String iconFileName, File iconFile,
+			int status)
 		throws PortalException {
 
 		DocumentationProjectPermission.check(
@@ -40,12 +41,12 @@ public class DocumentationProjectServiceImpl
 			DocumentationProjectActionKeys.ADD_DOCUMENTATION_PROJECT);
 
 		return documentationProjectLocalService.addDocumentationProject(
-			getUserId(), name, description, iconFileName, iconFile);
+			getUserId(), name, description, iconFileName, iconFile, status);
 	}
 
 	public DocumentationProject updateDocumentationProject(
 			long documentationProjectId, String name, String description,
-			String iconFileName, File iconFile)
+			String iconFileName, File iconFile, int status)
 		throws PortalException {
 
 		DocumentationProjectPermission.check(
@@ -53,7 +54,8 @@ public class DocumentationProjectServiceImpl
 			DocumentationProjectActionKeys.UPDATE_DOCUMENTATION_PROJECT);
 
 		return documentationProjectLocalService.updateDocumentationProject(
-			documentationProjectId, name, description, iconFileName, iconFile);
+			documentationProjectId, name, description, iconFileName, iconFile,
+			status);
 	}
 
 }

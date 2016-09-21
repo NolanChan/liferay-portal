@@ -45,7 +45,7 @@ public class DocumentationProjectLocalServiceImpl
 	@Override
 	public DocumentationProject addDocumentationProject(
 			long userId, String name, String description, String iconFileName,
-			File iconFile)
+			File iconFile, int status)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -68,6 +68,7 @@ public class DocumentationProjectLocalServiceImpl
 		documentationProject.setName(name);
 		documentationProject.setDescription(description);
 		documentationProject.setIconFileName(getIconFileName(iconFileName));
+		documentationProject.setStatus(status);
 
 		documentationProjectPersistence.update(documentationProject);
 
@@ -115,7 +116,7 @@ public class DocumentationProjectLocalServiceImpl
 	@Override
 	public DocumentationProject updateDocumentationProject(
 			long documentationProjectId, String name, String description,
-			String iconFileName, File iconFile)
+			String iconFileName, File iconFile, int status)
 		throws PortalException {
 
 		DocumentationProject documentationProject =
@@ -127,6 +128,7 @@ public class DocumentationProjectLocalServiceImpl
 		documentationProject.setModifiedDate(new Date());
 		documentationProject.setName(name);
 		documentationProject.setDescription(description);
+		documentationProject.setStatus(status);
 
 		String oldIconFileName = documentationProject.getIconFileName();
 

@@ -23,6 +23,7 @@
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="iconFileName" type="String" />
+		<column name="status" type="int" />
 
 		<!-- Order -->
 
