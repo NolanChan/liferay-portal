@@ -109,6 +109,6 @@ public class DocumentationProjectFileUtil {
 	}
 
 	private static final String _DIR_NAME =
-		"osb-ldn/documentation-project/{documentProjectId}";
+		"osb-ldn/documentation-project/{documentationProjectId}";
 
 }
