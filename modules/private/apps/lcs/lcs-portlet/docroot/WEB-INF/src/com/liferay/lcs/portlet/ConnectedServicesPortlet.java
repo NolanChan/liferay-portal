@@ -119,6 +119,8 @@ public class ConnectedServicesPortlet extends MVCPortlet {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
+			LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_SUCCESS);
+		jsonObject.put(
 			"heartbeatExpiredError",
 			LCSConnectionManagerUtil.isHandshakeExpired());
 		jsonObject.put(
@@ -126,9 +128,6 @@ public class ConnectedServicesPortlet extends MVCPortlet {
 			LCSConnectionManagerUtil.isLCSGatewayAvailable());
 		jsonObject.put("pending", LCSConnectionManagerUtil.isPending());
 		jsonObject.put("ready", LCSConnectionManagerUtil.isReady());
-
-		jsonObject.put(
-			LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_SUCCESS);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
