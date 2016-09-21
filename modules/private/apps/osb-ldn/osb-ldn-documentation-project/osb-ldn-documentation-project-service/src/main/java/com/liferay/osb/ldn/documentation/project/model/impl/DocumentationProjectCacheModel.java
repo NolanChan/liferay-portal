@@ -66,7 +66,7 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -88,6 +88,8 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 		sb.append(description);
 		sb.append(", iconFileName=");
 		sb.append(iconFileName);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -150,6 +152,8 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 			documentationProjectImpl.setIconFileName(iconFileName);
 		}
 
+		documentationProjectImpl.setStatus(status);
+
 		documentationProjectImpl.resetOriginalValues();
 
 		return documentationProjectImpl;
@@ -170,6 +174,8 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		iconFileName = objectInput.readUTF();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -218,6 +224,8 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 		else {
 			objectOutput.writeUTF(iconFileName);
 		}
+
+		objectOutput.writeInt(status);
 	}
 
 	public String uuid;
@@ -230,4 +238,5 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 	public String name;
 	public String description;
 	public String iconFileName;
+	public int status;
 }

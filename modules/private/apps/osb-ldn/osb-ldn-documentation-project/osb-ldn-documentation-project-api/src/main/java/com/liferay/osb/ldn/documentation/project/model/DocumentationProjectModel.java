@@ -238,6 +238,20 @@ public interface DocumentationProjectModel extends BaseModel<DocumentationProjec
 	 */
 	public void setIconFileName(String iconFileName);
 
+	/**
+	 * Returns the status of this documentation project.
+	 *
+	 * @return the status of this documentation project
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this documentation project.
+	 *
+	 * @param status the status of this documentation project
+	 */
+	public void setStatus(int status);
+
 	@Override
 	public boolean isNew();
 

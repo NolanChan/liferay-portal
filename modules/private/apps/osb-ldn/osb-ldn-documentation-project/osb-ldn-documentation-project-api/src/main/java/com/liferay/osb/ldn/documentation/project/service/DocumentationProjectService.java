@@ -55,12 +55,12 @@ public interface DocumentationProjectService extends BaseService {
 	 */
 	public DocumentationProject addDocumentationProject(java.lang.String name,
 		java.lang.String description, java.lang.String iconFileName,
-		File iconFile) throws PortalException;
+		File iconFile, int status) throws PortalException;
 
 	public DocumentationProject updateDocumentationProject(
 		long documentationProjectId, java.lang.String name,
 		java.lang.String description, java.lang.String iconFileName,
-		File iconFile) throws PortalException;
+		File iconFile, int status) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

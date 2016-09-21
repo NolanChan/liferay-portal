@@ -43,21 +43,21 @@ public class DocumentationProjectServiceUtil {
 	 */
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject addDocumentationProject(
 		java.lang.String name, java.lang.String description,
-		java.lang.String iconFileName, java.io.File iconFile)
+		java.lang.String iconFileName, java.io.File iconFile, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addDocumentationProject(name, description, iconFileName,
-			iconFile);
+			iconFile, status);
 	}
 
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject updateDocumentationProject(
 		long documentationProjectId, java.lang.String name,
 		java.lang.String description, java.lang.String iconFileName,
-		java.io.File iconFile)
+		java.io.File iconFile, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateDocumentationProject(documentationProjectId, name,
-			description, iconFileName, iconFile);
+			description, iconFileName, iconFile, status);
 	}
 
 	/**

@@ -49,10 +49,10 @@ public class DocumentationProjectLocalServiceWrapper
 	@Override
 	public com.liferay.osb.ldn.documentation.project.model.DocumentationProject addDocumentationProject(
 		long userId, java.lang.String name, java.lang.String description,
-		java.lang.String iconFileName, java.io.File iconFile)
+		java.lang.String iconFileName, java.io.File iconFile, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _documentationProjectLocalService.addDocumentationProject(userId,
-			name, description, iconFileName, iconFile);
+			name, description, iconFileName, iconFile, status);
 	}
 
 	/**
@@ -161,10 +161,10 @@ public class DocumentationProjectLocalServiceWrapper
 	public com.liferay.osb.ldn.documentation.project.model.DocumentationProject updateDocumentationProject(
 		long documentationProjectId, java.lang.String name,
 		java.lang.String description, java.lang.String iconFileName,
-		java.io.File iconFile)
+		java.io.File iconFile, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _documentationProjectLocalService.updateDocumentationProject(documentationProjectId,
-			name, description, iconFileName, iconFile);
+			name, description, iconFileName, iconFile, status);
 	}
 
 	@Override

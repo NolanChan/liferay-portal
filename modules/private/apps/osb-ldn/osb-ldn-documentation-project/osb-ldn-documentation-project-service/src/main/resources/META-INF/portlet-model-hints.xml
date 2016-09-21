@@ -14,5 +14,6 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="iconFileName" type="String" />
+		<field name="status" type="int" />
 	</model>
 </model-hints>

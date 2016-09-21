@@ -77,7 +77,8 @@ public interface DocumentationProjectLocalService extends BaseLocalService,
 
 	public DocumentationProject addDocumentationProject(long userId,
 		java.lang.String name, java.lang.String description,
-		java.lang.String iconFileName, File iconFile) throws PortalException;
+		java.lang.String iconFileName, File iconFile, int status)
+		throws PortalException;
 
 	/**
 	* Creates a new documentation project with the primary key. Does not add the documentation project to the database.
@@ -161,7 +162,7 @@ public interface DocumentationProjectLocalService extends BaseLocalService,
 	public DocumentationProject updateDocumentationProject(
 		long documentationProjectId, java.lang.String name,
 		java.lang.String description, java.lang.String iconFileName,
-		File iconFile) throws PortalException;
+		File iconFile, int status) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

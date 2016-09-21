@@ -1858,6 +1858,7 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 		documentationProjectImpl.setName(documentationProject.getName());
 		documentationProjectImpl.setDescription(documentationProject.getDescription());
 		documentationProjectImpl.setIconFileName(documentationProject.getIconFileName());
+		documentationProjectImpl.setStatus(documentationProject.getStatus());
 
 		return documentationProjectImpl;
 	}

@@ -8,5 +8,6 @@ create table OSB_LDN_DocumentationProject (
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
 	description STRING null,
-	iconFileName VARCHAR(75) null
+	iconFileName VARCHAR(75) null,
+	status INTEGER
 );

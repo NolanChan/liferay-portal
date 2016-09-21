@@ -71,6 +71,7 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("iconFileName", getIconFileName());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -137,6 +138,12 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 		if (iconFileName != null) {
 			setIconFileName(iconFileName);
 		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
 	}
 
 	@Override
@@ -177,6 +184,16 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 	@Override
 	public int compareTo(DocumentationProject documentationProject) {
 		return _documentationProject.compareTo(documentationProject);
+	}
+
+	/**
+	* Returns the status of this documentation project.
+	*
+	* @return the status of this documentation project
+	*/
+	@Override
+	public int getStatus() {
+		return _documentationProject.getStatus();
 	}
 
 	@Override
@@ -444,6 +461,16 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_documentationProject.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the status of this documentation project.
+	*
+	* @param status the status of this documentation project
+	*/
+	@Override
+	public void setStatus(int status) {
+		_documentationProject.setStatus(status);
 	}
 
 	/**
