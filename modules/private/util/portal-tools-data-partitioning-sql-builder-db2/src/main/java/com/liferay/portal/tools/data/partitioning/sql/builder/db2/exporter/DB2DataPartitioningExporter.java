@@ -14,9 +14,7 @@
 
 package com.liferay.portal.tools.data.partitioning.sql.builder.db2.exporter;
 
-import com.liferay.portal.tools.data.partitioning.sql.builder.db2.exporter.serializer.DB2FieldSerializer;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataPartitioningExporter;
-import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.InsertSQLBuilder;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
 
 import java.io.File;
@@ -41,7 +39,7 @@ import org.slf4j.LoggerFactory;
 public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 
 	public DB2DataPartitioningExporter() {
-		super(new InsertSQLBuilder(new DB2FieldSerializer()));
+		super();
 
 		String osName = System.getProperty("os.name");
 
