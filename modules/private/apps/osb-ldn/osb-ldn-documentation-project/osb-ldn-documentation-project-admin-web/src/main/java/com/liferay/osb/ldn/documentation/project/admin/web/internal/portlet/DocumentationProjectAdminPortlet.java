@@ -15,6 +15,10 @@
 package com.liferay.osb.ldn.documentation.project.admin.web.internal.portlet;
 
 import com.liferay.osb.ldn.documentation.project.admin.web.internal.constants.DocumentationProjectPortletKeys;
+import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconException;
+import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconExtensionException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -49,4 +53,24 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class DocumentationProjectAdminPortlet extends MVCPortlet {
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (_log.isDebugEnabled()) {
+			_log.debug(cause, cause);
+		}
+
+		if (cause instanceof DocumentationProjectIconException ||
+			cause instanceof DocumentationProjectIconExtensionException) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DocumentationProjectAdminPortlet.class);
+
 }

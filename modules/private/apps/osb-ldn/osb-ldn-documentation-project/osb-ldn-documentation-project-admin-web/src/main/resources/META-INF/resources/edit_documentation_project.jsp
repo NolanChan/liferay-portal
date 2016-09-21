@@ -37,6 +37,9 @@ renderResponse.setTitle(headerTitle);
 	</portlet:actionURL>
 
 	<aui:form action="<%= editDocumentationProjectURL %>" method="post" name="fm">
+		<liferay-ui:error exception="<%= DocumentationProjectIconException.class %>" message="please-provide-a-valid-icon" />
+		<liferay-ui:error exception="<%= DocumentationProjectIconExtensionException.class %>" message="please-provide-icon-with-valid-extension" />
+
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="documentationProjectId" type="hidden" value="<%= documentationProjectId %>" />
 

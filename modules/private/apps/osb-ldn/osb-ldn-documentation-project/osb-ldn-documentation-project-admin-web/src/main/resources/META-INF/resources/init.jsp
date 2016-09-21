@@ -25,6 +25,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.osb.ldn.documentation.project.constants.DocumentationProjectStatusConstants" %><%@
+page import="com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconException" %><%@
+page import="com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconExtensionException" %><%@
 page import="com.liferay.osb.ldn.documentation.project.model.DocumentationProject" %><%@
 page import="com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
