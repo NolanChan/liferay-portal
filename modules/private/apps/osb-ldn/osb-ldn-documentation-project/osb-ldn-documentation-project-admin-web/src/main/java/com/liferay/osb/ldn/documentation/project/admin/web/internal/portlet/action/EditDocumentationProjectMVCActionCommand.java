@@ -58,8 +58,10 @@ public class EditDocumentationProjectMVCActionCommand
 		String name = ParamUtil.getString(uploadPortletRequest, "name");
 		String description = ParamUtil.getString(
 			uploadPortletRequest, "description");
-		File iconFile = null;
+
 		String iconFileName = uploadPortletRequest.getFileName("icon");
+
+		File iconFile = null;
 
 		if (!iconFileName.equals(StringPool.BLANK)) {
 			iconFile = uploadPortletRequest.getFile("icon");

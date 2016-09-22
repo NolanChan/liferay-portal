@@ -31,8 +31,7 @@ page import="com.liferay.osb.ldn.documentation.project.model.DocumentationProjec
 page import="com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
+page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

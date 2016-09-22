@@ -56,7 +56,7 @@ renderResponse.setTitle(headerTitle);
 						<liferay-ui:message key="icon" />
 					</div>
 
-					<c:if test="<%= (documentationProject != null) && !Validator.isNull(documentationProject.getIconFileName()) %>">
+					<c:if test="<%= documentationProject != null %>">
 						<div>
 							<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/serve_documentation_project_icon" var="iconURL">
 								<portlet:param name="documentationProjectId" value="<%= String.valueOf(documentationProject.getDocumentationProjectId()) %>" />

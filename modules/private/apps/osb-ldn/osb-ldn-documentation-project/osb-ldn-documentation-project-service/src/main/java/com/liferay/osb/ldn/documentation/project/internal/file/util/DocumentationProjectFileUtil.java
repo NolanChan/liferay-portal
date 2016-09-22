@@ -63,6 +63,18 @@ public class DocumentationProjectFileUtil {
 			getDirName(documentationProjectId));
 	}
 
+	public static File getDocumentProjectFile(
+			long documentationProjectId, String fileName)
+		throws PortalException {
+
+		String dlStoreFileName = getDLStoreFileName(
+			documentationProjectId, fileName);
+
+		return DLStoreUtil.getFile(
+			PortalUtil.getDefaultCompanyId(), CompanyConstants.SYSTEM,
+			dlStoreFileName);
+	}
+
 	public static InputStream getDocumentProjectFileAsStream(
 			long documentationProjectId, String fileName)
 		throws PortalException {
