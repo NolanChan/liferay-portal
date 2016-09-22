@@ -78,7 +78,6 @@
 		<property name="proxyDomain" value="#{T(com.liferay.lcs.util.PortletPropsValues).PROXY_DOMAIN}" />
 		<property name="proxySelector" ref="com.liferay.lcs.util.LCSProxySelector" />
 		<property name="proxyWorkstation" value="#{T(com.liferay.lcs.util.PortletPropsValues).PROXY_WORKSTATION}" />
-
 	</bean>
 	<bean class="com.liferay.lcs.jsonwebserviceclient.OAuthJSONWebServiceClientImpl" id="osbLCSPortletJSONWebServiceClient">
 		<property name="hostName" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_PORTLET_HOST_NAME}" />
