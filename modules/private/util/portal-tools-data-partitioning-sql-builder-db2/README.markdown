@@ -2,19 +2,25 @@
 
 The data partitioning SQL builder tool (partitioning tool) allows you to
 physically separate a Liferay Portal instance from an already existing
-*logically partitioned* Liferay Portal instance. The existing instance is
-logically partitioned in that it has several companies in its database (i.e.,
+*logically partitioned* Liferay Portal instance. We consider an existing intalltion
+to be logically partitioned when several companies are defined in its database (i.e.,
 the database's `Company` table has multiple rows). Using the partitioning tool,
-you can move a subset of the companies to another database for a completely
-different new Liferay Portal instance to use. For more information, please
+you will be able to move a subset of the existing companies to another database in
+order to create a completely new Liferay Portal isolated instance.
+
+For more information, please
 read [Data Partitioning tool's README](https://github.com/liferay/liferay-portal/blob/master/modules/util/portal-tools-data-partitioning-sql-builder/README.markdown).
 
-**Important**: This tool does not allow moving one portal instance to another
-database manager system (DBMS), because the tool's output is always based on the
-SQL code for the underlying DBMS. The tool is for isolating company data into
-SQL files for the sole purpose of moving the data to a different database.
-
 ## DB2 special considerations
+
+Due DB2's clobs management nature, we are forced to follow a different
+approach to the one showed by other providers like Oracle or MySQL.
+
+Instead of contributing to the template algorithm we'll be using the
+native tools provided by the database. We'd like to highlight that
+this has always been one of the design goals of this tool; allowing
+the users of the tool to contribute a custom provider (usually based
+on native database tools) which could outperform the default approach
 
 ### CLOBS
 
@@ -68,7 +74,7 @@ For more reference about exporting data on DB2, please read [http://www.ibm.com/
 
 ### Importing tables
 
-The tool produces one or more files for you to execute on a target database.
+The tool produces one or more files for you to execute against the target database of your choice
 
 For tables **without** Clob columns, the files will contain commands similar
 to the following one:
