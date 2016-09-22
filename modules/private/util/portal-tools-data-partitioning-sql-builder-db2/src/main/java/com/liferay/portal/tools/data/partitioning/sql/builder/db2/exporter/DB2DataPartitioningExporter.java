@@ -39,17 +39,15 @@ import org.slf4j.LoggerFactory;
 public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 
 	public DB2DataPartitioningExporter() {
-		super();
-
 		String osName = System.getProperty("os.name");
 
 		if (osName.contains("windows")) {
-			_osComment = "::";
-			_osExtension = ".bat";
+			_scriptComment = "::";
+			_fileExtension = ".bat";
 		}
 		else {
-			_osComment = "#";
-			_osExtension = ".sh";
+			_scriptComment = "#";
+			_fileExtension = ".sh";
 		}
 	}
 
@@ -90,7 +88,7 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 
 	@Override
 	public String getOutputFileExtension() {
-		return _osExtension;
+		return _fileExtension;
 	}
 
 	@Override
@@ -134,31 +132,15 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 				connection, sql, companyId);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-
-			int columnCount = resultSetMetaData.getColumnCount();
-
-			boolean hasClob = false;
-
 			if (resultSet.next()) {
-				for (int i = 0; i < columnCount; i++) {
-					Object object = resultSet.getObject(i + 1);
-
-					if (object instanceof Clob) {
-						hasClob = true;
-
-						break;
-					}
-				}
-
 				StringBuilder sb = new StringBuilder(8);
 
-				sb.append(_osComment);
+				sb.append(_scriptComment);
 				sb.append(" Commands to export/import ");
 				sb.append(tableName);
 				sb.append(" table.\n");
 
-				if (hasClob) {
+				if (_containsClobColumn(resultSet)) {
 					sb.append(_getExportBlobCommand(companyId, tableName));
 					sb.append("\n");
 					sb.append(_getImportBlobCommand(tableName));
@@ -182,6 +164,24 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 					tableName,
 				e);
 		}
+	}
+
+	private boolean _containsClobColumn(ResultSet resultSet)
+		throws SQLException {
+
+		ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
+		int columnCount = resultSetMetaData.getColumnCount();
+
+		for (int i = 0; i < columnCount; i++) {
+			Object object = resultSet.getObject(i + 1);
+
+			if (object instanceof Clob) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private String _getExportBlobCommand(long companyId, String tableName) {
@@ -261,8 +261,8 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 		DB2DataPartitioningExporter.class);
 
 	private ExportContext _exportContext;
-	private final String _osComment;
-	private final String _osExtension;
+	private final String _fileExtension;
 	private String _outputDirName;
+	private final String _scriptComment;
 
 }
