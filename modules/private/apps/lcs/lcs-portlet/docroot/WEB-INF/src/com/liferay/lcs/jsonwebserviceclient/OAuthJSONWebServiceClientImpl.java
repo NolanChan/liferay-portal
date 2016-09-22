@@ -67,15 +67,13 @@ public class OAuthJSONWebServiceClientImpl extends JSONWebServiceClientImpl {
 	protected String execute(HttpRequestBase httpRequestBase)
 		throws JSONWebServiceTransportException {
 
-
 		if ((_accessToken == null) && (_accessSecret == null)) {
-			throw new JSONWebServiceTransportException.
-				AuthenticationFailure("OAuth credentials are not set");
+			throw new JSONWebServiceTransportException.AuthenticationFailure(
+				"OAuth credentials are not set");
 		}
 
 		OAuthConsumer oAuthConsumer = OAuthUtil.getOAuthConsumer(
 			_accessToken, _accessSecret);
-
 
 		String requestURL = OAuthUtil.buildURL(
 			getHostName(), getHostPort(), getProtocol(),
@@ -86,9 +84,9 @@ public class OAuthJSONWebServiceClientImpl extends JSONWebServiceClientImpl {
 		try {
 			oAuthConsumer.sign(httpRequestBase);
 		}
-		catch (OAuthException e) {
+		catch (OAuthException oae) {
 			throw new JSONWebServiceTransportException.CommunicationFailure(
-				"Unable to sign HTTP request", e);
+				"Unable to sign HTTP request", oae);
 		}
 
 		return super.execute(httpRequestBase);
