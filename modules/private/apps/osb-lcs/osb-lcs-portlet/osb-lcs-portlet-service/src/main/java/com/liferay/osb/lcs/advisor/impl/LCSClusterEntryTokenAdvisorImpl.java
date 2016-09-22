@@ -21,9 +21,10 @@ import com.liferay.lcs.util.LCSConstants;
 import com.liferay.oauth.model.OAuthUser;
 import com.liferay.oauth.service.OAuthUserService;
 import com.liferay.osb.lcs.advisor.LCSClusterEntryTokenAdvisor;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
 import com.liferay.osb.lcs.model.LCSClusterEntryToken;
 import com.liferay.osb.lcs.service.LCSClusterEntryTokenService;
-import com.liferay.osb.lcs.util.PortletPropsValues;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
@@ -37,6 +38,8 @@ import java.security.KeyStore;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -52,7 +55,7 @@ public class LCSClusterEntryTokenAdvisorImpl
 		throws PortalException {
 
 		OAuthUser oAuthUser = _oAuthUserService.addOAuthUser(
-			PortletPropsValues.OSB_LCS_PORTLET_OAUTH_CONSUMER_KEY,
+			_osbLCSConfiguration.osbLcsPortletOauthConsumerKey(),
 			serviceContext);
 
 		boolean portalPropertiesLCSServiceEnabled = GetterUtil.getBoolean(
@@ -94,13 +97,13 @@ public class LCSClusterEntryTokenAdvisorImpl
 			lcsClusterEntryToken);
 
 		KeyStore keyStore = KeyStoreFactory.getInstance(
-			PortletPropsValues.DIGITAL_SIGNATURE_KEY_STORE_PATH,
-			PortletPropsValues.DIGITAL_SIGNATURE_KEY_STORE_TYPE);
+			_osbLCSConfiguration.digitalSignatureKeyStorePath(),
+			_osbLCSConfiguration.osbPortletKeyStoreType());
 
 		KeyStoreAdvisor keyStoreAdvisor = new KeyStoreAdvisor();
 
 		String keyName = keyStoreAdvisor.getLatestKeyAlias(
-			PortletPropsValues.DIGITAL_SIGNATURE_KEY_NAME, keyStore);
+			_osbLCSConfiguration.digitalSignatureKeyName(), keyStore);
 
 		KeyStore.ProtectionParameter protectionParameter =
 			new KeyStore.PasswordProtection("_k3y#5t0r3-p45S".toCharArray());
@@ -147,7 +150,25 @@ public class LCSClusterEntryTokenAdvisorImpl
 		_lcsClusterEntryTokenService = lcsClusterEntryTokenService;
 	}
 
+	@Reference(bind = "-", unbind = "-")
+	public void setOAuthUserService(OAuthUserService oAuthUserService) {
+		_oAuthUserService = oAuthUserService;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
+			OSBLCSConfiguration.class, properties);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_osbLCSConfiguration = null;
+	}
+
+	private static volatile OSBLCSConfiguration _osbLCSConfiguration;
+
 	private LCSClusterEntryTokenService _lcsClusterEntryTokenService;
-	private final OAuthUserService _oAuthUserService;
+	private OAuthUserService _oAuthUserService;
 
 }

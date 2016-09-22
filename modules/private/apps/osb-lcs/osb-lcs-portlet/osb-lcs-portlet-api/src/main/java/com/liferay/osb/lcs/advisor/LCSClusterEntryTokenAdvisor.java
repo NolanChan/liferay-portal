@@ -20,11 +20,15 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 
 /**
  * @author Igor Beslic
  */
-@Component(immediate = true)
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
+)
 public interface LCSClusterEntryTokenAdvisor {
 
 	public void generateLCSClusterEntryToken(

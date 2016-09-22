@@ -15,8 +15,8 @@
 package com.liferay.osb.lcs.advisor.impl;
 
 import com.liferay.lcs.notification.LCSEventType;
-import com.liferay.osb.lcs.admin.util.AdminUtil;
 import com.liferay.osb.lcs.advisor.EmailAdvisor;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
 import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.email.EmailContext;
 import com.liferay.osb.lcs.email.EmailTemplate;
@@ -36,25 +36,23 @@ import com.liferay.osb.lcs.email.ServerUnexpectedlyShutdownEmailTemplate;
 import com.liferay.osb.lcs.model.LCSRole;
 import com.liferay.osb.lcs.service.LCSNotificationAuditEntryLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil;
-import com.liferay.osb.lcs.util.PortletPropsValues;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.ContentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -128,24 +126,15 @@ public class EmailAdvisorImpl implements EmailAdvisor {
 		_userLocalService = userLocalService;
 	}
 
-	protected Map<Locale, String> getLocalizationMap(
-		String templatePath, String parameter,
-		PortletPreferences portletPreferences) {
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
+			OSBLCSConfiguration.class, properties);
+	}
 
-		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
-			portletPreferences, parameter);
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		String defaultValue = map.get(defaultLocale);
-
-		if (Validator.isNotNull(defaultValue)) {
-			return map;
-		}
-
-		map.put(defaultLocale, ContentUtil.get(templatePath));
-
-		return map;
+	@Deactivate
+	protected void deactivate() {
+		_osbLCSConfiguration = null;
 	}
 
 	protected void sendEmail(
@@ -153,17 +142,10 @@ public class EmailAdvisorImpl implements EmailAdvisor {
 		Object[] contextAttributes, String popPortletPrefix, Object[] mailIds,
 		String emailAddress, User toUser) {
 
-		try {
-			if (!AdminUtil.isSendingEmailsEnabled()) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Disabled sending emails");
-				}
-
-				return;
+		if (!_osbLCSConfiguration.sendingEmailsEnabled()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Disabled sending emails");
 			}
-		}
-		catch (SystemException se) {
-			_log.error(se.getMessage(), se);
 
 			return;
 		}
@@ -173,8 +155,8 @@ public class EmailAdvisorImpl implements EmailAdvisor {
 		subscriptionSender.setCompanyId(toUser.getCompanyId());
 		subscriptionSender.setContextAttributes(contextAttributes);
 		subscriptionSender.setFrom(
-			PortletPropsValues.OSB_LCS_PORTLET_MEMBERS_EMAIL_FROM_ADDRESS,
-			PortletPropsValues.OSB_LCS_PORTLET_MEMBERS_EMAIL_FROM_NAME);
+			_osbLCSConfiguration.osbLcsPortletMembersEmailFromAddress(),
+			_osbLCSConfiguration.osbLcsPortletMembersEmailFromName());
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setLocalizedBodyMap(bodyMap);
 		subscriptionSender.setLocalizedSubjectMap(subjectMap);
@@ -209,13 +191,13 @@ public class EmailAdvisorImpl implements EmailAdvisor {
 		}
 		else if ((emailContext.getLCSEventType() ==
 					LCSEventType.MEMBERSHIP_INVITATION_ACCEPTED) &&
-				 _EMAIL_MEMBERSHIP_INVITATION_ACCEPTED_ENABLED) {
+				 _isEmailMembershipInvitationAcceptedEnabled()) {
 
 			return new MembershipInvitationAcceptedEmailTemplate(emailContext);
 		}
 		else if ((emailContext.getLCSEventType() ==
 					LCSEventType.MEMBERSHIP_REQUEST_ACCEPTED) &&
-				 _EMAIL_MEMBERSHIP_REQUEST_ACCEPTED_ENABLED) {
+				 _isEmailMembershipRequestAcceptedEnabled()) {
 
 			return new MembershipRequestAcceptedEmailTemplate(emailContext);
 		}
@@ -231,13 +213,13 @@ public class EmailAdvisorImpl implements EmailAdvisor {
 		}
 		else if ((emailContext.getLCSEventType() ==
 					LCSEventType.NEW_MEMBERSHIP_INVITATION) &&
-				 _EMAIL_MEMBERSHIP_INVITATION_ENABLED) {
+				 _isEmailMembershipInvitationEnabled()) {
 
 			return new MembershipInvitationEmailTemplate(emailContext);
 		}
 		else if ((emailContext.getLCSEventType() ==
 					LCSEventType.NEW_MEMBERSHIP_REQUEST) &&
-				 _EMAIL_MEMBERSHIP_REQUEST_ENABLED) {
+				 _isEmailMembershipRequestEnabled()) {
 
 			return new MembershipRequestEmailTemplate(emailContext);
 		}
@@ -293,24 +275,34 @@ public class EmailAdvisorImpl implements EmailAdvisor {
 		return lcsProjectAdmins;
 	}
 
-	private static final boolean _EMAIL_MEMBERSHIP_INVITATION_ACCEPTED_ENABLED =
-		PortletPropsValues.
-			OSB_LCS_PORTLET_MEMBERS_EMAIL_MEMBERSHIP_INVITATION_ACCEPTED_ENABLED;
+	private boolean _isEmailMembershipInvitationAcceptedEnabled() {
+		return
+			_osbLCSConfiguration.
+				osbLcsPortletMembersEmailMembershipInvitationAcceptedEnabled();
+	}
 
-	private static final boolean _EMAIL_MEMBERSHIP_INVITATION_ENABLED =
-		PortletPropsValues.
-			OSB_LCS_PORTLET_MEMBERS_EMAIL_MEMBERSHIP_INVITATION_ENABLED;
+	private boolean _isEmailMembershipInvitationEnabled() {
+		return
+			_osbLCSConfiguration.
+				osbLcsPortletMembersEmailMembershipInvitationEnabled();
+	}
 
-	private static final boolean _EMAIL_MEMBERSHIP_REQUEST_ACCEPTED_ENABLED =
-		PortletPropsValues.
-			OSB_LCS_PORTLET_MEMBERS_EMAIL_MEMBERSHIP_REQUEST_ACCEPTED_ENABLED;
+	private boolean _isEmailMembershipRequestAcceptedEnabled() {
+		return
+			_osbLCSConfiguration.
+				osbLcsPortletMembersEmailMembershipRequestAcceptedEnabled();
+	}
 
-	private static final boolean _EMAIL_MEMBERSHIP_REQUEST_ENABLED =
-		PortletPropsValues.
-			OSB_LCS_PORTLET_MEMBERS_EMAIL_MEMBERSHIP_REQUEST_ENABLED;
+	private boolean _isEmailMembershipRequestEnabled() {
+		return
+			_osbLCSConfiguration.
+				osbLcsPortletMembersEmailMembershipRequestEnabled();
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EmailAdvisorImpl.class);
+
+	private static volatile OSBLCSConfiguration _osbLCSConfiguration;
 
 	private UserLocalService _userLocalService;
 

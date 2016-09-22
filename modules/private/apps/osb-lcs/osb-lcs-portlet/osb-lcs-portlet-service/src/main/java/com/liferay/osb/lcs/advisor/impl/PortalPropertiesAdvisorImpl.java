@@ -15,6 +15,7 @@
 package com.liferay.osb.lcs.advisor.impl;
 
 import com.liferay.osb.lcs.advisor.PortalPropertiesAdvisor;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
 import com.liferay.osb.lcs.exception.NoSuchLCSMetadataException;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSMetadata;
@@ -26,9 +27,7 @@ import com.liferay.osb.lcs.nosql.service.LCSMetadataDetailsService;
 import com.liferay.osb.lcs.service.LCSClusterNodeService;
 import com.liferay.osb.lcs.service.LCSMetadataLocalService;
 import com.liferay.osb.lcs.util.ApplicationProfile;
-import com.liferay.osb.lcs.util.LCSClusterNodeUtil;
-import com.liferay.osb.lcs.util.PortletPropsValues;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -39,11 +38,16 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -64,7 +68,7 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 	public Map<String, Map<String, String>>
 		getLCSClusterEntryPropertyDifferencesMap(long lcsClusterEntryId) {
 
-		if (PortletPropsValues.APPLICATION_PROFILE ==
+		if (_osbLCSConfiguration.applicationProfile() ==
 				ApplicationProfile.PRODUCTION) {
 
 			throw new UnsupportedOperationException();
@@ -153,10 +157,47 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 				lcsClusterEntryId, lcsClusterEntryPropertyDifferencesMap);
 	}
 
+	@Reference(bind = "-", unbind = "-")
+	public void setLcsClusterEntryPropertyDifferencesService(
+		LCSClusterEntryPropertyDifferencesService
+			lcsClusterEntryPropertyDifferencesService) {
+
+		_lcsClusterEntryPropertyDifferencesService =
+			lcsClusterEntryPropertyDifferencesService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setLcsClusterNodePropertiesService(
+		LCSClusterNodePropertiesService lcsClusterNodePropertiesService) {
+
+		_lcsClusterNodePropertiesService = lcsClusterNodePropertiesService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setLcsClusterNodeService(
+		LCSClusterNodeService lcsClusterNodeService) {
+
+		_lcsClusterNodeService = lcsClusterNodeService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setLcsMetadataDetailsService(
+		LCSMetadataDetailsService lcsMetadataDetailsService) {
+
+		_lcsMetadataDetailsService = lcsMetadataDetailsService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setLcsMetadataLocalService(
+		LCSMetadataLocalService lcsMetadataLocalService) {
+
+		_lcsMetadataLocalService = lcsMetadataLocalService;
+	}
+
 	public void updateLCSClusterNodeProperties(
 		String key, Map<String, String> portalProperties) {
 
-		if (PortletPropsValues.APPLICATION_PROFILE ==
+		if (_osbLCSConfiguration.applicationProfile() ==
 				ApplicationProfile.PRODUCTION) {
 
 			throw new UnsupportedOperationException();
@@ -170,11 +211,8 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 			String key)
 		throws PortalException {
 
-		LCSClusterNode lcsClusterNode =
-			_lcsClusterNodeService.getLCSClusterNode(key);
-
 		LCSClusterNode randomSiblingLCSClusterNode =
-			LCSClusterNodeUtil.fetchRandomSiblingLCSClusterNode(lcsClusterNode);
+			_lcsClusterNodeService.fetchRandomSiblingLCSClusterNode(key);
 
 		if (randomSiblingLCSClusterNode == null) {
 			return;
@@ -183,7 +221,7 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 		Map<String, Map<String, String>> lcsClusterEntryPropertyDifferencesMap =
 				_lcsClusterEntryPropertyDifferencesService.
 					getLCSClusterEntryPropertyDifferencesMap(
-						lcsClusterNode.getLcsClusterEntryId());
+						randomSiblingLCSClusterNode.getLcsClusterEntryId());
 
 		LCSClusterNodeProperties lcsClusterNodeProperties =
 			_lcsClusterNodePropertiesService.fetchLCSClusterNodeProperties(key);
@@ -208,9 +246,20 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 			randomSiblingLCSClusterNodeProperties.getProperties();
 
 		processLCSClusterEntryPropertyDifferences(
-			key, lcsClusterNode.getLcsClusterEntryId(),
+			key, randomSiblingLCSClusterNode.getLcsClusterEntryId(),
 			lcsClusterEntryPropertyDifferencesMap, newPortalProperties,
 			portalProperties);
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
+			OSBLCSConfiguration.class, properties);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_osbLCSConfiguration = null;
 	}
 
 	protected String getHashCode(Map<String, String> portalProperties) {
@@ -293,19 +342,27 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 				lcsClusterEntryPropertyDifferencesMap.keySet());
 		}
 
-		String siblingKeys = LCSClusterNodeUtil.getLCSClusterNodeSiblingKeys(
-			key);
+		List<LCSClusterNode> lcsClusterNodes =
+			_lcsClusterNodeService.getLCSClusterNodeSiblingNodes(key);
+
+		List<String> siblingKeys = new ArrayList<>();
+
+		for (LCSClusterNode lcsClusterNode : lcsClusterNodes) {
+			siblingKeys.add(lcsClusterNode.getKey());
+		}
+
+		String siblingKeysString = StringUtil.merge(siblingKeys);
 
 		processAdditionalPortalProperties(
-			lcsClusterEntryPropertyDifferencesMap, key, siblingKeys,
+			lcsClusterEntryPropertyDifferencesMap, key, siblingKeysString,
 			new HashMap<String, String>(newPortalProperties), portalProperties);
 
 		processMissingPortalProperties(
-			lcsClusterEntryPropertyDifferencesMap, key, siblingKeys,
+			lcsClusterEntryPropertyDifferencesMap, key, siblingKeysString,
 			newPortalProperties, new HashMap<String, String>(portalProperties));
 
 		processChangedPortalProperties(
-			lcsClusterEntryPropertyDifferencesMap, key, siblingKeys,
+			lcsClusterEntryPropertyDifferencesMap, key, siblingKeysString,
 			newPortalProperties, portalProperties);
 
 		_lcsClusterEntryPropertyDifferencesService.
@@ -414,20 +471,13 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 		}
 	}
 
-	@BeanReference(type = LCSClusterEntryPropertyDifferencesService.class)
+	private static volatile OSBLCSConfiguration _osbLCSConfiguration;
+
 	private LCSClusterEntryPropertyDifferencesService
 		_lcsClusterEntryPropertyDifferencesService;
-
-	@BeanReference(type = LCSClusterNodePropertiesService.class)
 	private LCSClusterNodePropertiesService _lcsClusterNodePropertiesService;
-
-	@BeanReference(type = LCSClusterNodeService.class)
 	private LCSClusterNodeService _lcsClusterNodeService;
-
-	@BeanReference(type = LCSMetadataDetailsService.class)
 	private LCSMetadataDetailsService _lcsMetadataDetailsService;
-
-	@BeanReference(type = LCSMetadataLocalService.class)
 	private LCSMetadataLocalService _lcsMetadataLocalService;
 
 }

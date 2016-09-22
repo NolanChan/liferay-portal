@@ -129,13 +129,12 @@ public class UserAdvisorImpl implements UserAdvisor {
 		}
 	}
 
-	protected CompanyAdvisorImpl _companyAdvisor;
-	protected RoleLocalService _roleLocalService;
-	protected UserLocalService _userLocalService;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserAdvisorImpl.class);
 
+	private CompanyAdvisorImpl _companyAdvisor;
+	private RoleLocalService _roleLocalService;
 	private StringAdvisor _stringAdvisor;
+	private UserLocalService _userLocalService;
 
 }
