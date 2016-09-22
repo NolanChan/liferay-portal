@@ -68,8 +68,8 @@ public class MonitoringUnavailableEmailTemplate extends BaseEmailTemplate {
 		contextAttributes.add(
 			emailContext.translate(
 				"monitoring-is-unavailable-for-the-server-x-environment-x-" +
-					"project-x", lcsClusterNodeName, lcsClusterEntryName,
-				lcsProjectName));
+					"project-x",
+				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$URL_FIRST_LINE$]");
 		contextAttributes.add(
 			NavigationUtil.getLCSClusterNodeURL(

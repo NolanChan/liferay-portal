@@ -16,8 +16,8 @@ package com.liferay.osb.lcs.email;
 
 import com.liferay.osb.lcs.navigation.util.NavigationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.User;
 
 import java.util.List;
 import java.util.Locale;

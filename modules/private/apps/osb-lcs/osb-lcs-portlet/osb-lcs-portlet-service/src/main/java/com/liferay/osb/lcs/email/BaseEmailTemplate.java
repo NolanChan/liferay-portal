@@ -17,10 +17,10 @@ package com.liferay.osb.lcs.email;
 import com.liferay.osb.lcs.navigation.util.NavigationUtil;
 import com.liferay.osb.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.User;
 import com.liferay.util.ContentUtil;
 
 import java.util.ArrayList;

@@ -84,8 +84,8 @@ public class NewPatchAvailableEmailTemplate extends BaseEmailTemplate {
 			contextAttributes.add(
 				emailContext.translate(
 					"a-new-fix-pack-is-available-for-the-server-x-" +
-						"environment-x-project-x", lcsClusterNodeName,
-					lcsClusterEntryName, lcsProjectName));
+						"environment-x-project-x",
+					lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 			contextAttributes.add("[$URL_FIRST_LINE$]");
 			contextAttributes.add(
 				NavigationUtil.getLCSClusterNodeURL(
