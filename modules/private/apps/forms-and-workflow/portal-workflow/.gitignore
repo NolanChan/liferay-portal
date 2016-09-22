@@ -17,5 +17,3 @@ test-classes/
 test-coverage/
 test-results/
 tmp/
-
-!/lcs-portlet/docroot/WEB-INF/lib
