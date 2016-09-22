@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.email;
+package com.liferay.osb.lcs.email;
 
 import com.liferay.osb.lcs.navigation.util.NavigationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.User;
 
 import java.util.List;
 import java.util.Locale;
@@ -27,9 +29,9 @@ import javax.portlet.PortletPreferences;
  * @author Marko Cikos
  * @author Matija Petanjek
  */
-public class ServerManuallyShutdownEmailTemplate extends BaseEmailTemplate {
+public class MembershipRequestEmailTemplate extends BaseEmailTemplate {
 
-	public ServerManuallyShutdownEmailTemplate(EmailContext emailContext) {
+	public MembershipRequestEmailTemplate(EmailContext emailContext) {
 		super(emailContext);
 	}
 
@@ -39,43 +41,44 @@ public class ServerManuallyShutdownEmailTemplate extends BaseEmailTemplate {
 
 		return getLocalizationMap(
 			"com/liferay/osb/lcs/email/dependencies" +
-				"/email_notification_type_1_body.tmpl",
-			"emailNotificationType1Body", portletPreferences);
+				"/email_notification_type_2_body.tmpl",
+			"emailNotificationType2Body", portletPreferences);
 	}
 
 	@Override
 	public Object[] getContextAttributes() throws PortalException {
 		List<Object> contextAttributes = getBaseContextAttributes();
 
-		String lcsClusterEntryName = emailContext.getLCSClusterEntryName();
-		String lcsClusterNodeName = emailContext.getLCSClusterNodeName();
-		String lcsProjectName = emailContext.getLCSProjectName();
+		User user = emailContext.getUser();
 
 		contextAttributes.add("[$MESSAGE_FIRST_LINE$]");
 		contextAttributes.add(
 			emailContext.translate(
-				"the-server-x-environment-x-project-x-was-manually-shutdown",
-				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
+				"x-x-wants-to-join-project-x", user.getFullName(),
+				user.getEmailAddress(), emailContext.getLCSProjectName()));
+		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
+		contextAttributes.add(
+			emailContext.translate(
+				"you-can-manage-membership-requests-following-the-link-below"));
 		contextAttributes.add("[$SUBJECT$]");
-		contextAttributes.add(
-			emailContext.translate(
-				"the-server-was-manually-shutdown-x-environment-x-project-x",
-				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
-		contextAttributes.add("[$URL_FIRST_LINE$]");
-		contextAttributes.add(
-			NavigationUtil.getLCSClusterNodeURL(
-				emailContext.getLCSClusterNodeId()));
+		contextAttributes.add(emailContext.translate("membership-request"));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
-		contextAttributes.add(
-			emailContext.translate(
-				"see-x-on-liferay-connected-services", lcsClusterNodeName));
+		contextAttributes.add(StringPool.BLANK);
+
+		String lcsProjectURL = NavigationUtil.getLCSProjectURL(
+			emailContext.getLCSProjectId());
+
+		contextAttributes.add("[$URL_SECOND_LINE$]");
+		contextAttributes.add(lcsProjectURL);
+		contextAttributes.add("[$URL_TEXT_SECOND_LINE$]");
+		contextAttributes.add(lcsProjectURL);
 
 		return contextAttributes.toArray();
 	}
 
 	@Override
 	public String getPopPrefix() {
-		return "server_manually_shutdown_id";
+		return "lcs_membership_request_id";
 	}
 
 }

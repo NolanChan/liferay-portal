@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.email;
+package com.liferay.osb.lcs.email;
 
 import com.liferay.osb.lcs.navigation.util.NavigationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,9 +28,12 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Matija Petanjek
  */
-public class NewProjectMemberEmailTemplate extends BaseEmailTemplate {
+public class MembershipInvitationAcceptedEmailTemplate
+	extends BaseEmailTemplate {
 
-	public NewProjectMemberEmailTemplate(EmailContext emailContext) {
+	public MembershipInvitationAcceptedEmailTemplate(
+		EmailContext emailContext) {
+
 		super(emailContext);
 	}
 
@@ -54,8 +57,8 @@ public class NewProjectMemberEmailTemplate extends BaseEmailTemplate {
 
 		contextAttributes.add(
 			emailContext.translate(
-				"there-is-a-new-user-x-on-the-project-x", user.getFullName(),
-				emailContext.getLCSProjectName()));
+				"x-x-joined-the-project-x", user.getFullName(),
+				user.getEmailAddress(), emailContext.getLCSProjectName()));
 
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
@@ -63,7 +66,8 @@ public class NewProjectMemberEmailTemplate extends BaseEmailTemplate {
 				"you-can-see-and-manage-your-project-members-by-clicking-on-" +
 					"the-link-below"));
 		contextAttributes.add("[$SUBJECT$]");
-		contextAttributes.add(emailContext.translate("new-project-member"));
+		contextAttributes.add(
+			emailContext.translate("membership-invitation-accepted"));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(StringPool.BLANK);
 		contextAttributes.add("[$URL_SECOND_LINE$]");
@@ -81,7 +85,7 @@ public class NewProjectMemberEmailTemplate extends BaseEmailTemplate {
 
 	@Override
 	public String getPopPrefix() {
-		return "lcs_new_project_member_id";
+		return "lcs_membership_invitation_accepted_id";
 	}
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.email;
+package com.liferay.osb.lcs.email;
 
 import com.liferay.portal.kernel.exception.PortalException;
 

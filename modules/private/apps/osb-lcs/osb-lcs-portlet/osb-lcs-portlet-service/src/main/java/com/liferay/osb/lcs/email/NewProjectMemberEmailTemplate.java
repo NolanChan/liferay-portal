@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.email;
+package com.liferay.osb.lcs.email;
 
 import com.liferay.osb.lcs.navigation.util.NavigationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 
 import java.util.List;
@@ -31,9 +28,9 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Matija Petanjek
  */
-public class MembershipInvitationEmailTemplate extends BaseEmailTemplate {
+public class NewProjectMemberEmailTemplate extends BaseEmailTemplate {
 
-	public MembershipInvitationEmailTemplate(EmailContext emailContext) {
+	public NewProjectMemberEmailTemplate(EmailContext emailContext) {
 		super(emailContext);
 	}
 
@@ -43,63 +40,48 @@ public class MembershipInvitationEmailTemplate extends BaseEmailTemplate {
 
 		return getLocalizationMap(
 			"com/liferay/osb/lcs/email/dependencies" +
-				"/email_notification_type_4_body.tmpl",
-			"emailNotificationType4Body", portletPreferences);
+				"/email_notification_type_2_body.tmpl",
+			"emailNotificationType2Body", portletPreferences);
 	}
 
 	@Override
 	public Object[] getContextAttributes() throws PortalException {
 		List<Object> contextAttributes = getBaseContextAttributes();
 
-		String invitationMessage = emailContext.getCustomMessage();
+		contextAttributes.add("[$MESSAGE_FIRST_LINE$]");
+
 		User user = emailContext.getUser();
 
-		if (Validator.isNotNull(invitationMessage)) {
-			invitationMessage = StringUtil.quote(
-				invitationMessage, StringPool.QUOTE);
-		}
-
-		contextAttributes.add("[$CUSTOM_MESSAGE$]");
-		contextAttributes.add(invitationMessage);
-		contextAttributes.add("[$DEAR_LIFERAY_USER$]");
-		contextAttributes.add(emailContext.translate("dear-liferay-user"));
-		contextAttributes.add("[$MESSAGE_FIRST_LINE$]");
 		contextAttributes.add(
 			emailContext.translate(
-				"x-invited-you-to-be-part-of-the-liferay-connected-services-" +
-					"project-x",
-				user.getFullName(), emailContext.getLCSProjectName()));
+				"there-is-a-new-user-x-on-the-project-x", user.getFullName(),
+				emailContext.getLCSProjectName()));
+
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
 			emailContext.translate(
-				"use-the-link-below-to-accept-this-invitation-and-access-" +
-					"the-liferay-connected-services-site"));
+				"you-can-see-and-manage-your-project-members-by-clicking-on-" +
+					"the-link-below"));
 		contextAttributes.add("[$SUBJECT$]");
-		contextAttributes.add(emailContext.translate("membership-invitation"));
+		contextAttributes.add(emailContext.translate("new-project-member"));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(StringPool.BLANK);
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(NavigationUtil.getLCSPortalURL());
-		sb.append(NavigationUtil.CHECK_LCS_INVITATION_URL);
-		sb.append(StringPool.QUESTION);
-		sb.append("lcsProjectId=");
-		sb.append(emailContext.getLCSProjectId());
-
-		String dashboardLayoutURL = sb.toString();
-
 		contextAttributes.add("[$URL_SECOND_LINE$]");
-		contextAttributes.add(dashboardLayoutURL);
+
+		String lcsProjectURL = NavigationUtil.getLCSProjectUsersURL(
+			emailContext.getLCSProjectId());
+
+		contextAttributes.add(lcsProjectURL);
+
 		contextAttributes.add("[$URL_TEXT_SECOND_LINE$]");
-		contextAttributes.add(dashboardLayoutURL);
+		contextAttributes.add(lcsProjectURL);
 
 		return contextAttributes.toArray();
 	}
 
 	@Override
 	public String getPopPrefix() {
-		return "lcs_membership_request_invitation_id";
+		return "lcs_new_project_member_id";
 	}
 
 }

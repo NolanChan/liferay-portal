@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.email;
+package com.liferay.osb.lcs.email;
 
 import com.liferay.osb.lcs.navigation.util.NavigationUtil;
-import com.liferay.osb.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -28,9 +27,9 @@ import javax.portlet.PortletPreferences;
  * @author Marko Cikos
  * @author Matija Petanjek
  */
-public class PatchingToolUnavailableEmailTemplate extends BaseEmailTemplate {
+public class MonitoringUnavailableEmailTemplate extends BaseEmailTemplate {
 
-	public PatchingToolUnavailableEmailTemplate(EmailContext emailContext) {
+	public MonitoringUnavailableEmailTemplate(EmailContext emailContext) {
 		super(emailContext);
 	}
 
@@ -55,41 +54,39 @@ public class PatchingToolUnavailableEmailTemplate extends BaseEmailTemplate {
 		contextAttributes.add("[$MESSAGE_FIRST_LINE$]");
 		contextAttributes.add(
 			emailContext.translate(
-				"the-patching-tool-for-the-server-x-environment-x-project-x-" +
-					"is-currently-unavailable",
+				"monitoring-for-the-server-x-environment-x-project-x-is-" +
+					"currently-unavailable",
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
 			emailContext.translate(
-				"click-the-following-link-for-the-patching-tool-" +
-					"configuration-instructions"));
+				"please-make-sure-the-property-com-liferay-portal-servlet-" +
+					"filters-monitoring-monitoringfilter-is-set-to-true-in-" +
+					"your-portal-ext-properties-file",
+				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$SUBJECT$]");
 		contextAttributes.add(
 			emailContext.translate(
-				"the-patching-tool-is-unavailable-for-the-server-x-" +
-					"environment-x-project-x",
-				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
+				"monitoring-is-unavailable-for-the-server-x-environment-x-" +
+					"project-x", lcsClusterNodeName, lcsClusterEntryName,
+				lcsProjectName));
 		contextAttributes.add("[$URL_FIRST_LINE$]");
 		contextAttributes.add(
 			NavigationUtil.getLCSClusterNodeURL(
 				emailContext.getLCSClusterNodeId()));
-		contextAttributes.add("[$URL_SECOND_LINE$]");
-		contextAttributes.add(
-			PortletPropsValues.LRDCOM_PATCHING_TOOL_OVERVIEW_URL);
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(
 			emailContext.translate(
 				"see-x-on-liferay-connected-services", lcsClusterNodeName));
 		contextAttributes.add("[$URL_TEXT_SECOND_LINE$]");
-		contextAttributes.add(
-			PortletPropsValues.LRDCOM_PATCHING_TOOL_OVERVIEW_URL);
+		contextAttributes.add("");
 
 		return contextAttributes.toArray();
 	}
 
 	@Override
 	public String getPopPrefix() {
-		return "patch_tool_unavailable_id";
+		return "monitoring_unavailable_id";
 	}
 
 }

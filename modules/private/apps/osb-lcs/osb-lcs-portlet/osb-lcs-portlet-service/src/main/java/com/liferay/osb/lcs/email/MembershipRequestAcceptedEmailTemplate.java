@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.email;
+package com.liferay.osb.lcs.email;
 
 import com.liferay.osb.lcs.navigation.util.NavigationUtil;
-import com.liferay.osb.lcs.util.LCSClusterNodeUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 import java.util.Locale;
@@ -28,12 +28,9 @@ import javax.portlet.PortletPreferences;
  * @author Marko Cikos
  * @author Matija Petanjek
  */
-public class LCSClusterNodeClusterLinkFailedEmailTemplate
-	extends BaseEmailTemplate {
+public class MembershipRequestAcceptedEmailTemplate extends BaseEmailTemplate {
 
-	public LCSClusterNodeClusterLinkFailedEmailTemplate(
-		EmailContext emailContext) {
-
+	public MembershipRequestAcceptedEmailTemplate(EmailContext emailContext) {
 		super(emailContext);
 	}
 
@@ -43,57 +40,44 @@ public class LCSClusterNodeClusterLinkFailedEmailTemplate
 
 		return getLocalizationMap(
 			"com/liferay/osb/lcs/email/dependencies" +
-				"/email_notification_type_3_body.tmpl",
-			"emailNotificationType3Body", portletPreferences);
+				"/email_notification_type_2_body.tmpl",
+			"emailNotificationType2Body", portletPreferences);
 	}
 
 	@Override
 	public Object[] getContextAttributes() throws PortalException {
 		List<Object> contextAttributes = getBaseContextAttributes();
 
-		String lcsClusterEntryName = emailContext.getLCSClusterEntryName();
-		String lcsClusterNodeName = emailContext.getLCSClusterNodeName();
-		String lcsProjectName = emailContext.getLCSProjectName();
-
 		contextAttributes.add("[$MESSAGE_FIRST_LINE$]");
 		contextAttributes.add(
 			emailContext.translate(
-				"there-is-a-communication-error-between-nodes-in-one-of-" +
-					"your-clusters"));
+				"your-membership-request-for-project-x-has-been-accepted",
+				emailContext.getLCSProjectName()));
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
 			emailContext.translate(
-				"lcs-detected-a-cluster-link-failure-on-server-x-in-cluster-" +
-					"x-for-project-x",
-				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
-		contextAttributes.add("[$MESSAGE_THIRD_LINE$]");
-		contextAttributes.add(
-			emailContext.translate(
-				"x-has-no-link-to-the-following-nodes", lcsClusterNodeName));
-		contextAttributes.add("[$SIBLING_SERVER_NAMES$]");
-		contextAttributes.add(
-			LCSClusterNodeUtil.getLCSClusterNodeNames(
-				emailContext.getSiblingLCSClusterNodeKeys()));
+				"you-can-access-the-project-dashboard-by-clicking-on-the-" +
+					"link-below"));
 		contextAttributes.add("[$SUBJECT$]");
 		contextAttributes.add(
-			emailContext.translate(
-				"broken-connections-detected-in-cluster-x-project-x",
-				lcsClusterEntryName, lcsProjectName));
-		contextAttributes.add("[$URL_FIRST_LINE$]");
-		contextAttributes.add(
-			NavigationUtil.getLCSClusterEntryURL(
-				emailContext.getLCSClusterEntryId()));
+			emailContext.translate("your-membership-request-was-accepted"));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
-		contextAttributes.add(
-			emailContext.translate(
-				"see-x-on-liferay-connected-services", lcsClusterEntryName));
+		contextAttributes.add(StringPool.BLANK);
+
+		String lcsProjectURL = NavigationUtil.getLCSProjectURL(
+			emailContext.getLCSProjectId());
+
+		contextAttributes.add("[$URL_SECOND_LINE$]");
+		contextAttributes.add(lcsProjectURL);
+		contextAttributes.add("[$URL_TEXT_SECOND_LINE$]");
+		contextAttributes.add(lcsProjectURL);
 
 		return contextAttributes.toArray();
 	}
 
 	@Override
 	public String getPopPrefix() {
-		return "lcs_cluster_node_cluster_link_failed_id";
+		return "lcs_membership_request_accepted_id";
 	}
 
 }
