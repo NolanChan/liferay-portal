@@ -18,97 +18,18 @@ import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSProject;
-import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSClusterNodeLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil;
-import com.liferay.osb.lcs.util.PortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portlet.PortletConfigFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import javax.portlet.PortletConfig;
-
 /**
  * @author Marko Cikos
  * @author Matija Petanjek
+ * @author Igor Beslic
  */
 public class EmailContext {
-
-	public EmailContext(
-			boolean cluster, String lcsClusterNodeKey,
-			LCSEventType lcsEventType, long userId)
-		throws PortalException {
-
-		this(lcsEventType, userId);
-
-		_cluster = cluster;
-
-		_lcsClusterNode = LCSClusterNodeLocalServiceUtil.getLCSClusterNode(
-			lcsClusterNodeKey);
-
-		_lcsClusterEntry = LCSClusterEntryLocalServiceUtil.getLCSClusterEntry(
-			_lcsClusterNode.getLcsClusterEntryId());
-
-		_lcsProject = LCSProjectLocalServiceUtil.getLCSProject(
-			_lcsClusterEntry.getLcsProjectId());
-	}
-
-	public EmailContext(LCSEventType lcsEventType, LCSRole lcsRole)
-		throws PortalException {
-
-		this(lcsEventType, lcsRole.getUserId());
-
-		_lcsProject = LCSProjectLocalServiceUtil.getLCSProject(
-			lcsRole.getLcsProjectId());
-	}
-
-	public EmailContext(LCSEventType lcsEventType, long userId)
-		throws PortalException {
-
-		_lcsEventType = lcsEventType;
-
-		_user = UserLocalServiceUtil.getUserById(userId);
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PortletKeys.NOTIFICATIONS);
-
-		_portletConfig = PortletConfigFactoryUtil.update(portlet);
-
-		_locale = _user.getLocale();
-	}
-
-	public EmailContext(
-			String lcsClusterNodeKey, LCSEventType lcsEventType,
-			List<String> siblingLCSClusterNodeKeys, long userId)
-		throws PortalException {
-
-		this(false, lcsClusterNodeKey, lcsEventType, userId);
-
-		_siblingLCSClusterNodeKeys = siblingLCSClusterNodeKeys;
-	}
-
-	public EmailContext(
-			String customMessage, String emailAddress,
-			LCSEventType lcsEventType, long lcsProjectId, long userId)
-		throws PortalException {
-
-		this(lcsEventType, userId);
-
-		_customMessage = customMessage;
-
-		_emailAddress = emailAddress;
-
-		_lcsProject = LCSProjectLocalServiceUtil.getLCSProject(lcsProjectId);
-	}
 
 	public String getCustomMessage() {
 		return _customMessage;
@@ -162,12 +83,8 @@ public class EmailContext {
 		return _locale;
 	}
 
-	public PortletConfig getPortletConfig() {
-		return _portletConfig;
-	}
-
-	public List<String> getSiblingLCSClusterNodeKeys() {
-		return _siblingLCSClusterNodeKeys;
+	public List<String> getSiblingLCSClusterNodeNames() {
+		return _siblingLCSClusterNodeNames;
 	}
 
 	public User getUser() {
@@ -178,8 +95,97 @@ public class EmailContext {
 		return _cluster;
 	}
 
-	protected String translate(String pattern, Object... arguments) {
-		return LanguageUtil.format(_portletConfig, _locale, pattern, arguments);
+	public static class EmailContextBuilder {
+
+		public EmailContextBuilder(LCSEventType lcsEventType, User user) {
+			_lcsEventType = lcsEventType;
+			_user = user;
+		}
+
+		public EmailContext build() {
+			return new EmailContext(this);
+		}
+
+		public EmailContextBuilder cluster(boolean cluster) {
+			_cluster = cluster;
+
+			return this;
+		}
+
+		public EmailContextBuilder customMessage(String customMessage) {
+			_customMessage = customMessage;
+
+			return this;
+		}
+
+		public EmailContextBuilder emailAddress(String emailAddress) {
+			_emailAddress = emailAddress;
+
+			return this;
+		}
+
+		public EmailContextBuilder lcsClusterEntry(
+			LCSClusterEntry lcsClusterEntry) {
+
+			_lcsClusterEntry = lcsClusterEntry;
+
+			return this;
+		}
+
+		public EmailContextBuilder lcsClusterNode(
+			LCSClusterNode lcsClusterNode) {
+
+			_lcsClusterNode = lcsClusterNode;
+
+			return this;
+		}
+
+		public EmailContextBuilder lcsProject(LCSProject lcsProject) {
+			_lcsProject = lcsProject;
+
+			return this;
+		}
+
+		public EmailContextBuilder locale(Locale locale) {
+			_locale = locale;
+
+			return this;
+		}
+
+		public EmailContextBuilder siblingLCSClusterNodeNames(
+			List<String> siblingLCSCLusterNodeNames) {
+
+			_siblingLCSClusterNodeNames.addAll(siblingLCSCLusterNodeNames);
+
+			return this;
+		}
+
+		private boolean _cluster;
+		private String _customMessage;
+		private String _emailAddress;
+		private LCSClusterEntry _lcsClusterEntry;
+		private LCSClusterNode _lcsClusterNode;
+		private final LCSEventType _lcsEventType;
+		private LCSProject _lcsProject;
+		private Locale _locale;
+		private final List<String> _siblingLCSClusterNodeNames =
+			new ArrayList<>();
+		private final User _user;
+
+	}
+
+	private EmailContext(EmailContextBuilder emailContextBuilder) {
+		_cluster = emailContextBuilder._cluster;
+		_customMessage = emailContextBuilder._customMessage;
+		_emailAddress = emailContextBuilder._emailAddress;
+		_lcsClusterEntry = emailContextBuilder._lcsClusterEntry;
+		_lcsClusterNode = emailContextBuilder._lcsClusterNode;
+		_lcsEventType = emailContextBuilder._lcsEventType;
+		_lcsProject = emailContextBuilder._lcsProject;
+		_locale = emailContextBuilder._locale;
+		_siblingLCSClusterNodeNames.addAll(
+			emailContextBuilder._siblingLCSClusterNodeNames);
+		_user = emailContextBuilder._user;
 	}
 
 	private final boolean _cluster;
@@ -190,8 +196,7 @@ public class EmailContext {
 	private final LCSEventType _lcsEventType;
 	private final LCSProject _lcsProject;
 	private final Locale _locale;
-	private final PortletConfig _portletConfig;
-	private final List<String> _siblingLCSClusterNodeKeys = new ArrayList<>();
+	private final List<String> _siblingLCSClusterNodeNames = new ArrayList<>();
 	private final User _user;
 
 }

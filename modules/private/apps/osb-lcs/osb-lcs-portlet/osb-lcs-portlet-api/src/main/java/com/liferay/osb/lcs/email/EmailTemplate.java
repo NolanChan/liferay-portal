@@ -19,22 +19,18 @@ import com.liferay.portal.kernel.exception.PortalException;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Matija Petanjek
  * @author Igor Beslic
  */
 public interface EmailTemplate {
 
-	public Map<Locale, String> getBodyMap(
-		PortletPreferences portletPreferences);
+	public Map<Locale, String> getBodyMap();
 
 	public Object[] getContextAttributes() throws PortalException;
 
 	public String getPopPrefix();
 
-	public Map<Locale, String> getSubjectMap(
-		PortletPreferences portletPreferences);
+	public Map<Locale, String> getSubjectMap();
 
 }
