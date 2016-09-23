@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Matija Petanjek
  */
@@ -56,18 +54,19 @@ public class MembershipInvitationAcceptedEmailTemplate
 		User user = emailContext.getUser();
 
 		contextAttributes.add(
-			emailContext.translate(
-				"x-x-joined-the-project-x", user.getFullName(),
+			translate(
+				emailContext, "x-x-joined-the-project-x", user.getFullName(),
 				user.getEmailAddress(), emailContext.getLCSProjectName()));
 
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(
+				emailContext,
 				"you-can-see-and-manage-your-project-members-by-clicking-on-" +
 					"the-link-below"));
 		contextAttributes.add("[$SUBJECT$]");
 		contextAttributes.add(
-			emailContext.translate("membership-invitation-accepted"));
+			translate(emailContext, "membership-invitation-accepted"));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(StringPool.BLANK);
 		contextAttributes.add("[$URL_SECOND_LINE$]");

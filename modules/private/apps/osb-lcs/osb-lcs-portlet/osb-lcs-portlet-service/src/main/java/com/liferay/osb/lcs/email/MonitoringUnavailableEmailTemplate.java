@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Marko Cikos
  * @author Matija Petanjek
@@ -34,13 +32,11 @@ public class MonitoringUnavailableEmailTemplate extends BaseEmailTemplate {
 	}
 
 	@Override
-	public Map<Locale, String> getBodyMap(
-		PortletPreferences portletPreferences) {
-
+	public Map<Locale, String> getBodyMap() {
 		return getLocalizationMap(
 			"com/liferay/osb/lcs/email/dependencies" +
 				"/email_notification_type_2_body.tmpl",
-			"emailNotificationType2Body", portletPreferences);
+			"emailNotificationType2Body");
 	}
 
 	@Override
@@ -53,20 +49,23 @@ public class MonitoringUnavailableEmailTemplate extends BaseEmailTemplate {
 
 		contextAttributes.add("[$MESSAGE_FIRST_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(
+				emailContext,
 				"monitoring-for-the-server-x-environment-x-project-x-is-" +
 					"currently-unavailable",
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(
+				emailContext,
 				"please-make-sure-the-property-com-liferay-portal-servlet-" +
 					"filters-monitoring-monitoringfilter-is-set-to-true-in-" +
 					"your-portal-ext-properties-file",
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$SUBJECT$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(
+				emailContext,
 				"monitoring-is-unavailable-for-the-server-x-environment-x-" +
 					"project-x",
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
@@ -76,8 +75,9 @@ public class MonitoringUnavailableEmailTemplate extends BaseEmailTemplate {
 				emailContext.getLCSClusterNodeId()));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
-				"see-x-on-liferay-connected-services", lcsClusterNodeName));
+			translate(
+				emailContext, "see-x-on-liferay-connected-services",
+				lcsClusterNodeName));
 		contextAttributes.add("[$URL_TEXT_SECOND_LINE$]");
 		contextAttributes.add("");
 

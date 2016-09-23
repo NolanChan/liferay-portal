@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Marko Cikos
  * @author Matija Petanjek
@@ -35,13 +33,11 @@ public class MembershipRequestAcceptedEmailTemplate extends BaseEmailTemplate {
 	}
 
 	@Override
-	public Map<Locale, String> getBodyMap(
-		PortletPreferences portletPreferences) {
-
+	public Map<Locale, String> getBodyMap() {
 		return getLocalizationMap(
 			"com/liferay/osb/lcs/email/dependencies" +
 				"/email_notification_type_2_body.tmpl",
-			"emailNotificationType2Body", portletPreferences);
+			"emailNotificationType2Body");
 	}
 
 	@Override
@@ -50,17 +46,19 @@ public class MembershipRequestAcceptedEmailTemplate extends BaseEmailTemplate {
 
 		contextAttributes.add("[$MESSAGE_FIRST_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(
+				emailContext,
 				"your-membership-request-for-project-x-has-been-accepted",
 				emailContext.getLCSProjectName()));
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(
+				emailContext,
 				"you-can-access-the-project-dashboard-by-clicking-on-the-" +
 					"link-below"));
 		contextAttributes.add("[$SUBJECT$]");
 		contextAttributes.add(
-			emailContext.translate("your-membership-request-was-accepted"));
+			translate(emailContext, "your-membership-request-was-accepted"));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(StringPool.BLANK);
 

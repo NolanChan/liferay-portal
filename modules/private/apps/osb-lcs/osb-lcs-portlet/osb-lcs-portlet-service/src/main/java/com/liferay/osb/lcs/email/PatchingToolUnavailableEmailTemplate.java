@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Marko Cikos
  * @author Matija Petanjek
@@ -35,13 +33,11 @@ public class PatchingToolUnavailableEmailTemplate extends BaseEmailTemplate {
 	}
 
 	@Override
-	public Map<Locale, String> getBodyMap(
-		PortletPreferences portletPreferences) {
-
+	public Map<Locale, String> getBodyMap() {
 		return getLocalizationMap(
 			"com/liferay/osb/lcs/email/dependencies" +
 				"/email_notification_type_2_body.tmpl",
-			"emailNotificationType2Body", portletPreferences);
+			"emailNotificationType2Body");
 	}
 
 	@Override
@@ -54,18 +50,21 @@ public class PatchingToolUnavailableEmailTemplate extends BaseEmailTemplate {
 
 		contextAttributes.add("[$MESSAGE_FIRST_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(
+				emailContext,
 				"the-patching-tool-for-the-server-x-environment-x-project-x-" +
 					"is-currently-unavailable",
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(
+				emailContext,
 				"click-the-following-link-for-the-patching-tool-" +
 					"configuration-instructions"));
 		contextAttributes.add("[$SUBJECT$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(
+				emailContext,
 				"the-patching-tool-is-unavailable-for-the-server-x-" +
 					"environment-x-project-x",
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
@@ -78,8 +77,9 @@ public class PatchingToolUnavailableEmailTemplate extends BaseEmailTemplate {
 			PortletPropsValues.LRDCOM_PATCHING_TOOL_OVERVIEW_URL);
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
-				"see-x-on-liferay-connected-services", lcsClusterNodeName));
+			translate(
+				emailContext, "see-x-on-liferay-connected-services",
+				lcsClusterNodeName));
 		contextAttributes.add("[$URL_TEXT_SECOND_LINE$]");
 		contextAttributes.add(
 			PortletPropsValues.LRDCOM_PATCHING_TOOL_OVERVIEW_URL);

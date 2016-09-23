@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Marko Cikos
  * @author Matija Petanjek
@@ -34,13 +32,11 @@ public class NewPatchAvailableEmailTemplate extends BaseEmailTemplate {
 	}
 
 	@Override
-	public Map<Locale, String> getBodyMap(
-		PortletPreferences portletPreferences) {
-
+	public Map<Locale, String> getBodyMap() {
 		return getLocalizationMap(
 			"com/liferay/osb/lcs/email/dependencies" +
 				"/email_notification_type_1_body.tmpl",
-			"emailNotificationType1Body", portletPreferences);
+			"emailNotificationType1Body");
 	}
 
 	@Override
@@ -55,13 +51,15 @@ public class NewPatchAvailableEmailTemplate extends BaseEmailTemplate {
 
 		if (emailContext.isCluster()) {
 			contextAttributes.add(
-				emailContext.translate(
+				translate(
+					emailContext,
 					"a-new-fix-pack-is-available-and-ready-for-installation-" +
 						"for-the-cluster-x-project-x",
 					lcsClusterEntryName, lcsProjectName));
 			contextAttributes.add("[$SUBJECT$]");
 			contextAttributes.add(
-				emailContext.translate(
+				translate(
+					emailContext,
 					"a-new-fix-pack-is-available-for-the-cluster-x-project-x",
 					lcsClusterEntryName, lcsProjectName));
 			contextAttributes.add("[$URL_FIRST_LINE$]");
@@ -70,19 +68,21 @@ public class NewPatchAvailableEmailTemplate extends BaseEmailTemplate {
 					emailContext.getLCSClusterEntryId()));
 			contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 			contextAttributes.add(
-				emailContext.translate(
-					"see-x-on-liferay-connected-services",
+				translate(
+					emailContext, "see-x-on-liferay-connected-services",
 					lcsClusterEntryName));
 		}
 		else {
 			contextAttributes.add(
-				emailContext.translate(
+				translate(
+					emailContext,
 					"a-new-fix-pack-is-available-and-ready-for-installation-" +
 						"for-the-server-x-environment-x-project-x",
 					lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 			contextAttributes.add("[$SUBJECT$]");
 			contextAttributes.add(
-				emailContext.translate(
+				translate(
+					emailContext,
 					"a-new-fix-pack-is-available-for-the-server-x-" +
 						"environment-x-project-x",
 					lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
@@ -92,8 +92,9 @@ public class NewPatchAvailableEmailTemplate extends BaseEmailTemplate {
 					emailContext.getLCSClusterNodeId()));
 			contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 			contextAttributes.add(
-				emailContext.translate(
-					"see-x-on-liferay-connected-services", lcsClusterNodeName));
+				translate(
+					emailContext, "see-x-on-liferay-connected-services",
+					lcsClusterNodeName));
 		}
 
 		return contextAttributes.toArray();

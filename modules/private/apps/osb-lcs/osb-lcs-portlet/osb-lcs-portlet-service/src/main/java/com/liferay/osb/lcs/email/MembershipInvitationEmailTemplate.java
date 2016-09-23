@@ -26,8 +26,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Matija Petanjek
  */
@@ -38,13 +36,11 @@ public class MembershipInvitationEmailTemplate extends BaseEmailTemplate {
 	}
 
 	@Override
-	public Map<Locale, String> getBodyMap(
-		PortletPreferences portletPreferences) {
-
+	public Map<Locale, String> getBodyMap() {
 		return getLocalizationMap(
 			"com/liferay/osb/lcs/email/dependencies" +
 				"/email_notification_type_4_body.tmpl",
-			"emailNotificationType4Body", portletPreferences);
+			"emailNotificationType4Body");
 	}
 
 	@Override
@@ -62,20 +58,20 @@ public class MembershipInvitationEmailTemplate extends BaseEmailTemplate {
 		contextAttributes.add("[$CUSTOM_MESSAGE$]");
 		contextAttributes.add(invitationMessage);
 		contextAttributes.add("[$DEAR_LIFERAY_USER$]");
-		contextAttributes.add(emailContext.translate("dear-liferay-user"));
+		contextAttributes.add(translate(emailContext, "dear-liferay-user"));
 		contextAttributes.add("[$MESSAGE_FIRST_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(emailContext,
 				"x-invited-you-to-be-part-of-the-liferay-connected-services-" +
 					"project-x",
 				user.getFullName(), emailContext.getLCSProjectName()));
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(emailContext,
 				"use-the-link-below-to-accept-this-invitation-and-access-" +
 					"the-liferay-connected-services-site"));
 		contextAttributes.add("[$SUBJECT$]");
-		contextAttributes.add(emailContext.translate("membership-invitation"));
+		contextAttributes.add(translate(emailContext, "membership-invitation"));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(StringPool.BLANK);
 

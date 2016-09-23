@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Marko Cikos
  * @author Matija Petanjek
@@ -34,13 +32,11 @@ public class NewLCSPortletAvailableEmailTemplate extends BaseEmailTemplate {
 	}
 
 	@Override
-	public Map<Locale, String> getBodyMap(
-		PortletPreferences portletPreferences) {
-
+	public Map<Locale, String> getBodyMap() {
 		return getLocalizationMap(
 			"com/liferay/osb/lcs/email/dependencies" +
 				"/email_notification_type_2_body.tmpl",
-			"emailNotificationType2Body", portletPreferences);
+			"emailNotificationType2Body");
 	}
 
 	@Override
@@ -55,13 +51,15 @@ public class NewLCSPortletAvailableEmailTemplate extends BaseEmailTemplate {
 
 		if (emailContext.isCluster()) {
 			contextAttributes.add(
-				emailContext.translate(
+				translate(
+					emailContext,
 					"the-new-lcs-client-for-the-cluster-x-project-x-is-" +
 						"available",
 					lcsClusterEntryName, lcsProjectName));
 			contextAttributes.add("[$SUBJECT$]");
 			contextAttributes.add(
-				emailContext.translate(
+				translate(
+					emailContext,
 					"a-new-lcs-client-is-available-for-the-cluster-x-project-x",
 					lcsClusterEntryName, lcsProjectName));
 			contextAttributes.add("[$URL_FIRST_LINE$]");
@@ -70,19 +68,21 @@ public class NewLCSPortletAvailableEmailTemplate extends BaseEmailTemplate {
 					emailContext.getLCSClusterEntryId()));
 			contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 			contextAttributes.add(
-				emailContext.translate(
-					"see-x-on-liferay-connected-services",
+				translate(
+					emailContext, "see-x-on-liferay-connected-services",
 					lcsClusterEntryName));
 		}
 		else {
 			contextAttributes.add(
-				emailContext.translate(
+				translate(
+					emailContext,
 					"the-new-lcs-client-for-the-server-x-environment-x-" +
 						"project-x-is-available",
 					lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 			contextAttributes.add("[$SUBJECT$]");
 			contextAttributes.add(
-				emailContext.translate(
+				translate(
+					emailContext,
 					"a-new-lcs-client-is-available-for-the-server-x-" +
 						"environment-x-project-x",
 					lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
@@ -92,13 +92,15 @@ public class NewLCSPortletAvailableEmailTemplate extends BaseEmailTemplate {
 					emailContext.getLCSClusterNodeId()));
 			contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 			contextAttributes.add(
-				emailContext.translate(
-					"see-x-on-liferay-connected-services", lcsClusterNodeName));
+				translate(
+					emailContext, "see-x-on-liferay-connected-services",
+					lcsClusterNodeName));
 		}
 
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(
+				emailContext,
 				"please-find-download-links-at-the-following-address"));
 		contextAttributes.add("[$URL_SECOND_LINE$]");
 		contextAttributes.add(NavigationUtil.getLCSPortalURL());

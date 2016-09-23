@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Matija Petanjek
  */
@@ -35,13 +33,11 @@ public class NewProjectMemberEmailTemplate extends BaseEmailTemplate {
 	}
 
 	@Override
-	public Map<Locale, String> getBodyMap(
-		PortletPreferences portletPreferences) {
-
+	public Map<Locale, String> getBodyMap() {
 		return getLocalizationMap(
 			"com/liferay/osb/lcs/email/dependencies" +
 				"/email_notification_type_2_body.tmpl",
-			"emailNotificationType2Body", portletPreferences);
+			"emailNotificationType2Body");
 	}
 
 	@Override
@@ -53,17 +49,18 @@ public class NewProjectMemberEmailTemplate extends BaseEmailTemplate {
 		User user = emailContext.getUser();
 
 		contextAttributes.add(
-			emailContext.translate(
-				"there-is-a-new-user-x-on-the-project-x", user.getFullName(),
-				emailContext.getLCSProjectName()));
+			translate(
+				emailContext, "there-is-a-new-user-x-on-the-project-x",
+				user.getFullName(), emailContext.getLCSProjectName()));
 
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(
+				emailContext,
 				"you-can-see-and-manage-your-project-members-by-clicking-on-" +
 					"the-link-below"));
 		contextAttributes.add("[$SUBJECT$]");
-		contextAttributes.add(emailContext.translate("new-project-member"));
+		contextAttributes.add(translate(emailContext, "new-project-member"));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(StringPool.BLANK);
 		contextAttributes.add("[$URL_SECOND_LINE$]");

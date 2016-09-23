@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Marko Cikos
  * @author Matija Petanjek
@@ -34,13 +32,11 @@ public class ServerManuallyShutdownEmailTemplate extends BaseEmailTemplate {
 	}
 
 	@Override
-	public Map<Locale, String> getBodyMap(
-		PortletPreferences portletPreferences) {
-
+	public Map<Locale, String> getBodyMap() {
 		return getLocalizationMap(
 			"com/liferay/osb/lcs/email/dependencies" +
 				"/email_notification_type_1_body.tmpl",
-			"emailNotificationType1Body", portletPreferences);
+			"emailNotificationType1Body");
 	}
 
 	@Override
@@ -53,12 +49,14 @@ public class ServerManuallyShutdownEmailTemplate extends BaseEmailTemplate {
 
 		contextAttributes.add("[$MESSAGE_FIRST_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(
+				emailContext,
 				"the-server-x-environment-x-project-x-was-manually-shutdown",
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$SUBJECT$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(
+				emailContext,
 				"the-server-was-manually-shutdown-x-environment-x-project-x",
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$URL_FIRST_LINE$]");
@@ -67,8 +65,9 @@ public class ServerManuallyShutdownEmailTemplate extends BaseEmailTemplate {
 				emailContext.getLCSClusterNodeId()));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
-				"see-x-on-liferay-connected-services", lcsClusterNodeName));
+			translate(
+				emailContext, "see-x-on-liferay-connected-services",
+				lcsClusterNodeName));
 
 		return contextAttributes.toArray();
 	}

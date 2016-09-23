@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Marko Cikos
  * @author Matija Petanjek
@@ -35,13 +33,11 @@ public class NewPatchingToolAvailableEmailTemplate extends BaseEmailTemplate {
 	}
 
 	@Override
-	public Map<Locale, String> getBodyMap(
-		PortletPreferences portletPreferences) {
-
+	public Map<Locale, String> getBodyMap() {
 		return getLocalizationMap(
 			"com/liferay/osb/lcs/email/dependencies" +
 				"/email_notification_type_2_body.tmpl",
-			"emailNotificationType2Body", portletPreferences);
+			"emailNotificationType2Body");
 	}
 
 	@Override
@@ -56,13 +52,15 @@ public class NewPatchingToolAvailableEmailTemplate extends BaseEmailTemplate {
 
 		if (emailContext.isCluster()) {
 			contextAttributes.add(
-				emailContext.translate(
+				translate(
+					emailContext,
 					"a-new-patching-tool-for-the-cluster-x-project-x-is-" +
 						"available",
 					lcsClusterEntryName, lcsProjectName));
 			contextAttributes.add("[$SUBJECT$]");
 			contextAttributes.add(
-				emailContext.translate(
+				translate(
+					emailContext,
 					"a-new-patching-tool-is-available-for-the-cluster-x-" +
 						"project-x",
 					lcsClusterEntryName, lcsProjectName));
@@ -72,19 +70,21 @@ public class NewPatchingToolAvailableEmailTemplate extends BaseEmailTemplate {
 					emailContext.getLCSClusterEntryId()));
 			contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 			contextAttributes.add(
-				emailContext.translate(
-					"see-x-on-liferay-connected-services",
+				translate(
+					emailContext, "see-x-on-liferay-connected-services",
 					lcsClusterEntryName));
 		}
 		else {
 			contextAttributes.add(
-				emailContext.translate(
+				translate(
+					emailContext,
 					"a-new-patching-tool-for-the-server-x-environment-x-" +
 						"project-x-is-available",
 					lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 			contextAttributes.add("[$SUBJECT$]");
 			contextAttributes.add(
-				emailContext.translate(
+				translate(
+					emailContext,
 					"a-new-patching-tool-is-available-for-the-server-x-" +
 						"environment-x-project-x",
 					lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
@@ -94,13 +94,15 @@ public class NewPatchingToolAvailableEmailTemplate extends BaseEmailTemplate {
 					emailContext.getLCSClusterNodeId()));
 			contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 			contextAttributes.add(
-				emailContext.translate(
-					"see-x-on-liferay-connected-services", lcsClusterNodeName));
+				translate(
+					emailContext, "see-x-on-liferay-connected-services",
+					lcsClusterNodeName));
 		}
 
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
-			emailContext.translate(
+			translate(
+				emailContext,
 				"click-the-following-link-for-the-patching-tool-" +
 					"configuration-instructions"));
 		contextAttributes.add("[$URL_SECOND_LINE$]");

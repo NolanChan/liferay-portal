@@ -17,6 +17,7 @@ package com.liferay.osb.lcs.email;
 import com.liferay.osb.lcs.navigation.util.NavigationUtil;
 import com.liferay.osb.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -28,20 +29,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Matija Petanjek
  */
 public abstract class BaseEmailTemplate implements EmailTemplate {
 
 	@Override
-	public Map<Locale, String> getSubjectMap(
-		PortletPreferences portletPreferences) {
-
+	public Map<Locale, String> getSubjectMap() {
 		return getLocalizationMap(
 			"com/liferay/osb/lcs/email/dependencies/email_subject.tmpl",
-			"emailSubject", portletPreferences);
+			"emailSubject");
 	}
 
 	protected BaseEmailTemplate(EmailContext emailContext) {
@@ -55,29 +52,28 @@ public abstract class BaseEmailTemplate implements EmailTemplate {
 
 		contextAttributes.add("[$CHANGE_NOTIFICATIONS_TEXT$]");
 		contextAttributes.add(
-			emailContext.translate("change-notification-preferences"));
+			translate(emailContext, "change-notification-preferences"));
 		contextAttributes.add("[$CONTACT_SUPPORT_TEXT$]");
-		contextAttributes.add(emailContext.translate("contact-support"));
+		contextAttributes.add(translate(emailContext, "contact-support"));
 		contextAttributes.add("[$DEAR_X$]");
 		contextAttributes.add(
-			emailContext.translate("dear-x", user.getFullName()));
+			translate(emailContext, "dear-x", user.getFullName()));
 		contextAttributes.add("[$FEEDBACK_EMAIL_ADDRESS$]");
 		contextAttributes.add(
 			PortletPropsValues.OSB_LCS_PORTLET_MEMBERS_FEEDBACK_EMAIL_ADDRESS);
 		contextAttributes.add("[$LCS_TEAM$]");
 		contextAttributes.add(
-			emailContext.translate("the-liferay-connected-services-team"));
+			translate(emailContext, "the-liferay-connected-services-team"));
 		contextAttributes.add("[$NOTIFICATIONS_URL$]");
 		contextAttributes.add(NavigationUtil.getLCSNotificationsURL());
 		contextAttributes.add("[$THANK_YOU_TEXT$]");
-		contextAttributes.add(emailContext.translate("thank-you"));
+		contextAttributes.add(translate(emailContext, "thank-you"));
 
 		return contextAttributes;
 	}
 
 	protected Map<Locale, String> getLocalizationMap(
-		String templatePath, String parameter,
-		PortletPreferences portletPreferences) {
+		String templatePath, String parameter) {
 
 		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
 			portletPreferences, parameter);
@@ -93,6 +89,13 @@ public abstract class BaseEmailTemplate implements EmailTemplate {
 		map.put(defaultLocale, ContentUtil.get(templatePath));
 
 		return map;
+	}
+
+	protected String translate(
+		EmailContext emailContext, String pattern, Object... arguments) {
+
+		return LanguageUtil.format(
+			emailContext.getLocale(), pattern, arguments);
 	}
 
 	protected EmailContext emailContext;
