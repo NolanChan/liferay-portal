@@ -15,9 +15,7 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.sybase.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataPartitioningExporter;
-import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.InsertSQLBuilder;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
-import com.liferay.portal.tools.data.partitioning.sql.builder.sybase.exporter.serializer.SybaseFieldSerializer;
 
 /**
  * @author Manuel de la Peña
@@ -26,7 +24,7 @@ public class SybaseDataPartitioningExporter
 	extends BaseDataPartitioningExporter {
 
 	public SybaseDataPartitioningExporter() {
-		super(new InsertSQLBuilder(new SybaseFieldSerializer()));
+		super(new SybaseInsertSQLBuilder());
 	}
 
 	@Override

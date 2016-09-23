@@ -14,9 +14,6 @@
 
 package com.liferay.portal.tools.data.partitioning.sql.builder.sybase.exporter;
 
-import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.InsertSQLBuilder;
-import com.liferay.portal.tools.data.partitioning.sql.builder.sybase.exporter.serializer.SybaseFieldSerializer;
-
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -84,7 +81,25 @@ public class SybaseInsertSQLBuilderTest {
 		Assert.assertEquals("01 01 1970 12:00:000", field);
 	}
 
-	private final InsertSQLBuilder _insertSQLBuilder = new InsertSQLBuilder(
-		new SybaseFieldSerializer());
+	@Test
+	public void testBuildInsert() {
+		String[] fields = {"a", "b", "c", "d"};
+
+		Assert.assertEquals(
+			"insert into Foo values (a, b, c, d)\nGO\n",
+			_insertSQLBuilder.buildInsert("Foo", fields));
+	}
+
+	@Test
+	public void testBuildInsertWithMultilineFieldValues() {
+		String[] fields = {"a;\n", "b", "c;\n", "d"};
+
+		Assert.assertEquals(
+			"insert into Foo values (a;\n, b, c;\n, d)\nGO\n",
+			_insertSQLBuilder.buildInsert("Foo", fields));
+	}
+
+	private final SybaseInsertSQLBuilder _insertSQLBuilder =
+		new SybaseInsertSQLBuilder();
 
 }
