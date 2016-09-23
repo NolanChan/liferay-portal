@@ -1,0 +1,6 @@
+Bundle-Name: Liferay OSB LDN Generator
+Bundle-SymbolicName: com.liferay.osb.ldn.generator
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.osb.ldn.generator.layout,\
+	com.liferay.osb.ldn.generator.site
