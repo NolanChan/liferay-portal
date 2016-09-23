@@ -3,7 +3,7 @@
 ;
 [subrepo]
 	cmdver = liferay
-	commit = f380a643d2f6d33d4cd2ba485112c1abf056f8ec
+	commit = b0c044e12006230455533f119d781ff6cbc7a76e
 	mode = push
-	parent = a355fdac5c145103742d35d57c7f6b5afcf59e21
+	parent = e1f2c8b5f1a305f0a24cfc759651be502b2edcb8
 	remote = git@github.com:liferay/com-liferay-portal-search-elasticsearch-shield-private.git
