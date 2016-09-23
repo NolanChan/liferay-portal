@@ -17,6 +17,7 @@ package com.liferay.osb.lcs.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.lcs.subscription.SubscriptionType;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
 import com.liferay.osb.lcs.constants.LCSClusterEntryConstants;
 import com.liferay.osb.lcs.exception.DuplicateLCSClusterEntryNameException;
 import com.liferay.osb.lcs.exception.RequiredLCSClusterEntryNameException;
@@ -26,16 +27,18 @@ import com.liferay.osb.lcs.model.LCSInvitation;
 import com.liferay.osb.lcs.model.LCSRole;
 import com.liferay.osb.lcs.service.base.LCSClusterEntryLocalServiceBaseImpl;
 import com.liferay.osb.lcs.util.ApplicationProfile;
-import com.liferay.osb.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -346,9 +349,11 @@ public class LCSClusterEntryLocalServiceImpl
 
 	@Override
 	public LCSClusterEntry updateLCSClusterEntry(
-		LCSClusterEntry lcsClusterEntry) {
+		LCSClusterEntry lcsClusterEntry) throws PortalException {
 
-		if (PortletPropsValues.APPLICATION_PROFILE ==
+		OSBLCSConfiguration configuration = getConfiguration();
+
+		if (configuration.applicationProfile() ==
 				ApplicationProfile.PRODUCTION) {
 
 			throw new UnsupportedOperationException();
@@ -421,6 +426,13 @@ public class LCSClusterEntryLocalServiceImpl
 		}
 	}
 
+	protected OSBLCSConfiguration getConfiguration()
+		throws ConfigurationException {
+
+		return _configurationProvider.getCompanyConfiguration(
+			OSBLCSConfiguration.class, 0);
+	}
+
 	protected LCSClusterEntry updateSubscriptionType(
 			LCSClusterEntry lcsClusterEntry, String subscriptionType)
 		throws PortalException {
@@ -478,5 +490,8 @@ public class LCSClusterEntryLocalServiceImpl
 			throw new DuplicateLCSClusterEntryNameException();
 		}
 	}
+
+	@ServiceReference(type = ConfigurationProvider.class)
+	private ConfigurationProvider _configurationProvider;
 
 }

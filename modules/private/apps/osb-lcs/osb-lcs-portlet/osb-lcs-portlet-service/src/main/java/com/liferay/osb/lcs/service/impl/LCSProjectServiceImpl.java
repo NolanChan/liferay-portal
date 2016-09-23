@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
 import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSProject;
@@ -27,16 +28,18 @@ import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
 import com.liferay.osb.lcs.service.base.LCSProjectServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
 import com.liferay.osb.lcs.util.ApplicationProfile;
-import com.liferay.osb.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Collections;
 import java.util.List;
@@ -90,7 +93,9 @@ public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {
 	public LCSProject deleteLCSProject(long lcsProjectId)
 		throws PortalException {
 
-		if (PortletPropsValues.APPLICATION_PROFILE ==
+		OSBLCSConfiguration configuration = getConfiguration();
+
+		if (configuration.applicationProfile() ==
 				ApplicationProfile.PRODUCTION) {
 
 			throw new UnsupportedOperationException();
@@ -246,6 +251,16 @@ public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {
 			throw new PrincipalException();
 		}
 	}
+
+	protected OSBLCSConfiguration getConfiguration()
+		throws ConfigurationException {
+
+		return _configurationProvider.getCompanyConfiguration(
+			OSBLCSConfiguration.class, 0);
+	}
+
+	@ServiceReference(type = ConfigurationProvider.class)
+	private ConfigurationProvider _configurationProvider;
 
 	private OSBPortletService _osbPortletService;
 

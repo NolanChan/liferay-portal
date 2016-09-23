@@ -18,12 +18,13 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.advisor.EmailAdvisor;
 import com.liferay.osb.lcs.advisor.LCSMessageAdvisor;
 import com.liferay.osb.lcs.advisor.StringAdvisor;
 import com.liferay.osb.lcs.advisor.UserAdvisor;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
 import com.liferay.osb.lcs.constants.LCSMessageConstants;
 import com.liferay.osb.lcs.constants.LCSRoleConstants;
-import com.liferay.osb.lcs.email.EmailAdvisor;
 import com.liferay.osb.lcs.email.EmailContext;
 import com.liferay.osb.lcs.exception.DuplicateLCSProjectCorpProjectIdException;
 import com.liferay.osb.lcs.exception.DuplicateLCSProjectNameException;
@@ -36,7 +37,6 @@ import com.liferay.osb.lcs.model.LCSRole;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.service.base.LCSProjectLocalServiceBaseImpl;
 import com.liferay.osb.lcs.util.ApplicationProfile;
-import com.liferay.osb.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Projection;
@@ -48,15 +48,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.UniqueList;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -192,7 +193,9 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 			String sourceSystemName, String name, long userId)
 		throws PortalException {
 
-		if (PortletPropsValues.APPLICATION_PROFILE ==
+		OSBLCSConfiguration configuration = getConfiguration();
+
+		if (configuration.applicationProfile() ==
 				ApplicationProfile.PRODUCTION) {
 
 			throw new UnsupportedOperationException(
@@ -473,7 +476,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 		return lcsProjects;
 	}
 
-	@Reference(bind = "-")
+	/*@Reference(bind = "-")
 	public void setEmailAdvisor(EmailAdvisor emailAdvisor) {
 		_emailAdvisor = emailAdvisor;
 	}
@@ -496,7 +499,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 	@Reference(bind = "-")
 	public void setUserAdvisor(UserAdvisor userAdvisor) {
 		_userAdvisor = userAdvisor;
-	}
+	}*/
 
 	@Override
 	public LCSProject updateSubscriptionActive(
@@ -510,14 +513,25 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 		return updateLCSProject(lcsProject);
 	}
 
+	protected OSBLCSConfiguration getConfiguration()
+		throws ConfigurationException {
+
+		return _configurationProvider.getCompanyConfiguration(
+			OSBLCSConfiguration.class, 0);
+	}
+
 	protected void setUpLCSAdministratorUserLCSProject(
 			User user, long lcsMessageId, long lcsProjectId)
 		throws PortalException {
 
-		_emailAdvisor.sendToLCSProjectAdminsEmail(
-			new EmailContext(
-				null, user.getEmailAddress(), LCSEventType.NEW_PROJECT_MEMBER,
-				lcsProjectId, user.getUserId()));
+		EmailContext.EmailContextBuilder emailContextBuilder =
+			new EmailContext.EmailContextBuilder(
+				LCSEventType.NEW_PROJECT_MEMBER, user);
+
+		emailContextBuilder.lcsProject(getLCSProject(lcsProjectId));
+		emailContextBuilder.emailAddress(user.getEmailAddress());
+
+		_emailAdvisor.sendToLCSProjectAdminsEmail(emailContextBuilder.build());
 
 		_lcsMessageAdvisor.addLCSProjectLCSMessage(
 			true, user.getFullName(), true, LCSEventType.NEW_PROJECT_MEMBER,
@@ -541,10 +555,18 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LCSProjectLocalServiceImpl.class);
 
+	@ServiceReference(type = ConfigurationProvider.class)
+	private ConfigurationProvider _configurationProvider;
+
+	@ServiceReference(type = EmailAdvisor.class)
 	private EmailAdvisor _emailAdvisor;
+	@ServiceReference(type = LCSMessageAdvisor.class)
 	private LCSMessageAdvisor _lcsMessageAdvisor;
+	@ServiceReference(type = OSBPortletService.class)
 	private OSBPortletService _osbPortletService;
+	@ServiceReference(type = StringAdvisor.class)
 	private StringAdvisor _stringAdvisor;
+	@ServiceReference(type = UserAdvisor.class)
 	private UserAdvisor _userAdvisor;
 
 }

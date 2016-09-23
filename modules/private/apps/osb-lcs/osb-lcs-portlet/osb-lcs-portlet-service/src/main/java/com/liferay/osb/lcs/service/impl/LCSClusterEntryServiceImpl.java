@@ -17,20 +17,23 @@ package com.liferay.osb.lcs.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osb.lcs.advisor.LCSClusterEntryTokenAdvisor;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
 import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.service.base.LCSClusterEntryServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSClusterEntryPermission;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
 import com.liferay.osb.lcs.util.ApplicationProfile;
-import com.liferay.osb.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -107,7 +110,9 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 			String subscriptionType, int type)
 		throws PortalException {
 
-		if (PortletPropsValues.APPLICATION_PROFILE ==
+		OSBLCSConfiguration configuration = getConfiguration();
+
+		if (configuration.applicationProfile() ==
 				ApplicationProfile.PRODUCTION) {
 
 			throw new UnsupportedOperationException();
@@ -320,6 +325,16 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 
 		return filteredLCSClusterEntries;
 	}
+
+	protected OSBLCSConfiguration getConfiguration()
+		throws ConfigurationException {
+
+		return _configurationProvider.getCompanyConfiguration(
+			OSBLCSConfiguration.class, 0);
+	}
+
+	@ServiceReference(type = ConfigurationProvider.class)
+	private ConfigurationProvider _configurationProvider;
 
 	@BeanReference(type = LCSClusterEntryTokenAdvisor.class)
 	private LCSClusterEntryTokenAdvisor _lcsClusterEntryTokenAdvisor;
