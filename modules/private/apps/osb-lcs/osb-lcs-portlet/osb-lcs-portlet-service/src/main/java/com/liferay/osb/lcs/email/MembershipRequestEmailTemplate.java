@@ -14,7 +14,6 @@
 
 package com.liferay.osb.lcs.email;
 
-import com.liferay.osb.lcs.navigation.util.NavigationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.StringPool;
@@ -62,7 +61,7 @@ public class MembershipRequestEmailTemplate extends BaseEmailTemplate {
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(StringPool.BLANK);
 
-		String lcsProjectURL = NavigationUtil.getLCSProjectURL(
+		String lcsProjectURL = _navigationAdvisor.getLCSProjectURL(
 			emailContext.getLCSProjectId());
 
 		contextAttributes.add("[$URL_SECOND_LINE$]");

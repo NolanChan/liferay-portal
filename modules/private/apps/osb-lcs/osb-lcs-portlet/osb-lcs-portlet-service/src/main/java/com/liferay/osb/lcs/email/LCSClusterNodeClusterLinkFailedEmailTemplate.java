@@ -14,7 +14,7 @@
 
 package com.liferay.osb.lcs.email;
 
-import com.liferay.osb.lcs.navigation.util.NavigationUtil;
+import com.liferay.osb.lcs.advisor.NavigationAdvisor;
 import com.liferay.osb.lcs.util.LCSClusterNodeUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -77,7 +77,7 @@ public class LCSClusterNodeClusterLinkFailedEmailTemplate
 				lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$URL_FIRST_LINE$]");
 		contextAttributes.add(
-			NavigationUtil.getLCSClusterEntryURL(
+				NavigationAdvisor.getLCSClusterEntryURL(
 				emailContext.getLCSClusterEntryId()));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(

@@ -14,7 +14,6 @@
 
 package com.liferay.osb.lcs.email;
 
-import com.liferay.osb.lcs.navigation.util.NavigationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -63,7 +62,7 @@ public class ServerUnexpectedlyShutdownEmailTemplate extends BaseEmailTemplate {
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$URL_FIRST_LINE$]");
 		contextAttributes.add(
-			NavigationUtil.getLCSClusterNodeURL(
+			_navigationAdvisor.getLCSClusterNodeURL(
 				emailContext.getLCSClusterNodeId()));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(

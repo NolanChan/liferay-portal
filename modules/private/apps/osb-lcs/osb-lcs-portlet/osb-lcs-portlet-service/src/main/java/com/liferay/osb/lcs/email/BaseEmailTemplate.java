@@ -14,8 +14,9 @@
 
 package com.liferay.osb.lcs.email;
 
-import com.liferay.osb.lcs.navigation.util.NavigationUtil;
-import com.liferay.osb.lcs.util.PortletPropsValues;
+import com.liferay.osb.lcs.advisor.NavigationAdvisor;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
@@ -29,6 +30,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Matija Petanjek
  */
@@ -41,8 +46,24 @@ public abstract class BaseEmailTemplate implements EmailTemplate {
 			"emailSubject");
 	}
 
+	@Reference(bind = "-", unbind = "-")
+	public void setNavigationAdvisor(NavigationAdvisor navigationAdvisor) {
+		_navigationAdvisor = navigationAdvisor;
+	}
+
 	protected BaseEmailTemplate(EmailContext emailContext) {
 		this.emailContext = emailContext;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
+			OSBLCSConfiguration.class, properties);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_osbLCSConfiguration = null;
 	}
 
 	protected List<Object> getBaseContextAttributes() throws PortalException {
@@ -60,12 +81,12 @@ public abstract class BaseEmailTemplate implements EmailTemplate {
 			translate(emailContext, "dear-x", user.getFullName()));
 		contextAttributes.add("[$FEEDBACK_EMAIL_ADDRESS$]");
 		contextAttributes.add(
-			PortletPropsValues.OSB_LCS_PORTLET_MEMBERS_FEEDBACK_EMAIL_ADDRESS);
+			_osbLCSConfiguration.osbLcsPortletMembersFeedbackEmailAddress());
 		contextAttributes.add("[$LCS_TEAM$]");
 		contextAttributes.add(
 			translate(emailContext, "the-liferay-connected-services-team"));
 		contextAttributes.add("[$NOTIFICATIONS_URL$]");
-		contextAttributes.add(NavigationUtil.getLCSNotificationsURL());
+		contextAttributes.add(_navigationAdvisor.getLCSNotificationsURL());
 		contextAttributes.add("[$THANK_YOU_TEXT$]");
 		contextAttributes.add(translate(emailContext, "thank-you"));
 
@@ -98,6 +119,9 @@ public abstract class BaseEmailTemplate implements EmailTemplate {
 			emailContext.getLocale(), pattern, arguments);
 	}
 
+	protected static volatile OSBLCSConfiguration _osbLCSConfiguration;
+
+	protected NavigationAdvisor _navigationAdvisor;
 	protected EmailContext emailContext;
 
 }

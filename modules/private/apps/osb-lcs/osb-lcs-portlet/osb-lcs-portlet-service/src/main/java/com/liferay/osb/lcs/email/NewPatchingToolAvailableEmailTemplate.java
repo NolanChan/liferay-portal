@@ -14,8 +14,6 @@
 
 package com.liferay.osb.lcs.email;
 
-import com.liferay.osb.lcs.navigation.util.NavigationUtil;
-import com.liferay.osb.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -66,7 +64,7 @@ public class NewPatchingToolAvailableEmailTemplate extends BaseEmailTemplate {
 					lcsClusterEntryName, lcsProjectName));
 			contextAttributes.add("[$URL_FIRST_LINE$]");
 			contextAttributes.add(
-				NavigationUtil.getLCSClusterEntryURL(
+					_navigationAdvisor.getLCSClusterEntryURL(
 					emailContext.getLCSClusterEntryId()));
 			contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 			contextAttributes.add(
@@ -90,7 +88,7 @@ public class NewPatchingToolAvailableEmailTemplate extends BaseEmailTemplate {
 					lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 			contextAttributes.add("[$URL_FIRST_LINE$]");
 			contextAttributes.add(
-				NavigationUtil.getLCSClusterNodeURL(
+				_navigationAdvisor.getLCSClusterNodeURL(
 					emailContext.getLCSClusterNodeId()));
 			contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 			contextAttributes.add(
@@ -107,10 +105,10 @@ public class NewPatchingToolAvailableEmailTemplate extends BaseEmailTemplate {
 					"configuration-instructions"));
 		contextAttributes.add("[$URL_SECOND_LINE$]");
 		contextAttributes.add(
-			PortletPropsValues.LRDCOM_PATCHING_TOOL_OVERVIEW_URL);
+			_osbLCSConfiguration.lrdcomPatchingToolOverviewUrl());
 		contextAttributes.add("[$URL_TEXT_SECOND_LINE$]");
 		contextAttributes.add(
-			PortletPropsValues.LRDCOM_PATCHING_TOOL_OVERVIEW_URL);
+			_osbLCSConfiguration.lrdcomPatchingToolOverviewUrl());
 
 		return contextAttributes.toArray();
 	}

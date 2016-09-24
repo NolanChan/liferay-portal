@@ -14,7 +14,7 @@
 
 package com.liferay.osb.lcs.email;
 
-import com.liferay.osb.lcs.navigation.util.NavigationUtil;
+import com.liferay.osb.lcs.constants.NavigationConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -77,8 +77,8 @@ public class MembershipInvitationEmailTemplate extends BaseEmailTemplate {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(NavigationUtil.getLCSPortalURL());
-		sb.append(NavigationUtil.CHECK_LCS_INVITATION_URL);
+		sb.append(_navigationAdvisor.getLCSPortalURL());
+		sb.append(NavigationConstants.CHECK_LCS_INVITATION_URL);
 		sb.append(StringPool.QUESTION);
 		sb.append("lcsProjectId=");
 		sb.append(emailContext.getLCSProjectId());
