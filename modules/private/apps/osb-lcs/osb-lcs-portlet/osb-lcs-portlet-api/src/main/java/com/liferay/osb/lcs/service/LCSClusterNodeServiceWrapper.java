@@ -127,6 +127,13 @@ public class LCSClusterNodeServiceWrapper implements LCSClusterNodeService,
 		return _lcsClusterNodeService.fetchLCSClusterNode(key);
 	}
 
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterNode fetchRandomSiblingLCSClusterNode(
+		java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterNodeService.fetchRandomSiblingLCSClusterNode(key);
+	}
+
 	/**
 	* Returns the LCS cluster node matching the key.
 	*
@@ -255,6 +262,13 @@ public class LCSClusterNodeServiceWrapper implements LCSClusterNodeService,
 			details);
 	}
 
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSClusterNode> getLCSClusterNodeSiblingNodes(
+		java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterNodeService.getLCSClusterNodeSiblingNodes(key);
+	}
+
 	/**
 	* Returns all LCS cluster nodes (excluding their transient details)
 	* accessible to the user and belonging to the LCS project.
@@ -291,6 +305,13 @@ public class LCSClusterNodeServiceWrapper implements LCSClusterNodeService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _lcsClusterNodeService.getLCSProjectLCSClusterNodes(lcsProjectId,
 			details);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSClusterNode> getUserLCSClusterNodes(
+		boolean details)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterNodeService.getUserLCSClusterNodes(details);
 	}
 
 	/**

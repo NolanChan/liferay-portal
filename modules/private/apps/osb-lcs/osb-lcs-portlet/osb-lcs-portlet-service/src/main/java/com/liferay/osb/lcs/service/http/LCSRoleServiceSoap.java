@@ -95,6 +95,21 @@ public class LCSRoleServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.lcs.model.LCSRoleSoap addPendingLCSRole(
+		long lcsProjectId, long lcsClusterEntryId) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSRole returnValue = LCSRoleServiceUtil.addPendingLCSRole(lcsProjectId,
+					lcsClusterEntryId);
+
+			return com.liferay.osb.lcs.model.LCSRoleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Deletes the LCS role matching the LCS role identifier.
 	*

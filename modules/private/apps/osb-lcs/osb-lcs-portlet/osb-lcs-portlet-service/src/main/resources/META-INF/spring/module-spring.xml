@@ -10,6 +10,7 @@
 	<bean class="com.liferay.osb.lcs.service.impl.LCSClusterNodeLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSClusterNodeLocalService" />
 	<bean class="com.liferay.osb.lcs.service.impl.LCSClusterNodeServiceImpl" id="com.liferay.osb.lcs.service.LCSClusterNodeService" />
 	<bean class="com.liferay.osb.lcs.service.persistence.impl.LCSClusterNodePersistenceImpl" id="com.liferay.osb.lcs.service.persistence.LCSClusterNodePersistence" parent="basePersistence" />
+	<bean class="com.liferay.osb.lcs.service.persistence.impl.LCSClusterNodeFinderImpl" id="com.liferay.osb.lcs.service.persistence.LCSClusterNodeFinder" parent="basePersistence" />
 	<bean class="com.liferay.osb.lcs.service.impl.LCSClusterNodePatchesLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSClusterNodePatchesLocalService" />
 	<bean class="com.liferay.osb.lcs.service.impl.LCSClusterNodeUptimeLocalServiceImpl" id="com.liferay.osb.lcs.service.LCSClusterNodeUptimeLocalService" />
 	<bean class="com.liferay.osb.lcs.service.impl.LCSClusterNodeUptimeServiceImpl" id="com.liferay.osb.lcs.service.LCSClusterNodeUptimeService" />

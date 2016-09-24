@@ -253,13 +253,45 @@ public class LCSClusterNodeServiceHttp {
 		}
 	}
 
+	public static com.liferay.osb.lcs.model.LCSClusterNode fetchRandomSiblingLCSClusterNode(
+		HttpPrincipal httpPrincipal, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
+					"fetchRandomSiblingLCSClusterNode",
+					_fetchRandomSiblingLCSClusterNodeParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, key);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.osb.lcs.model.LCSClusterNode)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterNode> getLCSClusterEntryLCSClusterNodes(
 		HttpPrincipal httpPrincipal, long lcsClusterEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
 					"getLCSClusterEntryLCSClusterNodes",
-					_getLCSClusterEntryLCSClusterNodesParameterTypes6);
+					_getLCSClusterEntryLCSClusterNodesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterEntryId);
@@ -292,7 +324,7 @@ public class LCSClusterNodeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
 					"getLCSClusterEntryLCSClusterNodes",
-					_getLCSClusterEntryLCSClusterNodesParameterTypes7);
+					_getLCSClusterEntryLCSClusterNodesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterEntryId, details);
@@ -324,7 +356,7 @@ public class LCSClusterNodeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
-					"getLCSClusterNode", _getLCSClusterNodeParameterTypes8);
+					"getLCSClusterNode", _getLCSClusterNodeParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterNodeId);
@@ -356,7 +388,7 @@ public class LCSClusterNodeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
-					"getLCSClusterNode", _getLCSClusterNodeParameterTypes9);
+					"getLCSClusterNode", _getLCSClusterNodeParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterNodeId, details);
@@ -388,7 +420,7 @@ public class LCSClusterNodeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
-					"getLCSClusterNode", _getLCSClusterNodeParameterTypes10);
+					"getLCSClusterNode", _getLCSClusterNodeParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, key);
 
@@ -419,7 +451,7 @@ public class LCSClusterNodeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
-					"getLCSClusterNode", _getLCSClusterNodeParameterTypes11);
+					"getLCSClusterNode", _getLCSClusterNodeParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, key,
 					details);
@@ -446,13 +478,45 @@ public class LCSClusterNodeServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterNode> getLCSClusterNodeSiblingNodes(
+		HttpPrincipal httpPrincipal, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
+					"getLCSClusterNodeSiblingNodes",
+					_getLCSClusterNodeSiblingNodesParameterTypes13);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, key);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.osb.lcs.model.LCSClusterNode>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterNode> getLCSProjectLCSClusterNodes(
 		HttpPrincipal httpPrincipal, long lcsProjectId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
 					"getLCSProjectLCSClusterNodes",
-					_getLCSProjectLCSClusterNodesParameterTypes12);
+					_getLCSProjectLCSClusterNodesParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId);
@@ -485,10 +549,42 @@ public class LCSClusterNodeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
 					"getLCSProjectLCSClusterNodes",
-					_getLCSProjectLCSClusterNodesParameterTypes13);
+					_getLCSProjectLCSClusterNodesParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId, details);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.osb.lcs.model.LCSClusterNode>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.osb.lcs.model.LCSClusterNode> getUserLCSClusterNodes(
+		HttpPrincipal httpPrincipal, boolean details)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
+					"getUserLCSClusterNodes",
+					_getUserLCSClusterNodesParameterTypes16);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, details);
 
 			Object returnObj = null;
 
@@ -517,7 +613,7 @@ public class LCSClusterNodeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
-					"updateBuildNumber", _updateBuildNumberParameterTypes14);
+					"updateBuildNumber", _updateBuildNumberParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterNodeId, buildNumber);
@@ -545,7 +641,7 @@ public class LCSClusterNodeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
-					"updateBuildNumber", _updateBuildNumberParameterTypes15);
+					"updateBuildNumber", _updateBuildNumberParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, key,
 					buildNumber);
@@ -576,7 +672,7 @@ public class LCSClusterNodeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
 					"updateLCSClusterNode",
-					_updateLCSClusterNodeParameterTypes16);
+					_updateLCSClusterNodeParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterNodeId, name, description, location);
@@ -609,7 +705,7 @@ public class LCSClusterNodeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
 					"verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences",
-					_verifyLCSClusterEntryLCSClusterNodesPropertiesDifferencesParameterTypes17);
+					_verifyLCSClusterEntryLCSClusterNodesPropertiesDifferencesParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, key);
 
@@ -638,7 +734,7 @@ public class LCSClusterNodeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
 					"verifyLCSClusterNodeClusterLink",
-					_verifyLCSClusterNodeClusterLinkParameterTypes18);
+					_verifyLCSClusterNodeClusterLinkParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, key,
 					siblingKeys);
@@ -686,38 +782,45 @@ public class LCSClusterNodeServiceHttp {
 	private static final Class<?>[] _fetchLCSClusterNodeParameterTypes5 = new Class[] {
 			java.lang.String.class
 		};
-	private static final Class<?>[] _getLCSClusterEntryLCSClusterNodesParameterTypes6 =
-		new Class[] { long.class };
+	private static final Class<?>[] _fetchRandomSiblingLCSClusterNodeParameterTypes6 =
+		new Class[] { java.lang.String.class };
 	private static final Class<?>[] _getLCSClusterEntryLCSClusterNodesParameterTypes7 =
+		new Class[] { long.class };
+	private static final Class<?>[] _getLCSClusterEntryLCSClusterNodesParameterTypes8 =
 		new Class[] { long.class, boolean.class };
-	private static final Class<?>[] _getLCSClusterNodeParameterTypes8 = new Class[] {
+	private static final Class<?>[] _getLCSClusterNodeParameterTypes9 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getLCSClusterNodeParameterTypes9 = new Class[] {
+	private static final Class<?>[] _getLCSClusterNodeParameterTypes10 = new Class[] {
 			long.class, boolean.class
 		};
-	private static final Class<?>[] _getLCSClusterNodeParameterTypes10 = new Class[] {
+	private static final Class<?>[] _getLCSClusterNodeParameterTypes11 = new Class[] {
 			java.lang.String.class
 		};
-	private static final Class<?>[] _getLCSClusterNodeParameterTypes11 = new Class[] {
+	private static final Class<?>[] _getLCSClusterNodeParameterTypes12 = new Class[] {
 			java.lang.String.class, boolean.class
 		};
-	private static final Class<?>[] _getLCSProjectLCSClusterNodesParameterTypes12 =
+	private static final Class<?>[] _getLCSClusterNodeSiblingNodesParameterTypes13 =
+		new Class[] { java.lang.String.class };
+	private static final Class<?>[] _getLCSProjectLCSClusterNodesParameterTypes14 =
 		new Class[] { long.class };
-	private static final Class<?>[] _getLCSProjectLCSClusterNodesParameterTypes13 =
+	private static final Class<?>[] _getLCSProjectLCSClusterNodesParameterTypes15 =
 		new Class[] { long.class, boolean.class };
-	private static final Class<?>[] _updateBuildNumberParameterTypes14 = new Class[] {
+	private static final Class<?>[] _getUserLCSClusterNodesParameterTypes16 = new Class[] {
+			boolean.class
+		};
+	private static final Class<?>[] _updateBuildNumberParameterTypes17 = new Class[] {
 			long.class, int.class
 		};
-	private static final Class<?>[] _updateBuildNumberParameterTypes15 = new Class[] {
+	private static final Class<?>[] _updateBuildNumberParameterTypes18 = new Class[] {
 			java.lang.String.class, int.class
 		};
-	private static final Class<?>[] _updateLCSClusterNodeParameterTypes16 = new Class[] {
+	private static final Class<?>[] _updateLCSClusterNodeParameterTypes19 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class
 		};
-	private static final Class<?>[] _verifyLCSClusterEntryLCSClusterNodesPropertiesDifferencesParameterTypes17 =
+	private static final Class<?>[] _verifyLCSClusterEntryLCSClusterNodesPropertiesDifferencesParameterTypes20 =
 		new Class[] { java.lang.String.class };
-	private static final Class<?>[] _verifyLCSClusterNodeClusterLinkParameterTypes18 =
+	private static final Class<?>[] _verifyLCSClusterNodeClusterLinkParameterTypes21 =
 		new Class[] { java.lang.String.class, java.lang.String.class };
 }

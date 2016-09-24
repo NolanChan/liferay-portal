@@ -89,6 +89,12 @@ public class LCSProjectServiceWrapper implements LCSProjectService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserDomainLCSProjects()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsProjectService.getUserDomainLCSProjects();
+	}
+
+	@Override
 	public java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _lcsProjectService.getUserLCSProjects();

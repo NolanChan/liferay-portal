@@ -88,12 +88,44 @@ public class LCSRoleServiceHttp {
 		}
 	}
 
+	public static com.liferay.osb.lcs.model.LCSRole addPendingLCSRole(
+		HttpPrincipal httpPrincipal, long lcsProjectId, long lcsClusterEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSRoleServiceUtil.class,
+					"addPendingLCSRole", _addPendingLCSRoleParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					lcsProjectId, lcsClusterEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.osb.lcs.model.LCSRole)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.osb.lcs.model.LCSRole deleteLCSRole(
 		HttpPrincipal httpPrincipal, long lcsRoleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSRoleServiceUtil.class,
-					"deleteLCSRole", _deleteLCSRoleParameterTypes1);
+					"deleteLCSRole", _deleteLCSRoleParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, lcsRoleId);
 
@@ -125,7 +157,7 @@ public class LCSRoleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSRoleServiceUtil.class,
 					"getLCSProjectLCSRoles",
-					_getLCSProjectLCSRolesParameterTypes2);
+					_getLCSProjectLCSRolesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId);
@@ -157,7 +189,7 @@ public class LCSRoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSRoleServiceUtil.class,
-					"getUserLCSRoles", _getUserLCSRolesParameterTypes3);
+					"getUserLCSRoles", _getUserLCSRolesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId);
@@ -189,7 +221,7 @@ public class LCSRoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSRoleServiceUtil.class,
-					"getUserLCSRoles", _getUserLCSRolesParameterTypes4);
+					"getUserLCSRoles", _getUserLCSRolesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId, role);
@@ -222,7 +254,7 @@ public class LCSRoleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSRoleServiceUtil.class,
 					"hasUserLCSAdministratorLCSRole",
-					_hasUserLCSAdministratorLCSRoleParameterTypes5);
+					_hasUserLCSAdministratorLCSRoleParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId);
@@ -254,7 +286,7 @@ public class LCSRoleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSRoleServiceUtil.class,
-					"hasUserLCSRole", _hasUserLCSRoleParameterTypes6);
+					"hasUserLCSRole", _hasUserLCSRoleParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId, manageLCSClusterEntry);
@@ -285,21 +317,24 @@ public class LCSRoleServiceHttp {
 	private static final Class<?>[] _addLCSRoleParameterTypes0 = new Class[] {
 			long.class, long.class, long.class, int.class
 		};
-	private static final Class<?>[] _deleteLCSRoleParameterTypes1 = new Class[] {
+	private static final Class<?>[] _addPendingLCSRoleParameterTypes1 = new Class[] {
+			long.class, long.class
+		};
+	private static final Class<?>[] _deleteLCSRoleParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getLCSProjectLCSRolesParameterTypes2 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getUserLCSRolesParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getLCSProjectLCSRolesParameterTypes3 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getUserLCSRolesParameterTypes4 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getUserLCSRolesParameterTypes5 = new Class[] {
 			long.class, int.class
 		};
-	private static final Class<?>[] _hasUserLCSAdministratorLCSRoleParameterTypes5 =
+	private static final Class<?>[] _hasUserLCSAdministratorLCSRoleParameterTypes6 =
 		new Class[] { long.class };
-	private static final Class<?>[] _hasUserLCSRoleParameterTypes6 = new Class[] {
+	private static final Class<?>[] _hasUserLCSRoleParameterTypes7 = new Class[] {
 			long.class, boolean.class
 		};
 }

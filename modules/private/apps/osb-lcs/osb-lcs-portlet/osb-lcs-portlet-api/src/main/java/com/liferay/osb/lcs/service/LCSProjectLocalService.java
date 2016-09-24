@@ -234,6 +234,9 @@ public interface LCSProjectLocalService extends BaseLocalService,
 	public List<LCSProject> getLCSProjects(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSProject> getUserDomainLCSProjects(User user);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LCSProject> getUserLCSProjects(long userId)
 		throws PortalException;
 
@@ -264,5 +267,5 @@ public interface LCSProjectLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getLocalCorpProjectIds() throws SystemException;
+	public long[] getLocalCorpProjectIds();
 }

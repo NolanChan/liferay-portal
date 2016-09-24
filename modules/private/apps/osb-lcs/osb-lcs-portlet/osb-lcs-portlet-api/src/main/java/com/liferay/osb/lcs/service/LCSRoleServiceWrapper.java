@@ -97,6 +97,13 @@ public class LCSRoleServiceWrapper implements LCSRoleService,
 			lcsClusterEntryId, role);
 	}
 
+	@Override
+	public com.liferay.osb.lcs.model.LCSRole addPendingLCSRole(
+		long lcsProjectId, long lcsClusterEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsRoleService.addPendingLCSRole(lcsProjectId, lcsClusterEntryId);
+	}
+
 	/**
 	* Deletes the LCS role matching the LCS role identifier.
 	*

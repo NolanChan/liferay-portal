@@ -293,6 +293,12 @@ public class LCSProjectLocalServiceWrapper implements LCSProjectLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserDomainLCSProjects(
+		com.liferay.portal.kernel.model.User user) {
+		return _lcsProjectLocalService.getUserDomainLCSProjects(user);
+	}
+
+	@Override
 	public java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects(
 		long userId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _lcsProjectLocalService.getUserLCSProjects(userId);
@@ -340,8 +346,7 @@ public class LCSProjectLocalServiceWrapper implements LCSProjectLocalService,
 	}
 
 	@Override
-	public long[] getLocalCorpProjectIds()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public long[] getLocalCorpProjectIds() {
 		return _lcsProjectLocalService.getLocalCorpProjectIds();
 	}
 

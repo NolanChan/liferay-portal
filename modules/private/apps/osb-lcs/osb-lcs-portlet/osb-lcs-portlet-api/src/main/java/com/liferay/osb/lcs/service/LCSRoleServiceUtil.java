@@ -103,6 +103,12 @@ public class LCSRoleServiceUtil {
 				   .addLCSRole(userId, lcsProjectId, lcsClusterEntryId, role);
 	}
 
+	public static com.liferay.osb.lcs.model.LCSRole addPendingLCSRole(
+		long lcsProjectId, long lcsClusterEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addPendingLCSRole(lcsProjectId, lcsClusterEntryId);
+	}
+
 	/**
 	* Deletes the LCS role matching the LCS role identifier.
 	*

@@ -223,6 +223,20 @@ public class LCSClusterNodeServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap fetchRandomSiblingLCSClusterNode(
+		java.lang.String key) throws RemoteException {
+		try {
+			com.liferay.osb.lcs.model.LCSClusterNode returnValue = LCSClusterNodeServiceUtil.fetchRandomSiblingLCSClusterNode(key);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns all LCS cluster nodes (excluding their transient details)
 	* belonging to the LCS cluster entry.
@@ -364,6 +378,21 @@ public class LCSClusterNodeServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap[] getLCSClusterNodeSiblingNodes(
+		java.lang.String key) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSClusterNode> returnValue =
+				LCSClusterNodeServiceUtil.getLCSClusterNodeSiblingNodes(key);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns all LCS cluster nodes (excluding their transient details)
 	* accessible to the user and belonging to the LCS project.
@@ -408,6 +437,21 @@ public class LCSClusterNodeServiceSoap {
 			java.util.List<com.liferay.osb.lcs.model.LCSClusterNode> returnValue =
 				LCSClusterNodeServiceUtil.getLCSProjectLCSClusterNodes(lcsProjectId,
 					details);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap[] getUserLCSClusterNodes(
+		boolean details) throws RemoteException {
+		try {
+			java.util.List<com.liferay.osb.lcs.model.LCSClusterNode> returnValue =
+				LCSClusterNodeServiceUtil.getUserLCSClusterNodes(details);
 
 			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModels(returnValue);
 		}

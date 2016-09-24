@@ -279,12 +279,44 @@ public class LCSProjectServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserDomainLCSProjects(
+		HttpPrincipal httpPrincipal)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSProjectServiceUtil.class,
+					"getUserDomainLCSProjects",
+					_getUserDomainLCSProjectsParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.osb.lcs.model.LCSProject>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects(
 		HttpPrincipal httpPrincipal)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSProjectServiceUtil.class,
-					"getUserLCSProjects", _getUserLCSProjectsParameterTypes7);
+					"getUserLCSProjects", _getUserLCSProjectsParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -315,7 +347,7 @@ public class LCSProjectServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSProjectServiceUtil.class,
-					"getUserLCSProjects", _getUserLCSProjectsParameterTypes8);
+					"getUserLCSProjects", _getUserLCSProjectsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, lcsRole);
 
@@ -346,7 +378,7 @@ public class LCSProjectServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSProjectServiceUtil.class,
-					"getUserLCSProjects", _getUserLCSProjectsParameterTypes9);
+					"getUserLCSProjects", _getUserLCSProjectsParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, lcsRole,
 					role);
@@ -379,7 +411,7 @@ public class LCSProjectServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSProjectServiceUtil.class,
 					"getUserManageableLCSProjects",
-					_getUserManageableLCSProjectsParameterTypes10);
+					_getUserManageableLCSProjectsParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -411,7 +443,7 @@ public class LCSProjectServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSProjectServiceUtil.class,
 					"updateLCSProjectName",
-					_updateLCSProjectNameParameterTypes11);
+					_updateLCSProjectNameParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId, name);
@@ -458,18 +490,21 @@ public class LCSProjectServiceHttp {
 	private static final Class<?>[] _getUserDefaultLCSProjectIdParameterTypes6 = new Class[] {
 			
 		};
-	private static final Class<?>[] _getUserLCSProjectsParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getUserDomainLCSProjectsParameterTypes7 = new Class[] {
 			
 		};
 	private static final Class<?>[] _getUserLCSProjectsParameterTypes8 = new Class[] {
-			boolean.class
+			
 		};
 	private static final Class<?>[] _getUserLCSProjectsParameterTypes9 = new Class[] {
+			boolean.class
+		};
+	private static final Class<?>[] _getUserLCSProjectsParameterTypes10 = new Class[] {
 			boolean.class, int.class
 		};
-	private static final Class<?>[] _getUserManageableLCSProjectsParameterTypes10 =
+	private static final Class<?>[] _getUserManageableLCSProjectsParameterTypes11 =
 		new Class[] {  };
-	private static final Class<?>[] _updateLCSProjectNameParameterTypes11 = new Class[] {
+	private static final Class<?>[] _updateLCSProjectNameParameterTypes13 = new Class[] {
 			long.class, java.lang.String.class
 		};
 }

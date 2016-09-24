@@ -274,6 +274,11 @@ public class LCSProjectLocalServiceUtil {
 		return getService().getLCSProjects(start, end);
 	}
 
+	public static java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserDomainLCSProjects(
+		com.liferay.portal.kernel.model.User user) {
+		return getService().getUserDomainLCSProjects(user);
+	}
+
 	public static java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects(
 		long userId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserLCSProjects(userId);
@@ -315,8 +320,7 @@ public class LCSProjectLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static long[] getLocalCorpProjectIds()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static long[] getLocalCorpProjectIds() {
 		return getService().getLocalCorpProjectIds();
 	}
 

@@ -18,6 +18,7 @@ import com.liferay.osb.lcs.model.LCSMessage;
 import com.liferay.osb.lcs.service.LCSMessageService;
 import com.liferay.osb.lcs.service.persistence.LCSClusterEntryPersistence;
 import com.liferay.osb.lcs.service.persistence.LCSClusterEntryTokenPersistence;
+import com.liferay.osb.lcs.service.persistence.LCSClusterNodeFinder;
 import com.liferay.osb.lcs.service.persistence.LCSClusterNodePersistence;
 import com.liferay.osb.lcs.service.persistence.LCSClusterNodeUptimePersistence;
 import com.liferay.osb.lcs.service.persistence.LCSInvitationPersistence;
@@ -235,6 +236,25 @@ public abstract class LCSMessageServiceBaseImpl extends BaseServiceImpl
 	public void setLCSClusterNodePersistence(
 		LCSClusterNodePersistence lcsClusterNodePersistence) {
 		this.lcsClusterNodePersistence = lcsClusterNodePersistence;
+	}
+
+	/**
+	 * Returns the l c s cluster node finder.
+	 *
+	 * @return the l c s cluster node finder
+	 */
+	public LCSClusterNodeFinder getLCSClusterNodeFinder() {
+		return lcsClusterNodeFinder;
+	}
+
+	/**
+	 * Sets the l c s cluster node finder.
+	 *
+	 * @param lcsClusterNodeFinder the l c s cluster node finder
+	 */
+	public void setLCSClusterNodeFinder(
+		LCSClusterNodeFinder lcsClusterNodeFinder) {
+		this.lcsClusterNodeFinder = lcsClusterNodeFinder;
 	}
 
 	/**
@@ -1117,6 +1137,8 @@ public abstract class LCSMessageServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.osb.lcs.service.LCSClusterNodeService lcsClusterNodeService;
 	@BeanReference(type = LCSClusterNodePersistence.class)
 	protected LCSClusterNodePersistence lcsClusterNodePersistence;
+	@BeanReference(type = LCSClusterNodeFinder.class)
+	protected LCSClusterNodeFinder lcsClusterNodeFinder;
 	@BeanReference(type = com.liferay.osb.lcs.service.LCSClusterNodePatchesLocalService.class)
 	protected com.liferay.osb.lcs.service.LCSClusterNodePatchesLocalService lcsClusterNodePatchesLocalService;
 	@BeanReference(type = com.liferay.osb.lcs.service.LCSClusterNodeUptimeLocalService.class)

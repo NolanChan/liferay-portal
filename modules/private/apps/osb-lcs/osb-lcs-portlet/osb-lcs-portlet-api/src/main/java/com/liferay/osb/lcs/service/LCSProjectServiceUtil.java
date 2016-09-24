@@ -90,6 +90,11 @@ public class LCSProjectServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserDomainLCSProjects()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserDomainLCSProjects();
+	}
+
 	public static java.util.List<com.liferay.osb.lcs.model.LCSProject> getUserLCSProjects()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserLCSProjects();

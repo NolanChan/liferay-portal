@@ -144,6 +144,13 @@ public class LCSClusterNodeLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.lcs.model.LCSClusterNode fetchRandomSiblingLCSClusterNode(
+		com.liferay.osb.lcs.model.LCSClusterNode lcsClusterNode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterNodeLocalService.fetchRandomSiblingLCSClusterNode(lcsClusterNode);
+	}
+
+	@Override
 	public com.liferay.osb.lcs.model.LCSClusterNode getLCSClusterNode(
 		java.lang.String key, boolean details) {
 		return _lcsClusterNodeLocalService.getLCSClusterNode(key, details);
@@ -484,6 +491,14 @@ public class LCSClusterNodeLocalServiceWrapper
 		java.lang.String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _lcsClusterNodeLocalService.getSiblingLCSClusterNodes(key);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSClusterNode> getUserLCSClusterNodes(
+		long userId, boolean details)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterNodeLocalService.getUserLCSClusterNodes(userId,
+			details);
 	}
 
 	/**

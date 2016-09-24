@@ -127,6 +127,10 @@ public interface LCSClusterNodeService extends BaseService {
 	public LCSClusterNode fetchLCSClusterNode(java.lang.String key)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSClusterNode fetchRandomSiblingLCSClusterNode(java.lang.String key)
+		throws PortalException;
+
 	/**
 	* Returns the LCS cluster node matching the key.
 	*
@@ -231,6 +235,10 @@ public interface LCSClusterNodeService extends BaseService {
 	public List<LCSClusterNode> getLCSClusterEntryLCSClusterNodes(
 		long lcsClusterEntryId, boolean details) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNode> getLCSClusterNodeSiblingNodes(
+		java.lang.String key) throws PortalException;
+
 	/**
 	* Returns all LCS cluster nodes (excluding their transient details)
 	* accessible to the user and belonging to the LCS project.
@@ -263,6 +271,10 @@ public interface LCSClusterNodeService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LCSClusterNode> getLCSProjectLCSClusterNodes(
 		long lcsProjectId, boolean details) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNode> getUserLCSClusterNodes(boolean details)
+		throws PortalException;
 
 	/**
 	* Deletes the LCS cluster node.

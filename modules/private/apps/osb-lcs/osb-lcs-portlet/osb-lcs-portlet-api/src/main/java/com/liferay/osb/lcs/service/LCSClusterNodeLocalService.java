@@ -142,6 +142,10 @@ public interface LCSClusterNodeLocalService extends BaseLocalService,
 	public LCSClusterNode fetchLCSClusterNode(long lcsClusterNodeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LCSClusterNode fetchRandomSiblingLCSClusterNode(
+		LCSClusterNode lcsClusterNode) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LCSClusterNode getLCSClusterNode(java.lang.String key,
 		boolean details);
 
@@ -393,6 +397,10 @@ public interface LCSClusterNodeLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LCSClusterNode> getSiblingLCSClusterNodes(java.lang.String key)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSClusterNode> getUserLCSClusterNodes(long userId,
+		boolean details) throws PortalException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.

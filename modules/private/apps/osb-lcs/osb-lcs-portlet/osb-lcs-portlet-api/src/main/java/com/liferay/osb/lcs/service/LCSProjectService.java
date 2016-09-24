@@ -86,6 +86,10 @@ public interface LCSProjectService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSProject> getUserDomainLCSProjects()
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LCSProject> getUserLCSProjects() throws PortalException;
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

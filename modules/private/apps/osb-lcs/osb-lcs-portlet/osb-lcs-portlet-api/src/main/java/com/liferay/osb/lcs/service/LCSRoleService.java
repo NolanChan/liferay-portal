@@ -111,6 +111,9 @@ public interface LCSRoleService extends BaseService {
 	public LCSRole addLCSRole(long userId, long lcsProjectId,
 		long lcsClusterEntryId, int role) throws PortalException;
 
+	public LCSRole addPendingLCSRole(long lcsProjectId, long lcsClusterEntryId)
+		throws PortalException;
+
 	/**
 	* Deletes the LCS role matching the LCS role identifier.
 	*
