@@ -196,6 +196,16 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 		return lcsClusterNode;
 	}
 
+	@Override
+	public LCSClusterNode fetchRandomSiblingLCSClusterNode(String key)
+		throws PortalException {
+
+		LCSClusterNode lcsClusterNode = fetchLCSClusterNode(key);
+
+		return lcsClusterNodeLocalService.fetchRandomSiblingLCSClusterNode(
+			lcsClusterNode);
+	}
+
 	/**
 	 * Returns all LCS cluster nodes (excluding their transient details)
 	 * belonging to the LCS cluster entry.
@@ -329,6 +339,16 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 			OSBLCSActionKeys.VIEW);
 
 		return lcsClusterNode;
+	}
+
+	@Override
+	public List<LCSClusterNode> getLCSClusterNodeSiblingNodes(String key)
+		throws PortalException {
+
+		LCSClusterNode lcsClusterNode = getLCSClusterNode(key);
+
+		return lcsClusterNodeLocalService.getSiblingLCSClusterNodes(
+			lcsClusterNode.getKey());
 	}
 
 	/**

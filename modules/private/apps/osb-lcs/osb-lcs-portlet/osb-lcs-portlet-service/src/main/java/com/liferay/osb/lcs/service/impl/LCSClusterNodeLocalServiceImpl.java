@@ -248,6 +248,29 @@ public class LCSClusterNodeLocalServiceImpl
 	}
 
 	@Override
+	public LCSClusterNode fetchRandomSiblingLCSClusterNode(
+			LCSClusterNode lcsClusterNode)
+		throws PortalException {
+
+		LCSClusterEntry lcsClusterEntry =
+			lcsClusterEntryPersistence.findByPrimaryKey(
+				lcsClusterNode.getLcsClusterEntryId());
+
+		if (!lcsClusterEntry.isCluster()) {
+			return null;
+		}
+
+		List<LCSClusterNode> lcsClusterNodes = getSiblingLCSClusterNodes(
+			lcsClusterNode.getKey());
+
+		if (lcsClusterNodes.isEmpty()) {
+			return null;
+		}
+
+		return lcsClusterNodes.get(0);
+	}
+
+	@Override
 	public List<LCSClusterNode> getArchivedLCSClusterNodes(int buildNumber) {
 		return lcsClusterNodePersistence.findByBN_A(buildNumber, true);
 	}

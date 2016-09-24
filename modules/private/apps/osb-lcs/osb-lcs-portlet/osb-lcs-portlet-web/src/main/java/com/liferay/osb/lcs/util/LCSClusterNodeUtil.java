@@ -36,50 +36,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LCSClusterNodeUtil {
 
-	public static LCSClusterNode fetchRandomSiblingLCSClusterNode(
-			LCSClusterNode lcsClusterNode)
-		throws PortalException, SystemException {
-
-		LCSClusterEntry lcsClusterEntry =
-			LCSClusterEntryLocalServiceUtil.getLCSClusterEntry(
-				lcsClusterNode.getLcsClusterEntryId());
-
-		if (!lcsClusterEntry.isCluster()) {
-			return null;
-		}
-
-		List<LCSClusterNode> lcsClusterNodes =
-			LCSClusterNodeLocalServiceUtil.getSiblingLCSClusterNodes(
-				lcsClusterNode.getKey());
-
-		if (lcsClusterNodes.isEmpty()) {
-			return null;
-		}
-
-		return lcsClusterNodes.get(0);
-	}
-
-	public static String getLCSClusterNodeNames(List<String> keys)
-		throws SystemException {
-
-		StringBundler sb = new StringBundler((keys.size() * 4) - 1);
-
-		for (int i = 0; i < keys.size(); i++) {
-			LCSClusterNode lcsClusterNode =
-				LCSClusterNodeLocalServiceUtil.getLCSClusterNode(keys.get(i));
-
-			sb.append(StringPool.TAB);
-			sb.append(StringPool.DASH);
-			sb.append(lcsClusterNode.getName());
-
-			if ((i + 1) < keys.size()) {
-				sb.append(StringPool.NEW_LINE);
-			}
-		}
-
-		return sb.toString();
-	}
-
 	public static List<LCSClusterNode> getLCSClusterNodes(
 			HttpServletRequest request, long layoutLCSClusterEntryId,
 			long layoutLCSClusterNodeId, long layoutLCSProjectId)
@@ -112,31 +68,6 @@ public class LCSClusterNodeUtil {
 		}
 
 		return lcsClusterNodes;
-	}
-
-	public static String getLCSClusterNodeSiblingKeys(String key)
-		throws PortalException, SystemException {
-
-		List<LCSClusterNode> lcsClusterNodes =
-			LCSClusterNodeLocalServiceUtil.getSiblingLCSClusterNodes(key);
-
-		if (lcsClusterNodes.isEmpty()) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler((lcsClusterNodes.size() * 2) - 1);
-
-		for (int i = 0; i < lcsClusterNodes.size(); i++) {
-			LCSClusterNode lcsClusterNode = lcsClusterNodes.get(i);
-
-			sb.append(lcsClusterNode.getKey());
-
-			if ((i + 1) < lcsClusterNodes.size()) {
-				sb.append(StringPool.PIPE);
-			}
-		}
-
-		return sb.toString();
 	}
 
 	public static List<LCSClusterNode> getLCSProjectLCSClusterNodes(
