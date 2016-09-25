@@ -29,12 +29,22 @@ public interface LCSClusterEntryPropertyDifferencesService {
 			long lcsClusterEntryId, String propertyName,
 			Map<String, String> propertyValues);
 
+	public void addLCSClusterEntryPropertyDifferencesMap(
+		long lcsClusterEntryId,
+		Map<String, Map<String, String>> lcsClusterEntryPropertyDifferencesMap);
+
+	public void deleteLCSClusterEntryPropertyDifferences(
+		long LCSClusterEntryId, String propertyName);
+
 	public LCSClusterEntryPropertyDifferences
 		fetchLCSClusterEntryPropertyDifferences(
 			long lcsClusterEntryId, String propertyName);
 
 	public List<LCSClusterEntryPropertyDifferences>
 		getLCSClusterEntryPropertyDifferencesList(long lcsClusterEntryId);
+
+	public Map<String, Map<String, String>>
+		getLCSClusterEntryPropertyDifferencesMap(long lcsClusterEntryId);
 
 	public LCSClusterEntryPropertyDifferences
 		updateLCSClusterEntryPropertyDifferences(
