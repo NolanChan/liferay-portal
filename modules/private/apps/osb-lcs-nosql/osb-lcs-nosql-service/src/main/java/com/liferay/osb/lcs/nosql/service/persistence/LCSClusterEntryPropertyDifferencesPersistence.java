@@ -25,6 +25,8 @@ public interface LCSClusterEntryPropertyDifferencesPersistence {
 
 	public LCSClusterEntryPropertyDifferences create();
 
+	public void delete(long lcsClusterEntryId, String propertyName);
+
 	public LCSClusterEntryPropertyDifferences fetchByLCEI_PN(
 		long lcsClusterEntryId, String propertyName);
 

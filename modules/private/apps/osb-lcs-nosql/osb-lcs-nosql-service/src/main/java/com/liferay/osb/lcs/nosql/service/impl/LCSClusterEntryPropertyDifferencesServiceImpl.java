@@ -18,6 +18,7 @@ import com.liferay.osb.lcs.nosql.model.LCSClusterEntryPropertyDifferences;
 import com.liferay.osb.lcs.nosql.service.LCSClusterEntryPropertyDifferencesService;
 import com.liferay.osb.lcs.nosql.service.persistence.LCSClusterEntryPropertyDifferencesPersistence;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +47,37 @@ public class LCSClusterEntryPropertyDifferencesServiceImpl
 	}
 
 	@Override
+	public void addLCSClusterEntryPropertyDifferencesMap(
+		long lcsClusterEntryId,
+		Map<String, Map<String, String>>
+			lcsClusterEntryPropertyDifferencesMap) {
+
+		for (Map.Entry<String, Map<String, String>> entry :
+				lcsClusterEntryPropertyDifferencesMap.entrySet()) {
+
+			Map<String, String> propertyValuesMap = entry.getValue();
+
+			if (propertyValuesMap.size() == 1) {
+				deleteLCSClusterEntryPropertyDifferences(
+					lcsClusterEntryId, entry.getKey());
+
+				continue;
+			}
+
+			addLCSClusterEntryPropertyDifferences(
+				lcsClusterEntryId, entry.getKey(), entry.getValue());
+		}
+	}
+
+	@Override
+	public void deleteLCSClusterEntryPropertyDifferences(
+		long lcsClusterEntryId, String propertyName) {
+
+		_lcsClusterEntryPropertyDifferencesPersistence.delete(
+			lcsClusterEntryId, propertyName);
+	}
+
+	@Override
 	public LCSClusterEntryPropertyDifferences
 		fetchLCSClusterEntryPropertyDifferences(
 			long lcsClusterEntryId, String propertyName) {
@@ -61,6 +93,29 @@ public class LCSClusterEntryPropertyDifferencesServiceImpl
 		return
 			_lcsClusterEntryPropertyDifferencesPersistence.
 				findByLCSClusterEntryId(lcsClusterEntryId);
+	}
+
+	@Override
+	public Map<String, Map<String, String>>
+		getLCSClusterEntryPropertyDifferencesMap(long lcsClusterEntryId) {
+
+		Map<String, Map<String, String>> lcsClusterEntryPropertyDifferencesMap =
+			new HashMap<>();
+
+		List<LCSClusterEntryPropertyDifferences>
+			lcsClusterEntryPropertyDifferencesList =
+				getLCSClusterEntryPropertyDifferencesList(lcsClusterEntryId);
+
+		for (LCSClusterEntryPropertyDifferences
+				lcsClusterEntryPropertyDifferences :
+					lcsClusterEntryPropertyDifferencesList) {
+
+			lcsClusterEntryPropertyDifferencesMap.put(
+				lcsClusterEntryPropertyDifferences.getPropertyName(),
+				lcsClusterEntryPropertyDifferences.getPropertyValues());
+		}
+
+		return lcsClusterEntryPropertyDifferencesMap;
 	}
 
 	public void setLCSClusterEntryPropertyDifferencesPersistence(

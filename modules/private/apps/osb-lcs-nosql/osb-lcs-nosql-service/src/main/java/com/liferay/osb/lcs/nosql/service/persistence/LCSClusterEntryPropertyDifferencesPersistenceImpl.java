@@ -16,6 +16,7 @@ package com.liferay.osb.lcs.nosql.service.persistence;
 
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Statement;
+import com.datastax.driver.core.querybuilder.Delete;
 import com.datastax.driver.core.querybuilder.Insert;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.core.querybuilder.Update;
@@ -41,6 +42,18 @@ public class LCSClusterEntryPropertyDifferencesPersistenceImpl
 		lcsClusterEntryPropertyDifferences.setNew(true);
 
 		return lcsClusterEntryPropertyDifferences;
+	}
+
+	@Override
+	public void delete(long lcsClusterEntryId, String propertyName) {
+		Delete.Selection selection = QueryBuilder.delete();
+
+		Delete delete = selection.from(getTableName());
+
+		delete.where(QueryBuilder.eq("lcsClusterEntryId", lcsClusterEntryId));
+		delete.where(QueryBuilder.eq("propertyName", propertyName));
+
+		session.execute(delete);
 	}
 
 	@Override
