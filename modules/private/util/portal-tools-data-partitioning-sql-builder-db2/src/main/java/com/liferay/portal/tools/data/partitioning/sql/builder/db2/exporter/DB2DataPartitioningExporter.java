@@ -66,7 +66,7 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 
 	@Override
 	public String getControlTableNamesSQL(ExportContext exportContext) {
-		StringBuilder sb = new StringBuilder(14);
+		StringBuilder sb = new StringBuilder();
 
 		sb.append("select t1.");
 		sb.append(getTableNameFieldName());
@@ -93,7 +93,7 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 
 	@Override
 	public String getPartitionedTableNamesSQL(ExportContext exportContext) {
-		StringBuilder sb = new StringBuilder(11);
+		StringBuilder sb = new StringBuilder();
 
 		sb.append("select t2.");
 		sb.append(getTableNameFieldName());
