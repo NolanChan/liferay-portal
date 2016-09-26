@@ -12,13 +12,20 @@
  * details.
  */
 
-package com.liferay.osb.lcs.storage;
+package com.liferay.osb.lcs.advisor;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 
 /**
- * @author Ivica Cardic
+ * @author Igor Beslic
  */
-public interface LogStorageManager extends StorageManager {
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
+)
+public interface LCSPortletLogAdvisor {
 
-	public void writeLogFile(String key, String message, String throwable);
+	public void writeToFile(String key, String message, String throwable);
 
 }
