@@ -140,7 +140,7 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 				sb.append(tableName);
 				sb.append(" table.\n");
 
-				if (_containsClobColumn(resultSet)) {
+				if (_hasClobColumn(resultSet)) {
 					sb.append(_getExportBlobCommand(companyId, tableName));
 					sb.append("\n");
 					sb.append(_getImportBlobCommand(tableName));
@@ -166,7 +166,7 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 		}
 	}
 
-	private boolean _containsClobColumn(ResultSet resultSet)
+	private boolean _hasClobColumn(ResultSet resultSet)
 		throws SQLException {
 
 		ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
