@@ -52,7 +52,7 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 	}
 
 	@Override
-	public void export(final ExportContext exportContext) {
+	public void export(ExportContext exportContext) {
 		_exportContext = exportContext;
 
 		_outputDirName = _exportContext.getOutputDirName();
