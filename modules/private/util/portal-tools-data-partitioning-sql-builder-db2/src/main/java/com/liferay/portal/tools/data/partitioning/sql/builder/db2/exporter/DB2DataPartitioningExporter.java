@@ -166,24 +166,6 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 		}
 	}
 
-	private boolean _hasClobColumn(ResultSet resultSet)
-		throws SQLException {
-
-		ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-
-		int columnCount = resultSetMetaData.getColumnCount();
-
-		for (int i = 0; i < columnCount; i++) {
-			Object object = resultSet.getObject(i + 1);
-
-			if (object instanceof Clob) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private String _getExportBlobCommand(long companyId, String tableName) {
 		StringBuilder sb = new StringBuilder();
 
@@ -255,6 +237,22 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 		sb.append(tableName);
 
 		return sb.toString();
+	}
+
+	private boolean _hasClobColumn(ResultSet resultSet) throws SQLException {
+		ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
+		int columnCount = resultSetMetaData.getColumnCount();
+
+		for (int i = 0; i < columnCount; i++) {
+			Object object = resultSet.getObject(i + 1);
+
+			if (object instanceof Clob) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(
