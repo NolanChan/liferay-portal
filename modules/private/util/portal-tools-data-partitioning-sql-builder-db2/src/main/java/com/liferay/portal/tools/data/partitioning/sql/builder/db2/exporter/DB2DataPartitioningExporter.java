@@ -138,7 +138,7 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 				sb.append(_scriptComment);
 				sb.append(" Commands to export/import ");
 				sb.append(tableName);
-				sb.append(" table.\n");
+				sb.append(" table:\n");
 
 				if (_hasClobColumn(resultSet)) {
 					sb.append(_getExportBlobCommand(companyId, tableName));
