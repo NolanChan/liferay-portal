@@ -20,7 +20,6 @@ import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSPatchEntry;
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodePatches;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodePatchesService;
-import com.liferay.osb.lcs.nosql.service.LCSClusterNodePatchesServiceUtil;
 import com.liferay.osb.lcs.service.base.LCSPatchingAdvisorServiceBaseImpl;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -204,7 +203,7 @@ public class LCSPatchingAdvisorServiceImpl
 		LCSClusterNode lcsClusterNode, LCSPatchEntry lcsPatchEntry) {
 
 		LCSClusterNodePatches lcsClusterNodePatches =
-			LCSClusterNodePatchesServiceUtil.fetchLCSClusterNodePatches(
+			_lcsClusterNodePatchesService.fetchLCSClusterNodePatches(
 				lcsClusterNode.getKey());
 
 		if (lcsClusterNodePatches == null) {

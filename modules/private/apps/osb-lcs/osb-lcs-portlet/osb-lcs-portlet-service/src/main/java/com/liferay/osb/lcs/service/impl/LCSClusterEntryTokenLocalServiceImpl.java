@@ -16,12 +16,13 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osb.lcs.messaging.CommandMessageSenderUtil;
+import com.liferay.osb.lcs.advisor.CommandMessageAdvisor;
 import com.liferay.osb.lcs.model.LCSClusterEntryToken;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.impl.LCSClusterEntryTokenImpl;
 import com.liferay.osb.lcs.service.base.LCSClusterEntryTokenLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
@@ -72,7 +73,7 @@ public class LCSClusterEntryTokenLocalServiceImpl
 				continue;
 			}
 
-			CommandMessageSenderUtil.invalidateLCSClusterEntryToken(
+			_commandMessageAdvisor.invalidateLCSClusterEntryToken(
 				lcsClusterNode.getKey());
 		}
 
@@ -94,5 +95,8 @@ public class LCSClusterEntryTokenLocalServiceImpl
 		return lcsClusterEntryTokenPersistence.fetchByPrimaryKey(
 			lcsClusterEntryTokenId);
 	}
+
+	@ServiceReference(type = CommandMessageAdvisor.class)
+	private CommandMessageAdvisor _commandMessageAdvisor;
 
 }

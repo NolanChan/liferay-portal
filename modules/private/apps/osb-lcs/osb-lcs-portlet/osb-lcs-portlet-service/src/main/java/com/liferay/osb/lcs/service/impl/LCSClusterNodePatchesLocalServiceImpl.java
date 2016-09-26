@@ -19,18 +19,18 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.lcs.util.LCSClusterNodeStatus;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.lcs.util.PatchUtil;
-import com.liferay.osb.lcs.messaging.CommandMessageSender;
+import com.liferay.osb.lcs.advisor.CommandMessageAdvisor;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodePatches;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodePatchesService;
 import com.liferay.osb.lcs.service.LCSClusterNodeLocalService;
 import com.liferay.osb.lcs.service.base.LCSClusterNodePatchesLocalServiceBaseImpl;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -71,7 +71,7 @@ public class LCSClusterNodePatchesLocalServiceImpl
 				throw new PortalException(sb.toString());
 			}
 
-			_commandMessageSender.downloadPatches(
+			_commandMessageAdvisor.downloadPatches(
 				lcsClusterNode, Arrays.asList(patchName));
 
 			LCSClusterNodePatches lcsClusterNodePatches =
@@ -149,13 +149,13 @@ public class LCSClusterNodePatchesLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		LCSClusterNodePatchesLocalServiceImpl.class);
 
-	@BeanReference(type = CommandMessageSender.class)
-	private CommandMessageSender _commandMessageSender;
+	@ServiceReference(type = CommandMessageAdvisor.class)
+	private CommandMessageAdvisor _commandMessageAdvisor;
 
-	@BeanReference(type = LCSClusterNodeLocalService.class)
+	@ServiceReference(type = LCSClusterNodeLocalService.class)
 	private LCSClusterNodeLocalService _lcsClusterNodeLocalService;
 
-	@BeanReference(type = LCSClusterNodePatchesService.class)
+	@ServiceReference(type = LCSClusterNodePatchesService.class)
 	private LCSClusterNodePatchesService _lcsClusterNodePatchesService;
 
 }

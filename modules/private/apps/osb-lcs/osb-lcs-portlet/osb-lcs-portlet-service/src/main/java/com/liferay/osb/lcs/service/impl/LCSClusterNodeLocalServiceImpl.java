@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.lcs.subscription.SubscriptionType;
 import com.liferay.lcs.util.LCSClusterNodeStatus;
+import com.liferay.osb.lcs.advisor.CommandMessageAdvisor;
 import com.liferay.osb.lcs.advisor.PortalPropertiesAdvisor;
 import com.liferay.osb.lcs.exception.DuplicateLCSClusterNodeNameException;
 import com.liferay.osb.lcs.exception.LCSClusterNodeBuildNumberException;
@@ -26,7 +27,6 @@ import com.liferay.osb.lcs.exception.LCSClusterNodeKeyException;
 import com.liferay.osb.lcs.exception.NoSuchLCSClusterEntryException;
 import com.liferay.osb.lcs.exception.NoSuchLCSSubscriptionEntryException;
 import com.liferay.osb.lcs.exception.RequiredLCSClusterNodeNameException;
-import com.liferay.osb.lcs.messaging.CommandMessageSenderUtil;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSProject;
@@ -38,7 +38,6 @@ import com.liferay.osb.lcs.nosql.service.LCSClusterNodeDetailsService;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodePatchesService;
 import com.liferay.osb.lcs.service.base.LCSClusterNodeLocalServiceBaseImpl;
 import com.liferay.osb.lcs.storage.StorageManager;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -48,6 +47,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -242,7 +242,7 @@ public class LCSClusterNodeLocalServiceImpl
 		_portalPropertiesAdvisor.processLCSClusterEntryPropertyDifferences(
 			lcsClusterNode.getKey(), lcsClusterNode.getLcsClusterEntryId());
 
-		CommandMessageSenderUtil.deregister(lcsClusterNode.getKey());
+		_commandMessageAdvisor.deregister(lcsClusterNode.getKey());
 
 		return lcsClusterNode;
 	}
@@ -834,16 +834,19 @@ public class LCSClusterNodeLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = LCSClusterNodeDetailsService.class)
+	@ServiceReference(type = CommandMessageAdvisor.class)
+	private CommandMessageAdvisor _commandMessageAdvisor;
+
+	@ServiceReference(type = LCSClusterNodeDetailsService.class)
 	private LCSClusterNodeDetailsService _lcsClusterNodeDetailsService;
 
-	@BeanReference(type = LCSClusterNodePatchesService.class)
+	@ServiceReference(type = LCSClusterNodePatchesService.class)
 	private LCSClusterNodePatchesService _lcsClusterNodePatchesService;
 
-	@BeanReference(name = "com.liferay.osb.lcs.advisor.PortalPropertiesAdvisor")
+	@ServiceReference(type = PortalPropertiesAdvisor.class)
 	private PortalPropertiesAdvisor _portalPropertiesAdvisor;
 
-	@BeanReference(name = "com.liferay.osb.lcs.storage.PatchStorageManager")
+	@ServiceReference(type = StorageManager.class)
 	private StorageManager _storageManager;
 
 }

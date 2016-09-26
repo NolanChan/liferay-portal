@@ -526,7 +526,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 
 		EmailContext.EmailContextBuilder emailContextBuilder =
 			new EmailContext.EmailContextBuilder(
-				LCSEventType.NEW_PROJECT_MEMBER, user);
+				LCSEventType.NEW_PROJECT_MEMBER);
 
 		emailContextBuilder.lcsProject(getLCSProject(lcsProjectId));
 		emailContextBuilder.emailAddress(user.getEmailAddress());
