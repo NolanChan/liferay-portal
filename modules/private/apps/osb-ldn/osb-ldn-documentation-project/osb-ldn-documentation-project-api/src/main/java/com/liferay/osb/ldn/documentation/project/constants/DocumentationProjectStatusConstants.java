@@ -19,8 +19,8 @@ package com.liferay.osb.ldn.documentation.project.constants;
  */
 public class DocumentationProjectStatusConstants {
 
-	public static final int STATUS_OFFLINE = 0;
-
 	public static final int STATUS_LIVE = 1;
+
+	public static final int STATUS_OFFLINE = 0;
 
 }
