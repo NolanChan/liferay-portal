@@ -175,6 +175,57 @@ public interface DocumentationProjectPersistence extends BasePersistence<Documen
 	public int countByUuid(java.lang.String uuid);
 
 	/**
+	* Returns the documentation project where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchDocumentationProjectException} if it could not be found.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching documentation project
+	* @throws NoSuchDocumentationProjectException if a matching documentation project could not be found
+	*/
+	public DocumentationProject findByUUID_G(java.lang.String uuid, long groupId)
+		throws NoSuchDocumentationProjectException;
+
+	/**
+	* Returns the documentation project where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching documentation project, or <code>null</code> if a matching documentation project could not be found
+	*/
+	public DocumentationProject fetchByUUID_G(java.lang.String uuid,
+		long groupId);
+
+	/**
+	* Returns the documentation project where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching documentation project, or <code>null</code> if a matching documentation project could not be found
+	*/
+	public DocumentationProject fetchByUUID_G(java.lang.String uuid,
+		long groupId, boolean retrieveFromCache);
+
+	/**
+	* Removes the documentation project where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the documentation project that was removed
+	*/
+	public DocumentationProject removeByUUID_G(java.lang.String uuid,
+		long groupId) throws NoSuchDocumentationProjectException;
+
+	/**
+	* Returns the number of documentation projects where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching documentation projects
+	*/
+	public int countByUUID_G(java.lang.String uuid, long groupId);
+
+	/**
 	* Returns all the documentation projects where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid

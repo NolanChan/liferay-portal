@@ -37,6 +37,7 @@ public class DocumentationProjectSoap implements Serializable {
 
 		soapModel.setUuid(model.getUuid());
 		soapModel.setDocumentationProjectId(model.getDocumentationProjectId());
+		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
@@ -117,6 +118,14 @@ public class DocumentationProjectSoap implements Serializable {
 		_documentationProjectId = documentationProjectId;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -191,6 +200,7 @@ public class DocumentationProjectSoap implements Serializable {
 
 	private String _uuid;
 	private long _documentationProjectId;
+	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;

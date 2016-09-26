@@ -644,6 +644,261 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "documentationProject.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "documentationProject.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(documentationProject.uuid IS NULL OR documentationProject.uuid = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(DocumentationProjectModelImpl.ENTITY_CACHE_ENABLED,
+			DocumentationProjectModelImpl.FINDER_CACHE_ENABLED,
+			DocumentationProjectImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByUUID_G",
+			new String[] { String.class.getName(), Long.class.getName() },
+			DocumentationProjectModelImpl.UUID_COLUMN_BITMASK |
+			DocumentationProjectModelImpl.GROUPID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(DocumentationProjectModelImpl.ENTITY_CACHE_ENABLED,
+			DocumentationProjectModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] { String.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns the documentation project where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchDocumentationProjectException} if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching documentation project
+	 * @throws NoSuchDocumentationProjectException if a matching documentation project could not be found
+	 */
+	@Override
+	public DocumentationProject findByUUID_G(String uuid, long groupId)
+		throws NoSuchDocumentationProjectException {
+		DocumentationProject documentationProject = fetchByUUID_G(uuid, groupId);
+
+		if (documentationProject == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("uuid=");
+			msg.append(uuid);
+
+			msg.append(", groupId=");
+			msg.append(groupId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchDocumentationProjectException(msg.toString());
+		}
+
+		return documentationProject;
+	}
+
+	/**
+	 * Returns the documentation project where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching documentation project, or <code>null</code> if a matching documentation project could not be found
+	 */
+	@Override
+	public DocumentationProject fetchByUUID_G(String uuid, long groupId) {
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns the documentation project where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching documentation project, or <code>null</code> if a matching documentation project could not be found
+	 */
+	@Override
+	public DocumentationProject fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { uuid, groupId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderArgs, this);
+		}
+
+		if (result instanceof DocumentationProject) {
+			DocumentationProject documentationProject = (DocumentationProject)result;
+
+			if (!Objects.equals(uuid, documentationProject.getUuid()) ||
+					(groupId != documentationProject.getGroupId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_DOCUMENTATIONPROJECT_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid == null) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
+			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(groupId);
+
+				List<DocumentationProject> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderArgs, list);
+				}
+				else {
+					DocumentationProject documentationProject = list.get(0);
+
+					result = documentationProject;
+
+					cacheResult(documentationProject);
+
+					if ((documentationProject.getUuid() == null) ||
+							!documentationProject.getUuid().equals(uuid) ||
+							(documentationProject.getGroupId() != groupId)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+							finderArgs, documentationProject);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (DocumentationProject)result;
+		}
+	}
+
+	/**
+	 * Removes the documentation project where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the documentation project that was removed
+	 */
+	@Override
+	public DocumentationProject removeByUUID_G(String uuid, long groupId)
+		throws NoSuchDocumentationProjectException {
+		DocumentationProject documentationProject = findByUUID_G(uuid, groupId);
+
+		return remove(documentationProject);
+	}
+
+	/**
+	 * Returns the number of documentation projects where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching documentation projects
+	 */
+	@Override
+	public int countByUUID_G(String uuid, long groupId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
+
+		Object[] finderArgs = new Object[] { uuid, groupId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_DOCUMENTATIONPROJECT_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid == null) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
+			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(groupId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "documentationProject.uuid IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "documentationProject.uuid = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(documentationProject.uuid IS NULL OR documentationProject.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "documentationProject.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(DocumentationProjectModelImpl.ENTITY_CACHE_ENABLED,
 			DocumentationProjectModelImpl.FINDER_CACHE_ENABLED,
 			DocumentationProjectImpl.class,
@@ -1494,6 +1749,12 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 			DocumentationProjectImpl.class,
 			documentationProject.getPrimaryKey(), documentationProject);
 
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+			new Object[] {
+				documentationProject.getUuid(),
+				documentationProject.getGroupId()
+			}, documentationProject);
+
 		finderCache.putResult(FINDER_PATH_FETCH_BY_NAME,
 			new Object[] { documentationProject.getName() },
 			documentationProject);
@@ -1573,7 +1834,17 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 		DocumentationProjectModelImpl documentationProjectModelImpl,
 		boolean isNew) {
 		if (isNew) {
-			Object[] args = new Object[] { documentationProjectModelImpl.getName() };
+			Object[] args = new Object[] {
+					documentationProjectModelImpl.getUuid(),
+					documentationProjectModelImpl.getGroupId()
+				};
+
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				documentationProjectModelImpl);
+
+			args = new Object[] { documentationProjectModelImpl.getName() };
 
 			finderCache.putResult(FINDER_PATH_COUNT_BY_NAME, args,
 				Long.valueOf(1));
@@ -1581,6 +1852,19 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 				documentationProjectModelImpl);
 		}
 		else {
+			if ((documentationProjectModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						documentationProjectModelImpl.getUuid(),
+						documentationProjectModelImpl.getGroupId()
+					};
+
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+					Long.valueOf(1));
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+					documentationProjectModelImpl);
+			}
+
 			if ((documentationProjectModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_NAME.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
@@ -1597,7 +1881,26 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 
 	protected void clearUniqueFindersCache(
 		DocumentationProjectModelImpl documentationProjectModelImpl) {
-		Object[] args = new Object[] { documentationProjectModelImpl.getName() };
+		Object[] args = new Object[] {
+				documentationProjectModelImpl.getUuid(),
+				documentationProjectModelImpl.getGroupId()
+			};
+
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+		if ((documentationProjectModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					documentationProjectModelImpl.getOriginalUuid(),
+					documentationProjectModelImpl.getOriginalGroupId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		args = new Object[] { documentationProjectModelImpl.getName() };
 
 		finderCache.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
 		finderCache.removeResult(FINDER_PATH_FETCH_BY_NAME, args);
@@ -1850,6 +2153,7 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 
 		documentationProjectImpl.setUuid(documentationProject.getUuid());
 		documentationProjectImpl.setDocumentationProjectId(documentationProject.getDocumentationProjectId());
+		documentationProjectImpl.setGroupId(documentationProject.getGroupId());
 		documentationProjectImpl.setCompanyId(documentationProject.getCompanyId());
 		documentationProjectImpl.setUserId(documentationProject.getUserId());
 		documentationProjectImpl.setUserName(documentationProject.getUserName());

@@ -66,12 +66,14 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", documentationProjectId=");
 		sb.append(documentationProjectId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -107,6 +109,7 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 		}
 
 		documentationProjectImpl.setDocumentationProjectId(documentationProjectId);
+		documentationProjectImpl.setGroupId(groupId);
 		documentationProjectImpl.setCompanyId(companyId);
 		documentationProjectImpl.setUserId(userId);
 
@@ -165,6 +168,8 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 
 		documentationProjectId = objectInput.readLong();
 
+		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
 
 		userId = objectInput.readLong();
@@ -189,6 +194,8 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 		}
 
 		objectOutput.writeLong(documentationProjectId);
+
+		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(companyId);
 
@@ -230,6 +237,7 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 
 	public String uuid;
 	public long documentationProjectId;
+	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;

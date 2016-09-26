@@ -75,6 +75,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "documentationProjectId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
@@ -90,6 +91,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("documentationProjectId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
@@ -101,7 +103,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OSB_LDN_DocumentationProject (uuid_ VARCHAR(75) null,documentationProjectId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,iconFileName VARCHAR(75) null,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table OSB_LDN_DocumentationProject (uuid_ VARCHAR(75) null,documentationProjectId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,iconFileName VARCHAR(75) null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table OSB_LDN_DocumentationProject";
 	public static final String ORDER_BY_JPQL = " ORDER BY documentationProject.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OSB_LDN_DocumentationProject.name ASC";
@@ -118,8 +120,9 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 				"value.object.column.bitmask.enabled.com.liferay.osb.ldn.documentation.project.model.DocumentationProject"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long NAME_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -137,6 +140,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 		model.setUuid(soapModel.getUuid());
 		model.setDocumentationProjectId(soapModel.getDocumentationProjectId());
+		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
@@ -213,6 +217,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 		attributes.put("uuid", getUuid());
 		attributes.put("documentationProjectId", getDocumentationProjectId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -242,6 +247,12 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 		if (documentationProjectId != null) {
 			setDocumentationProjectId(documentationProjectId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -332,6 +343,29 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 	@Override
 	public void setDocumentationProjectId(long documentationProjectId) {
 		_documentationProjectId = documentationProjectId;
+	}
+
+	@JSON
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -536,6 +570,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 		documentationProjectImpl.setUuid(getUuid());
 		documentationProjectImpl.setDocumentationProjectId(getDocumentationProjectId());
+		documentationProjectImpl.setGroupId(getGroupId());
 		documentationProjectImpl.setCompanyId(getCompanyId());
 		documentationProjectImpl.setUserId(getUserId());
 		documentationProjectImpl.setUserName(getUserName());
@@ -607,6 +642,10 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 		documentationProjectModelImpl._originalUuid = documentationProjectModelImpl._uuid;
 
+		documentationProjectModelImpl._originalGroupId = documentationProjectModelImpl._groupId;
+
+		documentationProjectModelImpl._setOriginalGroupId = false;
+
 		documentationProjectModelImpl._originalCompanyId = documentationProjectModelImpl._companyId;
 
 		documentationProjectModelImpl._setOriginalCompanyId = false;
@@ -631,6 +670,8 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		}
 
 		documentationProjectCacheModel.documentationProjectId = getDocumentationProjectId();
+
+		documentationProjectCacheModel.groupId = getGroupId();
 
 		documentationProjectCacheModel.companyId = getCompanyId();
 
@@ -693,12 +734,14 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
 		sb.append(", documentationProjectId=");
 		sb.append(getDocumentationProjectId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", userId=");
@@ -724,7 +767,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -738,6 +781,10 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		sb.append(
 			"<column><column-name>documentationProjectId</column-name><column-value><![CDATA[");
 		sb.append(getDocumentationProjectId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -788,6 +835,9 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 	private String _uuid;
 	private String _originalUuid;
 	private long _documentationProjectId;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;

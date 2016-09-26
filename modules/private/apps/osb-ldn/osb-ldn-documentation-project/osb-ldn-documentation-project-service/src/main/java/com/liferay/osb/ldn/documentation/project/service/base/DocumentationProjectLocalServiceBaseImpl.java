@@ -225,17 +225,16 @@ public abstract class DocumentationProjectLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the documentation project with the matching UUID and company.
+	 * Returns the documentation project matching the UUID and group.
 	 *
 	 * @param uuid the documentation project's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching documentation project, or <code>null</code> if a matching documentation project could not be found
 	 */
 	@Override
-	public DocumentationProject fetchDocumentationProjectByUuidAndCompanyId(
-		String uuid, long companyId) {
-		return documentationProjectPersistence.fetchByUuid_C_First(uuid,
-			companyId, null);
+	public DocumentationProject fetchDocumentationProjectByUuidAndGroupId(
+		String uuid, long groupId) {
+		return documentationProjectPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -357,18 +356,48 @@ public abstract class DocumentationProjectLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the documentation project with the matching UUID and company.
+	 * Returns all the documentation projects matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the documentation projects
+	 * @param companyId the primary key of the company
+	 * @return the matching documentation projects, or an empty list if no matches were found
+	 */
+	@Override
+	public List<DocumentationProject> getDocumentationProjectsByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return documentationProjectPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of documentation projects matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the documentation projects
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of documentation projects
+	 * @param end the upper bound of the range of documentation projects (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching documentation projects, or an empty list if no matches were found
+	 */
+	@Override
+	public List<DocumentationProject> getDocumentationProjectsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<DocumentationProject> orderByComparator) {
+		return documentationProjectPersistence.findByUuid_C(uuid, companyId,
+			start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the documentation project matching the UUID and group.
 	 *
 	 * @param uuid the documentation project's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching documentation project
 	 * @throws PortalException if a matching documentation project could not be found
 	 */
 	@Override
-	public DocumentationProject getDocumentationProjectByUuidAndCompanyId(
-		String uuid, long companyId) throws PortalException {
-		return documentationProjectPersistence.findByUuid_C_First(uuid,
-			companyId, null);
+	public DocumentationProject getDocumentationProjectByUuidAndGroupId(
+		String uuid, long groupId) throws PortalException {
+		return documentationProjectPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

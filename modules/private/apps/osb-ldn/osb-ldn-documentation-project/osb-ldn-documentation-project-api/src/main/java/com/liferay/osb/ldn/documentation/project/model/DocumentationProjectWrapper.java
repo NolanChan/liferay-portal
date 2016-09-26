@@ -63,6 +63,7 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 
 		attributes.put("uuid", getUuid());
 		attributes.put("documentationProjectId", getDocumentationProjectId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -89,6 +90,12 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 
 		if (documentationProjectId != null) {
 			setDocumentationProjectId(documentationProjectId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -328,6 +335,16 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 	}
 
 	/**
+	* Returns the group ID of this documentation project.
+	*
+	* @return the group ID of this documentation project
+	*/
+	@Override
+	public long getGroupId() {
+		return _documentationProject.getGroupId();
+	}
+
+	/**
 	* Returns the primary key of this documentation project.
 	*
 	* @return the primary key of this documentation project
@@ -411,6 +428,16 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_documentationProject.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the group ID of this documentation project.
+	*
+	* @param groupId the group ID of this documentation project
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_documentationProject.setGroupId(groupId);
 	}
 
 	/**

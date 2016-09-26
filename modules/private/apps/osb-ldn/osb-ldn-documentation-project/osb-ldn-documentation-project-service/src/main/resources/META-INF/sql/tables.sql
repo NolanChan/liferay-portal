@@ -1,6 +1,7 @@
 create table OSB_LDN_DocumentationProject (
 	uuid_ VARCHAR(75) null,
 	documentationProjectId LONG not null primary key,
+	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,

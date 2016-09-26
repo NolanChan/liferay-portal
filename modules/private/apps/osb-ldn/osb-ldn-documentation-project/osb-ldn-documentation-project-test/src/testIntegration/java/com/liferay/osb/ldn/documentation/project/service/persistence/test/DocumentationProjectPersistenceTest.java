@@ -126,6 +126,8 @@ public class DocumentationProjectPersistenceTest {
 
 		newDocumentationProject.setUuid(RandomTestUtil.randomString());
 
+		newDocumentationProject.setGroupId(RandomTestUtil.nextLong());
+
 		newDocumentationProject.setCompanyId(RandomTestUtil.nextLong());
 
 		newDocumentationProject.setUserId(RandomTestUtil.nextLong());
@@ -152,6 +154,8 @@ public class DocumentationProjectPersistenceTest {
 			newDocumentationProject.getUuid());
 		Assert.assertEquals(existingDocumentationProject.getDocumentationProjectId(),
 			newDocumentationProject.getDocumentationProjectId());
+		Assert.assertEquals(existingDocumentationProject.getGroupId(),
+			newDocumentationProject.getGroupId());
 		Assert.assertEquals(existingDocumentationProject.getCompanyId(),
 			newDocumentationProject.getCompanyId());
 		Assert.assertEquals(existingDocumentationProject.getUserId(),
@@ -181,6 +185,15 @@ public class DocumentationProjectPersistenceTest {
 		_persistence.countByUuid(StringPool.NULL);
 
 		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G(StringPool.NULL, 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
 	}
 
 	@Test
@@ -226,9 +239,9 @@ public class DocumentationProjectPersistenceTest {
 
 	protected OrderByComparator<DocumentationProject> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("OSB_LDN_DocumentationProject",
-			"uuid", true, "documentationProjectId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true,
+			"uuid", true, "documentationProjectId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "name", true, "description", true,
 			"iconFileName", true, "status", true);
 	}
 
@@ -439,6 +452,15 @@ public class DocumentationProjectPersistenceTest {
 		DocumentationProject existingDocumentationProject = _persistence.findByPrimaryKey(newDocumentationProject.getPrimaryKey());
 
 		Assert.assertTrue(Objects.equals(
+				existingDocumentationProject.getUuid(),
+				ReflectionTestUtil.invoke(existingDocumentationProject,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingDocumentationProject.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDocumentationProject,
+				"getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertTrue(Objects.equals(
 				existingDocumentationProject.getName(),
 				ReflectionTestUtil.invoke(existingDocumentationProject,
 					"getOriginalName", new Class<?>[0])));
@@ -451,6 +473,8 @@ public class DocumentationProjectPersistenceTest {
 		DocumentationProject documentationProject = _persistence.create(pk);
 
 		documentationProject.setUuid(RandomTestUtil.randomString());
+
+		documentationProject.setGroupId(RandomTestUtil.nextLong());
 
 		documentationProject.setCompanyId(RandomTestUtil.nextLong());
 

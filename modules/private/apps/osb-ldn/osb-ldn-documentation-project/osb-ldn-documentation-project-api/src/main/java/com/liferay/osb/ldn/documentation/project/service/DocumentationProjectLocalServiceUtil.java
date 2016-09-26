@@ -105,16 +105,16 @@ public class DocumentationProjectLocalServiceUtil {
 	}
 
 	/**
-	* Returns the documentation project with the matching UUID and company.
+	* Returns the documentation project matching the UUID and group.
 	*
 	* @param uuid the documentation project's UUID
-	* @param companyId the primary key of the company
+	* @param groupId the primary key of the group
 	* @return the matching documentation project, or <code>null</code> if a matching documentation project could not be found
 	*/
-	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject fetchDocumentationProjectByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject fetchDocumentationProjectByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
 		return getService()
-				   .fetchDocumentationProjectByUuidAndCompanyId(uuid, companyId);
+				   .fetchDocumentationProjectByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -131,18 +131,18 @@ public class DocumentationProjectLocalServiceUtil {
 	}
 
 	/**
-	* Returns the documentation project with the matching UUID and company.
+	* Returns the documentation project matching the UUID and group.
 	*
 	* @param uuid the documentation project's UUID
-	* @param companyId the primary key of the company
+	* @param groupId the primary key of the group
 	* @return the matching documentation project
 	* @throws PortalException if a matching documentation project could not be found
 	*/
-	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject getDocumentationProjectByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
+	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject getDocumentationProjectByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getDocumentationProjectByUuidAndCompanyId(uuid, companyId);
+				   .getDocumentationProjectByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -280,6 +280,37 @@ public class DocumentationProjectLocalServiceUtil {
 	public static java.util.List<com.liferay.osb.ldn.documentation.project.model.DocumentationProject> getDocumentationProjects(
 		int start, int end) {
 		return getService().getDocumentationProjects(start, end);
+	}
+
+	/**
+	* Returns all the documentation projects matching the UUID and company.
+	*
+	* @param uuid the UUID of the documentation projects
+	* @param companyId the primary key of the company
+	* @return the matching documentation projects, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.osb.ldn.documentation.project.model.DocumentationProject> getDocumentationProjectsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .getDocumentationProjectsByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of documentation projects matching the UUID and company.
+	*
+	* @param uuid the UUID of the documentation projects
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of documentation projects
+	* @param end the upper bound of the range of documentation projects (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching documentation projects, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.osb.ldn.documentation.project.model.DocumentationProject> getDocumentationProjectsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.osb.ldn.documentation.project.model.DocumentationProject> orderByComparator) {
+		return getService()
+				   .getDocumentationProjectsByUuidAndCompanyId(uuid, companyId,
+			start, end, orderByComparator);
 	}
 
 	/**
