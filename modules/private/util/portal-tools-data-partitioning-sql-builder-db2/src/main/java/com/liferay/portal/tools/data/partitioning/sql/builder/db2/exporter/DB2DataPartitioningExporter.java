@@ -42,12 +42,12 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 		String osName = System.getProperty("os.name");
 
 		if (osName.contains("windows")) {
-			_scriptComment = "::";
 			_fileExtension = ".bat";
+			_scriptComment = "::";
 		}
 		else {
-			_scriptComment = "#";
 			_fileExtension = ".sh";
+			_scriptComment = "#";
 		}
 	}
 
