@@ -60,7 +60,7 @@ public class ServerManuallyShutdownEmailTemplate extends BaseEmailTemplate {
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$URL_FIRST_LINE$]");
 		contextAttributes.add(
-			_navigationAdvisor.getLCSClusterNodeURL(
+			navigationAdvisor.getLCSClusterNodeURL(
 				emailContext.getLCSClusterNodeId()));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(

@@ -63,7 +63,7 @@ public class NewLCSPortletAvailableEmailTemplate extends BaseEmailTemplate {
 					lcsClusterEntryName, lcsProjectName));
 			contextAttributes.add("[$URL_FIRST_LINE$]");
 			contextAttributes.add(
-					_navigationAdvisor.getLCSClusterEntryURL(
+				navigationAdvisor.getLCSClusterEntryURL(
 					emailContext.getLCSClusterEntryId()));
 			contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 			contextAttributes.add(
@@ -87,7 +87,7 @@ public class NewLCSPortletAvailableEmailTemplate extends BaseEmailTemplate {
 					lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 			contextAttributes.add("[$URL_FIRST_LINE$]");
 			contextAttributes.add(
-					_navigationAdvisor.getLCSClusterNodeURL(
+				navigationAdvisor.getLCSClusterNodeURL(
 					emailContext.getLCSClusterNodeId()));
 			contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 			contextAttributes.add(
@@ -102,9 +102,9 @@ public class NewLCSPortletAvailableEmailTemplate extends BaseEmailTemplate {
 				emailContext,
 				"please-find-download-links-at-the-following-address"));
 		contextAttributes.add("[$URL_SECOND_LINE$]");
-		contextAttributes.add(_navigationAdvisor.getLCSPortalURL());
+		contextAttributes.add(navigationAdvisor.getLCSPortalURL());
 		contextAttributes.add("[$URL_TEXT_SECOND_LINE$]");
-		contextAttributes.add(_navigationAdvisor.getLCSPortalURL());
+		contextAttributes.add(navigationAdvisor.getLCSPortalURL());
 
 		return contextAttributes.toArray();
 	}

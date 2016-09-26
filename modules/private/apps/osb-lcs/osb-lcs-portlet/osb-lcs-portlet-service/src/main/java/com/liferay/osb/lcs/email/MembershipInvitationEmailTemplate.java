@@ -61,13 +61,15 @@ public class MembershipInvitationEmailTemplate extends BaseEmailTemplate {
 		contextAttributes.add(translate(emailContext, "dear-liferay-user"));
 		contextAttributes.add("[$MESSAGE_FIRST_LINE$]");
 		contextAttributes.add(
-			translate(emailContext,
+			translate(
+				emailContext,
 				"x-invited-you-to-be-part-of-the-liferay-connected-services-" +
 					"project-x",
 				user.getFullName(), emailContext.getLCSProjectName()));
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
-			translate(emailContext,
+			translate(
+				emailContext,
 				"use-the-link-below-to-accept-this-invitation-and-access-" +
 					"the-liferay-connected-services-site"));
 		contextAttributes.add("[$SUBJECT$]");
@@ -77,7 +79,7 @@ public class MembershipInvitationEmailTemplate extends BaseEmailTemplate {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(_navigationAdvisor.getLCSPortalURL());
+		sb.append(navigationAdvisor.getLCSPortalURL());
 		sb.append(NavigationConstants.CHECK_LCS_INVITATION_URL);
 		sb.append(StringPool.QUESTION);
 		sb.append("lcsProjectId=");

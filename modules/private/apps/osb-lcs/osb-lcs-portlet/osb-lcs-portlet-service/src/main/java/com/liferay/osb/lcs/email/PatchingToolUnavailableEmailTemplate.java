@@ -68,11 +68,11 @@ public class PatchingToolUnavailableEmailTemplate extends BaseEmailTemplate {
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$URL_FIRST_LINE$]");
 		contextAttributes.add(
-			_navigationAdvisor.getLCSClusterNodeURL(
+			navigationAdvisor.getLCSClusterNodeURL(
 				emailContext.getLCSClusterNodeId()));
 		contextAttributes.add("[$URL_SECOND_LINE$]");
 		contextAttributes.add(
-			_osbLCSConfiguration.lrdcomPatchingToolOverviewUrl());
+			osbLCSConfiguration.lrdcomPatchingToolOverviewUrl());
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(
 			translate(
@@ -80,7 +80,7 @@ public class PatchingToolUnavailableEmailTemplate extends BaseEmailTemplate {
 				lcsClusterNodeName));
 		contextAttributes.add("[$URL_TEXT_SECOND_LINE$]");
 		contextAttributes.add(
-			_osbLCSConfiguration.lrdcomPatchingToolOverviewUrl());
+			osbLCSConfiguration.lrdcomPatchingToolOverviewUrl());
 
 		return contextAttributes.toArray();
 	}

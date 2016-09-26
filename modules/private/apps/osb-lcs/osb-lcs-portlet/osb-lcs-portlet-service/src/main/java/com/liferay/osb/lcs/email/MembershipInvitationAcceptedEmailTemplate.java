@@ -68,7 +68,7 @@ public class MembershipInvitationAcceptedEmailTemplate
 		contextAttributes.add(StringPool.BLANK);
 		contextAttributes.add("[$URL_SECOND_LINE$]");
 
-		String lcsProjectURL = _navigationAdvisor.getLCSProjectUsersURL(
+		String lcsProjectURL = navigationAdvisor.getLCSProjectUsersURL(
 			emailContext.getLCSProjectId());
 
 		contextAttributes.add(lcsProjectURL);

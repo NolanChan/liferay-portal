@@ -64,7 +64,7 @@ public class NewPatchingToolAvailableEmailTemplate extends BaseEmailTemplate {
 					lcsClusterEntryName, lcsProjectName));
 			contextAttributes.add("[$URL_FIRST_LINE$]");
 			contextAttributes.add(
-					_navigationAdvisor.getLCSClusterEntryURL(
+				navigationAdvisor.getLCSClusterEntryURL(
 					emailContext.getLCSClusterEntryId()));
 			contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 			contextAttributes.add(
@@ -88,7 +88,7 @@ public class NewPatchingToolAvailableEmailTemplate extends BaseEmailTemplate {
 					lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 			contextAttributes.add("[$URL_FIRST_LINE$]");
 			contextAttributes.add(
-				_navigationAdvisor.getLCSClusterNodeURL(
+				navigationAdvisor.getLCSClusterNodeURL(
 					emailContext.getLCSClusterNodeId()));
 			contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 			contextAttributes.add(
@@ -105,10 +105,10 @@ public class NewPatchingToolAvailableEmailTemplate extends BaseEmailTemplate {
 					"configuration-instructions"));
 		contextAttributes.add("[$URL_SECOND_LINE$]");
 		contextAttributes.add(
-			_osbLCSConfiguration.lrdcomPatchingToolOverviewUrl());
+			osbLCSConfiguration.lrdcomPatchingToolOverviewUrl());
 		contextAttributes.add("[$URL_TEXT_SECOND_LINE$]");
 		contextAttributes.add(
-			_osbLCSConfiguration.lrdcomPatchingToolOverviewUrl());
+			osbLCSConfiguration.lrdcomPatchingToolOverviewUrl());
 
 		return contextAttributes.toArray();
 	}

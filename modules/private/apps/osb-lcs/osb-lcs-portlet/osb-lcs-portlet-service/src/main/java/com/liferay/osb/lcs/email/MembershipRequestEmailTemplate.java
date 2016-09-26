@@ -61,7 +61,7 @@ public class MembershipRequestEmailTemplate extends BaseEmailTemplate {
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(StringPool.BLANK);
 
-		String lcsProjectURL = _navigationAdvisor.getLCSProjectURL(
+		String lcsProjectURL = navigationAdvisor.getLCSProjectURL(
 			emailContext.getLCSProjectId());
 
 		contextAttributes.add("[$URL_SECOND_LINE$]");

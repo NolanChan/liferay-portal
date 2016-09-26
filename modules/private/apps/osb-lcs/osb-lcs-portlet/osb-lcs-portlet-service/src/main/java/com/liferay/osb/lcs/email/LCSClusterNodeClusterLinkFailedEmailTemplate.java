@@ -14,8 +14,6 @@
 
 package com.liferay.osb.lcs.email;
 
-import com.liferay.osb.lcs.advisor.NavigationAdvisor;
-import com.liferay.osb.lcs.util.LCSClusterNodeUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -53,36 +51,39 @@ public class LCSClusterNodeClusterLinkFailedEmailTemplate
 
 		contextAttributes.add("[$MESSAGE_FIRST_LINE$]");
 		contextAttributes.add(
-			translate(emailContext,
+			translate(
+				emailContext,
 				"there-is-a-communication-error-between-nodes-in-one-of-" +
 					"your-clusters"));
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
-			translate(emailContext,
+			translate(
+				emailContext,
 				"lcs-detected-a-cluster-link-failure-on-server-x-in-cluster-" +
 					"x-for-project-x",
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$MESSAGE_THIRD_LINE$]");
 		contextAttributes.add(
-			translate(emailContext,
-				"x-has-no-link-to-the-following-nodes", lcsClusterNodeName));
+			translate(
+				emailContext, "x-has-no-link-to-the-following-nodes",
+				lcsClusterNodeName));
 		contextAttributes.add("[$SIBLING_SERVER_NAMES$]");
-		contextAttributes.add(
-			LCSClusterNodeUtil.getLCSClusterNodeNames(
-				emailContext.getSiblingLCSClusterNodeKeys()));
+		contextAttributes.add(emailContext.getSiblingLCSClusterNodeNames());
 		contextAttributes.add("[$SUBJECT$]");
 		contextAttributes.add(
-			translate(emailContext,
+			translate(
+				emailContext,
 				"broken-connections-detected-in-cluster-x-project-x",
 				lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$URL_FIRST_LINE$]");
 		contextAttributes.add(
-				NavigationAdvisor.getLCSClusterEntryURL(
+			navigationAdvisor.getLCSClusterEntryURL(
 				emailContext.getLCSClusterEntryId()));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(
-			translate(emailContext,
-				"see-x-on-liferay-connected-services", lcsClusterEntryName));
+			translate(
+				emailContext, "see-x-on-liferay-connected-services",
+				lcsClusterEntryName));
 
 		return contextAttributes.toArray();
 	}
