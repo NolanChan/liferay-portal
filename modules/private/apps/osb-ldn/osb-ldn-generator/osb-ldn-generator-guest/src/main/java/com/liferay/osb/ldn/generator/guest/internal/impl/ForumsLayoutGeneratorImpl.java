@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.osb.ldn.generator.guest.group.internal.impl;
+package com.liferay.osb.ldn.generator.guest.internal.impl;
 
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
-import com.liferay.osb.ldn.generator.guest.group.internal.AbstractLayoutGenerator;
-import com.liferay.osb.ldn.generator.guest.group.internal.LayoutGenerator;
+import com.liferay.osb.ldn.generator.guest.internal.AbstractLayoutGenerator;
+import com.liferay.osb.ldn.generator.guest.internal.LayoutGenerator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -28,16 +28,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Yury Butrymovich
  */
 @Component(
-	immediate = true, property = {"ldn.page.generator.type=blogs"},
+	immediate = true, property = {"ldn.page.generator.type=forums"},
 	service = LayoutGenerator.class
 )
-public class BlogsLayoutGeneratorImpl extends AbstractLayoutGenerator {
+public class ForumsLayoutGeneratorImpl extends AbstractLayoutGenerator {
 
 	@Override
 	public Layout generate(long userId, long groupId) throws PortalException {
-		String name = "Blogs";
-		String title = "Blogs";
-		String url = "/blogs";
+		String name = "Forums";
+		String title = "Forums";
+		String url = "/forums";
 		long version = 1L;
 
 		return getLayout(userId, groupId, name, title, url, version);

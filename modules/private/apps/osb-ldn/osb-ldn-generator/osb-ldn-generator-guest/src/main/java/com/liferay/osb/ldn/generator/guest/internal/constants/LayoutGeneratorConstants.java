@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.ldn.generator.guest.group.internal.constants;
+package com.liferay.osb.ldn.generator.guest.internal.constants;
 
 /**
  * @author Ryan Park

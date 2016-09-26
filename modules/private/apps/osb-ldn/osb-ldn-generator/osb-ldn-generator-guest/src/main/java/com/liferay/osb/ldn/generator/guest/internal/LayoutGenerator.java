@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.ldn.generator.guest.group.internal;
+package com.liferay.osb.ldn.generator.guest.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;

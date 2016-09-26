@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.osb.ldn.generator.guest.group.internal.impl;
+package com.liferay.osb.ldn.generator.guest.internal.impl;
 
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
-import com.liferay.osb.ldn.generator.guest.group.internal.LayoutGenerator;
-import com.liferay.osb.ldn.generator.guest.group.internal.LayoutGeneratorFactory;
-import com.liferay.osb.ldn.generator.guest.group.internal.constants.LayoutGeneratorConstants;
+import com.liferay.osb.ldn.generator.guest.internal.LayoutGenerator;
+import com.liferay.osb.ldn.generator.guest.internal.LayoutGeneratorFactory;
+import com.liferay.osb.ldn.generator.guest.internal.constants.LayoutGeneratorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 
