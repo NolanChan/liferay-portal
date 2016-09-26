@@ -12,28 +12,30 @@
  * details.
  */
 
-package com.liferay.osb.lcs.messaging;
+package com.liferay.osb.lcs.advisor;
 
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
+@Component(immediate = true)
 public interface CommandMessageAdvisor {
 
 	public void deregister(String key);
 
 	public void downloadPatches(
 			LCSClusterNode lcsClusterNode, List<String> patchNames)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void executeScript(LCSClusterNode lcsClusterNode, String script)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void invalidateLCSClusterEntryToken(String key);
 

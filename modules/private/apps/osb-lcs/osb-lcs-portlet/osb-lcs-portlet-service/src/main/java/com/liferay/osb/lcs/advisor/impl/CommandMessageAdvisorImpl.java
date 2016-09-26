@@ -12,26 +12,25 @@
  * details.
  */
 
-package com.liferay.osb.lcs.messaging.impl;
+package com.liferay.osb.lcs.advisor.impl;
 
 import com.liferay.lcs.messaging.CommandMessage;
 import com.liferay.lcs.messaging.HandshakeMessage;
 import com.liferay.lcs.messaging.Message;
 import com.liferay.lcs.security.DigitalSignature;
 import com.liferay.lcs.util.PatchUtil;
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeInstallationEnvironment;
-import com.liferay.osb.lcs.nosql.service.LCSClusterNodeInstallationEnvironmentServiceUtil;
+import com.liferay.osb.lcs.nosql.service.LCSClusterNodeInstallationEnvironmentService;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodeScriptService;
 import com.liferay.osb.lcs.queue.QueueManager;
 import com.liferay.osb.lcs.service.permission.LCSClusterEntryPermission;
 import com.liferay.osb.lcs.storage.PatchStorageManager;
-import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 
 import java.net.URL;
 
@@ -41,11 +40,14 @@ import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-public class CommandMessageAdvisorImpl implements com.liferay.osb.lcs.messaging.CommandMessageAdvisor {
+public class CommandMessageAdvisorImpl
+	implements com.liferay.osb.lcs.advisor.CommandMessageAdvisor {
 
 	@Override
 	public void deregister(String key) {
@@ -56,13 +58,14 @@ public class CommandMessageAdvisorImpl implements com.liferay.osb.lcs.messaging.
 	@Override
 	public void downloadPatches(
 			LCSClusterNode lcsClusterNode, List<String> patchNames)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LCSClusterEntryPermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			lcsClusterNode.getLcsClusterEntryId(), ActionKeys.DOWNLOAD_PATCH);
+			lcsClusterNode.getLcsClusterEntryId(),
+			OSBLCSActionKeys.DOWNLOAD_PATCH);
 
-		Map<String, String> payload = new HashMap<String, String>();
+		Map<String, String> payload = new HashMap<>();
 
 		for (String patchName : patchNames) {
 			String patchFileName = PatchUtil.getPatchFileName(patchName);
@@ -79,11 +82,12 @@ public class CommandMessageAdvisorImpl implements com.liferay.osb.lcs.messaging.
 
 	@Override
 	public void executeScript(LCSClusterNode lcsClusterNode, String script)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LCSClusterEntryPermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			lcsClusterNode.getLcsClusterEntryId(), ActionKeys.EXECUTE_COMMAND);
+			lcsClusterNode.getLcsClusterEntryId(),
+			OSBLCSActionKeys.EXECUTE_COMMAND);
 
 		sendCommandMessage(
 			CommandMessage.COMMAND_TYPE_EXECUTE_SCRIPT, lcsClusterNode.getKey(),
@@ -97,24 +101,37 @@ public class CommandMessageAdvisorImpl implements com.liferay.osb.lcs.messaging.
 		sendHandshakeMessage(key, false);
 	}
 
+	@Reference(bind = "-")
 	public void setDigitalSignature(DigitalSignature digitalSignature) {
 		_digitalSignature = digitalSignature;
 	}
 
+	@Reference(bind = "-")
 	public void setLCSClusterNodeScriptService(
 		LCSClusterNodeScriptService lcsClusterNodeScriptService) {
 
 		_lcsClusterNodeScriptService = lcsClusterNodeScriptService;
 	}
 
+	@Reference(bind = "-")
 	public void setPatchStorageManager(
 		PatchStorageManager patchStorageManager) {
 
 		_patchStorageManager = patchStorageManager;
 	}
 
+	@Reference(bind = "-")
 	public void setQueueManager(QueueManager queueManager) {
 		_queueManager = queueManager;
+	}
+
+	@Reference(bind = "-")
+	public void setLCSClusterNodeInstallationEnvironmentService(
+		LCSClusterNodeInstallationEnvironmentService
+			lcsClusterNodeInstallationEnvironmentService) {
+
+		_lcsClusterNodeInstallationEnvironmentService =
+			lcsClusterNodeInstallationEnvironmentService;
 	}
 
 	@Override
@@ -127,11 +144,11 @@ public class CommandMessageAdvisorImpl implements com.liferay.osb.lcs.messaging.
 	protected int getLCSPortletBuildNumber(String key) {
 		LCSClusterNodeInstallationEnvironment
 			lcsClusterNodeInstallationEnvironment =
-				LCSClusterNodeInstallationEnvironmentServiceUtil.
+				_lcsClusterNodeInstallationEnvironmentService.
 					fetchLCSClusterNodeInstallationEnvironment(key);
 
-		Map<String, String> softwareMetadata = new TreeMap<String, String>(
-				lcsClusterNodeInstallationEnvironment.getSoftwareMetadata());
+		Map<String, String> softwareMetadata = new TreeMap<>(
+			lcsClusterNodeInstallationEnvironment.getSoftwareMetadata());
 
 		return Integer.parseInt(
 			softwareMetadata.get("lcs.portlet.build.number"));
@@ -185,12 +202,14 @@ public class CommandMessageAdvisorImpl implements com.liferay.osb.lcs.messaging.
 		_queueManager.sendMessage(handshakeMessage);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		com.liferay.osb.lcs.messaging.impl.CommandMessageAdvisorImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommandMessageAdvisorImpl.class);
 
 	private DigitalSignature _digitalSignature;
 	private LCSClusterNodeScriptService _lcsClusterNodeScriptService;
 	private PatchStorageManager _patchStorageManager;
 	private QueueManager _queueManager;
+	LCSClusterNodeInstallationEnvironmentService
+		_lcsClusterNodeInstallationEnvironmentService;
 
 }
