@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.osb.ldn.generator.guest.internal.impl;
+packagecom.liferay.osb.ldn.generator.guest.internal.layout;
 
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
-import com.liferay.osb.ldn.generator.guest.internal.AbstractLayoutGenerator;
+import com.liferay.osb.ldn.generator.layout.AbstractLayoutGenerator;
 import com.liferay.osb.ldn.generator.guest.internal.LayoutGenerator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -28,28 +28,19 @@ import org.osgi.service.component.annotations.Reference;
  * @author Yury Butrymovich
  */
 @Component(
-	immediate = true, property = {"ldn.page.generator.type=home"},
+	immediate = true, property = {"ldn.page.generator.type=community"},
 	service = LayoutGenerator.class
 )
-public class HomeLayoutGeneratorImpl extends AbstractLayoutGenerator {
-
-	public static final String RANDOM_NINE_PORTLET_ID =
-		"com_liferay_osb_ldn_documentation_project_random_nine_web_" +
-			"DocumentationProjectRandomNinePortlet";
+public class CommunityLayoutGenerator extends AbstractLayoutGenerator {
 
 	@Override
 	public Layout generate(long userId, long groupId) throws PortalException {
-		String name = "Home";
-		String title = "Home";
-		String url = "/home";
+		String name = "Community";
+		String title = "Community";
+		String url = "/community";
 		long version = 1L;
 
 		return getLayout(userId, groupId, name, title, url, version);
-	}
-
-	@Override
-	protected void resetLayout(Layout layout, long userId) {
-		addPortlet(layout, userId, RANDOM_NINE_PORTLET_ID);
 	}
 
 	@Reference(unbind = "-")

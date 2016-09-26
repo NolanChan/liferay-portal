@@ -12,17 +12,26 @@
  * details.
  */
 
-package com.liferay.osb.ldn.generator.guest.internal;
+package com.liferay.osb.ldn.generator.layout;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 
 /**
  * @author Yury Butrymovich
  */
-public interface LayoutGeneratorFactory {
+public abstract class AbstractLayoutGenerator implements LayoutGenerator {
 
-	public LayoutGenerator getLayoutGenerator(
-			long userId, long groupId, int type)
-		throws PortalException;
+	protected void addPortlet(Layout layout, long userId, String portletId) {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		layoutTypePortlet.addPortletId(userId, portletId);
+
+		layoutLocalService.updateLayout(layout);
+	}
+
+	protected LayoutLocalService layoutLocalService;
 
 }

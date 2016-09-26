@@ -28,16 +28,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Yury Butrymovich
  */
 @Component(
-	immediate = true, property = {"ldn.page.generator.type=community"},
+	immediate = true, property = {"ldn.page.generator.type=projects"},
 	service = LayoutGenerator.class
 )
-public class CommunityLayoutGeneratorImpl extends AbstractLayoutGenerator {
+public class ProjectsLayoutGenerator extends AbstractLayoutGenerator {
 
 	@Override
 	public Layout generate(long userId, long groupId) throws PortalException {
-		String name = "Community";
-		String title = "Community";
-		String url = "/community";
+		String name = "Projects";
+		String title = "Projects";
+		String url = "/projects";
 		long version = 1L;
 
 		return getLayout(userId, groupId, name, title, url, version);

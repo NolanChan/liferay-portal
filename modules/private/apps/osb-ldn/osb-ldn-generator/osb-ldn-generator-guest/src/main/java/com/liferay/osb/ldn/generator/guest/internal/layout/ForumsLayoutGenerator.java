@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.osb.ldn.generator.guest.internal.impl;
+packagecom.liferay.osb.ldn.generator.guest.internal.layout;
 
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
-import com.liferay.osb.ldn.generator.guest.internal.AbstractLayoutGenerator;
+import com.liferay.osb.ldn.generator.layout.AbstractLayoutGenerator;
 import com.liferay.osb.ldn.generator.guest.internal.LayoutGenerator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -28,16 +28,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Yury Butrymovich
  */
 @Component(
-	immediate = true, property = {"ldn.page.generator.type=projects"},
+	immediate = true, property = {"ldn.page.generator.type=forums"},
 	service = LayoutGenerator.class
 )
-public class ProjectsLayoutGeneratorImpl extends AbstractLayoutGenerator {
+public class ForumsLayoutGenerator extends AbstractLayoutGenerator {
 
 	@Override
 	public Layout generate(long userId, long groupId) throws PortalException {
-		String name = "Projects";
-		String title = "Projects";
-		String url = "/projects";
+		String name = "Forums";
+		String title = "Forums";
+		String url = "/forums";
 		long version = 1L;
 
 		return getLayout(userId, groupId, name, title, url, version);
