@@ -19,7 +19,6 @@ import com.liferay.lcs.messaging.HandshakeMessage;
 import com.liferay.lcs.messaging.Message;
 import com.liferay.lcs.security.DigitalSignature;
 import com.liferay.lcs.util.PatchUtil;
-import com.liferay.osb.lcs.messaging.CommandMessageSender;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeInstallationEnvironment;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodeInstallationEnvironmentServiceUtil;
@@ -46,7 +45,7 @@ import java.util.TreeMap;
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-public class CommandMessageSenderImpl implements CommandMessageSender {
+public class CommandMessageAdvisorImpl implements com.liferay.osb.lcs.messaging.CommandMessageAdvisor {
 
 	@Override
 	public void deregister(String key) {
@@ -187,7 +186,7 @@ public class CommandMessageSenderImpl implements CommandMessageSender {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		CommandMessageSenderImpl.class);
+		com.liferay.osb.lcs.messaging.impl.CommandMessageAdvisorImpl.class);
 
 	private DigitalSignature _digitalSignature;
 	private LCSClusterNodeScriptService _lcsClusterNodeScriptService;

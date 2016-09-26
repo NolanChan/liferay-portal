@@ -24,7 +24,7 @@ import java.util.List;
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-public interface CommandMessageSender {
+public interface CommandMessageAdvisor {
 
 	public void deregister(String key);
 
