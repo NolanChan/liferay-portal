@@ -14,13 +14,13 @@
 
 package com.liferay.osb.ldn.generator.guest.internal.site;
 
-import com.liferay.osb.ldn.generator.guest.internal.LayoutGenerator;
-import com.liferay.osb.ldn.generator.guest.internal.LayoutGeneratorFactory;
-import com.liferay.osb.ldn.generator.guest.internal.constants.LayoutGeneratorConstants;
+import com.liferay.osb.ldn.generator.guest.site.constants.GuestSiteConstants;
+import com.liferay.osb.ldn.generator.layout.LayoutGenerator;
+import com.liferay.osb.ldn.generator.layout.LayoutGeneratorRegistry;
 import com.liferay.osb.ldn.generator.site.SiteGenerator;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osb.ldn.site.generator.name=Guest Site"
+		"osb.ldn.site.generator.key=" + GuestSiteConstants.GUEST_SITE_KEY
 	},
 	service = SiteGenerator.class
 )
@@ -40,29 +40,23 @@ public class GuestSiteGenerator implements SiteGenerator {
 
 	public void generate(long groupId) {
 		try {
-			addLayouts(groupId);
+			generateLayouts(groupId);
 		}
 		catch (PortalException pe) {
 		}
 	}
 
-	protected void addLayouts(long groupId) throws PortalException {
-		long userId = _userLocalService.getDefaultUserId(
-			PortalUtil.getDefaultCompanyId());
+	protected void generateLayouts(long groupId) throws PortalException {
+		List<LayoutGenerator> layoutGenerators =
+			_layoutGeneratorRegistry.getLayoutGenerators(
+				GuestSiteConstants.GUEST_SITE_KEY);
 
-		for (int pageType : LayoutGeneratorConstants.PAGE_TYPES) {
-			LayoutGenerator layoutGenerator =
-				_layoutGeneratorFactory.getLayoutGenerator(
-					userId, groupId, pageType);
-
-			layoutGenerator.generate(userId, groupId);
+		for (LayoutGenerator layoutGenerator : layoutGenerators) {
+			layoutGenerator.generate(groupId);
 		}
 	}
 
 	@Reference
-	private LayoutGeneratorFactory _layoutGeneratorFactory;
-
-	@Reference
-	private UserLocalService _userLocalService;
+	private LayoutGeneratorRegistry _layoutGeneratorRegistry;
 
 }
