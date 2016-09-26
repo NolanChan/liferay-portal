@@ -227,7 +227,7 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 	}
 
 	private String _getImportBlobCommand(String tableName) {
-		StringBuilder sb = new StringBuilder(8);
+		StringBuilder sb = new StringBuilder();
 
 		sb.append("import from ");
 		sb.append(_outputDirName);
@@ -242,7 +242,7 @@ public class DB2DataPartitioningExporter extends BaseDataPartitioningExporter {
 	}
 
 	private String _getImportCommand(String tableName) {
-		StringBuilder sb = new StringBuilder(9);
+		StringBuilder sb = new StringBuilder();
 
 		sb.append("import from ");
 		sb.append(_outputDirName);
