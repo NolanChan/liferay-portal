@@ -24,10 +24,16 @@ import com.liferay.osb.ldn.documentation.project.internal.file.util.Documentatio
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.base.DocumentationProjectLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.File;
 
@@ -60,6 +66,17 @@ public class DocumentationProjectLocalServiceImpl
 		DocumentationProject documentationProject =
 			documentationProjectPersistence.create(documentationProjectId);
 
+		Group group = _groupLocalService.addGroup(
+			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			DocumentationProject.class.getName(), documentationProjectId,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, null, null,
+			GroupConstants.TYPE_SITE_OPEN, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name), false,
+			false, true, null);
+
+		documentationProject.setGroupId(group.getGroupId());
+
 		documentationProject.setCompanyId(user.getCompanyId());
 		documentationProject.setUserId(userId);
 		documentationProject.setUserName(user.getFullName());
@@ -90,6 +107,8 @@ public class DocumentationProjectLocalServiceImpl
 		throws PortalException {
 
 		// Documentation project
+
+		_groupLocalService.deleteGroup(documentationProject.getGroupId());
 
 		documentationProjectPersistence.remove(documentationProject);
 
@@ -196,5 +215,8 @@ public class DocumentationProjectLocalServiceImpl
 	}
 
 	private static final String[] _ICON_EXTENSIONS = {"svg", "png"};
+
+	@ServiceReference(type = GroupLocalService.class)
+	private GroupLocalService _groupLocalService;
 
 }
