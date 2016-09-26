@@ -60,7 +60,7 @@ public class PostUpgradeFixOSGiCommands {
 			sb.append("select messageId from MBMessage where threadId in (");
 			sb.append("select threadId from MBThread where categoryId = ");
 			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" and messagecount = 1)) and classNameId = ");
+			sb.append(" and messageCount = 1)) and classNameId = ");
 			sb.append(classNameId);
 
 			runSQL(sb.toString());
@@ -69,18 +69,18 @@ public class PostUpgradeFixOSGiCommands {
 				"delete from MBMessage where threadId in (" +
 					"select threadId from MBThread where categoryId = " +
 						MBCategoryConstants.DISCUSSION_CATEGORY_ID +
-							" and messagecount = 1)");
+							" and messageCount = 1)");
 
 			runSQL(
 				"delete from MBDiscussion where threadId in (" +
 					"select threadId from MBThread where categoryId = " +
 						MBCategoryConstants.DISCUSSION_CATEGORY_ID +
-							" and messagecount = 1)");
+							" and messageCount = 1)");
 
 			runSQL(
 				"delete from MBThread where categoryId = " +
 					MBCategoryConstants.DISCUSSION_CATEGORY_ID +
-						" and messagecount = 1");
+						" and messageCount = 1");
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Finished executing postUpgradeFix:LPS_66133");
