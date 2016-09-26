@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.storage;
+package com.liferay.osb.lcs.storage.impl;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -20,6 +20,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
+import com.liferay.osb.lcs.storage.LogStorageManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;

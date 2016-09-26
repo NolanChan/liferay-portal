@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.storage;
+package com.liferay.osb.lcs.storage.impl;
 
+import com.liferay.osb.lcs.storage.LogStorageManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;

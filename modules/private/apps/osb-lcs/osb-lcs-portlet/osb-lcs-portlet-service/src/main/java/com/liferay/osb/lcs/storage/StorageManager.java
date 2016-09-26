@@ -12,13 +12,26 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.storage;
+package com.liferay.osb.lcs.storage;
 
 /**
  * @author Ivica Cardic
+ * @author Igor Beslic
  */
-public interface LogStorageManager extends StorageManager {
+public interface StorageManager {
 
-	public void writeLogFile(String key, String message, String throwable);
+	public void afterPropertiesSet();
+
+	public void destroy();
+
+	public void setAccessKey(String accessKey);
+
+	public void setBucketName(String bucketName);
+
+	public void setPath(String path);
+
+	public void setPrefix(String prefix);
+
+	public void setSecretKey(String secretKey);
 
 }

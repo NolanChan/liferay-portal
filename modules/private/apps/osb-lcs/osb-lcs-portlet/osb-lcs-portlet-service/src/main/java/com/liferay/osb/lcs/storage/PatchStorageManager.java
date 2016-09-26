@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.storage;
+package com.liferay.osb.lcs.storage;
 
 import java.io.File;
 

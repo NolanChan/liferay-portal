@@ -12,33 +12,38 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.storage;
+package com.liferay.osb.lcs.storage;
 
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-public class LogStorageManagerFactory {
+public class PatchStorageManagerFactory {
 
-	public LogStorageManager getInstance() throws Exception {
-		if (_logStorageManager != null) {
-			return _logStorageManager;
+	public PatchStorageManager getInstance() throws Exception {
+		if (_patchStorageManager != null) {
+			return _patchStorageManager;
 		}
 
 		Class<?> storageManagerClass = Class.forName(_storageManagerClassName);
 
-		LogStorageManager storageManager =
-			(LogStorageManager)storageManagerClass.newInstance();
+		PatchStorageManager storageManager =
+			(PatchStorageManager)storageManagerClass.newInstance();
 
 		storageManager.setAccessKey(_accessKey);
 		storageManager.setBucketName(_bucketName);
+		storageManager.setContextPath(_contextPath);
+		storageManager.setDownloadHostName(_downloadHostName);
+		storageManager.setDownloadHostPort(_downloadHostPort);
+		storageManager.setHostName(_hostName);
+		storageManager.setHostPort(_hostPort);
 		storageManager.setPath(_path);
 		storageManager.setPrefix(_prefix);
 		storageManager.setSecretKey(_secretKey);
 
-		_logStorageManager = storageManager;
+		_patchStorageManager = storageManager;
 
-		return _logStorageManager;
+		return _patchStorageManager;
 	}
 
 	public void setAccessKey(String accessKey) {
@@ -47,6 +52,26 @@ public class LogStorageManagerFactory {
 
 	public void setBucketName(String bucketName) {
 		_bucketName = bucketName;
+	}
+
+	public void setContextPath(String contextPath) {
+		_contextPath = contextPath;
+	}
+
+	public void setDownloadHostName(String downloadHostName) {
+		_downloadHostName = downloadHostName;
+	}
+
+	public void setDownloadHostPort(int downloadHostPort) {
+		_downloadHostPort = downloadHostPort;
+	}
+
+	public void setHostName(String hostName) {
+		_hostName = hostName;
+	}
+
+	public void setHostPort(int hostPort) {
+		_hostPort = hostPort;
 	}
 
 	public void setPath(String path) {
@@ -67,7 +92,12 @@ public class LogStorageManagerFactory {
 
 	private String _accessKey;
 	private String _bucketName;
-	private LogStorageManager _logStorageManager;
+	private String _contextPath;
+	private String _downloadHostName;
+	private int _downloadHostPort;
+	private String _hostName;
+	private int _hostPort;
+	private PatchStorageManager _patchStorageManager;
 	private String _path;
 	private String _prefix;
 	private String _secretKey;

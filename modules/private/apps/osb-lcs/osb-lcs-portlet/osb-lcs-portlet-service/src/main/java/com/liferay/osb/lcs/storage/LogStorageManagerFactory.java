@@ -12,38 +12,33 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.storage;
+package com.liferay.osb.lcs.storage;
 
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-public class PatchStorageManagerFactory {
+public class LogStorageManagerFactory {
 
-	public PatchStorageManager getInstance() throws Exception {
-		if (_patchStorageManager != null) {
-			return _patchStorageManager;
+	public LogStorageManager getInstance() throws Exception {
+		if (_logStorageManager != null) {
+			return _logStorageManager;
 		}
 
 		Class<?> storageManagerClass = Class.forName(_storageManagerClassName);
 
-		PatchStorageManager storageManager =
-			(PatchStorageManager)storageManagerClass.newInstance();
+		LogStorageManager storageManager =
+			(LogStorageManager)storageManagerClass.newInstance();
 
 		storageManager.setAccessKey(_accessKey);
 		storageManager.setBucketName(_bucketName);
-		storageManager.setContextPath(_contextPath);
-		storageManager.setDownloadHostName(_downloadHostName);
-		storageManager.setDownloadHostPort(_downloadHostPort);
-		storageManager.setHostName(_hostName);
-		storageManager.setHostPort(_hostPort);
 		storageManager.setPath(_path);
 		storageManager.setPrefix(_prefix);
 		storageManager.setSecretKey(_secretKey);
 
-		_patchStorageManager = storageManager;
+		_logStorageManager = storageManager;
 
-		return _patchStorageManager;
+		return _logStorageManager;
 	}
 
 	public void setAccessKey(String accessKey) {
@@ -52,26 +47,6 @@ public class PatchStorageManagerFactory {
 
 	public void setBucketName(String bucketName) {
 		_bucketName = bucketName;
-	}
-
-	public void setContextPath(String contextPath) {
-		_contextPath = contextPath;
-	}
-
-	public void setDownloadHostName(String downloadHostName) {
-		_downloadHostName = downloadHostName;
-	}
-
-	public void setDownloadHostPort(int downloadHostPort) {
-		_downloadHostPort = downloadHostPort;
-	}
-
-	public void setHostName(String hostName) {
-		_hostName = hostName;
-	}
-
-	public void setHostPort(int hostPort) {
-		_hostPort = hostPort;
 	}
 
 	public void setPath(String path) {
@@ -92,12 +67,7 @@ public class PatchStorageManagerFactory {
 
 	private String _accessKey;
 	private String _bucketName;
-	private String _contextPath;
-	private String _downloadHostName;
-	private int _downloadHostPort;
-	private String _hostName;
-	private int _hostPort;
-	private PatchStorageManager _patchStorageManager;
+	private LogStorageManager _logStorageManager;
 	private String _path;
 	private String _prefix;
 	private String _secretKey;

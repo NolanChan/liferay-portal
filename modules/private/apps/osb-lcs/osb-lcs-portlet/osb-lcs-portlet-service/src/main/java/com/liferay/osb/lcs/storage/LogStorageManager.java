@@ -12,39 +12,13 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.storage;
+package com.liferay.osb.lcs.storage;
 
 /**
  * @author Ivica Cardic
  */
-public abstract class BaseStorageManagerImpl implements StorageManager {
+public interface LogStorageManager extends StorageManager {
 
-	@Override
-	public void afterPropertiesSet() {
-	}
-
-	@Override
-	public void destroy() {
-	}
-
-	@Override
-	public void setAccessKey(String accessKey) {
-	}
-
-	@Override
-	public void setBucketName(String bucketName) {
-	}
-
-	@Override
-	public void setPath(String path) {
-	}
-
-	@Override
-	public void setPrefix(String prefix) {
-	}
-
-	@Override
-	public void setSecretKey(String secretKey) {
-	}
+	public void writeLogFile(String key, String message, String throwable);
 
 }
