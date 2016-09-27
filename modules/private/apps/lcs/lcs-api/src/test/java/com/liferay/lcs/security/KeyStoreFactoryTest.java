@@ -18,10 +18,13 @@ import java.security.KeyStore;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 /**
  * @author Igor Beslic
  */
+@RunWith(JUnit4.class)
 public class KeyStoreFactoryTest extends BaseTest {
 
 	@Test

@@ -23,13 +23,10 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 /**
  * @author Igor Beslic
  */
-@RunWith(JUnit4.class)
 public class BaseTest {
 
 	@Before
