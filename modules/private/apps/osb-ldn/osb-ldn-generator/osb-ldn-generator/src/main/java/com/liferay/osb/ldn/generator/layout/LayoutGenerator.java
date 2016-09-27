@@ -19,7 +19,7 @@ package com.liferay.osb.ldn.generator.layout;
  */
 public interface LayoutGenerator {
 
-	public void generate(long groupId) throws Exception;
+	public void generate(long layoutId) throws Exception;
 
 	public String getLayoutDescription();
 

@@ -12,58 +12,78 @@
  * details.
  */
 
-packagecom.liferay.osb.ldn.generator.guest.internal.layout;
+package com.liferay.osb.ldn.generator.guest.internal.layout;
 
-import com.liferay.expando.kernel.service.ExpandoValueLocalService;
-import com.liferay.osb.ldn.generator.layout.AbstractLayoutGenerator;
-import com.liferay.osb.ldn.generator.guest.internal.LayoutGenerator;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.osb.ldn.generator.guest.site.constants.GuestSiteConstants;
+import com.liferay.osb.ldn.generator.layout.BaseLayoutGenerator;
+import com.liferay.osb.ldn.generator.layout.LayoutGenerator;
+import com.liferay.osb.ldn.generator.layout.LayoutVersion;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Yury Butrymovich
+ * @author Ryan Park
  */
 @Component(
-	immediate = true, property = {"ldn.page.generator.type=home"},
+	immediate = true,
+	property = {
+		"osb.ldn.layout.order:Integer=1",
+		"osb.ldn.site.generator.key=" + GuestSiteConstants.GUEST_SITE_KEY
+	},
 	service = LayoutGenerator.class
 )
-public class HomeLayoutGenerator extends AbstractLayoutGenerator {
+public class HomeLayoutGenerator extends BaseLayoutGenerator {
 
-	public static final String RANDOM_NINE_PORTLET_ID =
+	public static final int LAYOUT_VERSION = 1;
+
+	@Override
+	public int getLayoutVersion() {
+		return LAYOUT_VERSION;
+	}
+
+	@Override
+	protected void doGenerate(long layoutId) throws Exception {
+		Layout layout = _layoutLocalService.getLayout(layoutId);
+
+		layout.setTypeSettings(StringPool.BLANK);
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		User user = _userLocalService.getDefaultUser(layout.getCompanyId());
+
+		layoutTypePortlet.setLayoutTemplateId(
+			user.getUserId(), "1_column", false);
+
+		layoutTypePortlet.addPortletId(
+			user.getUserId(), RANDOM_NINE_PORTLET_ID, "column-1", 0, false);
+
+		_layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.getPrivateLayout(),
+			layout.getLayoutId(), layout.getTypeSettings());
+	}
+
+	protected static final String RANDOM_NINE_PORTLET_ID =
 		"com_liferay_osb_ldn_documentation_project_random_nine_web_" +
 			"DocumentationProjectRandomNinePortlet";
 
-	@Override
-	public Layout generate(long userId, long groupId) throws PortalException {
-		String name = "Home";
-		String title = "Home";
-		String url = "/home";
-		long version = 1L;
-
-		return getLayout(userId, groupId, name, title, url, version);
+	@Reference
+	private void setLayoutVersion(LayoutVersion layoutVersion) {
+		this.layoutVersion = layoutVersion;
 	}
 
-	@Override
-	protected void resetLayout(Layout layout, long userId) {
-		addPortlet(layout, userId, RANDOM_NINE_PORTLET_ID);
-	}
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
-	@Reference(unbind = "-")
-	protected void setExpandoValueLocalService(
-		ExpandoValueLocalService expandoValueLocalService) {
-
-		this.expandoValueLocalService = expandoValueLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		this.layoutLocalService = layoutLocalService;
-	}
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

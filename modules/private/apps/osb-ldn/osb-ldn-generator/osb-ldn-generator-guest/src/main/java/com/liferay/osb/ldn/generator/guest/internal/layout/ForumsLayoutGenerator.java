@@ -12,14 +12,15 @@
  * details.
  */
 
-packagecom.liferay.osb.ldn.generator.guest.internal.layout;
+package com.liferay.osb.ldn.generator.guest.internal.layout;
 
-import com.liferay.expando.kernel.service.ExpandoValueLocalService;
-import com.liferay.osb.ldn.generator.layout.AbstractLayoutGenerator;
-import com.liferay.osb.ldn.generator.guest.internal.LayoutGenerator;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.osb.ldn.generator.guest.site.constants.GuestSiteConstants;
+import com.liferay.osb.ldn.generator.layout.BaseLayoutGenerator;
+import com.liferay.osb.ldn.generator.layout.LayoutGenerator;
+import com.liferay.osb.ldn.generator.layout.LayoutVersion;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,33 +29,39 @@ import org.osgi.service.component.annotations.Reference;
  * @author Yury Butrymovich
  */
 @Component(
-	immediate = true, property = {"ldn.page.generator.type=forums"},
+	immediate = true,
+	property = {
+		"osb.ldn.layout.order:Integer=3",
+		"osb.ldn.site.generator.key=" + GuestSiteConstants.GUEST_SITE_KEY
+	},
 	service = LayoutGenerator.class
 )
-public class ForumsLayoutGenerator extends AbstractLayoutGenerator {
+public class ForumsLayoutGenerator extends BaseLayoutGenerator {
+
+	public static final int LAYOUT_VERSION = 1;
 
 	@Override
-	public Layout generate(long userId, long groupId) throws PortalException {
-		String name = "Forums";
-		String title = "Forums";
-		String url = "/forums";
-		long version = 1L;
-
-		return getLayout(userId, groupId, name, title, url, version);
+	public int getLayoutVersion() {
+		return LAYOUT_VERSION;
 	}
 
-	@Reference(unbind = "-")
-	protected void setExpandoValueLocalService(
-		ExpandoValueLocalService expandoValueLocalService) {
+	@Override
+	protected void doGenerate(long layoutId) throws Exception {
+		Layout layout = _layoutLocalService.getLayout(layoutId);
 
-		this.expandoValueLocalService = expandoValueLocalService;
+		layout.setTypeSettings(StringPool.BLANK);
+
+		_layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.getPrivateLayout(),
+			layout.getLayoutId(), layout.getTypeSettings());
 	}
 
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		this.layoutLocalService = layoutLocalService;
+	@Reference
+	private void setLayoutVersion(LayoutVersion layoutVersion) {
+		this.layoutVersion = layoutVersion;
 	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 }
