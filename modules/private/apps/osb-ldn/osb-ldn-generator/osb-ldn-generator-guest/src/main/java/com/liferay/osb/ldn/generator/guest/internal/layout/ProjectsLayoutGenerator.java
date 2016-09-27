@@ -19,6 +19,7 @@ import com.liferay.osb.ldn.generator.layout.BaseLayoutGenerator;
 import com.liferay.osb.ldn.generator.layout.LayoutGenerator;
 import com.liferay.osb.ldn.generator.layout.LayoutVersion;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -31,7 +32,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osb.ldn.layout.order:Integer=2",
+		"osb.ldn.layout.description=", "osb.ldn.layout.friendly.url=/projects",
+		"osb.ldn.layout.hidden:Boolean=false", "osb.ldn.layout.name=Projects",
+		"osb.ldn.layout.order:Integer=2", "osb.ldn.layout.title=Projects",
+		"osb.ldn.layout.type=" + LayoutConstants.TYPE_PORTLET,
 		"osb.ldn.site.generator.key=" + GuestSiteConstants.GUEST_SITE_KEY
 	},
 	service = LayoutGenerator.class
