@@ -108,14 +108,16 @@ public class DocumentationProjectLocalServiceImpl
 
 		// Documentation project
 
-		_groupLocalService.deleteGroup(documentationProject.getGroupId());
-
 		documentationProjectPersistence.remove(documentationProject);
 
 		// Files
 
 		DocumentationProjectFileUtil.destroyDocumentationProjectDirectory(
 			documentationProject.getDocumentationProjectId());
+
+		// Group
+
+		_groupLocalService.deleteGroup(documentationProject.getGroupId());
 
 		return documentationProject;
 	}
