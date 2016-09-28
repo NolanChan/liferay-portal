@@ -14,24 +14,33 @@
 
 package com.liferay.osb.lcs.storage;
 
+import java.io.File;
+
+import java.util.Date;
+import java.util.Map;
+
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
 public interface StorageManager {
 
-	public void afterPropertiesSet();
+	public Map<String, Long> getFileNamesSizes();
 
-	public void destroy();
+	public Map<String, Long> getFileNamesSizes(Date sinceModifiedDate);
 
-	public void setAccessKey(String accessKey);
+	public Map<String, Long> getFileNamesSizes(String nameFragment);
 
 	public void setBucketName(String bucketName);
+
+	public void setCredentials(String accessKey, String secretKey);
 
 	public void setPath(String path);
 
 	public void setPrefix(String prefix);
 
-	public void setSecretKey(String secretKey);
+	public void writeFile(File file);
+
+	public void writeFile(String key, String message, String throwable);
 
 }
