@@ -54,7 +54,7 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 	@Override
 	public int getLCSClusterNodeClusterLinkStatus() {
 		if (LCSClusterNodeStatus.
-				LCS_CLUSTER_NODE_CLUSTER_LINK_HEALTHY.hasStatus(_status)) {
+				LCS_CLUSTER_NODE_CLUSTER_LINK_HEALTHY.hasStatus(getStatus())) {
 
 			return LCSConstants.LCS_CLUSTER_NODE_CLUSTER_LINK_HEALTHY;
 		}
@@ -65,7 +65,7 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 	@Override
 	public int getMetricsLCSServiceStatus() {
 		if (LCSClusterNodeStatus.METRICS_LCS_SERVICE_ENABLED.hasStatus(
-				_status)) {
+				getStatus())) {
 
 			return LCSConstants.METRICS_LCS_SERVICE_AVAILABLE;
 		}
@@ -75,7 +75,7 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 
 	@Override
 	public int getMonitoringStatus() {
-		if (LCSClusterNodeStatus.MONITORING_ENABLED.hasStatus(_status)) {
+		if (LCSClusterNodeStatus.MONITORING_ENABLED.hasStatus(getStatus())) {
 			return LCSConstants.MONITORING_AVAILABLE;
 		}
 
@@ -85,7 +85,7 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 	@Override
 	public int getPatchesLCSServiceStatus() {
 		if (LCSClusterNodeStatus.PATCHES_LCS_SERVICE_ENABLED.hasStatus(
-				_status)) {
+				getStatus())) {
 
 			return LCSConstants.PATCHES_LCS_SERVICE_AVAILABLE;
 		}
@@ -100,7 +100,7 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 
 	@Override
 	public int getPatchingToolStatus() {
-		if (LCSClusterNodeStatus.PATCHING_TOOL_ENABLED.hasStatus(_status)) {
+		if (LCSClusterNodeStatus.PATCHING_TOOL_ENABLED.hasStatus(getStatus())) {
 			return LCSConstants.PATCHING_TOOL_AVAILABLE;
 		}
 
@@ -120,7 +120,7 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 	@Override
 	public int getPortalPropertiesLCSServiceStatus() {
 		if (LCSClusterNodeStatus.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED.
-				hasStatus(_status)) {
+				hasStatus(getStatus())) {
 
 			return LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_AVAILABLE;
 		}
@@ -140,7 +140,7 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 	@Override
 	public boolean isLCSCLusterNodeClusterLinkHealthy() {
 		if (LCSClusterNodeStatus.
-				LCS_CLUSTER_NODE_CLUSTER_LINK_HEALTHY.hasStatus(_status)) {
+				LCS_CLUSTER_NODE_CLUSTER_LINK_HEALTHY.hasStatus(getStatus())) {
 
 			return true;
 		}
@@ -278,6 +278,5 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 	private Map<String, Integer> _patchIdsStatuses = new HashMap<>();
 	private int _patchingToolVersion;
 	private String _portalEdition;
-	private final int _status;
 
 }
