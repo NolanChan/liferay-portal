@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.data.partitioning.sql.builder.sybase.exporter;
 
+import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.InsertSQLBuilder;
+
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -99,7 +101,7 @@ public class SybaseInsertSQLBuilderTest {
 			_insertSQLBuilder.buildInsert("Foo", fields));
 	}
 
-	private final SybaseInsertSQLBuilder _insertSQLBuilder =
+	private final InsertSQLBuilder _insertSQLBuilder =
 		new SybaseInsertSQLBuilder();
 
 }

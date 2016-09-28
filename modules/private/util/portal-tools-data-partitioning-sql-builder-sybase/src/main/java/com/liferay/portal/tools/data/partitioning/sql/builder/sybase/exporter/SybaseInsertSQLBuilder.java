@@ -30,9 +30,9 @@ public class SybaseInsertSQLBuilder extends InsertSQLBuilder {
 	public String buildInsert(String tableName, String[] fields) {
 		String buildInsert = super.buildInsert(tableName, fields);
 
-		int lastIndexOf = buildInsert.lastIndexOf(";\n");
+		int index = buildInsert.lastIndexOf(";\n");
 
-		return buildInsert.substring(0, lastIndexOf) + "\nGO\n";
+		return buildInsert.substring(0, index) + "\nGO\n";
 	}
 
 }
