@@ -36,7 +36,7 @@ create table Reports_Entry (
 	pageURL STRING null,
 	reportParameters VARCHAR(255) null,
 	status VARCHAR(75) null,
-	errorMessage VARCHAR(75) null
+	errorMessage STRING null
 );
 
 create table Reports_Source (
