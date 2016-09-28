@@ -15,8 +15,7 @@ Bundle-ClassPath:\
 	lib/poi-ooxml-schemas.jar,\
 	lib/poi-ooxml.jar,\
 	lib/poi.jar,\
-	lib/xalan.jar,\
-	lib/xercesImpl.jar
+	lib/xalan.jar
 Bundle-Name: Liferay Portal Reports Engine Jasper
 Bundle-SymbolicName: com.liferay.portal.reports.engine.jasper
 Bundle-Version: 1.0.4
@@ -76,7 +75,7 @@ Import-Package:\
 	!org.apache.poi.xssf.*,\
 	!org.apache.tools.*,\
 	!org.apache.velocity.*,\
-	!org.apache.xerces.utils.regex.*,\
+	!org.apache.xerces.impl.xpath.regex.*,\
 	!org.apache.xml.resolver.*,\
 	!org.apache.xmlbeans.*,\
 	\
@@ -129,5 +128,4 @@ Liferay-Releng-Module-Group-Title: Reports Engine
 	lib/poi-ooxml-schemas.jar=poi-ooxml-schemas-[0-9]*.jar,\
 	lib/poi-ooxml.jar=poi-ooxml-[0-9]*.jar,\
 	lib/poi.jar=poi-[0-9]*.jar,\
-	lib/xalan.jar=xalan-[0-9]*.jar,\
-	lib/xercesImpl.jar=xercesImpl-[0-9]*.jar
+	lib/xalan.jar=xalan-[0-9]*.jar
