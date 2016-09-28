@@ -5,7 +5,7 @@ Bundle-ClassPath:\
 	lib/smiley-http-proxy-servlet.jar
 Bundle-Name: Liferay Portal Search Elasticsearch Marvel Web
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch.marvel.web
-Bundle-Version: 1.0.2
+Bundle-Version: 1.0.3
 Web-ContextPath: /portal-search-elasticsearch-marvel-web
 -includeresource:\
 	lib/httpclient.jar=httpclient-[0-9]*.jar,\
