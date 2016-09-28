@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.osb.lcs.service.persistence.LCSClusterNodeFinder.findByLCEN_LPN">
+		<![CDATA[
+			SELECT
+				DISTINCT OSBLCS_LCSClusterNode.*
+			FROM
+				OSBLCS_LCSClusterEntry, OSBLCS_LCSClusterNode, OSBLCS_LCSProject
+			WHERE
+				[$LCS_CLUSTER_ENTRY_NAME_TEMPLATE$] [$AND_OR_CONNECTOR$]
+				[$LCS_PROJECT_NAME_TEMPLATE$] AND
+				(
+					(OSBLCS_LCSClusterEntry.lcsClusterEntryId = OSBLCS_LCSClusterNode.lcsClusterEntryId) AND
+					(OSBLCS_LCSClusterEntry.lcsProjectId = OSBLCS_LCSProject.lcsProjectId)
+				)
+		]]>
+	</sql>
+</custom-sql>
