@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -349,9 +350,16 @@ public class LCSClusterEntryLocalServiceImpl
 
 	@Override
 	public LCSClusterEntry updateLCSClusterEntry(
-		LCSClusterEntry lcsClusterEntry) throws PortalException {
+		LCSClusterEntry lcsClusterEntry) {
 
-		OSBLCSConfiguration configuration = getConfiguration();
+		OSBLCSConfiguration configuration;
+
+		try {
+			configuration = getConfiguration();
+		}
+		catch (ConfigurationException ce) {
+			throw new SystemException("Configuration is not available.");
+		}
 
 		if (configuration.applicationProfile() ==
 				ApplicationProfile.PRODUCTION) {

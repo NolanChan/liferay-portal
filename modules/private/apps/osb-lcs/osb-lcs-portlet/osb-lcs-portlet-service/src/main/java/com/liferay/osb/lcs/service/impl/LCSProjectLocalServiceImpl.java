@@ -476,31 +476,6 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 		return lcsProjects;
 	}
 
-	/*@Reference(bind = "-")
-	public void setEmailAdvisor(EmailAdvisor emailAdvisor) {
-		_emailAdvisor = emailAdvisor;
-	}
-
-	@Reference(bind = "-")
-	public void setLCSMessageAdvisor(LCSMessageAdvisor lcsMessageAdvisor) {
-		_lcsMessageAdvisor = lcsMessageAdvisor;
-	}
-
-	@Reference(bind = "-")
-	public void setOSBPortletService(OSBPortletService osbPortletService) {
-		_osbPortletService = osbPortletService;
-	}
-
-	@Reference(bind = "-")
-	public void setStringAdvisor(StringAdvisor stringAdvisor) {
-		_stringAdvisor = stringAdvisor;
-	}
-
-	@Reference(bind = "-")
-	public void setUserAdvisor(UserAdvisor userAdvisor) {
-		_userAdvisor = userAdvisor;
-	}*/
-
 	@Override
 	public LCSProject updateSubscriptionActive(
 			long lcsProjectId, boolean subscriptionActive)
@@ -560,12 +535,16 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 
 	@ServiceReference(type = EmailAdvisor.class)
 	private EmailAdvisor _emailAdvisor;
+
 	@ServiceReference(type = LCSMessageAdvisor.class)
 	private LCSMessageAdvisor _lcsMessageAdvisor;
+
 	@ServiceReference(type = OSBPortletService.class)
 	private OSBPortletService _osbPortletService;
+
 	@ServiceReference(type = StringAdvisor.class)
 	private StringAdvisor _stringAdvisor;
+
 	@ServiceReference(type = UserAdvisor.class)
 	private UserAdvisor _userAdvisor;
 

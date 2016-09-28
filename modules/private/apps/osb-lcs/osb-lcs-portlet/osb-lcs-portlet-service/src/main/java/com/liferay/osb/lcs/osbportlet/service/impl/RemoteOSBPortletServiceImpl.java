@@ -16,6 +16,7 @@ package com.liferay.osb.lcs.osbportlet.service.impl;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import com.liferay.osb.lcs.advisor.CompanyAdvisor;
 import com.liferay.osb.lcs.constants.OSBPortletConstants;
 import com.liferay.osb.lcs.json.CompanyDeserializer;
 import com.liferay.osb.lcs.json.CorpProjectDeserializer;
@@ -539,6 +540,16 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 		}
 	}
 
+	public void setCompanyAdvisor(CompanyAdvisor companyAdvisor) {
+		_companyAdvisor = companyAdvisor;
+	}
+
+	public void setJsonWebServiceClient(
+		JSONWebServiceClient jsonWebServiceClient) {
+
+		_jsonWebServiceClient = jsonWebServiceClient;
+	}
+
 	public void setJSONWebServiceClient(
 		JSONWebServiceClient jsonWebServiceClient) {
 
@@ -675,8 +686,8 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 		for (User remoteUser : remoteUsers) {
 			try {
-				User localUser = _userLocalService.getUserByUuid(
-					remoteUser.getUuid());
+				User localUser = _userLocalService.getUserByUuidAndCompanyId(
+					remoteUser.getUuid(), _companyAdvisor.getCompanyId());
 
 				localUsers.add(localUser);
 			}
@@ -774,7 +785,10 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	private final Map<String, Class<?>> _classes = new HashMap<>();
 
-	@Reference(bind = "-")
+	@Reference(unbind = "-")
+	private CompanyAdvisor _companyAdvisor;
+
+	@Reference(unbind = "-")
 	private JSONWebServiceClient _jsonWebServiceClient;
 
 }
