@@ -11,7 +11,7 @@ Bundle-ClassPath:\
 	lib/xstream.jar
 Bundle-Name: Liferay Portal Rules Engine Drools
 Bundle-SymbolicName: com.liferay.portal.rules.engine.drools
-Bundle-Version: 1.0.2
+Bundle-Version: 1.0.3
 Import-Package:\
 	!com.bea.*,\
 	\
