@@ -76,8 +76,7 @@ public class UpgradeReportEntry extends UpgradeProcess {
 
 	protected void updateReportEntries() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				"select companyId, entryId, reportParameters from " +
-					"Entry")) {
+				"select companyId, entryId, reportParameters from Entry")) {
 
 			try (PreparedStatement ps2 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(

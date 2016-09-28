@@ -29,8 +29,7 @@ public class UpgradeSamlSpSession extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try {
 			runSQL(
-				"alter_column_type SamlSpSession jSessionId " +
-					"VARCHAR(200) null");
+				"alter_column_type SamlSpSession jSessionId VARCHAR(200) null");
 		}
 		catch (SQLException sqle) {
 			upgradeTable(
