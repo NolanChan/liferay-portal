@@ -429,8 +429,8 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 					try {
 						TimeUnit.MILLISECONDS.sleep(
-							(long) (multiplier *
-								_lcsGatewayUnavailableWaitTime));
+							(long)
+								(multiplier * _lcsGatewayUnavailableWaitTime));
 					}
 					catch (InterruptedException ie) {
 					}
@@ -470,8 +470,8 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 					try {
 						TimeUnit.MILLISECONDS.sleep(
-							(long) (multiplier *
-								_lcsGatewayUnavailableWaitTime));
+							(long)
+								(multiplier * _lcsGatewayUnavailableWaitTime));
 					}
 					catch (InterruptedException ie) {
 					}

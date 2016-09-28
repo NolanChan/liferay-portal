@@ -34,7 +34,7 @@ public interface LCSClusterEntryPropertyDifferencesService {
 		Map<String, Map<String, String>> lcsClusterEntryPropertyDifferencesMap);
 
 	public void deleteLCSClusterEntryPropertyDifferences(
-		long LCSClusterEntryId, String propertyName);
+		long lcsClusterEntryId, String propertyName);
 
 	public LCSClusterEntryPropertyDifferences
 		fetchLCSClusterEntryPropertyDifferences(
