@@ -14,6 +14,10 @@
 
 package com.liferay.osb.lcs.advisor;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.io.File;
+
 import java.net.URL;
 
 import java.util.Date;
@@ -41,5 +45,9 @@ public interface PatchAdvisor {
 	public Map<String, Long> getPatchFileNamesSizes();
 
 	public void resetActivePatchFileNames();
+
+	public void resetInstallablePatches() throws PortalException;
+
+	public void writePatchFile(File file);
 
 }

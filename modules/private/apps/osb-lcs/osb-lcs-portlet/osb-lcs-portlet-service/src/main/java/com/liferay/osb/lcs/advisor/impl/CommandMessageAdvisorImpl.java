@@ -19,6 +19,7 @@ import com.liferay.lcs.messaging.HandshakeMessage;
 import com.liferay.lcs.messaging.Message;
 import com.liferay.lcs.security.DigitalSignature;
 import com.liferay.lcs.util.PatchUtil;
+import com.liferay.osb.lcs.advisor.PatchAdvisor;
 import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeInstallationEnvironment;
@@ -26,7 +27,6 @@ import com.liferay.osb.lcs.nosql.service.LCSClusterNodeInstallationEnvironmentSe
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodeScriptService;
 import com.liferay.osb.lcs.queue.QueueManager;
 import com.liferay.osb.lcs.service.permission.LCSClusterEntryPermission;
-import com.liferay.osb.lcs.storage.PatchStorageManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -70,7 +70,7 @@ public class CommandMessageAdvisorImpl
 		for (String patchName : patchNames) {
 			String patchFileName = PatchUtil.getPatchFileName(patchName);
 
-			URL url = _patchStorageManager.getPatchAsURL(patchFileName);
+			URL url = _patchAdvisor.getPatchAsURL(patchFileName);
 
 			payload.put(patchFileName, url.toString());
 		}
@@ -114,10 +114,9 @@ public class CommandMessageAdvisorImpl
 	}
 
 	@Reference(bind = "-")
-	public void setPatchStorageManager(
-		PatchStorageManager patchStorageManager) {
+	public void setPatchStorageManager(PatchAdvisor patchAdvisor) {
 
-		_patchStorageManager = patchStorageManager;
+		_patchAdvisor = patchAdvisor;
 	}
 
 	@Reference(bind = "-")
@@ -207,7 +206,7 @@ public class CommandMessageAdvisorImpl
 
 	private DigitalSignature _digitalSignature;
 	private LCSClusterNodeScriptService _lcsClusterNodeScriptService;
-	private PatchStorageManager _patchStorageManager;
+	private PatchAdvisor _patchAdvisor;
 	private QueueManager _queueManager;
 	LCSClusterNodeInstallationEnvironmentService
 		_lcsClusterNodeInstallationEnvironmentService;
