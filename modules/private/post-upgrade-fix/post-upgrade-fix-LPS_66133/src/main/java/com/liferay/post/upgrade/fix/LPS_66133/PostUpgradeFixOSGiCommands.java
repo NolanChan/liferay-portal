@@ -83,13 +83,13 @@ public class PostUpgradeFixOSGiCommands {
 						" and messagecount = 1");
 
 			if (_log.isInfoEnabled()) {
-				_log.info("postUpgradeFix:LPS_66133 execution finished");
+				_log.info("Finished executing postUpgradeFix:LPS_66133");
 			}
 		}
 		catch (Exception e) {
 			_log.error(
-				"An exception occurred during postUpgradeFix:LPS_66133 " +
-					"execution",
+				"An exception was thrown while executing postUpgradeFix:" +
+					"LPS_66133 ",
 				e);
 		}
 	}
