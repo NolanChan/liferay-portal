@@ -43,8 +43,6 @@ import org.osgi.service.component.annotations.Component;
 public class PostUpgradeFixOSGiCommands {
 
 	public void LPS_66599() {
-		System.out.println("Executing postUpgradeFix:LPS_66599");
-
 		if (_log.isInfoEnabled()) {
 			_log.info("Executing postUpgradeFix:LPS_66599");
 		}
@@ -78,17 +76,11 @@ public class PostUpgradeFixOSGiCommands {
 				ps1.executeBatch();
 			}
 
-			System.out.println("postUpgradeFix:LPS_66599 execution finished");
-
 			if (_log.isInfoEnabled()) {
 				_log.info("postUpgradeFix:LPS_66599 execution finished");
 			}
 		}
 		catch (Exception e) {
-			System.err.println(
-				"An exception occurred during postUpgradeFix:LPS_66599 " +
-					"execution, see log for more information");
-
 			_log.error(
 				"An exception occurred during postUpgradeFix:LPS_66599 " +
 					"execution",
