@@ -16,6 +16,7 @@ package com.liferay.osb.ldn.documentation.project.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.ldn.documentation.project.constants.DocumentationProjectStatusConstants;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectDescriptionException;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconException;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconExtensionException;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -39,6 +41,9 @@ import java.io.File;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Ryan Park
@@ -66,14 +71,24 @@ public class DocumentationProjectLocalServiceImpl
 		DocumentationProject documentationProject =
 			documentationProjectPersistence.create(documentationProjectId);
 
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.getDefault(), name);
+
+		boolean active = false;
+
+		if (status == DocumentationProjectStatusConstants.STATUS_LIVE) {
+			active = true;
+		}
+
 		Group group = _groupLocalService.addGroup(
 			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			DocumentationProject.class.getName(), documentationProjectId,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, null, null,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null,
 			GroupConstants.TYPE_SITE_OPEN, true,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name), false,
-			false, true, null);
+			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name), true,
+			false, active, null);
 
 		documentationProject.setGroupId(group.getGroupId());
 
@@ -143,6 +158,21 @@ public class DocumentationProjectLocalServiceImpl
 		DocumentationProject documentationProject =
 			documentationProjectPersistence.findByPrimaryKey(
 				documentationProjectId);
+
+		Group group = _groupLocalService.getGroup(
+			documentationProject.getGroupId());
+
+		boolean active = false;
+
+		if (status == DocumentationProjectStatusConstants.STATUS_LIVE) {
+			active = true;
+		}
+
+		_groupLocalService.updateGroup(
+			group.getGroupId(), group.getParentGroupId(), group.getNameMap(),
+			group.getDescriptionMap(), group.getType(),
+			group.getManualMembership(), group.getMembershipRestriction(),
+			group.getFriendlyURL(), group.getInheritContent(), active, null);
 
 		String oldIconFileName = documentationProject.getIconFileName();
 
