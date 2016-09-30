@@ -97,9 +97,8 @@ public class EmailContext {
 
 	public static class EmailContextBuilder {
 
-		public EmailContextBuilder(LCSEventType lcsEventType, User user) {
+		public EmailContextBuilder(LCSEventType lcsEventType) {
 			_lcsEventType = lcsEventType;
-			_user = user;
 		}
 
 		public EmailContext build() {
@@ -160,6 +159,12 @@ public class EmailContext {
 			return this;
 		}
 
+		public EmailContextBuilder user(User user) {
+			_user = user;
+
+			return this;
+		}
+
 		private boolean _cluster;
 		private String _customMessage;
 		private String _emailAddress;
@@ -170,7 +175,7 @@ public class EmailContext {
 		private Locale _locale;
 		private final List<String> _siblingLCSClusterNodeNames =
 			new ArrayList<>();
-		private final User _user;
+		private User _user;
 
 	}
 
