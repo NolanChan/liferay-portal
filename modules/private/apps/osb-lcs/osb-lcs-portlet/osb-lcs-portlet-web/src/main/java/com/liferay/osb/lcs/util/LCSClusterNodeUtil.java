@@ -14,17 +14,12 @@
 
 package com.liferay.osb.lcs.util;
 
-import com.liferay.osb.lcs.model.LCSClusterEntry;
+import com.liferay.osb.lcs.constants.OSBLCSWebKeys;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSProject;
-import com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSClusterNodeLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSClusterNodeServiceUtil;
 import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +34,7 @@ public class LCSClusterNodeUtil {
 	public static List<LCSClusterNode> getLCSClusterNodes(
 			HttpServletRequest request, long layoutLCSClusterEntryId,
 			long layoutLCSClusterNodeId, long layoutLCSProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<LCSClusterNode> lcsClusterNodes = null;
 
@@ -56,7 +51,7 @@ public class LCSClusterNodeUtil {
 				request, layoutLCSClusterEntryId);
 		}
 		else if (layoutLCSClusterNodeId > 0) {
-			lcsClusterNodes = new ArrayList<LCSClusterNode>();
+			lcsClusterNodes = new ArrayList<>();
 
 			LCSClusterNode lcsClusterNode = getLCSClusterNode(
 				request, layoutLCSClusterNodeId);
@@ -72,11 +67,10 @@ public class LCSClusterNodeUtil {
 
 	public static List<LCSClusterNode> getLCSProjectLCSClusterNodes(
 			HttpServletRequest request, long lcsProjectId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		String key =
-			WebKeys.CORP_ENTRY_LCS_CLUSTER_NODES.concat(
-				String.valueOf(lcsProjectId));
+		String key = OSBLCSWebKeys.CORP_ENTRY_LCS_CLUSTER_NODES.concat(
+			String.valueOf(lcsProjectId));
 
 		List<LCSClusterNode> lcsClusterNodes =
 			(List<LCSClusterNode>)request.getAttribute(key);
@@ -96,11 +90,11 @@ public class LCSClusterNodeUtil {
 
 	protected static List<LCSClusterNode> getLCSClusterEntryLCSClusterNodes(
 			HttpServletRequest request, long lcsClusterEntryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<LCSClusterNode> lcsClusterNodes =
 			(List<LCSClusterNode>)request.getAttribute(
-				WebKeys.LCS_CLUSTER_ENTRY_LCS_CLUSTER_NODES);
+				OSBLCSWebKeys.LCS_CLUSTER_ENTRY_LCS_CLUSTER_NODES);
 
 		if (lcsClusterNodes != null) {
 			return lcsClusterNodes;
@@ -111,17 +105,17 @@ public class LCSClusterNodeUtil {
 				lcsClusterEntryId, true);
 
 		request.setAttribute(
-			WebKeys.LCS_CLUSTER_ENTRY_LCS_CLUSTER_NODES, lcsClusterNodes);
+			OSBLCSWebKeys.LCS_CLUSTER_ENTRY_LCS_CLUSTER_NODES, lcsClusterNodes);
 
 		return lcsClusterNodes;
 	}
 
 	protected static LCSClusterNode getLCSClusterNode(
 			HttpServletRequest request, long lcsClusterNodeId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LCSClusterNode lcsClusterNode = (LCSClusterNode)request.getAttribute(
-			WebKeys.LCS_CLUSTER_NODE);
+			OSBLCSWebKeys.LCS_CLUSTER_NODE);
 
 		if (lcsClusterNode != null) {
 			return lcsClusterNode;
@@ -130,24 +124,24 @@ public class LCSClusterNodeUtil {
 		lcsClusterNode = LCSClusterNodeServiceUtil.getLCSClusterNode(
 			lcsClusterNodeId, true);
 
-		request.setAttribute(WebKeys.LCS_CLUSTER_NODE, lcsClusterNode);
+		request.setAttribute(OSBLCSWebKeys.LCS_CLUSTER_NODE, lcsClusterNode);
 
 		return lcsClusterNode;
 	}
 
 	protected static List<LCSClusterNode> getLCSProjectsLCSClusterNodes(
 			HttpServletRequest request)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		List<LCSClusterNode> lcsClusterNodes = new ArrayList<LCSClusterNode>();
+		List<LCSClusterNode> lcsClusterNodes = new ArrayList<>();
 
 		List<LCSProject> lcsProjects = (List<LCSProject>)request.getAttribute(
-			WebKeys.LCS_PROJECTS);
+			OSBLCSWebKeys.LCS_PROJECTS);
 
 		if (lcsProjects != null) {
 			lcsProjects = LCSProjectServiceUtil.getUserLCSProjects();
 
-			request.setAttribute(WebKeys.LCS_PROJECTS, lcsProjects);
+			request.setAttribute(OSBLCSWebKeys.LCS_PROJECTS, lcsProjects);
 		}
 
 		for (LCSProject lcsProject : lcsProjects) {
