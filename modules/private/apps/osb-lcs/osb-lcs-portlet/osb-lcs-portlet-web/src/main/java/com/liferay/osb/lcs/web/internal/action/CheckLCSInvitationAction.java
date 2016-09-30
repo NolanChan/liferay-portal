@@ -15,21 +15,22 @@
 package com.liferay.osb.lcs.web.internal.action;
 
 import com.liferay.lcs.notification.LCSEventType;
-import com.liferay.osb.lcs.advisor.LCSMessageAdvisor;
+import com.liferay.osb.lcs.advisor.EmailAdvisor;
+import com.liferay.osb.lcs.advisor.impl.LCSMessageAdvisorImpl;
+import com.liferay.osb.lcs.constants.NavigationConstants;
 import com.liferay.osb.lcs.constants.OSBLCSConstants;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
-import com.liferay.osb.lcs.email.EmailAdvisor;
+import com.liferay.osb.lcs.constants.OSBPortletConstants;
 import com.liferay.osb.lcs.email.EmailContext;
 import com.liferay.osb.lcs.exception.NoSuchLCSInvitationException;
 import com.liferay.osb.lcs.model.LCSInvitation;
 import com.liferay.osb.lcs.model.LCSProject;
-import com.liferay.osb.lcs.navigation.util.NavigationUtil;
-import com.liferay.osb.lcs.osbportlet.service.OSBPortletServiceUtil;
-import com.liferay.osb.lcs.osbportlet.util.OSBPortletUtil;
-import com.liferay.osb.lcs.service.LCSInvitationLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSMembersLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil;
+import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
+import com.liferay.osb.lcs.service.LCSInvitationLocalService;
+import com.liferay.osb.lcs.service.LCSMembersLocalService;
+import com.liferay.osb.lcs.service.LCSProjectLocalService;
+import com.liferay.osb.lcs.service.LCSRoleLocalService;
+import com.liferay.osb.lcs.web.internal.advisor.PortletURLAdvisor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,7 +46,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.util.bean.PortletBeanLocatorUtil;
 
 import java.io.IOException;
 
@@ -53,6 +53,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -86,8 +87,8 @@ public class CheckLCSInvitationAction extends BaseStrutsAction {
 
 		if (lcsProjectId == 0) {
 			LiferayPortletURL liferayPortletURL =
-				NavigationUtil.getPortletRenderURL(
-					companyId, NavigationUtil.FRIENDLY_URL_INFO,
+				_portletURLAdvisor.getPortletRenderURL(
+					companyId, NavigationConstants.FRIENDLY_URL_INFO,
 					OSBLCSPortletKeys.INFO, false, request, "errorMessage",
 					"project-invitation-is-not-valid");
 
@@ -96,12 +97,12 @@ public class CheckLCSInvitationAction extends BaseStrutsAction {
 			return null;
 		}
 
-		if (!LCSInvitationLocalServiceUtil.hasUserLCSInvitation(
+		if (!_lcsInvitationLocalService.hasUserLCSInvitation(
 				user.getUserId())) {
 
 			LiferayPortletURL liferayPortletURL =
-				NavigationUtil.getPortletRenderURL(
-					companyId, NavigationUtil.FRIENDLY_URL_INFO,
+				_portletURLAdvisor.getPortletRenderURL(
+					companyId, NavigationConstants.FRIENDLY_URL_INFO,
 					OSBLCSPortletKeys.INFO, false, request, "errorMessage",
 					"project-invitation-is-not-valid");
 
@@ -115,8 +116,8 @@ public class CheckLCSInvitationAction extends BaseStrutsAction {
 		}
 		catch (NoSuchLCSInvitationException nslcsie) {
 			LiferayPortletURL liferayPortletURL =
-				NavigationUtil.getPortletRenderURL(
-					companyId, NavigationUtil.FRIENDLY_URL_INFO,
+				_portletURLAdvisor.getPortletRenderURL(
+					companyId, NavigationConstants.FRIENDLY_URL_INFO,
 					OSBLCSPortletKeys.INFO, false, request, "errorMessage",
 					"project-invitation-is-not-valid");
 
@@ -125,18 +126,66 @@ public class CheckLCSInvitationAction extends BaseStrutsAction {
 			return null;
 		}
 
-		String parameterName = NavigationUtil.getPublicRenderParameterName(
+		String parameterName = _portletURLAdvisor.getPublicRenderParameterName(
 			"layoutLCSProjectId");
 
 		LiferayPortletURL liferayPortletURL =
-			NavigationUtil.getPortletRenderURL(
-				companyId, NavigationUtil.FRIENDLY_URL_DASHBOARD,
+			_portletURLAdvisor.getPortletRenderURL(
+				companyId, NavigationConstants.FRIENDLY_URL_DASHBOARD,
 				OSBLCSPortletKeys.NAVIGATION, true, request, parameterName,
 				String.valueOf(lcsProjectId));
 
 		response.sendRedirect(liferayPortletURL.toString());
 
 		return null;
+	}
+
+	@Reference(unbind = "-")
+	public void setEmailAdvisor(EmailAdvisor emailAdvisor) {
+		_emailAdvisor = emailAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsInvitationLocalService(
+		LCSInvitationLocalService lcsInvitationLocalService) {
+
+		_lcsInvitationLocalService = lcsInvitationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsMembersLocalService(
+		LCSMembersLocalService lcsMembersLocalService) {
+
+		_lcsMembersLocalService = lcsMembersLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsMessageAdvisor(LCSMessageAdvisorImpl lcsMessageAdvisor) {
+		_lcsMessageAdvisor = lcsMessageAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsProjectLocalService(
+		LCSProjectLocalService lcsProjectLocalService) {
+
+		_lcsProjectLocalService = lcsProjectLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsRoleLocalService(
+		LCSRoleLocalService lcsRoleLocalService) {
+
+		_lcsRoleLocalService = lcsRoleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setOsbPortletService(OSBPortletService osbPortletService) {
+		_osbPortletService = osbPortletService;
+	}
+
+	@Reference(unbind = "-")
+	public void setPortletURLAdvisor(PortletURLAdvisor portletURLAdvisor) {
+		_portletURLAdvisor = portletURLAdvisor;
 	}
 
 	protected String redirectToLogin(
@@ -168,48 +217,42 @@ public class CheckLCSInvitationAction extends BaseStrutsAction {
 			long companyId, long lcsProjectId, User user)
 		throws PortalException {
 
-		if (_emailAdvisor == null) {
-			_emailAdvisor = (EmailAdvisor)PortletBeanLocatorUtil.locate(
-				"com.liferay.osb.lcs.email.EmailAdvisor");
-		}
+		EmailContext.EmailContextBuilder emailContextBuilder =
+			new EmailContext.EmailContextBuilder(
+				LCSEventType.MEMBERSHIP_INVITATION_ACCEPTED);
 
-		_emailAdvisor.sendToLCSProjectAdminsEmail(
-			new EmailContext(
-				null, user.getEmailAddress(),
-				LCSEventType.MEMBERSHIP_INVITATION_ACCEPTED, lcsProjectId,
-				user.getUserId()));
+		emailContextBuilder.emailAddress(user.getEmailAddress());
+		emailContextBuilder.lcsProject(
+			_lcsProjectLocalService.getLCSProject(lcsProjectId));
+		emailContextBuilder.user(user);
 
-		if (_lcsMessageAdvisor == null) {
-			_lcsMessageAdvisor =
-				(LCSMessageAdvisor)PortletBeanLocatorUtil.locate(
-					"com.liferay.osb.lcs.advisor.LCSMessageAdvisor");
-		}
+		_emailAdvisor.sendToLCSProjectAdminsEmail(emailContextBuilder.build());
 
 		_lcsMessageAdvisor.addLCSProjectLCSMessage(
 			true, user.getFullName(), true,
 			LCSEventType.MEMBERSHIP_INVITATION_ACCEPTED, lcsProjectId);
 
 		LCSInvitation lcsInvitation =
-			LCSInvitationLocalServiceUtil.getLCSProjectLCSInvitation(
+			_lcsInvitationLocalService.getLCSProjectLCSInvitation(
 				lcsProjectId, user.getEmailAddress());
 
-		LCSRoleLocalServiceUtil.toLCSRole(lcsInvitation);
+		_lcsRoleLocalService.toLCSRole(lcsInvitation);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Converted LCS invitation to LCS role");
 		}
 
-		LCSProject lcsProject = LCSProjectLocalServiceUtil.getLCSProject(
+		LCSProject lcsProject = _lcsProjectLocalService.getLCSProject(
 			lcsProjectId);
 
-		OSBPortletServiceUtil.addCorpProjectUsers(
+		_osbPortletService.addCorpProjectUsers(
 			lcsProject.getCorpProjectId(), new long[] {user.getUserId()});
 
-		OSBPortletServiceUtil.addUserCorpProjectRoles(
+		_osbPortletService.addUserCorpProjectRoles(
 			lcsProject.getCorpProjectId(), new long[] {user.getUserId()},
-			OSBPortletUtil.ROLE_OSB_CORP_LCS_USER);
+			OSBPortletConstants.ROLE_OSB_CORP_LCS_USER);
 
-		LCSMembersLocalServiceUtil.validateLCSSiteMembership(
+		_lcsMembersLocalService.validateLCSSiteMembership(
 			companyId, user.getUserId());
 	}
 
@@ -217,6 +260,12 @@ public class CheckLCSInvitationAction extends BaseStrutsAction {
 		CheckLCSInvitationAction.class);
 
 	private EmailAdvisor _emailAdvisor;
-	private LCSMessageAdvisor _lcsMessageAdvisor;
+	private LCSInvitationLocalService _lcsInvitationLocalService;
+	private LCSMembersLocalService _lcsMembersLocalService;
+	private LCSMessageAdvisorImpl _lcsMessageAdvisor;
+	private LCSProjectLocalService _lcsProjectLocalService;
+	private LCSRoleLocalService _lcsRoleLocalService;
+	private OSBPortletService _osbPortletService;
+	private PortletURLAdvisor _portletURLAdvisor;
 
 }

@@ -14,18 +14,18 @@
 
 package com.liferay.osb.lcs.web.internal.action;
 
+import com.liferay.osb.lcs.advisor.LCSPortletLogAdvisor;
 import com.liferay.osb.lcs.constants.OSBLCSConstants;
-import com.liferay.osb.lcs.storage.LogStorageManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.util.bean.PortletBeanLocatorUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mladen Cikara
@@ -54,6 +54,13 @@ public class LCSClientExceptionUploadAction extends BaseStrutsAction {
 		return null;
 	}
 
+	@Reference(unbind = "-")
+	public void setLcsPortletLogAdvisor(
+		LCSPortletLogAdvisor lcsPortletLogAdvisor) {
+
+		_lcsPortletLogAdvisor = lcsPortletLogAdvisor;
+	}
+
 	protected void doExecute(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
@@ -62,22 +69,16 @@ public class LCSClientExceptionUploadAction extends BaseStrutsAction {
 		String message = request.getParameter("message");
 		String throwable = request.getParameter("throwable");
 
-		if (_logStorageManager == null) {
-			_logStorageManager =
-				(LogStorageManager)PortletBeanLocatorUtil.locate(
-					"com.liferay.osb.lcs.storage.LogStorageManager");
-		}
-
-		_logStorageManager.writeLogFile(key, message, throwable);
+		_lcsPortletLogAdvisor.writeToFile(key, message, throwable);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(key + " " + throwable);
+			_log.debug("Uploaded exception saved to file");
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LCSClientExceptionUploadAction.class);
 
-	private LogStorageManager _logStorageManager;
+	private LCSPortletLogAdvisor _lcsPortletLogAdvisor;
 
 }

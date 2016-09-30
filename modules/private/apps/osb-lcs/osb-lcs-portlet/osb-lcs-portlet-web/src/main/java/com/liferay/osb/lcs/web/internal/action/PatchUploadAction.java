@@ -14,11 +14,10 @@
 
 package com.liferay.osb.lcs.web.internal.action;
 
+import com.liferay.osb.lcs.advisor.PatchAdvisor;
 import com.liferay.osb.lcs.constants.OSBLCSConstants;
 import com.liferay.osb.lcs.exception.NoSuchLCSPatchEntryException;
-import com.liferay.osb.lcs.nosql.service.LCSClusterNodePatchesServiceUtil;
 import com.liferay.osb.lcs.service.LCSPatchEntryLocalServiceUtil;
-import com.liferay.osb.lcs.storage.PatchStorageManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.util.bean.PortletBeanLocatorUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,6 +51,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -85,6 +84,11 @@ public class PatchUploadAction extends BaseStrutsAction {
 		}
 
 		return null;
+	}
+
+	@Reference(unbind = "-")
+	public void setPatchAdvisor(PatchAdvisor patchAdvisor) {
+		_patchAdvisor = patchAdvisor;
 	}
 
 	protected void addLCSPatchEntry(InputStream inputStream, long size)
@@ -250,7 +254,7 @@ public class PatchUploadAction extends BaseStrutsAction {
 
 		file.delete();
 
-		LCSClusterNodePatchesServiceUtil.resetInstallablePatches();
+		_patchAdvisor.resetInstallablePatches();
 	}
 
 	protected String getTextContent(Element rootElement, String name) {
@@ -266,12 +270,6 @@ public class PatchUploadAction extends BaseStrutsAction {
 	}
 
 	protected void processZipFile(File file) throws Exception {
-		if (_patchStorageManager == null) {
-			_patchStorageManager =
-				(PatchStorageManager)PortletBeanLocatorUtil.locate(
-					"com.liferay.osb.lcs.storage.PatchStorageManager");
-		}
-
 		ZipFile zipFile = new ZipFile(file);
 
 		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
@@ -282,7 +280,7 @@ public class PatchUploadAction extends BaseStrutsAction {
 			String name = zipEntry.getName();
 
 			if (name.equals("fixpack_documentation.xml")) {
-				_patchStorageManager.writePatchFile(file);
+				_patchAdvisor.writePatchFile(file);
 
 				addLCSPatchEntry(
 					zipFile.getInputStream(zipEntry), file.length());
@@ -307,6 +305,6 @@ public class PatchUploadAction extends BaseStrutsAction {
 	private static final File _tmpDir = new File(
 		SystemProperties.get(SystemProperties.TMP_DIR));
 
-	private PatchStorageManager _patchStorageManager;
+	private PatchAdvisor _patchAdvisor;
 
 }
