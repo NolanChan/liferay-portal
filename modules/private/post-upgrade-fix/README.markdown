@@ -27,3 +27,6 @@ As an example to perform this process, please check LPS-66599 post upgrade fix m
 - **Java class:** com.liferay.post.upgrade.fix.LPS_66599.PostUpgradeFixOSGiCommands
 - **Full gogo console command:** postUpgradeFix:LPS_66599
 
+Remember that, when you deliver this module to a customer, the following requirements are mandatory:
+- Make a database and document library backup prior to execute the OSGI command.
+- Execute the command while the portal isn't receiving traffic.
