@@ -20,7 +20,6 @@ import com.liferay.osb.ldn.github.exception.GitHubRepositoryCommitsException;
 import com.liferay.osb.ldn.github.exception.GitHubRepositoryOpenIssuesException;
 import com.liferay.osb.ldn.github.exception.GitHubRepositoryStarsException;
 import com.liferay.osb.ldn.github.exception.GitHubRepositoryURLException;
-import com.liferay.osb.ldn.github.exception.GitHubServiceConfigurationException;
 import com.liferay.osb.ldn.github.internal.configuration.GitHubServiceConfiguration;
 import com.liferay.osb.ldn.github.internal.util.GitHubCommunicatorUtil;
 import com.liferay.osb.ldn.github.internal.util.GitHubServiceConfigurationUtil;
@@ -103,7 +102,7 @@ public class GitHubRepositoryLocalServiceImpl
 		}
 
 		if (isExpired(gitHubRepository)) {
-			updateGitHubRepository(
+			return updateGitHubRepository(
 				userId, owner, name, apiKey, gitHubRepository);
 		}
 
@@ -160,11 +159,6 @@ public class GitHubRepositoryLocalServiceImpl
 		int updateIntervalHours =
 			_gitHubServiceConfiguration.updateIntervalHours();
 
-		if (updateIntervalHours < 0) {
-			throw new GitHubServiceConfigurationException(
-				"Update interval hours is less than 0");
-		}
-
 		calendar.add(Calendar.HOUR_OF_DAY, updateIntervalHours);
 
 		Date gitHubRepositoryExpirationTime = calendar.getTime();
@@ -192,11 +186,6 @@ public class GitHubRepositoryLocalServiceImpl
 		int updateWindowMilliseconds =
 			_gitHubServiceConfiguration.updateWindowMilliseconds();
 
-		if (updateWindowMilliseconds < 0) {
-			throw new GitHubServiceConfigurationException(
-				"Update window milliseconds is less than 0");
-		}
-
 		if (lock.isNew() || lock.isExpired()) {
 			_lockLocalService.refresh(
 				lock.getUuid(), lock.getCompanyId(), updateWindowMilliseconds);
@@ -213,6 +202,7 @@ public class GitHubRepositoryLocalServiceImpl
 			Date now = new Date();
 
 			gitHubRepository.setModifiedDate(now);
+
 			gitHubRepository.setCommits(gitHubRepositoryHolder.getCommits());
 			gitHubRepository.setOpenIssues(
 				gitHubRepositoryHolder.getOpenIssues());

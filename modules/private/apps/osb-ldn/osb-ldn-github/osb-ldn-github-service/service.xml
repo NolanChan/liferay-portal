@@ -81,6 +81,5 @@
 		<exception>GitHubRepositoryOpenIssues</exception>
 		<exception>GitHubRepositoryStars</exception>
 		<exception>GitHubRepositoryURL</exception>
-		<exception>GitHubServiceConfiguration</exception>
 	</exceptions>
 </service-builder>
