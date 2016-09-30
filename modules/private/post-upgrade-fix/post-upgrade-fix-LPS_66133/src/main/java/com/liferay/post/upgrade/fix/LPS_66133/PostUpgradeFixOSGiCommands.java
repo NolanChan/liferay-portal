@@ -59,7 +59,7 @@ public class PostUpgradeFixOSGiCommands {
 			sb.append("delete from AssetEntry where classPK in (");
 			sb.append("select messageId from MBMessage where threadId in (");
 			sb.append("select threadId from MBThread where categoryId = ");
-			sb.append(classNameId);
+			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
 			sb.append(" and messageCount = 1)) and classNameId = ");
 			sb.append(classNameId);
 
