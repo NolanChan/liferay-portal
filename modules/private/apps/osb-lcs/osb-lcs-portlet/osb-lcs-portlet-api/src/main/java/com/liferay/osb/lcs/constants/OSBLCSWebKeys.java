@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.osb.lcs.util;
+package com.liferay.osb.lcs.constants;
 
 /**
  * @author Ivica Cardic
  */
-public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
+public class OSBLCSWebKeys {
 
 	public static final String CORP_ENTRY_LCS_CLUSTER_NODES =
 		"LIFERAY_SHARED_CORP_ENTRY_LCS_CLUSTER_NODES";
