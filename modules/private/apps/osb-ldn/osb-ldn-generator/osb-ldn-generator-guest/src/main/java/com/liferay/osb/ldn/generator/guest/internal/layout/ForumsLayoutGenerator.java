@@ -18,10 +18,7 @@ import com.liferay.osb.ldn.generator.guest.site.constants.GuestSiteConstants;
 import com.liferay.osb.ldn.generator.layout.BaseLayoutGenerator;
 import com.liferay.osb.ldn.generator.layout.LayoutGenerator;
 import com.liferay.osb.ldn.generator.layout.LayoutVersion;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,22 +47,12 @@ public class ForumsLayoutGenerator extends BaseLayoutGenerator {
 	}
 
 	@Override
-	protected void doGenerate(long layoutId) throws Exception {
-		Layout layout = _layoutLocalService.getLayout(layoutId);
-
-		layout.setTypeSettings(StringPool.BLANK);
-
-		_layoutLocalService.updateLayout(
-			layout.getGroupId(), layout.getPrivateLayout(),
-			layout.getLayoutId(), layout.getTypeSettings());
+	protected void doGenerate(long plid) throws Exception {
 	}
 
 	@Reference
 	private void setLayoutVersion(LayoutVersion layoutVersion) {
 		this.layoutVersion = layoutVersion;
 	}
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 }

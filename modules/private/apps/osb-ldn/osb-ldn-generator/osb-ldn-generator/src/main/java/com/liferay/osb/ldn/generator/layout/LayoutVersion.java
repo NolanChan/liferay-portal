@@ -29,13 +29,12 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import java.util.List;
 
 /**
  * @author Ryan Park
@@ -43,24 +42,28 @@ import java.util.List;
 @Component(service = LayoutVersion.class)
 public class LayoutVersion {
 
-	public int getLayoutVersion(long layoutId) throws PortalException {
-		Layout layout = _layoutLocalService.getLayout(layoutId);
+	public int getLayoutVersion(long plid) throws PortalException {
+		Layout layout = _layoutLocalService.getLayout(plid);
 
 		ExpandoValue expandoValue = _expandoValueLocalService.getValue(
 			layout.getCompanyId(), Layout.class.getName(), _TABLE_NAME,
-			_COLUMN_NAME, layoutId);
+			_COLUMN_NAME, plid);
+
+		if (expandoValue == null) {
+			return 0;
+		}
 
 		return expandoValue.getInteger();
 	}
 
-	public void setLayoutVersion(long layoutId, int version)
+	public void setLayoutVersion(long plid, int version)
 		throws PortalException {
 
-		Layout layout = _layoutLocalService.getLayout(layoutId);
+		Layout layout = _layoutLocalService.getLayout(plid);
 
 		_expandoValueLocalService.addValue(
 			layout.getCompanyId(), Layout.class.getName(), _TABLE_NAME,
-			_COLUMN_NAME, layoutId, version);
+			_COLUMN_NAME, plid, version);
 	}
 
 	@Activate

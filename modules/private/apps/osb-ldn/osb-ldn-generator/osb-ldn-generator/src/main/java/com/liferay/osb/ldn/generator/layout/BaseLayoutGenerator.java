@@ -24,14 +24,14 @@ import java.util.Map;
  */
 public abstract class BaseLayoutGenerator implements LayoutGenerator {
 
-	public void generate(long layoutId) throws Exception {
-		if (layoutVersion.getLayoutVersion(layoutId) > getLayoutVersion()) {
+	public void generate(long plid) throws Exception {
+		if (layoutVersion.getLayoutVersion(plid) > getLayoutVersion()) {
 			return;
 		}
 
-		doGenerate(layoutId);
+		doGenerate(plid);
 
-		layoutVersion.setLayoutVersion(layoutId, getLayoutVersion());
+		layoutVersion.setLayoutVersion(plid, getLayoutVersion());
 	}
 
 	public String getLayoutDescription() {
@@ -60,7 +60,7 @@ public abstract class BaseLayoutGenerator implements LayoutGenerator {
 
 	public abstract int getLayoutVersion() throws Exception;
 
-	protected void activate(Map<String,Object> config) {
+	protected void activate(Map<String, Object> config) {
 		_layoutDescription = GetterUtil.getString(
 			config.get("osb.ldn.layout.description"));
 		_layoutFriendlyURL = GetterUtil.getString(
@@ -72,7 +72,7 @@ public abstract class BaseLayoutGenerator implements LayoutGenerator {
 		_layoutType = GetterUtil.getString(config.get("osb.ldn.layout.type"));
 	}
 
-	protected abstract void doGenerate(long layoutId) throws Exception;
+	protected abstract void doGenerate(long plid) throws Exception;
 
 	protected LayoutVersion layoutVersion;
 

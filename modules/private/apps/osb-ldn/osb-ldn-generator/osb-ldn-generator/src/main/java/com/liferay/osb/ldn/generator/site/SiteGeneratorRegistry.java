@@ -17,10 +17,10 @@ package com.liferay.osb.ldn.generator.site;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 
-import com.liferay.portal.kernel.util.Validator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
@@ -49,7 +49,8 @@ public class SiteGeneratorRegistry {
 				new SiteGeneratorServiceReferenceMapper());
 	}
 
-
+	private ServiceTrackerMap<String, SiteGenerator>
+		_siteGeneratorServiceTrackerMap;
 
 	private class SiteGeneratorServiceReferenceMapper
 		implements ServiceReferenceMapper<String, SiteGenerator> {
@@ -61,9 +62,8 @@ public class SiteGeneratorRegistry {
 
 			System.out.println(serviceReference.toString());
 
-			String siteGeneratorKey =
-				(String)serviceReference.getProperty(
-					"osb.ldn.site.generator.key");
+			String siteGeneratorKey = (String)serviceReference.getProperty(
+				"osb.ldn.site.generator.key");
 
 			if (Validator.isNotNull(siteGeneratorKey)) {
 				emitter.emit(siteGeneratorKey);
@@ -71,8 +71,5 @@ public class SiteGeneratorRegistry {
 		}
 
 	}
-
-	private ServiceTrackerMap<String, SiteGenerator>
-		_siteGeneratorServiceTrackerMap;
 
 }

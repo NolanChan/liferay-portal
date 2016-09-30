@@ -114,9 +114,8 @@ public class LayoutGeneratorRegistry {
 			ServiceReference<LayoutGenerator> serviceReference,
 			Emitter<String> emitter) {
 
-			String siteGeneratorKey =
-				(String)serviceReference.getProperty(
-					"osb.ldn.site.generator.key");
+			String siteGeneratorKey = (String)serviceReference.getProperty(
+				"osb.ldn.site.generator.key");
 
 			if (Validator.isNotNull(siteGeneratorKey)) {
 				emitter.emit(siteGeneratorKey);

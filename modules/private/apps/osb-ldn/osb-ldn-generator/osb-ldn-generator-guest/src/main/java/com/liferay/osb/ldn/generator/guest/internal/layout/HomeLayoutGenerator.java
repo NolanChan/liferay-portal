@@ -54,8 +54,8 @@ public class HomeLayoutGenerator extends BaseLayoutGenerator {
 	}
 
 	@Override
-	protected void doGenerate(long layoutId) throws Exception {
-		Layout layout = _layoutLocalService.getLayout(layoutId);
+	protected void doGenerate(long plid) throws Exception {
+		Layout layout = _layoutLocalService.getLayout(plid);
 
 		layout.setTypeSettings(StringPool.BLANK);
 

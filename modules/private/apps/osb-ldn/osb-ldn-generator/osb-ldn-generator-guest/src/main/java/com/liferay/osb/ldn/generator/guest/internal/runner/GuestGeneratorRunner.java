@@ -40,14 +40,6 @@ public class GuestGeneratorRunner {
 		_guestSiteGenerator.generate(group.getGroupId());
 	}
 
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference(
-		target = "(osb.ldn.site.generator.key=" + GuestSiteConstants.GUEST_SITE_KEY + ")"
-	)
-	private SiteGenerator _guestSiteGenerator;
-
 	@Reference(target = "(osb.ldn.layout.friendly.url=/blogs)")
 	private LayoutGenerator _blogLayoutGenerator;
 
@@ -56,6 +48,14 @@ public class GuestGeneratorRunner {
 
 	@Reference(target = "(osb.ldn.layout.friendly.url=/forums)")
 	private LayoutGenerator _forumsLayoutGenerator;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference(
+		target = "(osb.ldn.site.generator.key=" + GuestSiteConstants.GUEST_SITE_KEY + ")"
+	)
+	private SiteGenerator _guestSiteGenerator;
 
 	@Reference(target = "(osb.ldn.layout.friendly.url=/home)")
 	private LayoutGenerator _homeLayoutGenerator;

@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.List;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -76,7 +74,7 @@ public class GuestSiteGenerator implements SiteGenerator {
 					new ServiceContext());
 			}
 
-			layoutGenerator.generate(layout.getLayoutId());
+			layoutGenerator.generate(layout.getPlid());
 		}
 	}
 
