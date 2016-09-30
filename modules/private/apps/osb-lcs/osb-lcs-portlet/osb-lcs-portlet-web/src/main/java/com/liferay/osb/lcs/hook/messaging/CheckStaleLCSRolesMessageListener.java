@@ -17,7 +17,7 @@ package com.liferay.osb.lcs.hook.messaging;
 import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.osbportlet.service.OSBPortletServiceUtil;
+import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.service.LCSNotificationLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil;
@@ -53,6 +53,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CheckStaleLCSRolesMessageListener.class)
 public class CheckStaleLCSRolesMessageListener
 	extends BaseSchedulerEntryMessageListener {
+
+	@Reference(unbind = "-")
+	public void setOsbPortletService(OSBPortletService osbPortletService) {
+		_osbPortletService = osbPortletService;
+	}
 
 	@Activate
 	protected void activate() {
@@ -129,7 +134,7 @@ public class CheckStaleLCSRolesMessageListener
 						return;
 					}
 
-					if (OSBPortletServiceUtil.hasUserCorpProject(
+					if (_osbPortletService.hasUserCorpProject(
 							user.getUserId(), lcsProject.getCorpProjectId())) {
 
 						return;
@@ -173,6 +178,7 @@ public class CheckStaleLCSRolesMessageListener
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"MMM d, " + "yyyy - hh:mm:ss");
 	private Date _lastCheckDate = new Date();
+	private OSBPortletService _osbPortletService;
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

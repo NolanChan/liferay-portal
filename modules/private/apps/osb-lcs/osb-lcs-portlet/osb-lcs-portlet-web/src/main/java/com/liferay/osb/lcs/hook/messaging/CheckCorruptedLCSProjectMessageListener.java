@@ -21,7 +21,7 @@ import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.model.CorpProject;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.osbportlet.service.OSBPortletServiceUtil;
+import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSNotificationLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil;
@@ -130,9 +130,8 @@ public class CheckCorruptedLCSProjectMessageListener
 			public void performAction(LCSProject lcsProject)
 				throws PortalException {
 
-				CorpProject corpProject =
-					OSBPortletServiceUtil.fetchCorpProject(
-						lcsProject.getCorpProjectId());
+				CorpProject corpProject = _osbPortletService.fetchCorpProject(
+					lcsProject.getCorpProjectId());
 
 				if (corpProject == null) {
 					deleteLCSProject(lcsProject);
@@ -168,6 +167,11 @@ public class CheckCorruptedLCSProjectMessageListener
 	}
 
 	@Reference(unbind = "-")
+	protected void setOsbPortletService(OSBPortletService osbPortletService) {
+		_osbPortletService = osbPortletService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setSchedulerEngineHelper(
 		SchedulerEngineHelper schedulerEngineHelper) {
 
@@ -185,6 +189,7 @@ public class CheckCorruptedLCSProjectMessageListener
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"MMM d, " + "yyyy - hh:mm:ss");
 	private Date _lastCheckDate = new Date();
+	private OSBPortletService _osbPortletService;
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }
