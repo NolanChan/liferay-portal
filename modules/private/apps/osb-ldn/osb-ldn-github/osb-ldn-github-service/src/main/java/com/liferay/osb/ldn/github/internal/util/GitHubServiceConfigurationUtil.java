@@ -39,7 +39,7 @@ public class GitHubServiceConfigurationUtil {
 
 		if (_gitHubServiceConfiguration == null) {
 			throw new GitHubServiceConfigurationException(
-				"GitHubServiceConfiguration is null");
+				"GitHub service configuration is null");
 		}
 
 		return _gitHubServiceConfiguration;
