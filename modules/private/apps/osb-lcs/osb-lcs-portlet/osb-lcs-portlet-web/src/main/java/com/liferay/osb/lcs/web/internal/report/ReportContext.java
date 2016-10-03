@@ -12,123 +12,233 @@
  * details.
  */
 
-package com.liferay.osb.lcs.report;
+package com.liferay.osb.lcs.web.internal.report;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.lcs.util.LCSConstants;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
-
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequest;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Ivica Cardic
  */
 public class ReportContext {
 
-	public ReportContext(
-		PortletConfig portletConfig, PortletContext portletContext,
-		PortletRequest portletRequest) {
-
-		_portletConfig = portletConfig;
-		_portletContext = portletContext;
-		_portletRequest = portletRequest;
-
-		_numberformat.setMaximumFractionDigits(2);
-		_numberformat.setMinimumFractionDigits(2);
-
-		_simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-		_simpleDateTimeFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-	}
-
 	public String formatDate(Date date) {
 		return _simpleDateFormat.format(date);
 	}
 
 	public String formatNumber(double number) {
-		return _numberformat.format(number);
+		return _numberFormat.format(number);
 	}
 
 	public String formatTime(long time) {
 		return _simpleDateTimeFormat.format(time);
 	}
 
-	public long getCompanyId() {
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		return themeDisplay.getCompanyId();
+	public long getLcsClusterEntryId() {
+		return _lcsClusterEntryId;
 	}
 
-	public String getLanguage(String key) {
-		return LanguageUtil.get(
-			_portletConfig, _portletRequest.getLocale(), key);
+	public long getLcsClusterNodeId() {
+		return _lcsClusterNodeId;
+	}
+
+	public long getLcsProjectId() {
+		return _lcsProjectId;
 	}
 
 	public String getLineSeparator() {
-		if (_lineSeparator == null) {
-			HttpServletRequest httpServletRequest =
-				PortalUtil.getHttpServletRequest(_portletRequest);
-
-			if (BrowserSnifferUtil.isWindows(httpServletRequest)) {
-				_lineSeparator = StringPool.RETURN_NEW_LINE;
-			}
-
-			_lineSeparator = StringPool.NEW_LINE;
-		}
-
 		return _lineSeparator;
 	}
 
 	public Locale getLocale() {
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		return themeDisplay.getLocale();
+		return _locale;
 	}
 
-	public String getParameter(String key) {
-		return _portletRequest.getParameter(key);
+	public int getMonth() {
+		return _month;
 	}
 
-	public PortletConfig getPortletConfig() {
-		return _portletConfig;
-	}
-
-	public String getRealPath(String path) {
-		return _portletContext.getRealPath(path);
-	}
-
-	public ThemeDisplay getThemeDisplay() {
-		return (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public String getReportDependenciesPath() {
+		return _reportDependenciesPath;
 	}
 
 	public long getUserId() {
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		return themeDisplay.getUserId();
+		return _userId;
 	}
 
+	public int getYear() {
+		return _year;
+	}
+
+	public static class ReportContextBuilder {
+
+		public ReportContext build() {
+			return new ReportContext(this);
+		}
+
+		public ReportContextBuilder dateFormat(String dateFormat) {
+			_dateFormat = dateFormat;
+
+			return this;
+		}
+
+		public ReportContextBuilder dateTimeFormat(String dateTimeFormat) {
+			_dateTimeFormat = dateTimeFormat;
+
+			return this;
+		}
+
+		public ReportContextBuilder lcsClusterEntryId(long lcsClusterEntryId) {
+			_lcsClusterEntryId = lcsClusterEntryId;
+
+			return this;
+		}
+
+		public ReportContextBuilder lcsClusterNodeId(long lcsClusterNodeId) {
+			_lcsClusterNodeId = lcsClusterNodeId;
+
+			return this;
+		}
+
+		public ReportContextBuilder lcsProjectId(long lcsProjectId) {
+			_lcsProjectId = lcsProjectId;
+
+			return this;
+		}
+
+		public ReportContextBuilder lineSeparator(String lineSeparator) {
+			_lineSeparator = lineSeparator;
+
+			return this;
+		}
+
+		public ReportContextBuilder locale(Locale locale) {
+			_locale = locale;
+
+			return this;
+		}
+
+		public ReportContextBuilder month(int month) {
+			_month = month;
+
+			return this;
+		}
+
+		public ReportContextBuilder numberFormat(String numberFormat) {
+			_numberformat = numberFormat;
+
+			return this;
+		}
+
+		public ReportContextBuilder reportDependenciesPath(
+			String reportDependenciesPath) {
+
+			_reportDependenciesPath = reportDependenciesPath;
+
+			return this;
+		}
+
+		public ReportContextBuilder userId(long userId) {
+			_userId = userId;
+
+			return this;
+		}
+
+		public ReportContextBuilder year(int year) {
+			_year = year;
+
+			return this;
+		}
+
+		private String _dateFormat;
+		private String _dateTimeFormat;
+		private long _lcsClusterEntryId;
+		private long _lcsClusterNodeId;
+		private long _lcsProjectId;
+		private String _lineSeparator;
+		private Locale _locale;
+		private int _month;
+		private String _numberformat;
+		private String _reportDependenciesPath;
+		private long _userId;
+		private int _year;
+
+	}
+
+	private ReportContext(ReportContextBuilder reportContextBuilder) {
+		_lcsClusterEntryId = LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID;
+
+		if (reportContextBuilder._lcsClusterEntryId != 0) {
+			_lcsClusterEntryId = reportContextBuilder._lcsClusterEntryId;
+		}
+
+		_lcsClusterNodeId = LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID;
+
+		if (reportContextBuilder._lcsClusterNodeId != 0) {
+			_lcsClusterNodeId = reportContextBuilder._lcsClusterNodeId;
+		}
+
+		_lcsProjectId = LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID;
+
+		if (reportContextBuilder._lcsProjectId != 0) {
+			_lcsProjectId = reportContextBuilder._lcsProjectId;
+		}
+
+		_lineSeparator = reportContextBuilder._lineSeparator;
+		_locale = reportContextBuilder._locale;
+
+		_month = LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID;
+
+		if (reportContextBuilder._month != 0) {
+			_month = reportContextBuilder._month;
+		}
+
+		_numberFormat = NumberFormat.getInstance();
+
+		_numberFormat.setMaximumFractionDigits(2);
+		_numberFormat.setMinimumFractionDigits(2);
+
+		if (reportContextBuilder._dateFormat != null) {
+			_simpleDateFormat = new SimpleDateFormat(
+				reportContextBuilder._dateFormat);
+		}
+		else {
+			_simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		}
+
+		if (reportContextBuilder._dateTimeFormat != null) {
+			_simpleDateTimeFormat = new SimpleDateFormat(
+				reportContextBuilder._dateTimeFormat);
+		}
+		else {
+			_simpleDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		}
+
+		_userId = reportContextBuilder._userId;
+
+		_year = LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID;
+
+		if (reportContextBuilder._year != 0) {
+			_year = reportContextBuilder._year;
+		}
+	}
+
+	private long _lcsClusterEntryId;
+	private long _lcsClusterNodeId;
+	private long _lcsProjectId;
 	private String _lineSeparator;
-	private NumberFormat _numberformat = NumberFormat.getInstance();
-	private PortletConfig _portletConfig;
-	private PortletContext _portletContext;
-	private PortletRequest _portletRequest;
-	private SimpleDateFormat _simpleDateFormat = new SimpleDateFormat(
-		"yyyy-MM-dd");
-	private SimpleDateFormat _simpleDateTimeFormat = new SimpleDateFormat(
-		"yyyy-MM-dd HH:mm:ss");
+	private Locale _locale;
+	private int _month;
+	private final NumberFormat _numberFormat;
+	private String _reportDependenciesPath;
+	private final SimpleDateFormat _simpleDateFormat;
+	private final SimpleDateFormat _simpleDateTimeFormat;
+	private long _userId;
+	private int _year;
 
 }
