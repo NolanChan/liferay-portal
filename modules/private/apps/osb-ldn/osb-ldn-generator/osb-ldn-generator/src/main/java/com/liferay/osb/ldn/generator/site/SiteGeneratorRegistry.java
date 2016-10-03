@@ -60,8 +60,6 @@ public class SiteGeneratorRegistry {
 			ServiceReference<SiteGenerator> serviceReference,
 			Emitter<String> emitter) {
 
-			System.out.println(serviceReference.toString());
-
 			String siteGeneratorKey = (String)serviceReference.getProperty(
 				"osb.ldn.site.generator.key");
 
