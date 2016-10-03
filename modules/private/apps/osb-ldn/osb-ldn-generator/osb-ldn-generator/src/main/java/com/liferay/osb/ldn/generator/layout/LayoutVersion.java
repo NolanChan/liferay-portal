@@ -98,7 +98,7 @@ public class LayoutVersion {
 		if (expandoColumn == null) {
 			_expandoColumnLocalService.addColumn(
 				expandoTable.getTableId(), _COLUMN_NAME,
-				ExpandoColumnConstants.LONG);
+				ExpandoColumnConstants.INTEGER);
 		}
 	}
 
