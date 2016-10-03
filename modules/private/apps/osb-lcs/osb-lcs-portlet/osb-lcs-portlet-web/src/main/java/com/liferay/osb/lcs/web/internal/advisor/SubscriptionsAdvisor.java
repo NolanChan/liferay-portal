@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.subscriptions.util;
+package com.liferay.osb.lcs.web.internal.advisor;
 
 import com.liferay.lcs.subscription.SubscriptionType;
 import com.liferay.lcs.util.LCSConstants;
@@ -26,15 +26,14 @@ import com.liferay.osb.lcs.service.LCSClusterNodeService;
 import com.liferay.osb.lcs.service.LCSClusterNodeUptimeService;
 import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
 import com.liferay.osb.lcs.service.LCSSubscriptionEntryService;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -48,9 +47,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.TimeZone;
-
-import javax.portlet.PortletConfig;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -58,41 +56,41 @@ import org.joda.time.Hours;
 import org.joda.time.Minutes;
 import org.joda.time.Seconds;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marko Cikos
  * @author Matija Petanjek
  */
-public class SubscriptionsUtil {
+@Component(immediate = true)
+public class SubscriptionsAdvisor {
 
 	public static final int UPTIMES_START_MONTH = Calendar.JANUARY;
 
 	public static final int UPTIMES_START_YEAR = 2016;
 
-	public static String formatUptime(
-		long startTime, long endTime, Locale locale,
-		PortletConfig portletConfig) {
+	public String formatUptime(long startTime, long endTime, Locale locale) {
+		String duration = getDuration(startTime, endTime, locale);
 
-		String duration = SubscriptionsUtil.getDuration(
-			startTime, endTime, locale, portletConfig);
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale.getLanguage());
 
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("^(00(");
-		sb.append(LanguageUtil.get(portletConfig, locale, "days-abbreviation"));
+		sb.append(LanguageUtil.get(resourceBundle, "days-abbreviation"));
 		sb.append(StringPool.PIPE);
-		sb.append(
-			LanguageUtil.get(portletConfig, locale, "hours-abbreviation"));
+		sb.append(LanguageUtil.get(resourceBundle, "hours-abbreviation"));
 		sb.append(StringPool.PIPE);
-		sb.append(
-			LanguageUtil.get(portletConfig, locale, "minutes-abbreviation"));
+		sb.append(LanguageUtil.get(resourceBundle, "minutes-abbreviation"));
 		sb.append("):)+");
 
 		return duration.replaceAll(sb.toString(), StringPool.BLANK);
 	}
 
-	public static JSONObject getBillsJSONObject(
-			long lcsProjectId, int month, int year, Locale locale,
-			PortletConfig portletConfig)
+	public JSONObject getBillsJSONObject(
+			long lcsProjectId, int month, int year, Locale locale)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -101,10 +99,13 @@ public class SubscriptionsUtil {
 
 		JSONObject amountJSONObject = JSONFactoryUtil.createJSONObject();
 
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale.getLanguage());
+
 		amountJSONObject.put(
 			"name",
 			LanguageUtil.get(
-				portletConfig, locale, "liferay-connected-services-charges"));
+				resourceBundle, "liferay-connected-services-charges"));
 
 		double amount =
 			_lcsClusterNodeUptimeService.
@@ -117,16 +118,14 @@ public class SubscriptionsUtil {
 
 		JSONObject taxJSONObject = JSONFactoryUtil.createJSONObject();
 
-		taxJSONObject.put(
-			"name", LanguageUtil.get(portletConfig, locale, "tax"));
+		taxJSONObject.put("name", LanguageUtil.get(resourceBundle, "tax"));
 		taxJSONObject.put("value", 0);
 
 		summaryJSONArray.put(taxJSONObject);
 
 		JSONObject totalJSONObject = JSONFactoryUtil.createJSONObject();
 
-		totalJSONObject.put(
-			"name", LanguageUtil.get(portletConfig, locale, "total"));
+		totalJSONObject.put("name", LanguageUtil.get(resourceBundle, "total"));
 		totalJSONObject.put("value", amount);
 
 		summaryJSONArray.put(totalJSONObject);
@@ -162,9 +161,7 @@ public class SubscriptionsUtil {
 		return jsonObject;
 	}
 
-	public static String getDuration(
-		long start, long end, Locale locale, PortletConfig portletConfig) {
-
+	public String getDuration(long start, long end, Locale locale) {
 		StringBundler sb = new StringBundler(11);
 
 		DateTime endDateTime = new DateTime(end);
@@ -176,36 +173,36 @@ public class SubscriptionsUtil {
 
 		Days days = Days.daysBetween(startDateTime, endDateTime);
 
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale.getLanguage());
+
 		sb.append(numberFormat.format(days.getDays()));
-		sb.append(LanguageUtil.get(portletConfig, locale, "days-abbreviation"));
+		sb.append(LanguageUtil.get(resourceBundle, "days-abbreviation"));
 		sb.append(StringPool.COLON);
 
 		Hours hours = Hours.hoursBetween(startDateTime, endDateTime);
 
 		sb.append(numberFormat.format(hours.getHours() % 24));
-		sb.append(
-			LanguageUtil.get(portletConfig, locale, "hours-abbreviation"));
+		sb.append(LanguageUtil.get(resourceBundle, "hours-abbreviation"));
 		sb.append(StringPool.COLON);
 
 		Minutes minutes = Minutes.minutesBetween(startDateTime, endDateTime);
 
 		sb.append(numberFormat.format(minutes.getMinutes() % 60));
-		sb.append(
-			LanguageUtil.get(portletConfig, locale, "minutes-abbreviation"));
+		sb.append(LanguageUtil.get(resourceBundle, "minutes-abbreviation"));
 		sb.append(StringPool.COLON);
 
 		Seconds seconds = Seconds.secondsBetween(startDateTime, endDateTime);
 
 		sb.append(numberFormat.format(seconds.getSeconds() % 60));
-		sb.append(
-			LanguageUtil.get(portletConfig, locale, "seconds-abbreviation"));
+		sb.append(LanguageUtil.get(resourceBundle, "seconds-abbreviation"));
 
 		return sb.toString();
 	}
 
-	public static JSONArray getLCSClusterEntriesJSONArray(
-			long lcsProjectId, Locale locale, PortletConfig portletConfig)
-		throws PortalException, SystemException {
+	public JSONArray getLCSClusterEntriesJSONArray(
+			long lcsProjectId, Locale locale)
+		throws PortalException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -226,8 +223,11 @@ public class SubscriptionsUtil {
 			SubscriptionType subscriptionType = SubscriptionType.valueOf(
 				lcsClusterEntry.getSubscriptionType());
 
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(locale.getLanguage());
+
 			String subscriptionTypeLabel = LanguageUtil.get(
-				portletConfig, locale, subscriptionType.getLabel());
+				resourceBundle, subscriptionType.getLabel());
 
 			jsonObject.put("subscriptionTypeLabel", subscriptionTypeLabel);
 
@@ -237,15 +237,18 @@ public class SubscriptionsUtil {
 		return jsonArray;
 	}
 
-	public static JSONArray getLCSClusterNodesJSONArray(
-			long lcsProjectId, Locale locale, PortletConfig portletConfig)
-		throws PortalException, SystemException {
+	public JSONArray getLCSClusterNodesJSONArray(
+			long lcsProjectId, Locale locale)
+		throws PortalException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<LCSClusterEntry> lcsClusterEntries =
 			_lcsClusterEntryService.getLCSProjectLCSClusterEntries(
 				lcsProjectId);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale.getLanguage());
 
 		for (LCSClusterEntry lcsClusterEntry : lcsClusterEntries) {
 			List<LCSClusterNode> lcsClusterNodes =
@@ -262,7 +265,7 @@ public class SubscriptionsUtil {
 					lcsClusterEntry.getSubscriptionType());
 
 				String subscriptionTypeLabel = LanguageUtil.get(
-					portletConfig, locale, subscriptionType.getLabel());
+					resourceBundle, subscriptionType.getLabel());
 
 				jsonObject.put("subscriptionTypeLabel", subscriptionTypeLabel);
 
@@ -273,9 +276,9 @@ public class SubscriptionsUtil {
 		return jsonArray;
 	}
 
-	public static JSONObject getLCSClusterNodeUptimesJSONObject(
+	public JSONObject getLCSClusterNodeUptimesJSONObject(
 			long lcsClusterEntryId, long lcsProjectId, int month, int year,
-			Locale locale, PortletConfig portletConfig)
+			Locale locale)
 		throws Exception {
 
 		JSONObject JSONObject = JSONFactoryUtil.createJSONObject();
@@ -291,6 +294,9 @@ public class SubscriptionsUtil {
 				lcsClusterEntryId, LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID,
 				lcsProjectId, month, year, true, true);
 
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale.getLanguage());
+
 		for (LCSClusterNodeUptime lcsClusterNodeUptime :
 				lcsClusterNodeUptimes) {
 
@@ -299,8 +305,7 @@ public class SubscriptionsUtil {
 
 			long endTime = lcsClusterNodeUptime.getEndTime();
 
-			String endTimeLabel = LanguageUtil.get(
-				portletConfig, locale, "online");
+			String endTimeLabel = LanguageUtil.get(resourceBundle, "online");
 
 			if (endTime == 0) {
 				Date now = new Date();
@@ -311,23 +316,22 @@ public class SubscriptionsUtil {
 				endTimeLabel = format.format(endTime);
 			}
 
-			lcsClusterNodeUptimesJSONObject.put("endTimeLabel", endTimeLabel);
+			lcsClusterNodeUptimesJSONObject.put(
+				"duration",
+				getDuration(
+					lcsClusterNodeUptime.getStartTime(), endTime, locale));
 			lcsClusterNodeUptimesJSONObject.put(
 				"endTime", lcsClusterNodeUptime.getEndTime());
+			lcsClusterNodeUptimesJSONObject.put("endTimeLabel", endTimeLabel);
 			lcsClusterNodeUptimesJSONObject.put(
 				"environment", lcsClusterNodeUptime.getLcsClusterEntryName());
 			lcsClusterNodeUptimesJSONObject.put(
 				"server", lcsClusterNodeUptime.getLcsClusterNodeName());
 			lcsClusterNodeUptimesJSONObject.put(
-				"startTimeLabel",
-				format.format(lcsClusterNodeUptime.getStartTime()));
-			lcsClusterNodeUptimesJSONObject.put(
 				"startTime", lcsClusterNodeUptime.getStartTime());
 			lcsClusterNodeUptimesJSONObject.put(
-				"duration",
-				getDuration(
-					lcsClusterNodeUptime.getStartTime(), endTime, locale,
-					portletConfig));
+				"startTimeLabel",
+				format.format(lcsClusterNodeUptime.getStartTime()));
 
 			totalDuration =
 				totalDuration + endTime - lcsClusterNodeUptime.getStartTime();
@@ -336,21 +340,22 @@ public class SubscriptionsUtil {
 		}
 
 		JSONObject.put("entries", jsonArray);
-		JSONObject.put(
-			"totalDuration",
-			getDuration(0, totalDuration, locale, portletConfig));
+		JSONObject.put("totalDuration", getDuration(0, totalDuration, locale));
 
 		return JSONObject;
 	}
 
-	public static JSONArray getLCSSubscriptionEntriesJSONArray(
+	public JSONArray getLCSSubscriptionEntriesJSONArray(
 		List<LCSSubscriptionEntry> lcsOrderEntries, Locale locale,
-		TimeZone timeZone, PortletConfig portletConfig) {
+		TimeZone timeZone) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			_DATE_FORMAT_PATTERN, locale, timeZone);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale.getLanguage());
 
 		for (LCSSubscriptionEntry lcsSubscriptionEntry : lcsOrderEntries) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -358,7 +363,7 @@ public class SubscriptionsUtil {
 			Date endDate = lcsSubscriptionEntry.getEndDate();
 
 			String expirationDate = LanguageUtil.get(
-				portletConfig, locale, "indefinite");
+				resourceBundle, "indefinite");
 
 			if (endDate.getTime() != _EXPIRATION_DATE_INDEFINITE) {
 				expirationDate = format.format(endDate);
@@ -384,7 +389,7 @@ public class SubscriptionsUtil {
 
 			if (processorCoresAllowed == Integer.MAX_VALUE) {
 				processorCoresAllowedLabel = LanguageUtil.get(
-					portletConfig, locale, "unlimited");
+					resourceBundle, "unlimited");
 			}
 
 			jsonObject.put(
@@ -403,7 +408,7 @@ public class SubscriptionsUtil {
 				lcsSubscriptionEntry.getType());
 
 			String subscriptionTypeLabel = LanguageUtil.get(
-				portletConfig, locale, subscriptionType.getLabel());
+				resourceBundle, subscriptionType.getLabel());
 
 			jsonObject.put("subscriptionTypeLabel", subscriptionTypeLabel);
 
@@ -422,7 +427,7 @@ public class SubscriptionsUtil {
 		return jsonArray;
 	}
 
-	public static JSONArray getPaymentsJSONArray(
+	public JSONArray getPaymentsJSONArray(
 			long lcsProjectId, int startMonth, int startYear, int endMonth,
 			int endYear)
 		throws Exception {
@@ -454,14 +459,14 @@ public class SubscriptionsUtil {
 		return jsonArray;
 	}
 
-	public static JSONArray getSubscriptionsUsageJSONArray(
-			long lcsProjectId, Locale locale, PortletConfig portletConfig)
-		throws PortalException, SystemException {
+	public JSONArray getSubscriptionsUsageJSONArray(
+			long lcsProjectId, Locale locale)
+		throws PortalException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		Map<SubscriptionType, int[]> subscriptionTypesServersCounts =
-			new HashMap<SubscriptionType, int[]>();
+			new HashMap<>();
 
 		LCSProject lcsProject = LCSProjectServiceUtil.getLCSProject(
 			lcsProjectId);
@@ -498,6 +503,9 @@ public class SubscriptionsUtil {
 			subscriptionTypesServersCounts.put(subscriptionType, serversCounts);
 		}
 
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale.getLanguage());
+
 		for (Map.Entry<SubscriptionType, int[]> entry :
 				subscriptionTypesServersCounts.entrySet()) {
 
@@ -515,7 +523,7 @@ public class SubscriptionsUtil {
 			SubscriptionType subscriptionType = entry.getKey();
 
 			String subscriptionTypeLabel = LanguageUtil.get(
-				portletConfig, locale, subscriptionType.getLabel());
+				resourceBundle, subscriptionType.getLabel());
 
 			jsonObject.put("subscriptionTypeLabel", subscriptionTypeLabel);
 			jsonObject.put("subscriptionTypeName", subscriptionType.name());
@@ -526,14 +534,14 @@ public class SubscriptionsUtil {
 		return jsonArray;
 	}
 
-	public static boolean hasElasticSubscription(long lcsProjectId)
-		throws PortalException, SystemException {
+	public boolean hasElasticSubscription(long lcsProjectId)
+		throws PortalException {
 
 		return _lcsSubscriptionEntryService.
 			hasLCSProjectElasticLCSSubscriptionEntry(lcsProjectId);
 	}
 
-	public static int[] parsePeriod(String period) {
+	public int[] parsePeriod(String period) {
 		String[] periodArray = period.split(StringPool.DASH);
 
 		return new int[] {
@@ -542,9 +550,42 @@ public class SubscriptionsUtil {
 		};
 	}
 
-	protected static boolean isLCSClusterEntryEditable(
-			LCSClusterEntry lcsClusterEntry)
-		throws PortalException, SystemException {
+	@Reference(unbind = "-")
+	public void setLcsClusterEntryService(
+		LCSClusterEntryService lcsClusterEntryService) {
+
+		_lcsClusterEntryService = lcsClusterEntryService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsClusterNodeService(
+		LCSClusterNodeService lcsClusterNodeService) {
+
+		_lcsClusterNodeService = lcsClusterNodeService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsClusterNodeUptimeService(
+		LCSClusterNodeUptimeService lcsClusterNodeUptimeService) {
+
+		_lcsClusterNodeUptimeService = lcsClusterNodeUptimeService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsSubscriptionEntryService(
+		LCSSubscriptionEntryService lcsSubscriptionEntryService) {
+
+		_lcsSubscriptionEntryService = lcsSubscriptionEntryService;
+	}
+
+	public void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = resourceBundleLoader;
+	}
+
+	protected boolean isLCSClusterEntryEditable(LCSClusterEntry lcsClusterEntry)
+		throws PortalException {
 
 		SubscriptionType subscriptionType = SubscriptionType.valueOf(
 			lcsClusterEntry.getSubscriptionType());
@@ -574,16 +615,10 @@ public class SubscriptionsUtil {
 
 	private static final int _PLATFORM_VERSION_ALL = 0;
 
-	@BeanReference(type = LCSClusterEntryService.class)
-	private static LCSClusterEntryService _lcsClusterEntryService;
-
-	@BeanReference(type = LCSClusterNodeService.class)
-	private static LCSClusterNodeService _lcsClusterNodeService;
-
-	@BeanReference(type = LCSClusterNodeUptimeService.class)
-	private static LCSClusterNodeUptimeService _lcsClusterNodeUptimeService;
-
-	@BeanReference(type = LCSSubscriptionEntryService.class)
-	private static LCSSubscriptionEntryService _lcsSubscriptionEntryService;
+	private LCSClusterEntryService _lcsClusterEntryService;
+	private LCSClusterNodeService _lcsClusterNodeService;
+	private LCSClusterNodeUptimeService _lcsClusterNodeUptimeService;
+	private LCSSubscriptionEntryService _lcsSubscriptionEntryService;
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }
