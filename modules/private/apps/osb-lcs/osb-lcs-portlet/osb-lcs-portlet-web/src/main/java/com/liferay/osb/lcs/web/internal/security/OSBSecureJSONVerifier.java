@@ -21,12 +21,13 @@ import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.PortalUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
@@ -36,7 +37,6 @@ import javax.servlet.http.HttpServletRequest;
 	property = {
 		"auth.verifier.OSBSecureJSONVerifier.api.token=jujUBL6GSnjfNmmDAs",
 		"auth.verifier.OSBSecureJSONVerifier.urls.includes=/api/jsonws/osb-lcs-portlet.lcsclusternode/update-build-number,/api/jsonws/osb-lcs-portlet.lcsclusternode/verify-lcs-cluster-node-cluster-link,/api/jsonws/osb-lcs-portlet.lcsclusternodeuptime/*,/api/jsonws/osb-lcs-portlet.lcspatchingadvisor/*,/api/jsonws/osb-lcs-portlet.lcsmembers/*,/api/jsonws/osb-lcs-portlet.lcsmessage/*,/api/jsonws/osb-lcs-portlet.lcssubscriptionentry/add-corp-project-lcs-subscription-entries"
-
 	}
 )
 public class OSBSecureJSONVerifier implements AuthVerifier {
