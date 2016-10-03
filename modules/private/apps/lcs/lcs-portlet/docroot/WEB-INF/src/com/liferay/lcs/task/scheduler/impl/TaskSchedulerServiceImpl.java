@@ -70,22 +70,19 @@ public class TaskSchedulerServiceImpl implements TaskSchedulerService {
 
 		String taskName = schedulerContext.get("taskName");
 
-		ScheduledTask scheduledTask = (ScheduledTask)beanLocator.locate(
-			taskName);
+		try {
+			ScheduledTask scheduledTask = (ScheduledTask)beanLocator.locate(
+				taskName);
 
-		if (scheduledTask == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Not scheduling task " + taskName);
+			if (scheduledTask.getType() == Type.LOCAL) {
+				scheduleLocalScheduledTask(schedulerContext);
 			}
-
-			return;
+			else if (scheduledTask.getType() == Type.MEMORY_CLUSTERED) {
+				_scheduleClusteredScheduledTask(schedulerContext);
+			}
 		}
-
-		if (scheduledTask.getType() == Type.LOCAL) {
-			scheduleLocalScheduledTask(schedulerContext);
-		}
-		else if (scheduledTask.getType() == Type.MEMORY_CLUSTERED) {
-			_scheduleClusteredScheduledTask(schedulerContext);
+		catch (Exception e) {
+			_log.error("Unable to create new scheduled task", e);
 		}
 	}
 
