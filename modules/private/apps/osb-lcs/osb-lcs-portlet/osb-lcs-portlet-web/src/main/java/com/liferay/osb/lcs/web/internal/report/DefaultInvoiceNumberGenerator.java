@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.osb.lcs.report;
+package com.liferay.osb.lcs.web.internal.report;
 
-import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.exception.SystemException;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
@@ -25,11 +27,21 @@ public class DefaultInvoiceNumberGenerator implements InvoiceNumberGenerator {
 	@Override
 	public long getInvoiceNumber() {
 		try {
-			return CounterLocalServiceUtil.increment();
+			return _counterLocalService.increment(
+				InvoiceNumberGenerator.class.getName());
 		}
 		catch (SystemException se) {
 			throw new RuntimeException(se);
 		}
 	}
+
+	@Reference(unbind = "-")
+	public void setCounterLocalService(
+		CounterLocalService counterLocalService) {
+
+		_counterLocalService = counterLocalService;
+	}
+
+	private CounterLocalService _counterLocalService;
 
 }

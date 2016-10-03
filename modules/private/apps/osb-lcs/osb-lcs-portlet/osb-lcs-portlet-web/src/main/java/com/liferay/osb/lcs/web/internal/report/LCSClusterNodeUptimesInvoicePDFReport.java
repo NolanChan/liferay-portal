@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.report;
+package com.liferay.osb.lcs.web.internal.report;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -27,26 +27,26 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import com.liferay.lcs.util.LCSConstants;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.exception.NoSuchFolderException;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.osb.lcs.advisor.CompanyAdvisor;
 import com.liferay.osb.lcs.model.LCSClusterNodeUptime;
 import com.liferay.osb.lcs.service.LCSClusterNodeUptimeService;
 import com.liferay.osb.lcs.service.LCSProjectService;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalService;
-import com.liferay.portal.service.RepositoryLocalService;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalService;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -55,6 +55,8 @@ import java.text.NumberFormat;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Matija Petanjek
@@ -65,11 +67,9 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 	public ByteArrayOutputStream process(ReportContext reportContext)
 		throws Exception {
 
-		long lcsProjectId = GetterUtil.getInteger(
-			reportContext.getParameter("lcsProjectId"),
-			LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID);
-		int month = GetterUtil.getInteger(reportContext.getParameter("month"));
-		int year = GetterUtil.getInteger(reportContext.getParameter("year"));
+		long lcsProjectId = reportContext.getLcsProjectId();
+		int month = reportContext.getMonth();
+		int year = reportContext.getYear();
 
 		FileEntry fileEntry = getFileEntry(reportContext);
 
@@ -98,17 +98,63 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		return byteArrayOutputStream;
 	}
 
+	@Reference(unbind = "-")
+	public void setCompanyAdvisor(CompanyAdvisor companyAdvisor) {
+		_companyAdvisor = companyAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setDlAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setInvoiceNumberGenerator(
+		InvoiceNumberGenerator invoiceNumberGenerator) {
+
+		_invoiceNumberGenerator = invoiceNumberGenerator;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsClusterNodeUptimeService(
+		LCSClusterNodeUptimeService lcsClusterNodeUptimeService) {
+
+		_lcsClusterNodeUptimeService = lcsClusterNodeUptimeService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsProjectService(LCSProjectService lcsProjectService) {
+		_lcsProjectService = lcsProjectService;
+	}
+
+	@Reference(unbind = "-")
+	public void setRepositoryLocalService(
+		RepositoryLocalService repositoryLocalService) {
+
+		_repositoryLocalService = repositoryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	protected FileEntry addFileEntry(
 			ReportContext reportContext,
 			ByteArrayOutputStream byteArrayOutputStream)
 		throws Exception {
 
 		Group group = _groupLocalService.getFriendlyURLGroup(
-			reportContext.getCompanyId(), "/guest");
+			_companyAdvisor.getCompanyId(), "/guest");
 		Folder folder = getFolder(reportContext);
 
-		int month = GetterUtil.getInteger(reportContext.getParameter("month"));
-		int year = GetterUtil.getInteger(reportContext.getParameter("year"));
+		int month = GetterUtil.getInteger(reportContext.getMonth());
+		int year = GetterUtil.getInteger(reportContext.getYear());
 
 		String fileName = getFileName(month, year);
 
@@ -132,7 +178,9 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 
 		PdfPCell pdfPCell = new PdfPCell(
 			new Phrase(
-				reportContext.getLanguage("bill-to-address"), smallFont));
+				LanguageUtil.format(
+					reportContext.getLocale(), "bill-to-address", (Object)null),
+				smallFont));
 
 		pdfPCell.setBorder(Rectangle.NO_BORDER);
 		pdfPCell.setUseAscender(true);
@@ -140,21 +188,21 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		pdfPTable.addCell(pdfPCell);
 
 		pdfPCell = new PdfPCell(
-			new Phrase(reportContext.getLanguage("attention"), normalFont));
+			new Phrase(
+				LanguageUtil.format(
+					reportContext.getLocale(), "attention", (Object)null),
+				normalFont));
 
 		pdfPCell.setBorder(Rectangle.NO_BORDER);
 		pdfPCell.setUseAscender(true);
 
 		pdfPTable.addCell(pdfPCell);
 
-		long lcsProjectId = GetterUtil.getInteger(
-			reportContext.getParameter("lcsProjectId"));
-
 		try {
 			pdfPCell = new PdfPCell(
 				new Phrase(
 					_lcsProjectService.getLCSProjectAdministratorEmailAddress(
-						lcsProjectId),
+						reportContext.getLcsProjectId()),
 					normalFont));
 		}
 		catch (Exception e) {
@@ -179,7 +227,10 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		PdfPTable pdfPTable = new PdfPTable(2);
 
 		PdfPCell pdfPCell = new PdfPCell(
-			new Phrase(reportContext.getLanguage("details"), bigFont));
+			new Phrase(
+				LanguageUtil.format(
+					reportContext.getLocale(), "details", (Object)null),
+				bigFont));
 
 		pdfPCell.setBackgroundColor(new BaseColor(74, 150, 232));
 		pdfPCell.setBorderColor(BaseColor.LIGHT_GRAY);
@@ -263,7 +314,10 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		pdfPTable.addCell(pdfPCell);
 
 		pdfPCell = new PdfPCell(
-			new Phrase(reportContext.getLanguage("account-number"), smallFont));
+			new Phrase(
+				LanguageUtil.format(
+					reportContext.getLocale(), "account-number", (Object)null),
+				smallFont));
 
 		pdfPCell.setBorder(Rectangle.NO_BORDER);
 		pdfPCell.setVerticalAlignment(Element.ALIGN_BOTTOM);
@@ -289,8 +343,10 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		PdfPTable pdfPTable = new PdfPTable(1);
 
 		Phrase phrase = new Phrase(
-			reportContext.getLanguage("this-invoice-is-for-the-billing-period"),
-			normalFont);
+				LanguageUtil.format(
+						reportContext.getLocale(),
+						"this-invoice-is-for-the-billing-period", (Object)null),
+				normalFont);
 
 		PdfPCell pdfPCell = new PdfPCell(phrase);
 
@@ -300,10 +356,12 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		pdfPTable.addCell(pdfPCell);
 
 		pdfPCell = new PdfPCell(
-			new Phrase(
-				reportContext.getLanguage(
-					"greetings-from-liferay-connected-services"),
-				smallFont));
+				new Phrase(
+						LanguageUtil.format(
+								reportContext.getLocale(),
+								"greetings-from-liferay-connected-services",
+								(Object)null),
+						smallFont));
 
 		pdfPCell.setBorder(Rectangle.NO_BORDER);
 		pdfPCell.setUseDescender(true);
@@ -370,11 +428,13 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		PdfContentByte pdfContentByte, double total, Font bigFont,
 		Font boldFont, Font smallFont, ReportContext reportContext) {
 
-		PdfPTable pdfPTable = new PdfPTable(new float[]{5, 4});
+		PdfPTable pdfPTable = new PdfPTable(new float[] {5, 4});
 
 		PdfPCell pdfPCell = new PdfPCell(
 			new Phrase(
-				reportContext.getLanguage("liferay-connected-services-invoice"),
+				LanguageUtil.format(
+					reportContext.getLocale(),
+					"liferay-connected-services-invoice", (Object)null),
 				bigFont));
 
 		pdfPCell.setBorder(Rectangle.BOTTOM);
@@ -387,7 +447,10 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		pdfPTable.addCell(pdfPCell);
 
 		pdfPCell = new PdfPCell(
-			new Phrase(reportContext.getLanguage("invoice-summary"), boldFont));
+			new Phrase(
+				LanguageUtil.format(
+					reportContext.getLocale(), "invoice-summary", (Object)null),
+				boldFont));
 
 		pdfPCell.setBorder(Rectangle.BOTTOM);
 		pdfPCell.setBorderColor(BaseColor.LIGHT_GRAY);
@@ -399,7 +462,10 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		pdfPTable.addCell(pdfPCell);
 
 		pdfPCell = new PdfPCell(
-			new Phrase(reportContext.getLanguage("invoice-number"), smallFont));
+			new Phrase(
+				LanguageUtil.format(
+					reportContext.getLocale(), "invoice-number", (Object)null),
+				smallFont));
 
 		pdfPCell.setBorder(Rectangle.NO_BORDER);
 		pdfPCell.setUseAscender(true);
@@ -418,7 +484,10 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		pdfPTable.addCell(pdfPCell);
 
 		pdfPCell = new PdfPCell(
-			new Phrase(reportContext.getLanguage("invoice-date"), smallFont));
+			new Phrase(
+				LanguageUtil.format(
+					reportContext.getLocale(), "invoice-data", (Object)null),
+				boldFont));
 
 		pdfPCell.setBorder(Rectangle.BOTTOM);
 		pdfPCell.setBorderColor(BaseColor.LIGHT_GRAY);
@@ -440,7 +509,10 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 
 		pdfPCell = new PdfPCell(
 			new Phrase(
-				reportContext.getLanguage("total-amount-due-on"), boldFont));
+				LanguageUtil.format(
+					reportContext.getLocale(), "total-amount-due-on",
+					(Object)null),
+				boldFont));
 
 		pdfPCell.setBorder(Rectangle.BOTTOM);
 		pdfPCell.setBorderColor(BaseColor.LIGHT_GRAY);
@@ -475,7 +547,10 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		PdfPTable pdfPTable = new PdfPTable(2);
 
 		PdfPCell pdfPCell = new PdfPCell(
-			new Phrase(reportContext.getLanguage("summary"), bigFont));
+			new Phrase(
+				LanguageUtil.format(
+					reportContext.getLocale(), "summary", (Object)null),
+				bigFont));
 
 		pdfPCell.setBackgroundColor(new BaseColor(74, 150, 232));
 		pdfPCell.setBorderColor(BaseColor.LIGHT_GRAY);
@@ -486,7 +561,9 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 
 		pdfPCell = new PdfPCell(
 			new Phrase(
-				reportContext.getLanguage("liferay-connected-services-charges"),
+				LanguageUtil.format(
+					reportContext.getLocale(),
+					"liferay-connected-services-charges", (Object)null),
 				normalFont));
 
 		pdfPCell.disableBorderSide(Rectangle.RIGHT);
@@ -506,7 +583,10 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		pdfPTable.addCell(pdfPCell);
 
 		pdfPCell = new PdfPCell(
-			new Phrase(reportContext.getLanguage("charges"), smallFont));
+			new Phrase(
+				LanguageUtil.format(
+					reportContext.getLocale(), "charges", (Object)null),
+				smallFont));
 
 		pdfPCell.disableBorderSide(Rectangle.RIGHT);
 		pdfPCell.setBorderColor(BaseColor.LIGHT_GRAY);
@@ -525,7 +605,10 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		pdfPTable.addCell(pdfPCell);
 
 		pdfPCell = new PdfPCell(
-			new Phrase(reportContext.getLanguage("tax"), smallFont));
+			new Phrase(
+				LanguageUtil.format(
+					reportContext.getLocale(), "tax", (Object)null),
+				smallFont));
 
 		pdfPCell.disableBorderSide(Rectangle.RIGHT);
 		pdfPCell.setBorderColor(BaseColor.LIGHT_GRAY);
@@ -545,7 +628,9 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 
 		pdfPCell = new PdfPCell(
 			new Phrase(
-				reportContext.getLanguage("total-for-this-invoice"),
+				LanguageUtil.format(
+					reportContext.getLocale(), "total-for-this-invoice",
+					(Object)null),
 				normalFont));
 
 		pdfPCell.setBackgroundColor(BaseColor.LIGHT_GRAY);
@@ -592,16 +677,13 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		throws Exception {
 
 		Group group = _groupLocalService.getFriendlyURLGroup(
-			reportContext.getCompanyId(), "/guest");
+			_companyAdvisor.getCompanyId(), "/guest");
 		Folder folder = getFolder(reportContext);
-
-		int month = GetterUtil.getInteger(reportContext.getParameter("month"));
-		int year = GetterUtil.getInteger(reportContext.getParameter("year"));
 
 		try {
 			return _dlAppLocalService.getFileEntry(
 				group.getGroupId(), folder.getFolderId(),
-				getFileName(month, year));
+				getFileName(reportContext.getMonth(), reportContext.getYear()));
 		}
 		catch (NoSuchFileEntryException nsfee) {
 			return null;
@@ -619,9 +701,9 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 
 	protected Folder getFolder(ReportContext reportContext) throws Exception {
 		User user = _userLocalService.getUserByEmailAddress(
-			reportContext.getCompanyId(), "system@liferay.com");
+			_companyAdvisor.getCompanyId(), "system@liferay.com");
 		Group group = _groupLocalService.getFriendlyURLGroup(
-			reportContext.getCompanyId(), "/guest");
+			_companyAdvisor.getCompanyId(), "/guest");
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -642,48 +724,32 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 				StringPool.BLANK, serviceContext);
 		}
 
-		long lcsProjectId = GetterUtil.getInteger(
-			reportContext.getParameter("lcsProjectId"));
-
 		try {
 			return _dlAppLocalService.getFolder(
 				group.getGroupId(), invoicesFolder.getFolderId(),
-				String.valueOf(lcsProjectId));
+				String.valueOf(reportContext.getLcsProjectId()));
 		}
 		catch (NoSuchFolderException nsfe) {
 			return _dlAppLocalService.addFolder(
 				user.getUserId(), group.getGroupId(),
-				invoicesFolder.getFolderId(), String.valueOf(lcsProjectId),
+				invoicesFolder.getFolderId(),
+				String.valueOf(reportContext.getLcsProjectId()),
 				StringPool.BLANK, serviceContext);
 		}
 	}
 
 	protected Image getLogoImage(ReportContext reportContext) throws Exception {
 		return Image.getInstance(
-			reportContext.getRealPath(
-				"/WEB-INF/classes/com/liferay/osb/lcs/report/dependencies" +
-					"/logo.png"));
+			reportContext.getReportDependenciesPath() + "/logo.png");
 	}
 
-	@BeanReference(type = DLAppLocalService.class)
+	private CompanyAdvisor _companyAdvisor;
 	private DLAppLocalService _dlAppLocalService;
-
-	@BeanReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
-
-	@BeanReference(type = InvoiceNumberGenerator.class)
 	private InvoiceNumberGenerator _invoiceNumberGenerator;
-
-	@BeanReference(type = LCSClusterNodeUptimeService.class)
 	private LCSClusterNodeUptimeService _lcsClusterNodeUptimeService;
-
-	@BeanReference(type = LCSProjectService.class)
 	private LCSProjectService _lcsProjectService;
-
-	@BeanReference(type = RepositoryLocalService.class)
 	private RepositoryLocalService _repositoryLocalService;
-
-	@BeanReference(type = UserLocalService.class)
 	private UserLocalService _userLocalService;
 
 }

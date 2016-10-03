@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.osb.lcs.report;
+package com.liferay.osb.lcs.web.internal.report;
 
-import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.model.LCSClusterNodeUptime;
 import com.liferay.osb.lcs.service.LCSClusterNodeUptimeService;
-import com.liferay.osb.lcs.subscriptions.util.SubscriptionsUtil;
-import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.osb.lcs.web.internal.advisor.SubscriptionsAdvisor;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.BufferedWriter;
@@ -27,6 +24,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStreamWriter;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
@@ -44,21 +43,11 @@ public class LCSClusterNodeUptimesDelimitedReport extends BaseReport {
 		BufferedWriter bufferedWriter = new BufferedWriter(
 			new OutputStreamWriter(byteArrayOutputStream));
 
-		long lcsClusterEntryId = GetterUtil.get(
-			reportContext.getParameter("lcsClusterEntryId"),
-			LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID);
-		long lcsClusterNodeId = GetterUtil.get(
-			reportContext.getParameter("lcsClusterNodeId"),
-			LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID);
-		long lcsProjectId = GetterUtil.get(
-			reportContext.getParameter("lcsProjectId"),
-			LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID);
-		int month = GetterUtil.get(
-			reportContext.getParameter("month"),
-			LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID);
-		int year = GetterUtil.get(
-			reportContext.getParameter("year"),
-			LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID);
+		long lcsClusterEntryId = reportContext.getLcsClusterEntryId();
+		long lcsClusterNodeId = reportContext.getLcsClusterNodeId();
+		long lcsProjectId = reportContext.getLcsProjectId();
+		int month = reportContext.getMonth();
+		int year = reportContext.getYear();
 
 		List<LCSClusterNodeUptime> lcsClusterNodeUptimes =
 			_lcsClusterNodeUptimeService.getMonthlyLCSClusterNodeUptimes(
@@ -81,11 +70,10 @@ public class LCSClusterNodeUptimesDelimitedReport extends BaseReport {
 				reportContext.formatTime(lcsClusterNodeUptime.getEndTime()));
 			bufferedWriter.write(StringPool.SEMICOLON);
 			bufferedWriter.write(
-				SubscriptionsUtil.formatUptime(
+				_subscriptionsAdvisor.formatUptime(
 					lcsClusterNodeUptime.getStartTime(),
 					lcsClusterNodeUptime.getEndTime(),
-					reportContext.getLocale(),
-					reportContext.getPortletConfig()));
+					reportContext.getLocale()));
 			bufferedWriter.write(StringPool.SEMICOLON);
 			bufferedWriter.write(reportContext.getLineSeparator());
 
@@ -95,7 +83,21 @@ public class LCSClusterNodeUptimesDelimitedReport extends BaseReport {
 		return byteArrayOutputStream;
 	}
 
-	@BeanReference(type = LCSClusterNodeUptimeService.class)
+	@Reference(unbind = "-")
+	public void setLcsClusterNodeUptimeService(
+		LCSClusterNodeUptimeService lcsClusterNodeUptimeService) {
+
+		_lcsClusterNodeUptimeService = lcsClusterNodeUptimeService;
+	}
+
+	@Reference(unbind = "-")
+	public void setSubscriptionsAdvisor(
+		SubscriptionsAdvisor subscriptionsAdvisor) {
+
+		_subscriptionsAdvisor = subscriptionsAdvisor;
+	}
+
 	private LCSClusterNodeUptimeService _lcsClusterNodeUptimeService;
+	private SubscriptionsAdvisor _subscriptionsAdvisor;
 
 }

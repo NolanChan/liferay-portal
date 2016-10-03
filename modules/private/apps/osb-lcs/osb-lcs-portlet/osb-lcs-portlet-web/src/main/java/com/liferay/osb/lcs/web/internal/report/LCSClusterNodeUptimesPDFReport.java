@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.report;
+package com.liferay.osb.lcs.web.internal.report;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -29,12 +29,10 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.model.LCSClusterNodeUptime;
 import com.liferay.osb.lcs.service.LCSClusterNodeUptimeService;
-import com.liferay.osb.lcs.subscriptions.util.SubscriptionsUtil;
-import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.osb.lcs.web.internal.advisor.SubscriptionsAdvisor;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -55,17 +53,11 @@ public class LCSClusterNodeUptimesPDFReport extends BaseReport {
 	public ByteArrayOutputStream process(ReportContext reportContext)
 		throws Exception {
 
-		long lcsClusterEntryId = GetterUtil.getInteger(
-			reportContext.getParameter("lcsClusterEntryId"),
-			LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID);
-		long lcsClusterNodeId = GetterUtil.getInteger(
-			reportContext.getParameter("lcsClusterNodeId"),
-			LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID);
-		long lcsProjectId = GetterUtil.getInteger(
-			reportContext.getParameter("lcsProjectId"),
-			LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID);
-		int month = GetterUtil.getInteger(reportContext.getParameter("month"));
-		int year = GetterUtil.getInteger(reportContext.getParameter("year"));
+		long lcsClusterEntryId = reportContext.getLcsClusterEntryId();
+		long lcsClusterNodeId = reportContext.getLcsClusterNodeId();
+		long lcsProjectId = reportContext.getLcsProjectId();
+		int month = reportContext.getMonth();
+		int year = reportContext.getYear();
 
 		List<LCSClusterNodeUptime> lcsClusterNodeUptimes =
 			_lcsClusterNodeUptimeService.getMonthlyLCSClusterNodeUptimes(
@@ -81,6 +73,18 @@ public class LCSClusterNodeUptimesPDFReport extends BaseReport {
 		return createPdfPageHeaders(
 			pdfDocumentByteArrayOutputStream,
 			lcsClusterNodeUptime.getLcsProjectName(), month, year);
+	}
+
+	public void setLcsClusterNodeUptimeService(
+		LCSClusterNodeUptimeService lcsClusterNodeUptimeService) {
+
+		_lcsClusterNodeUptimeService = lcsClusterNodeUptimeService;
+	}
+
+	public void setSubscriptionsAdvisor(
+		SubscriptionsAdvisor subscriptionsAdvisor) {
+
+		_subscriptionsAdvisor = subscriptionsAdvisor;
 	}
 
 	protected PdfPTable createHeaderPdfPTable(int page, String headerContent)
@@ -188,12 +192,21 @@ public class LCSClusterNodeUptimesPDFReport extends BaseReport {
 						lcsClusterNodeUptime.getLcsClusterNodeName()));
 				pdfPTable.addCell(
 					new Phrase(
-						reportContext.getLanguage("start-time"), boldFont));
+						LanguageUtil.format(
+							reportContext.getLocale(), "start-time",
+							(Object)null),
+						boldFont));
 				pdfPTable.addCell(
 					new Phrase(
-						reportContext.getLanguage("end-time"), boldFont));
+						LanguageUtil.format(
+							reportContext.getLocale(), "end-time",
+							(Object)null),
+						boldFont));
 				pdfPTable.addCell(
-					new Phrase(reportContext.getLanguage("uptime"), boldFont));
+					new Phrase(
+						LanguageUtil.format(
+							reportContext.getLocale(), "uptime", (Object)null),
+						boldFont));
 
 				curLCSClusterNodeId = lcsClusterNodeId;
 
@@ -209,11 +222,10 @@ public class LCSClusterNodeUptimesPDFReport extends BaseReport {
 			pdfPTable.addCell(
 				reportContext.formatTime(lcsClusterNodeUptime.getEndTime()));
 			pdfPTable.addCell(
-				SubscriptionsUtil.formatUptime(
+				_subscriptionsAdvisor.formatUptime(
 					lcsClusterNodeUptime.getStartTime(),
 					lcsClusterNodeUptime.getEndTime(),
-					reportContext.getLocale(),
-					reportContext.getPortletConfig()));
+					reportContext.getLocale()));
 
 			defaultPdfPCell.setBackgroundColor(BaseColor.WHITE);
 
@@ -272,7 +284,7 @@ public class LCSClusterNodeUptimesPDFReport extends BaseReport {
 		return pdfPageHeadersByteArrayOutputStream;
 	}
 
-	@BeanReference(type = LCSClusterNodeUptimeService.class)
 	private LCSClusterNodeUptimeService _lcsClusterNodeUptimeService;
+	private SubscriptionsAdvisor _subscriptionsAdvisor;
 
 }

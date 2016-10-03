@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.report;
+package com.liferay.osb.lcs.web.internal.report;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +30,6 @@ public class ReportFactoryImpl implements ReportFactory {
 		_reports = reports;
 	}
 
-	private Map<Type, Report> _reports = new HashMap<Type, Report>();
+	private Map<Type, Report> _reports = new HashMap<>();
 
 }

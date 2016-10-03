@@ -12,11 +12,14 @@
  * details.
  */
 
-package com.liferay.osb.lcs.report;
+package com.liferay.osb.lcs.web.internal.report;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ivica Cardic
  */
+@Component(immediate = true)
 public interface InvoiceNumberGenerator {
 
 	public long getInvoiceNumber();
