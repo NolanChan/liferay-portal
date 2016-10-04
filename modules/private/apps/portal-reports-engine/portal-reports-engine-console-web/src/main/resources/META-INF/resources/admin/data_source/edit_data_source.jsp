@@ -102,21 +102,58 @@ String name = BeanParamUtil.getString(source, request, "name");
 			data.<portlet:namespace />driverPassword = document.<portlet:namespace />fm['<portlet:namespace />driverPassword'].value;
 
 			if (url != null) {
-				var dialog = new A.Dialog(
-					{
-						centered: true,
-						destroyOnClose: true,
-						modal: true,
-						title: Liferay.Language.get('source'),
-						width: 600
-					}
-				).render();
+				var dbConnectionModal = Liferay.Util.Window.getWindow({
+						dialog: {
+							centered: true,
+							destroyOnHide: true,
+							height: 300,
+							hideOn: [],
+							modal: true,
+							resizable: false,
+							toolbars: {
+								footer: [
+										{
+											cssClass: 'btn-lg btn-primary',
+											label: Liferay.Language.get('close'),
+											on: {
+												click: function() {
+													dbConnectionModal.hide();
+													}
+											}
+										}
+									],
+								header: [
+										{
+											cssClass: 'close',
+											discardDefaultButtonCssClasses: true,
+											labelHTML: Liferay.Util.getLexiconIconTpl('times'),
+											on: {
+												click: function() {
+													dbConnectionModal.hide();
+													}
+											}
+										}
+									]
+							},
+							width: 600
+						},
+						title: Liferay.Language.get('source')
+				});
 
-				dialog.plug(
-					A.Plugin.IO,
+				dbConnectionModal.render();
+
+				A.io.request(
+					url,
 					{
-						data: data,
-						uri: url
+						after: {
+							success: function() {
+								var response = this.get('responseData');
+
+								dbConnectionModal.bodyNode.append(response);
+								dbConnectionModal.show();
+							}
+						},
+						data: data
 					}
 				);
 			}
