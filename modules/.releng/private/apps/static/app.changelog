@@ -297,7 +297,7 @@ app.git.id-7.0.5=be486404cec0f6048db3c07afd43f930f8118343
 #
 
 app.artifacts-7.0.6=\
-	com.liferay.osgi.util-3.0.3.jar,\
+	com.liferay.osgi.util-3.0.4.jar,\
 	com.liferay.petra.xml-1.0.3.jar,\
 	com.liferay.portal.configuration.metatype-2.0.3.jar,\
 	com.liferay.portal.configuration.persistence-2.0.3.jar,\
@@ -337,6 +337,6 @@ app.artifacts-7.0.6=\
 	org.osgi.service.http-3.5.0-20150611.165350-3.LIFERAY-PATCHED-2.jar,\
 	org.osgi.service.metatype-1.3.0.jar
 
-app.change.log-7.0.6=LPS-66244 LPS-66470 LPS-66530 LPS-66814 LPS-66853 LPS-67018 LPS-67092 LPS-67352 LPS-67541 LPS-68013 LPS-68014 LPS-68062 LPS-68100 LPS-68163 
+app.change.log-7.0.6=LPS-66244 LPS-66470 LPS-66530 LPS-66814 LPS-66853 LPS-67018 LPS-67092 LPS-67352 LPS-67541 LPS-68013 LPS-68014 LPS-68062 LPS-68100 LPS-68163 LPS-68402 
 
-app.git.id-7.0.6=c8571bdbf47f0485d0e8ed5333b37a230d6b3b93
+app.git.id-7.0.6=8688a7018c5bf6fd6c9a027b954c3fc004db43a2
