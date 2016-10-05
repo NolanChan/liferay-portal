@@ -3,7 +3,6 @@
 	height: 64px;
 	left: 0;
 	max-width: 100%;
-	padding: 1em 2em;
 	position: fixed;
 	right: 0;
 	top: 0;
@@ -17,24 +16,46 @@
 
 	.logo.custom-logo {
 		margin-right: auto;
+		padding-top: 16px;
 
 		img {
 			height: 32px;
 		}
 	}
 
+	.navbar-header {
+		left: 0;
+		padding: 0 2em;
+		position: absolute;
+		right: 0;
+
+		@include display(flex);
+		@include justify-content(space-between);
+		@include transition(right 0.5s)
+	}
+
 	.navbar-collapse {
 		padding: 0 2em;
 
-		li {
-			display: inline-block;
-			padding: 0 1em;
-		}
-
 		ul {
+			font-size: 12px;
 			list-style: none;
 			margin: 0;
-			padding: 0;
+			padding: 22px 0;
+
+			li {
+				display: inline-block;
+				margin: 0;
+				padding: 0 32px 0 0;
+
+				a {
+					padding: 0;
+				}
+
+				&.open a, a:hover {
+					background: none;
+				}
+			}
 		}
 
 		@include media-query(null, $screen-xs-max) {
@@ -51,15 +72,14 @@
 		}
 	}
 
-	.navbar-header {
-		left: 0;
-		padding: 0 2em;
-		position: absolute;
-		right: 0;
+	.navbar {
+		margin-bottom: 0;
+		min-height: 0;
+		border: none;
 
-		@include display(flex);
-		@include justify-content(space-between);
-		@include transition(right 0.5s)
+		.lfr-nav-item .delete-tab {
+			display: none;
+		}
 	}
 
 	.navbar-toggle {
@@ -76,11 +96,19 @@
 		margin-bottom: 0;
 	}
 
-	.user-icon {
-		height: 40px;
-		line-height: 40px;
-		margin: -4px 0;
-		width: 40px;
+	.user-personal-bar {
+		span.sign-in {
+			display: block;
+			font-size: 12px;
+			padding: 21px 0;
+		}
+
+		.user-icon {
+			height: 40px;
+			line-height: 40px;
+			margin: 12px 0 0;
+			width: 40px;
+		}
 	}
 
 	&.banner-fill {
