@@ -17,10 +17,9 @@ package com.liferay.osb.lcs.account.portlet;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.account.util.AccountUtil;
 import com.liferay.osb.lcs.advisor.UserAdvisor;
+import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.model.LCSNotification;
 import com.liferay.osb.lcs.service.LCSNotificationServiceUtil;
-import com.liferay.osb.lcs.util.AuthUtil;
-import com.liferay.osb.lcs.util.PortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -29,11 +28,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.util.bean.PortletBeanLocatorUtil;
 
 import java.io.IOException;
 
@@ -45,11 +45,11 @@ import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
-import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-account" + PortletKeys.ACCOUNT,
+		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-account" + OSBLCSPortletKeys.ACCOUNT,
 		"com.liferay.portlet.display-category=category.lcs",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-account.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
@@ -114,21 +114,6 @@ public class AccountPortlet extends MVCPortlet {
 			LCSNotificationServiceUtil.deleteLCSNotification(
 				lcsNotification.getLcsNotificationId());
 		}
-	}
-
-	@Override
-	public void destroy() {
-		super.destroy();
-
-		_userAdvisor = null;
-	}
-
-	@Override
-	public void init() throws PortletException {
-		super.init();
-
-		_userAdvisor = (UserAdvisor)PortletBeanLocatorUtil.locate(
-			"com.liferay.osb.lcs.advisor.UserAdvisor");
 	}
 
 	public void saveLCSNotifications(
@@ -214,7 +199,9 @@ public class AccountPortlet extends MVCPortlet {
 		throws IOException {
 
 		try {
-			AuthUtil.checkAuthToken(resourceRequest);
+			AuthTokenUtil.checkCSRFToken(
+				PortalUtil.getHttpServletRequest(resourceRequest),
+				AccountPortlet.class.getName());
 
 			String resourceID = resourceRequest.getResourceID();
 
@@ -236,6 +223,11 @@ public class AccountPortlet extends MVCPortlet {
 
 			writeJSON(resourceRequest, resourceResponse, jsonObject);
 		}
+	}
+
+	@Reference(unbind = "-")
+	public void setUserAdvisor(UserAdvisor userAdvisor) {
+		_userAdvisor = userAdvisor;
 	}
 
 	public void updateUser(

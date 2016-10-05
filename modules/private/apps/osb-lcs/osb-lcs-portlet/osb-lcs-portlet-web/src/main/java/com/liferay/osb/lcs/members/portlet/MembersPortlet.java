@@ -16,30 +16,31 @@ package com.liferay.osb.lcs.members.portlet;
 
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.lcs.util.LCSConstants;
-import com.liferay.osb.lcs.advisor.CompanyAdvisor;
-import com.liferay.osb.lcs.advisor.LCSMessageAdvisor;
-import com.liferay.osb.lcs.email.EmailAdvisor;
+import com.liferay.osb.lcs.advisor.EmailAdvisor;
+import com.liferay.osb.lcs.advisor.impl.CompanyAdvisorImpl;
+import com.liferay.osb.lcs.advisor.impl.LCSMessageAdvisorImpl;
+import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.email.EmailContext;
 import com.liferay.osb.lcs.model.LCSMessage;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.service.LCSInvitationServiceUtil;
-import com.liferay.osb.lcs.service.LCSMembersLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
-import com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSRoleServiceUtil;
-import com.liferay.osb.lcs.service.UserLCSMessageLocalServiceUtil;
-import com.liferay.osb.lcs.util.AuthUtil;
-import com.liferay.osb.lcs.util.PortletKeys;
+import com.liferay.osb.lcs.service.LCSInvitationService;
+import com.liferay.osb.lcs.service.LCSMembersLocalService;
+import com.liferay.osb.lcs.service.LCSProjectService;
+import com.liferay.osb.lcs.service.LCSRoleLocalService;
+import com.liferay.osb.lcs.service.LCSRoleService;
+import com.liferay.osb.lcs.service.UserLCSMessageLocalService;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.util.bean.PortletBeanLocatorUtil;
 
 import java.io.IOException;
 
@@ -49,13 +50,13 @@ import java.util.Objects;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
-import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -65,7 +66,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-members" + PortletKeys.MEMBERS,
+		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-members" + OSBLCSPortletKeys.MEMBERS,
 		"com.liferay.portlet.display-category=category.lcs",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-members.js",
@@ -97,10 +98,10 @@ public class MembersPortlet extends MVCPortlet {
 		long lcsProjectId = ParamUtil.getLong(actionRequest, "lcsProjectId");
 		int role = ParamUtil.getInteger(actionRequest, "role");
 
-		LCSRoleServiceUtil.addLCSRole(
+		_lcsRoleService.addLCSRole(
 			userId, lcsProjectId, lcsClusterEntryId, role);
 
-		LCSMembersLocalServiceUtil.validateLCSSiteMembership(
+		_lcsMembersLocalService.validateLCSSiteMembership(
 			_companyAdvisor.getCompanyId(), userId);
 	}
 
@@ -110,28 +111,7 @@ public class MembersPortlet extends MVCPortlet {
 
 		long lcsRoleId = ParamUtil.getLong(actionRequest, "lcsRoleId");
 
-		LCSRoleServiceUtil.deleteLCSRole(lcsRoleId);
-	}
-
-	@Override
-	public void destroy() {
-		super.destroy();
-
-		_companyAdvisor = null;
-		_emailAdvisor = null;
-		_lcsMessageAdvisor = null;
-	}
-
-	@Override
-	public void init() throws PortletException {
-		super.init();
-
-		_companyAdvisor = (CompanyAdvisor)PortletBeanLocatorUtil.locate(
-			"com.liferay.osb.lcs.advisor.CompanyAdvisor");
-		_emailAdvisor = (EmailAdvisor)PortletBeanLocatorUtil.locate(
-			"com.liferay.osb.lcs.email.EmailAdvisor");
-		_lcsMessageAdvisor = (LCSMessageAdvisor)PortletBeanLocatorUtil.locate(
-			"com.liferay.osb.lcs.advisor.LCSMessageAdvisor");
+		_lcsRoleService.deleteLCSRole(lcsRoleId);
 	}
 
 	@Override
@@ -140,7 +120,9 @@ public class MembersPortlet extends MVCPortlet {
 		throws IOException {
 
 		try {
-			AuthUtil.checkAuthToken(resourceRequest);
+			AuthTokenUtil.checkCSRFToken(
+				PortalUtil.getHttpServletRequest(resourceRequest),
+				MembersPortlet.class.getName());
 
 			String resourceID = resourceRequest.getResourceID();
 
@@ -176,6 +158,64 @@ public class MembersPortlet extends MVCPortlet {
 		}
 	}
 
+	@Reference(unbind = "-")
+	public void setCompanyAdvisor(CompanyAdvisorImpl companyAdvisor) {
+		_companyAdvisor = companyAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setEmailAdvisor(EmailAdvisor emailAdvisor) {
+		_emailAdvisor = emailAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSInvitationService(
+		LCSInvitationService lcsInvitationService) {
+
+		_lcsInvitationService = lcsInvitationService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSMembersLocalService(
+		LCSMembersLocalService lcsMembersLocalService) {
+
+		_lcsMembersLocalService = lcsMembersLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSMessageAdvisor(LCSMessageAdvisorImpl lcsMessageAdvisor) {
+		_lcsMessageAdvisor = lcsMessageAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSProjectService(LCSProjectService lcsProjectService) {
+		_lcsProjectService = lcsProjectService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSRoleLocalService(
+		LCSRoleLocalService lcsRoleLocalService) {
+
+		_lcsRoleLocalService = lcsRoleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSRoleService(LCSRoleService lcsRoleService) {
+		_lcsRoleService = lcsRoleService;
+	}
+
+	@Reference(unbind = "-")
+	public void setUserLCSMessageLocalService(
+		UserLCSMessageLocalService userLCSMessageLocalService) {
+
+		_userLCSMessageLocalService = userLCSMessageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	protected void addLCSRoles(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
@@ -191,28 +231,36 @@ public class MembersPortlet extends MVCPortlet {
 
 		long[] userIds = ParamUtil.getLongValues(resourceRequest, "userId");
 
-		LCSProject lcsProject = LCSProjectServiceUtil.getLCSProject(
-			lcsProjectId);
+		LCSProject lcsProject = _lcsProjectService.getLCSProject(lcsProjectId);
 
-		LCSMembersLocalServiceUtil.validateCorpProjectUsers(
+		_lcsMembersLocalService.validateCorpProjectUsers(
 			lcsProject.getCorpProjectId(), userIds);
 
 		long lcsClusterEntryId = ParamUtil.getLong(
 			resourceRequest, "lcsClusterEntryId");
 		int role = ParamUtil.getInteger(resourceRequest, "role");
 
+		EmailContext.EmailContextBuilder emailContextBuilder;
+
 		for (long userId : userIds) {
-			LCSRole lcsRole = LCSRoleServiceUtil.addLCSRole(
+			emailContextBuilder = new EmailContext.EmailContextBuilder(
+				LCSEventType.MEMBERSHIP_REQUEST_ACCEPTED);
+
+			User user = _userLocalService.getUser(userId);
+
+			emailContextBuilder.emailAddress(user.getEmailAddress());
+			emailContextBuilder.user(user);
+			emailContextBuilder.locale(user.getLocale());
+
+			LCSRole lcsRole = _lcsRoleService.addLCSRole(
 				userId, lcsProjectId, lcsClusterEntryId, role);
 
-			LCSMembersLocalServiceUtil.validateLCSSiteMembership(
+			_lcsMembersLocalService.validateLCSSiteMembership(
 				_companyAdvisor.getCompanyId(), userId);
 
-			_emailAdvisor.sendEmail(
-				new EmailContext(
-					LCSEventType.MEMBERSHIP_REQUEST_ACCEPTED, lcsRole));
+			_emailAdvisor.sendEmail(emailContextBuilder.build());
 
-			UserLCSMessageLocalServiceUtil.addUserLCSMessage(
+			_userLCSMessageLocalService.addUserLCSMessage(
 				userId, lcsMessage.getLcsMessageId());
 		}
 
@@ -231,7 +279,7 @@ public class MembersPortlet extends MVCPortlet {
 		long lcsInvitationId = ParamUtil.getLong(
 			resourceRequest, "lcsInvitationId");
 
-		LCSInvitationServiceUtil.deleteLCSInvitation(lcsInvitationId);
+		_lcsInvitationService.deleteLCSInvitation(lcsInvitationId);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -249,11 +297,11 @@ public class MembersPortlet extends MVCPortlet {
 		long[] userIds = ParamUtil.getLongValues(resourceRequest, "userId");
 
 		for (long userId : userIds) {
-			List<LCSRole> lcsRoles = LCSRoleLocalServiceUtil.getUserLCSRoles(
+			List<LCSRole> lcsRoles = _lcsRoleLocalService.getUserLCSRoles(
 				userId, lcsProjectId);
 
 			for (LCSRole lcsRole : lcsRoles) {
-				LCSRoleServiceUtil.deleteLCSRole(lcsRole.getLcsRoleId());
+				_lcsRoleService.deleteLCSRole(lcsRole.getLcsRoleId());
 			}
 		}
 
@@ -281,7 +329,7 @@ public class MembersPortlet extends MVCPortlet {
 		long lcsProjectId = ParamUtil.getLong(resourceRequest, "lcsProjectId");
 		int role = ParamUtil.getInteger(resourceRequest, "role");
 
-		List<LCSRole> lcsRoles = LCSRoleServiceUtil.getLCSProjectLCSRoles(
+		List<LCSRole> lcsRoles = _lcsRoleService.getLCSProjectLCSRoles(
 			lcsProjectId);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -306,14 +354,20 @@ public class MembersPortlet extends MVCPortlet {
 			}
 		}
 
-		LCSInvitationServiceUtil.addLCSInvitation(
+		_lcsInvitationService.addLCSInvitation(
 			lcsProjectId, emailAddress, lcsClusterEntryId, role);
 
-		_emailAdvisor.sendEmail(
-			new EmailContext(
-				invitationMessage, emailAddress,
-				LCSEventType.NEW_MEMBERSHIP_INVITATION, lcsProjectId,
-				PortalUtil.getUserId(resourceRequest)));
+		EmailContext.EmailContextBuilder emailContextBuilder =
+			new EmailContext.EmailContextBuilder(
+				LCSEventType.NEW_MEMBERSHIP_INVITATION);
+
+		emailContextBuilder.emailAddress(emailAddress);
+		emailContextBuilder.customMessage(invitationMessage);
+		emailContextBuilder.lcsProject(
+			_lcsProjectService.getLCSProject(lcsProjectId));
+		emailContextBuilder.user(PortalUtil.getUser(resourceRequest));
+
+		_emailAdvisor.sendEmail(emailContextBuilder.build());
 
 		jsonObject.put(
 			LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_SUCCESS);
@@ -323,8 +377,15 @@ public class MembersPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(MembersPortlet.class);
 
-	private CompanyAdvisor _companyAdvisor;
+	private CompanyAdvisorImpl _companyAdvisor;
 	private EmailAdvisor _emailAdvisor;
-	private LCSMessageAdvisor _lcsMessageAdvisor;
+	private LCSInvitationService _lcsInvitationService;
+	private LCSMembersLocalService _lcsMembersLocalService;
+	private LCSMessageAdvisorImpl _lcsMessageAdvisor;
+	private LCSProjectService _lcsProjectService;
+	private LCSRoleLocalService _lcsRoleLocalService;
+	private LCSRoleService _lcsRoleService;
+	private UserLCSMessageLocalService _userLCSMessageLocalService;
+	private UserLocalService _userLocalService;
 
 }

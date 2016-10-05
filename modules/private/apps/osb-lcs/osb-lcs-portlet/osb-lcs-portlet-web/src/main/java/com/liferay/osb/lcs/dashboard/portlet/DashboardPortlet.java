@@ -1,6 +1,6 @@
 package com.liferay.osb.lcs.dashboard.portlet;
 
-import com.liferay.osb.lcs.util.PortletKeys;
+import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -13,7 +13,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-dashboard" + PortletKeys.DASHBOARD,
+		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-dashboard" + OSBLCSPortletKeys.DASHBOARD,
 		"javax.portlet.display-name=Dashboard",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.info.keywords=Dashboard",

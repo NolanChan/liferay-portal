@@ -16,16 +16,16 @@ package com.liferay.osb.lcs.environment.portlet;
 
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.advisor.LCSClusterEntryTokenAdvisor;
+import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.exception.DuplicateLCSClusterEntryNameException;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.service.LCSClusterEntryServiceUtil;
-import com.liferay.osb.lcs.util.AuthUtil;
-import com.liferay.osb.lcs.util.PortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -33,9 +33,9 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.util.bean.PortletBeanLocatorUtil;
 
 import java.io.IOException;
 
@@ -45,7 +45,6 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
-import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
@@ -62,7 +61,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-environment" + PortletKeys.ENVIRONMENT,
+		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-environment" + OSBLCSPortletKeys.ENVIRONMENT,
 		"com.liferay.portlet.display-category=category.lcs",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-environment.js",
@@ -114,8 +113,8 @@ public class EnvironmentPortlet extends MVCPortlet {
 				lcsClusterEntryType);
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			actionRequest, PortletKeys.ENVIRONMENT, themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
+			actionRequest, OSBLCSPortletKeys.ENVIRONMENT,
+			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		redirectURL.setParameter(
 			"layoutLCSClusterEntryId",
@@ -154,15 +153,6 @@ public class EnvironmentPortlet extends MVCPortlet {
 			lcsClusterEntryId, lcsServicesConfiguration, serviceContext);
 	}
 
-	@Override
-	public void init() throws PortletException {
-		super.init();
-
-		_lcsClusterEntryTokenAdvisor =
-			(LCSClusterEntryTokenAdvisor)PortletBeanLocatorUtil.locate(
-				"com.liferay.osb.lcs.advisor.LCSClusterEntryTokenAdvisor");
-	}
-
 	public void regenerateLCSClusterEntryToken(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -186,7 +176,9 @@ public class EnvironmentPortlet extends MVCPortlet {
 		throws IOException {
 
 		try {
-			AuthUtil.checkAuthToken(resourceRequest);
+			AuthTokenUtil.checkCSRFToken(
+				PortalUtil.getHttpServletRequest(resourceRequest),
+				EnvironmentPortlet.class.getName());
 
 			String resourceID = resourceRequest.getResourceID();
 
@@ -197,6 +189,12 @@ public class EnvironmentPortlet extends MVCPortlet {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	public void setLcsClusterEntryTokenAdvisor(
+		LCSClusterEntryTokenAdvisor lcsClusterEntryTokenAdvisor) {
+
+		_lcsClusterEntryTokenAdvisor = lcsClusterEntryTokenAdvisor;
 	}
 
 	public void updateLCSClusterEntry(

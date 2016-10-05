@@ -16,21 +16,19 @@ package com.liferay.osb.lcs.enrollment.portlet;
 
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.lcs.util.LCSConstants;
-import com.liferay.osb.lcs.advisor.LCSMessageAdvisor;
+import com.liferay.osb.lcs.advisor.EmailAdvisor;
+import com.liferay.osb.lcs.advisor.impl.LCSMessageAdvisorImpl;
 import com.liferay.osb.lcs.constants.LCSRoleConstants;
-import com.liferay.osb.lcs.email.EmailAdvisor;
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
+import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.email.EmailContext;
 import com.liferay.osb.lcs.enrollment.util.EnrollmentUtil;
 import com.liferay.osb.lcs.model.LCSProject;
-import com.liferay.osb.lcs.model.LCSRole;
+import com.liferay.osb.lcs.service.LCSProjectLocalService;
 import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
 import com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSRoleServiceUtil;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
-import com.liferay.osb.lcs.util.ActionKeys;
-import com.liferay.osb.lcs.util.AuthUtil;
-import com.liferay.osb.lcs.util.PortletKeys;
-import com.liferay.osb.lcs.util.WebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -38,28 +36,29 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.util.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import java.util.List;
 
 import javax.portlet.Portlet;
-import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -69,7 +68,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-enrollment" + PortletKeys.ENROLLMENT,
+		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-enrollment" + OSBLCSPortletKeys.ENROLLMENT,
 		"com.liferay.portlet.display-category=category.lcs",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-enrollment.js",
@@ -100,22 +99,14 @@ public class EnrollmentPortlet extends MVCPortlet {
 	}
 
 	@Override
-	public void init() throws PortletException {
-		super.init();
-
-		_emailAdvisor = (EmailAdvisor)PortletBeanLocatorUtil.locate(
-			"com.liferay.osb.lcs.email.EmailAdvisor");
-		_lcsMessageAdvisor = (LCSMessageAdvisor)PortletBeanLocatorUtil.locate(
-			"com.liferay.osb.lcs.advisor.LCSMessageAdvisor");
-	}
-
-	@Override
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException {
 
 		try {
-			AuthUtil.checkAuthToken(resourceRequest);
+			AuthTokenUtil.checkCSRFToken(
+				PortalUtil.getHttpServletRequest(resourceRequest),
+				EnrollmentPortlet.class.getName());
 
 			String resourceID = resourceRequest.getResourceID();
 
@@ -152,6 +143,28 @@ public class EnrollmentPortlet extends MVCPortlet {
 
 			writeJSON(resourceRequest, resourceResponse, jsonObject);
 		}
+	}
+
+	@Reference(unbind = "-")
+	public void setEmailAdvisor(EmailAdvisor emailAdvisor) {
+		_emailAdvisor = emailAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsMessageAdvisor(LCSMessageAdvisorImpl lcsMessageAdvisor) {
+		_lcsMessageAdvisor = lcsMessageAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsProjectLocalService(
+		LCSProjectLocalService lcsProjectLocalService) {
+
+		_lcsProjectLocalService = lcsProjectLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setUserService(UserService userService) {
+		_userService = userService;
 	}
 
 	protected void addLCSAdministratorRole(
@@ -198,23 +211,26 @@ public class EnrollmentPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			resourceRequest);
-
 		long lcsProjectId = ParamUtil.getLong(resourceRequest, "lcsProjectId");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			resourceRequest);
+		User currentUser = _userService.getCurrentUser();
 
-		LCSRole lcsEnvironmentMembershipPendingUserLCSRole =
-			LCSRoleLocalServiceUtil.addLCSRole(
-				serviceContext.getUserId(), lcsProjectId, 0,
-				LCSRoleConstants.ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER);
+		LCSRoleLocalServiceUtil.addLCSRole(
+			currentUser.getUserId(), lcsProjectId, 0,
+			LCSRoleConstants.ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER);
 
-		_emailAdvisor.sendToLCSProjectAdminsEmail(
-			new EmailContext(
-				LCSEventType.NEW_MEMBERSHIP_REQUEST,
-				lcsEnvironmentMembershipPendingUserLCSRole));
+		EmailContext.EmailContextBuilder emailContextBuilder =
+			new EmailContext.EmailContextBuilder(
+				LCSEventType.NEW_MEMBERSHIP_REQUEST);
+
+		emailContextBuilder.user(currentUser);
+
+		LCSProject lcsProject = _lcsProjectLocalService.getLCSProject(
+			lcsProjectId);
+
+		emailContextBuilder.lcsProject(lcsProject);
+
+		_emailAdvisor.sendToLCSProjectAdminsEmail(emailContextBuilder.build());
 
 		_lcsMessageAdvisor.addLCSProjectLCSMessage(
 			true, null, true, LCSEventType.NEW_MEMBERSHIP_REQUEST,
@@ -230,7 +246,7 @@ public class EnrollmentPortlet extends MVCPortlet {
 			"administered", toJSONArray(lcsProjects, false, null));
 
 		lcsProjects = EnrollmentUtil.getCompanyLCSProjects(
-			serviceContext.getUserId());
+			currentUser.getUserId());
 
 		dataJSONObject.put("company", toJSONArray(lcsProjects, false, null));
 
@@ -321,7 +337,7 @@ public class EnrollmentPortlet extends MVCPortlet {
 					"editable",
 					LCSProjectPermission.contains(
 						permissionChecker, lcsProject.getLcsProjectId(),
-						ActionKeys.MANAGE_ENTRY));
+						OSBLCSActionKeys.MANAGE_ENTRY));
 			}
 
 			jsonObject.put("lcsProjectId", lcsProject.getLcsProjectId());
@@ -357,6 +373,8 @@ public class EnrollmentPortlet extends MVCPortlet {
 		EnrollmentPortlet.class);
 
 	private EmailAdvisor _emailAdvisor;
-	private LCSMessageAdvisor _lcsMessageAdvisor;
+	private LCSMessageAdvisorImpl _lcsMessageAdvisor;
+	private LCSProjectLocalService _lcsProjectLocalService;
+	private UserService _userService;
 
 }

@@ -15,15 +15,16 @@
 package com.liferay.osb.lcs.notifications.portlet;
 
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.service.LCSClusterNodePatchesLocalServiceUtil;
-import com.liferay.osb.lcs.util.AuthUtil;
-import com.liferay.osb.lcs.util.PortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -43,7 +44,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.add-default-resource=true" + PortletKeys.NOTIFICATIONS,
+		"com.liferay.portlet.add-default-resource=true" + OSBLCSPortletKeys.NOTIFICATIONS,
 		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-notifications",
 		"com.liferay.portlet.display-category=category.lcs",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
@@ -75,7 +76,9 @@ public class NotificationsPortlet extends MVCPortlet {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			AuthUtil.checkAuthToken(resourceRequest);
+			AuthTokenUtil.checkCSRFToken(
+				PortalUtil.getHttpServletRequest(resourceRequest),
+				NotificationsPortlet.class.getName());
 
 			String resourceID = resourceRequest.getResourceID();
 

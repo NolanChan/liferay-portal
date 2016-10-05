@@ -15,19 +15,16 @@
 package com.liferay.osb.lcs.subscriptions.portlet;
 
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.model.LCSSubscriptionEntry;
-import com.liferay.osb.lcs.report.Report;
-import com.liferay.osb.lcs.report.ReportContext;
-import com.liferay.osb.lcs.report.ReportFactory;
-import com.liferay.osb.lcs.report.ReportFactoryUtil;
 import com.liferay.osb.lcs.service.LCSClusterEntryServiceUtil;
 import com.liferay.osb.lcs.service.LCSSubscriptionEntryServiceUtil;
-import com.liferay.osb.lcs.subscriptions.util.SubscriptionsUtil;
 import com.liferay.osb.lcs.util.ApplicationProfile;
-import com.liferay.osb.lcs.util.AuthUtil;
-import com.liferay.osb.lcs.util.PortletKeys;
-import com.liferay.osb.lcs.util.PortletPropsValues;
-import com.liferay.osb.lcs.util.WebKeys;
+import com.liferay.osb.lcs.web.internal.advisor.SubscriptionsAdvisor;
+import com.liferay.osb.lcs.web.internal.report.Report;
+import com.liferay.osb.lcs.web.internal.report.ReportContext;
+import com.liferay.osb.lcs.web.internal.report.ReportFactory;
+import com.liferay.osb.lcs.web.internal.report.ReportFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -35,9 +32,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -48,6 +48,7 @@ import java.util.List;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -60,7 +61,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-subscriptions" + PortletKeys.SUBSCRIPTIONS,
+		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-subscriptions" + OSBLCSPortletKeys.SUBSCRIPTIONS,
 		"com.liferay.portlet.display-category=category.lcs",
 		"com.liferay.portlet.footer-portlet-javascript=/js/jquery.min.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/highcharts-base.min.js",
@@ -90,7 +91,9 @@ public class SubscriptionsPortlet extends MVCPortlet {
 		throws IOException {
 
 		try {
-			AuthUtil.checkAuthToken(resourceRequest);
+			AuthTokenUtil.checkCSRFToken(
+				PortalUtil.getHttpServletRequest(resourceRequest),
+				SubscriptionsPortlet.class.getName());
 
 			String resourceID = resourceRequest.getResourceID();
 
@@ -148,6 +151,12 @@ public class SubscriptionsPortlet extends MVCPortlet {
 		}
 	}
 
+	public void setSubscriptionsAdvisor(
+		SubscriptionsAdvisor subscriptionsAdvisor) {
+
+		_subscriptionsAdvisor = subscriptionsAdvisor;
+	}
+
 	protected void downloadLCSClusterNodeUptimesDelimitedReport(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
@@ -155,9 +164,15 @@ public class SubscriptionsPortlet extends MVCPortlet {
 		Report report = ReportFactoryUtil.getReport(
 			ReportFactory.Type.LCS_CLUSTER_NODE_UPTIMES_DELIMITED);
 
+		ReportContext.ReportContextBuilder reportContextBuilder =
+			new ReportContext.ReportContextBuilder();
+
+		reportContextBuilder.lcsClusterNodeId(
+			ParamUtil.getLong(resourceRequest, "lcsClusterNodeId"));
+		reportContextBuilder.locale(resourceRequest.getLocale());
+
 		ByteArrayOutputStream byteArrayOutputStream = report.process(
-			new ReportContext(
-				getPortletConfig(), getPortletContext(), resourceRequest));
+			reportContextBuilder.build());
 
 		writeFile(
 			resourceResponse, byteArrayOutputStream, "uptimes.csv", "text/csv");
@@ -170,9 +185,17 @@ public class SubscriptionsPortlet extends MVCPortlet {
 		Report report = ReportFactoryUtil.getReport(
 			ReportFactory.Type.LCS_CLUSTER_NODE_UPTIMES_INVOICE_PDF);
 
+		ReportContext.ReportContextBuilder reportContextBuilder =
+			new ReportContext.ReportContextBuilder();
+
+		reportContextBuilder.lcsClusterNodeId(
+			ParamUtil.getLong(resourceRequest, "lcsClusterNodeId"));
+		reportContextBuilder.locale(resourceRequest.getLocale());
+		reportContextBuilder.reportDependenciesPath(
+			getReportDependenciesPath());
+
 		ByteArrayOutputStream byteArrayOutputStream = report.process(
-			new ReportContext(
-				getPortletConfig(), getPortletContext(), resourceRequest));
+			reportContextBuilder.build());
 
 		writeFile(
 			resourceResponse, byteArrayOutputStream, "bill.pdf",
@@ -186,9 +209,17 @@ public class SubscriptionsPortlet extends MVCPortlet {
 		Report report = ReportFactoryUtil.getReport(
 			ReportFactory.Type.LCS_CLUSTER_NODE_UPTIMES_PDF);
 
+		ReportContext.ReportContextBuilder reportContextBuilder =
+			new ReportContext.ReportContextBuilder();
+
+		reportContextBuilder.lcsClusterNodeId(
+			ParamUtil.getLong(resourceRequest, "lcsClusterNodeId"));
+		reportContextBuilder.locale(resourceRequest.getLocale());
+		reportContextBuilder.reportDependenciesPath(
+			getReportDependenciesPath());
+
 		ByteArrayOutputStream byteArrayOutputStream = report.process(
-			new ReportContext(
-				getPortletConfig(), getPortletContext(), resourceRequest));
+			reportContextBuilder.build());
 
 		writeFile(
 			resourceResponse, byteArrayOutputStream, "uptimes.pdf",
@@ -207,9 +238,9 @@ public class SubscriptionsPortlet extends MVCPortlet {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		int[] periodArray = SubscriptionsUtil.parsePeriod(period);
+		int[] periodArray = _subscriptionsAdvisor.parsePeriod(period);
 
-		JSONObject billsJSONObject = SubscriptionsUtil.getBillsJSONObject(
+		JSONObject billsJSONObject = _subscriptionsAdvisor.getBillsJSONObject(
 			lcsProjectId, periodArray[1], periodArray[0],
 			themeDisplay.getLocale());
 
@@ -235,14 +266,14 @@ public class SubscriptionsPortlet extends MVCPortlet {
 
 		Calendar billsCalendar = Calendar.getInstance();
 
-		JSONObject billsJSONObject = SubscriptionsUtil.getBillsJSONObject(
+		JSONObject billsJSONObject = _subscriptionsAdvisor.getBillsJSONObject(
 			lcsProjectId, billsCalendar.get(Calendar.MONTH),
 			billsCalendar.get(Calendar.YEAR), themeDisplay.getLocale());
 
 		dataJSONObject.put("bills", billsJSONObject);
 
 		JSONObject lcsClusterNodeUptimesJSONObject =
-			SubscriptionsUtil.getLCSClusterNodeUptimesJSONObject(
+			_subscriptionsAdvisor.getLCSClusterNodeUptimesJSONObject(
 				LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID, lcsProjectId,
 				billsCalendar.get(Calendar.MONTH),
 				billsCalendar.get(Calendar.YEAR), themeDisplay.getLocale());
@@ -254,11 +285,12 @@ public class SubscriptionsPortlet extends MVCPortlet {
 
 		paymentsCalendar.add(Calendar.MONTH, -5);
 
-		JSONArray paymentsJSONArray = SubscriptionsUtil.getPaymentsJSONArray(
-			lcsProjectId, paymentsCalendar.get(Calendar.MONTH),
-			paymentsCalendar.get(Calendar.YEAR),
-			billsCalendar.get(Calendar.MONTH),
-			billsCalendar.get(Calendar.YEAR));
+		JSONArray paymentsJSONArray =
+			_subscriptionsAdvisor.getPaymentsJSONArray(
+				lcsProjectId, paymentsCalendar.get(Calendar.MONTH),
+				paymentsCalendar.get(Calendar.YEAR),
+				billsCalendar.get(Calendar.MONTH),
+				billsCalendar.get(Calendar.YEAR));
 
 		dataJSONObject.put("payments", paymentsJSONArray);
 
@@ -283,10 +315,10 @@ public class SubscriptionsPortlet extends MVCPortlet {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		int[] periodArray = SubscriptionsUtil.parsePeriod(period);
+		int[] periodArray = _subscriptionsAdvisor.parsePeriod(period);
 
 		JSONObject lcsClusterNodeUptimesJSONObject =
-			SubscriptionsUtil.getLCSClusterNodeUptimesJSONObject(
+			_subscriptionsAdvisor.getLCSClusterNodeUptimesJSONObject(
 				lcsClusterEntryId, lcsProjectId, periodArray[1], periodArray[0],
 				themeDisplay.getLocale());
 
@@ -309,10 +341,10 @@ public class SubscriptionsPortlet extends MVCPortlet {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		int[] startPeriodArray = SubscriptionsUtil.parsePeriod(startPeriod);
-		int[] endPeriodArray = SubscriptionsUtil.parsePeriod(endPeriod);
+		int[] startPeriodArray = _subscriptionsAdvisor.parsePeriod(startPeriod);
+		int[] endPeriodArray = _subscriptionsAdvisor.parsePeriod(endPeriod);
 
-		JSONArray jsonArray = SubscriptionsUtil.getPaymentsJSONArray(
+		JSONArray jsonArray = _subscriptionsAdvisor.getPaymentsJSONArray(
 			lcsProjectId, startPeriodArray[1], startPeriodArray[0],
 			endPeriodArray[1], endPeriodArray[0]);
 
@@ -321,6 +353,13 @@ public class SubscriptionsPortlet extends MVCPortlet {
 			LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_SUCCESS);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
+	}
+
+	protected String getReportDependenciesPath() {
+		PortletContext portletContext = getPortletContext();
+
+		return portletContext.getRealPath(
+			"/WEB-INF/classes/META-INF/resources/com/liferay/osb/lcs/report");
 	}
 
 	protected void getSubscriptionsDetails(
@@ -338,18 +377,18 @@ public class SubscriptionsPortlet extends MVCPortlet {
 
 		dataJSONObject.put(
 			"hasElasticSubscription",
-			SubscriptionsUtil.hasElasticSubscription(lcsProjectId));
+			_subscriptionsAdvisor.hasElasticSubscription(lcsProjectId));
 
 		PortletConfig portletConfig = getPortletConfig();
 
 		JSONArray lcsClusterEntriesJSONArray =
-			SubscriptionsUtil.getLCSClusterEntriesJSONArray(
+			_subscriptionsAdvisor.getLCSClusterEntriesJSONArray(
 				lcsProjectId, themeDisplay.getLocale());
 
 		dataJSONObject.put("lcsClusterEntries", lcsClusterEntriesJSONArray);
 
 		JSONArray lcsClusterNodesJSONArray =
-			SubscriptionsUtil.getLCSClusterNodesJSONArray(
+			_subscriptionsAdvisor.getLCSClusterNodesJSONArray(
 				lcsProjectId, themeDisplay.getLocale());
 
 		dataJSONObject.put("lcsClusterNodes", lcsClusterNodesJSONArray);
@@ -370,14 +409,14 @@ public class SubscriptionsPortlet extends MVCPortlet {
 				lcsProjectId);
 
 		JSONArray lcsSubscriptionEntriesJSONArray =
-			SubscriptionsUtil.getLCSSubscriptionEntriesJSONArray(
+			_subscriptionsAdvisor.getLCSSubscriptionEntriesJSONArray(
 				lcsOrderEntries, themeDisplay.getLocale(),
 				themeDisplay.getTimeZone());
 
 		dataJSONObject.put("subscriptions", lcsSubscriptionEntriesJSONArray);
 
 		JSONArray subscriptionsUsageJSONArray =
-			SubscriptionsUtil.getSubscriptionsUsageJSONArray(
+			_subscriptionsAdvisor.getSubscriptionsUsageJSONArray(
 				lcsProjectId, themeDisplay.getLocale());
 
 		dataJSONObject.put("subscriptionsUsage", subscriptionsUsageJSONArray);
@@ -408,12 +447,12 @@ public class SubscriptionsPortlet extends MVCPortlet {
 
 		dataJSONObject.put(
 			"hasElasticSubscription",
-			SubscriptionsUtil.hasElasticSubscription(lcsProjectId));
+			_subscriptionsAdvisor.hasElasticSubscription(lcsProjectId));
 
 		LCSClusterEntryServiceUtil.updateSubscriptionType(
 			lcsClusterEntryId, subscriptionType);
 
-		if (SubscriptionsUtil.hasElasticSubscription(lcsProjectId)) {
+		if (_subscriptionsAdvisor.hasElasticSubscription(lcsProjectId)) {
 			boolean elastic = ParamUtil.getBoolean(resourceRequest, "elastic");
 
 			LCSClusterEntryServiceUtil.updateElastic(
@@ -423,13 +462,13 @@ public class SubscriptionsPortlet extends MVCPortlet {
 		PortletConfig portletConfig = getPortletConfig();
 
 		JSONArray lcsClusterEntriesJSONArray =
-			SubscriptionsUtil.getLCSClusterEntriesJSONArray(
+			_subscriptionsAdvisor.getLCSClusterEntriesJSONArray(
 				lcsProjectId, themeDisplay.getLocale());
 
 		dataJSONObject.put("lcsClusterEntries", lcsClusterEntriesJSONArray);
 
 		JSONArray subscriptionsUsageJSONArray =
-			SubscriptionsUtil.getSubscriptionsUsageJSONArray(
+			_subscriptionsAdvisor.getSubscriptionsUsageJSONArray(
 				lcsProjectId, themeDisplay.getLocale());
 
 		dataJSONObject.put("subscriptionsUsage", subscriptionsUsageJSONArray);
@@ -465,5 +504,7 @@ public class SubscriptionsPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SubscriptionsPortlet.class);
+
+	private SubscriptionsAdvisor _subscriptionsAdvisor;
 
 }

@@ -15,15 +15,13 @@
 package com.liferay.osb.lcs.server.portlet;
 
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.exception.DuplicateLCSClusterNodeNameException;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodeCurrentThreadsMetricsServiceUtil;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodeJDBCConnectionPoolMetricsServiceUtil;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodeJVMMetricsServiceUtil;
 import com.liferay.osb.lcs.server.util.ServerUtil;
 import com.liferay.osb.lcs.service.LCSClusterNodeServiceUtil;
-import com.liferay.osb.lcs.util.AuthUtil;
-import com.liferay.osb.lcs.util.PortletKeys;
-import com.liferay.osb.lcs.util.WebKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -31,10 +29,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -58,7 +59,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-server" + PortletKeys.SERVER,
+		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-server" + OSBLCSPortletKeys.SERVER,
 		"com.liferay.portlet.display-category=category.lcs",
 		"com.liferay.portlet.footer-portlet-javascript=/js/jquery.min.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/highcharts-base.min.js",
@@ -111,7 +112,9 @@ public class ServerPortlet extends MVCPortlet {
 		throws IOException {
 
 		try {
-			AuthUtil.checkAuthToken(resourceRequest);
+			AuthTokenUtil.checkCSRFToken(
+				PortalUtil.getHttpServletRequest(resourceRequest),
+				ServerPortlet.class.getName());
 
 			String resourceID = resourceRequest.getResourceID();
 

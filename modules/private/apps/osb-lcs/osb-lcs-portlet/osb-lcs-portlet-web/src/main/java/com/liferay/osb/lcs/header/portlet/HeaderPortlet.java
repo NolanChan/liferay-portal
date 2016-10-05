@@ -14,7 +14,7 @@
 
 package com.liferay.osb.lcs.header.portlet;
 
-import com.liferay.osb.lcs.util.PortletKeys;
+import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-header" + PortletKeys.HEADER,
+		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-header" + OSBLCSPortletKeys.HEADER,
 		"com.liferay.portlet.display-category=category.lcs",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-header.js",
