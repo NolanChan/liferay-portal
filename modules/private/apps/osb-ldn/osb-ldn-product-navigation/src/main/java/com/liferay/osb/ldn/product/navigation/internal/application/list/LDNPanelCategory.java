@@ -50,7 +50,7 @@ public class LDNPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return "LDN";
+		return "Liferay Developer Network";
 	}
 
 	@Override
