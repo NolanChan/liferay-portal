@@ -1,39 +1,38 @@
-# Procedure to fix Core Upgrade Issues in Liferay 7
+# Procedure to Fix Core Upgrade Issues in Liferay 7
 
-In previous Liferay versions was really common to add upgrade fixes into verify
+In previous Liferay versions, it was common to add upgrade fixes into verify
 classes. That wasn't a good practice for two reasons:
 
-- The nature of an upgrade fix is to be executed just once. However a verify
-process remains in the code (for next Liferay versions) to be executed as many
-times as necessary.
-- These verify processes turn into classes really difficult to maintain since
-contain a bunch of upgrade fixes some of them old and useless for next Liferay
-versions. 
+- An upgrade fix should be executed just once. A verify process, however,
+remains in the code for subsequent Liferay versions to be executed as many times
+as necessary.
+- It is difficult to maintain verify processes that contain a bunch of upgrade
+fixes, especially ones that are old and irrelevant to newer Liferay versions.
 
-To avoid this we have defined a new procedure to fix upgrade issues in the Core
-from Liferay 7 or DXP and above:
+To avoid this, we've defined a new procedure to fix upgrade issues in the Core
+for Liferay 7 or DXP (and above):
 
-1.  Fix the issue in master. To do it, you should add the upgrade fix to the
-upgrade process class associated to the next GA release. For example, if latest
-published GA release is 7.0 GA2 (7001), you should add your upgrade fix to
-`UpgradeProcess_7_0_2` class, if that class doesn't exist yet, you should create
-it. This step will solve the issue for next GA upgrades.
+1. Fix the issue in `master`. To do it, add the upgrade fix to the upgrade
+process class associated to the next GA release. For example, if the latest
+published GA release is 7.0 GA2 (7001), add your upgrade fix to the
+`UpgradeProcess_7_0_2` class (create it if doesn't already exist). This step
+solves the issue for subsequent GA upgrades.
 
-2. Backport these changes to `ee-7.0.x`. Fix pack team should include these
-modifications to future fix packs. This will solve the issue for new EE
-customers who upgrade to DXP after installing this fix pack.
+2. Backport the upgrade fixes to `ee-7.0.x`. The fix pack team includes these
+modifications for future fix packs. This solves the issue for new EE customers
+who upgrade to DXP after installing this fix pack.
 
-3. If it's a critical issue or your customer needs to solve the problem but they
-can't repeat the upgrade, you should create a new module into
-`modules/private/fixes/upgrade` directory inside **liferay-portal-ee**
-(`ee-7.0.x`) branch. This module has to include a Gogo console command which
-exeuctes the same modifications than the upgrade process. You should create a
-knowledge base article with the instructions to execute the process so that
-other customers could use it in the future (add the related LPS issue to the
-documentation). As first reviewal, please, send the pull request to commit this
-module to the Upgrade SME (Alberto Chaparro).
+3. If it's a critical issue or your customer needs to solve the problem but
+can't repeat the upgrade, create a new module in the
+`modules/private/fixes/upgrade` directory inside the **liferay-portal-ee**
+(`ee-7.0.x`) branch. This module must include a Gogo console command which
+executes the same modifications as the upgrade process. Create a knowledge base
+article with the instructions to execute the process so that other customers can
+use it in the future (add the related LPS issue to the article). For initial
+review, send a pull request that commits this module to the Upgrade SME (i.e.,
+Alberto Chaparro).
 
-4. The module must fulfill following naming guidelines:
+4. The module must fulfill the following naming guidelines:
 
 	- **Directory name:**
 	`modules/private/post-upgrade-fix/post-upgrade-fix-{LPS_nnnnn}`
@@ -44,7 +43,7 @@ module to the Upgrade SME (Alberto Chaparro).
 	- **Gogo console scope:** `"postUpgradeFix"`
 	- **Gogo console function:** {LPS_nnnnn}
 
-As an example to perform this process, please check
+As an example of performing this process, please check the
 [LPS-66599](https://issues.liferay.com/browse/LPS-66599) post upgrade fix
 module:
 
@@ -56,8 +55,9 @@ module:
 `com.liferay.post.upgrade.fix.LPS_66599.PostUpgradeFixOSGiCommands`
 - **Full gogo console command:** `postUpgradeFix:LPS_66599`
 
-Remember that, when you deliver this module to a customer, the following
+Remember, when you deliver this module to a customer, the following
 requirements are mandatory:
 
-- Make a database and document library backup prior to execute the OSGI command.
+- Make a database and Document Library backup prior to executing the OSGi
+command.
 - Execute the command while the portal isn't receiving traffic.
