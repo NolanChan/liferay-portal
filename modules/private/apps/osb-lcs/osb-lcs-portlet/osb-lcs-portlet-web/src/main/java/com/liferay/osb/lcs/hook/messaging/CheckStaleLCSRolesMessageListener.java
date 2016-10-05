@@ -14,9 +14,9 @@
 
 package com.liferay.osb.lcs.hook.messaging;
 
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletServiceUtil;
 import com.liferay.osb.lcs.service.LCSNotificationLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil;
@@ -28,37 +28,38 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 
 import java.text.Format;
 
 import java.util.Date;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
  * @author Matija Petanjek
  */
 @Component(immediate = true, service = CheckStaleLCSRolesMessageListener.class)
-public class CheckStaleLCSRolesMessageListener extends
-	BaseSchedulerEntryMessageListener {
+public class CheckStaleLCSRolesMessageListener
+	extends BaseSchedulerEntryMessageListener {
 
 	@Activate
 	protected void activate() {
 		schedulerEntryImpl.setTrigger(
 			TriggerFactoryUtil.createTrigger(
-				getEventListenerClass(), getEventListenerClass(),
-				30, TimeUnit.MINUTE));
+				getEventListenerClass(), getEventListenerClass(), 30,
+				TimeUnit.MINUTE));
 
 		_schedulerEngineHelper.register(
 			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
@@ -67,6 +68,22 @@ public class CheckStaleLCSRolesMessageListener extends
 	@Deactivate
 	protected void deactivate() {
 		_schedulerEngineHelper.unregister(this);
+	}
+
+	protected void deleteLCSRole(LCSRole lcsRole, User user)
+		throws PortalException {
+
+		LCSRoleLocalServiceUtil.deleteLCSRole(lcsRole.getLcsRoleId());
+
+		if (_log.isInfoEnabled()) {
+			if (user != null) {
+				_log.info(
+					"Deleted stale LCS role for " + user.getEmailAddress());
+			}
+			else {
+				_log.info("Deleted LCS role " + lcsRole.getLcsRoleId());
+			}
+		}
 	}
 
 	@Override
@@ -127,25 +144,10 @@ public class CheckStaleLCSRolesMessageListener extends
 
 					deleteLCSRole(lcsRole, user);
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
-	}
-
-	protected void deleteLCSRole(LCSRole lcsRole, User user)
-		throws PortalException {
-
-		LCSRoleLocalServiceUtil.deleteLCSRole(lcsRole.getLcsRoleId());
-
-		if (_log.isInfoEnabled()) {
-			if (user != null) {
-				_log.info(
-					"Deleted stale LCS role for " + user.getEmailAddress());
-			}
-			else {
-				_log.info("Deleted LCS role " + lcsRole.getLcsRoleId());
-			}
-		}
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -164,14 +166,13 @@ public class CheckStaleLCSRolesMessageListener extends
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CheckStaleLCSRolesMessageListener.class);
 
-	private Format _dateFormatDateTime =
+	private final Format _dateFormatDateTime =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"MMM d, " + "yyyy - hh:mm:ss");
 	private Date _lastCheckDate = new Date();
-
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

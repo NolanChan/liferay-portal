@@ -17,10 +17,10 @@ package com.liferay.osb.lcs.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.lcs.subscription.SubscriptionType;
+import com.liferay.osb.lcs.constants.LCSClusterEntryConstants;
 import com.liferay.osb.lcs.exception.DuplicateLCSClusterEntryNameException;
 import com.liferay.osb.lcs.exception.RequiredLCSClusterEntryNameException;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
-import com.liferay.osb.lcs.constants.LCSClusterEntryConstants;
 import com.liferay.osb.lcs.model.LCSClusterEntryToken;
 import com.liferay.osb.lcs.model.LCSInvitation;
 import com.liferay.osb.lcs.model.LCSRole;

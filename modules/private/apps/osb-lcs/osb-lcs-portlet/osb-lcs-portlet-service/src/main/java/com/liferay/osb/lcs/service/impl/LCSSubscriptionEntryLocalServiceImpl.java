@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+
 import com.liferay.lcs.rest.JSONErrorCode;
 import com.liferay.lcs.subscription.SubscriptionType;
 import com.liferay.osb.lcs.exception.LCSSubscriptionEntryProductException;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -629,7 +631,7 @@ public class LCSSubscriptionEntryLocalServiceImpl
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LCSSubscriptionEntryLocalServiceImpl.class);
 
 	private ObjectMapper _objectMapper;

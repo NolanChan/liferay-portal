@@ -36,9 +36,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -52,6 +51,8 @@ import javax.portlet.PortletConfig;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marko Cikos
  * @author Matija Petanjek
@@ -59,26 +60,25 @@ import javax.portlet.ResourceResponse;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.SUBSCRIPTIONS,
-		"javax.portlet.display-name=Subscriptions",
-		"javax.portlet.init-param.copy-request-parameters=true",
-		"javax.portlet.init-param.template-path=/subscriptions/",
-		"javax.portlet.init-param.view-template=/subscriptions/view.jsp",
-		"javax.portlet.expiration-cache=0",
-		"javax.portlet.mime-type=text/html",
-		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.info.title=Subscriptions",
-		"javax.portlet.info.short-title=Subscriptions",
-		"javax.portlet.info.keywords=Subscriptions",
-		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
-		"javax.portlet.supported-public-render-parameter=layoutLCSProjectId",
+		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-subscriptions" + PortletKeys.SUBSCRIPTIONS,
+		"com.liferay.portlet.display-category=category.lcs",
 		"com.liferay.portlet.footer-portlet-javascript=/js/jquery.min.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/highcharts-base.min.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-subscription-type-cell-editor.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-subscriptions.js",
-		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-subscriptions",
-		"com.liferay.portlet.display-category=category.lcs"
+		"javax.portlet.display-name=Subscriptions",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.info.keywords=Subscriptions",
+		"javax.portlet.info.short-title=Subscriptions",
+		"javax.portlet.info.title=Subscriptions",
+		"javax.portlet.init-param.copy-request-parameters=true",
+		"javax.portlet.init-param.template-path=/subscriptions/",
+		"javax.portlet.init-param.view-template=/subscriptions/view.jsp",
+		"javax.portlet.mime-type=text/html", "javax.portlet.name=",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supported-public-render-parameter=layoutLCSProjectId"
 	},
 	service = Portlet.class
 )
@@ -463,6 +463,7 @@ public class SubscriptionsPortlet extends MVCPortlet {
 		outputStream.close();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SubscriptionsPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SubscriptionsPortlet.class);
 
 }

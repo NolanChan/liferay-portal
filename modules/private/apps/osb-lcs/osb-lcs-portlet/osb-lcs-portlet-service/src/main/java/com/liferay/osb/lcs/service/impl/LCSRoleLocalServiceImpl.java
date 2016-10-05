@@ -19,11 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.osb.lcs.advisor.CompanyAdvisor;
 import com.liferay.osb.lcs.advisor.UserAdvisor;
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSInvitation;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.osbportlet.util.OSBPortletUtil;
 import com.liferay.osb.lcs.service.base.LCSRoleLocalServiceBaseImpl;
@@ -229,7 +229,7 @@ public class LCSRoleLocalServiceImpl extends LCSRoleLocalServiceBaseImpl {
 	 * @return     the LCS role in the LCS project, or <code>null</code> if no
 	 *             matching LCS role is found
 	 * @since      LCS 0.1
-	 * @deprecated As of LCS 1.1, replaced by {@link
+	 * @deprecated As of 7.0.0, As of LCS 1.1, replaced by {@link
 	 *             #hasUserLCSAdministratorLCSRole(long, long)}
 	 */
 	@Deprecated

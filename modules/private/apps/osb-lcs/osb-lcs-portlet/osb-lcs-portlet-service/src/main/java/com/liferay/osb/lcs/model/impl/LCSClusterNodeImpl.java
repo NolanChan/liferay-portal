@@ -15,6 +15,7 @@
 package com.liferay.osb.lcs.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.lcs.util.LCSClusterNodeStatus;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
@@ -53,7 +54,7 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 	@Override
 	public int getLCSClusterNodeClusterLinkStatus() {
 		if (LCSClusterNodeStatus.
-			LCS_CLUSTER_NODE_CLUSTER_LINK_HEALTHY.hasStatus(_status)) {
+				LCS_CLUSTER_NODE_CLUSTER_LINK_HEALTHY.hasStatus(_status)) {
 
 			return LCSConstants.LCS_CLUSTER_NODE_CLUSTER_LINK_HEALTHY;
 		}
@@ -64,7 +65,7 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 	@Override
 	public int getMetricsLCSServiceStatus() {
 		if (LCSClusterNodeStatus.METRICS_LCS_SERVICE_ENABLED.hasStatus(
-			_status)) {
+				_status)) {
 
 			return LCSConstants.METRICS_LCS_SERVICE_AVAILABLE;
 		}
@@ -84,7 +85,7 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 	@Override
 	public int getPatchesLCSServiceStatus() {
 		if (LCSClusterNodeStatus.PATCHES_LCS_SERVICE_ENABLED.hasStatus(
-			_status)) {
+				_status)) {
 
 			return LCSConstants.PATCHES_LCS_SERVICE_AVAILABLE;
 		}
@@ -119,7 +120,7 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 	@Override
 	public int getPortalPropertiesLCSServiceStatus() {
 		if (LCSClusterNodeStatus.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED.
-			hasStatus(_status)) {
+				hasStatus(_status)) {
 
 			return LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_AVAILABLE;
 		}
@@ -139,7 +140,7 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 	@Override
 	public boolean isLCSCLusterNodeClusterLinkHealthy() {
 		if (LCSClusterNodeStatus.
-			LCS_CLUSTER_NODE_CLUSTER_LINK_HEALTHY.hasStatus(_status)) {
+				LCS_CLUSTER_NODE_CLUSTER_LINK_HEALTHY.hasStatus(_status)) {
 
 			return true;
 		}
@@ -194,7 +195,7 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 	@Override
 	public boolean isMetricsLCSServiceEnabled() {
 		if (LCSClusterNodeStatus.METRICS_LCS_SERVICE_ENABLED.hasStatus(
-			getStatus())) {
+				getStatus())) {
 
 			return true;
 		}
@@ -219,7 +220,7 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 	@Override
 	public boolean isPatchesLCSServiceEnabled() {
 		if (LCSClusterNodeStatus.PATCHES_LCS_SERVICE_ENABLED.hasStatus(
-			getStatus())) {
+				getStatus())) {
 
 			return true;
 		}
@@ -239,7 +240,7 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 	@Override
 	public boolean isPortalPropertiesLCSServiceEnabled() {
 		if (LCSClusterNodeStatus.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED.
-			hasStatus(getStatus())) {
+				hasStatus(getStatus())) {
 
 			return true;
 		}
@@ -277,6 +278,6 @@ public class LCSClusterNodeImpl extends LCSClusterNodeBaseImpl {
 	private Map<String, Integer> _patchIdsStatuses = new HashMap<>();
 	private int _patchingToolVersion;
 	private String _portalEdition;
-	private int _status;
+	private final int _status;
 
 }

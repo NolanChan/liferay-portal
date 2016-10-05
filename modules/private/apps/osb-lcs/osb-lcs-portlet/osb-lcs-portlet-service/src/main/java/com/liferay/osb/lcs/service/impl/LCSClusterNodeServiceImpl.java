@@ -66,8 +66,8 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 	@Deprecated
 	@Override
 	public LCSClusterNode addLCSClusterNode(
-		long lcsClusterEntryId, String name, String description,
-		int buildNumber, String key, String location)
+			long lcsClusterEntryId, String name, String description,
+			int buildNumber, String key, String location)
 		throws PortalException {
 
 		return addLCSClusterNode(
@@ -77,9 +77,9 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 
 	@Override
 	public LCSClusterNode addLCSClusterNode(
-		long lcsClusterEntryId, String name, String description,
-		int buildNumber, String key, String location,
-		int processorCoresTotal)
+			long lcsClusterEntryId, String name, String description,
+			int buildNumber, String key, String location,
+			int processorCoresTotal)
 		throws PortalException {
 
 		LCSClusterEntryPermission.check(
@@ -113,8 +113,8 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 	@Deprecated
 	@Override
 	public LCSClusterNode addLCSClusterNode(
-		String siblingKey, String name, String description, String key,
-		String location)
+			String siblingKey, String name, String description, String key,
+			String location)
 		throws PortalException {
 
 		return addLCSClusterNode(
@@ -123,8 +123,8 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 
 	@Override
 	public LCSClusterNode addLCSClusterNode(
-		String siblingKey, String name, String description, String key,
-		String location, int processorCoresTotal)
+			String siblingKey, String name, String description, String key,
+			String location, int processorCoresTotal)
 		throws PortalException {
 
 		LCSClusterNode siblingLCSClusterNode = getLCSClusterNode(siblingKey);
@@ -207,7 +207,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 	 */
 	@Override
 	public List<LCSClusterNode> getLCSClusterEntryLCSClusterNodes(
-		long lcsClusterEntryId)
+			long lcsClusterEntryId)
 		throws PortalException {
 
 		LCSClusterEntryPermission.check(
@@ -230,7 +230,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public List<LCSClusterNode> getLCSClusterEntryLCSClusterNodes(
-		long lcsClusterEntryId, boolean details)
+			long lcsClusterEntryId, boolean details)
 		throws PortalException {
 
 		LCSClusterEntryPermission.check(
@@ -280,7 +280,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public LCSClusterNode getLCSClusterNode(
-		long lcsClusterNodeId, boolean details)
+			long lcsClusterNodeId, boolean details)
 		throws PortalException {
 
 		LCSClusterNode lcsClusterNode =
@@ -365,7 +365,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public List<LCSClusterNode> getLCSProjectLCSClusterNodes(
-		long lcsProjectId, boolean details)
+			long lcsProjectId, boolean details)
 		throws PortalException {
 
 		return lcsClusterNodeLocalService.getLCSProjectLCSClusterNodes(
@@ -415,8 +415,8 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public LCSClusterNode updateLCSClusterNode(
-		long lcsClusterNodeId, String name, String description,
-		String location)
+			long lcsClusterNodeId, String name, String description,
+			String location)
 		throws PortalException {
 
 		LCSClusterNode lcsClusterNode =
@@ -433,13 +433,13 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 
 	@Override
 	public void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(
-		String key)
+			String key)
 		throws PortalException {
 
 		User user = getUser();
 
 		if (!StringUtil.equalsIgnoreCase(
-			user.getEmailAddress(), "system@liferay.com")) {
+				user.getEmailAddress(), "system@liferay.com")) {
 
 			throw new PrincipalException();
 		}
@@ -455,7 +455,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 		User user = getUser();
 
 		if (!StringUtil.equalsIgnoreCase(
-			user.getEmailAddress(), "system@liferay.com")) {
+				user.getEmailAddress(), "system@liferay.com")) {
 
 			throw new PrincipalException();
 		}
@@ -470,7 +470,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 
 		for (LCSClusterNode siblingLCSClusterNode : siblingLCSClusterNodes) {
 			if (LCSClusterNodeStatus.isActive(
-				siblingLCSClusterNode.getStatus())) {
+					siblingLCSClusterNode.getStatus())) {
 
 				if (siblingKeys.contains(siblingLCSClusterNode.getKey())) {
 					continue;

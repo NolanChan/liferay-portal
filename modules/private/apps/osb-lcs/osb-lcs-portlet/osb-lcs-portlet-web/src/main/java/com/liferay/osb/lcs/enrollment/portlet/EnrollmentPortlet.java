@@ -14,24 +14,22 @@
 
 package com.liferay.osb.lcs.enrollment.portlet;
 
-import com.liferay.osb.lcs.util.PortletKeys;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.advisor.LCSMessageAdvisor;
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.email.EmailAdvisor;
 import com.liferay.osb.lcs.email.EmailContext;
 import com.liferay.osb.lcs.enrollment.util.EnrollmentUtil;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
 import com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSRoleServiceUtil;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
 import com.liferay.osb.lcs.util.ActionKeys;
 import com.liferay.osb.lcs.util.AuthUtil;
+import com.liferay.osb.lcs.util.PortletKeys;
 import com.liferay.osb.lcs.util.WebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -40,14 +38,15 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.util.bean.PortletBeanLocatorUtil;
-import org.osgi.service.component.annotations.Component;
 
 import java.io.IOException;
 
@@ -60,6 +59,8 @@ import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Igor Beslic
  * @author Marko Cikos
@@ -68,24 +69,23 @@ import javax.servlet.http.HttpServletRequest;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.ENROLLMENT,
+		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-enrollment" + PortletKeys.ENROLLMENT,
+		"com.liferay.portlet.display-category=category.lcs",
+		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
+		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-enrollment.js",
+		"com.liferay.portlet.header-portlet-css=/css/lcs-admin.css",
 		"javax.portlet.display-name=Enrollment",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.info.keywords=Enrollment",
+		"javax.portlet.info.short-title=Enrollment",
+		"javax.portlet.info.title=Enrollment",
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.template-path=/enrollment/",
 		"javax.portlet.init-param.view-template=/enrollment/view.jsp",
-		"javax.portlet.expiration-cache=0",
-		"javax.portlet.mime-type=text/html",
+		"javax.portlet.mime-type=text/html", "javax.portlet.name=",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.info.title=Enrollment",
-		"javax.portlet.info.short-title=Enrollment",
-		"javax.portlet.info.keywords=Enrollment",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
-		"javax.portlet.supported-public-render-parameter=layoutLCSProjectId",
-		"com.liferay.portlet.header-portlet-css=/css/lcs-admin.css",
-		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
-		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-enrollment.js",
-		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-enrollment",
-		"com.liferay.portlet.display-category=category.lcs"
+		"javax.portlet.supported-public-render-parameter=layoutLCSProjectId"
 	},
 	service = Portlet.class
 )
@@ -353,7 +353,8 @@ public class EnrollmentPortlet extends MVCPortlet {
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(EnrollmentPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		EnrollmentPortlet.class);
 
 	private EmailAdvisor _emailAdvisor;
 	private LCSMessageAdvisor _lcsMessageAdvisor;

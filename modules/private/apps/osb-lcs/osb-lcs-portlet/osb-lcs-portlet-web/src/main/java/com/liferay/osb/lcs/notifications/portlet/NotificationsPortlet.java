@@ -25,13 +25,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import org.osgi.service.component.annotations.Component;
 
 import java.io.IOException;
 
 import javax.portlet.Portlet;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Igor Beslic
@@ -42,26 +43,25 @@ import javax.portlet.ResourceResponse;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.NOTIFICATIONS,
+		"com.liferay.portlet.add-default-resource=true" + PortletKeys.NOTIFICATIONS,
+		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-notifications",
+		"com.liferay.portlet.display-category=category.lcs",
+		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
+		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-notifications.js",
 		"javax.portlet.display-name=Notifications",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.info.keywords=Notifications",
+		"javax.portlet.info.short-title=Notifications",
+		"javax.portlet.info.title=Notifications",
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.template-path=/notifications/",
 		"javax.portlet.init-param.view-template=/notifications/view.jsp",
-		"javax.portlet.expiration-cache=0",
-		"javax.portlet.mime-type=text/html",
+		"javax.portlet.mime-type=text/html", "javax.portlet.name=",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.info.title=Notifications",
-		"javax.portlet.info.short-title=Notifications",
-		"javax.portlet.info.keywords=Notifications",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supported-public-render-parameter=layoutLCSClusterEntryId",
 		"javax.portlet.supported-public-render-parameter=layoutLCSClusterNodeId",
-		"javax.portlet.supported-public-render-parameter=layoutLCSProjectId",
-		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
-		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-notifications.js",
-		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-notifications",
-		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.display-category=category.lcs"
+		"javax.portlet.supported-public-render-parameter=layoutLCSProjectId"
 	},
 	service = Portlet.class
 )
@@ -132,6 +132,7 @@ public class NotificationsPortlet extends MVCPortlet {
 			lcsClusterNodeIds, lcsClusterNodeKeys, patchId);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(NotificationsPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		NotificationsPortlet.class);
 
 }

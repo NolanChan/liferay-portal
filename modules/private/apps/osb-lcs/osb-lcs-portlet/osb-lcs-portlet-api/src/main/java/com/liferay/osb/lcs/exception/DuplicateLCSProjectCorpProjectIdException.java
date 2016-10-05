@@ -30,7 +30,9 @@ public class DuplicateLCSProjectCorpProjectIdException extends PortalException {
 		super(msg);
 	}
 
-	public DuplicateLCSProjectCorpProjectIdException(String msg, Throwable cause) {
+	public DuplicateLCSProjectCorpProjectIdException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

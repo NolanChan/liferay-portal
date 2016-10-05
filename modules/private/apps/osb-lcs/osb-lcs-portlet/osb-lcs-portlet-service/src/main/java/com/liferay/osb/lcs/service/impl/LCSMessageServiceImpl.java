@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.constants.LCSMessageConstants;
 import com.liferay.osb.lcs.exception.NoSuchLCSProjectException;
 import com.liferay.osb.lcs.model.LCSMessage;
-import com.liferay.osb.lcs.constants.LCSMessageConstants;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.service.base.LCSMessageServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;

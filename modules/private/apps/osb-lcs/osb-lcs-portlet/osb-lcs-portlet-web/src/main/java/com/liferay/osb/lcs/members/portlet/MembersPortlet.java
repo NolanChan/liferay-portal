@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.util.bean.PortletBeanLocatorUtil;
-import org.osgi.service.component.annotations.Component;
 
 import java.io.IOException;
 
@@ -56,6 +55,8 @@ import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Igor Beslic
  * @author Marko Cikos
@@ -64,24 +65,23 @@ import javax.servlet.http.HttpServletRequest;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.MEMBERS,
+		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-members" + PortletKeys.MEMBERS,
+		"com.liferay.portlet.display-category=category.lcs",
+		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
+		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-members.js",
 		"javax.portlet.display-name=LCS Admin",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.info.keywords=Members",
+		"javax.portlet.info.short-title=Members",
+		"javax.portlet.info.title=Members",
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.template-path=/members/",
 		"javax.portlet.init-param.view-template=/members/view.jsp",
-		"javax.portlet.expiration-cache=0",
-		"javax.portlet.mime-type=text/html",
+		"javax.portlet.mime-type=text/html", "javax.portlet.name=",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.info.title=Members",
-		"javax.portlet.info.short-title=Members",
-		"javax.portlet.info.keywords=Members",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supported-public-render-parameter=layoutLCSClusterEntryId",
-		"javax.portlet.supported-public-render-parameter=layoutLCSProjectId",
-		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
-		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-members.js",
-		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-members",
-		"com.liferay.portlet.display-category=category.lcs"
+		"javax.portlet.supported-public-render-parameter=layoutLCSProjectId"
 	},
 	service = Portlet.class
 )
@@ -166,8 +166,7 @@ public class MembersPortlet extends MVCPortlet {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			String message = LanguageUtil.get(
-				resourceRequest.getLocale(),
-				"your-request-failed-to-complete");
+				resourceRequest.getLocale(), "your-request-failed-to-complete");
 
 			jsonObject.put(LCSConstants.JSON_KEY_MESSAGE, message);
 			jsonObject.put(
@@ -322,7 +321,7 @@ public class MembersPortlet extends MVCPortlet {
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MembersPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(MembersPortlet.class);
 
 	private CompanyAdvisor _companyAdvisor;
 	private EmailAdvisor _emailAdvisor;

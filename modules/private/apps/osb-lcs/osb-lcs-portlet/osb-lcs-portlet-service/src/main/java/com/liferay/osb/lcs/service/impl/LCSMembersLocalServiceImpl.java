@@ -84,7 +84,7 @@ public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {
 
 		for (long userId : userIds) {
 			if (!OSBPortletServiceUtil.hasUserCorpProject(
-				userId, corpProjectId)) {
+					userId, corpProjectId)) {
 
 				noCorpProjectUserIds.add(userId);
 
@@ -122,7 +122,7 @@ public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {
 			group.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-			userId, group.getGroupId(), role.getRoleId())) {
+				userId, group.getGroupId(), role.getRoleId())) {
 
 			return;
 		}
@@ -131,7 +131,7 @@ public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {
 			userId, group.getGroupId(), new long[] {role.getRoleId()});
 
 		UserLocalServiceUtil.addGroupUsers(
-			group.getGroupId(), new long[]{userId});
+			group.getGroupId(), new long[] {userId});
 	}
 
 }

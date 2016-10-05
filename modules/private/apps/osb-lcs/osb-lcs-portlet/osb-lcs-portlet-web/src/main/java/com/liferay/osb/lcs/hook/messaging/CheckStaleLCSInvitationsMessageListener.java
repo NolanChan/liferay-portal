@@ -24,34 +24,33 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 
 import java.text.Format;
 
 import java.util.Date;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
  * @author Matija Petanjek
  */
 @Component(
-	immediate = true,
-	service = CheckStaleLCSInvitationsMessageListener.class
+	immediate = true, service = CheckStaleLCSInvitationsMessageListener.class
 )
 public class CheckStaleLCSInvitationsMessageListener
 	extends BaseSchedulerEntryMessageListener {
@@ -60,8 +59,8 @@ public class CheckStaleLCSInvitationsMessageListener
 	protected void activate() {
 		schedulerEntryImpl.setTrigger(
 			TriggerFactoryUtil.createTrigger(
-				getEventListenerClass(), getEventListenerClass(),
-				60, TimeUnit.MINUTE));
+				getEventListenerClass(), getEventListenerClass(), 60,
+				TimeUnit.MINUTE));
 
 		_schedulerEngineHelper.register(
 			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
@@ -70,6 +69,19 @@ public class CheckStaleLCSInvitationsMessageListener
 	@Deactivate
 	protected void deactivate() {
 		_schedulerEngineHelper.unregister(this);
+	}
+
+	protected void deleteLCSInvitation(LCSInvitation lcsInvitation)
+		throws PortalException {
+
+		LCSInvitationLocalServiceUtil.deleteLCSInvitation(
+			lcsInvitation.getLcsInvitationId());
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Deleted stale LCS invitation for " +
+					lcsInvitation.getEmailAddress());
+		}
 	}
 
 	@Override
@@ -123,22 +135,10 @@ public class CheckStaleLCSInvitationsMessageListener
 						deleteLCSInvitation(lcsInvitation);
 					}
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
-	}
-
-	protected void deleteLCSInvitation(LCSInvitation lcsInvitation)
-		throws PortalException {
-
-		LCSInvitationLocalServiceUtil.deleteLCSInvitation(
-			lcsInvitation.getLcsInvitationId());
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Deleted stale LCS invitation for " +
-					lcsInvitation.getEmailAddress());
-		}
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -157,14 +157,13 @@ public class CheckStaleLCSInvitationsMessageListener
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CheckStaleLCSInvitationsMessageListener.class);
 
-	private Format _dateFormatDateTime =
+	private final Format _dateFormatDateTime =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"MMM d, " + "yyyy - hh:mm:ss");
 	private Date _lastCheckDate = new Date();
-
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

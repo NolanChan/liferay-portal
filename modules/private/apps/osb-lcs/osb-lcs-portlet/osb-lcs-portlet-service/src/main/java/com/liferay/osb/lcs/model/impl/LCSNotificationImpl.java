@@ -15,6 +15,7 @@
 package com.liferay.osb.lcs.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSProject;

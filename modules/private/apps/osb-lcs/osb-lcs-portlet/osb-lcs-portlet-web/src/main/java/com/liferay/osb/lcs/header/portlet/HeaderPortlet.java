@@ -16,9 +16,10 @@ package com.liferay.osb.lcs.header.portlet;
 
 import com.liferay.osb.lcs.util.PortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.Portlet;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Matija Petanjek
@@ -26,25 +27,23 @@ import javax.portlet.Portlet;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.HEADER,
-		"javax.portlet.display-name=Header",
+		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-header" + PortletKeys.HEADER,
+		"com.liferay.portlet.display-category=category.lcs",
+		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
+		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-header.js",
+		"javax.portlet.display-name=Header", "javax.portlet.expiration-cache=0",
+		"javax.portlet.info.keywords=Header",
+		"javax.portlet.info.short-title=Header",
+		"javax.portlet.info.title=Header",
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.template-path=/header/",
 		"javax.portlet.init-param.view-template=/header/view.jsp",
-		"javax.portlet.expiration-cache=0",
-		"javax.portlet.mime-type=text/html",
+		"javax.portlet.mime-type=text/html", "javax.portlet.name=",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.info.title=Header",
-		"javax.portlet.info.short-title=Header",
-		"javax.portlet.info.keywords=Header",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supported-public-render-parameter=layoutLCSClusterEntryId",
 		"javax.portlet.supported-public-render-parameter=layoutLCSClusterNodeId",
-		"javax.portlet.supported-public-render-parameter=layoutLCSProjectId",
-		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
-		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-header.js",
-		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-header",
-		"com.liferay.portlet.display-category=category.lcs"
+		"javax.portlet.supported-public-render-parameter=layoutLCSProjectId"
 	},
 	service = Portlet.class
 )

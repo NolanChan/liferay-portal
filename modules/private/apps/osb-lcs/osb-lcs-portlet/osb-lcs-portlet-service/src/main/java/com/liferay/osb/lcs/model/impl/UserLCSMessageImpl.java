@@ -15,6 +15,7 @@
 package com.liferay.osb.lcs.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.osb.lcs.model.LCSMessage;
 import com.liferay.osb.lcs.service.LCSMessageLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;

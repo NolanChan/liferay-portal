@@ -796,7 +796,7 @@ public class LCSClusterNodeLocalServiceImpl
 
 		if (oldLcsClusterNode != null) {
 			if (StringUtil.equalsIgnoreCase(
-				name, oldLcsClusterNode.getName())) {
+					name, oldLcsClusterNode.getName())) {
 
 				return;
 			}

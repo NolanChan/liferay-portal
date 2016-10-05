@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Igor Beslic
  */
 @ProviderType
-public class NoSuchLCSNotificationAuditEntryException extends NoSuchModelException {
+public class NoSuchLCSNotificationAuditEntryException
+	extends NoSuchModelException {
 
 	public NoSuchLCSNotificationAuditEntryException() {
 	}
@@ -30,7 +31,9 @@ public class NoSuchLCSNotificationAuditEntryException extends NoSuchModelExcepti
 		super(msg);
 	}
 
-	public NoSuchLCSNotificationAuditEntryException(String msg, Throwable cause) {
+	public NoSuchLCSNotificationAuditEntryException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

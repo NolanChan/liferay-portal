@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletServiceUtil;
 import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
 import com.liferay.osb.lcs.service.base.LCSProjectServiceBaseImpl;
@@ -44,7 +44,7 @@ import java.util.List;
 /**
  * @author Igor Beslic
  * @see LCSProjectServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSProjectServiceUtil
+ * @see LCSProjectServiceUtil
  */
 @ProviderType
 public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {
@@ -153,8 +153,8 @@ public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {
 
 		for (LCSProject lcsProject : lcsProjects) {
 			if (StringUtil.equalsIgnoreCase(
-				lcsProject.getName(),
-				LCSConstants.CORP_PROJECT_DEFAULT_NAME)) {
+					lcsProject.getName(),
+					LCSConstants.CORP_PROJECT_DEFAULT_NAME)) {
 
 				return lcsProject.getLcsProjectId();
 			}

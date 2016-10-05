@@ -33,9 +33,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
 
@@ -48,6 +47,8 @@ import javax.portlet.PortletConfig;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Igor Beslic
  * @author Ivica Cardic
@@ -57,29 +58,27 @@ import javax.portlet.ResourceResponse;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.SERVER,
-		"javax.portlet.display-name=Server",
-		"javax.portlet.init-param.copy-request-parameters=true",
-		"javax.portlet.init-param.template-path=/server/",
-		"javax.portlet.init-param.view-template=/server/view.jsp",
-		"javax.portlet.expiration-cache=0",
-		"javax.portlet.mime-type=text/html",
-		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.info.title=Server",
-		"javax.portlet.info.short-title=Server",
-		"javax.portlet.info.keywords=Server",
-		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
-		"javax.portlet.supported-public-render-parameter=layoutLCSClusterEntryId",
-		"javax.portlet.supported-public-render-parameter=layoutLCSClusterNodeId",
-		"javax.portlet.supported-public-render-parameter=layoutLCSProjectId",
+		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-server" + PortletKeys.SERVER,
+		"com.liferay.portlet.display-category=category.lcs",
 		"com.liferay.portlet.footer-portlet-javascript=/js/jquery.min.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/highcharts-base.min.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/highcharts-more.min.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-notifications.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-server.js",
-		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-server",
-		"com.liferay.portlet.display-category=category.lcs"
+		"javax.portlet.display-name=Server", "javax.portlet.expiration-cache=0",
+		"javax.portlet.info.keywords=Server",
+		"javax.portlet.info.short-title=Server",
+		"javax.portlet.info.title=Server",
+		"javax.portlet.init-param.copy-request-parameters=true",
+		"javax.portlet.init-param.template-path=/server/",
+		"javax.portlet.init-param.view-template=/server/view.jsp",
+		"javax.portlet.mime-type=text/html", "javax.portlet.name=",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supported-public-render-parameter=layoutLCSClusterEntryId",
+		"javax.portlet.supported-public-render-parameter=layoutLCSClusterNodeId",
+		"javax.portlet.supported-public-render-parameter=layoutLCSProjectId"
 	},
 	service = Portlet.class
 )
@@ -288,6 +287,6 @@ public class ServerPortlet extends MVCPortlet {
 	private static final String _KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE =
 		".hideDefaultSuccessMessage";
 
-	private static Log _log = LogFactoryUtil.getLog(ServerPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(ServerPortlet.class);
 
 }

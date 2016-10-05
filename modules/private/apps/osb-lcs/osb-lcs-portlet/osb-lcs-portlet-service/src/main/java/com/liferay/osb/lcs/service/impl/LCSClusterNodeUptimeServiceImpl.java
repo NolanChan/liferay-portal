@@ -121,7 +121,7 @@ public class LCSClusterNodeUptimeServiceImpl
 		User user = getUser();
 
 		if (StringUtil.equalsIgnoreCase(
-			user.getEmailAddress(), "system@liferay.com")) {
+				user.getEmailAddress(), "system@liferay.com")) {
 
 			return;
 		}

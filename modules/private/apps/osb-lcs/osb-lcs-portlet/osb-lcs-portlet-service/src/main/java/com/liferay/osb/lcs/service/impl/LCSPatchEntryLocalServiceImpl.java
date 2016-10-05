@@ -16,7 +16,6 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osb.lcs.exception.NoSuchLCSPatchEntryException;
 import com.liferay.osb.lcs.model.LCSMetadata;
 import com.liferay.osb.lcs.model.LCSPatchEntry;
 import com.liferay.osb.lcs.service.base.LCSPatchEntryLocalServiceBaseImpl;

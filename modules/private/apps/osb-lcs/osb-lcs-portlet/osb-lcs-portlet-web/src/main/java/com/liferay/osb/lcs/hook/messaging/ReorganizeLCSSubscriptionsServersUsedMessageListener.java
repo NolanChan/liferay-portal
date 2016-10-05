@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -50,8 +51,8 @@ public class ReorganizeLCSSubscriptionsServersUsedMessageListener
 	protected void activate() {
 		schedulerEntryImpl.setTrigger(
 			TriggerFactoryUtil.createTrigger(
-				getEventListenerClass(), getEventListenerClass(),
-				10, TimeUnit.MINUTE));
+				getEventListenerClass(), getEventListenerClass(), 10,
+				TimeUnit.MINUTE));
 
 		_schedulerEngineHelper.register(
 			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
@@ -88,6 +89,7 @@ public class ReorganizeLCSSubscriptionsServersUsedMessageListener
 						reorganizeLCSSubsriptionsServersUsed(
 							lcsProject.getLcsProjectId());
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -109,7 +111,7 @@ public class ReorganizeLCSSubscriptionsServersUsedMessageListener
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ReorganizeLCSSubscriptionsServersUsedMessageListener.class);
 
 	private SchedulerEngineHelper _schedulerEngineHelper;

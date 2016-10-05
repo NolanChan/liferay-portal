@@ -21,6 +21,8 @@ import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.advisor.LCSMessageAdvisor;
 import com.liferay.osb.lcs.advisor.StringAdvisor;
 import com.liferay.osb.lcs.advisor.UserAdvisor;
+import com.liferay.osb.lcs.constants.LCSMessageConstants;
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.email.EmailAdvisor;
 import com.liferay.osb.lcs.email.EmailContext;
 import com.liferay.osb.lcs.exception.DuplicateLCSProjectCorpProjectIdException;
@@ -29,10 +31,8 @@ import com.liferay.osb.lcs.exception.NoSuchLCSProjectException;
 import com.liferay.osb.lcs.model.CorpProject;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSMessage;
-import com.liferay.osb.lcs.constants.LCSMessageConstants;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.service.base.LCSProjectLocalServiceBaseImpl;
 import com.liferay.osb.lcs.util.ApplicationProfile;
@@ -387,7 +387,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 	}
 
 	@Override
-	public long[] getLocalCorpProjectIds() throws SystemException {
+	public long[] getLocalCorpProjectIds() {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			LCSProject.class, this.getClassLoader());
 
@@ -512,7 +512,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LCSProjectLocalServiceImpl.class);
 
 	@BeanReference(type = EmailAdvisor.class)

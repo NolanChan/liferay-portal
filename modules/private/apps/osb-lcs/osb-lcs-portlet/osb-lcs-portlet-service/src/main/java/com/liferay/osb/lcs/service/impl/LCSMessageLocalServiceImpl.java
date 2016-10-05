@@ -16,12 +16,12 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSMessage;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.model.impl.LCSMessageImpl;
 import com.liferay.osb.lcs.service.base.LCSMessageLocalServiceBaseImpl;
 import com.liferay.osb.lcs.util.comparator.LCSMessageModifiedDateComparator;

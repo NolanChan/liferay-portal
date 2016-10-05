@@ -68,7 +68,8 @@ public class LCSInvitationLocalServiceImpl
 		}
 
 		@Override
-		public List<LCSInvitation> getLCSProjectLCSInvitations(long lcsProjectId) {
+		public List<LCSInvitation> getLCSProjectLCSInvitations(
+			long lcsProjectId) {
 			return lcsInvitationPersistence.findByLCSProjectId(
 				lcsProjectId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
@@ -81,7 +82,8 @@ public class LCSInvitationLocalServiceImpl
 		}
 
 		@Override
-		public boolean hasUserLCSInvitation(long userId) throws PortalException {
+		public boolean hasUserLCSInvitation(long userId)
+			throws PortalException {
 			User user = userPersistence.findByPrimaryKey(userId);
 
 			if (lcsInvitationPersistence.countByEmailAddress(
@@ -96,8 +98,9 @@ public class LCSInvitationLocalServiceImpl
 		protected void validate(long lcsProjectId, String emailAddress)
 			throws PortalException {
 
-			LCSInvitation lcsInvitation = lcsInvitationPersistence.fetchByLPI_EA(
-				lcsProjectId, emailAddress);
+			LCSInvitation lcsInvitation =
+				lcsInvitationPersistence.fetchByLPI_EA(
+					lcsProjectId, emailAddress);
 
 			if (lcsInvitation != null) {
 				throw new DuplicateLCSInvitationException();

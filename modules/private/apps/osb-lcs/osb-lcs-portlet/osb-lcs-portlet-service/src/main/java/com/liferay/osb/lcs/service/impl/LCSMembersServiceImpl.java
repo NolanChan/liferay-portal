@@ -127,7 +127,7 @@ public class LCSMembersServiceImpl extends LCSMembersServiceBaseImpl {
 		User user = getUser();
 
 		if (StringUtil.equalsIgnoreCase(
-			user.getEmailAddress(), "system@liferay.com")) {
+				user.getEmailAddress(), "system@liferay.com")) {
 
 			return;
 		}

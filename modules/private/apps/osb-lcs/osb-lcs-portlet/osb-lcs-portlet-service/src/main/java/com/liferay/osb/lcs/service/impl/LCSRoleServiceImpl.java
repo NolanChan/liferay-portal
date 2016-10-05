@@ -16,9 +16,9 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletServiceUtil;
 import com.liferay.osb.lcs.osbportlet.util.OSBPortletUtil;
 import com.liferay.osb.lcs.service.base.LCSRoleServiceBaseImpl;

@@ -46,6 +46,7 @@ public class CorpProjectImpl implements CorpProject {
 	}
 
 	private String _name;
-	private long corpProjectId;
 	private long _organizationId;
+	private long corpProjectId;
+
 }
