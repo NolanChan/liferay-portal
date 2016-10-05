@@ -69,7 +69,7 @@ long lcsProjectId = ParamUtil.getLong(request, "lcsProjectId");
 				<div class="lcs-section-content">
 
 					<%
-					String lcsClusterEntryName = LanguageUtil.get(pageContext, "all");
+					String lcsClusterEntryName = LanguageUtil.get(request, "all");
 
 					if (lcsClusterEntryId != LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID) {
 						LCSClusterEntry lcsClusterEntry = LCSClusterEntryServiceUtil.getLCSClusterEntry(lcsClusterEntryId);
@@ -90,7 +90,7 @@ long lcsProjectId = ParamUtil.getLong(request, "lcsProjectId");
 				<div class="lcs-section-content">
 
 					<%
-					String lcsClusterNodeName = LanguageUtil.get(pageContext, "all");
+					String lcsClusterNodeName = LanguageUtil.get(request, "all");
 
 					if (lcsClusterNodeId != LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID) {
 						LCSClusterNode lcsClusterNode = LCSClusterNodeServiceUtil.getLCSClusterNode(lcsClusterNodeId);
@@ -160,10 +160,10 @@ long lcsProjectId = ParamUtil.getLong(request, "lcsProjectId");
 		<div class="lcs-checkboxes-container lcs-section-content" id="<portlet:namespace />notifications-container">
 
 			<%
-			Layout downloadsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_DOWNLOADS);
+			Layout downloadsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_DOWNLOADS);
 			%>
 
-			<liferay-portlet:renderURL plid="<%= downloadsLayout.getPlid() %>" portletName="<%= PortletKeys.DOWNLOADS %>" var="downloadsURL">
+			<liferay-portlet:renderURL plid="<%= downloadsLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.DOWNLOADS %>" var="downloadsURL">
 				<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
 			</liferay-portlet:renderURL>
 
@@ -172,14 +172,14 @@ long lcsProjectId = ParamUtil.getLong(request, "lcsProjectId");
 			%>
 
 				<aui:field-wrapper>
-					<aui:input cssClass="notification" data-type="<%= lcsNotificationType.getType() %>" label="<%= HtmlUtil.escape(LanguageUtil.get(pageContext, lcsNotificationType.getLabel())) %>" name='<%= "notification" + lcsNotificationType.getType() %>' type="checkbox" />
+					<aui:input cssClass="notification" data-type="<%= lcsNotificationType.getType() %>" label="<%= HtmlUtil.escape(LanguageUtil.get(request, lcsNotificationType.getLabel())) %>" name='<%= "notification" + lcsNotificationType.getType() %>' type="checkbox" />
 
 					<c:if test="<%= lcsNotificationType.isEnterpriseSubscriptionRequired() %>">
-						<span class="icon-briefcase requirement" title='<liferay-ui:message key="this-notification-is-only-available-for-enterprise-subscribers" />'></span>
+						<span class="icon-briefcase requirement" title="<liferay-ui:message key="this-notification-is-only-available-for-enterprise-subscribers" />"></span>
 					</c:if>
 
 					<c:if test="<%= lcsNotificationType.getMinimumSupportedLCSPortletVersion() > 10 %>">
-						<aui:a cssClass="requirement" href="<%= downloadsURL %>" title='<%= LanguageUtil.format(pageContext, "this-notification-requires-that-your-server-has-liferay-connected-services-client-x-or-later-version-installed", lcsNotificationType.getMinimumSupportedLCSPortletVersion()) %>'>
+						<aui:a cssClass="requirement" href="<%= downloadsURL %>" title='<%= LanguageUtil.format(request, "this-notification-requires-that-your-server-has-liferay-connected-services-client-x-or-later-version-installed", lcsNotificationType.getMinimumSupportedLCSPortletVersion()) %>'>
 							(<liferay-ui:message arguments="<%= lcsNotificationType.getMinimumSupportedLCSPortletVersion() %>" key="client-x" />)
 						</aui:a>
 					</c:if>
@@ -202,7 +202,7 @@ long lcsProjectId = ParamUtil.getLong(request, "lcsProjectId");
 <aui:script use="lcs-account">
 	var lcsAccount = new Liferay.Portlet.LCSAccount(
 		{
-			errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+			errorMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
 			lcsConstants: {
 				ALL_ID: '<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>',
 				JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
@@ -217,9 +217,9 @@ long lcsProjectId = ParamUtil.getLong(request, "lcsProjectId");
 	lcsAccount.initializeEditEmailNotificationsPage(
 		{
 			labels: {
-				all: '<%= UnicodeLanguageUtil.get(pageContext, "all") %>'
+				all: '<%= UnicodeLanguageUtil.get(request, "all") %>'
 			},
-			projectsLCSNotifications: <%= AccountUtil.getLCSProjectsLCSNotificationsJSONArray() %>,
+			projectsLCSNotifications: <%= com.liferay.osb.lcs.account.util.AccountAdvisor.getLCSProjectsLCSNotificationsJSONArray() %>,
 			selected: {
 				environmentId: <%= lcsClusterEntryId %>,
 				projectId: <%= lcsProjectId %>,

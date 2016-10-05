@@ -75,7 +75,7 @@
 <aui:script use="lcs-subscriptions">
 	var lcsSubscriptions = new Liferay.Portlet.LCSSubscriptions(
 		{
-			errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+			errorMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
 			lcsConstants: {
 				JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
 				JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',
@@ -96,24 +96,24 @@
 			getLCSClusterNodeUptimesURL: '<%= getLCSClusterNodeUptimesURL %>',
 			getPaymentsURL: '<%= getPaymentsURL %>',
 			labels: {
-				all: '<%= UnicodeLanguageUtil.get(pageContext, "all") %>',
-				cost: '<%= UnicodeLanguageUtil.get(pageContext, "cost") %>',
-				daysAbbreviation: '<%= UnicodeLanguageUtil.get(pageContext, "days-abbreviation") %>',
-				duration: '<%= UnicodeLanguageUtil.get(pageContext, "duration") %>',
-				endTime: '<%= UnicodeLanguageUtil.format(pageContext, "end-time-x", "GMT") %>',
-				environment: '<%= UnicodeLanguageUtil.get(pageContext, "environment") %>',
-				hoursAbbreviation: '<%= UnicodeLanguageUtil.get(pageContext, "hours-abbreviation") %>',
-				minutesAbbreviation: '<%= UnicodeLanguageUtil.get(pageContext, "minutes-abbreviation") %>',
-				msgNoBills: '<%= UnicodeLanguageUtil.get(pageContext, "there-were-no-bills-in-the-selected-month") %>',
-				msgNoPaymentHistory: '<%= UnicodeLanguageUtil.get(pageContext, "there-were-no-payments-in-the-selected-date-range") %>',
-				msgNoUptimes: '<%= UnicodeLanguageUtil.get(pageContext, "there-were-no-online-servers-in-the-selected-month") %>',
-				onlineServers: '<%= UnicodeLanguageUtil.get(pageContext, "online-servers") %>',
-				paymentHistory: '<%= UnicodeLanguageUtil.get(pageContext, "payment-history") %>',
-				rate: '<%= UnicodeLanguageUtil.get(pageContext, "rate") %>',
-				server: '<%= UnicodeLanguageUtil.get(pageContext, "server") %>',
-				startTime: '<%= UnicodeLanguageUtil.format(pageContext, "start-time-x", "GMT") %>',
-				totalDuration: '<%= UnicodeLanguageUtil.get(pageContext, "total-duration") %>',
-				uptime: '<%= UnicodeLanguageUtil.get(pageContext, "uptime") %>'
+				all: '<%= UnicodeLanguageUtil.get(request, "all") %>',
+				cost: '<%= UnicodeLanguageUtil.get(request, "cost") %>',
+				daysAbbreviation: '<%= UnicodeLanguageUtil.get(request, "days-abbreviation") %>',
+				duration: '<%= UnicodeLanguageUtil.get(request, "duration") %>',
+				endTime: '<%= UnicodeLanguageUtil.format(request, "end-time-x", "GMT") %>',
+				environment: '<%= UnicodeLanguageUtil.get(request, "environment") %>',
+				hoursAbbreviation: '<%= UnicodeLanguageUtil.get(request, "hours-abbreviation") %>',
+				minutesAbbreviation: '<%= UnicodeLanguageUtil.get(request, "minutes-abbreviation") %>',
+				msgNoBills: '<%= UnicodeLanguageUtil.get(request, "there-were-no-bills-in-the-selected-month") %>',
+				msgNoPaymentHistory: '<%= UnicodeLanguageUtil.get(request, "there-were-no-payments-in-the-selected-date-range") %>',
+				msgNoUptimes: '<%= UnicodeLanguageUtil.get(request, "there-were-no-online-servers-in-the-selected-month") %>',
+				onlineServers: '<%= UnicodeLanguageUtil.get(request, "online-servers") %>',
+				paymentHistory: '<%= UnicodeLanguageUtil.get(request, "payment-history") %>',
+				rate: '<%= UnicodeLanguageUtil.get(request, "rate") %>',
+				server: '<%= UnicodeLanguageUtil.get(request, "server") %>',
+				startTime: '<%= UnicodeLanguageUtil.format(request, "start-time-x", "GMT") %>',
+				totalDuration: '<%= UnicodeLanguageUtil.get(request, "total-duration") %>',
+				uptime: '<%= UnicodeLanguageUtil.get(request, "uptime") %>'
 			}
 		}
 	);

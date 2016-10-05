@@ -21,7 +21,7 @@ long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSPr
 %>
 
 <c:choose>
-	<c:when test="<%= LCSProjectPermission.contains(permissionChecker, layoutLCSProjectId, ActionKeys.MANAGE_ENTRY) %>">
+	<c:when test="<%= LCSProjectPermission.contains(permissionChecker, layoutLCSProjectId, OSBLCSActionKeys.MANAGE_ENTRY) %>">
 
 		<%
 		List<User> unprovisionedLCSProjectUsers = LCSMembersUtil.getUnprovisionedLCSProjectUsers(layoutLCSProjectId);
@@ -102,7 +102,7 @@ long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSPr
 									int role = lcsInvitation.getRole();
 									%>
 
-									<liferay-ui:search-container-column-text name="role" value="<%= LanguageUtil.get(pageContext, LCSRoleConstants.getRoleLabel(role)) %>" />
+									<liferay-ui:search-container-column-text name="role" value="<%= LanguageUtil.get(request, LCSRoleConstants.getRoleLabel(role)) %>" />
 
 									<%
 									LCSClusterEntry lcsClusterEntry = null;
@@ -112,7 +112,7 @@ long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSPr
 									}
 									%>
 
-									<liferay-ui:search-container-column-text name="environment" value='<%= (lcsClusterEntry != null) ? HtmlUtil.escape(lcsClusterEntry.getName()) : LanguageUtil.get(pageContext, "all-environments") %>' />
+									<liferay-ui:search-container-column-text name="environment" value='<%= (lcsClusterEntry != null) ? HtmlUtil.escape(lcsClusterEntry.getName()) : LanguageUtil.get(request, "all-environments") %>' />
 
 									<liferay-ui:search-container-column-text name="action">
 										<liferay-ui:icon-menu icon="">
@@ -143,7 +143,7 @@ long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSPr
 		<aui:script use="lcs-members">
 			var lcsMembers = new Liferay.Portlet.LCSMembers(
 				{
-					errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+					errorMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
 					lcsAdministratorRole: '<%= LCSRoleConstants.ROLE_LCS_ADMINISTRATOR %>',
 					lcsConstants: {
 						JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',
@@ -184,13 +184,13 @@ long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSPr
 
 			lcsMembers.initializeViewPage(
 				{
-					assignRolesPanelTitle: '<%= UnicodeLanguageUtil.get(pageContext, "manage-requests") %>',
+					assignRolesPanelTitle: '<%= UnicodeLanguageUtil.get(request, "manage-requests") %>',
 					assignRolesURL: '<%= addLCSRolesURL %>',
 					cancelInvitationURL: '<%= cancelInvitationURL %>',
-					invitePanelTitle: '<%= UnicodeLanguageUtil.get(pageContext, "invite-user") %>',
+					invitePanelTitle: '<%= UnicodeLanguageUtil.get(request, "invite-user") %>',
 					inviteURL: '<%= inviteURL %>',
-					msgConfirmCancelInvitation: '<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-cancel-the-invitation") %>',
-					msgConfirmRejectRequests: '<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-reject-the-selected-membership-requests") %>',
+					msgConfirmCancelInvitation: '<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-cancel-the-invitation") %>',
+					msgConfirmRejectRequests: '<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-reject-the-selected-membership-requests") %>',
 					rejectRequestsURL: '<%= deleteLCSRolesURL %>',
 					renderAssignRolesPanelURL: '<%= assignRolesPanelURL %>',
 					renderInvitePanelURL: '<%= invitePanelURL %>'

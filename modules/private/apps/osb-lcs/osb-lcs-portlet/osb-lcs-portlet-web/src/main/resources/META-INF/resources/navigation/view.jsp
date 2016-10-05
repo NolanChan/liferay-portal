@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.osb.lcs.advisor.NavigationAdvisor" %>
+
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -22,13 +24,13 @@ long layoutLCSClusterNodeId = ParamUtil.getLong(request, "layoutLCSClusterNodeId
 long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSProjectServiceUtil.getUserDefaultLCSProjectId());
 String layoutSettingsModule = ParamUtil.getString(request, "layoutSettingsModule");
 
-Layout dashboardLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_DASHBOARD);
-Layout downloadsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_DOWNLOADS);
-Layout lcsClusterEntryLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
-Layout lcsClusterNodeLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_NODE);
+Layout dashboardLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_DASHBOARD);
+Layout downloadsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_DOWNLOADS);
+Layout lcsClusterEntryLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
+Layout lcsClusterNodeLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_NODE);
 LCSRole lcsRole = LCSRoleLocalServiceUtil.fetchLCSRole(themeDisplay.getUserId(), layoutLCSProjectId);
-Layout subscriptionsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_SUBSCRIPTIONS);
-Layout usersLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_USERS);
+Layout subscriptionsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_SUBSCRIPTIONS);
+Layout usersLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_USERS);
 %>
 
 <c:choose>
@@ -74,9 +76,9 @@ Layout usersLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.ge
 				</aui:a>
 			</div>
 
-			<c:if test="<%= LCSProjectPermission.contains(permissionChecker, layoutLCSProjectId, ActionKeys.MANAGE_USERS) %>">
+			<c:if test="<%= LCSProjectPermission.contains(permissionChecker, layoutLCSProjectId, OSBLCSActionKeys.MANAGE_USERS) %>">
 				<div class="menu-item <%= (usersLayout.getPlid() == plid) ? "selected" : StringPool.BLANK %>">
-					<liferay-portlet:renderURL plid="<%= usersLayout.getPlid() %>" portletName="<%= PortletKeys.MEMBERS %>" var="usersURL">
+					<liferay-portlet:renderURL plid="<%= usersLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.MEMBERS %>" var="usersURL">
 						<portlet:param name="mvcPath" value="/members/view.jsp" />
 						<portlet:param name="layoutLCSClusterEntryId" value="0" />
 						<portlet:param name="layoutLCSClusterNodeId" value="0" />
@@ -93,9 +95,9 @@ Layout usersLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.ge
 				</div>
 			</c:if>
 
-			<c:if test="<%= AdminUtil.isSubscriptionsEnabled() && LCSProjectPermission.contains(permissionChecker, layoutLCSProjectId, ActionKeys.MANAGE_SUBSCRIPTIONS) %>">
+			<c:if test="<%= AdminUtil.isSubscriptionsEnabled() && LCSProjectPermission.contains(permissionChecker, layoutLCSProjectId, OSBLCSActionKeys.MANAGE_SUBSCRIPTIONS) %>">
 				<div class="menu-item <%= (subscriptionsLayout.getPlid() == plid) ? "selected" : StringPool.BLANK %>">
-					<liferay-portlet:renderURL plid="<%= subscriptionsLayout.getPlid() %>" portletName="<%= PortletKeys.SUBSCRIPTIONS %>" var="subscriptionsURL">
+					<liferay-portlet:renderURL plid="<%= subscriptionsLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.SUBSCRIPTIONS %>" var="subscriptionsURL">
 						<portlet:param name="layoutLCSClusterEntryId" value="0" />
 						<portlet:param name="layoutLCSClusterNodeId" value="0" />
 						<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
@@ -112,7 +114,7 @@ Layout usersLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.ge
 			</c:if>
 
 			<div class="menu-item <%= (downloadsLayout.getPlid() == plid) ? "selected" : StringPool.BLANK %>">
-				<liferay-portlet:renderURL plid="<%= downloadsLayout.getPlid() %>" portletName="<%= PortletKeys.DOWNLOADS %>" var="downloadsURL">
+				<liferay-portlet:renderURL plid="<%= downloadsLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.DOWNLOADS %>" var="downloadsURL">
 					<portlet:param name="layoutLCSClusterEntryId" value="0" />
 					<portlet:param name="layoutLCSClusterNodeId" value="0" />
 					<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
@@ -132,9 +134,9 @@ Layout usersLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.ge
 			<c:choose>
 				<c:when test="<%= layoutLCSClusterEntryId == 0 %>">
 					<div class="environments-titlebar titlebar">
-						<c:if test="<%= LCSProjectPermission.contains(permissionChecker, layoutLCSProjectId, ActionKeys.ADD_LCS_CLUSTER_ENTRY) %>">
+						<c:if test="<%= LCSProjectPermission.contains(permissionChecker, layoutLCSProjectId, OSBLCSActionKeys.ADD_LCS_CLUSTER_ENTRY) %>">
 							<div class="titlebar-inner titlebar-top <%= Validator.equals(layoutSettingsModule, LCSConstants.SETTINGS_MODULE_ADD_ENVIRONMENT) ? "selected" : StringPool.BLANK %>">
-								<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= PortletKeys.ENVIRONMENT %>" var="addLCSClusterEntryURL">
+								<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.ENVIRONMENT %>" var="addLCSClusterEntryURL">
 									<portlet:param name="mvcPath" value="/environment/add_lcs_cluster_entry.jsp" />
 									<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
 								</liferay-portlet:renderURL>
@@ -160,17 +162,17 @@ Layout usersLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.ge
 						%>
 
 							<div class="menu-item">
-								<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= PortletKeys.ENVIRONMENT %>" var="lcsClusterEntryURL">
+								<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.ENVIRONMENT %>" var="lcsClusterEntryURL">
 									<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(lcsClusterEntryId) %>" />
 									<portlet:param name="layoutLCSClusterNodeId" value="0" />
 									<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
 								</liferay-portlet:renderURL>
 
 								<aui:a cssClass="environment" href="<%= lcsClusterEntryURL %>" label="<%= HtmlUtil.escape(lcsClusterEntry.getName()) %>" title="<%= HtmlUtil.escape(lcsClusterEntry.getName()) %>">
-									<span class="environment-icon lcs-content-type-icon <%= lcsClusterEntry.isEnvironment() ? "group" : "cluster" %> <%= NavigationUtil.getLCSClusterEntryHealthStatusCSSClass(lcsClusterEntry.hasOfflineLCSClusterNode(), lcsClusterNodes.size()) %>" title="<%= LanguageUtil.get(pageContext, NavigationUtil.getLCSClusterEntryHealthStatusTitle(lcsClusterEntry.isCluster(), lcsClusterEntry.hasOfflineLCSClusterNode())) %>"></span>
+									<span class="environment-icon lcs-content-type-icon <%= lcsClusterEntry.isEnvironment() ? "group" : "cluster" %> <%= NavigationAdvisor.getLCSClusterEntryHealthStatusCSSClass(lcsClusterEntry.hasOfflineLCSClusterNode(), lcsClusterNodes.size()) %>" title="<%= LanguageUtil.get(request, NavigationAdvisor.getLCSClusterEntryHealthStatusTitle(lcsClusterEntry.isCluster(), lcsClusterEntry.hasOfflineLCSClusterNode())) %>"></span>
 								</aui:a>
 
-								<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= PortletKeys.ENVIRONMENT %>" var="lcsClusterEntrySettingsURL">
+								<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.ENVIRONMENT %>" var="lcsClusterEntrySettingsURL">
 									<portlet:param name="environmentPage" value="settings" />
 									<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(lcsClusterEntryId) %>" />
 									<portlet:param name="layoutLCSClusterNodeId" value="0" />
@@ -187,7 +189,7 @@ Layout usersLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.ge
 					</div>
 				</c:when>
 				<c:otherwise>
-					<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= PortletKeys.ENVIRONMENT %>" var="lcsClusterEntryURL">
+					<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.ENVIRONMENT %>" var="lcsClusterEntryURL">
 						<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
 						<portlet:param name="layoutLCSClusterNodeId" value="0" />
 						<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
@@ -203,7 +205,7 @@ Layout usersLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.ge
 							<aui:a cssClass="title" href="<%= lcsClusterEntryURL %>" title="<%= HtmlUtil.escape(lcsClusterEntry.getName()) %>">
 								<span class="title-label"><%= HtmlUtil.escape(lcsClusterEntry.getName()) %></span>
 
-								<span class="environment-icon lcs-content-type-icon <%= lcsClusterEntry.isEnvironment() ? "group" : "cluster" %> <%= NavigationUtil.getLCSClusterEntryHealthStatusCSSClass(lcsClusterEntry.hasOfflineLCSClusterNode(), lcsClusterNodes.size()) %>" title="<%= LanguageUtil.get(pageContext, NavigationUtil.getLCSClusterEntryHealthStatusTitle(lcsClusterEntry.isCluster(), lcsClusterEntry.hasOfflineLCSClusterNode())) %>"></span>
+								<span class="environment-icon lcs-content-type-icon <%= lcsClusterEntry.isEnvironment() ? "group" : "cluster" %> <%= NavigationAdvisor.getLCSClusterEntryHealthStatusCSSClass(lcsClusterEntry.hasOfflineLCSClusterNode(), lcsClusterNodes.size()) %>" title="<%= LanguageUtil.get(request, NavigationAdvisor.getLCSClusterEntryHealthStatusTitle(lcsClusterEntry.isCluster(), lcsClusterEntry.hasOfflineLCSClusterNode())) %>"></span>
 							</aui:a>
 						</div>
 					</div>
@@ -211,24 +213,24 @@ Layout usersLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.ge
 					<div class="menu-items">
 
 						<%
-						Map<Long, Boolean> lcsClusterNodeOnlineStatuses = NavigationUtil.getLCSClusterNodeOfflineStatuses(layoutLCSClusterEntryId);
+						Map<Long, Boolean> lcsClusterNodeOnlineStatuses = NavigationAdvisor.getLCSClusterNodeOfflineStatuses(layoutLCSClusterEntryId);
 
 						for (LCSClusterNode lcsClusterNode : lcsClusterNodes) {
 							long lcsClusterNodeId = lcsClusterNode.getLcsClusterNodeId();
 						%>
 
 							<div class="menu-item <%= (lcsClusterNode.getLcsClusterNodeId() == layoutLCSClusterNodeId) ? "selected" : StringPool.BLANK %>">
-								<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" portletName="<%= PortletKeys.SERVER %>" var="lcsClusterNodeURL">
+								<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.SERVER %>" var="lcsClusterNodeURL">
 									<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(lcsClusterNode.getLcsClusterEntryId()) %>" />
 									<portlet:param name="layoutLCSClusterNodeId" value="<%= String.valueOf(lcsClusterNodeId) %>" />
 									<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
 								</liferay-portlet:renderURL>
 
 								<aui:a cssClass="server" href="<%= lcsClusterNodeURL %>" label="<%= HtmlUtil.escape(lcsClusterNode.getName()) %>" title="<%= HtmlUtil.escape(lcsClusterNode.getName()) %>">
-									<span class="lcs-content-type-icon server-icon <%= NavigationUtil.getLCSClusterNodeHealthStatusCSSClass(lcsClusterNodeOnlineStatuses.get(lcsClusterNodeId)) %>" title="<%= lcsClusterNode.isOffline() ? LanguageUtil.get(pageContext, "the-server-is-offline") : LanguageUtil.get(pageContext, "the-server-is-online") %>"></span>
+									<span class="lcs-content-type-icon server-icon <%= NavigationAdvisor.getLCSClusterNodeHealthStatusCSSClass(lcsClusterNodeOnlineStatuses.get(lcsClusterNodeId)) %>" title="<%= lcsClusterNode.isOffline() ? LanguageUtil.get(request, "the-server-is-offline") : LanguageUtil.get(request, "the-server-is-online") %>"></span>
 								</aui:a>
 
-								<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" portletName="<%= PortletKeys.SERVER %>" var="lcsClusterNodeSettingsURL">
+								<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.SERVER %>" var="lcsClusterNodeSettingsURL">
 									<portlet:param name="serverPage" value="settings" />
 									<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(lcsClusterNode.getLcsClusterEntryId()) %>" />
 									<portlet:param name="layoutLCSClusterNodeId" value="<%= String.valueOf(lcsClusterNodeId) %>" />

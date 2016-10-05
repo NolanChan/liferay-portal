@@ -39,7 +39,7 @@ LCSClusterEntryToken lcsClusterEntryToken = LCSClusterEntryTokenServiceUtil.fetc
 		</div>
 
 		<div class="lcs-note">
-			<liferay-ui:message arguments="<%= PortletPropsValues.LCS_PORTLET_TOKEN_COMPATIBLE_BUILD_NUMBER %>" key="to-use-the-token-version-x-or-newer-of-the-liferay-connected-services-client-must-be-installed-in-your-liferay-instance" />
+			<liferay-ui:message arguments="<%= osbLCSConfiguration.lcsPortletTokenCompatibleVersion() %>" key="to-use-the-token-version-x-or-newer-of-the-liferay-connected-services-client-must-be-installed-in-your-liferay-instance" />
 		</div>
 	</div>
 
@@ -49,39 +49,46 @@ LCSClusterEntryToken lcsClusterEntryToken = LCSClusterEntryTokenServiceUtil.fetc
 		</div>
 
 		<div class="lcs-section-content">
-			<c:if test="<%= AdminUtil.isSubscriptionsEnabled() %>">
 
-				<%
-				LCSClusterEntry lcsClusterEntry = LCSClusterEntryServiceUtil.getLCSClusterEntry(layoutLCSClusterEntryId);
+			<%
+			LCSClusterEntry lcsClusterEntry = LCSClusterEntryServiceUtil.getLCSClusterEntry(layoutLCSClusterEntryId);
 
-				SubscriptionType subscriptionType = SubscriptionType.valueOf(lcsClusterEntry.getSubscriptionType());
-				%>
+			SubscriptionType subscriptionType = SubscriptionType.valueOf(lcsClusterEntry.getSubscriptionType());
+			%>
 
-				<c:choose>
-					<c:when test="<%= subscriptionType.equals(SubscriptionType.UNDEFINED) %>">
-						<div class="lcs-note">
-							<liferay-ui:message key="if-this-environment-has-a-subscription-type-and-you-have-a-valid-subscription-of-that-type-registering-the-server-will-activate-your-liferay-instance" />
+			<c:choose>
+				<c:when test="<%= subscriptionType.equals(SubscriptionType.UNDEFINED) %>">
+					<div class="lcs-note">
+						<liferay-ui:message key="if-this-environment-has-a-subscription-type-and-you-have-a-valid-subscription-of-that-type-registering-the-server-will-activate-your-liferay-instance" />
 
-							<%
-							Layout subscriptionsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_SUBSCRIPTIONS);
-							%>
+						<%
+						Layout subscriptionsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_SUBSCRIPTIONS);
+						%>
 
-							<liferay-portlet:renderURL plid="<%= subscriptionsLayout.getPlid() %>" portletName="<%= PortletKeys.SUBSCRIPTIONS %>" var="subscriptionsURL">
-								<portlet:param name="layoutLCSClusterEntryId" value="0" />
-								<portlet:param name="layoutLCSClusterNodeId" value="0" />
-								<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
-							</liferay-portlet:renderURL>
-						</div>
+						<liferay-portlet:renderURL plid="<%= subscriptionsLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.SUBSCRIPTIONS %>" var="subscriptionsURL">
+							<portlet:param name="layoutLCSClusterEntryId" value="0" />
+							<portlet:param name="layoutLCSClusterNodeId" value="0" />
+							<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
+						</liferay-portlet:renderURL>
+					</div>
 
-						<aui:a href="<%= subscriptionsURL %>" label="assign-subscription-type" />
-					</c:when>
-					<c:otherwise>
-						<div class="lcs-note">
-							<liferay-ui:message arguments="<%= EnvironmentUtil.getSubscriptionTypeLabel(pageContext, layoutLCSClusterEntryId) %>" key="registering-a-liferay-instance-in-this-environment-will-activate-the-instance-and-consume-a-x-activation-key" />
-						</div>
-					</c:otherwise>
-				</c:choose>
-			</c:if>
+					<aui:a href="<%= subscriptionsURL %>" label="assign-subscription-type" />
+				</c:when>
+				<c:otherwise>
+					<div class="lcs-note">
+
+						<%
+						String messageArguments = subscriptionType.getLabel();
+
+						if (lcsClusterEntry.isElastic()) {
+							messageArguments = messageArguments + StringPool.COMMA + "elastic";
+						}
+						%>
+
+						<liferay-ui:message arguments="<%= messageArguments %>" key="registering-a-liferay-instance-in-this-environment-will-activate-the-instance-and-consume-a-x-activation-key" translateArguments="<%= true %>" />
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 
@@ -190,7 +197,7 @@ LCSClusterEntryToken lcsClusterEntryToken = LCSClusterEntryTokenServiceUtil.fetc
 	lcsEnvironment.initializeRegistrationPage(
 		{
 			labels: {
-				msgConfirmRegenerate: '<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-regenerate-this-environment-token") + UnicodeLanguageUtil.get(pageContext, StringPool.NEW_LINE + StringPool.NEW_LINE) + UnicodeLanguageUtil.get(pageContext, "any-servers-using-the-previous-token-will-be-disconnected-from-liferay-connected-services-and-will-not-be-able-to-reconnect-until-restarting-with-the-new-token") %>'
+				msgConfirmRegenerate: '<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-regenerate-this-environment-token") + UnicodeLanguageUtil.get(request, StringPool.NEW_LINE + StringPool.NEW_LINE) + UnicodeLanguageUtil.get(request, "any-servers-using-the-previous-token-will-be-disconnected-from-liferay-connected-services-and-will-not-be-able-to-reconnect-until-restarting-with-the-new-token") %>'
 			},
 			portalPropertiesLCSServiceEnabled: '<%= LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED %>',
 			tokenCreated: <%= lcsClusterEntryToken != null %>

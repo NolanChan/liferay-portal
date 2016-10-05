@@ -87,14 +87,14 @@ for (LCSClusterEntry lcsClusterEntry : lcsClusterEntries) {
 			String environmentName = lcsClusterEntryNameToLCSClusterEntryId.get(memberUserLCSRole.getLcsClusterEntryId());
 
 			if (environmentName == null) {
-				environmentLabel = LanguageUtil.get(pageContext, "all-environments");
+				environmentLabel = LanguageUtil.get(request, "all-environments");
 			}
 			else {
 				environmentLabel = HtmlUtil.escape(environmentName);
 			}
 			%>
 
-			<liferay-ui:search-container-column-text cssClass='<%= (memberUserLCSRole.getRole() == LCSRoleConstants.ROLE_LCS_ADMINISTRATOR) ? StringPool.BLANK : "lcs-environment-role" %>' name="role" value="<%= LanguageUtil.get(pageContext, LCSRoleConstants.getRoleLabel(memberUserLCSRole.getRole())) %>" />
+			<liferay-ui:search-container-column-text cssClass='<%= (memberUserLCSRole.getRole() == LCSRoleConstants.ROLE_LCS_ADMINISTRATOR) ? StringPool.BLANK : "lcs-environment-role" %>' name="role" value="<%= LanguageUtil.get(request, LCSRoleConstants.getRoleLabel(memberUserLCSRole.getRole())) %>" />
 
 			<liferay-ui:search-container-column-text name="environment" value="<%= environmentLabel %>" />
 
@@ -134,7 +134,7 @@ for (LCSClusterEntry lcsClusterEntry : lcsClusterEntries) {
 					if ((role == LCSRoleConstants.ROLE_LCS_ADMINISTRATOR) || !assignableLCSClusterEntries.isEmpty()) {
 				%>
 
-					<aui:option label="<%= LCSRoleConstants.getRoleLabel(role) %>" value="<%= String.valueOf(role) %>" />
+						<aui:option label="<%= LCSRoleConstants.getRoleLabel(role) %>" value="<%= String.valueOf(role) %>" />
 
 				<%
 					}
@@ -180,7 +180,7 @@ for (LCSClusterEntry lcsClusterEntry : lcsClusterEntries) {
 
 	lcsMembers.initializeManageRolesPage(
 		{
-			msgConfirmAssignAdministratorRole: '<%= UnicodeLanguageUtil.get(pageContext, "you-are-about-to-assign-the-lcs-administrator-role-to-a-user-that-has-one-or-more-lcs-environment-roles") + UnicodeLanguageUtil.get(pageContext, StringPool.NEW_LINE + StringPool.NEW_LINE) + UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-continue") %>'
+			msgConfirmAssignAdministratorRole: '<%= UnicodeLanguageUtil.get(request, "you-are-about-to-assign-the-lcs-administrator-role-to-a-user-that-has-one-or-more-lcs-environment-roles") + UnicodeLanguageUtil.get(request, StringPool.NEW_LINE + StringPool.NEW_LINE) + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-continue") %>'
 		}
 	);
 </aui:script>

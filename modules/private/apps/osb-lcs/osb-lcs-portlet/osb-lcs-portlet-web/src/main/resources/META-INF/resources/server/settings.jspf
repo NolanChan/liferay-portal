@@ -27,7 +27,7 @@
 
 	<aui:input cssClass="description" name="description" type="textarea" value="<%= lcsClusterNode.getDescription() %>" />
 
-	<c:if test="<%= LCSClusterEntryPermission.contains(permissionChecker, lcsClusterEntry, ActionKeys.MANAGE_ENTRY) %>">
+	<c:if test="<%= LCSClusterEntryPermission.contains(permissionChecker, lcsClusterEntry, OSBLCSActionKeys.MANAGE_ENTRY) %>">
 		<aui:button-row>
 			<aui:button name="save" type="submit" />
 
@@ -36,13 +36,13 @@
 	</c:if>
 </aui:form>
 
-<c:if test="<%= LCSClusterEntryPermission.contains(permissionChecker, lcsClusterEntry, ActionKeys.MANAGE_ENTRY) %>">
+<c:if test="<%= LCSClusterEntryPermission.contains(permissionChecker, lcsClusterEntry, OSBLCSActionKeys.MANAGE_ENTRY) %>">
 
 	<%
-	Layout lcsClusterEntryLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
+	Layout lcsClusterEntryLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
 	%>
 
-	<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= PortletKeys.ENVIRONMENT %>" var="lcsClusterEntryURL">
+	<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.ENVIRONMENT %>" var="lcsClusterEntryURL">
 		<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
 		<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
 	</liferay-portlet:renderURL>
@@ -55,7 +55,7 @@
 	<aui:script use="lcs-server">
 		var lcsServer = new Liferay.Portlet.LCSServer(
 			{
-				errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+				errorMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
 				lcsConstants: {
 					JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
 					JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',
@@ -69,7 +69,7 @@
 		lcsServer.initializeSettingsPage(
 			{
 				deleteLCSClusterNodeURL: '<%= deleteLCSClusterNodeURL %>',
-				msgConfirmUnregisterServer: '<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-unregister-this-server-from-liferay-connected-services") %>'
+				msgConfirmUnregisterServer: '<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-unregister-this-server-from-liferay-connected-services") %>'
 			}
 		);
 	</aui:script>

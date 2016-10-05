@@ -34,7 +34,7 @@
 			%>
 
 			<div class="link">
-				<aui:a href="<%= PortletPropsValues.LCS_PORTLET_6210_DOWNLOAD_URL %>">
+				<aui:a href="<%= osbLCSConfiguration.lcsPortlet6210DownloadUrl() %>">
 					<liferay-ui:message arguments="<%= lcsMetadata.getSupportedLCSPortlet() %>" key="download-version-x" />
 				</aui:a>
 			</div>
@@ -46,7 +46,7 @@
 			</div>
 
 			<div class="link">
-				<liferay-ui:message arguments="<%= PortletPropsValues.LCS_PORTLET_7010_DOWNLOAD_URL %>" key="download-on-liferay-marketplace" />
+				<liferay-ui:message arguments="<%= osbLCSConfiguration.lcsPortlet7010DownloadUrl() %>" key="download-on-liferay-marketplace" />
 			</div>
 		</aui:col>
 	</aui:row>
@@ -58,7 +58,7 @@
 	</h2>
 
 	<div class="lcs-note">
-		<liferay-ui:message arguments="<%= PortletPropsValues.LCS_PORTLET_TOKEN_INCOMPATIBLE_BUILD_NUMBER %>" key="if-you-are-using-an-environment-token-with-version-x-or-older-of-the-liferay-connected-services-client-you-must-regenerate-the-token-upon-upgrading-the-client" />
+		<liferay-ui:message arguments="<%= osbLCSConfiguration.lcsPortletTokenCompatibleVersion() %>" key="if-you-are-using-an-environment-token-with-version-x-or-older-of-the-liferay-connected-services-client-you-must-regenerate-the-token-upon-upgrading-the-client" />
 	</div>
 
 	<div class="lcs-note">

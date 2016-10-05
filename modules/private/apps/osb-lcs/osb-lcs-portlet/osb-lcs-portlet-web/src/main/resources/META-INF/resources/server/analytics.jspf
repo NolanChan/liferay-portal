@@ -15,7 +15,7 @@
 --%>
 
 <%
-Map<Integer, String> companyIdsWebIds = ServerUtil.getCompanyIdsWebIds(lcsClusterNode.getKey());
+Map<Integer, String> companyIdsWebIds = com.liferay.osb.lcs.server.util.ServerAdvisor.getCompanyIdsWebIds(lcsClusterNode.getKey());
 %>
 
 <c:choose>
@@ -23,10 +23,10 @@ Map<Integer, String> companyIdsWebIds = ServerUtil.getCompanyIdsWebIds(lcsCluste
 		<div class="alert alert-info">
 
 			<%
-			Layout environmentLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
+			Layout environmentLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
 			%>
 
-			<liferay-portlet:renderURL plid="<%= environmentLayout.getPlid() %>" portletName="<%= PortletKeys.ENVIRONMENT %>" var="registrationURL">
+			<liferay-portlet:renderURL plid="<%= environmentLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.ENVIRONMENT %>" var="registrationURL">
 				<portlet:param name="environmentPage" value="registration" />
 				<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
 				<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
@@ -38,10 +38,10 @@ Map<Integer, String> companyIdsWebIds = ServerUtil.getCompanyIdsWebIds(lcsCluste
 	<c:when test="<%= (companyIdsWebIds == null) || companyIdsWebIds.isEmpty() %>">
 
 		<%
-		Layout downloadsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_DOWNLOADS);
+		Layout downloadsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_DOWNLOADS);
 		%>
 
-		<liferay-portlet:renderURL plid="<%= downloadsLayout.getPlid() %>" portletName="<%= PortletKeys.DOWNLOADS %>" var="downloadsURL">
+		<liferay-portlet:renderURL plid="<%= downloadsLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.DOWNLOADS %>" var="downloadsURL">
 			<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
 		</liferay-portlet:renderURL>
 
@@ -58,7 +58,7 @@ Map<Integer, String> companyIdsWebIds = ServerUtil.getCompanyIdsWebIds(lcsCluste
 					<c:when test="<%= companyIdsWebIds.size() == 1 %>">
 
 						<%
-						for (Map.Entry<Integer, String> entry : companyIdsWebIds.entrySet() ) {
+						for (Map.Entry<Integer, String> entry : companyIdsWebIds.entrySet()) {
 						%>
 
 							<aui:input name="companyId" type="hidden" value="<%= entry.getKey() %>" />
@@ -140,26 +140,26 @@ Map<Integer, String> companyIdsWebIds = ServerUtil.getCompanyIdsWebIds(lcsCluste
 		<div class="footer-note">
 
 			<%
-			Layout accountLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_ACCOUNT);
+			Layout accountLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_ACCOUNT);
 			%>
 
-			<liferay-portlet:renderURL plid="<%= accountLayout.getPlid() %>" portletName="<%= PortletKeys.ACCOUNT %>" var="preferencesURL">
+			<liferay-portlet:renderURL plid="<%= accountLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.ACCOUNT %>" var="preferencesURL">
 				<portlet:param name="accountPage" value="preferences" />
 				<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
 				<portlet:param name="layoutLCSClusterNodeId" value="<%= String.valueOf(layoutLCSClusterNodeId) %>" />
 				<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
 			</liferay-portlet:renderURL>
 
-			<liferay-ui:message arguments="<%= new Object[] {ServerUtil.getTimeZoneLabel(locale, timeZone), preferencesURL} %>" key="the-time-zone-is-x" />
+			<liferay-ui:message arguments="<%= new Object[] {com.liferay.osb.lcs.server.util.ServerAdvisor.getTimeZoneLabel(locale, timeZone), preferencesURL} %>" key="the-time-zone-is-x" />
 		</div>
 
 		<div class="footer-note">
 
 			<%
-			Layout feedbackLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_FEEDBACK);
+			Layout feedbackLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_FEEDBACK);
 			%>
 
-			<liferay-portlet:renderURL plid="<%= feedbackLayout.getPlid() %>" portletName="<%= PortletKeys.NAVIGATION %>" var="feedbackURL">
+			<liferay-portlet:renderURL plid="<%= feedbackLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.NAVIGATION %>" var="feedbackURL">
 				<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
 			</liferay-portlet:renderURL>
 
@@ -174,7 +174,7 @@ Map<Integer, String> companyIdsWebIds = ServerUtil.getCompanyIdsWebIds(lcsCluste
 		<aui:script use="lcs-server">
 			var lcsServer = new Liferay.Portlet.LCSServer(
 				{
-					errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+					errorMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
 					lcsConstants: {
 						ALL_PORTAL_OBJECTS_NAME: '<%= LCSConstants.ALL_PORTAL_OBJECTS_NAME %>',
 						JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
@@ -189,27 +189,27 @@ Map<Integer, String> companyIdsWebIds = ServerUtil.getCompanyIdsWebIds(lcsCluste
 			lcsServer.initializeAnalyticsPage(
 				{
 					ampm: <%= DateUtil.isFormatAmPm(locale) %>,
-					companies: <%= ServerUtil.getCompanySitesJSONArray(companyIdsWebIds, lcsClusterNode) %>,
+					companies: <%= com.liferay.osb.lcs.server.util.ServerAdvisor.getCompanySitesJSONArray(companyIdsWebIds, lcsClusterNode) %>,
 					labels: {
-						all: '<%= UnicodeLanguageUtil.get(pageContext, "all") %>',
-						allPages: '<%= UnicodeLanguageUtil.get(pageContext, "all-pages") %>',
-						averageLoadTime: '<%= UnicodeLanguageUtil.get(pageContext, "average-load-time-ms") %>',
-						loadTimes: '<%= UnicodeLanguageUtil.get(pageContext, "load-times-ms") %>',
-						maxLoadTime: '<%= UnicodeLanguageUtil.get(pageContext, "max-load-time-ms") %>',
-						minLoadTime: '<%= UnicodeLanguageUtil.get(pageContext, "min-load-time-ms") %>',
-						minMaxLoadTimes: '<%= UnicodeLanguageUtil.get(pageContext, "min-max-load-times-ms") %>',
-						msgHighLoadTime: '<%= UnicodeLanguageUtil.format(pageContext, "high-page-load-time-may-cause-a-poor-user-experience", PortletPropsValues.LRDCOM_PERFORMANCE_TUNING_URL) %>',
-						msgNoMetrics: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-metrics-in-the-selected-period") %>',
-						msgNoSearchResults: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-search-results") %>',
-						name: '<%= UnicodeLanguageUtil.get(pageContext, "name") %>',
-						organizationSite: '<%= UnicodeLanguageUtil.get(pageContext, "organization-site") %>',
-						pageName: '<%= UnicodeLanguageUtil.get(pageContext, "page-name") %>',
-						pages: '<%= UnicodeLanguageUtil.get(pageContext, "pages") %>',
-						pageViews: '<%= UnicodeLanguageUtil.get(pageContext, "page-views") %>',
-						portlets: '<%= UnicodeLanguageUtil.get(pageContext, "portlets") %>',
-						search: '<%= UnicodeLanguageUtil.get(pageContext, "search") %>',
-						standardDeviation: '<%= UnicodeLanguageUtil.get(pageContext, "standard-deviation-ms") %>',
-						summary: '<%= UnicodeLanguageUtil.get(pageContext, "summary") %>'
+						all: '<%= UnicodeLanguageUtil.get(request, "all") %>',
+						allPages: '<%= UnicodeLanguageUtil.get(request, "all-pages") %>',
+						averageLoadTime: '<%= UnicodeLanguageUtil.get(request, "average-load-time-ms") %>',
+						loadTimes: '<%= UnicodeLanguageUtil.get(request, "load-times-ms") %>',
+						maxLoadTime: '<%= UnicodeLanguageUtil.get(request, "max-load-time-ms") %>',
+						minLoadTime: '<%= UnicodeLanguageUtil.get(request, "min-load-time-ms") %>',
+						minMaxLoadTimes: '<%= UnicodeLanguageUtil.get(request, "min-max-load-times-ms") %>',
+						msgHighLoadTime: '<%= UnicodeLanguageUtil.format(request, "high-page-load-time-may-cause-a-poor-user-experience", osbLCSConfiguration.lrdcomPerformanceTuningUrl()) %>',
+						msgNoMetrics: '<%= UnicodeLanguageUtil.get(request, "there-are-no-metrics-in-the-selected-period") %>',
+						msgNoSearchResults: '<%= UnicodeLanguageUtil.get(request, "there-are-no-search-results") %>',
+						name: '<%= UnicodeLanguageUtil.get(request, "name") %>',
+						organizationSite: '<%= UnicodeLanguageUtil.get(request, "organization-site") %>',
+						pageName: '<%= UnicodeLanguageUtil.get(request, "page-name") %>',
+						pages: '<%= UnicodeLanguageUtil.get(request, "pages") %>',
+						pageViews: '<%= UnicodeLanguageUtil.get(request, "page-views") %>',
+						portlets: '<%= UnicodeLanguageUtil.get(request, "portlets") %>',
+						search: '<%= UnicodeLanguageUtil.get(request, "search") %>',
+						standardDeviation: '<%= UnicodeLanguageUtil.get(request, "standard-deviation-ms") %>',
+						summary: '<%= UnicodeLanguageUtil.get(request, "summary") %>'
 					},
 					thresholds: {
 						'highPageLoadTime': 3000,

@@ -87,11 +87,11 @@
 
 			lcsServer.initializeDetailsPage(
 				{
-					data: <%= ServerUtil.getLCSClusterNodeMetadataJSONObject(layoutLCSClusterNodeId, pageContext) %>,
+					data: <%= com.liferay.osb.lcs.server.util.ServerAdvisor.getLCSClusterNodeMetadataJSONObject(layoutLCSClusterNodeId, themeDisplay.getLocale()) %>,
 					labels: {
-						all: '<%= UnicodeLanguageUtil.get(pageContext, "all") %>',
-						msgNoSearchResults: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-search-results") %>',
-						search: '<%= UnicodeLanguageUtil.get(pageContext, "search") %>'
+						all: '<%= UnicodeLanguageUtil.get(request, "all") %>',
+						msgNoSearchResults: '<%= UnicodeLanguageUtil.get(request, "there-are-no-search-results") %>',
+						search: '<%= UnicodeLanguageUtil.get(request, "search") %>'
 					}
 				}
 			);

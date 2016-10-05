@@ -34,14 +34,13 @@ long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSPr
 	<span class="user-full-name">
 		<%= HtmlUtil.escape(user.getFullName()) %>
 	</span>
-
 	<span class="icon-caret-down"></span>
 </div>
 
 <div class="profile-menu" id="<portlet:namespace />profileMenu">
 	<ul class="dropdown-menu">
 		<li>
-			<aui:a href="<%= PortletPropsValues.LRDCOM_USER_DOCUMENTATION_URL %>" target="_blank">
+			<aui:a href="<%= osbLCSConfiguration.lrdcomUserDocumentationUrl() %>" target="_blank">
 				<span class="icon-file-text profile-icon"></span>
 
 				<liferay-ui:message key="user-documentation" />
@@ -50,10 +49,10 @@ long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSPr
 		<li>
 
 			<%
-			Layout accountLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_ACCOUNT);
+			Layout accountLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_ACCOUNT);
 			%>
 
-			<liferay-portlet:renderURL plid="<%= accountLayout.getPlid() %>" portletName="<%= PortletKeys.ACCOUNT %>" var="accountURL">
+			<liferay-portlet:renderURL plid="<%= accountLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.ACCOUNT %>" var="accountURL">
 				<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
 			</liferay-portlet:renderURL>
 
@@ -66,10 +65,10 @@ long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSPr
 		<li class="manage-projects">
 
 			<%
-			Layout projectsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_PROJECTS);
+			Layout projectsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_PROJECTS);
 			%>
 
-			<liferay-portlet:renderURL plid="<%= projectsLayout.getPlid() %>" portletName="<%= PortletKeys.ENROLLMENT %>" var="projectsURL">
+			<liferay-portlet:renderURL plid="<%= projectsLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.ENROLLMENT %>" var="projectsURL">
 				<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
 			</liferay-portlet:renderURL>
 
@@ -81,13 +80,13 @@ long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSPr
 		</li>
 
 		<%
-		Layout dashboardLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_DASHBOARD);
+		Layout dashboardLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_DASHBOARD);
 
 		for (LCSProject lcsProject : LCSProjectServiceUtil.getUserLCSProjects(false, LCSRoleConstants.ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER)) {
 		%>
 
 			<li class="project-item">
-				<liferay-portlet:renderURL plid="<%= dashboardLayout.getPlid() %>" portletName="<%= PortletKeys.NAVIGATION %>" var="dashboardURL">
+				<liferay-portlet:renderURL plid="<%= dashboardLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.NAVIGATION %>" var="dashboardURL">
 					<portlet:param name="layoutLCSClusterEntryId" value="0" />
 					<portlet:param name="layoutLCSClusterNodeId" value="0" />
 					<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(lcsProject.getLcsProjectId()) %>" />
@@ -105,7 +104,7 @@ long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSPr
 		%>
 
 		<li class="sign-out">
-			<aui:a href="<%= NavigationUtil.LOGOUT_URL %>">
+			<aui:a href="<%= NavigationConstants.LOGOUT_URL %>">
 				<span class="icon-power-off profile-icon"></span>
 
 				<liferay-ui:message key="sign-out" />
@@ -124,9 +123,9 @@ long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSPr
 		if (userLCSMessagesCount > 0) {
 		%>
 
-		<span class="unread" id="<portlet:namespace />userLCSMessagesCount">
-			<%= userLCSMessagesCount %>
-		</span>
+			<span class="unread" id="<portlet:namespace />userLCSMessagesCount">
+				<%= userLCSMessagesCount %>
+			</span>
 
 		<%
 		}
@@ -148,7 +147,7 @@ long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSPr
 <aui:script use="lcs-header">
 	new Liferay.Portlet.LCSHeader(
 		{
-			errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+			errorMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
 			namespace: '<portlet:namespace />',
 			urls: {
 				getUserLCSMessages: '<%= getUserLCSMessagesURL %>',

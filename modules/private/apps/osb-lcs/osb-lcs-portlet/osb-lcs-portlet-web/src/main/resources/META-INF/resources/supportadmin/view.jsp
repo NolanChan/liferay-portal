@@ -32,12 +32,13 @@ long corpProjectId = ParamUtil.getLong(request, "corpProjectId");
 
 	<aui:fieldset>
 		<aui:row>
-			<aui:column>
+			<aui:col>
 				<aui:input inlineLabel="true" name="corpProjectId" />
-			</aui:column>
-			<aui:column>
+			</aui:col>
+
+			<aui:col>
 				<aui:button type="submit" value="search" />
-			</aui:column>
+			</aui:col>
 		</aui:row>
 	</aui:fieldset>
 </aui:form>
@@ -47,16 +48,16 @@ long corpProjectId = ParamUtil.getLong(request, "corpProjectId");
 >
 	<liferay-ui:search-container-results>
 
-			<%
-			LCSProject lcsProject = LCSProjectLocalServiceUtil.fetchByCorpProject(corpProjectId);
+		<%
+		LCSProject lcsProject = LCSProjectLocalServiceUtil.fetchByCorpProject(corpProjectId);
 
-			if (lcsProject != null) {
-				List<LCSSubscriptionEntry> lcsSubscriptionEntries = LCSSubscriptionEntryLocalServiceUtil.getLCSProjectLCSSubscriptionEntries(lcsProject.getLcsProjectId());
+		if (lcsProject != null) {
+			List<LCSSubscriptionEntry> lcsSubscriptionEntries = LCSSubscriptionEntryLocalServiceUtil.getLCSProjectLCSSubscriptionEntries(lcsProject.getLcsProjectId());
 
-				pageContext.setAttribute("results", lcsSubscriptionEntries);
-				pageContext.setAttribute("total", lcsSubscriptionEntries.size());
-			}
-			%>
+			pageContext.setAttribute("results", lcsSubscriptionEntries);
+			pageContext.setAttribute("total", lcsSubscriptionEntries.size());
+		}
+		%>
 
 	</liferay-ui:search-container-results>
 

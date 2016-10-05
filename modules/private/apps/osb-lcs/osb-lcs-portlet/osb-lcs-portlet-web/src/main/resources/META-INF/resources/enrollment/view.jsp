@@ -122,7 +122,7 @@
 </div>
 
 <div class="fade-out footer-note" id="<portlet:namespace />projectsFooter">
-	<liferay-ui:message arguments='<%= StringUtil.replace(PortletPropsValues.LRDCOM_USER_PROJECTS_URL, "{0}", user.getScreenName()) %>' key="for-additional-options-please-visit-your-personal-liferay-projects-page" />
+	<liferay-ui:message arguments='<%= StringUtil.replace(osbLCSConfiguration.lrdcomUserProjectsUrl(), "{0}", user.getScreenName()) %>' key="for-additional-options-please-visit-your-personal-liferay-projects-page" />
 </div>
 
 <portlet:resourceURL id="addLCSAdministratorRole" var="addLCSAdministratorRoleURL">
@@ -144,21 +144,21 @@
 <aui:script use="lcs-enrollment">
 	new Liferay.Portlet.LCSEnrollment(
 		{
-			errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+			errorMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
 			labels: {
-				administratorEmailAddresses: '<%= UnicodeLanguageUtil.get(pageContext, "administrator-email-addresses") %>',
-				all: '<%= UnicodeLanguageUtil.get(pageContext, "all") %>',
-				becomeAnAdministrator: '<%= UnicodeLanguageUtil.get(pageContext, "become-an-administrator") %>',
-				msgConfirmBecomingAdministrator: '<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-become-an-administrator-on-the-project") %>',
-				msgConfirmProjectAccessRequest: '<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-request-access-to-the-project") %>',
-				msgNoCompanyProjects: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-company-projects") %>',
-				msgNoPendingProjects: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-pending-projects") %>',
-				msgNoSearchResults: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-search-results") %>',
-				msgNoUnlinkedProjects: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-unlinked-projects") %>',
-				msgProjectAccessRequestSuccess: '<%= UnicodeLanguageUtil.get(pageContext, "you-successfully-requested-access-to-the-project") %>',
-				name: '<%= UnicodeLanguageUtil.get(pageContext, "name") %>',
-				requestAccess: '<%= UnicodeLanguageUtil.get(pageContext, "request-access") %>',
-				search: '<%= UnicodeLanguageUtil.get(pageContext, "search") %>'
+				administratorEmailAddresses: '<%= UnicodeLanguageUtil.get(request, "administrator-email-addresses") %>',
+				all: '<%= UnicodeLanguageUtil.get(request, "all") %>',
+				becomeAnAdministrator: '<%= UnicodeLanguageUtil.get(request, "become-an-administrator") %>',
+				msgConfirmBecomingAdministrator: '<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-become-an-administrator-on-the-project") %>',
+				msgConfirmProjectAccessRequest: '<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-request-access-to-the-project") %>',
+				msgNoCompanyProjects: '<%= UnicodeLanguageUtil.get(request, "there-are-no-company-projects") %>',
+				msgNoPendingProjects: '<%= UnicodeLanguageUtil.get(request, "there-are-no-pending-projects") %>',
+				msgNoSearchResults: '<%= UnicodeLanguageUtil.get(request, "there-are-no-search-results") %>',
+				msgNoUnlinkedProjects: '<%= UnicodeLanguageUtil.get(request, "there-are-no-unlinked-projects") %>',
+				msgProjectAccessRequestSuccess: '<%= UnicodeLanguageUtil.get(request, "you-successfully-requested-access-to-the-project") %>',
+				name: '<%= UnicodeLanguageUtil.get(request, "name") %>',
+				requestAccess: '<%= UnicodeLanguageUtil.get(request, "request-access") %>',
+				search: '<%= UnicodeLanguageUtil.get(request, "search") %>'
 			},
 			lcsConstants: {
 				JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
@@ -167,7 +167,7 @@
 				JSON_VALUE_SUCCESS: '<%= LCSConstants.JSON_VALUE_SUCCESS %>'
 			},
 			namespace: '<portlet:namespace />',
-			successMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-completed-successfully") %>',
+			successMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-completed-successfully") %>',
 			urls: {
 				addLCSAdministratorRole: '<%= addLCSAdministratorRoleURL %>',
 				addLCSEnvironmentMembershipPendingUserRole: '<%= addLCSEnvironmentMembershipPendingUserRoleURL %>',

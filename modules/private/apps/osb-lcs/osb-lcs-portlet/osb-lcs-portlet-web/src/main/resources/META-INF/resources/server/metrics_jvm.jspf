@@ -28,7 +28,7 @@
 		<liferay-ui:search-container-results>
 
 			<%
-			List<Object[]> lcsGarbageCollectorMetricsList = ServerUtil.getGarbageCollectorMetricsList(layoutLCSClusterNodeId);
+			List<Object[]> lcsGarbageCollectorMetricsList = com.liferay.osb.lcs.server.util.ServerAdvisor.getGarbageCollectorMetricsList(layoutLCSClusterNodeId);
 
 			results = lcsGarbageCollectorMetricsList;
 			total = lcsGarbageCollectorMetricsList.size();
@@ -81,7 +81,7 @@
 <aui:script use="lcs-server">
 	var lcsServer = new Liferay.Portlet.LCSServer(
 		{
-			errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+			errorMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
 			lcsConstants: {
 				JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
 				JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',
@@ -96,10 +96,10 @@
 		{
 			dataUrl: '<%= getLCSClusterNodeJVMMetricsURL %>',
 			labels: {
-				metric: '<%= UnicodeLanguageUtil.get(pageContext, "metric") %>',
-				value: '<%= UnicodeLanguageUtil.get(pageContext, "value") %>'
+				metric: '<%= UnicodeLanguageUtil.get(request, "metric") %>',
+				value: '<%= UnicodeLanguageUtil.get(request, "value") %>'
 			},
-			msgNoData: '<%= UnicodeLanguageUtil.get(pageContext, "there-is-no-metrics-data") %>'
+			msgNoData: '<%= UnicodeLanguageUtil.get(request, "there-is-no-metrics-data") %>'
 		}
 	);
 </aui:script>

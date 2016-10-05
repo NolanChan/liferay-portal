@@ -44,10 +44,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<div class="alert alert-info">
 
 			<%
-			Layout environmentLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
+			Layout environmentLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
 			%>
 
-			<liferay-portlet:renderURL plid="<%= environmentLayout.getPlid() %>" portletName="<%= PortletKeys.ENVIRONMENT %>" var="registrationURL">
+			<liferay-portlet:renderURL plid="<%= environmentLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.ENVIRONMENT %>" var="registrationURL">
 				<portlet:param name="environmentPage" value="registration" />
 				<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
 				<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
@@ -98,10 +98,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 <div class="footer-note">
 
 	<%
-	Layout feedbackLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_FEEDBACK);
+	Layout feedbackLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_FEEDBACK);
 	%>
 
-	<liferay-portlet:renderURL plid="<%= feedbackLayout.getPlid() %>" portletName="<%= PortletKeys.NAVIGATION %>" var="feedbackURL">
+	<liferay-portlet:renderURL plid="<%= feedbackLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.NAVIGATION %>" var="feedbackURL">
 		<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
 	</liferay-portlet:renderURL>
 

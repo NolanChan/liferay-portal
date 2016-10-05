@@ -52,7 +52,7 @@ LCSClusterNodeInstallationEnvironment lcsClusterNodeInstallationEnvironment = LC
 				<aui:script use="lcs-server">
 					var lcsServer = new Liferay.Portlet.LCSServer(
 						{
-							errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "unable-to-get-metrics-data") %>',
+							errorMessage: '<%= UnicodeLanguageUtil.get(request, "unable-to-get-metrics-data") %>',
 							lcsConstants: {
 								JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
 								JSON_KEY_RESULT: '<%= LCSConstants.JSON_KEY_RESULT %>',
@@ -67,14 +67,14 @@ LCSClusterNodeInstallationEnvironment lcsClusterNodeInstallationEnvironment = LC
 							getCurrentThreadsMetricsURL: '<%= getLCSClusterNodeCurrentThreadsMetricsURL %>',
 							getJDBCConnectionPoolMetricsURL: '<%= getLCSClusterNodeJDBCConnectionPoolMetricsURL %>',
 							labels: {
-								active: '<%= UnicodeLanguageUtil.get(pageContext, "active") %>',
-								busy: '<%= UnicodeLanguageUtil.get(pageContext, "busy") %>',
-								channel: '<%= UnicodeLanguageUtil.get(pageContext, "channel") %>',
-								idle: '<%= UnicodeLanguageUtil.get(pageContext, "idle") %>',
-								pool: '<%= UnicodeLanguageUtil.get(pageContext, "pool") %>',
-								unused: '<%= UnicodeLanguageUtil.get(pageContext, "unused") %>'
+								active: '<%= UnicodeLanguageUtil.get(request, "active") %>',
+								busy: '<%= UnicodeLanguageUtil.get(request, "busy") %>',
+								channel: '<%= UnicodeLanguageUtil.get(request, "channel") %>',
+								idle: '<%= UnicodeLanguageUtil.get(request, "idle") %>',
+								pool: '<%= UnicodeLanguageUtil.get(request, "pool") %>',
+								unused: '<%= UnicodeLanguageUtil.get(request, "unused") %>'
 							},
-							msgNoData: '<%= UnicodeLanguageUtil.get(pageContext, "there-is-no-metrics-data") %>'
+							msgNoData: '<%= UnicodeLanguageUtil.get(request, "there-is-no-metrics-data") %>'
 						}
 					);
 				</aui:script>

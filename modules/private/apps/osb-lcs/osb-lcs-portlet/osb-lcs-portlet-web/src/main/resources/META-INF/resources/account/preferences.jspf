@@ -45,7 +45,7 @@
 	<aui:select helpMessage="show-this-projects-dashboard-after-login" label="default-project" name="defaultLCSProjectId">
 
 		<%
-		long defaultLCSProjectId = GetterUtil.getLong(expandoBridge.getAttribute( "defaultLCSProjectId", false), 0l);
+		long defaultLCSProjectId = GetterUtil.getLong(expandoBridge.getAttribute("defaultLCSProjectId", false), 0l);
 
 		for (LCSProject lcsProject : LCSProjectServiceUtil.getUserLCSProjects()) {
 		%>

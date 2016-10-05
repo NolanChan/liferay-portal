@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/tags/init.jsp" %>
+<%@ include file="init.jsp" %>
 
 <%@ tag import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 tag import="com.liferay.portal.kernel.util.CalendarUtil" %><%@
@@ -25,7 +25,7 @@ tag import="com.liferay.portal.kernel.util.StringPool" %>
 <%@ attribute name="inlineField" required="false" type="Boolean" %>
 <%@ attribute name="label" required="false" %>
 <%@ attribute name="name" required="true" %>
-<%@ attribute name="startMonth" required="false" type="Integer" %>
+<%@ attribute name="startMonth" required="false" type="java.lang.Integer" %>
 <%@ attribute name="startYear" required="false" type="Integer" %>
 <%@ attribute name="valueMonth" required="false" type="Integer" %>
 <%@ attribute name="valueYear" required="false" type="Integer" %>

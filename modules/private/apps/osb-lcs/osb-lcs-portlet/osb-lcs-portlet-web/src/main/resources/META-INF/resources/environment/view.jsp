@@ -26,7 +26,7 @@ List<LCSClusterNode> lcsClusterNodes = LCSClusterNodeUtil.getLCSClusterNodes(req
 
 String defaultPage = lcsClusterNodes.isEmpty() ? "registration" : "fixPacks";
 
-if (!LCSClusterEntryPermission.contains(permissionChecker, layoutLCSClusterEntry, ActionKeys.MANAGE_ENTRY)) {
+if (!LCSClusterEntryPermission.contains(permissionChecker, layoutLCSClusterEntry, OSBLCSActionKeys.MANAGE_ENTRY)) {
 	defaultPage = "settings";
 }
 
@@ -36,7 +36,7 @@ String environmentPage = ParamUtil.getString(request, "environmentPage", default
 <liferay-ui:error key="duplicateLCSClusterEntryName" message="please-enter-a-unique-environment-name" />
 
 <div class="lcs-toolbar">
-	<c:if test="<%= !lcsClusterNodes.isEmpty() && LCSClusterEntryPermission.contains(permissionChecker, layoutLCSClusterEntry, ActionKeys.MANAGE_ENTRY) %>">
+	<c:if test="<%= !lcsClusterNodes.isEmpty() && LCSClusterEntryPermission.contains(permissionChecker, layoutLCSClusterEntry, OSBLCSActionKeys.MANAGE_ENTRY) %>">
 		<div class="item <%= Validator.equals(environmentPage, "fixPacks") ? "selected" : StringPool.BLANK %>">
 			<liferay-portlet:renderURL var="fixPacksURL">
 				<portlet:param name="environmentPage" value="fixPacks" />
@@ -48,7 +48,7 @@ String environmentPage = ParamUtil.getString(request, "environmentPage", default
 		</div>
 	</c:if>
 
-	<c:if test="<%= LCSClusterEntryPermission.contains(permissionChecker, layoutLCSClusterEntry, ActionKeys.MANAGE_ENTRY) %>">
+	<c:if test="<%= LCSClusterEntryPermission.contains(permissionChecker, layoutLCSClusterEntry, OSBLCSActionKeys.MANAGE_ENTRY) %>">
 		<div class="item <%= Validator.equals(environmentPage, "registration") ? "selected" : StringPool.BLANK %>">
 			<liferay-portlet:renderURL var="lcsClusterEntryTokensURL">
 				<portlet:param name="environmentPage" value="registration" />
@@ -75,12 +75,12 @@ String environmentPage = ParamUtil.getString(request, "environmentPage", default
 
 <c:choose>
 	<c:when test='<%= Validator.equals(environmentPage, "fixPacks") %>'>
-		<c:if test="<%= LCSClusterEntryPermission.contains(permissionChecker, layoutLCSClusterEntry, ActionKeys.MANAGE_ENTRY) %>">
+		<c:if test="<%= LCSClusterEntryPermission.contains(permissionChecker, layoutLCSClusterEntry, OSBLCSActionKeys.MANAGE_ENTRY) %>">
 			<liferay-util:include page="/notifications/view.jsp" servletContext="<%= application %>" />
 		</c:if>
 	</c:when>
 	<c:when test='<%= Validator.equals(environmentPage, "registration") %>'>
-		<c:if test="<%= LCSClusterEntryPermission.contains(permissionChecker, layoutLCSClusterEntry, ActionKeys.MANAGE_ENTRY) %>">
+		<c:if test="<%= LCSClusterEntryPermission.contains(permissionChecker, layoutLCSClusterEntry, OSBLCSActionKeys.MANAGE_ENTRY) %>">
 			<%@ include file="/environment/registration.jspf" %>
 		</c:if>
 	</c:when>

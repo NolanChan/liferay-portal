@@ -19,10 +19,10 @@
 		<div class="alert alert-info">
 
 			<%
-			Layout environmentLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
+			Layout environmentLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
 			%>
 
-			<liferay-portlet:renderURL plid="<%= environmentLayout.getPlid() %>" portletName="<%= PortletKeys.ENVIRONMENT %>" var="registrationURL">
+			<liferay-portlet:renderURL plid="<%= environmentLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.ENVIRONMENT %>" var="registrationURL">
 				<portlet:param name="environmentPage" value="registration" />
 				<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
 				<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
@@ -34,7 +34,7 @@
 	<c:otherwise>
 
 		<%
-		JSONObject portalPropertiesDifferenceJSONObject = ServerUtil.getPortalPropertiesDifferenceJSONObject(lcsClusterNode.getKey());
+		JSONObject portalPropertiesDifferenceJSONObject = com.liferay.osb.lcs.server.util.ServerAdvisor.getPortalPropertiesDifferenceJSONObject(lcsClusterNode.getKey());
 
 		JSONArray portalPropertiesDifferenceDataJSONArray = portalPropertiesDifferenceJSONObject.getJSONArray("data");
 		%>
@@ -69,7 +69,7 @@
 						<div class="options-menu" id="<portlet:namespace />propertiesTableOptionsMenu">
 							<ul class="dropdown-menu">
 								<li class="item">
-									<aui:input checked="<%= false %>" label="show-default-values"  name="showDefaults" type="checkbox" value="<%= true %>" />
+									<aui:input checked="<%= false %>" label="show-default-values" name="showDefaults" type="checkbox" value="<%= true %>" />
 								</li>
 								<li class="item">
 									<aui:input checked="<%= true %>" label="show-custom-values" name="showValues" type="checkbox" value="<%= true %>" />
@@ -87,7 +87,7 @@
 				<aui:script use="lcs-server">
 					var lcsServer = new Liferay.Portlet.LCSServer(
 							{
-								errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+								errorMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
 								lcsConstants: {
 									JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
 									JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',
@@ -102,12 +102,12 @@
 						{
 							data: <%= portalPropertiesDifferenceDataJSONArray %>,
 							labels: {
-								all: '<%= UnicodeLanguageUtil.get(pageContext, "all") %>',
-								customValue: '<%= UnicodeLanguageUtil.get(pageContext, "custom-value") %>',
-								defaultValue: '<%= UnicodeLanguageUtil.get(pageContext, "default-value") %>',
-								msgNoSearchResults: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-search-results") %>',
-								propertyName: '<%= UnicodeLanguageUtil.get(pageContext, "property-name") %>',
-								search: '<%= UnicodeLanguageUtil.get(pageContext, "search") %>'
+								all: '<%= UnicodeLanguageUtil.get(request, "all") %>',
+								customValue: '<%= UnicodeLanguageUtil.get(request, "custom-value") %>',
+								defaultValue: '<%= UnicodeLanguageUtil.get(request, "default-value") %>',
+								msgNoSearchResults: '<%= UnicodeLanguageUtil.get(request, "there-are-no-search-results") %>',
+								propertyName: '<%= UnicodeLanguageUtil.get(request, "property-name") %>',
+								search: '<%= UnicodeLanguageUtil.get(request, "search") %>'
 							}
 						}
 					);

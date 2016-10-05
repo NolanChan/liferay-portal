@@ -74,7 +74,7 @@ List<LCSMessage> lcsMessages = LCSMessageServiceUtil.getLCSProjectLCSMessages(la
 		<h2 class="title">
 			<liferay-ui:message key="subscriptions" />
 
-			<c:if test="<%= PortletPropsValues.APPLICATION_PROFILE != ApplicationProfile.PRODUCTION %>">
+			<c:if test="<%= osbLCSConfiguration.applicationProfile() != ApplicationProfile.PRODUCTION %>">
 				<aui:a cssClass="icon-refresh" href="javascript:;" id="refreshLCSSubscriptionEntries" />
 			</c:if>
 		</h2>
@@ -114,7 +114,7 @@ List<LCSMessage> lcsMessages = LCSMessageServiceUtil.getLCSProjectLCSMessages(la
 <aui:script use="lcs-subscriptions">
 	var lcsSubscriptions = new Liferay.Portlet.LCSSubscriptions(
 		{
-			errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+			errorMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
 			lcsConstants: {
 				JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
 				JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',
@@ -122,7 +122,7 @@ List<LCSMessage> lcsMessages = LCSMessageServiceUtil.getLCSProjectLCSMessages(la
 				JSON_VALUE_SUCCESS: '<%= LCSConstants.JSON_VALUE_SUCCESS %>'
 			},
 			namespace: '<portlet:namespace />',
-			successMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-completed-successfully") %>'
+			successMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-completed-successfully") %>'
 		}
 	);
 
@@ -130,31 +130,31 @@ List<LCSMessage> lcsMessages = LCSMessageServiceUtil.getLCSProjectLCSMessages(la
 		{
 			getSubscriptionsDetailsURL: '<%= getSubscriptionsDetailsURL %>',
 			labels: {
-				all: '<%= UnicodeLanguageUtil.get(pageContext, "all") %>',
-				cancel: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>',
-				elastic: '<%= UnicodeLanguageUtil.get(pageContext, "elastic") %>',
-				elasticHelp: '<%= UnicodeLanguageUtil.get(pageContext, "elastic-help") %>',
-				environment: '<%= UnicodeLanguageUtil.get(pageContext, "environment") %>',
-				environmentSubscriptionType: '<%= UnicodeLanguageUtil.get(pageContext, "environment-subscription-type") %>',
-				expirationDate: '<%= UnicodeLanguageUtil.get(pageContext, "expiration-date") %>',
-				msgConfirmSubscriptionType: '<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-update-the-subscription-type") + UnicodeLanguageUtil.get(pageContext, StringPool.NEW_LINE + StringPool.NEW_LINE) + UnicodeLanguageUtil.get(pageContext, "this-action-cannot-be-undone") %>',
-				msgNoOrders: '<%= UnicodeLanguageUtil.get(pageContext, "you-have-no-active-orders-on-this-project") %>',
-				msgNoSearchResults: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-search-results") %>',
-				msgRefreshOrders: '<%= UnicodeLanguageUtil.get(pageContext, "sync-your-orders-from-liferay") %>',
-				noSubscriptions: '<%= UnicodeLanguageUtil.get(pageContext, "no-subscriptions") %>',
-				platform: '<%= UnicodeLanguageUtil.get(pageContext, "platform") %>',
-				processorCoresAllowed: '<%= UnicodeLanguageUtil.get(pageContext, "processor-cores-allowed") %>',
-				product: '<%= UnicodeLanguageUtil.get(pageContext, "product") %>',
-				save: '<%= UnicodeLanguageUtil.get(pageContext, "save") %>',
-				search: '<%= UnicodeLanguageUtil.get(pageContext, "search") %>',
-				server: '<%= UnicodeLanguageUtil.get(pageContext, "server") %>',
-				serversAllowed: '<%= UnicodeLanguageUtil.get(pageContext, "servers-allowed") %>',
-				serversAvailable: '<%= UnicodeLanguageUtil.get(pageContext, "servers-available") %>',
-				serversUsed: '<%= UnicodeLanguageUtil.get(pageContext, "servers-used") %>',
-				startDate: '<%= UnicodeLanguageUtil.get(pageContext, "start-date") %>',
-				subscriptions: '<%= UnicodeLanguageUtil.get(pageContext, "subscriptions") %>',
-				subscriptionType: '<%= UnicodeLanguageUtil.get(pageContext, "subscription-type") %>',
-				supportEndDate: '<%= UnicodeLanguageUtil.get(pageContext, "support-end-date") %>'
+				all: '<%= UnicodeLanguageUtil.get(request, "all") %>',
+				cancel: '<%= UnicodeLanguageUtil.get(request, "cancel") %>',
+				elastic: '<%= UnicodeLanguageUtil.get(request, "elastic") %>',
+				elasticHelp: '<%= UnicodeLanguageUtil.get(request, "elastic-help") %>',
+				environment: '<%= UnicodeLanguageUtil.get(request, "environment") %>',
+				environmentSubscriptionType: '<%= UnicodeLanguageUtil.get(request, "environment-subscription-type") %>',
+				expirationDate: '<%= UnicodeLanguageUtil.get(request, "expiration-date") %>',
+				msgConfirmSubscriptionType: '<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-update-the-subscription-type") + UnicodeLanguageUtil.get(request, StringPool.NEW_LINE + StringPool.NEW_LINE) + UnicodeLanguageUtil.get(request, "this-action-cannot-be-undone") %>',
+				msgNoOrders: '<%= UnicodeLanguageUtil.get(request, "you-have-no-active-orders-on-this-project") %>',
+				msgNoSearchResults: '<%= UnicodeLanguageUtil.get(request, "there-are-no-search-results") %>',
+				msgRefreshOrders: '<%= UnicodeLanguageUtil.get(request, "sync-your-orders-from-liferay") %>',
+				noSubscriptions: '<%= UnicodeLanguageUtil.get(request, "no-subscriptions") %>',
+				platform: '<%= UnicodeLanguageUtil.get(request, "platform") %>',
+				processorCoresAllowed: '<%= UnicodeLanguageUtil.get(request, "processor-cores-allowed") %>',
+				product: '<%= UnicodeLanguageUtil.get(request, "product") %>',
+				save: '<%= UnicodeLanguageUtil.get(request, "save") %>',
+				search: '<%= UnicodeLanguageUtil.get(request, "search") %>',
+				server: '<%= UnicodeLanguageUtil.get(request, "server") %>',
+				serversAllowed: '<%= UnicodeLanguageUtil.get(request, "servers-allowed") %>',
+				serversAvailable: '<%= UnicodeLanguageUtil.get(request, "servers-available") %>',
+				serversUsed: '<%= UnicodeLanguageUtil.get(request, "servers-used") %>',
+				startDate: '<%= UnicodeLanguageUtil.get(request, "start-date") %>',
+				subscriptions: '<%= UnicodeLanguageUtil.get(request, "subscriptions") %>',
+				subscriptionType: '<%= UnicodeLanguageUtil.get(request, "subscription-type") %>',
+				supportEndDate: '<%= UnicodeLanguageUtil.get(request, "support-end-date") %>'
 			},
 			subscriptionTypeElastic: '<%= SubscriptionType.ELASTIC %>',
 			updateLCSClusterEntryURL: '<%= updateLCSClusterEntryURL %>'

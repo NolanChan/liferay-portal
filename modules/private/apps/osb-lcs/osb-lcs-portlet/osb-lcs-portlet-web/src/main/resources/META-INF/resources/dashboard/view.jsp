@@ -25,7 +25,7 @@ String statusOrderByType = ParamUtil.getString(request, "statusOrderByType", "as
 
 List<LCSClusterEntry> lcsClusterEntries = LCSClusterEntryServiceUtil.getLCSProjectLCSClusterEntries(layoutLCSProjectId);
 List<LCSClusterNode> lcsClusterNodes = LCSClusterNodeUtil.getLCSClusterNodes(request, layoutLCSClusterEntryId, layoutLCSClusterNodeId, layoutLCSProjectId);
-List<Object[]> statusObjectArrays = DashboardUtil.getStatusObjectArrays(pageContext, lcsClusterNodes, statusOrderByCol, statusOrderByType);
+List<Object[]> statusObjectArrays = DashboardUtil.getStatusObjectArrays(themeDisplay.getLocale(), lcsClusterNodes, statusOrderByCol, statusOrderByType);
 %>
 
 <c:choose>
@@ -104,10 +104,10 @@ List<Object[]> statusObjectArrays = DashboardUtil.getStatusObjectArrays(pageCont
 								<liferay-ui:search-container-column-text name="server" orderable="<%= true %>">
 
 									<%
-									Layout lcsClusterNodeLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_NODE);
+									Layout lcsClusterNodeLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_NODE);
 									%>
 
-									<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" portletName="<%= PortletKeys.SERVER %>" var="serverPageURL">
+									<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.SERVER %>" var="serverPageURL">
 										<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(lcsClusterNode.getLcsClusterEntryId()) %>" />
 										<portlet:param name="layoutLCSClusterNodeId" value="<%= String.valueOf(lcsClusterNode.getLcsClusterNodeId()) %>" />
 										<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />

@@ -34,7 +34,7 @@
 		<%
 		List<LCSNotification> lcsNotifications = LCSNotificationServiceUtil.getLCSNotifications();
 
-		results = AccountUtil.getLCSNotificationsRulesObjectArrays(pageContext, lcsNotifications);
+		results = com.liferay.osb.lcs.account.util.AccountAdvisor.getLCSNotificationsRulesObjectArrays(themeDisplay.getLocale(), lcsNotifications);
 		total = lcsNotifications.size();
 
 		pageContext.setAttribute("results", results);
@@ -94,7 +94,7 @@
 
 <aui:script>
 	function <portlet:namespace />deleteNotifications(actionURL) {
-		if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-notifications-rule") %>')) {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-notifications-rule") %>')) {
 			window.location.href = actionURL + '&<portlet:namespace />redirect=<%= HttpUtil.encodeURL(currentURL) %>';
 		}
 	}
@@ -103,7 +103,7 @@
 <aui:script use="lcs-account">
 	var lcsAccount = new Liferay.Portlet.LCSAccount(
 		{
-			errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+			errorMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
 			lcsConstants: {
 				JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
 				JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',

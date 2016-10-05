@@ -72,14 +72,14 @@
 	lcsAccount.initializeMessagesPage(
 		{
 			labels: {
-				all: '<%= UnicodeLanguageUtil.get(pageContext, "all") %>',
-				content: '<%= UnicodeLanguageUtil.get(pageContext, "content") %>',
-				from: '<%= UnicodeLanguageUtil.get(pageContext, "from") %>',
-				msgError: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
-				msgNoData: '<%= UnicodeLanguageUtil.get(pageContext, "there-were-no-notifications-in-the-selected-period") %>',
-				msgNoSearchResults: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-search-results") %>',
-				search: '<%= UnicodeLanguageUtil.get(pageContext, "search") %>',
-				time: '<%= UnicodeLanguageUtil.get(pageContext, "time") %>'
+				all: '<%= UnicodeLanguageUtil.get(request, "all") %>',
+				content: '<%= UnicodeLanguageUtil.get(request, "content") %>',
+				from: '<%= UnicodeLanguageUtil.get(request, "from") %>',
+				msgError: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
+				msgNoData: '<%= UnicodeLanguageUtil.get(request, "there-were-no-notifications-in-the-selected-period") %>',
+				msgNoSearchResults: '<%= UnicodeLanguageUtil.get(request, "there-are-no-search-results") %>',
+				search: '<%= UnicodeLanguageUtil.get(request, "search") %>',
+				time: '<%= UnicodeLanguageUtil.get(request, "time") %>'
 			},
 			urls: {
 				getUserLCSMessages: '<%= getUserLCSMessagesURL %>'

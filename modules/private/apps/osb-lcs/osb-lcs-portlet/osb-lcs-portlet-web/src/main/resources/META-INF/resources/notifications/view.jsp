@@ -27,9 +27,9 @@ List<LCSClusterNode> lcsClusterNodes = LCSClusterNodeUtil.getLCSClusterNodes(req
 
 List<Object[]> downloadablePatchObjectArrays = NotificationsUtil.getDownloadablePatchObjectArrays(layoutLCSClusterEntryId, layoutLCSClusterNodeId, layoutLCSProjectId, lcsClusterNodes, patchesOrderByCol, patchesOrderByType);
 
-Layout dashboardLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_DASHBOARD);
-Layout environmentLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
-Layout serverLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_NODE);
+Layout dashboardLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_DASHBOARD);
+	Layout environmentLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
+Layout serverLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_NODE);
 %>
 
 <c:choose>
@@ -37,12 +37,12 @@ Layout serverLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.g
 		<div class="alert alert-info">
 			<liferay-ui:message key="the-fix-packs-update-service-is-unavailable-for-your-subscription-level" />
 
-			<aui:a href="<%= HtmlUtil.escape(PortletPropsValues.LRDCOM_EE_PORTAL_OVERVIEW_URL) %>" label="learn-more" target="_blank" />
+			<aui:a href="<%= HtmlUtil.escape(osbLCSConfiguration.lrdcomEePortalOverviewUrl()) %>" label="learn-more" target="_blank" />
 		</div>
 	</c:when>
 	<c:when test="<%= (plid != dashboardLayout.getPlid()) && !lcsClusterNodes.get(0).isPatchesLCSServiceEnabled() %>">
 		<div class="alert alert-info">
-			<liferay-portlet:renderURL plid="<%= environmentLayout.getPlid() %>" portletName="<%= PortletKeys.ENVIRONMENT %>" var="registrationURL">
+			<liferay-portlet:renderURL plid="<%= environmentLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.ENVIRONMENT %>" var="registrationURL">
 				<portlet:param name="environmentPage" value="registration" />
 				<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
 				<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
@@ -105,20 +105,20 @@ Layout serverLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.g
 			<div class="footer-note">
 				<liferay-ui:message key="use-the-patching-tool-to-complete-installation-of-downloaded-fix-packs" />
 
-				<liferay-ui:message arguments="<%= PortletPropsValues.LRDCOM_PATCHING_TOOL_OVERVIEW_URL %>" key="please-see-user-documentation-for-more-details" />
+				<liferay-ui:message arguments="<%= osbLCSConfiguration.lrdcomPatchingToolOverviewUrl() %>" key="please-see-user-documentation-for-more-details" />
 			</div>
 		</c:if>
 
 		<c:if test="<%= !downloadablePatchObjectArrays.isEmpty() %>">
-			<liferay-portlet:resourceURL id="downloadPatchStatus" portletName="<%= PortletKeys.NOTIFICATIONS %>" var="downloadPatchStatusURL">
+			<liferay-portlet:resourceURL id="downloadPatchStatus" portletName="<%= OSBLCSPortletKeys.NOTIFICATIONS %>" var="downloadPatchStatusURL">
 				<portlet:param name="p_auth" value="<%= AuthTokenUtil.getToken(request) %>" />
 			</liferay-portlet:resourceURL>
 
-			<liferay-portlet:resourceURL id="downloadPatch" portletName="<%= PortletKeys.NOTIFICATIONS %>" var="downloadPatchURL">
+			<liferay-portlet:resourceURL id="downloadPatch" portletName="<%= OSBLCSPortletKeys.NOTIFICATIONS %>" var="downloadPatchURL">
 				<portlet:param name="p_auth" value="<%= AuthTokenUtil.getToken(request) %>" />
 			</liferay-portlet:resourceURL>
 
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.NOTIFICATIONS %>" var="lcsClusterNodesURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+			<liferay-portlet:renderURL portletName="<%= OSBLCSPortletKeys.NOTIFICATIONS %>" var="lcsClusterNodesURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 				<portlet:param name="mvcPath" value="/notifications/view_lcs_cluster_nodes.jsp" />
 			</liferay-portlet:renderURL>
 
@@ -133,14 +133,14 @@ Layout serverLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.g
 			<aui:script use="lcs-notifications">
 				var lcsNotifications = new Liferay.Portlet.LCSNotifications(
 					{
-						errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+						errorMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
 						lcsConstants: {
 							JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
 							JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',
 							JSON_KEY_RESULT: '<%= LCSConstants.JSON_KEY_RESULT %>',
 							JSON_VALUE_SUCCESS: '<%= LCSConstants.JSON_VALUE_SUCCESS %>'
 						},
-						namespace: '<%= PortalUtil.getPortletNamespace(PortletKeys.NOTIFICATIONS) %>'
+						namespace: '<%= PortalUtil.getPortletNamespace(OSBLCSPortletKeys.NOTIFICATIONS) %>'
 					}
 				);
 
@@ -149,23 +149,23 @@ Layout serverLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.g
 						downloadPatchStatusAttributes: {
 							'<%= LCSConstants.PATCHES_ERROR %>': {
 								cssClass: 'lcs-download-status-<%= LCSConstants.toPatchStatusLabel(LCSConstants.PATCHES_ERROR) %>',
-								label: '<%= UnicodeLanguageUtil.get(pageContext, LCSConstants.toPatchStatusLabel(LCSConstants.PATCHES_ERROR)) %>'
+								label: '<%= UnicodeLanguageUtil.get(request, LCSConstants.toPatchStatusLabel(LCSConstants.PATCHES_ERROR)) %>'
 							},
 							'<%= LCSConstants.PATCHES_DOWNLOAD_INITIATED %>': {
 								cssClass: 'lcs-download-status-<%= LCSConstants.toPatchStatusLabel(LCSConstants.PATCHES_DOWNLOAD_INITIATED) %>',
-								label: '<%= UnicodeLanguageUtil.get(pageContext, LCSConstants.toPatchStatusLabel(LCSConstants.PATCHES_DOWNLOAD_INITIATED)) %>'
+								label: '<%= UnicodeLanguageUtil.get(request, LCSConstants.toPatchStatusLabel(LCSConstants.PATCHES_DOWNLOAD_INITIATED)) %>'
 							},
 							'<%= LCSConstants.PATCHES_DOWNLOADED %>': {
 								cssClass: 'lcs-download-status-<%= LCSConstants.toPatchStatusLabel(LCSConstants.PATCHES_DOWNLOADED) %>',
-								label: '<%= UnicodeLanguageUtil.get(pageContext, LCSConstants.toPatchStatusLabel(LCSConstants.PATCHES_DOWNLOADED)) %>'
+								label: '<%= UnicodeLanguageUtil.get(request, LCSConstants.toPatchStatusLabel(LCSConstants.PATCHES_DOWNLOADED)) %>'
 							},
 							'<%= LCSConstants.PATCHES_DOWNLOADING %>': {
 								cssClass: 'lcs-download-status-<%= LCSConstants.toPatchStatusLabel(LCSConstants.PATCHES_DOWNLOADING) %>',
-								label: '<%= UnicodeLanguageUtil.get(pageContext, LCSConstants.toPatchStatusLabel(LCSConstants.PATCHES_DOWNLOADING)) %>'
+								label: '<%= UnicodeLanguageUtil.get(request, LCSConstants.toPatchStatusLabel(LCSConstants.PATCHES_DOWNLOADING)) %>'
 							},
 							'<%= LCSConstants.PATCHES_UNKNOWN %>': {
 								cssClass: 'lcs-download-status-<%= LCSConstants.toPatchStatusLabel(LCSConstants.PATCHES_UNKNOWN) %>',
-								label: '<%= UnicodeLanguageUtil.get(pageContext, LCSConstants.toPatchStatusLabel(LCSConstants.PATCHES_UNKNOWN)) %>'
+								label: '<%= UnicodeLanguageUtil.get(request, LCSConstants.toPatchStatusLabel(LCSConstants.PATCHES_UNKNOWN)) %>'
 							}
 						},
 						downloadPatchStatusCodes: {
@@ -177,11 +177,11 @@ Layout serverLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.g
 						},
 						downloadPatchStatusURL: '<%= downloadPatchStatusURL %>',
 						downloadPatchURL: '<%= downloadPatchURL %>',
-						msgCompletedDownload: '<%= UnicodeLanguageUtil.get(pageContext, "completed-download-for-x.-please-restart-the-server-help") %>',
-						msgConfirmDownloadFixPack: '<%= ((lcsClusterEntry != null) && lcsClusterEntry.isCluster()) ? UnicodeLanguageUtil.get(pageContext, "you-are-about-to-download-this-fix-pack-to-all-nodes-in-the-cluster").concat("\\n\\n").concat(UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-continue")) : UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-download-this-fix-pack") %>',
-						msgConfirmDownloadSelectedFixPacks: '<%= ((lcsClusterEntry != null) && lcsClusterEntry.isCluster()) ? UnicodeLanguageUtil.get(pageContext, "you-are-about-to-download-the-selected-fix-packs-to-all-nodes-in-the-cluster").concat("\\n\\n").concat(UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-continue")) : UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-download-the-selected-fix-packs") %>',
-						msgNoAvailableFixPacks: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-fix-packs-available-for-download") %>',
-						showServersDialogTitle: '<%= UnicodeLanguageUtil.get(pageContext, "environment") %>: ',
+						msgCompletedDownload: '<%= UnicodeLanguageUtil.get(request, "completed-download-for-x.-please-restart-the-server-help") %>',
+						msgConfirmDownloadFixPack: '<%= ((lcsClusterEntry != null) && lcsClusterEntry.isCluster()) ? UnicodeLanguageUtil.get(request, "you-are-about-to-download-this-fix-pack-to-all-nodes-in-the-cluster").concat("\\n\\n").concat(UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-continue")) : UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-download-this-fix-pack") %>',
+						msgConfirmDownloadSelectedFixPacks: '<%= ((lcsClusterEntry != null) && lcsClusterEntry.isCluster()) ? UnicodeLanguageUtil.get(request, "you-are-about-to-download-the-selected-fix-packs-to-all-nodes-in-the-cluster").concat("\\n\\n").concat(UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-continue")) : UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-download-the-selected-fix-packs") %>',
+						msgNoAvailableFixPacks: '<%= UnicodeLanguageUtil.get(request, "there-are-no-fix-packs-available-for-download") %>',
+						showServersDialogTitle: '<%= UnicodeLanguageUtil.get(request, "environment") %>: ',
 						showServersDialogURL: '<%= lcsClusterNodesURL %>'
 					}
 				);

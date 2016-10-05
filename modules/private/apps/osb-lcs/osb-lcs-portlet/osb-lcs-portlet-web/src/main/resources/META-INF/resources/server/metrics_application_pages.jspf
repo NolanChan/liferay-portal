@@ -39,7 +39,7 @@
 	>
 		<liferay-ui:search-container-column-text name="page" orderable="<%= true %>">
 			<c:choose>
-				<c:when test="<%= lcsClusterNode.getBuildNumber() >= ServerUtil.RELEASE_6_2_0_BUILD_NUMBER %>">
+				<c:when test="<%= lcsClusterNode.getBuildNumber() >= com.liferay.osb.lcs.server.util.ServerAdvisor.RELEASE_6_2_0_BUILD_NUMBER %>">
 
 					<%
 					Map<String, Object> data = new HashMap<String, Object>();
@@ -64,7 +64,7 @@
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<c:if test="<%= lcsClusterNode.getBuildNumber() >= ServerUtil.RELEASE_6_2_0_BUILD_NUMBER %>">
+<c:if test="<%= lcsClusterNode.getBuildNumber() >= com.liferay.osb.lcs.server.util.ServerAdvisor.RELEASE_6_2_0_BUILD_NUMBER %>">
 	<liferay-portlet:renderURL var="layoutPortletsDialogURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 		<portlet:param name="mvcPath" value="/server/layout_portlets.jsp" />
 	</liferay-portlet:renderURL>
@@ -72,7 +72,7 @@
 	<aui:script use="lcs-server">
 		var lcsServer = new Liferay.Portlet.LCSServer(
 			{
-				errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+				errorMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
 				lcsConstants: {
 					JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
 					JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',
@@ -85,7 +85,7 @@
 
 		lcsServer.initializeApplicationMetrics(
 			{
-				layoutPortletsDialogTitle: '<%= UnicodeLanguageUtil.get(pageContext, "applications-on-the-page") %>: ',
+				layoutPortletsDialogTitle: '<%= UnicodeLanguageUtil.get(request, "applications-on-the-page") %>: ',
 				layoutPortletsDialogUrl: '<%= layoutPortletsDialogURL %>'
 			}
 		);

@@ -76,13 +76,13 @@ String patchId = PatchUtil.getPatchId(patchName);
 			}
 			%>
 
-			<%= LanguageUtil.get(pageContext, LCSConstants.toPatchStatusLabel(patchStatus)) %>
+			<%= LanguageUtil.get(request, LCSConstants.toPatchStatusLabel(patchStatus)) %>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text name="server">
 
 			<%
-			Layout lcsClusterNodeLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_NODE);
+			Layout lcsClusterNodeLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_NODE);
 			%>
 
 			<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" var="lcsClusterNodeURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">

@@ -28,7 +28,7 @@ String errorMessage = ParamUtil.getString(request, "errorMessage");
 	</span>
 
 	<p>
-		<liferay-ui:message arguments="<%= new Object[] {PortletPropsValues.LRDCOM_PRODUCT_PAGE_URL, PortletPropsValues.LRDCOM_USER_DOCUMENTATION_URL} %>" key="liferay-connected-services-is-a-set-of-online-tools-and-services-that-lets-you-manage-and-monitor-your-liferay-installations" />
+		<liferay-ui:message arguments="<%= new Object[] {osbLCSConfiguration.lrdcomProductPageUrl(), osbLCSConfiguration.lrdcomUserDocumentationUrl()} %>" key="liferay-connected-services-is-a-set-of-online-tools-and-services-that-lets-you-manage-and-monitor-your-liferay-installations" />
 	</p>
 
 	<c:if test="<%= Validator.isNotNull(errorMessage) %>">
@@ -54,7 +54,7 @@ String errorMessage = ParamUtil.getString(request, "errorMessage");
 					<liferay-ui:icon-menu icon="">
 
 						<%
-						Layout dashboardLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_DASHBOARD);
+						Layout dashboardLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_DASHBOARD);
 						%>
 
 						<liferay-portlet:renderURL plid="<%= dashboardLayout.getPlid() %>" var="dashboardURL" />

@@ -37,7 +37,7 @@ for (Object[] downloadablePatchObjectArray : downloadablePatchObjectArrays) {
 	List<Long> lcsClusterNodeIds = (List<Long>)downloadablePatchObjectArray[6];
 	LCSClusterEntry lcsClusterEntry = (LCSClusterEntry)downloadablePatchObjectArray[8];
 
-	if (!cluster && !lcsClusterNodeIds.isEmpty() && LCSClusterEntryPermission.contains(permissionChecker, lcsClusterEntry, ActionKeys.MANAGE_ENTRY)) {
+	if (!cluster && !lcsClusterNodeIds.isEmpty() && LCSClusterEntryPermission.contains(permissionChecker, lcsClusterEntry, OSBLCSActionKeys.MANAGE_ENTRY)) {
 		downloadsCount = downloadsCount + 1;
 	}
 }
@@ -53,7 +53,7 @@ for (Object[] downloadablePatchObjectArray : downloadablePatchObjectArrays) {
 		<div class="alert alert-info">
 
 			<%
-			Layout lcsClusterEntryLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
+			Layout lcsClusterEntryLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
 			%>
 
 			<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" var="lcsClusterEntryURL">
@@ -152,10 +152,10 @@ for (Object[] downloadablePatchObjectArray : downloadablePatchObjectArrays) {
 							lcsClusterNodelayoutLCSProjectId = lcsClusterEntry.getLcsProjectId();
 						}
 
-						Layout lcsClusterNodeLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_NODE);
+						Layout lcsClusterNodeLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_NODE);
 						%>
 
-						<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" portletName="<%= PortletKeys.NAVIGATION %>" var="lcsClusterNodeURL">
+						<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.NAVIGATION %>" var="lcsClusterNodeURL">
 							<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(lcsClusterNode.getLcsClusterEntryId()) %>" />
 							<portlet:param name="layoutLCSClusterNodeId" value="<%= String.valueOf(lcsClusterNode.getLcsClusterNodeId()) %>" />
 							<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(lcsClusterNodelayoutLCSProjectId) %>" />
@@ -182,7 +182,7 @@ for (Object[] downloadablePatchObjectArray : downloadablePatchObjectArrays) {
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text cssClass="action" name="download">
-				<c:if test="<%= !cluster && !lcsClusterNodeIds.isEmpty() && LCSClusterEntryPermission.contains(permissionChecker, lcsClusterEntry, ActionKeys.MANAGE_ENTRY) %>">
+				<c:if test="<%= !cluster && !lcsClusterNodeIds.isEmpty() && LCSClusterEntryPermission.contains(permissionChecker, lcsClusterEntry, OSBLCSActionKeys.MANAGE_ENTRY) %>">
 
 					<%
 					Map<String, Object> data = new HashMap<String, Object>();

@@ -20,7 +20,7 @@
 long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSProjectServiceUtil.getUserDefaultLCSProjectId());
 %>
 
-<c:if test="<%= LCSProjectPermission.contains(permissionChecker, layoutLCSProjectId, ActionKeys.ADD_LCS_CLUSTER_ENTRY) %>">
+<c:if test="<%= LCSProjectPermission.contains(permissionChecker, layoutLCSProjectId, OSBLCSActionKeys.ADD_LCS_CLUSTER_ENTRY) %>">
 	<h2>
 		<liferay-ui:message key="new-environment" />
 	</h2>

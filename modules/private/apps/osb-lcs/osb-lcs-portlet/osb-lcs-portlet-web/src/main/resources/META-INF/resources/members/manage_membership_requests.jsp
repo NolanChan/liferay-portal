@@ -31,7 +31,7 @@ long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSPr
 			<aui:col cssClass="lcs-search-users" width="<%= 50 %>">
 				<span class="icon-search search-users-icon"></span>
 
-				<aui:input cssClass="search-users-input" label="" name="searchUsers" placeholder='<%= LanguageUtil.get(pageContext, "search") %>' />
+				<aui:input cssClass="search-users-input" label="" name="searchUsers" placeholder='<%= LanguageUtil.get(request, "search") %>' />
 			</aui:col>
 		</aui:row>
 

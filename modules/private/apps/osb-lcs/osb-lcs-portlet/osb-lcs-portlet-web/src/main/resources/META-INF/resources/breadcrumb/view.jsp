@@ -21,16 +21,16 @@ long layoutLCSClusterEntryId = ParamUtil.getLong(request, "layoutLCSClusterEntry
 long layoutLCSClusterNodeId = ParamUtil.getLong(request, "layoutLCSClusterNodeId");
 long layoutLCSProjectId = ParamUtil.getLong(request, "layoutLCSProjectId", LCSProjectServiceUtil.getUserDefaultLCSProjectId());
 
-Layout dashboardLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_DASHBOARD);
-Layout lcsClusterEntryLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
-Layout lcsClusterNodeLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_NODE);
+Layout dashboardLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_DASHBOARD);
+Layout lcsClusterEntryLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
+Layout lcsClusterNodeLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_NODE);
 LCSRole lcsRole = LCSRoleLocalServiceUtil.fetchLCSRole(themeDisplay.getUserId(), layoutLCSProjectId);
 %>
 
 <c:if test="<%= lcsRole != null %>">
 	<ul>
 		<li>
-			<liferay-portlet:renderURL plid="<%= (layoutLCSClusterEntryId > 0) ? dashboardLayout.getPlid() : plid %>" portletName="<%= PortletKeys.BREADCRUMB %>" var="layoutLCSProjectURL">
+			<liferay-portlet:renderURL plid="<%= (layoutLCSClusterEntryId > 0) ? dashboardLayout.getPlid() : plid %>" portletName="<%= OSBLCSPortletKeys.BREADCRUMB %>" var="layoutLCSProjectURL">
 				<portlet:param name="layoutLCSClusterEntryId" value="0" />
 				<portlet:param name="layoutLCSClusterNodeId" value="0" />
 				<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
@@ -51,7 +51,7 @@ LCSRole lcsRole = LCSRoleLocalServiceUtil.fetchLCSRole(themeDisplay.getUserId(),
 				for (LCSProject lcsProject : LCSProjectServiceUtil.getUserLCSProjects(false, LCSRoleConstants.ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER)) {
 				%>
 
-					<liferay-portlet:renderURL plid="<%= (layoutLCSClusterEntryId > 0) ? dashboardLayout.getPlid() : plid %>" portletName="<%= PortletKeys.BREADCRUMB %>" var="lcsProjectURL">
+					<liferay-portlet:renderURL plid="<%= (layoutLCSClusterEntryId > 0) ? dashboardLayout.getPlid() : plid %>" portletName="<%= OSBLCSPortletKeys.BREADCRUMB %>" var="lcsProjectURL">
 						<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(lcsProject.getLcsProjectId()) %>" />
 						<portlet:param name="layoutLCSClusterEntryId" value="0" />
 						<portlet:param name="layoutLCSClusterNodeId" value="0" />
@@ -80,7 +80,7 @@ LCSRole lcsRole = LCSRoleLocalServiceUtil.fetchLCSRole(themeDisplay.getUserId(),
 				LCSClusterEntry layoutLCSClusterEntry = LCSClusterEntryServiceUtil.getLCSClusterEntry(layoutLCSClusterEntryId);
 				%>
 
-				<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= PortletKeys.BREADCRUMB %>" var="lcsClusterEntryURL">
+				<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.BREADCRUMB %>" var="lcsClusterEntryURL">
 					<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
 					<portlet:param name="layoutLCSClusterNodeId" value="0" />
 					<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
@@ -101,7 +101,7 @@ LCSRole lcsRole = LCSRoleLocalServiceUtil.fetchLCSRole(themeDisplay.getUserId(),
 					for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryServiceUtil.getLCSProjectLCSClusterEntries(layoutLCSProjectId)) {
 					%>
 
-						<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= PortletKeys.BREADCRUMB %>" var="lcsClusterEntryURL">
+						<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.BREADCRUMB %>" var="lcsClusterEntryURL">
 							<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(lcsClusterEntry.getLcsClusterEntryId()) %>" />
 							<portlet:param name="layoutLCSClusterNodeId" value="0" />
 							<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
@@ -131,7 +131,7 @@ LCSRole lcsRole = LCSRoleLocalServiceUtil.fetchLCSRole(themeDisplay.getUserId(),
 				LCSClusterNode layoutLCSClusterNode = LCSClusterNodeServiceUtil.getLCSClusterNode(layoutLCSClusterNodeId);
 				%>
 
-				<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" portletName="<%= PortletKeys.BREADCRUMB %>" var="lcsClusterNodeURL">
+				<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.BREADCRUMB %>" var="lcsClusterNodeURL">
 					<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
 					<portlet:param name="layoutLCSClusterNodeId" value="<%= String.valueOf(layoutLCSClusterNodeId) %>" />
 					<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />
@@ -152,7 +152,7 @@ LCSRole lcsRole = LCSRoleLocalServiceUtil.fetchLCSRole(themeDisplay.getUserId(),
 					for (LCSClusterNode lcsClusterNode : LCSClusterNodeServiceUtil.getLCSClusterEntryLCSClusterNodes(layoutLCSClusterEntryId)) {
 					%>
 
-						<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" portletName="<%= PortletKeys.BREADCRUMB %>" var="lcsClusterNodeURL">
+						<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.BREADCRUMB %>" var="lcsClusterNodeURL">
 							<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(layoutLCSClusterEntryId) %>" />
 							<portlet:param name="layoutLCSClusterNodeId" value="<%= String.valueOf(lcsClusterNode.getLcsClusterNodeId()) %>" />
 							<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(layoutLCSProjectId) %>" />

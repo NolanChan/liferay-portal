@@ -85,28 +85,27 @@ else {
 							<c:when test="<%= lcsEventType == LCSEventType.MEMBERSHIP_INVITATION_ACCEPTED %>">
 
 								<%
-								Layout usersLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_USERS);
+								Layout usersLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_USERS);
 
 								LCSProject lcsProject = LCSProjectServiceUtil.getLCSProject(lcsMessage.getClassPK());
 								%>
 
-								<liferay-portlet:renderURL plid="<%= usersLayout.getPlid() %>" portletName="<%= PortletKeys.MEMBERS %>" var="usersURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
+								<liferay-portlet:renderURL plid="<%= usersLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.MEMBERS %>" var="usersURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
 									<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(lcsMessage.getClassPK()) %>" />
 								</liferay-portlet:renderURL>
 
 								<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(lcsMessage.getContent()), usersURL, HtmlUtil.escape(lcsProject.getName())} %>" key="<%= lcsEventType.getMessage() %>" translateArguments="<%= false %>" />
 							</c:when>
 							<c:when test="<%= lcsEventType == LCSEventType.OSB_SUBSCRIPTION_STATUS_RECEIVED %>">
-
 								<div class="lcs-message-content">
 									<%= HtmlUtil.escape(lcsMessage.getContent()) %>
 								</div>
 
 								<%
-								Layout subscriptionsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_SUBSCRIPTIONS);
+								Layout subscriptionsLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_SUBSCRIPTIONS);
 								%>
 
-								<liferay-portlet:renderURL plid="<%= subscriptionsLayout.getPlid() %>" portletName="<%= PortletKeys.SUBSCRIPTIONS %>" var="subscriptionsURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
+								<liferay-portlet:renderURL plid="<%= subscriptionsLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.SUBSCRIPTIONS %>" var="subscriptionsURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
 									<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(lcsMessage.getClassPK()) %>" />
 								</liferay-portlet:renderURL>
 
@@ -117,12 +116,12 @@ else {
 							<c:when test="<%= lcsMessage.getClassNameId() == ClassNameLocalServiceUtil.getClassNameId(LCSProject.class) %>">
 
 								<%
-								Layout dashboardLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_DASHBOARD);
+								Layout dashboardLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_DASHBOARD);
 
 								LCSProject lcsProject = LCSProjectServiceUtil.getLCSProject(lcsMessage.getClassPK());
 								%>
 
-								<liferay-portlet:renderURL plid="<%= dashboardLayout.getPlid() %>" portletName="<%= PortletKeys.NAVIGATION %>" var="dashboardURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
+								<liferay-portlet:renderURL plid="<%= dashboardLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.NAVIGATION %>" var="dashboardURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
 									<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(lcsMessage.getClassPK()) %>" />
 								</liferay-portlet:renderURL>
 
@@ -131,12 +130,12 @@ else {
 							<c:when test="<%= lcsMessage.getClassNameId() == ClassNameLocalServiceUtil.getClassNameId(LCSClusterEntry.class) %>">
 
 								<%
-								Layout lcsClusterEntryLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
+								Layout lcsClusterEntryLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_ENTRY);
 
 								LCSClusterEntry lcsClusterEntry = LCSClusterEntryServiceUtil.getLCSClusterEntry(lcsMessage.getClassPK());
 								%>
 
-								<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= PortletKeys.ENVIRONMENT %>" var="lcsClusterEntryURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
+								<liferay-portlet:renderURL plid="<%= lcsClusterEntryLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.ENVIRONMENT %>" var="lcsClusterEntryURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
 									<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(lcsClusterEntry.getLcsClusterEntryId()) %>" />
 									<portlet:param name="layoutLCSClusterNodeId" value="0" />
 									<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(lcsClusterEntry.getLcsProjectId()) %>" />
@@ -147,14 +146,14 @@ else {
 							<c:otherwise>
 
 								<%
-								Layout lcsClusterNodeLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_LCS_CLUSTER_NODE);
+								Layout lcsClusterNodeLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_LCS_CLUSTER_NODE);
 
 								LCSClusterNode lcsClusterNode = LCSClusterNodeServiceUtil.getLCSClusterNode(lcsMessage.getClassPK());
 
 								LCSClusterEntry lcsClusterEntry = LCSClusterEntryServiceUtil.getLCSClusterEntry(lcsClusterNode.getLcsClusterEntryId());
 								%>
 
-								<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" portletName="<%= PortletKeys.SERVER %>" var="lcsClusterNodeURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
+								<liferay-portlet:renderURL plid="<%= lcsClusterNodeLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.SERVER %>" var="lcsClusterNodeURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
 									<portlet:param name="layoutLCSClusterEntryId" value="<%= String.valueOf(lcsClusterNode.getLcsClusterEntryId()) %>" />
 									<portlet:param name="layoutLCSClusterNodeId" value="<%= String.valueOf(lcsMessage.getClassPK()) %>" />
 									<portlet:param name="layoutLCSProjectId" value="<%= String.valueOf(lcsClusterEntry.getLcsProjectId()) %>" />
@@ -187,10 +186,10 @@ else {
 		</c:if>
 
 		<%
-		Layout accountLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationUtil.FRIENDLY_URL_ACCOUNT);
+		Layout accountLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), true, NavigationConstants.FRIENDLY_URL_ACCOUNT);
 		%>
 
-		<liferay-portlet:renderURL plid="<%= accountLayout.getPlid() %>" portletName="<%= PortletKeys.ACCOUNT %>" var="accountMessagesURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
+		<liferay-portlet:renderURL plid="<%= accountLayout.getPlid() %>" portletName="<%= OSBLCSPortletKeys.ACCOUNT %>" var="accountMessagesURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
 			<portlet:param name="mvcPath" value="/account/view.jsp" />
 			<portlet:param name="accountPage" value="messages" />
 		</liferay-portlet:renderURL>
