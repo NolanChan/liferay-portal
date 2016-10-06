@@ -1,3 +1,11 @@
+@media only screen and (min-width: 768px) {
+	#content, #wrapper {
+		margin: 0;
+		padding: 0;
+	}
+}
+
 #content {
-	padding-top: 100px;
+	margin-top: 64px;
+	min-height: 100px;
 }

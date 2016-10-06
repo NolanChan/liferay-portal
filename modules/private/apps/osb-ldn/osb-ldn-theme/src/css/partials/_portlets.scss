@@ -1,0 +1,19 @@
+@media only screen and (min-width: 768px) {
+	.portlet > .portlet-topper {
+		bottom: -66px;
+		top: auto;
+	}
+}
+
+.portlet {
+	margin: 0;
+}
+
+.portlet-decorate .portlet-content {
+	background: transparent;
+	border: none;
+}
+
+.portlet-content, .portlet-content-editable {
+	padding: 0;
+}

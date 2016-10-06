@@ -1,8 +1,8 @@
 a {
-	color: $altFontColor;
+	color: $fontColor;
 
 	&:active, &:focus, &:hover {
-		color: darken($altFontColor, 20%);
+		color: darken($fontColor, 20%);
 		text-decoration: none;
 	}
 }
@@ -34,8 +34,8 @@ a.btn, button, input.btn, input[type="button"], input[type="submit"], .btn, .fie
 
 	&:hover, &:focus {
 		background: #FFF;
-		border-color: $altFontColor;
-		color: $altFontColor;
+		border-color: $fontColor;
+		color: $fontColor;
 	}
 }
 
