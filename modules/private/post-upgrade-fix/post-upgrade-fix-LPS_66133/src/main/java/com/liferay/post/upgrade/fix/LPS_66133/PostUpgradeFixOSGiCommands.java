@@ -121,7 +121,15 @@ public class PostUpgradeFixOSGiCommands {
 				e);
 		}
 		finally {
-			runSQL("drop table " + tempTableName);
+			try {
+				runSQL("drop table " + tempTableName);
+			}
+			catch (Exception e) {
+				_log.error(
+					"An exception was thrown while deleting temporary table " +
+						tempTableName + " of postUpgradeFix:LPS_66133 ",
+					e);
+			}
 		}
 	}
 
