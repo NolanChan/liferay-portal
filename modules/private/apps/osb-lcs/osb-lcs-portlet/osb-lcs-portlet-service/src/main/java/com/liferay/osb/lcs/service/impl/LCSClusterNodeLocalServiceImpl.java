@@ -514,6 +514,21 @@ public class LCSClusterNodeLocalServiceImpl
 	}
 
 	@Override
+	public List<LCSClusterNode> getUserLCSClusterNodes(
+			long userId, boolean details)
+		throws PortalException {
+
+		List<LCSClusterNode> lcsClusterNodes = lcsClusterNodeFinder.findByU_A(
+			userId, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		if (!details) {
+			return lcsClusterNodes;
+		}
+
+		return addDetails(lcsClusterNodes);
+	}
+
+	@Override
 	public boolean hasLCSClusterEntryAllInactiveLCSClusterNodes(
 		long lcsClusterEntryId) {
 

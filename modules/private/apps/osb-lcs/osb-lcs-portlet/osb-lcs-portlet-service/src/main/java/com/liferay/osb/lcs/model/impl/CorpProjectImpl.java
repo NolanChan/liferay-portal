@@ -22,7 +22,7 @@ import com.liferay.osb.lcs.model.CorpProject;
 public class CorpProjectImpl implements CorpProject {
 
 	public long getCorpProjectId() {
-		return corpProjectId;
+		return _corpProjectId;
 	}
 
 	public String getName() {
@@ -34,7 +34,7 @@ public class CorpProjectImpl implements CorpProject {
 	}
 
 	public void setCorpProjectId(long corpProjectId) {
-		this.corpProjectId = corpProjectId;
+		this._corpProjectId = corpProjectId;
 	}
 
 	public void setName(String name) {
@@ -45,8 +45,8 @@ public class CorpProjectImpl implements CorpProject {
 		_organizationId = organizationId;
 	}
 
+	private long _corpProjectId;
 	private String _name;
 	private long _organizationId;
-	private long corpProjectId;
 
 }

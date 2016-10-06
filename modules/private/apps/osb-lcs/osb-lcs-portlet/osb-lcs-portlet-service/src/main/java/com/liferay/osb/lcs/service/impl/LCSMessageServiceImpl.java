@@ -120,20 +120,6 @@ public class LCSMessageServiceImpl extends LCSMessageServiceBaseImpl {
 		lcsMessageLocalService.deleteLCSProjectLCSMessage(
 			lcsProjectId, sourceMessageId, sourceSystemName,
 			classNameLocalService.getClassNameId(LCSProject.class.getName()));
-}
-
-	@Override
-	public List<LCSMessage> getLCSProjectLCSMessages(
-			long lcsProjectId, String sourceSystemName)
-		throws PortalException {
-
-		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
-
-		return lcsMessagePersistence.findByS_C_C(
-			sourceSystemName,
-			classNameLocalService.getClassNameId(LCSProject.class.getName()),
-			lcsProjectId);
 	}
 
 	@Override
@@ -148,6 +134,20 @@ public class LCSMessageServiceImpl extends LCSMessageServiceBaseImpl {
 
 		return lcsMessageLocalService.getLCSMessages(
 			getUserId(), modifyDateGT, modifyDateLT);
+	}
+
+	@Override
+	public List<LCSMessage> getLCSProjectLCSMessages(
+			long lcsProjectId, String sourceSystemName)
+		throws PortalException {
+
+		LCSProjectPermission.check(
+			getPermissionChecker(), lcsProjectId, OSBLCSActionKeys.VIEW);
+
+		return lcsMessagePersistence.findByS_C_C(
+			sourceSystemName,
+			classNameLocalService.getClassNameId(LCSProject.class.getName()),
+			lcsProjectId);
 	}
 
 }

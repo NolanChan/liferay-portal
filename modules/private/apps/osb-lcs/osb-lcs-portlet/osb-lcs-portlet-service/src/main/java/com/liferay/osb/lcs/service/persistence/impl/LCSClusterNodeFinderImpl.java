@@ -38,6 +38,9 @@ public class LCSClusterNodeFinderImpl
 	public static final String FIND_BY_LCEN_LPN =
 		LCSClusterNodeFinder.class.getName() + ".findByLCEN_LPN";
 
+	public static final String FIND_BY_U_A =
+		LCSClusterNodeFinder.class.getName() + ".findByU_A";
+
 	public List<LCSClusterNode> findByLCEN_LPN(
 		String lcsClusterEntryName, String lcsProjectName, boolean andOperator,
 		int start, int end) {
@@ -93,6 +96,43 @@ public class LCSClusterNodeFinderImpl
 			if (Validator.isNotNull(lcsProjectName)) {
 				qPos.add(lcsProjectName);
 			}
+
+			return (List<LCSClusterNode>)QueryUtil.list(
+				q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public List<LCSClusterNode> findByU_A(
+		long userId, boolean archived, int start, int end) {
+
+		String sql = CustomSQLUtil.get(FIND_BY_U_A);
+
+		sql = StringUtil.replace(
+			sql, "[$LCS_CLUSTER_NODE_ACTIVE_TEMPLATE$]",
+			"OSBLCS_LCSClusterNode.archived = ?");
+
+		sql = CustomSQLUtil.replaceAndOperator(sql, true);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.setCacheable(false);
+			q.addEntity("OSBLCS_LCSClusterNode", LCSClusterNodeImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(userId);
+			qPos.add(archived);
 
 			return (List<LCSClusterNode>)QueryUtil.list(
 				q, getDialect(), start, end);

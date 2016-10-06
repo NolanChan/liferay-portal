@@ -191,7 +191,7 @@ public class LCSRoleLocalServiceImpl extends LCSRoleLocalServiceBaseImpl {
 				"defaultLCSProjectId", false);
 
 			if (defaultLCSProjectId == lcsRole.getLcsProjectId()) {
-				expandoBridge.setAttribute("defaultLCSProjectId", 0l, false);
+				expandoBridge.setAttribute("defaultLCSProjectId", 0L, false);
 			}
 		}
 
@@ -461,7 +461,7 @@ public class LCSRoleLocalServiceImpl extends LCSRoleLocalServiceBaseImpl {
 		List<LCSRole> lcsRoles = lcsRolePersistence.findByU_LPI(
 			userId, lcsProjectId);
 
-		int ignoredRoles[] =
+		int[] ignoredRoles =
 			{LCSRoleConstants.ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER};
 
 		if (manageLCSClusterEntry) {

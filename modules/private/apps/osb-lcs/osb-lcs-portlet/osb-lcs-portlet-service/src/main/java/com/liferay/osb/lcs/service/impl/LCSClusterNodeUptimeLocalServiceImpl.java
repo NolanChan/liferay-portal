@@ -106,7 +106,7 @@ public class LCSClusterNodeUptimeLocalServiceImpl
 			calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) - 5, 1, 0,
 			0, 0);
 
-		if (range == DATE_RANGE_CURRENT_YEAR) {
+		if (range == _DATE_RANGE_CURRENT_YEAR) {
 			calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		}
 
@@ -378,7 +378,7 @@ public class LCSClusterNodeUptimeLocalServiceImpl
 
 		while (curStartDate.before(endDate)) {
 			List<LCSClusterNodeUptime> filteredLCSClusterNodeUptimes =
-				cloneLCSClusterNodeUptimes(
+				_cloneLCSClusterNodeUptimes(
 					filterLCSClusterNodeUptimes(
 						curLCSClusterNodeUptimes, curStartTime, curEndTime));
 
@@ -659,7 +659,7 @@ public class LCSClusterNodeUptimeLocalServiceImpl
 		return lcsClusterNodeUptimes;
 	}
 
-	private List<LCSClusterNodeUptime> cloneLCSClusterNodeUptimes(
+	private List<LCSClusterNodeUptime> _cloneLCSClusterNodeUptimes(
 		List<LCSClusterNodeUptime> lcsClusterNodeUptimes) {
 
 		List<LCSClusterNodeUptime> clonedLCSClusterNodeUptimes =
@@ -675,6 +675,6 @@ public class LCSClusterNodeUptimeLocalServiceImpl
 		return clonedLCSClusterNodeUptimes;
 	}
 
-	private static final int DATE_RANGE_CURRENT_YEAR = 1;
+	private static final int _DATE_RANGE_CURRENT_YEAR = 1;
 
 }

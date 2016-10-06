@@ -51,13 +51,18 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Igor Beslic
@@ -408,6 +413,62 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<LCSProject> getUserDomainLCSProjects(User user) {
+		String emailAddress = user.getEmailAddress();
+
+		String domain = emailAddress.substring(
+			emailAddress.indexOf(StringPool.AT));
+
+		domain = domain.replaceFirst("\\..+$", StringPool.BLANK);
+
+		if (_EMAIL_ADDRESS_SUBDOMAINS.contains(domain)) {
+			return Collections.emptyList();
+		}
+
+		List<Long> userIds = getUserIdsByEmailAddressDomain(
+			user.getUserId(), domain);
+
+		if (userIds.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		DynamicQuery query = DynamicQueryFactoryUtil.forClass(LCSRole.class);
+
+		query.add(
+			RestrictionsFactoryUtil.eq(
+				"role", LCSRoleConstants.ROLE_LCS_ADMINISTRATOR));
+		query.add(RestrictionsFactoryUtil.in("userId", userIds));
+
+		List<LCSRole> lcsRoles = dynamicQuery(query);
+
+		if (lcsRoles.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		Set<LCSProject> lcsProjects = new HashSet<>();
+
+		for (LCSRole lcsRole : lcsRoles) {
+			int count = lcsRolePersistence.countByU_LPI(
+				user.getUserId(), lcsRole.getLcsProjectId());
+
+			if (count != 0) {
+				continue;
+			}
+
+			LCSProject lcsProject = lcsProjectPersistence.fetchByPrimaryKey(
+				lcsRole.getLcsProjectId());
+
+			if (lcsProject == null) {
+				continue;
+			}
+
+			lcsProjects.add(lcsProject);
+		}
+
+		return ListUtil.fromCollection(lcsProjects);
+	}
+
+	@Override
 	public List<LCSProject> getUserLCSProjects(long userId)
 		throws PortalException {
 
@@ -495,6 +556,33 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 			OSBLCSConfiguration.class, 0);
 	}
 
+	protected List<Long> getUserIdsByEmailAddressDomain(
+		long userId, String domain) {
+
+		String emailAddressWildcard =
+			StringPool.PERCENT + domain + StringPool.PERCENT;
+
+		DynamicQuery query = DynamicQueryFactoryUtil.forClass(User.class);
+
+		query.add(
+			RestrictionsFactoryUtil.like("emailAddress", emailAddressWildcard));
+		query.add(RestrictionsFactoryUtil.ne("userId", userId));
+
+		List<User> users = dynamicQuery(query);
+
+		if (users.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<Long> userIds = new ArrayList<>();
+
+		for (User user : users) {
+			userIds.add(user.getUserId());
+		}
+
+		return userIds;
+	}
+
 	protected void setUpLCSAdministratorUserLCSProject(
 			User user, long lcsMessageId, long lcsProjectId)
 		throws PortalException {
@@ -526,6 +614,9 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 					user.getUserUuid()));
 		}
 	}
+
+	private static final String _EMAIL_ADDRESS_SUBDOMAINS =
+		"aol,gmail,hotmail,mail,outlook,yahoo";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LCSProjectLocalServiceImpl.class);

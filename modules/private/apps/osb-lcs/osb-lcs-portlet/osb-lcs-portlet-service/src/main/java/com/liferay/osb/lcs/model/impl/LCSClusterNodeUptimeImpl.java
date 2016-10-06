@@ -27,7 +27,7 @@ public class LCSClusterNodeUptimeImpl extends LCSClusterNodeUptimeBaseImpl {
 
 	public double getAmount() {
 		return _amount;
-		}
+	}
 
 	public long getLcsClusterEntryId() {
 		return _lcsClusterEntryId;

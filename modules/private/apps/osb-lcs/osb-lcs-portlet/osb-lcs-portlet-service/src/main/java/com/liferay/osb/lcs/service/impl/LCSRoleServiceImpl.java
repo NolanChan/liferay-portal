@@ -27,6 +27,7 @@ import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.ArrayList;
@@ -81,6 +82,21 @@ public class LCSRoleServiceImpl extends LCSRoleServiceBaseImpl {
 
 		return lcsRoleLocalService.addLCSRole(
 			userId, lcsProjectId, lcsClusterEntryId, role);
+	}
+
+	@Override
+	public LCSRole addPendingLCSRole(long lcsProjectId, long lcsClusterEntryId)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isSignedIn()) {
+			throw new PrincipalException();
+		}
+
+		return lcsRoleLocalService.addLCSRole(
+			getUserId(), lcsProjectId, lcsClusterEntryId,
+			LCSRoleConstants.ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER);
 	}
 
 	/**

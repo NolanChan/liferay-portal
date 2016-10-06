@@ -394,6 +394,14 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 	}
 
 	@Override
+	public List<LCSClusterNode> getUserLCSClusterNodes(boolean details)
+		throws PortalException {
+
+		return lcsClusterNodeLocalService.getUserLCSClusterNodes(
+			getUserId(), details);
+	}
+
+	@Override
 	public void updateBuildNumber(long lcsClusterNodeId, int buildNumber)
 		throws PortalException {
 

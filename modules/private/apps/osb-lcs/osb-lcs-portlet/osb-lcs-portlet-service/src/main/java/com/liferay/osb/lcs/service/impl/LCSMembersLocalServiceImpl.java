@@ -27,11 +27,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,18 +69,40 @@ public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {
 	public void invalidateLCSSiteMembership(long companyId, long userId)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			companyId, GroupConstants.GUEST);
 
-		if (GroupLocalServiceUtil.hasUserGroup(userId, group.getGroupId())) {
-			GroupLocalServiceUtil.unsetUserGroups(
+		if (_groupLocalService.hasUserGroup(userId, group.getGroupId())) {
+			_groupLocalService.unsetUserGroups(
 				userId, new long[] {group.getGroupId()});
 		}
+	}
+
+	@ServiceReference
+	public void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
 	}
 
 	@Reference(bind = "-")
 	public void setOSBPortletService(OSBPortletService osbPortletService) {
 		_osbPortletService = osbPortletService;
+	}
+
+	@ServiceReference
+	public void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@ServiceReference
+	public void setUserGroupRoleLocalService(
+		UserGroupRoleLocalService userGroupRoleLocalService) {
+
+		_userGroupRoleLocalService = userGroupRoleLocalService;
+	}
+
+	@ServiceReference
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
 	}
 
 	@Override
@@ -120,25 +143,29 @@ public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {
 	public void validateLCSSiteMembership(long companyId, long userId)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			companyId, GroupConstants.GUEST);
 
-		Role role = RoleLocalServiceUtil.getRole(
+		Role role = _roleLocalService.getRole(
 			group.getCompanyId(), RoleConstants.SITE_MEMBER);
 
-		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+		if (_userGroupRoleLocalService.hasUserGroupRole(
 				userId, group.getGroupId(), role.getRoleId())) {
 
 			return;
 		}
 
-		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+		_userGroupRoleLocalService.addUserGroupRoles(
 			userId, group.getGroupId(), new long[] {role.getRoleId()});
 
-		UserLocalServiceUtil.addGroupUsers(
+		_userLocalService.addGroupUsers(
 			group.getGroupId(), new long[] {userId});
 	}
 
+	private GroupLocalService _groupLocalService;
 	private OSBPortletService _osbPortletService;
+	private RoleLocalService _roleLocalService;
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+	private UserLocalService _userLocalService;
 
 }

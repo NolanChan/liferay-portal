@@ -28,7 +28,7 @@ public class LCSNotificationAuditEntryImpl
 
 	public String getLcsClusterEntryName() {
 		return _lcsClusterEntryName;
-		}
+	}
 
 	public String getLcsClusterNodeKey() {
 		return _lcsClusterNodeKey;

@@ -24,7 +24,6 @@ import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
-import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
 import com.liferay.osb.lcs.service.base.LCSProjectServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
 import com.liferay.osb.lcs.util.ApplicationProfile;
@@ -144,8 +143,7 @@ public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {
 			expandoBridge.getAttribute("defaultLCSProjectId", false));
 
 		if (defaultLCSProjectId > 0) {
-			LCSProject lcsProject = LCSProjectServiceUtil.getLCSProject(
-				defaultLCSProjectId);
+			LCSProject lcsProject = getLCSProject(defaultLCSProjectId);
 
 			if (lcsProject != null) {
 				return defaultLCSProjectId;
@@ -170,6 +168,13 @@ public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {
 		LCSProject defaultLCSProject = lcsProjects.get(0);
 
 		return defaultLCSProject.getLcsProjectId();
+	}
+
+	@Override
+	public List<LCSProject> getUserDomainLCSProjects() throws PortalException {
+		checkSignedIn();
+
+		return lcsProjectLocalService.getUserDomainLCSProjects(getUser());
 	}
 
 	@Override
