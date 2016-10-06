@@ -1,5 +1,0 @@
-Bundle-Name: Liferay VLDAP Web
-Bundle-SymbolicName: com.liferay.vldap.web
-Bundle-Version: 2.0.0
-
-Include-Resource: OSGI-INF/lib=lib
