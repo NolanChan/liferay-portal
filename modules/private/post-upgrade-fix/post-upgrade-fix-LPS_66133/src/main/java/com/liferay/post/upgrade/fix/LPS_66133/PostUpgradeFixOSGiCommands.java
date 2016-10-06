@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
@@ -50,43 +52,63 @@ public class PostUpgradeFixOSGiCommands {
 			_log.info("Executing postUpgradeFix:LPS_66133");
 		}
 
+		String tempTableName = "TEMP_TABLE_" + StringUtil.randomString(4);
+
 		try {
+			runSQL("create table " + tempTableName + " (threadId LONG)");
+
+			StringBundler sb = new StringBundler(8);
+
+			sb.append("insert into ");
+			sb.append(tempTableName);
+			sb.append(" select MBThread.threadId from MBThread, MBMessage ");
+			sb.append("where MBThread.threadId = MBMessage.threadId and ");
+			sb.append("MBThread.categoryId = ");
+			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
+			sb.append(" group by MBMessage.threadId having ");
+			sb.append("count(MBMessage.messageId) = 1");
+
 			long classNameId = PortalUtil.getClassNameId(
 				MBDiscussion.class.getName());
 
-			StringBundler sb = new StringBundler(6);
+			sb = new StringBundler(7);
 
 			sb.append("delete from AssetEntry where classPK in (");
-			sb.append("select messageId from MBMessage where threadId in (");
-			sb.append("select threadId from MBThread where categoryId = ");
-			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" and messageCount = 1)) and classNameId = ");
+			sb.append("select MBMessage.messageId from MBMessage inner join ");
+			sb.append(tempTableName);
+			sb.append(" on MBMessage.threadId = ");
+			sb.append(tempTableName);
+			sb.append(".threadId) and classNameId = ");
 			sb.append(classNameId);
 
 			runSQL(sb.toString());
 
 			sb = new StringBundler(4);
 
-			sb.append("delete from MBDiscussion where threadId in (select ");
-			sb.append("threadId from MBThread where categoryId = ");
-			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" and messageCount = 1)");
+			sb.append("delete from MBDiscussion where threadId in (");
+			sb.append("select threadId from ");
+			sb.append(tempTableName);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			runSQL(sb.toString());
 
 			sb = new StringBundler(4);
 
-			sb.append("delete from MBMessage where threadId in (select ");
-			sb.append("threadId from MBThread where categoryId = ");
-			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" and messageCount = 1)");
+			sb.append("delete from MBMessage where threadId in (");
+			sb.append("select threadId from ");
+			sb.append(tempTableName);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			runSQL(sb.toString());
 
-			runSQL(
-				"delete from MBThread where categoryId = " +
-					MBCategoryConstants.DISCUSSION_CATEGORY_ID +
-						" and messageCount = 1");
+			sb = new StringBundler(4);
+
+			sb.append("delete from MBThread where threadId in (");
+			sb.append("select threadId from ");
+			sb.append(tempTableName);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			runSQL(sb.toString());
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Finished executing postUpgradeFix:LPS_66133");
@@ -97,6 +119,9 @@ public class PostUpgradeFixOSGiCommands {
 				"An exception was thrown while executing postUpgradeFix:" +
 					"LPS_66133 ",
 				e);
+		}
+		finally {
+			runSQL("drop table " + tempTableName);
 		}
 	}
 
