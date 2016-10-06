@@ -5,6 +5,7 @@
 	<portlet>
 		<portlet-name>1</portlet-name>
 		<use-default-template>false</use-default-template>
+		<layout-cacheable>true</layout-cacheable>
 		<system>true</system>
 	</portlet>
 	<portlet>
