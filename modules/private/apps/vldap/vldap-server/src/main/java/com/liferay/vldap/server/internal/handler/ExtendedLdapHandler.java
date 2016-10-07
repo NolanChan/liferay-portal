@@ -14,8 +14,6 @@
 
 package com.liferay.vldap.server.internal.handler;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.vldap.server.internal.handler.util.LdapHandlerContext;
 import com.liferay.vldap.server.internal.handler.util.LdapSslContextFactory;
 import com.liferay.vldap.server.internal.util.OIDConstants;
@@ -82,8 +80,5 @@ public class ExtendedLdapHandler extends BaseLdapHandler {
 
 		return toList(extendedResponse);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ExtendedLdapHandler.class);
 
 }
