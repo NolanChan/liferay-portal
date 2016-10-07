@@ -33,8 +33,8 @@ public class OracleInsertSQLBuilderTest {
 		String field = _insertSQLBuilder.buildField(new Date(0L));
 
 		Assert.assertEquals(
-			"to_timestamp('1970-01-01 00:00:00.001', " +
-				"'yyyy-MM-dd HH24:MI:SS.FF')",
+			"to_timestamp('1970-01-01 00:00:00.001', 'yyyy-MM-dd " +
+				"HH24:MI:SS.FF')",
 			field);
 	}
 
@@ -85,8 +85,8 @@ public class OracleInsertSQLBuilderTest {
 		String field = _insertSQLBuilder.buildField(new Timestamp(0L));
 
 		Assert.assertEquals(
-			"to_timestamp('1970-01-01 00:00:00.001', " +
-				"'yyyy-MM-dd HH24:MI:SS.FF')",
+			"to_timestamp('1970-01-01 00:00:00.001', 'yyyy-MM-dd " +
+				"HH24:MI:SS.FF')",
 			field);
 	}
 

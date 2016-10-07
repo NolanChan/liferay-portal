@@ -1669,8 +1669,8 @@ public class ClusterSchedulerEngineTest {
 		@Around(
 			"execution(void com.liferay.portal.kernel.cluster." +
 				"ClusterableContextThreadLocal.putThreadLocalContext(" +
-					"java.lang.String, java.io.Serializable)) && " +
-						"args(key, value)"
+					"java.lang.String, java.io.Serializable)) && args(key, " +
+						"value)"
 		)
 		public void loadIndexesFromCluster(String key, Serializable value) {
 			_threadLocals.put(key, value);

@@ -145,11 +145,14 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 		String authnRequestXML = OpenSamlUtil.marshall(authnRequest);
 
-		authnRequestXML =
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE " +
-				"saml2p:AuthnRequest [\n<!ENTITY xxe SYSTEM " +
-					"\"http://localhost/saml-request\">\n]>" +
-						authnRequestXML.substring(38);
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE ");
+		sb.append("saml2p:AuthnRequest [\n<!ENTITY xxe SYSTEM ");
+		sb.append("\"http://localhost/saml-request\">\n]>");
+		sb.append(authnRequestXML.substring(38));
+
+		authnRequestXML = sb.toString();
 
 		authnRequestXML =
 			authnRequestXML.substring(0, authnRequestXML.length() - 22) +
@@ -166,13 +169,12 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 		String authnRequestXML = OpenSamlUtil.marshall(authnRequest);
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE ");
 		sb.append("saml2p:AuthnRequest [\n<!ENTITY xxe PUBLIC ");
 		sb.append("\"SOME//PUBLIC//ID\" ");
 		sb.append("\"http://localhost/saml-request\">\n]>");
-
 		sb.append(authnRequestXML.substring(38));
 
 		authnRequestXML = sb.toString();

@@ -363,8 +363,8 @@ public class DocumentumRepository
 
 				if (extRepositoryObjectType != ExtRepositoryObjectType.FILE) {
 					throw new UnsupportedOperationException(
-						"Copying non-file external repository objects is " +
-							"not supported");
+						"Copying non-file external repository objects is not " +
+							"supported");
 				}
 
 				IDfDocument idfDocument = getIDfSysObject(

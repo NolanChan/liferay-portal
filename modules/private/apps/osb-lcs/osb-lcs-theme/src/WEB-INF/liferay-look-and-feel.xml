@@ -11,8 +11,8 @@
 			<setting configurable="true" key="feedback-page" value="/group/guest/feedback" />
 			<setting configurable="true" key="google-tag-manager-id" value="" />
 			<setting configurable="true" key="liferay-home-url" value="https://www.liferay.com" />
-			<setting configurable="true" key="privacy-policy-url" value="https://www.liferay.com/about-us/privacy" />
 			<setting key="portlet-setup-show-borders-default" value="false" />
+			<setting configurable="true" key="privacy-policy-url" value="https://www.liferay.com/about-us/privacy" />
 		</settings>
 	</theme>
 </look-and-feel>

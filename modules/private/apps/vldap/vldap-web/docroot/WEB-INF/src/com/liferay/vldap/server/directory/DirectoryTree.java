@@ -247,8 +247,8 @@ public class DirectoryTree {
 		if (community == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Group with name " + typeValue + " does not " +
-						"exist for company " + company.getCompanyId());
+					"Group with name " + typeValue + " does not exist for " +
+						"company " + company.getCompanyId());
 			}
 
 			return null;

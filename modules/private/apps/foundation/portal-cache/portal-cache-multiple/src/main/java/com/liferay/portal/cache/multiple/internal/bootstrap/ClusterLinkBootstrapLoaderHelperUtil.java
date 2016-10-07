@@ -174,8 +174,8 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 		if (clusterNodeResponse == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to load cache from the cluster because there " +
-						"was no peer response");
+					"Unable to load cache from the cluster because there was " +
+						"no peer response");
 			}
 
 			return;
