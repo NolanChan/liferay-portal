@@ -55,7 +55,7 @@ public class SambaAuthTest extends BaseVLDAPTestCase {
 
 		_expandoBridge = mock(ExpandoBridge.class);
 
-		Class clazz = Class.forName(SambaAuth.class.getName());
+		Class<?> clazz = Class.forName(SambaAuth.class.getName());
 
 		Method setUserLocalServiceMethod = clazz.getDeclaredMethod(
 			"setUserLocalService", UserLocalService.class);

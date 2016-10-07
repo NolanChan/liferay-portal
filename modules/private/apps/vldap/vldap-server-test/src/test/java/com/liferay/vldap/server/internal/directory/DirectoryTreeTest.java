@@ -1224,13 +1224,13 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		StringValue stringValue = new StringValue("testScreenName");
 
-		ExprNode exprNode = new EqualityNode("cn", stringValue);
+		ExprNode exprNode = new EqualityNode<>("cn", stringValue);
 
 		branchNode.addNode(exprNode);
 
 		stringValue = new StringValue("newTestScreenName");
 
-		exprNode = new EqualityNode("cn", stringValue);
+		exprNode = new EqualityNode<>("cn", stringValue);
 
 		branchNode.addNode(exprNode);
 
@@ -1256,13 +1256,13 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		StringValue stringValue = new StringValue("testScreenName");
 
-		ExprNode exprNode = new EqualityNode("cn", stringValue);
+		ExprNode exprNode = new EqualityNode<>("cn", stringValue);
 
 		branchNode.addNode(exprNode);
 
 		stringValue = new StringValue("test");
 
-		exprNode = new EqualityNode("ou", stringValue);
+		exprNode = new EqualityNode<>("ou", stringValue);
 
 		branchNode.addNode(exprNode);
 
@@ -1354,7 +1354,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		StringValue stringValue = new StringValue("testScreenName");
 
-		LeafNode leafNode = new EqualityNode("cn", stringValue);
+		LeafNode leafNode = new EqualityNode<>("cn", stringValue);
 
 		List<FilterConstraint> filterConstraints =
 			getFilterConstraintsFromLeafNode(leafNode);
@@ -1427,7 +1427,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		StringValue stringValue = new StringValue("testScreenName");
 
-		ExprNode exprNode = new EqualityNode("cn", stringValue);
+		ExprNode exprNode = new EqualityNode<>("cn", stringValue);
 
 		branchNode.addNode(exprNode);
 
@@ -1447,7 +1447,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		StringValue stringValue = new StringValue("testScreenName");
 
-		ExprNode exprNode = new EqualityNode("cn", stringValue);
+		ExprNode exprNode = new EqualityNode<>("cn", stringValue);
 
 		List<FilterConstraint> filterConstraints =
 			(List<FilterConstraint>)toFilterConstraintsMethod.invoke(
@@ -1495,7 +1495,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		if (addExprNode) {
 			StringValue stringValue = new StringValue("testScreenName");
 
-			ExprNode exprNode = new EqualityNode("cn", stringValue);
+			ExprNode exprNode = new EqualityNode<>("cn", stringValue);
 
 			branchNode.addNode(exprNode);
 		}
@@ -1718,7 +1718,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	}
 
 	private static Object _classInstance;
-	private static Class _clazz;
+	private static Class<?> _clazz;
 	private static Organization _organization;
 	private static User _user;
 

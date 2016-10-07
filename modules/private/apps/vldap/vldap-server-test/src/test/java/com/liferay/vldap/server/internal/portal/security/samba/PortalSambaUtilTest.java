@@ -309,7 +309,7 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 	}
 
 	private static Object _classInstance;
-	private static Class _clazz;
+	private static Class<?> _clazz;
 	private static ExpandoBridge _expandoBridge;
 	private static User _user;
 

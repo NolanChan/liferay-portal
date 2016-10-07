@@ -251,6 +251,7 @@ public class RoleBuilderTest extends BaseVLDAPTestCase {
 			PRIMARY_KEY
 		);
 
+		@SuppressWarnings("rawtypes")
 		List roles = new ArrayList<>();
 
 		roles.add(role);

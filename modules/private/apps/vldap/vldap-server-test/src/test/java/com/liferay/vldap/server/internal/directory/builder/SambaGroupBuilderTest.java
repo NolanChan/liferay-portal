@@ -188,7 +188,7 @@ public class SambaGroupBuilderTest extends BaseVLDAPTestCase {
 			"testName"
 		);
 
-		List organizations = new ArrayList<>();
+		List<Object> organizations = new ArrayList<>();
 
 		organizations.add(organization);
 

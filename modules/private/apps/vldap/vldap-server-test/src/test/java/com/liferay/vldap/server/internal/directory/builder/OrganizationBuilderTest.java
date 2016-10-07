@@ -225,6 +225,7 @@ public class OrganizationBuilderTest extends BaseVLDAPTestCase {
 			PRIMARY_KEY
 		);
 
+		@SuppressWarnings("rawtypes")
 		List organizations = new ArrayList<>();
 
 		organizations.add(organization);

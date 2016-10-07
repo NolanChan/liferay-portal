@@ -285,6 +285,7 @@ public class UserGroupBuilderTest extends BaseVLDAPTestCase {
 			PRIMARY_KEY
 		);
 
+		@SuppressWarnings("rawtypes")
 		List userGroups = new ArrayList<>();
 
 		userGroups.add(userGroup);
