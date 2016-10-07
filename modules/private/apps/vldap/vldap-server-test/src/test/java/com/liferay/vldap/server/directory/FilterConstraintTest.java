@@ -14,8 +14,6 @@
 
 package com.liferay.vldap.server.directory;
 
-import com.liferay.vldap.server.directory.FilterConstraint;
-
 import java.util.ArrayList;
 import java.util.List;
 

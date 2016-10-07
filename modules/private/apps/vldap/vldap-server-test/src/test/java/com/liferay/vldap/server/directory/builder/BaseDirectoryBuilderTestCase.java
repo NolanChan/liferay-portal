@@ -16,7 +16,6 @@ package com.liferay.vldap.server.directory.builder;
 
 import com.liferay.vldap.BaseVLDAPTestCase;
 import com.liferay.vldap.server.directory.FilterConstraint;
-import com.liferay.vldap.server.directory.builder.DirectoryBuilder;
 import com.liferay.vldap.server.directory.ldap.Directory;
 
 import java.util.ArrayList;

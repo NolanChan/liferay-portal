@@ -14,8 +14,6 @@
 
 package com.liferay.vldap.server.directory.builder;
 
-import com.liferay.vldap.server.directory.builder.OrganizationsBuilder;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -31,8 +31,8 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.vldap.server.portal.security.samba.PortalSambaUtil;
 import com.liferay.vldap.server.handler.util.LdapHandlerThreadLocal;
+import com.liferay.vldap.server.portal.security.samba.PortalSambaUtil;
 import com.liferay.vldap.server.util.LdapUtil;
 import com.liferay.vldap.server.util.PortletPropsValues;
 

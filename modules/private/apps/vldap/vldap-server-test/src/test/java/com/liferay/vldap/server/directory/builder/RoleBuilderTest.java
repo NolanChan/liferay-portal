@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.vldap.BaseVLDAPTestCase;
 import com.liferay.vldap.server.directory.FilterConstraint;
-import com.liferay.vldap.server.directory.builder.RoleBuilder;
 import com.liferay.vldap.server.directory.ldap.Directory;
 
 import java.util.ArrayList;

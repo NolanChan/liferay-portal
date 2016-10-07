@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
 import com.liferay.vldap.BaseVLDAPTestCase;
 import com.liferay.vldap.server.directory.FilterConstraint;
-import com.liferay.vldap.server.directory.builder.OrganizationBuilder;
 import com.liferay.vldap.server.directory.ldap.Directory;
 
 import java.util.ArrayList;
