@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.samba;
+package com.liferay.vldap.server.internal.portal.security.samba;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -25,8 +25,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.vldap.BaseVLDAPTestCase;
-import com.liferay.vldap.server.internal.portal.security.samba.PortalSambaUtil;
+import com.liferay.vldap.server.internal.BaseVLDAPTestCase;
 
 import java.lang.reflect.Method;
 

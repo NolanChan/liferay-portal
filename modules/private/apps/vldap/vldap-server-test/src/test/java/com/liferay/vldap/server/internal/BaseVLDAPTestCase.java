@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.vldap;
+package com.liferay.vldap.server.internal;
 
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;

@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.vldap.util;
+package com.liferay.vldap.server.internal.util;
 
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.vldap.server.internal.util.LdapUtil;
 
 import org.apache.directory.api.ldap.model.name.Dn;
 

@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.vldap.server.directory.ldap;
+package com.liferay.vldap.server.internal.directory.ldap;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
-import com.liferay.vldap.BaseVLDAPTestCase;
-import com.liferay.vldap.server.internal.directory.ldap.Directory;
-import com.liferay.vldap.server.internal.directory.ldap.TopDirectory;
+import com.liferay.vldap.server.internal.BaseVLDAPTestCase;
 
 import java.util.ArrayList;
 import java.util.Collection;

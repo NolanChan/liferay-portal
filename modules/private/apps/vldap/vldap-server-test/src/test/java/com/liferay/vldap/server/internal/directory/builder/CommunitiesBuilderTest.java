@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.vldap.server.directory.builder;
-
-import com.liferay.vldap.server.internal.directory.builder.CommunitiesBuilder;
+package com.liferay.vldap.server.internal.directory.builder;
 
 import org.junit.Before;
 import org.junit.Test;

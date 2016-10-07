@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.vldap.server.directory.builder;
-
-import com.liferay.vldap.server.internal.directory.builder.UserGroupsBuilder;
+package com.liferay.vldap.server.internal.directory.builder;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,14 +24,14 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author William Newbury
  */
 @RunWith(PowerMockRunner.class)
-public class UserGroupsBuilderTest extends BaseDirectoryBuilderTestCase {
+public class OrganizationsBuilderTest extends BaseDirectoryBuilderTestCase {
 
 	@Before
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 
-		directoryBuilder = new UserGroupsBuilder();
+		directoryBuilder = new OrganizationsBuilder();
 	}
 
 	@Test
@@ -44,7 +42,7 @@ public class UserGroupsBuilderTest extends BaseDirectoryBuilderTestCase {
 	@Test
 	public void testValidAttributes() {
 		doTestValidAttributes("objectclass", "organizationalUnit", "top", "*");
-		doTestValidAttributes("ou", "User Groups", "*");
+		doTestValidAttributes("ou", "Organizations", "*");
 	}
 
 }

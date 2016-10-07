@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.vldap.server.directory.builder;
+package com.liferay.vldap.server.internal.directory.builder;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.Organization;
@@ -23,9 +23,8 @@ import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
-import com.liferay.vldap.BaseVLDAPTestCase;
+import com.liferay.vldap.server.internal.BaseVLDAPTestCase;
 import com.liferay.vldap.server.internal.directory.FilterConstraint;
-import com.liferay.vldap.server.internal.directory.builder.UserBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;

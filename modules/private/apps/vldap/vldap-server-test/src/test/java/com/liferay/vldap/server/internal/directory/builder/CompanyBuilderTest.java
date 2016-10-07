@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.vldap.server.directory.builder;
+package com.liferay.vldap.server.internal.directory.builder;
 
-import com.liferay.vldap.BaseVLDAPTestCase;
+import com.liferay.vldap.server.internal.BaseVLDAPTestCase;
 import com.liferay.vldap.server.internal.directory.FilterConstraint;
-import com.liferay.vldap.server.internal.directory.builder.CompanyBuilder;
 import com.liferay.vldap.server.internal.directory.ldap.Directory;
 
 import java.util.ArrayList;

@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.vldap.server.directory;
-
-import com.liferay.vldap.server.internal.directory.FilterConstraint;
+package com.liferay.vldap.server.internal.directory;
 
 import java.util.ArrayList;
 import java.util.List;

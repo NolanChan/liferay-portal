@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.vldap.server.directory;
+package com.liferay.vldap.server.internal.directory;
 
 import com.liferay.vldap.server.internal.directory.builder.AttributeValidator;
 
