@@ -28,10 +28,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
 import com.liferay.vldap.BaseVLDAPTestCase;
-import com.liferay.vldap.server.directory.FilterConstraint;
-import com.liferay.vldap.server.directory.ldap.Attribute;
-import com.liferay.vldap.server.directory.ldap.Directory;
-import com.liferay.vldap.server.util.PortletPropsValues;
+import com.liferay.vldap.server.internal.directory.FilterConstraint;
+import com.liferay.vldap.server.internal.directory.builder.UserBuilder;
+import com.liferay.vldap.server.internal.directory.ldap.Attribute;
+import com.liferay.vldap.server.internal.directory.ldap.Directory;
+import com.liferay.vldap.server.internal.util.PortletPropsValues;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

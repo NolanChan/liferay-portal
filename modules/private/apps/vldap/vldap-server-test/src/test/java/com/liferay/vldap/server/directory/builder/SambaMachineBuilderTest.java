@@ -17,8 +17,9 @@ package com.liferay.vldap.server.directory.builder;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.vldap.BaseVLDAPTestCase;
-import com.liferay.vldap.server.directory.FilterConstraint;
-import com.liferay.vldap.server.directory.ldap.Directory;
+import com.liferay.vldap.server.internal.directory.FilterConstraint;
+import com.liferay.vldap.server.internal.directory.builder.SambaMachineBuilder;
+import com.liferay.vldap.server.internal.directory.ldap.Directory;
 
 import java.util.ArrayList;
 import java.util.List;

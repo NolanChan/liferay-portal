@@ -17,6 +17,8 @@ package com.liferay.vldap.server.directory.ldap;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
 import com.liferay.vldap.BaseVLDAPTestCase;
+import com.liferay.vldap.server.internal.directory.ldap.Directory;
+import com.liferay.vldap.server.internal.directory.ldap.TopDirectory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,10 +61,10 @@ public class DirectoryTest extends BaseVLDAPTestCase {
 		_directory.addMemberAttributes(
 			"Liferay", company, new LinkedHashMap<String, Object>());
 
-		List<com.liferay.vldap.server.directory.ldap.Attribute> attributes =
-			_directory.getAttributes("member");
+		List<com.liferay.vldap.server.internal.directory.ldap.Attribute>
+			attributes = _directory.getAttributes("member");
 
-		com.liferay.vldap.server.directory.ldap.Attribute attribute =
+		com.liferay.vldap.server.internal.directory.ldap.Attribute attribute =
 			attributes.get(0);
 
 		Assert.assertEquals(
@@ -93,14 +95,14 @@ public class DirectoryTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetAttributes() {
-		List<com.liferay.vldap.server.directory.ldap.Attribute> attributes =
-			_directory.getAttributes();
+		List<com.liferay.vldap.server.internal.directory.ldap.Attribute>
+			attributes = _directory.getAttributes();
 
 		Assert.assertEquals(5, attributes.size());
 
 		attributes = _directory.getAttributes("testAttribute");
 
-		com.liferay.vldap.server.directory.ldap.Attribute attribute =
+		com.liferay.vldap.server.internal.directory.ldap.Attribute attribute =
 			attributes.get(0);
 
 		Assert.assertEquals("testAttribute", attribute.getAttributeId());

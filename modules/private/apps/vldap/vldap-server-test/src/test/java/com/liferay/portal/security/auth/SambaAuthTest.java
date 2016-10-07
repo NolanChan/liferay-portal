@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.vldap.BaseVLDAPTestCase;
-import com.liferay.vldap.server.portal.security.auth.SambaAuth;
+import com.liferay.vldap.server.internal.portal.security.auth.SambaAuth;
 
 import java.lang.reflect.Method;
 

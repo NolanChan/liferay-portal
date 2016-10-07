@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.vldap.BaseVLDAPTestCase;
-import com.liferay.vldap.server.portal.security.samba.PortalSambaUtil;
+import com.liferay.vldap.server.internal.portal.security.samba.PortalSambaUtil;
 
 import java.lang.reflect.Method;
 

@@ -15,7 +15,7 @@
 package com.liferay.vldap.util;
 
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.vldap.server.util.LdapUtil;
+import com.liferay.vldap.server.internal.util.LdapUtil;
 
 import org.apache.directory.api.ldap.model.name.Dn;
 

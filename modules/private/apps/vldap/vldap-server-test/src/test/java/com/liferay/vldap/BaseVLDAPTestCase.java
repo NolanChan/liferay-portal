@@ -47,8 +47,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.vldap.server.directory.SearchBase;
-import com.liferay.vldap.server.util.PortletPropsKeys;
+import com.liferay.vldap.server.internal.directory.SearchBase;
+import com.liferay.vldap.server.internal.util.PortletPropsKeys;
 
 import java.lang.reflect.Field;
 

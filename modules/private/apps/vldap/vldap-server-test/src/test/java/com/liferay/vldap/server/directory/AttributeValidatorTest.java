@@ -14,7 +14,7 @@
 
 package com.liferay.vldap.server.directory;
 
-import com.liferay.vldap.server.directory.builder.AttributeValidator;
+import com.liferay.vldap.server.internal.directory.builder.AttributeValidator;
 
 import org.junit.Assert;
 import org.junit.Test;
