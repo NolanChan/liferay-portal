@@ -9,5 +9,4 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--includeresource:\
-	@opensaml-*.jar!/templates/*.vm
+-includeresource: @opensaml-*.jar!/templates/*.vm

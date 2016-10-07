@@ -159,8 +159,8 @@ public class AdminPortlet extends MVCPortlet {
 		String entityId = _metadataManager.getLocalEntityId();
 
 		String certificateKeyPassword = properties.getProperty(
-			PortletPropsKeys.SAML_KEYSTORE_CREDENTIAL_PASSWORD + "["+ entityId +
-				"]");
+			PortletPropsKeys.SAML_KEYSTORE_CREDENTIAL_PASSWORD + "[" +
+				entityId + "]");
 
 		if (Validator.isNull(certificateKeyPassword)) {
 			throw new CertificateKeyPasswordException();
@@ -309,6 +309,7 @@ public class AdminPortlet extends MVCPortlet {
 		boolean assertionSignatureRequired = ParamUtil.getBoolean(
 			uploadPortletRequest, "assertionSignatureRequired");
 		long clockSkew = ParamUtil.getLong(uploadPortletRequest, "clockSkew");
+
 		boolean enabled = true;
 		boolean forceAuthn = ParamUtil.getBoolean(
 			uploadPortletRequest, "forceAuthn");
