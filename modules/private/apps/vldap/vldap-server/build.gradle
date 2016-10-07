@@ -23,7 +23,7 @@ dependencies {
 	provided group: "org.apache.mina", name: "mina-core", version: "2.0.9"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.samba.jcifs", name: "jcifs", version: "1.3.14-kohsuke-1"
+	provided group: "pull-parser", name: "pull-parser", version: "2.1.10"
 	provided group: "xml-apis", name: "xml-apis", version: "1.0.b2"
-	provided group: 'pull-parser', name: 'pull-parser', version: '2.1.10'
-	provided group: 'xmlpull', name: 'xmlpull', version: '1.1.3.1'
+	provided group: "xmlpull", name: "xmlpull", version: "1.1.3.1"
 }
