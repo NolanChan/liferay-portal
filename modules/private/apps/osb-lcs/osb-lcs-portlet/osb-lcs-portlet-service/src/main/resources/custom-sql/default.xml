@@ -16,4 +16,26 @@
 				)
 		]]>
 	</sql>
+	<sql id="com.liferay.osb.lcs.service.persistence.LCSClusterNodeFinder.findByU_A">
+		<![CDATA[
+			SELECT
+				OSBLCS_LCSClusterNode.*
+			FROM
+				OSBLCS_LCSClusterEntry, OSBLCS_LCSClusterNode, OSBLCS_LCSProject, OSBLCS_LCSRole
+			WHERE
+				OSBLCS_LCSRole.userId = ? AND
+				OSBLCS_LCSRole.role <> 0 AND
+				[$LCS_CLUSTER_NODE_ACTIVE_TEMPLATE$] [$AND_OR_CONNECTOR$]
+				(
+					(OSBLCS_LCSClusterEntry.lcsClusterEntryId = OSBLCS_LCSClusterNode.lcsClusterEntryId) AND
+					(OSBLCS_LCSClusterEntry.lcsProjectId = OSBLCS_LCSProject.lcsProjectId) AND
+					(OSBLCS_LCSProject.lcsProjectId = OSBLCS_LCSRole.lcsProjectId) AND
+					(OSBLCS_LCSRole.lcsClusterEntryId = 0) AND
+				) OR
+				(
+					(OSBLCS_LCSClusterNode.lcsClusterEntryId = OSBLCS_LCSRole.lcsClusterEntryId) AND
+					(OSBLCS_LCSRole.lcsClusterEntryId <> 0)
+				)
+		]]>
+	</sql>
 </custom-sql>
