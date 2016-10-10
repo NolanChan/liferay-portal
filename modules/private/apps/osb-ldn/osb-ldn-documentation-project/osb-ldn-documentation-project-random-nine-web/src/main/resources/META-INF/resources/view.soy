@@ -4,16 +4,27 @@
  * Renders a list of documentation projects.
  *
  * @param documentationProjects
+ * @param strings
  */
 {template .render}
 	<div class="view">
-		<ul class="documentation-project">
-			{foreach $documentationProject in $documentationProjects}
-				{call .render_documentation_project}
-					{param documentationProject: $documentationProject /}
-				{/call}
-			{/foreach}
-		</ul>
+		<div class="content-container">
+			<div class="all-documentation-projects">
+				<p>{$strings['docs-news-and-contribution-guidelines-for-our-open-source-projects']}</p>
+
+				<a href="/">{$strings['all-projects']}</a>
+			</div>
+
+			<div class="random-nine-documentation-projects">
+				<ul>
+					{foreach $documentationProject in $documentationProjects}
+						{call .render_documentation_project}
+							{param documentationProject: $documentationProject /}
+						{/call}
+					{/foreach}
+				</ul>
+			</div>
+		</div>
 	</div>
 {/template}
 

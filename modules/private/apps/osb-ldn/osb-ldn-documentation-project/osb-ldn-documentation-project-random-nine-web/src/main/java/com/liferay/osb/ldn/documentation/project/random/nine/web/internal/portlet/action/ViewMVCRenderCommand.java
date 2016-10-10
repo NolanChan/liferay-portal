@@ -18,6 +18,7 @@ import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.random.nine.web.internal.constants.DocumentationProjectPortletKeys;
 import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
@@ -62,6 +65,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		Template template = (Template)renderRequest.getAttribute(
 			WebKeys.TEMPLATE);
 
@@ -69,7 +75,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			documentationProjects = getRandomDocumentationProjectList(
-				renderRequest);
+				renderRequest, themeDisplay);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -81,11 +87,16 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		template.put("documentationProjects", documentationProjects);
 
+		Map<String, Object> strings = getStringsMap(
+			themeDisplay.getLanguageId());
+
+		template.put("strings", strings);
+
 		return "view";
 	}
 
 	protected List<Map<String, Object>> getRandomDocumentationProjectList(
-			RenderRequest renderRequest)
+			RenderRequest renderRequest, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		List<Map<String, Object>> documentationProjectList = new ArrayList<>(9);
@@ -100,9 +111,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		PortletConfig portletConfig = (PortletConfig)renderRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		for (int i = 0; (i < 9) && (i < documentationProjects.size()); i++) {
 			DocumentationProject documentationProject =
@@ -137,6 +145,19 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return documentationProjectList;
 	}
 
+	protected Map<String, Object> getStringsMap(String languageId) {
+		Map<String, Object> strings = new HashMap<>();
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(languageId);
+
+		for (String key : resourceBundle.keySet()) {
+			strings.put(key, LanguageUtil.get(resourceBundle, key));
+		}
+
+		return strings;
+	}
+
 	@Reference
 	private DocumentationProjectLocalService _documentationProjectLocalService;
 
@@ -144,5 +165,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	private GroupLocalService _groupLocalService;
 
 	private final Log _log = LogFactoryUtil.getLog(ViewMVCRenderCommand.class);
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.osb.ldn.documentation.project.random.nine.web)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }
