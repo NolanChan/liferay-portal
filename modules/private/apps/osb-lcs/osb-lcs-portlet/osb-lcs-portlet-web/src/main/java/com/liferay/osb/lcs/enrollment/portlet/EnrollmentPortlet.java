@@ -22,13 +22,12 @@ import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.email.EmailContext;
-import com.liferay.osb.lcs.enrollment.util.EnrollmentUtil;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.service.LCSProjectLocalService;
-import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
-import com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSRoleServiceUtil;
+import com.liferay.osb.lcs.service.LCSProjectService;
+import com.liferay.osb.lcs.service.LCSRoleService;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
+import com.liferay.osb.lcs.web.internal.advisor.EnrollmentAdvisor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -151,6 +150,11 @@ public class EnrollmentPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	public void setEnrollmentAdvisor(EnrollmentAdvisor enrollmentAdvisor) {
+		_enrollmentAdvisor = enrollmentAdvisor;
+	}
+
+	@Reference(unbind = "-")
 	public void setLcsMessageAdvisor(LCSMessageAdvisorImpl lcsMessageAdvisor) {
 		_lcsMessageAdvisor = lcsMessageAdvisor;
 	}
@@ -160,6 +164,16 @@ public class EnrollmentPortlet extends MVCPortlet {
 		LCSProjectLocalService lcsProjectLocalService) {
 
 		_lcsProjectLocalService = lcsProjectLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsProjectService(LCSProjectService lcsProjectService) {
+		_lcsProjectService = lcsProjectService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsRoleService(LCSRoleService lcsRoleService) {
+		_lcsRoleService = lcsRoleService;
 	}
 
 	@Reference(unbind = "-")
@@ -176,7 +190,7 @@ public class EnrollmentPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			resourceRequest);
 
-		LCSRoleServiceUtil.addLCSRole(
+		_lcsRoleService.addLCSRole(
 			serviceContext.getUserId(), lcsProjectId, 0,
 			LCSRoleConstants.ROLE_LCS_ADMINISTRATOR);
 
@@ -184,7 +198,7 @@ public class EnrollmentPortlet extends MVCPortlet {
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		List<LCSProject> lcsProjects = LCSProjectServiceUtil.getUserLCSProjects(
+		List<LCSProject> lcsProjects = _lcsProjectService.getUserLCSProjects(
 			false,
 			LCSRoleConstants.ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER);
 
@@ -194,11 +208,6 @@ public class EnrollmentPortlet extends MVCPortlet {
 			"active",
 			toJSONArray(
 				lcsProjects, true, themeDisplay.getPermissionChecker()));
-
-		lcsProjects = EnrollmentUtil.getLCSProjects(false);
-
-		dataJSONObject.put(
-			"unadministered", toJSONArray(lcsProjects, false, null));
 
 		jsonObject.put(LCSConstants.JSON_KEY_DATA, dataJSONObject);
 		jsonObject.put(
@@ -215,9 +224,7 @@ public class EnrollmentPortlet extends MVCPortlet {
 
 		User currentUser = _userService.getCurrentUser();
 
-		LCSRoleLocalServiceUtil.addLCSRole(
-			currentUser.getUserId(), lcsProjectId, 0,
-			LCSRoleConstants.ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER);
+		_lcsRoleService.addPendingLCSRole(lcsProjectId, 0);
 
 		EmailContext.EmailContextBuilder emailContextBuilder =
 			new EmailContext.EmailContextBuilder(
@@ -240,25 +247,21 @@ public class EnrollmentPortlet extends MVCPortlet {
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		List<LCSProject> lcsProjects = EnrollmentUtil.getLCSProjects(true);
+		List<LCSProject> lcsProjects = _lcsProjectService.getUserLCSProjects(
+			false);
 
 		dataJSONObject.put(
 			"administered", toJSONArray(lcsProjects, false, null));
 
-		lcsProjects = EnrollmentUtil.getCompanyLCSProjects(
-			currentUser.getUserId());
+		lcsProjects = _lcsProjectService.getUserDomainLCSProjects();
 
 		dataJSONObject.put("company", toJSONArray(lcsProjects, false, null));
 
-		lcsProjects = LCSProjectServiceUtil.getUserLCSProjects(
+		lcsProjects = _lcsProjectService.getUserLCSProjects(
 			true,
 			LCSRoleConstants.ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER);
 
 		dataJSONObject.put("pending", toJSONArray(lcsProjects, false, null));
-
-		lcsProjects = EnrollmentUtil.getLCSProjects(false);
-
-		dataJSONObject.put("unadministeredCount", lcsProjects.size());
 
 		jsonObject.put(LCSConstants.JSON_KEY_DATA, dataJSONObject);
 		jsonObject.put(
@@ -278,7 +281,7 @@ public class EnrollmentPortlet extends MVCPortlet {
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		List<LCSProject> lcsProjects = LCSProjectServiceUtil.getUserLCSProjects(
+		List<LCSProject> lcsProjects = _lcsProjectService.getUserLCSProjects(
 			false,
 			LCSRoleConstants.ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER);
 
@@ -287,26 +290,20 @@ public class EnrollmentPortlet extends MVCPortlet {
 			toJSONArray(
 				lcsProjects, true, themeDisplay.getPermissionChecker()));
 
-		lcsProjects = EnrollmentUtil.getLCSProjects(true);
+		lcsProjects = _lcsProjectService.getUserLCSProjects(false);
 
 		dataJSONObject.put(
 			"administered", toJSONArray(lcsProjects, false, null));
 
-		lcsProjects = EnrollmentUtil.getCompanyLCSProjects(
-			themeDisplay.getUserId());
+		lcsProjects = _lcsProjectService.getUserDomainLCSProjects();
 
 		dataJSONObject.put("company", toJSONArray(lcsProjects, false, null));
 
-		lcsProjects = LCSProjectServiceUtil.getUserLCSProjects(
+		lcsProjects = _lcsProjectService.getUserLCSProjects(
 			true,
 			LCSRoleConstants.ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER);
 
 		dataJSONObject.put("pending", toJSONArray(lcsProjects, false, null));
-
-		lcsProjects = EnrollmentUtil.getLCSProjects(false);
-
-		dataJSONObject.put(
-			"unadministered", toJSONArray(lcsProjects, false, null));
 
 		jsonObject.put(LCSConstants.JSON_KEY_DATA, dataJSONObject);
 		jsonObject.put(
@@ -325,7 +322,7 @@ public class EnrollmentPortlet extends MVCPortlet {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			List<String> emailAddresses =
-				EnrollmentUtil.getAdministratorEmailAddresses(
+				_enrollmentAdvisor.getAdministratorEmailAddresses(
 					lcsProject.getLcsProjectId());
 
 			jsonObject.put(
@@ -357,7 +354,7 @@ public class EnrollmentPortlet extends MVCPortlet {
 		String lcsProjectName = ParamUtil.getString(
 			resourceRequest, "lcsProjectName");
 
-		LCSProject lcsProject = LCSProjectServiceUtil.updateLCSProjectName(
+		LCSProject lcsProject = _lcsProjectService.updateLCSProjectName(
 			lcsProjectId, lcsProjectName);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -373,8 +370,11 @@ public class EnrollmentPortlet extends MVCPortlet {
 		EnrollmentPortlet.class);
 
 	private EmailAdvisor _emailAdvisor;
+	private EnrollmentAdvisor _enrollmentAdvisor;
 	private LCSMessageAdvisorImpl _lcsMessageAdvisor;
 	private LCSProjectLocalService _lcsProjectLocalService;
+	private LCSProjectService _lcsProjectService;
+	private LCSRoleService _lcsRoleService;
 	private UserService _userService;
 
 }

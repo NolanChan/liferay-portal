@@ -31,7 +31,7 @@ public class LocalOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
 	protected List<User> getOrganizationUsers(long organizationId) {
-		return _userLocalService.getOrganizationUsers(organizationId);
+		return userLocalService.getOrganizationUsers(organizationId);
 	}
 
 }

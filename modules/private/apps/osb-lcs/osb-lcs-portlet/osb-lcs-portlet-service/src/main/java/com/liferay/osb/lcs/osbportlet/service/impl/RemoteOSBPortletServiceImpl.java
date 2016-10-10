@@ -88,7 +88,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 		String serviceURL =
 			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT + "/add-corp-project";
 
-		User user = _userLocalService.getUserById(userId);
+		User user = userLocalService.getUserById(userId);
 
 		try {
 			CorpProject corpProject = doGetToObject(
@@ -168,7 +168,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 			serviceURL = _URL_API_JSONWS_USER + "/get-user-by-email-address";
 
 			for (int i = 0; i < userIds.length; i++) {
-				User localUser = _userLocalService.getUser(userIds[i]);
+				User localUser = userLocalService.getUser(userIds[i]);
 
 				User remoteUser = (User)doGetToObject(
 					getClass("com.liferay.portal.model.impl.UserImpl"),
@@ -316,7 +316,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 			if (corpProject != null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						_stringAdvisor.concat(
+						stringAdvisor.concat(
 							"Returning cached corp project", corpProject));
 				}
 
@@ -331,7 +331,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					_stringAdvisor.concat(
+					stringAdvisor.concat(
 						"Returning corp project: ", corpProject));
 			}
 
@@ -454,7 +454,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 		String serviceURL =
 			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT +
 				"/get-user-corp-projects";
-		User user = _userLocalService.getUser(userId);
+		User user = userLocalService.getUser(userId);
 
 		try {
 			return doGetToList(
@@ -478,7 +478,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 		String serviceURL =
 			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT + "/has-user-corp-project";
-		User user = _userLocalService.getUser(userId);
+		User user = userLocalService.getUser(userId);
 
 		try {
 			return doGetToObject(
@@ -502,7 +502,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 		String serviceURL =
 			_URL_API_JSONWS_OSB_PORTLET_CORP_PROJECT +
 				"/has-user-corp-project-role";
-		User user = _userLocalService.getUser(userId);
+		User user = userLocalService.getUser(userId);
 
 		try {
 			return doGetToObject(
@@ -607,7 +607,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	protected void checkOrganizationId(long organizationId, String url) {
 		if (organizationId == 0) {
 			throw new UnsupportedOperationException(
-				_stringAdvisor.concat(
+				stringAdvisor.concat(
 					"Organization ID value of 0 is invalid for invoking", url));
 		}
 	}
@@ -686,7 +686,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 		for (User remoteUser : remoteUsers) {
 			try {
-				User localUser = _userLocalService.getUserByUuidAndCompanyId(
+				User localUser = userLocalService.getUserByUuidAndCompanyId(
 					remoteUser.getUuid(), _companyAdvisor.getCompanyId());
 
 				localUsers.add(localUser);
@@ -732,7 +732,7 @@ public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 			strings[i + 1] = parameters[i];
 		}
 
-		_log.error(_stringAdvisor.concat(strings));
+		_log.error(stringAdvisor.concat(strings));
 
 		if (e instanceof JSONWebServiceInvocationException) {
 			throw getPortalException((JSONWebServiceInvocationException)e);

@@ -15,6 +15,7 @@
 package com.liferay.osb.lcs.subscriptions.portlet;
 
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.model.LCSSubscriptionEntry;
 import com.liferay.osb.lcs.service.LCSClusterEntryServiceUtil;
@@ -25,6 +26,7 @@ import com.liferay.osb.lcs.web.internal.report.Report;
 import com.liferay.osb.lcs.web.internal.report.ReportContext;
 import com.liferay.osb.lcs.web.internal.report.ReportFactory;
 import com.liferay.osb.lcs.web.internal.report.ReportFactoryUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -45,6 +47,7 @@ import java.io.OutputStream;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
@@ -52,14 +55,18 @@ import javax.portlet.PortletContext;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Marko Cikos
  * @author Matija Petanjek
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-subscriptions" + OSBLCSPortletKeys.SUBSCRIPTIONS,
 		"com.liferay.portlet.display-category=category.lcs",
@@ -155,6 +162,17 @@ public class SubscriptionsPortlet extends MVCPortlet {
 		SubscriptionsAdvisor subscriptionsAdvisor) {
 
 		_subscriptionsAdvisor = subscriptionsAdvisor;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
+			OSBLCSConfiguration.class, properties);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_osbLCSConfiguration = null;
 	}
 
 	protected void downloadLCSClusterNodeUptimesDelimitedReport(
@@ -393,7 +411,7 @@ public class SubscriptionsPortlet extends MVCPortlet {
 
 		dataJSONObject.put("lcsClusterNodes", lcsClusterNodesJSONArray);
 
-		if (PortletPropsValues.APPLICATION_PROFILE !=
+		if (_osbLCSConfiguration.applicationProfile() !=
 				ApplicationProfile.PRODUCTION) {
 
 			boolean refresh = ParamUtil.getBoolean(resourceRequest, "refresh");
@@ -504,6 +522,8 @@ public class SubscriptionsPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SubscriptionsPortlet.class);
+
+	private static volatile OSBLCSConfiguration _osbLCSConfiguration;
 
 	private SubscriptionsAdvisor _subscriptionsAdvisor;
 

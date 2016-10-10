@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.display-category=category.lcs",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-members.js",
-		"javax.portlet.display-name=LCS Admin",
+		"javax.portlet.display-name=Members",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.info.keywords=Members",
 		"javax.portlet.info.short-title=Members",

@@ -17,11 +17,11 @@ package com.liferay.osb.lcs.server.portlet;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.exception.DuplicateLCSClusterNodeNameException;
-import com.liferay.osb.lcs.nosql.service.LCSClusterNodeCurrentThreadsMetricsServiceUtil;
-import com.liferay.osb.lcs.nosql.service.LCSClusterNodeJDBCConnectionPoolMetricsServiceUtil;
-import com.liferay.osb.lcs.nosql.service.LCSClusterNodeJVMMetricsServiceUtil;
-import com.liferay.osb.lcs.server.util.ServerUtil;
-import com.liferay.osb.lcs.service.LCSClusterNodeServiceUtil;
+import com.liferay.osb.lcs.nosql.service.LCSClusterNodeCurrentThreadsMetricsService;
+import com.liferay.osb.lcs.nosql.service.LCSClusterNodeJDBCConnectionPoolMetricsService;
+import com.liferay.osb.lcs.nosql.service.LCSClusterNodeJVMMetricsService;
+import com.liferay.osb.lcs.service.LCSClusterNodeService;
+import com.liferay.osb.lcs.web.internal.advisor.PortalInstanceAdvisor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -49,6 +49,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -92,7 +93,7 @@ public class ServerPortlet extends MVCPortlet {
 		long lcsClusterNodeId = ParamUtil.getLong(
 			actionRequest, "lcsClusterNodeId");
 
-		LCSClusterNodeServiceUtil.deleteLCSClusterNode(lcsClusterNodeId);
+		_lcsClusterNodeService.deleteLCSClusterNode(lcsClusterNodeId);
 
 		PortletConfig portletConfig = getPortletConfig();
 
@@ -151,6 +152,45 @@ public class ServerPortlet extends MVCPortlet {
 		}
 	}
 
+	@Reference(unbind = "-")
+	public void setLcsClusterNodeCurrentThreadsMetricsService(
+		LCSClusterNodeCurrentThreadsMetricsService
+			lcsClusterNodeCurrentThreadsMetricsService) {
+
+		_lcsClusterNodeCurrentThreadsMetricsService =
+			lcsClusterNodeCurrentThreadsMetricsService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsClusterNodeJDBCConnectionPoolMetricsService(
+		LCSClusterNodeJDBCConnectionPoolMetricsService
+			lcsClusterNodeJDBCConnectionPoolMetricsService) {
+
+		_lcsClusterNodeJDBCConnectionPoolMetricsService =
+			lcsClusterNodeJDBCConnectionPoolMetricsService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsClusterNodeJVMMetricsService(
+		LCSClusterNodeJVMMetricsService lcsClusterNodeJVMMetricsService) {
+
+		_lcsClusterNodeJVMMetricsService = lcsClusterNodeJVMMetricsService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLcsClusterNodeService(
+		LCSClusterNodeService lcsClusterNodeService) {
+
+		_lcsClusterNodeService = lcsClusterNodeService;
+	}
+
+	@Reference(unbind = "-")
+	public void setPortalInstanceAdvisor(
+		PortalInstanceAdvisor portalInstanceAdvisor) {
+
+		_portalInstanceAdvisor = portalInstanceAdvisor;
+	}
+
 	public void updateLCSClusterNode(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -163,7 +203,7 @@ public class ServerPortlet extends MVCPortlet {
 		String location = ParamUtil.getString(actionRequest, "location");
 
 		try {
-			LCSClusterNodeServiceUtil.updateLCSClusterNode(
+			_lcsClusterNodeService.updateLCSClusterNode(
 				lcsClusterNodeId, name, description, location);
 		}
 		catch (DuplicateLCSClusterNodeNameException dlcscnne) {
@@ -184,7 +224,7 @@ public class ServerPortlet extends MVCPortlet {
 		JSONArray lcsClusterNodeCurrentThreadsMetricsJSONArray =
 			JSONFactoryUtil.createJSONArray(
 				JSONFactoryUtil.looseSerialize(
-					LCSClusterNodeCurrentThreadsMetricsServiceUtil.
+					_lcsClusterNodeCurrentThreadsMetricsService.
 						getLCSClusterNodeCurrentThreadsMetricsList(key)));
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -207,7 +247,7 @@ public class ServerPortlet extends MVCPortlet {
 		JSONArray lcsClusterNodeJDBCConnectionPoolMetricsJSONArray =
 			JSONFactoryUtil.createJSONArray(
 				JSONFactoryUtil.looseSerialize(
-					LCSClusterNodeJDBCConnectionPoolMetricsServiceUtil.
+					_lcsClusterNodeJDBCConnectionPoolMetricsService.
 						getLCSClusterNodeJDBCConnectionPoolMetricsList(key)));
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -230,7 +270,7 @@ public class ServerPortlet extends MVCPortlet {
 		JSONObject lcsClusterNodeJVMMetricsJSON =
 			JSONFactoryUtil.createJSONObject(
 				JSONFactoryUtil.looseSerializeDeep(
-					LCSClusterNodeJVMMetricsServiceUtil.
+					_lcsClusterNodeJVMMetricsService.
 						fetchLCSClusterNodeJVMMetrics(key)));
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -278,7 +318,7 @@ public class ServerPortlet extends MVCPortlet {
 
 		jsonObject.put(
 			LCSConstants.JSON_KEY_DATA,
-			ServerUtil.getPagesMetricsJSONObject(
+			_portalInstanceAdvisor.getPagesMetricsJSONObject(
 				companyId, calendar.getTime(), groupId, key, layoutName, period,
 				themeDisplay.getTimeZone()));
 		jsonObject.put(
@@ -291,5 +331,13 @@ public class ServerPortlet extends MVCPortlet {
 		".hideDefaultSuccessMessage";
 
 	private static final Log _log = LogFactoryUtil.getLog(ServerPortlet.class);
+
+	private LCSClusterNodeCurrentThreadsMetricsService
+		_lcsClusterNodeCurrentThreadsMetricsService;
+	private LCSClusterNodeJDBCConnectionPoolMetricsService
+		_lcsClusterNodeJDBCConnectionPoolMetricsService;
+	private LCSClusterNodeJVMMetricsService _lcsClusterNodeJVMMetricsService;
+	private LCSClusterNodeService _lcsClusterNodeService;
+	private PortalInstanceAdvisor _portalInstanceAdvisor;
 
 }

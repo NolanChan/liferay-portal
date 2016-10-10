@@ -169,7 +169,7 @@ public abstract class BaseOSBPortletServiceImpl
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				_stringAdvisor.concat(
+				stringAdvisor.concat(
 					"Get remote users for corp project ID", corpProjectId));
 		}
 
@@ -232,12 +232,12 @@ public abstract class BaseOSBPortletServiceImpl
 
 	@Reference(bind = "-")
 	public void setStringAdvisor(StringAdvisor stringAdvisor) {
-		_stringAdvisor = stringAdvisor;
+		this.stringAdvisor = stringAdvisor;
 	}
 
 	@Reference(bind = "-")
 	public void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
+		this.userLocalService = userLocalService;
 	}
 
 	@Override
@@ -260,7 +260,7 @@ public abstract class BaseOSBPortletServiceImpl
 		String[] userUuids = new String[userIds.length];
 
 		for (int i = 0; i < userIds.length; i++) {
-			User user = _userLocalService.getUserById(userIds[i]);
+			User user = userLocalService.getUserById(userIds[i]);
 
 			userUuids[i] = user.getUserUuid();
 		}
@@ -268,8 +268,8 @@ public abstract class BaseOSBPortletServiceImpl
 		return userUuids;
 	}
 
-	protected StringAdvisor _stringAdvisor;
-	protected UserLocalService _userLocalService;
+	protected StringAdvisor stringAdvisor;
+	protected UserLocalService userLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseOSBPortletServiceImpl.class);

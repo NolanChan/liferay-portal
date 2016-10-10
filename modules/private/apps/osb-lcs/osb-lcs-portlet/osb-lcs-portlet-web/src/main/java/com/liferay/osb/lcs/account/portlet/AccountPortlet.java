@@ -15,11 +15,11 @@
 package com.liferay.osb.lcs.account.portlet;
 
 import com.liferay.lcs.util.LCSConstants;
-import com.liferay.osb.lcs.account.util.AccountUtil;
 import com.liferay.osb.lcs.advisor.UserAdvisor;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.model.LCSNotification;
 import com.liferay.osb.lcs.service.LCSNotificationServiceUtil;
+import com.liferay.osb.lcs.web.internal.advisor.AccountAdvisor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -226,6 +226,11 @@ public class AccountPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	public void setAccountAdvisor(AccountAdvisor accountAdvisor) {
+		_accountAdvisor = accountAdvisor;
+	}
+
+	@Reference(unbind = "-")
 	public void setUserAdvisor(UserAdvisor userAdvisor) {
 		_userAdvisor = userAdvisor;
 	}
@@ -296,7 +301,7 @@ public class AccountPortlet extends MVCPortlet {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		JSONArray jsonArray = AccountUtil.getUserLCSMessagesJSONArray(
+		JSONArray jsonArray = _accountAdvisor.getUserLCSMessagesJSONArray(
 			startDate, endDate, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
 
@@ -309,6 +314,7 @@ public class AccountPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(AccountPortlet.class);
 
+	private AccountAdvisor _accountAdvisor;
 	private UserAdvisor _userAdvisor;
 
 }
