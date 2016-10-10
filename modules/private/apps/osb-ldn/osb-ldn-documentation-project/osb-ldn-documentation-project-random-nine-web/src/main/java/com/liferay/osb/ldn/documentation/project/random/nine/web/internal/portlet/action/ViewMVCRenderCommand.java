@@ -18,9 +18,13 @@ import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.random.nine.web.internal.constants.DocumentationProjectPortletKeys;
 import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -61,8 +65,19 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		Template template = (Template)renderRequest.getAttribute(
 			WebKeys.TEMPLATE);
 
-		List<Map<String, Object>> documentationProjects =
-			getRandomDocumentationProjectList(renderRequest);
+		List<Map<String, Object>> documentationProjects = null;
+
+		try {
+			documentationProjects = getRandomDocumentationProjectList(
+				renderRequest);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
+			documentationProjects = new ArrayList<>(0);
+		}
 
 		template.put("documentationProjects", documentationProjects);
 
@@ -70,7 +85,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	protected List<Map<String, Object>> getRandomDocumentationProjectList(
-		RenderRequest renderRequest) {
+			RenderRequest renderRequest)
+		throws Exception {
 
 		List<Map<String, Object>> documentationProjectList = new ArrayList<>(9);
 
@@ -108,7 +124,12 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			documentationProjectMap.put("iconURL", iconURL.toString());
 
 			documentationProjectMap.put("name", documentationProject.getName());
-			documentationProjectMap.put("siteURL", null);
+
+			Group group = _groupLocalService.getGroup(
+				documentationProject.getGroupId());
+
+			documentationProjectMap.put(
+				"siteURL", group.getDisplayURL(themeDisplay, false));
 
 			documentationProjectList.add(documentationProjectMap);
 		}
@@ -118,5 +139,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DocumentationProjectLocalService _documentationProjectLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	private final Log _log = LogFactoryUtil.getLog(ViewMVCRenderCommand.class);
 
 }
