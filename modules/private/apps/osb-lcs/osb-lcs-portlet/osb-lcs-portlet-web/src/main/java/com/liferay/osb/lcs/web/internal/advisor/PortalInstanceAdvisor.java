@@ -32,7 +32,7 @@ import com.liferay.osb.lcs.nosql.service.LCSClusterNodeJVMMetricsService;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodeLiferayVMMetricsService;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodeSiteService;
 import com.liferay.osb.lcs.nosql.service.LCSStatsLayoutMetricsEventsService;
-import com.liferay.osb.lcs.service.LCSClusterNodeServiceUtil;
+import com.liferay.osb.lcs.service.LCSClusterNodeService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -134,7 +134,7 @@ public class PortalInstanceAdvisor {
 		throws PortalException {
 
 		LCSClusterNode lcsClusterNode =
-			LCSClusterNodeServiceUtil.getLCSClusterNode(layoutLCSClusterNodeId);
+			_lcsClusterNodeService.getLCSClusterNode(layoutLCSClusterNodeId);
 
 		LCSClusterNodeJVMMetrics lcsClusterNodeJVMMetrics =
 			_lcsClusterNodeJVMMetricsService.fetchLCSClusterNodeJVMMetrics(
@@ -174,7 +174,7 @@ public class PortalInstanceAdvisor {
 		throws PortalException {
 
 		LCSClusterNode lcsClusterNode =
-			LCSClusterNodeServiceUtil.getLCSClusterNode(layoutLCSClusterNodeId);
+			_lcsClusterNodeService.getLCSClusterNode(layoutLCSClusterNodeId);
 
 		LCSClusterNodeHibernateMetrics lcsClusterNodeHibernateMetrics =
 			_lcsClusterNodeHibernateMetricsService.
@@ -219,7 +219,7 @@ public class PortalInstanceAdvisor {
 		DecimalFormat decimalFormat = new DecimalFormat("#0.00");
 
 		LCSClusterNode lcsClusterNode =
-			LCSClusterNodeServiceUtil.getLCSClusterNode(lcsClusterNodeId, true);
+			_lcsClusterNodeService.getLCSClusterNode(lcsClusterNodeId, true);
 
 		LCSClusterNodeInstallationEnvironment
 			lcsClusterNodeInstallationEnvironment =
@@ -357,7 +357,7 @@ public class PortalInstanceAdvisor {
 			new ArrayList<>();
 
 		LCSClusterNode lcsClusterNode =
-			LCSClusterNodeServiceUtil.getLCSClusterNode(layoutLCSClusterNodeId);
+			_lcsClusterNodeService.getLCSClusterNode(layoutLCSClusterNodeId);
 
 		List<? extends LCSClusterNodeLiferayVMMetrics>
 			lcsClusterNodeLiferayVMMetricsList =
@@ -405,7 +405,7 @@ public class PortalInstanceAdvisor {
 		throws PortalException {
 
 		LCSClusterNode lcsClusterNode =
-			LCSClusterNodeServiceUtil.getLCSClusterNode(layoutLCSClusterNodeId);
+			_lcsClusterNodeService.getLCSClusterNode(layoutLCSClusterNodeId);
 
 		return (List<LCSClusterNodeLiferayVMMetrics>)
 			_lcsClusterNodeLiferayVMMetricsService.
@@ -653,6 +653,13 @@ public class PortalInstanceAdvisor {
 			lcsClusterNodeLiferayVMMetricsService;
 	}
 
+	@Reference(unbind = "-")
+	public void setLcsClusterNodeService(
+		LCSClusterNodeService lcsClusterNodeService) {
+
+		_lcsClusterNodeService = lcsClusterNodeService;
+	}
+
 	public void setLcsClusterNodeSiteService(
 		LCSClusterNodeSiteService lcsClusterNodeSiteService) {
 
@@ -778,6 +785,7 @@ public class PortalInstanceAdvisor {
 	private LCSClusterNodeJVMMetricsService _lcsClusterNodeJVMMetricsService;
 	private LCSClusterNodeLiferayVMMetricsService
 		_lcsClusterNodeLiferayVMMetricsService;
+	private LCSClusterNodeService _lcsClusterNodeService;
 	private LCSClusterNodeSiteService _lcsClusterNodeSiteService;
 	private LCSStatsLayoutMetricsEventsService
 		_lcsStatsLayoutMetricsEventsService;

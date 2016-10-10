@@ -104,7 +104,7 @@ public class PortletURLAdvisor {
 		Map<String, String> publicRenderParameters = new HashMap<>();
 
 		for (int i = 0; (i + 1) < parameters.length;) {
-			publicRenderParameters.put(parameters[i], parameters[i+1]);
+			publicRenderParameters.put(parameters[i], parameters[i + 1]);
 
 			i = i + 2;
 		}
