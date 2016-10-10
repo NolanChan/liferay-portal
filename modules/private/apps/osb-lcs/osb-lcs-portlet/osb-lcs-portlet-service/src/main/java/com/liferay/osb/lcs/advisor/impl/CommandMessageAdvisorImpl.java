@@ -107,6 +107,15 @@ public class CommandMessageAdvisorImpl
 	}
 
 	@Reference(bind = "-")
+	public void setLCSClusterNodeInstallationEnvironmentService(
+		LCSClusterNodeInstallationEnvironmentService
+			lcsClusterNodeInstallationEnvironmentService) {
+
+		_lcsClusterNodeInstallationEnvironmentService =
+			lcsClusterNodeInstallationEnvironmentService;
+	}
+
+	@Reference(bind = "-")
 	public void setLCSClusterNodeScriptService(
 		LCSClusterNodeScriptService lcsClusterNodeScriptService) {
 
@@ -115,22 +124,12 @@ public class CommandMessageAdvisorImpl
 
 	@Reference(bind = "-")
 	public void setPatchStorageManager(PatchAdvisor patchAdvisor) {
-
 		_patchAdvisor = patchAdvisor;
 	}
 
 	@Reference(bind = "-")
 	public void setQueueManager(QueueManager queueManager) {
 		_queueManager = queueManager;
-	}
-
-	@Reference(bind = "-")
-	public void setLCSClusterNodeInstallationEnvironmentService(
-		LCSClusterNodeInstallationEnvironmentService
-			lcsClusterNodeInstallationEnvironmentService) {
-
-		_lcsClusterNodeInstallationEnvironmentService =
-			lcsClusterNodeInstallationEnvironmentService;
 	}
 
 	@Override
@@ -205,10 +204,10 @@ public class CommandMessageAdvisorImpl
 		CommandMessageAdvisorImpl.class);
 
 	private DigitalSignature _digitalSignature;
+	private LCSClusterNodeInstallationEnvironmentService
+		_lcsClusterNodeInstallationEnvironmentService;
 	private LCSClusterNodeScriptService _lcsClusterNodeScriptService;
 	private PatchAdvisor _patchAdvisor;
 	private QueueManager _queueManager;
-	LCSClusterNodeInstallationEnvironmentService
-		_lcsClusterNodeInstallationEnvironmentService;
 
 }

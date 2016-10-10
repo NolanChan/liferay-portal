@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.osb.lcs.server.util;
+package com.liferay.osb.lcs.web.internal.advisor;
 
-import com.liferay.compat.portal.kernel.util.ListUtil;
+import com.liferay.lcs.portal.SiteType;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.advisor.PortalPropertiesAdvisor;
 import com.liferay.osb.lcs.model.LCSClusterNode;
@@ -26,27 +26,26 @@ import com.liferay.osb.lcs.nosql.model.LCSClusterNodeLiferayVMMetrics;
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeSite;
 import com.liferay.osb.lcs.nosql.model.LCSStatsLayoutMetricsEvents;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodeDetailsService;
-import com.liferay.osb.lcs.nosql.service.LCSClusterNodeHibernateMetricsServiceUtil;
-import com.liferay.osb.lcs.nosql.service.LCSClusterNodeInstallationEnvironmentServiceUtil;
-import com.liferay.osb.lcs.nosql.service.LCSClusterNodeJVMMetricsServiceUtil;
-import com.liferay.osb.lcs.nosql.service.LCSClusterNodeLiferayVMMetricsServiceUtil;
-import com.liferay.osb.lcs.nosql.service.LCSClusterNodeSiteServiceUtil;
-import com.liferay.osb.lcs.nosql.service.LCSStatsLayoutMetricsEventsUtil;
-import com.liferay.osb.lcs.nosql.util.LCSClusterNodeSiteType;
+import com.liferay.osb.lcs.nosql.service.LCSClusterNodeHibernateMetricsService;
+import com.liferay.osb.lcs.nosql.service.LCSClusterNodeInstallationEnvironmentService;
+import com.liferay.osb.lcs.nosql.service.LCSClusterNodeJVMMetricsService;
+import com.liferay.osb.lcs.nosql.service.LCSClusterNodeLiferayVMMetricsService;
+import com.liferay.osb.lcs.nosql.service.LCSClusterNodeSiteService;
+import com.liferay.osb.lcs.nosql.service.LCSStatsLayoutMetricsEventsService;
 import com.liferay.osb.lcs.service.LCSClusterNodeServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.bean.PortletBeanLocatorUtil;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -60,34 +59,38 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeMap;
 
-import javax.servlet.jsp.PageContext;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
  * @author Marko Cikos
  */
-public class ServerUtil {
+@Component(immediate = true)
+public class PortalInstanceAdvisor {
 
 	public static final int RELEASE_6_2_0_BUILD_NUMBER = 6200;
 
-	public static Map<Integer, String> getCompanyIdsWebIds(String key) {
+	public Map<Integer, String> getCompanyIdsWebIds(String key) {
 		LCSClusterNodeDetails lcsClusterNodeDetails =
 			_lcsClusterNodeDetailsService.fetchLCSClusterNodeDetails(key);
 
 		return lcsClusterNodeDetails.getCompanyIdsWebIds();
 	}
 
-	public static JSONArray getCompanySitesJSONArray(
+	public JSONArray getCompanySitesJSONArray(
 		Map<Integer, String> companyIdsWebIds, LCSClusterNode lcsClusterNode) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<LCSClusterNodeSite> lcsClusterNodeSites =
-			LCSClusterNodeSiteServiceUtil.getLCSClusterNodeSites(
+		List<? extends LCSClusterNodeSite> lcsClusterNodeSites =
+			_lcsClusterNodeSiteService.getLCSClusterNodeSites(
 				lcsClusterNode.getInstallationId());
 
 		lcsClusterNodeSites = ListUtil.sort(
@@ -113,8 +116,7 @@ public class ServerUtil {
 				site.put("groupId", lcsClusterNodeSite.getGroupId());
 				site.put(
 					"organizationSite",
-					LCSClusterNodeSiteType.isOrganization(
-						lcsClusterNodeSite.getType()));
+					SiteType.isOrganization(lcsClusterNodeSite.getType()));
 
 				sites.put(site);
 			}
@@ -127,23 +129,22 @@ public class ServerUtil {
 		return jsonArray;
 	}
 
-	public static List<Object[]>
+	public List<Object[]>
 			getGarbageCollectorMetricsList(long layoutLCSClusterNodeId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LCSClusterNode lcsClusterNode =
 			LCSClusterNodeServiceUtil.getLCSClusterNode(layoutLCSClusterNodeId);
 
 		LCSClusterNodeJVMMetrics lcsClusterNodeJVMMetrics =
-			LCSClusterNodeJVMMetricsServiceUtil.fetchLCSClusterNodeJVMMetrics(
+			_lcsClusterNodeJVMMetricsService.fetchLCSClusterNodeJVMMetrics(
 				lcsClusterNode.getKey());
 
 		if (lcsClusterNodeJVMMetrics == null) {
 			return Collections.emptyList();
 		}
 
-		List<Object[]> lcsGarbageCollectorMetricsList =
-			new ArrayList<Object[]>();
+		List<Object[]> lcsGarbageCollectorMetricsList = new ArrayList<>();
 
 		Map<String, Map<String, Long>> garbageCollectorMetricsMap =
 			lcsClusterNodeJVMMetrics.getGarbageCollectorMetrics();
@@ -168,18 +169,18 @@ public class ServerUtil {
 		return lcsGarbageCollectorMetricsList;
 	}
 
-	public static List<Object[]> getHibernateMetricsObjectArrays(
+	public List<Object[]> getHibernateMetricsObjectArrays(
 			long layoutLCSClusterNodeId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LCSClusterNode lcsClusterNode =
 			LCSClusterNodeServiceUtil.getLCSClusterNode(layoutLCSClusterNodeId);
 
 		LCSClusterNodeHibernateMetrics lcsClusterNodeHibernateMetrics =
-			LCSClusterNodeHibernateMetricsServiceUtil.
+			_lcsClusterNodeHibernateMetricsService.
 				fetchLCSClusterNodeHibernateMetrics(lcsClusterNode.getKey());
 
-		List<Object[]> hibernateMetricsObjectArrays = new ArrayList<Object[]>();
+		List<Object[]> hibernateMetricsObjectArrays = new ArrayList<>();
 
 		if (lcsClusterNodeHibernateMetrics == null) {
 			return Collections.emptyList();
@@ -209,9 +210,9 @@ public class ServerUtil {
 		return hibernateMetricsObjectArrays;
 	}
 
-	public static JSONObject getLCSClusterNodeMetadataJSONObject(
-			long lcsClusterNodeId, PageContext pageContext)
-		throws PortalException, SystemException {
+	public JSONObject getLCSClusterNodeMetadataJSONObject(
+			long lcsClusterNodeId, Locale locale)
+		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -222,16 +223,16 @@ public class ServerUtil {
 
 		LCSClusterNodeInstallationEnvironment
 			lcsClusterNodeInstallationEnvironment =
-				LCSClusterNodeInstallationEnvironmentServiceUtil.
+				_lcsClusterNodeInstallationEnvironmentService.
 					fetchLCSClusterNodeInstallationEnvironment(
 						lcsClusterNode.getKey());
 
-		Map<String, String> hardwareMetadata = new TreeMap<String, String>(
+		Map<String, String> hardwareMetadata = new TreeMap<>(
 			lcsClusterNodeInstallationEnvironment.getHardwareMetadata());
 
 		for (String key : hardwareMetadata.keySet()) {
-			if (Validator.equals(key, "cpu.total.cores") ||
-				Validator.equals(key, "fs.root")) {
+			if (Objects.equals(key, "cpu.total.cores") ||
+				Objects.equals(key, "fs.root")) {
 
 				continue;
 			}
@@ -249,36 +250,39 @@ public class ServerUtil {
 
 		jsonObject.put("hardwareMetadata", toJSONArray(hardwareMetadata));
 
-		Map<String, String> liferayMetadata = new TreeMap<String, String>();
+		Map<String, String> liferayMetadata = new TreeMap<>();
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale.getLanguage());
 
 		liferayMetadata.put(
-			LanguageUtil.get(pageContext, "lcs-server-key"),
+			LanguageUtil.get(resourceBundle, "lcs-server-key"),
 			lcsClusterNode.getKey());
 		liferayMetadata.put(
-			LanguageUtil.get(pageContext, "portal-build-number"),
+			LanguageUtil.get(resourceBundle, "portal-build-number"),
 			String.valueOf(lcsClusterNode.getBuildNumber()));
 		liferayMetadata.put(
-			LanguageUtil.get(pageContext, "portal-edition"),
+			LanguageUtil.get(resourceBundle, "portal-edition"),
 			lcsClusterNode.getPortalEdition());
 
-		if (Validator.equals(lcsClusterNode.getPortalEdition(), "EE")) {
+		if (Objects.equals(lcsClusterNode.getPortalEdition(), "EE")) {
 			liferayMetadata.put(
-				LanguageUtil.get(pageContext, "patching-tool-version"),
+				LanguageUtil.get(resourceBundle, "patching-tool-version"),
 				String.valueOf(lcsClusterNode.getPatchingToolVersion()));
 		}
 
-		Map<String, String> baseSoftwareMetadata =
-			new TreeMap<String, String>();
-		Map<String, String> javaMetadata = new TreeMap<String, String>();
-		List<String[]> javaOptions = new ArrayList<String[]>();
+		Map<String, String> baseSoftwareMetadata = new TreeMap<>();
+		Map<String, String> javaMetadata = new TreeMap<>();
+		List<String[]> javaOptions = new ArrayList<>();
 
-		Map<String, String> softwareMetadata = new TreeMap<String, String>(
+		Map<String, String> softwareMetadata = new TreeMap<>(
 			lcsClusterNodeInstallationEnvironment.getSoftwareMetadata());
 
 		for (String key : softwareMetadata.keySet()) {
-			if (Validator.equals(key, "lcs.portlet.build.number")) {
+			if (Objects.equals(key, "lcs.portlet.build.number")) {
 				liferayMetadata.put(
-					LanguageUtil.get(pageContext, "lcs-portlet-build-number"),
+					LanguageUtil.get(
+						resourceBundle, "lcs-portlet-build-number"),
 					String.valueOf(softwareMetadata.get(key)));
 
 				continue;
@@ -290,7 +294,7 @@ public class ServerUtil {
 				continue;
 			}
 
-			if (!Validator.equals(key, "java.input.arguments")) {
+			if (!Objects.equals(key, "java.input.arguments")) {
 				javaMetadata.put(key, softwareMetadata.get(key));
 
 				continue;
@@ -331,23 +335,33 @@ public class ServerUtil {
 		return jsonObject;
 	}
 
-	public static Object[] getLiferayMultiVMMetricsObjectArray(
+	public List<LCSStatsLayoutMetricsEvents> getLCSStatsLayoutMetricsEventsList(
+		long companyId, Date endDate, long groupId, String key,
+		String layoutName, int timeSlot) {
+
+		return (List<LCSStatsLayoutMetricsEvents>)
+			getLCSStatsLayoutMetricsEventsService(timeSlot).
+				getLCSStatsLayoutMetricsEventsList(
+					companyId, endDate, groupId, key, layoutName);
+	}
+
+	public Object[] getLiferayMultiVMMetricsObjectArray(
 			long layoutLCSClusterNodeId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<LCSClusterNodeLiferayVMMetrics> liferayEntityCacheMetricsList =
-			new ArrayList<LCSClusterNodeLiferayVMMetrics>();
+			new ArrayList<>();
 		List<LCSClusterNodeLiferayVMMetrics> liferayFinderCacheMetricsList =
-			new ArrayList<LCSClusterNodeLiferayVMMetrics>();
+			new ArrayList<>();
 		List<LCSClusterNodeLiferayVMMetrics> liferayOtherCacheMetricsList =
-			new ArrayList<LCSClusterNodeLiferayVMMetrics>();
+			new ArrayList<>();
 
 		LCSClusterNode lcsClusterNode =
 			LCSClusterNodeServiceUtil.getLCSClusterNode(layoutLCSClusterNodeId);
 
-		List<LCSClusterNodeLiferayVMMetrics>
+		List<? extends LCSClusterNodeLiferayVMMetrics>
 			lcsClusterNodeLiferayVMMetricsList =
-				LCSClusterNodeLiferayVMMetricsServiceUtil.
+				_lcsClusterNodeLiferayVMMetricsService.
 					getLCSClusterNodeLiferayVMMetricsList(
 						lcsClusterNode.getKey(), "liferayMultiVMMetrics");
 
@@ -386,34 +400,34 @@ public class ServerUtil {
 		};
 	}
 
-	public static List<LCSClusterNodeLiferayVMMetrics>
+	public List<LCSClusterNodeLiferayVMMetrics>
 			getLiferaySingleVMMetricsList(long layoutLCSClusterNodeId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LCSClusterNode lcsClusterNode =
 			LCSClusterNodeServiceUtil.getLCSClusterNode(layoutLCSClusterNodeId);
 
-		return LCSClusterNodeLiferayVMMetricsServiceUtil.
-			getLCSClusterNodeLiferayVMMetricsList(
-				lcsClusterNode.getKey(), "liferaySingleVMMetrics");
+		return (List<LCSClusterNodeLiferayVMMetrics>)
+			_lcsClusterNodeLiferayVMMetricsService.
+				getLCSClusterNodeLiferayVMMetricsList(
+					lcsClusterNode.getKey(), "liferaySingleVMMetrics");
 	}
 
-	public static JSONObject getPagesMetricsJSONObject(
+	public JSONObject getPagesMetricsJSONObject(
 		long companyId, Date endDate, long groupId, String key,
 		String layoutName, int period, TimeZone timeZone) {
 
 		List<LCSStatsLayoutMetricsEvents>
 			summaryLCSStatsLayoutMetricsEventsList =
-				LCSStatsLayoutMetricsEventsUtil.
-					getSummaryLCSStatsLayoutMetricsEventsList(
-						companyId, endDate, groupId, key, period);
+				getSummaryLCSStatsLayoutMetricsEventsList(
+					companyId, endDate, groupId, key, period);
 
 		if (summaryLCSStatsLayoutMetricsEventsList.isEmpty()) {
 			return JSONFactoryUtil.createJSONObject();
 		}
 
 		List<LCSStatsLayoutMetricsEvents> lcsStatsLayoutMetricsEventsList =
-			LCSStatsLayoutMetricsEventsUtil.getLCSStatsLayoutMetricsEventsList(
+			getLCSStatsLayoutMetricsEventsList(
 				companyId, endDate, groupId, key, layoutName, period);
 
 		if (lcsStatsLayoutMetricsEventsList.isEmpty()) {
@@ -431,7 +445,7 @@ public class ServerUtil {
 			JSONFactoryUtil.createJSONArray();
 
 		Map<Long, LCSStatsLayoutMetricsEvents> lcsStatsLayoutMetricsEventsMap =
-			new HashMap<Long, LCSStatsLayoutMetricsEvents>();
+			new HashMap<>();
 
 		for (LCSStatsLayoutMetricsEvents lcsStatsLayoutMetricsEvents :
 				lcsStatsLayoutMetricsEventsList) {
@@ -535,7 +549,7 @@ public class ServerUtil {
 			summaryJSONObject.put(
 				"pageViews", lcsStatsLayoutMetricsEvents.getSampleCount());
 
-			if (Validator.equals(name, LCSConstants.ALL_PORTAL_OBJECTS_NAME)) {
+			if (Objects.equals(name, LCSConstants.ALL_PORTAL_OBJECTS_NAME)) {
 				jsonObject.put("allPagesSummary", summaryJSONObject);
 
 				continue;
@@ -549,17 +563,13 @@ public class ServerUtil {
 		return jsonObject;
 	}
 
-	public static JSONObject getPortalPropertiesDifferenceJSONObject(String key)
+	public JSONObject getPortalPropertiesDifferenceJSONObject(String key)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		PortalPropertiesAdvisor portalPropertiesAdvisor =
-			(PortalPropertiesAdvisor)PortletBeanLocatorUtil.locate(
-				"com.liferay.osb.lcs.advisor.PortalPropertiesAdvisor");
-
 		JSONArray portalPropertiesDifferenceJSONArray =
-			portalPropertiesAdvisor.getPortalPropertiesDifference(key);
+			_portalPropertiesAdvisor.getPortalPropertiesDifference(key);
 
 		jsonObject.put(
 			LCSConstants.JSON_KEY_DATA, portalPropertiesDifferenceJSONArray);
@@ -569,7 +579,7 @@ public class ServerUtil {
 		return jsonObject;
 	}
 
-	public static String getTimeZoneLabel(Locale locale, TimeZone timeZone) {
+	public String getTimeZoneLabel(Locale locale, TimeZone timeZone) {
 		int offset = timeZone.getRawOffset();
 
 		if (timeZone.inDaylightTime(new Date())) {
@@ -606,13 +616,124 @@ public class ServerUtil {
 		return sb.toString();
 	}
 
+	@Reference(unbind = "-")
 	public void setLCSClusterNodeDetailsService(
 		LCSClusterNodeDetailsService lcsClusterNodeDetailsService) {
 
 		_lcsClusterNodeDetailsService = lcsClusterNodeDetailsService;
 	}
 
-	protected static JSONArray toJSONArray(List<String[]> arrays) {
+	public void setLcsClusterNodeHibernateMetricsService(
+		LCSClusterNodeHibernateMetricsService
+			lcsClusterNodeHibernateMetricsService) {
+
+		_lcsClusterNodeHibernateMetricsService =
+			lcsClusterNodeHibernateMetricsService;
+	}
+
+	public void setLcsClusterNodeInstallationEnvironmentService(
+		LCSClusterNodeInstallationEnvironmentService
+			lcsClusterNodeInstallationEnvironmentService) {
+
+		_lcsClusterNodeInstallationEnvironmentService =
+			lcsClusterNodeInstallationEnvironmentService;
+	}
+
+	public void setLcsClusterNodeJVMMetricsService(
+		LCSClusterNodeJVMMetricsService lcsClusterNodeJVMMetricsService) {
+
+		_lcsClusterNodeJVMMetricsService = lcsClusterNodeJVMMetricsService;
+	}
+
+	public void setLcsClusterNodeLiferayVMMetricsService(
+		LCSClusterNodeLiferayVMMetricsService
+			lcsClusterNodeLiferayVMMetricsService) {
+
+		_lcsClusterNodeLiferayVMMetricsService =
+			lcsClusterNodeLiferayVMMetricsService;
+	}
+
+	public void setLcsClusterNodeSiteService(
+		LCSClusterNodeSiteService lcsClusterNodeSiteService) {
+
+		_lcsClusterNodeSiteService = lcsClusterNodeSiteService;
+	}
+
+	public void setLcsStatsLayoutMetricsEventsService(
+		LCSStatsLayoutMetricsEventsService lcsStatsLayoutMetricsEventsService) {
+
+		_lcsStatsLayoutMetricsEventsService =
+			lcsStatsLayoutMetricsEventsService;
+	}
+
+	public void setLCSStatsLayoutMetricsEventsService60(
+		LCSStatsLayoutMetricsEventsService
+			lcsStatsLayoutMetricsEventsService60) {
+
+		_lcsStatsLayoutMetricsEventsService60 =
+			lcsStatsLayoutMetricsEventsService60;
+	}
+
+	public void setLCSStatsLayoutMetricsEventsService1440(
+		LCSStatsLayoutMetricsEventsService
+			lcsStatsLayoutMetricsEventsService1440) {
+
+		_lcsStatsLayoutMetricsEventsService1440 =
+			lcsStatsLayoutMetricsEventsService1440;
+	}
+
+	public void setLCSStatsLayoutMetricsEventsService10080(
+		LCSStatsLayoutMetricsEventsService
+			lcsStatsLayoutMetricsEventsService10080) {
+
+		_lcsStatsLayoutMetricsEventsService10080 =
+			lcsStatsLayoutMetricsEventsService10080;
+	}
+
+	@Reference(unbind = "-")
+	public void setPortalPropertiesAdvisor(
+		PortalPropertiesAdvisor portalPropertiesAdvisor) {
+
+		_portalPropertiesAdvisor = portalPropertiesAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = resourceBundleLoader;
+	}
+
+	protected LCSStatsLayoutMetricsEventsService
+		getLCSStatsLayoutMetricsEventsService(int timeSlot) {
+
+		if (timeSlot == 10080) {
+			return _lcsStatsLayoutMetricsEventsService10080;
+		}
+
+		if (timeSlot == 1440) {
+			return _lcsStatsLayoutMetricsEventsService1440;
+		}
+
+		if (timeSlot == 60) {
+			return _lcsStatsLayoutMetricsEventsService60;
+		}
+
+		return null;
+	}
+
+	protected List<LCSStatsLayoutMetricsEvents>
+		getSummaryLCSStatsLayoutMetricsEventsList(
+			long companyId, Date endDate, long groupId, String key,
+			int timeSlot) {
+
+		return (List<LCSStatsLayoutMetricsEvents>)
+			getLCSStatsLayoutMetricsEventsService(timeSlot).
+				getSummaryLCSStatsLayoutMetricsEventsList(
+					companyId, endDate, groupId, key);
+	}
+
+	protected JSONArray toJSONArray(List<String[]> arrays) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (String[] array : arrays) {
@@ -627,7 +748,7 @@ public class ServerUtil {
 		return jsonArray;
 	}
 
-	protected static JSONArray toJSONArray(Map<String, String> map) {
+	protected JSONArray toJSONArray(Map<String, String> map) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -642,7 +763,26 @@ public class ServerUtil {
 		return jsonArray;
 	}
 
-	private static LCSClusterNodeDetailsService _lcsClusterNodeDetailsService;
+	private static LCSStatsLayoutMetricsEventsService
+		_lcsStatsLayoutMetricsEventsService60;
+	private static LCSStatsLayoutMetricsEventsService
+		_lcsStatsLayoutMetricsEventsService1440;
+	private static LCSStatsLayoutMetricsEventsService
+		_lcsStatsLayoutMetricsEventsService10080;
+
+	private LCSClusterNodeDetailsService _lcsClusterNodeDetailsService;
+	private LCSClusterNodeHibernateMetricsService
+		_lcsClusterNodeHibernateMetricsService;
+	private LCSClusterNodeInstallationEnvironmentService
+		_lcsClusterNodeInstallationEnvironmentService;
+	private LCSClusterNodeJVMMetricsService _lcsClusterNodeJVMMetricsService;
+	private LCSClusterNodeLiferayVMMetricsService
+		_lcsClusterNodeLiferayVMMetricsService;
+	private LCSClusterNodeSiteService _lcsClusterNodeSiteService;
+	private LCSStatsLayoutMetricsEventsService
+		_lcsStatsLayoutMetricsEventsService;
+	private PortalPropertiesAdvisor _portalPropertiesAdvisor;
+	private ResourceBundleLoader _resourceBundleLoader;
 
 	private static class LCSClusterNodeSitesComaparator
 		implements Comparator<LCSClusterNodeSite> {
@@ -655,9 +795,9 @@ public class ServerUtil {
 			String friendlyURL1 = lcsClusterNodeSite1.getFriendlyURL();
 			String friendlyURL2 = lcsClusterNodeSite2.getFriendlyURL();
 
-			Boolean organizationSite1 = LCSClusterNodeSiteType.isOrganization(
+			Boolean organizationSite1 = SiteType.isOrganization(
 				lcsClusterNodeSite1.getType());
-			Boolean organizationSite2 = LCSClusterNodeSiteType.isOrganization(
+			Boolean organizationSite2 = SiteType.isOrganization(
 				lcsClusterNodeSite2.getType());
 
 			if (organizationSite1 != organizationSite2) {

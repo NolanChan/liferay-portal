@@ -109,7 +109,7 @@ public class PatchAdvisorImpl implements PatchAdvisor {
 
 		int count = LCSClusterNodeLocalServiceUtil.getLCSClusterNodesCount();
 
-		for (int start = 0, end = 20; start < count; end+= 20, start+= 20) {
+		for (int start = 0, end = 20; start < count; end += 20, start += 20) {
 			List<LCSClusterNode> lcsClusterNodes =
 					LCSClusterNodeLocalServiceUtil.getLCSClusterNodes(
 						start, end, true);

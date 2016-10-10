@@ -12,35 +12,33 @@
  * details.
  */
 
-package com.liferay.osb.lcs.account.util;
+package com.liferay.osb.lcs.web.internal.advisor;
 
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.advisor.NavigationAdvisor;
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSMessage;
 import com.liferay.osb.lcs.model.LCSNotification;
 import com.liferay.osb.lcs.model.LCSProject;
-import com.liferay.osb.lcs.model.LCSRoleConstants;
-import com.liferay.osb.lcs.navigation.util.NavigationUtil;
 import com.liferay.osb.lcs.service.LCSClusterEntryServiceUtil;
 import com.liferay.osb.lcs.service.LCSClusterNodeServiceUtil;
 import com.liferay.osb.lcs.service.LCSMessageService;
 import com.liferay.osb.lcs.service.LCSNotificationServiceUtil;
 import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.ClassNameLocalServiceUtil;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -52,24 +50,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.TimeZone;
 
-import javax.portlet.PortletConfig;
-
-import javax.servlet.jsp.PageContext;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marko Cikos
  */
-public class AccountUtil {
+@Component(immediate = true)
+public class AccountAdvisor {
 
-	public static List<Object[]> getLCSNotificationsRulesObjectArrays(
-			PageContext pageContext, List<LCSNotification> lcsNotifications)
-		throws PortalException, SystemException {
+	public List<Object[]> getLCSNotificationsRulesObjectArrays(
+			Locale locale, List<LCSNotification> lcsNotifications)
+		throws PortalException {
 
-		List<Object[]> lcsNotificationsRules = new ArrayList<Object[]>();
+		List<Object[]> lcsNotificationsRules = new ArrayList<>();
 
-		String lcsClusterObjectNameAll = LanguageUtil.get(pageContext, "all");
+		String lcsClusterObjectNameAll = LanguageUtil.get(locale, "all");
 
 		for (LCSNotification lcsNotification : lcsNotifications) {
 			long lcsClusterEntryId = LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID;
@@ -139,8 +139,8 @@ public class AccountUtil {
 			new LCSNotificationsRulesComparator(lcsClusterObjectNameAll));
 	}
 
-	public static JSONArray getLCSProjectsLCSNotificationsJSONArray()
-		throws PortalException, SystemException {
+	public JSONArray getLCSProjectsLCSNotificationsJSONArray()
+		throws PortalException {
 
 		JSONArray lcsProjectsJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -157,8 +157,7 @@ public class AccountUtil {
 			JSONArray lcsNotificationsJSONArray =
 				JSONFactoryUtil.createJSONArray();
 
-			Map<Integer, Boolean> notificationTypesEnabled =
-				new HashMap<Integer, Boolean>();
+			Map<Integer, Boolean> notificationTypesEnabled = new HashMap<>();
 
 			for (LCSEventType lcsEventType : LCSEventType.getSupported()) {
 				LCSNotification lcsNotification =
@@ -196,15 +195,17 @@ public class AccountUtil {
 		return lcsProjectsJSONArray;
 	}
 
-	public static JSONArray getUserLCSMessagesJSONArray(
-			Date startDate, Date endDate, Locale locale, TimeZone timeZone,
-			PortletConfig portletConfig)
-		throws PortalException, SystemException {
+	public JSONArray getUserLCSMessagesJSONArray(
+			Date startDate, Date endDate, Locale locale, TimeZone timeZone)
+		throws PortalException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<LCSMessage> lcsMessages = _lcsMessageService.getLCSMessages(
 			startDate, endDate);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale.getLanguage());
 
 		for (LCSMessage lcsMessage : lcsMessages) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -215,39 +216,38 @@ public class AccountUtil {
 			String name = null;
 			String url = null;
 
-			if (classNameId == ClassNameLocalServiceUtil.getClassNameId(
+			if (classNameId == _classNameLocalService.getClassNameId(
 					LCSProject.class)) {
 
 				LCSProject lcsProject = LCSProjectServiceUtil.getLCSProject(
 					classPK);
 
 				name = lcsProject.getName();
-				url = NavigationUtil.getLCSProjectURL(classPK);
+				url = _navigationAdvisor.getLCSProjectURL(classPK);
 			}
 
-			if (classNameId == ClassNameLocalServiceUtil.getClassNameId(
+			if (classNameId == _classNameLocalService.getClassNameId(
 					LCSClusterEntry.class)) {
 
 				LCSClusterEntry lcsClusterEntry =
 					LCSClusterEntryServiceUtil.getLCSClusterEntry(classPK);
 
 				name = lcsClusterEntry.getName();
-				url = NavigationUtil.getLCSClusterEntryURL(classPK);
+				url = _navigationAdvisor.getLCSClusterEntryURL(classPK);
 			}
 
-			if (classNameId == ClassNameLocalServiceUtil.getClassNameId(
+			if (classNameId == _classNameLocalService.getClassNameId(
 					LCSClusterNode.class)) {
 
 				LCSClusterNode lcsClusterNode =
 					LCSClusterNodeServiceUtil.getLCSClusterNode(classPK);
 
 				name = lcsClusterNode.getName();
-				url = NavigationUtil.getLCSClusterNodeURL(classPK);
+				url = _navigationAdvisor.getLCSClusterNodeURL(classPK);
 			}
 
 			String content = lcsMessage.getContent();
-			String from = LanguageUtil.get(
-				portletConfig, locale, "liferay-support");
+			String from = LanguageUtil.get(resourceBundle, "liferay-support");
 
 			LCSEventType lcsEventType = LCSEventType.valueOf(
 				lcsMessage.getType());
@@ -256,19 +256,19 @@ public class AccountUtil {
 					LCSEventType.OSB_SUBSCRIPTION_STATUS_RECEIVED) {
 
 				content = getSubscriptionsStatusContent(
-					content, classPK, locale, portletConfig);
+					content, classPK, locale);
 			}
 
-			if (Validator.equals(
+			if (Objects.equals(
 					lcsMessage.getSourceSystemName(),
 					LCSConstants.SOURCE_SYSTEM_NAME_LCS)) {
 
 				content = LanguageUtil.format(
-					portletConfig, locale, lcsEventType.getMessage(),
+					resourceBundle, lcsEventType.getMessage(),
 					new Object[] {url, name}, false);
 
 				from = LanguageUtil.get(
-					portletConfig, locale, "liferay-connected-services");
+					resourceBundle, "liferay-connected-services");
 			}
 
 			jsonObject.put("content", content);
@@ -288,10 +288,32 @@ public class AccountUtil {
 		return jsonArray;
 	}
 
-	protected static JSONArray getLCSClusterEntriesLCSNotificationsJSONArray(
+	public void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+	}
+
+	public void setLcsMessageService(LCSMessageService lcsMessageService) {
+		_lcsMessageService = lcsMessageService;
+	}
+
+	@Reference(unbind = "-")
+	public void setNavigationAdvisor(NavigationAdvisor navigationAdvisor) {
+		_navigationAdvisor = navigationAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = resourceBundleLoader;
+	}
+
+	protected JSONArray getLCSClusterEntriesLCSNotificationsJSONArray(
 			long lcsProjectId,
 			Map<Integer, Boolean> parentLCSNotificationTypesEnabled)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		JSONArray lcsClusterEntriesJSONArray =
 			JSONFactoryUtil.createJSONArray();
@@ -312,8 +334,7 @@ public class AccountUtil {
 			JSONArray lcsNotificationsJSONArray =
 				JSONFactoryUtil.createJSONArray();
 
-			Map<Integer, Boolean> notificationTypesEnabled =
-				new HashMap<Integer, Boolean>();
+			Map<Integer, Boolean> notificationTypesEnabled = new HashMap<>();
 
 			for (LCSEventType lcsEventType : LCSEventType.getSupported()) {
 				LCSNotification lcsNotification =
@@ -351,10 +372,10 @@ public class AccountUtil {
 		return lcsClusterEntriesJSONArray;
 	}
 
-	protected static JSONArray getLCSClusterNodesLCSNotificationsJSONArray(
+	protected JSONArray getLCSClusterNodesLCSNotificationsJSONArray(
 			long lcsClusterEntryId, Map<Integer,
 			Boolean> parentLCSNotificationTypesEnabled)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		JSONArray lcsClusterNodesJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -402,7 +423,7 @@ public class AccountUtil {
 		return lcsClusterNodesJSONArray;
 	}
 
-	protected static JSONObject getLCSNotificationJSONObject(
+	protected JSONObject getLCSNotificationJSONObject(
 		boolean enabled, boolean inherited, int type) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -414,24 +435,28 @@ public class AccountUtil {
 		return jsonObject;
 	}
 
-	protected static String getSubscriptionsStatusContent(
-		String content, long lcsProjectId, Locale locale,
-		PortletConfig portletConfig) {
+	protected String getSubscriptionsStatusContent(
+		String content, long lcsProjectId, Locale locale) {
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale.getLanguage());
 
 		StringBundler sb = new StringBundler(6);
 
 		sb.append(content);
 		sb.append(" <a href='");
-		sb.append(NavigationUtil.getSubscriptionsURL(lcsProjectId));
+		sb.append(_navigationAdvisor.getSubscriptionsURL(lcsProjectId));
 		sb.append("'>");
-		sb.append(LanguageUtil.get(portletConfig, locale, "see-subscriptions"));
+		sb.append(LanguageUtil.get(resourceBundle, "see-subscriptions"));
 		sb.append("</a>");
 
 		return sb.toString();
 	}
 
-	@BeanReference(type = LCSMessageService.class)
-	private static LCSMessageService _lcsMessageService;
+	private ClassNameLocalService _classNameLocalService;
+	private LCSMessageService _lcsMessageService;
+	private NavigationAdvisor _navigationAdvisor;
+	private ResourceBundleLoader _resourceBundleLoader;
 
 	private static class LCSNotificationsRulesComparator
 		implements Comparator<Object[]> {
@@ -477,7 +502,7 @@ public class AccountUtil {
 			return lcsClusterNodeName1.compareTo(lcsClusterNodeName2);
 		}
 
-		private String _lcsClusterObjectNameAll;
+		private final String _lcsClusterObjectNameAll;
 
 	};
 
