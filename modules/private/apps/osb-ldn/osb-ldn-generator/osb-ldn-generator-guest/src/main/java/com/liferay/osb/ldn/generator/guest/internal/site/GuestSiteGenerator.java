@@ -48,23 +48,14 @@ public class GuestSiteGenerator implements SiteGenerator {
 
 	public void generate(long groupId) throws Exception {
 		generateLayouts(groupId);
+
+		generateLayoutSets(groupId);
 	}
 
 	protected void generateLayouts(long groupId) throws Exception {
 		List<LayoutGenerator> layoutGenerators =
 			_layoutGeneratorRegistry.getLayoutGenerators(
 				GuestSiteConstants.GUEST_SITE_KEY);
-
-		// Layout set
-
-		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			groupId, false);
-
-		_layoutSetLocalService.updateLookAndFeel(
-			groupId, "osbldn_WAR_osbldn", layoutSet.getColorSchemeId(),
-			layoutSet.getCss());
-
-		// Layout
 
 		for (LayoutGenerator layoutGenerator : layoutGenerators) {
 			Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
@@ -89,6 +80,15 @@ public class GuestSiteGenerator implements SiteGenerator {
 
 			layoutGenerator.generate(layout.getPlid());
 		}
+	}
+
+	protected void generateLayoutSets(long groupId) throws Exception {
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			groupId, false);
+
+		_layoutSetLocalService.updateLookAndFeel(
+			groupId, "osbldn_WAR_osbldn", layoutSet.getColorSchemeId(),
+			layoutSet.getCss());
 	}
 
 	@Reference
