@@ -14,26 +14,27 @@
 
 package com.liferay.osb.lcs.util;
 
-import com.liferay.osb.lcs.constants.OSBLCSWebKeys;
 import com.liferay.osb.lcs.model.LCSClusterNode;
-import com.liferay.osb.lcs.model.LCSProject;
+import com.liferay.osb.lcs.service.LCSClusterNodeService;
 import com.liferay.osb.lcs.service.LCSClusterNodeServiceUtil;
-import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
+ * @author Igor Beslic
  */
+@Component(immediate = true)
 public class LCSClusterNodeUtil {
 
-	public static List<LCSClusterNode> getLCSClusterNodes(
-			HttpServletRequest request, long layoutLCSClusterEntryId,
-			long layoutLCSClusterNodeId, long layoutLCSProjectId)
+	public List<LCSClusterNode> getLCSClusterNodes(
+			long layoutLCSClusterEntryId, long layoutLCSClusterNodeId,
+			long layoutLCSProjectId)
 		throws PortalException {
 
 		List<LCSClusterNode> lcsClusterNodes = null;
@@ -41,118 +42,59 @@ public class LCSClusterNodeUtil {
 		if ((layoutLCSClusterEntryId <= 0) && (layoutLCSClusterNodeId <= 0) &&
 			(layoutLCSProjectId > 0)) {
 
-			lcsClusterNodes = getLCSProjectLCSClusterNodes(
-				request, layoutLCSProjectId);
+			lcsClusterNodes = getLCSProjectLCSClusterNodes(layoutLCSProjectId);
 		}
 		else if ((layoutLCSClusterEntryId > 0) &&
 				 (layoutLCSClusterNodeId <= 0)) {
 
 			lcsClusterNodes = getLCSClusterEntryLCSClusterNodes(
-				request, layoutLCSClusterEntryId);
+				layoutLCSClusterEntryId);
 		}
 		else if (layoutLCSClusterNodeId > 0) {
 			lcsClusterNodes = new ArrayList<>();
 
 			LCSClusterNode lcsClusterNode = getLCSClusterNode(
-				request, layoutLCSClusterNodeId);
+				layoutLCSClusterNodeId);
 
 			lcsClusterNodes.add(lcsClusterNode);
 		}
 		else {
-			lcsClusterNodes = getLCSProjectsLCSClusterNodes(request);
+			lcsClusterNodes = _lcsClusterNodeService.getUserLCSClusterNodes(
+				false);
 		}
 
 		return lcsClusterNodes;
 	}
 
-	public static List<LCSClusterNode> getLCSProjectLCSClusterNodes(
-			HttpServletRequest request, long lcsProjectId)
+	public List<LCSClusterNode> getLCSProjectLCSClusterNodes(long lcsProjectId)
 		throws PortalException {
 
-		String key = OSBLCSWebKeys.CORP_ENTRY_LCS_CLUSTER_NODES.concat(
-			String.valueOf(lcsProjectId));
-
-		List<LCSClusterNode> lcsClusterNodes =
-			(List<LCSClusterNode>)request.getAttribute(key);
-
-		if (lcsClusterNodes != null) {
-			return lcsClusterNodes;
-		}
-
-		lcsClusterNodes =
-			LCSClusterNodeServiceUtil.getLCSProjectLCSClusterNodes(
-				lcsProjectId, true);
-
-		request.setAttribute(key, lcsClusterNodes);
-
-		return lcsClusterNodes;
+		return LCSClusterNodeServiceUtil.getLCSProjectLCSClusterNodes(
+			lcsProjectId, true);
 	}
 
-	protected static List<LCSClusterNode> getLCSClusterEntryLCSClusterNodes(
-			HttpServletRequest request, long lcsClusterEntryId)
-		throws PortalException {
+	@Reference(unbind = "-")
+	public void setLcsClusterNodeService(
+		LCSClusterNodeService lcsClusterNodeService) {
 
-		List<LCSClusterNode> lcsClusterNodes =
-			(List<LCSClusterNode>)request.getAttribute(
-				OSBLCSWebKeys.LCS_CLUSTER_ENTRY_LCS_CLUSTER_NODES);
-
-		if (lcsClusterNodes != null) {
-			return lcsClusterNodes;
-		}
-
-		lcsClusterNodes =
-			LCSClusterNodeServiceUtil.getLCSClusterEntryLCSClusterNodes(
-				lcsClusterEntryId, true);
-
-		request.setAttribute(
-			OSBLCSWebKeys.LCS_CLUSTER_ENTRY_LCS_CLUSTER_NODES, lcsClusterNodes);
-
-		return lcsClusterNodes;
+		_lcsClusterNodeService = lcsClusterNodeService;
 	}
 
-	protected static LCSClusterNode getLCSClusterNode(
-			HttpServletRequest request, long lcsClusterNodeId)
+	protected List<LCSClusterNode> getLCSClusterEntryLCSClusterNodes(
+			long lcsClusterEntryId)
 		throws PortalException {
 
-		LCSClusterNode lcsClusterNode = (LCSClusterNode)request.getAttribute(
-			OSBLCSWebKeys.LCS_CLUSTER_NODE);
+		return LCSClusterNodeServiceUtil.getLCSClusterEntryLCSClusterNodes(
+			lcsClusterEntryId, true);
+	}
 
-		if (lcsClusterNode != null) {
-			return lcsClusterNode;
-		}
+	protected LCSClusterNode getLCSClusterNode(long lcsClusterNodeId)
+		throws PortalException {
 
-		lcsClusterNode = LCSClusterNodeServiceUtil.getLCSClusterNode(
+		return LCSClusterNodeServiceUtil.getLCSClusterNode(
 			lcsClusterNodeId, true);
-
-		request.setAttribute(OSBLCSWebKeys.LCS_CLUSTER_NODE, lcsClusterNode);
-
-		return lcsClusterNode;
 	}
 
-	protected static List<LCSClusterNode> getLCSProjectsLCSClusterNodes(
-			HttpServletRequest request)
-		throws PortalException {
-
-		List<LCSClusterNode> lcsClusterNodes = new ArrayList<>();
-
-		List<LCSProject> lcsProjects = (List<LCSProject>)request.getAttribute(
-			OSBLCSWebKeys.LCS_PROJECTS);
-
-		if (lcsProjects != null) {
-			lcsProjects = LCSProjectServiceUtil.getUserLCSProjects();
-
-			request.setAttribute(OSBLCSWebKeys.LCS_PROJECTS, lcsProjects);
-		}
-
-		for (LCSProject lcsProject : lcsProjects) {
-			List<LCSClusterNode> curLCSClusterNodes =
-				getLCSProjectLCSClusterNodes(
-					request, lcsProject.getLcsProjectId());
-
-			lcsClusterNodes.addAll(curLCSClusterNodes);
-		}
-
-		return lcsClusterNodes;
-	}
+	private LCSClusterNodeService _lcsClusterNodeService;
 
 }
