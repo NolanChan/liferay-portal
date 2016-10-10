@@ -18,8 +18,12 @@ import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.random.nine.web.internal.constants.DocumentationProjectPortletKeys;
 import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -29,6 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -56,14 +62,16 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			WebKeys.TEMPLATE);
 
 		List<Map<String, Object>> documentationProjects =
-			getRandomDocumentationProjectList();
+			getRandomDocumentationProjectList(renderRequest);
 
 		template.put("documentationProjects", documentationProjects);
 
 		return "view";
 	}
 
-	protected List<Map<String, Object>> getRandomDocumentationProjectList() {
+	protected List<Map<String, Object>> getRandomDocumentationProjectList(
+		RenderRequest renderRequest) {
+
 		List<Map<String, Object>> documentationProjectList = new ArrayList<>(9);
 
 		List<DocumentationProject> documentationProjects =
@@ -74,13 +82,31 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		Collections.shuffle(documentationProjects);
 
+		PortletConfig portletConfig = (PortletConfig)renderRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		for (int i = 0; (i < 9) && (i < documentationProjects.size()); i++) {
 			DocumentationProject documentationProject =
 				documentationProjects.get(i);
 
-			Map<String, Object> documentationProjectMap = new HashMap<>(2);
+			Map<String, Object> documentationProjectMap = new HashMap<>(3);
 
-			documentationProjectMap.put("iconURL", null);
+			LiferayPortletURL iconURL = PortletURLFactoryUtil.create(
+				renderRequest, portletConfig.getPortletName(),
+				themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
+
+			iconURL.setCopyCurrentRenderParameters(false);
+			iconURL.setParameter(
+				"documentationProjectId",
+				String.valueOf(
+					documentationProject.getDocumentationProjectId()));
+			iconURL.setResourceID("/serve_documentation_project_icon");
+
+			documentationProjectMap.put("iconURL", iconURL.toString());
+
 			documentationProjectMap.put("name", documentationProject.getName());
 			documentationProjectMap.put("siteURL", null);
 
