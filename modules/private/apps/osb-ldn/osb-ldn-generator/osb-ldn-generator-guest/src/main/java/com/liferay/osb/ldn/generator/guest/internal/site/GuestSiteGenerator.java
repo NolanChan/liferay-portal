@@ -20,9 +20,11 @@ import com.liferay.osb.ldn.generator.layout.LayoutGeneratorRegistry;
 import com.liferay.osb.ldn.generator.site.SiteGenerator;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -52,6 +54,17 @@ public class GuestSiteGenerator implements SiteGenerator {
 		List<LayoutGenerator> layoutGenerators =
 			_layoutGeneratorRegistry.getLayoutGenerators(
 				GuestSiteConstants.GUEST_SITE_KEY);
+
+		// Layout set
+
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			groupId, false);
+
+		_layoutSetLocalService.updateLookAndFeel(
+			groupId, "osbldn_WAR_osbldn", layoutSet.getColorSchemeId(),
+			layoutSet.getCss());
+
+		// Layout
 
 		for (LayoutGenerator layoutGenerator : layoutGenerators) {
 			Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
@@ -86,6 +99,9 @@ public class GuestSiteGenerator implements SiteGenerator {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;
