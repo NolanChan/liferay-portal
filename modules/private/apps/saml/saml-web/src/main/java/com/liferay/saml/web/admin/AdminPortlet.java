@@ -84,6 +84,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.css-class-wrapper=saml-portlet-admin",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/admin/css/main.css",
+		"com.liferay.portlet.layout-cacheable=true",
 		"javax.portlet.display-name=SAML Admin",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.copy-request-parameters=true",
