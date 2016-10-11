@@ -18,7 +18,14 @@ import com.liferay.osb.ldn.generator.guest.site.constants.GuestSiteConstants;
 import com.liferay.osb.ldn.generator.layout.BaseLayoutGenerator;
 import com.liferay.osb.ldn.generator.layout.LayoutGenerator;
 import com.liferay.osb.ldn.generator.layout.LayoutVersion;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,11 +55,35 @@ public class BlogsLayoutGenerator extends BaseLayoutGenerator {
 
 	@Override
 	protected void doGenerate(long plid) throws Exception {
+		Layout layout = _layoutLocalService.getLayout(plid);
+
+		layout.setTypeSettings(StringPool.BLANK);
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		User user = _userLocalService.getDefaultUser(layout.getCompanyId());
+
+		layoutTypePortlet.setLayoutTemplateId(
+			user.getUserId(), "1_column", false);
+
+		layoutTypePortlet.addPortletId(
+			user.getUserId(), PortletKeys.BLOGS, "column-1", 0, false);
+
+		_layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.getPrivateLayout(),
+			layout.getLayoutId(), layout.getTypeSettings());
 	}
 
 	@Reference
 	private void setLayoutVersion(LayoutVersion layoutVersion) {
 		this.layoutVersion = layoutVersion;
 	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }
