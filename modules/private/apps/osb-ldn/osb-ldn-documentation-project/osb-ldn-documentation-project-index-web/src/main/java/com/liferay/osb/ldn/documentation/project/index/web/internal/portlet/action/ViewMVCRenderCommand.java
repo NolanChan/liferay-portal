@@ -19,18 +19,28 @@ import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -61,36 +71,71 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		Template template = (Template)renderRequest.getAttribute(
 			WebKeys.TEMPLATE);
 
-		List<Map<String, Object>> documentationProjectList =
-			getDocumentationProjectList();
+		List<Map<String, Object>> documentationProjectsList = null;
 
-		template.put("documentationProjects", documentationProjectList);
+		try {
+			documentationProjectsList = getDocumentationProjectList(
+				renderRequest, themeDisplay);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
+			documentationProjectsList = new ArrayList<>(0);
+		}
+
+		template.put("documentationProjects", documentationProjectsList);
 
 		Map<String, Object> strings = getStringsMap(
-			themeDisplay.getLanguageId(), documentationProjectList.size());
+			themeDisplay.getLanguageId(), documentationProjectsList.size());
 
 		template.put("strings", strings);
 
 		return "view";
 	}
 
-	protected List<Map<String, Object>> getDocumentationProjectList() {
+	protected List<Map<String, Object>> getDocumentationProjectList(
+			RenderRequest renderRequest, ThemeDisplay themeDisplay)
+		throws Exception {
+
 		List<Map<String, Object>> documentationProjectList = new LinkedList<>();
 
 		List<DocumentationProject> documentationProjects =
 			_documentationProjectLocalService.getDocumentationProjects(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
+		PortletConfig portletConfig = (PortletConfig)renderRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
 		for (DocumentationProject documentationProject :
 				documentationProjects) {
 
-			Map<String, Object> documentationProjectMap = new HashMap<>();
+			Map<String, Object> documentationProjectMap = new HashMap<>(3);
 
 			documentationProjectMap.put(
 				"description", documentationProject.getDescription());
-			documentationProjectMap.put("iconURL", null);
+
+			LiferayPortletURL iconURL = PortletURLFactoryUtil.create(
+				renderRequest, portletConfig.getPortletName(),
+				themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
+
+			iconURL.setCopyCurrentRenderParameters(false);
+			iconURL.setParameter(
+				"documentationProjectId",
+				String.valueOf(
+					documentationProject.getDocumentationProjectId()));
+			iconURL.setResourceID("/serve_documentation_project_icon");
+
+			documentationProjectMap.put("iconURL", iconURL.toString());
+
 			documentationProjectMap.put("name", documentationProject.getName());
-			documentationProjectMap.put("siteURL", null);
+
+			Group group = _groupLocalService.getGroup(
+				documentationProject.getGroupId());
+
+			documentationProjectMap.put(
+				"siteURL", group.getDisplayURL(themeDisplay, false));
 
 			documentationProjectList.add(documentationProjectMap);
 		}
@@ -105,6 +150,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(languageId);
+
+		strings.put("projects", LanguageUtil.get(resourceBundle, "projects"));
 
 		if (documentationProjectCount == 1) {
 			strings.put(
@@ -122,6 +169,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DocumentationProjectLocalService _documentationProjectLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	private final Log _log = LogFactoryUtil.getLog(ViewMVCRenderCommand.class);
 
 	@Reference(
 		target = "(bundle.symbolic.name=com.liferay.osb.ldn.documentation.project.index.web)"
