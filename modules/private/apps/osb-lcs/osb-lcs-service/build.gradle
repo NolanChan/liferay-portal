@@ -1,7 +1,7 @@
 
 buildService {
-	apiDir = "../osb-lcs-portlet-api/src/main/java"
-	testDir = "../osb-lcs-portlet-test/src/testIntegration/java"
+	apiDir = "../osb-lcs-api/src/main/java"
+	testDir = "../osb-lcs-test/src/testIntegration/java"
 }
 
 dependencies {
@@ -23,5 +23,5 @@ dependencies {
 	provided name: "jackson-core", group: "com.fasterxml.jackson.core", version: "2.4.2"
 	provided name: "jackson-databind", group: "com.fasterxml.jackson.core", version: "2.4.2"
 	provided name: "javax.servlet-api", group: "javax.servlet", version: "3.0.1"
-	provided project(":private:apps:osb-lcs:osb-lcs-portlet:osb-lcs-portlet-api")
+	provided project(":private:apps:osb-lcs:osb-lcs-api")
 }

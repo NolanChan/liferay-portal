@@ -1,8 +1,8 @@
 dependencies {
 	provided  project(':private:apps:lcs:lcs-api')
 	provided  project(':private:apps:osb-lcs-nosql:osb-lcs-nosql-api')
-	provided  project(':private:apps:osb-lcs:osb-lcs-portlet:osb-lcs-portlet-api')
-	provided  project(':private:apps:osb-lcs:osb-lcs-portlet:osb-lcs-portlet-service')
+	provided  project(':private:apps:osb-lcs:osb-lcs-api')
+	provided  project(':private:apps:osb-lcs:osb-lcs-service')
 	provided group: "com.itextpdf", name: "itextpdf", version: "5.5.5"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.3"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.2"
