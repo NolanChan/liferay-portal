@@ -19,6 +19,7 @@ import com.liferay.osb.ldn.generator.layout.LayoutGenerator;
 import com.liferay.osb.ldn.generator.site.SiteGenerator;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -38,6 +39,11 @@ public class GuestGeneratorRunner {
 			PortalUtil.getDefaultCompanyId(), GroupConstants.GUEST);
 
 		_guestSiteGenerator.generate(group.getGroupId());
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference(target = "(osb.ldn.layout.friendly.url=/blogs)")
