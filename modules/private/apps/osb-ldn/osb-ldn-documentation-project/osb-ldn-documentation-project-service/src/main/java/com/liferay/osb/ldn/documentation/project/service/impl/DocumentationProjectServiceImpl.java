@@ -21,6 +21,7 @@ import com.liferay.osb.ldn.documentation.project.internal.service.permission.Doc
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.base.DocumentationProjectServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.File;
 
@@ -31,9 +32,10 @@ import java.io.File;
 public class DocumentationProjectServiceImpl
 	extends DocumentationProjectServiceBaseImpl {
 
+	@Override
 	public DocumentationProject addDocumentationProject(
 			String name, String description, String iconFileName, File iconFile,
-			int status)
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		DocumentationProjectPermission.check(
@@ -41,12 +43,15 @@ public class DocumentationProjectServiceImpl
 			DocumentationProjectActionKeys.ADD_DOCUMENTATION_PROJECT);
 
 		return documentationProjectLocalService.addDocumentationProject(
-			getUserId(), name, description, iconFileName, iconFile, status);
+			getUserId(), name, description, iconFileName, iconFile, status,
+			serviceContext);
 	}
 
+	@Override
 	public DocumentationProject updateDocumentationProject(
 			long documentationProjectId, String name, String description,
-			String iconFileName, File iconFile, int status)
+			String iconFileName, File iconFile, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		DocumentationProjectPermission.check(
@@ -55,7 +60,7 @@ public class DocumentationProjectServiceImpl
 
 		return documentationProjectLocalService.updateDocumentationProject(
 			documentationProjectId, name, description, iconFileName, iconFile,
-			status);
+			status, serviceContext);
 	}
 
 }

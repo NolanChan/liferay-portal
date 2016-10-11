@@ -16,6 +16,7 @@ package com.liferay.osb.ldn.documentation.project.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.osb.ldn.documentation.project.constants.DocumentationProjectStatusConstants;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectDescriptionException;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconException;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -56,7 +58,7 @@ public class DocumentationProjectLocalServiceImpl
 	@Override
 	public DocumentationProject addDocumentationProject(
 			long userId, String name, String description, String iconFileName,
-			File iconFile, int status)
+			File iconFile, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -104,6 +106,15 @@ public class DocumentationProjectLocalServiceImpl
 
 		documentationProjectPersistence.update(documentationProject);
 
+		// Assets
+
+		if (serviceContext != null) {
+			updateAsset(
+				userId, documentationProjectId,
+				serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames());
+		}
+
 		// Files
 
 		DocumentationProjectFileUtil.initDocumentationProjectDirectory(
@@ -150,35 +161,53 @@ public class DocumentationProjectLocalServiceImpl
 	}
 
 	@Override
-	public DocumentationProject updateDocumentationProject(
-			long documentationProjectId, String name, String description,
-			String iconFileName, File iconFile, int status)
+	public void updateAsset(
+			long userId, long documentationProjectId, long[] assetCategoryIds,
+			String[] assetTagNames)
 		throws PortalException {
 
 		DocumentationProject documentationProject =
 			documentationProjectPersistence.findByPrimaryKey(
 				documentationProjectId);
 
-		Group group = _groupLocalService.getGroup(
-			documentationProject.getGroupId());
+		boolean visible = false;
 
-		boolean active = false;
+		if (documentationProject.getStatus() ==
+				DocumentationProjectStatusConstants.STATUS_LIVE) {
 
-		if (status == DocumentationProjectStatusConstants.STATUS_LIVE) {
-			active = true;
+			visible = true;
 		}
 
-		_groupLocalService.updateGroup(
-			group.getGroupId(), group.getParentGroupId(), group.getNameMap(),
-			group.getDescriptionMap(), group.getType(),
-			group.getManualMembership(), group.getMembershipRestriction(),
-			group.getFriendlyURL(), group.getInheritContent(), active, null);
+		Group group = _groupLocalService.getCompanyGroup(
+			documentationProject.getCompanyId());
 
-		String oldIconFileName = documentationProject.getIconFileName();
+		_assetEntryLocalService.updateEntry(
+			userId, group.getGroupId(), null, null,
+			DocumentationProject.class.getName(),
+			documentationProject.getDocumentationProjectId(),
+			documentationProject.getUuid(), 0, assetCategoryIds, assetTagNames,
+			visible, visible, null, null, null, null, null, null, null, null,
+			null, null, 0, 0, null);
+	}
+
+	@Override
+	public DocumentationProject updateDocumentationProject(
+			long documentationProjectId, String name, String description,
+			String iconFileName, File iconFile, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DocumentationProject documentationProject =
+			documentationProjectPersistence.findByPrimaryKey(
+				documentationProjectId);
 
 		boolean skipIconUpdate = false;
 
-		if ((iconFile == null) && Validator.isNull(iconFileName)) {
+		String oldIconFileName = documentationProject.getIconFileName();
+
+		if ((iconFile == null) || !iconFile.exists() ||
+			Validator.isNull(iconFileName)) {
+
 			iconFile = DocumentationProjectFileUtil.getDocumentProjectFile(
 				documentationProjectId, documentationProject.getIconFileName());
 			iconFileName = documentationProject.getIconFileName();
@@ -199,6 +228,15 @@ public class DocumentationProjectLocalServiceImpl
 
 		documentationProjectPersistence.update(documentationProject);
 
+		// Assets
+
+		if (serviceContext != null) {
+			updateAsset(
+				documentationProject.getUserId(), documentationProjectId,
+				serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames());
+		}
+
 		// Files
 
 		if (!skipIconUpdate) {
@@ -209,6 +247,23 @@ public class DocumentationProjectLocalServiceImpl
 				documentationProjectId, documentationProject.getIconFileName(),
 				iconFile);
 		}
+
+		// Group
+
+		Group group = _groupLocalService.getGroup(
+			documentationProject.getGroupId());
+
+		boolean active = false;
+
+		if (status == DocumentationProjectStatusConstants.STATUS_LIVE) {
+			active = true;
+		}
+
+		_groupLocalService.updateGroup(
+			group.getGroupId(), group.getParentGroupId(), group.getNameMap(),
+			group.getDescriptionMap(), group.getType(),
+			group.getManualMembership(), group.getMembershipRestriction(),
+			group.getFriendlyURL(), group.getInheritContent(), active, null);
 
 		return documentationProject;
 	}
@@ -247,6 +302,9 @@ public class DocumentationProjectLocalServiceImpl
 	}
 
 	private static final String[] _ICON_EXTENSIONS = {"svg", "png"};
+
+	@ServiceReference(type = AssetEntryLocalService.class)
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@ServiceReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
