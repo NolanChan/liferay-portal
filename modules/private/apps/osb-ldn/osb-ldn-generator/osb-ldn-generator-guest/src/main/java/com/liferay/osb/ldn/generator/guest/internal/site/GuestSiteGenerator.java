@@ -27,8 +27,12 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,6 +80,29 @@ public class GuestSiteGenerator implements SiteGenerator {
 					layoutGenerator.getLayoutHidden(),
 					layoutGenerator.getLayoutFriendlyURL(),
 					new ServiceContext());
+			}
+			else {
+				Map<Locale, String> nameMap = layout.getNameMap();
+				Map<Locale, String> titleMap = layout.getTitleMap();
+				Map<Locale, String> descriptionMap = layout.getDescriptionMap();
+				Map<Locale, String> friendlyURLMap = new HashMap<>();
+
+				Locale locale = LocaleUtil.getSiteDefault();
+
+				nameMap.put(locale, layoutGenerator.getLayoutName());
+				titleMap.put(locale, layoutGenerator.getLayoutTitle());
+				descriptionMap.put(
+					locale, layoutGenerator.getLayoutDescription());
+				friendlyURLMap.put(
+					locale, layoutGenerator.getLayoutFriendlyURL());
+
+				layout = _layoutLocalService.updateLayout(
+					layout.getGroupId(), false, layout.getLayoutId(), 0,
+					layout.getNameMap(), layout.getTitleMap(),
+					layout.getDescriptionMap(), layout.getKeywordsMap(),
+					layout.getRobotsMap(), layoutGenerator.getLayoutType(),
+					layoutGenerator.getLayoutHidden(), friendlyURLMap, false,
+					null, new ServiceContext());
 			}
 
 			layoutGenerator.generate(layout.getPlid());

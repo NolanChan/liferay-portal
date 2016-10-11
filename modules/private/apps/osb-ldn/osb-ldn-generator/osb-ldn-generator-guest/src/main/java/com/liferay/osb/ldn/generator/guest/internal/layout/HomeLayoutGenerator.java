@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"osb.ldn.layout.description=", "osb.ldn.layout.friendly.url=/home",
-		"osb.ldn.layout.hidden:Boolean=false", "osb.ldn.layout.name=Home",
+		"osb.ldn.layout.hidden:Boolean=true", "osb.ldn.layout.name=Home",
 		"osb.ldn.layout.order:Integer=1", "osb.ldn.layout.title=Home",
 		"osb.ldn.layout.type=" + LayoutConstants.TYPE_PORTLET,
 		"osb.ldn.site.generator.key=" + GuestSiteConstants.GUEST_SITE_KEY
