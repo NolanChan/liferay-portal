@@ -47,7 +47,7 @@ renderResponse.setTitle(headerTitle);
 			<aui:model-context bean="<%= documentationProject %>" model="<%= DocumentationProject.class %>" />
 
 			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
+				<aui:fieldset label="details">
 					<aui:input autoFocus="<%= true %>" name="name" />
 
 					<aui:input name="description" />
@@ -57,20 +57,24 @@ renderResponse.setTitle(headerTitle);
 					</div>
 
 					<c:if test="<%= documentationProject != null %>">
-						<div>
-							<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/serve_documentation_project_icon" var="iconURL">
-								<portlet:param name="documentationProjectId" value="<%= String.valueOf(documentationProject.getDocumentationProjectId()) %>" />
-							</liferay-portlet:resourceURL>
+						<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/serve_documentation_project_icon" var="iconURL">
+							<portlet:param name="documentationProjectId" value="<%= String.valueOf(documentationProject.getDocumentationProjectId()) %>" />
+						</liferay-portlet:resourceURL>
 
-							<div class="icon">
-								<img class="xsmall" src="<%= HtmlUtil.escapeAttribute(iconURL) %>" />
-							</div>
+						<div class="icon">
+							<img class="xsmall" src="<%= HtmlUtil.escapeAttribute(iconURL) %>" />
 						</div>
 					</c:if>
 
 					<aui:input accept="image/*" label="" name="icon" type="file" />
+				</aui:fieldset>
 
-					<aui:select name="status">
+				<aui:fieldset label="categorization">
+					<aui:input name="tags" type="assetTags" />
+				</aui:fieldset>
+
+				<aui:fieldset label="status">
+					<aui:select label="site-status" name="status">
 						<aui:option label="offline" value="<%= DocumentationProjectStatusConstants.STATUS_OFFLINE %>" />
 						<aui:option label="live" value="<%= DocumentationProjectStatusConstants.STATUS_LIVE %>" />
 					</aui:select>

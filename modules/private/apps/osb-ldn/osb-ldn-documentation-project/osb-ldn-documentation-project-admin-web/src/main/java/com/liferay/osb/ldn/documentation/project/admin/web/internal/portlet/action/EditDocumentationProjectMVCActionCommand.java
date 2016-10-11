@@ -18,10 +18,11 @@ import com.liferay.osb.ldn.documentation.project.admin.web.internal.constants.Do
 import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
 
@@ -58,25 +59,22 @@ public class EditDocumentationProjectMVCActionCommand
 		String name = ParamUtil.getString(uploadPortletRequest, "name");
 		String description = ParamUtil.getString(
 			uploadPortletRequest, "description");
-
 		String iconFileName = uploadPortletRequest.getFileName("icon");
-
-		File iconFile = null;
-
-		if (!iconFileName.equals(StringPool.BLANK)) {
-			iconFile = uploadPortletRequest.getFile("icon");
-		}
-
+		File iconFile = uploadPortletRequest.getFile("icon");
 		int status = ParamUtil.getInteger(uploadPortletRequest, "status");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
 
 		if (documentationProjectId > 0) {
 			_documentationProjectService.updateDocumentationProject(
 				documentationProjectId, name, description, iconFileName,
-				iconFile, status);
+				iconFile, status, serviceContext);
 		}
 		else {
 			_documentationProjectService.addDocumentationProject(
-				name, description, iconFileName, iconFile, status);
+				name, description, iconFileName, iconFile, status,
+				serviceContext);
 		}
 	}
 
