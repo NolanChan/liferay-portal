@@ -60,7 +60,7 @@ public class GitHubContributorLocalServiceImpl
 		_gitHubServiceConfiguration =
 			GitHubServiceConfigurationUtil.getGitHubServiceConfiguration();
 
-		if (gitHubContributors.size() == 0) {
+		if (gitHubContributors.isEmpty()) {
 			return getNewGitHubContributors(
 				userId, gitHubRepository.getGitHubRepositoryId(), owner, name,
 				_gitHubServiceConfiguration.apiKey(), count);
