@@ -83,16 +83,22 @@ public class GuestSiteGenerator implements SiteGenerator {
 			}
 			else {
 				Map<Locale, String> nameMap = layout.getNameMap();
-				Map<Locale, String> titleMap = layout.getTitleMap();
-				Map<Locale, String> descriptionMap = layout.getDescriptionMap();
-				Map<Locale, String> friendlyURLMap = new HashMap<>();
 
 				Locale locale = LocaleUtil.getSiteDefault();
 
 				nameMap.put(locale, layoutGenerator.getLayoutName());
+
+				Map<Locale, String> titleMap = layout.getTitleMap();
+
 				titleMap.put(locale, layoutGenerator.getLayoutTitle());
+
+				Map<Locale, String> descriptionMap = layout.getDescriptionMap();
+
 				descriptionMap.put(
 					locale, layoutGenerator.getLayoutDescription());
+
+				Map<Locale, String> friendlyURLMap = new HashMap<>();
+
 				friendlyURLMap.put(
 					locale, layoutGenerator.getLayoutFriendlyURL());
 
