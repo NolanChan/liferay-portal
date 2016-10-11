@@ -100,7 +100,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 		}
 		else {
 			throw new DefinitionFileException.InvalidDefinitionFile(
-				fileName, (inputStream == null));
+				fileName, inputStream == null);
 		}
 
 		return definition;

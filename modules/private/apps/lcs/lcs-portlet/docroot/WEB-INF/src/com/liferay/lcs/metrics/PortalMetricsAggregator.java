@@ -231,7 +231,7 @@ public class PortalMetricsAggregator {
 			}
 
 			if (name.endsWith("/")) {
-				name = name.substring(0, (name.length() - 1));
+				name = name.substring(0, name.length() - 1);
 			}
 
 			performanceMetrics.put("name", name);

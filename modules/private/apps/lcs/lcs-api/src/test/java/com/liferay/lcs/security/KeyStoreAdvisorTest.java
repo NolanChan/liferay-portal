@@ -41,7 +41,7 @@ public class KeyStoreAdvisorTest extends BaseTest {
 
 		while (buildNumber < 200) {
 			keyStore.setEntry(
-				(DEFAULT_ALIAS + buildNumber), getSecretKeyEntry(),
+				DEFAULT_ALIAS + buildNumber, getSecretKeyEntry(),
 				protectionParameter);
 
 			buildNumber = buildNumber + 15;
@@ -57,16 +57,16 @@ public class KeyStoreAdvisorTest extends BaseTest {
 			DEFAULT_ALIAS,
 			keyStoreAdvisor.getKeyAlias(0, DEFAULT_ALIAS, keyStore));
 		Assert.assertEquals(
-			(DEFAULT_ALIAS + 130),
+			DEFAULT_ALIAS + 130,
 			keyStoreAdvisor.getKeyAlias(130, DEFAULT_ALIAS, keyStore));
 		Assert.assertEquals(
-			(DEFAULT_ALIAS + 130),
+			DEFAULT_ALIAS + 130,
 			keyStoreAdvisor.getKeyAlias(140, DEFAULT_ALIAS, keyStore));
 		Assert.assertEquals(
-			(DEFAULT_ALIAS + 145),
+			DEFAULT_ALIAS + 145,
 			keyStoreAdvisor.getKeyAlias(150, DEFAULT_ALIAS, keyStore));
 		Assert.assertEquals(
-			(DEFAULT_ALIAS + 190),
+			DEFAULT_ALIAS + 190,
 			keyStoreAdvisor.getKeyAlias(205, DEFAULT_ALIAS, keyStore));
 	}
 

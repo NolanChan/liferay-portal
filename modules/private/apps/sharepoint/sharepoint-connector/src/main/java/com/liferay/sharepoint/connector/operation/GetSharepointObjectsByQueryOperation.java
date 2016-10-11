@@ -170,7 +170,7 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 			permissionsHexMask.substring(2), 16);
 
 		for (Permission permission : Permission.values()) {
-			long permissionBit = (permisssionsMask & permission.getMask());
+			long permissionBit = permisssionsMask & permission.getMask();
 
 			if (permissionBit != 0) {
 				permissions.add(permission);

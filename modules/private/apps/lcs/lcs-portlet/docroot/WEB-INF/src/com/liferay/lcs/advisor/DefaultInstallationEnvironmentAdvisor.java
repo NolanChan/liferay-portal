@@ -164,7 +164,7 @@ public class DefaultInstallationEnvironmentAdvisor
 				return true;
 			}
 
-			index = javaOpts.indexOf("-javaagent", (index + 10));
+			index = javaOpts.indexOf("-javaagent", index + 10);
 		}
 
 		return false;
