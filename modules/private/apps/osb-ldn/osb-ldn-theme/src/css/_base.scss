@@ -72,12 +72,6 @@ select {
 	@include appearance(none);
 }
 
-#content {
-	li {
-		padding-bottom: 1.5em;
-	}
-}
-
 .longform {
 	p {
 		font: 300 1.25em/2 Source Serif Pro, Arial, Helvetica, sans-serif;

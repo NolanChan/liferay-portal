@@ -8,17 +8,25 @@
  */
 {template .render}
 	<div class="view">
-		<div class="count">
-			{$strings['x-projects']}
+		<div class="content-header">
+			<div class="content-title">
+				{$strings['projects']}
+			</div>
 		</div>
 
-		<ul class="documentation-project">
-			{foreach $documentationProject in $documentationProjects}
-				{call .render_documentation_project}
-					{param documentationProject: $documentationProject /}
-				{/call}
-			{/foreach}
-		</ul>
+		<div class="content-container">
+			<div class="count">
+				{$strings['x-projects']}
+			</div>
+
+			<ul class="documentation-project">
+				{foreach $documentationProject in $documentationProjects}
+					{call .render_documentation_project}
+						{param documentationProject: $documentationProject /}
+					{/call}
+				{/foreach}
+			</ul>
+		</div>
 	</div>
 {/template}
 

@@ -3,47 +3,77 @@
 /* ---------- View ---------- */
 
 .documentation-project-index .view {
-	ul {
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-		width: 100%;
+	margin-top: -64px;
+
+	.content-header {
+		background-color: #F7F9FA;
+		height: 360px;
 	}
 
-	li {
-		display: inline-block;
-		width: 25%;
+	.content-container, .content-title {
+		margin: 0 auto;
+		width: 1200px;
+	}
 
-		a {
-			text-decoration: none;
-		}
-
-		span {
-			display: block;
-		}
-
-		.icon, .icon img {
-			height: 64px;
-			margin: 0 auto;
-			width: 64px;
-		}
-
-		.name {
-			font-size: 16px;
-			font-weight: 600;
-			margin-top: 17px;
-			text-align: center;
-		}
-
-		.description {
-			font-size: 16px;
-			font-weight: 600;
-			margin-top: 17px;
-			text-align: center;
-		}
+	.content-title {
+		font-size: 48px;
+		font-weight: 300;
+		letter-spacing: 3px;
+		line-height: 1.1;
+		padding-top: 150px;
 	}
 
 	.count {
-		margin-bottom: 2em;
+		font-size: 16px;
+		font-weight: 600;
+		letter-spacing: 1.6px;
+		line-height: 1.5;
+		margin: 100px 0;
+	}
+
+	.documentation-project {
+		list-style-type: none;
+		padding: 0;
+
+		li {
+			border: 1px solid #D2DFE8;
+			display: inline-flex;
+			margin: 0 40px 40px 0;
+			padding: 0;
+
+			&:nth-child(4n+4) {
+				margin-right: 0;
+			}
+
+			a {
+				display: block;
+				height: 340px;
+				padding: 32px;
+				text-decoration: none;
+				width: 268px;
+			}
+
+			span {
+				display: block;
+				margin: 27px 0;
+			}
+
+			.icon, .icon img {
+				height: 64px;
+				margin: 0;
+				width: 64px;
+			}
+
+			.name {
+				font-size: 20px;
+				letter-spacing: 1px;
+			}
+
+			.description {
+				font-size: 12px;
+				letter-spacing: .4px;
+				line-height: 1.3;
+			}
+		}
 	}
 }
