@@ -18,7 +18,13 @@ import com.liferay.osb.ldn.generator.guest.site.constants.GuestSiteConstants;
 import com.liferay.osb.ldn.generator.layout.BaseLayoutGenerator;
 import com.liferay.osb.ldn.generator.layout.LayoutGenerator;
 import com.liferay.osb.ldn.generator.layout.LayoutVersion;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,11 +54,40 @@ public class ProjectsLayoutGenerator extends BaseLayoutGenerator {
 
 	@Override
 	protected void doGenerate(long plid) throws Exception {
+		Layout layout = _layoutLocalService.getLayout(plid);
+
+		layout.setTypeSettings(StringPool.BLANK);
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		User user = _userLocalService.getDefaultUser(layout.getCompanyId());
+
+		layoutTypePortlet.setLayoutTemplateId(
+			user.getUserId(), "1_column", false);
+
+		layoutTypePortlet.addPortletId(
+			user.getUserId(), DOCUMENTATION_PROJECT_INDEX_PORTLET_ID,
+			"column-1", 0, false);
+
+		_layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.getPrivateLayout(),
+			layout.getLayoutId(), layout.getTypeSettings());
 	}
+
+	protected static final String DOCUMENTATION_PROJECT_INDEX_PORTLET_ID =
+		"com_liferay_osb_ldn_documentation_project_index_web_" +
+			"DocumentationProjectIndexPortlet";
 
 	@Reference
 	private void setLayoutVersion(LayoutVersion layoutVersion) {
 		this.layoutVersion = layoutVersion;
 	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }
