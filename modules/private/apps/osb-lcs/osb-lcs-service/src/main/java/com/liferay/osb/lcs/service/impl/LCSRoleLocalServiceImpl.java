@@ -230,7 +230,7 @@ public class LCSRoleLocalServiceImpl extends LCSRoleLocalServiceBaseImpl {
 	 * @return     the LCS role in the LCS project, or <code>null</code> if no
 	 *             matching LCS role is found
 	 * @since      LCS 0.1
-	 * @deprecated As of 7.0.0, As of LCS 1.1, replaced by {@link
+	 * @deprecated As of 1.0.0, As of LCS 1.1, replaced by {@link
 	 *             #hasUserLCSAdministratorLCSRole(long, long)}
 	 */
 	@Deprecated
