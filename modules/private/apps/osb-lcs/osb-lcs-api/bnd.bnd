@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Connected Services API
+Bundle-Name: Liferay OSB LCS API
 Bundle-SymbolicName: com.liferay.osb.lcs.api
 Bundle-Version: 1.0.0
 Export-Package:\

@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Connected Services Service
+Bundle-Name: Liferay OSB LCS Service
 Bundle-SymbolicName: com.liferay.osb.lcs.service
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
