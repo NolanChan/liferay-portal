@@ -37,7 +37,7 @@ public class UpgradeReportDefinition extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasTable("Definition")) {
+		if (hasTable("Reports_Definition")) {
 			updateReportDefinitions();
 		}
 	}
@@ -45,12 +45,13 @@ public class UpgradeReportDefinition extends UpgradeProcess {
 	protected void updateReportDefinitions() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				"select companyId, definitionId, reportParameters from " +
-					"Definition")) {
+					"Reports_Definition")) {
 
 			try (PreparedStatement ps2 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,
-						"update Definition set reportParameters = ? where " +
+						"update Reports_Definition set reportParameters = ? " +
+							"where " +
 							"companyId = ? and definitionId = ?");
 				ResultSet rs = ps1.executeQuery()) {
 
