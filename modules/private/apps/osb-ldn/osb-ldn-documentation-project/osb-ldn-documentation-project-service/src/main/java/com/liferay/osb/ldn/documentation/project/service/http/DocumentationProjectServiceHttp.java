@@ -58,7 +58,8 @@ public class DocumentationProjectServiceHttp {
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject addDocumentationProject(
 		HttpPrincipal httpPrincipal, java.lang.String name,
 		java.lang.String description, java.lang.String iconFileName,
-		java.io.File iconFile, int status)
+		java.io.File iconFile, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DocumentationProjectServiceUtil.class,
@@ -66,7 +67,7 @@ public class DocumentationProjectServiceHttp {
 					_addDocumentationProjectParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name,
-					description, iconFileName, iconFile, status);
+					description, iconFileName, iconFile, status, serviceContext);
 
 			Object returnObj = null;
 
@@ -93,7 +94,8 @@ public class DocumentationProjectServiceHttp {
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject updateDocumentationProject(
 		HttpPrincipal httpPrincipal, long documentationProjectId,
 		java.lang.String name, java.lang.String description,
-		java.lang.String iconFileName, java.io.File iconFile, int status)
+		java.lang.String iconFileName, java.io.File iconFile, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DocumentationProjectServiceUtil.class,
@@ -102,7 +104,7 @@ public class DocumentationProjectServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					documentationProjectId, name, description, iconFileName,
-					iconFile, status);
+					iconFile, status, serviceContext);
 
 			Object returnObj = null;
 
@@ -129,10 +131,12 @@ public class DocumentationProjectServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(DocumentationProjectServiceHttp.class);
 	private static final Class<?>[] _addDocumentationProjectParameterTypes0 = new Class[] {
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.io.File.class, int.class
+			java.lang.String.class, java.io.File.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateDocumentationProjectParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.io.File.class, int.class
+			java.lang.String.class, java.io.File.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

@@ -55,11 +55,12 @@ public class DocumentationProjectLocalServiceUtil {
 
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject addDocumentationProject(
 		long userId, java.lang.String name, java.lang.String description,
-		java.lang.String iconFileName, java.io.File iconFile, int status)
+		java.lang.String iconFileName, java.io.File iconFile, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addDocumentationProject(userId, name, description,
-			iconFileName, iconFile, status);
+			iconFileName, iconFile, status, serviceContext);
 	}
 
 	/**
@@ -159,11 +160,12 @@ public class DocumentationProjectLocalServiceUtil {
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject updateDocumentationProject(
 		long documentationProjectId, java.lang.String name,
 		java.lang.String description, java.lang.String iconFileName,
-		java.io.File iconFile, int status)
+		java.io.File iconFile, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateDocumentationProject(documentationProjectId, name,
-			description, iconFileName, iconFile, status);
+			description, iconFileName, iconFile, status, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -335,6 +337,14 @@ public class DocumentationProjectLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void updateAsset(long userId, long documentationProjectId,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.updateAsset(userId, documentationProjectId, assetCategoryIds,
+			assetTagNames);
 	}
 
 	public static DocumentationProjectLocalService getService() {

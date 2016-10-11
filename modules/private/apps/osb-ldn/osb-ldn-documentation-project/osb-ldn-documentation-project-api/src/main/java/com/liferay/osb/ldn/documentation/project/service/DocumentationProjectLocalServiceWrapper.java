@@ -49,10 +49,11 @@ public class DocumentationProjectLocalServiceWrapper
 	@Override
 	public com.liferay.osb.ldn.documentation.project.model.DocumentationProject addDocumentationProject(
 		long userId, java.lang.String name, java.lang.String description,
-		java.lang.String iconFileName, java.io.File iconFile, int status)
+		java.lang.String iconFileName, java.io.File iconFile, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _documentationProjectLocalService.addDocumentationProject(userId,
-			name, description, iconFileName, iconFile, status);
+			name, description, iconFileName, iconFile, status, serviceContext);
 	}
 
 	/**
@@ -161,10 +162,11 @@ public class DocumentationProjectLocalServiceWrapper
 	public com.liferay.osb.ldn.documentation.project.model.DocumentationProject updateDocumentationProject(
 		long documentationProjectId, java.lang.String name,
 		java.lang.String description, java.lang.String iconFileName,
-		java.io.File iconFile, int status)
+		java.io.File iconFile, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _documentationProjectLocalService.updateDocumentationProject(documentationProjectId,
-			name, description, iconFileName, iconFile, status);
+			name, description, iconFileName, iconFile, status, serviceContext);
 	}
 
 	@Override
@@ -354,6 +356,14 @@ public class DocumentationProjectLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _documentationProjectLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void updateAsset(long userId, long documentationProjectId,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_documentationProjectLocalService.updateAsset(userId,
+			documentationProjectId, assetCategoryIds, assetTagNames);
 	}
 
 	@Override

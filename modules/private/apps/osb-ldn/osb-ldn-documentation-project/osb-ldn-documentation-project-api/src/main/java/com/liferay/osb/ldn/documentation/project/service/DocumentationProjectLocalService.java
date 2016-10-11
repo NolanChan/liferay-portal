@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -77,8 +78,8 @@ public interface DocumentationProjectLocalService extends BaseLocalService,
 
 	public DocumentationProject addDocumentationProject(long userId,
 		java.lang.String name, java.lang.String description,
-		java.lang.String iconFileName, File iconFile, int status)
-		throws PortalException;
+		java.lang.String iconFileName, File iconFile, int status,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new documentation project with the primary key. Does not add the documentation project to the database.
@@ -162,7 +163,8 @@ public interface DocumentationProjectLocalService extends BaseLocalService,
 	public DocumentationProject updateDocumentationProject(
 		long documentationProjectId, java.lang.String name,
 		java.lang.String description, java.lang.String iconFileName,
-		File iconFile, int status) throws PortalException;
+		File iconFile, int status, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -300,4 +302,8 @@ public interface DocumentationProjectLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void updateAsset(long userId, long documentationProjectId,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames)
+		throws PortalException;
 }

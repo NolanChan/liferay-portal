@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -55,12 +56,14 @@ public interface DocumentationProjectService extends BaseService {
 	 */
 	public DocumentationProject addDocumentationProject(java.lang.String name,
 		java.lang.String description, java.lang.String iconFileName,
-		File iconFile, int status) throws PortalException;
+		File iconFile, int status, ServiceContext serviceContext)
+		throws PortalException;
 
 	public DocumentationProject updateDocumentationProject(
 		long documentationProjectId, java.lang.String name,
 		java.lang.String description, java.lang.String iconFileName,
-		File iconFile, int status) throws PortalException;
+		File iconFile, int status, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
