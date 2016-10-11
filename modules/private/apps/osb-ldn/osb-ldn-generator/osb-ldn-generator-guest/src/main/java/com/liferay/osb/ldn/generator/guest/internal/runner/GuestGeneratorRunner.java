@@ -49,9 +49,6 @@ public class GuestGeneratorRunner {
 	@Reference(target = "(osb.ldn.layout.friendly.url=/blogs)")
 	private LayoutGenerator _blogLayoutGenerator;
 
-	@Reference(target = "(osb.ldn.layout.friendly.url=/community)")
-	private LayoutGenerator _communityLayoutGenerator;
-
 	@Reference(target = "(osb.ldn.layout.friendly.url=/forums)")
 	private LayoutGenerator _forumsLayoutGenerator;
 

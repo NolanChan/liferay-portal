@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"osb.ldn.layout.description=", "osb.ldn.layout.friendly.url=/blogs",
 		"osb.ldn.layout.hidden:Boolean=false", "osb.ldn.layout.name=Blogs",
-		"osb.ldn.layout.order:Integer=5", "osb.ldn.layout.title=Blogs",
+		"osb.ldn.layout.order:Integer=4", "osb.ldn.layout.title=Blogs",
 		"osb.ldn.layout.type=" + LayoutConstants.TYPE_PORTLET,
 		"osb.ldn.site.generator.key=" + GuestSiteConstants.GUEST_SITE_KEY
 	},
