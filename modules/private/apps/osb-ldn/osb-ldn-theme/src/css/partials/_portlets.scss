@@ -1,7 +1,12 @@
 @media only screen and (min-width: 768px) {
 	.portlet > .portlet-topper {
-		bottom: -66px;
+		bottom: -33px;
+		left: auto;
 		top: auto;
+	}
+
+	.portlet:hover > .portlet-topper {
+		@include transform(translateY(0));
 	}
 }
 
