@@ -1,0 +1,3 @@
+Bundle-Name: Liferay OSB LDN Generator Sample Data
+Bundle-SymbolicName: com.liferay.osb.ldn.generator.sample.data
+Bundle-Version: 1.0.0
