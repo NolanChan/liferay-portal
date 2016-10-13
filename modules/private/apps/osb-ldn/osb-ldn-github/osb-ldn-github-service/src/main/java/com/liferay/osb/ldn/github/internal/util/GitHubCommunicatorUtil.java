@@ -115,7 +115,7 @@ public class GitHubCommunicatorUtil {
 
 		String apiCallURL =
 			_API_CALL_PREFIX + owner + StringPool.SLASH + name +
-			"/contributors";
+				"/contributors";
 
 		apiCallURL = HttpUtil.addParameter(apiCallURL, "access_token", apiKey);
 

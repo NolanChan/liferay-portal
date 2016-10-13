@@ -81,7 +81,7 @@ public abstract class BaseServerMetricsTask implements ServerMetricsTask {
 			Map<String, Map<String, Object>> currentThreadsMetrics =
 				getCurrentThreadsMetrics();
 
-			if (currentThreadsMetrics.size() == 0) {
+			if (currentThreadsMetrics.isEmpty()) {
 				_currentThreadsMetricsEnabled = false;
 
 				if (_log.isWarnEnabled()) {
@@ -116,7 +116,7 @@ public abstract class BaseServerMetricsTask implements ServerMetricsTask {
 			Map<String, Map<String, Object>> jdbcConnectionPoolsMetrics =
 				getJDBCConnectionPoolsMetrics();
 
-			if (jdbcConnectionPoolsMetrics.size() == 0) {
+			if (jdbcConnectionPoolsMetrics.isEmpty()) {
 				_jdbcConnectionPoolsMetricsEnabled = false;
 
 				if (_log.isWarnEnabled()) {

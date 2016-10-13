@@ -56,7 +56,7 @@ Set<LCSAlert> lcsClusterEntryTokenAlerts = LCSUtil.getLCSClusterEntryTokenAlerts
 %>
 
 <c:choose>
-	<c:when test="<%= ((lcsClusterNode == null) || (lcsClusterEntry == null)) %>">
+	<c:when test="<%= (lcsClusterNode == null) || (lcsClusterEntry == null) %>">
 		<c:choose>
 			<c:when test='<%= SessionErrors.contains(liferayPortletRequest, "generalPluginAccess") %>'>
 				<div class="alert alert-warning lcs-alert">

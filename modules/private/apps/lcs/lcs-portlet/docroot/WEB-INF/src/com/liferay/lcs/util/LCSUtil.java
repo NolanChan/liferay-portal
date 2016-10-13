@@ -828,7 +828,7 @@ public class LCSUtil {
 
 		String layoutFullURL = getLCSPortalURL() + friendlyURL;
 
-		if (publicRenderParameters.size() == 0) {
+		if (publicRenderParameters.isEmpty()) {
 			return layoutFullURL;
 		}
 
