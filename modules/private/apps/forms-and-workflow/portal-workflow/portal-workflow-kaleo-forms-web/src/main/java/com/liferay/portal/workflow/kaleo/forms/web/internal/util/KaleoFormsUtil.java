@@ -51,7 +51,7 @@ import javax.portlet.PortletSession;
 public class KaleoFormsUtil {
 
 	/**
-	 * Removes all attributes from this portlet session.
+	 * Removes all attributes from the portlet session.
 	 *
 	 * @param portletSession the session obtained from the request
 	 */
@@ -66,14 +66,14 @@ public class KaleoFormsUtil {
 	}
 
 	/**
-	 * Returns a new instance of kaleo task form pairs.
+	 * Returns a new instance of the Kaleo task form pair.
 	 *
-	 * @param  kaleoProcessId the primary key of the kaleo process
+	 * @param  kaleoProcessId the primary key of the Kaleo process
 	 * @param  ddmStructureId the primary key of the record set's DDM structure
 	 * @param  workflowDefinition the workflow definition
 	 * @param  initialStateName the initial workflow task name
 	 * @param  portletSession the portlet session obtained from the request
-	 * @return an instance of kaleo task form pairs
+	 * @return a new instance of the Kaleo task form pair
 	 * @throws Exception if an exception occurred
 	 */
 	public static KaleoTaskFormPair getInitialStateKaleoTaskFormPair(
@@ -139,11 +139,11 @@ public class KaleoFormsUtil {
 	}
 
 	/**
-	 * Returns the kaleo process's DDM structure ID.
+	 * Returns the Kaleo process's DDM structure ID.
 	 *
-	 * @param  kaleoProcess the kaleo process
+	 * @param  kaleoProcess the Kaleo process
 	 * @param  portletSession the portlet session obtained from the request
-	 * @return the structure ID
+	 * @return the Kaleo process's DDM structure ID
 	 * @throws Exception if an exception occurred
 	 */
 	public static long getKaleoProcessDDMStructureId(
@@ -167,11 +167,11 @@ public class KaleoFormsUtil {
 	}
 
 	/**
-	 * Return the kaleo process's structure ID.
+	 * Returns the Kaleo process's DDM structure ID associated with the Kaleo process ID.
 	 *
-	 * @param  kaleoProcessId the primary key of the kaleo process
+	 * @param  kaleoProcessId the primary key of the Kaleo process
 	 * @param  portletSession the portlet session obtained from the request
-	 * @return the structure ID
+	 * @return the Kaleo process's DDM structure ID
 	 * @throws Exception if an exception occurred
 	 */
 	public static long getKaleoProcessDDMStructureId(
@@ -189,11 +189,11 @@ public class KaleoFormsUtil {
 	}
 
 	/**
-	 * Returns the kaleo process's description.
+	 * Returns the Kaleo process's description.
 	 *
-	 * @param  kaleoProcess the kaleo process
+	 * @param  kaleoProcess the Kaleo process
 	 * @param  portletSession the portlet session obtained from the request
-	 * @return the description
+	 * @return the Kaleo process's description
 	 * @throws Exception if an exception occurred
 	 */
 	public static String getKaleoProcessDescription(
@@ -233,11 +233,11 @@ public class KaleoFormsUtil {
 	}
 
 	/**
-	 * Returns the kaleo process's name.
+	 * Returns the Kaleo process's name.
 	 *
-	 * @param  kaleoProcess the kaleo process
+	 * @param  kaleoProcess the Kaleo process
 	 * @param  portletSession the portlet session obtained from the request
-	 * @return the name
+	 * @return the Kaleo process's name
 	 * @throws Exception if an exception occurred
 	 */
 	public static String getKaleoProcessName(
@@ -275,12 +275,12 @@ public class KaleoFormsUtil {
 	}
 
 	/**
-	 * Returns the kaleo process's name.
+	 * Returns the Kaleo process's name associated with the locale.
 	 *
 	 * @param  kaleoProcess the kaleo process
 	 * @param  portletSession the portlet session obtained from the request
 	 * @param  locale the locale of the returned name
-	 * @return the name
+	 * @return the Kaleo process's name
 	 * @throws Exception if an exception occurred
 	 */
 	public static String getKaleoProcessName(
@@ -308,14 +308,14 @@ public class KaleoFormsUtil {
 	}
 
 	/**
-	 * Returns the kaleo task form pairs.
+	 * Returns the Kaleo task form pairs.
 	 *
 	 * @param  companyId the company ID
-	 * @param  kaleoProcessId the primary key of the kaleo process
+	 * @param  kaleoProcessId the primary key of the Kaleo process
 	 * @param  ddmStructureId the primary key of the record set's DDM structure
 	 * @param  workflowDefinition the workflow definition
 	 * @param  portletSession the portlet session obtained from the request
-	 * @return the kaleo task form pairs
+	 * @return the Kaleo task form pairs
 	 * @throws Exception if an exception occurred
 	 */
 	public static KaleoTaskFormPairs getKaleoTaskFormPairs(
@@ -340,11 +340,11 @@ public class KaleoFormsUtil {
 	}
 
 	/**
-	 * Returns the kaleo process's workflow definition.
+	 * Returns the Kaleo process's workflow definition.
 	 *
-	 * @param  kaleoProcess the kaleo process
+	 * @param  kaleoProcess the Kaleo process
 	 * @param  portletSession the portlet session obtained from the request
-	 * @return the workflow definition
+	 * @return the Kaleo process's workflow definition
 	 */
 	public static String getWorkflowDefinition(
 		KaleoProcess kaleoProcess, PortletSession portletSession) {
@@ -367,8 +367,8 @@ public class KaleoFormsUtil {
 	 * Returns the workflow definition.
 	 *
 	 * @param  companyId the company ID
-	 * @param  name the name of the workflow definition
-	 * @param  version the version of the workflow definition
+	 * @param  name the workflow definition's name
+	 * @param  version the workflow definition's version
 	 * @return the workflow definition
 	 */
 	public static WorkflowDefinition getWorkflowDefinition(
@@ -387,13 +387,13 @@ public class KaleoFormsUtil {
 	}
 
 	/**
-	 * Determines if the workflow definition is active.
+	 * Returns <code>true</code> if the workflow definition is active.
 	 *
 	 * @param  companyId the company ID
-	 * @param  name the name of the workflow definition
-	 * @param  version the version of the workflow definition
+	 * @param  name the workflow definition's name
+	 * @param  version the workflow definition's version
 	 * @return <code>true</code> if the workflow definition is active;
-	 *         <code>false</code> otherwise.
+	 *         <code>false</code> otherwise
 	 */
 	public static boolean isWorkflowDefinitionActive(
 		long companyId, String name, int version) {
