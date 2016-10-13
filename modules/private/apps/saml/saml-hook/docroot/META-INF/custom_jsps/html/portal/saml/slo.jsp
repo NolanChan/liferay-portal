@@ -193,7 +193,7 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 							);
 
 							if (logoutPending) {
-								instance.checkStatus();
+								setTimeout(A.bind('checkStatus', instance), 1000);
 							}
 							else {
 								instance._completeSignOut.show();
