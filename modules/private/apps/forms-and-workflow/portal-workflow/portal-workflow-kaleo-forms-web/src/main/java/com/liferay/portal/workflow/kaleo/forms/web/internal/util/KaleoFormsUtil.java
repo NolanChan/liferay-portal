@@ -167,7 +167,8 @@ public class KaleoFormsUtil {
 	}
 
 	/**
-	 * Returns the Kaleo process's DDM structure ID associated with the Kaleo process ID.
+	 * Returns the Kaleo process's DDM structure ID associated with the Kaleo
+	 * process ID.
 	 *
 	 * @param  kaleoProcessId the primary key of the Kaleo process
 	 * @param  portletSession the portlet session obtained from the request
