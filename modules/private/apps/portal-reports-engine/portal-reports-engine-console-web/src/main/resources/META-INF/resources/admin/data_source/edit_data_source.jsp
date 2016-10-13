@@ -81,14 +81,14 @@ String name = BeanParamUtil.getString(source, request, "name");
 	</aui:fieldset>
 </aui:form>
 
-<aui:script use="aui-dialog,aui-io">
+<aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace />testDatabaseConnection',
 		function() {
 			var A = AUI();
 
-			var url = "<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/admin/data_source/test_database_connection.jsp" /></portlet:renderURL>";
+			var url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/admin/data_source/test_database_connection.jsp" /></portlet:renderURL>';
 
 			var data = {};
 
@@ -102,7 +102,8 @@ String name = BeanParamUtil.getString(source, request, "name");
 			data.<portlet:namespace />driverPassword = document.<portlet:namespace />fm['<portlet:namespace />driverPassword'].value;
 
 			if (url != null) {
-				var dbConnectionModal = Liferay.Util.Window.getWindow({
+				var databaseConnectionModal = Liferay.Util.Window.getWindow(
+					{
 						dialog: {
 							centered: true,
 							destroyOnHide: true,
@@ -112,35 +113,36 @@ String name = BeanParamUtil.getString(source, request, "name");
 							resizable: false,
 							toolbars: {
 								footer: [
-										{
-											cssClass: 'btn-lg btn-primary',
-											label: Liferay.Language.get('close'),
-											on: {
-												click: function() {
-													dbConnectionModal.hide();
-													}
+									{
+										cssClass: 'btn-lg btn-primary',
+										label: '<liferay-ui:message key="close" />',
+										on: {
+											click: function() {
+												databaseConnectionModal.hide();
 											}
 										}
-									],
+									}
+								],
 								header: [
-										{
-											cssClass: 'close',
-											discardDefaultButtonCssClasses: true,
-											labelHTML: Liferay.Util.getLexiconIconTpl('times'),
-											on: {
-												click: function() {
-													dbConnectionModal.hide();
-													}
+									{
+										cssClass: 'close',
+										discardDefaultButtonCssClasses: true,
+										labelHTML: Liferay.Util.getLexiconIconTpl('times'),
+										on: {
+											click: function() {
+												databaseConnectionModal.hide();
 											}
 										}
-									]
+									}
+								]
 							},
 							width: 600
 						},
-						title: Liferay.Language.get('source')
-				});
+						title: '<liferay-ui:message key="source" />'
+					}
+				);
 
-				dbConnectionModal.render();
+				databaseConnectionModal.render();
 
 				A.io.request(
 					url,
@@ -149,14 +151,15 @@ String name = BeanParamUtil.getString(source, request, "name");
 							success: function() {
 								var response = this.get('responseData');
 
-								dbConnectionModal.bodyNode.append(response);
-								dbConnectionModal.show();
+								databaseConnectionModal.bodyNode.append(response);
+								databaseConnectionModal.show();
 							}
 						},
 						data: data
 					}
 				);
 			}
-		}
+		},
+		['aui-dialog', 'aui-io']
 	);
 </aui:script>
