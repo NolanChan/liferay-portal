@@ -3,7 +3,7 @@ dependencies {
 	testCompile group: "org.opensaml", name: "opensaml", version: "2.6.0"
 	testCompile group: "org.opensaml", name: "openws", version: "1.5.0"
 	testCompile group: "org.opensaml", name: "xmltooling", version: "1.4.0"
-	testCompile project(':private:apps:saml:saml-api')
-	testCompile project(':private:apps:saml:saml-impl')
-	testCompile project(':private:apps:saml:saml-persistence-api')
+	testCompile project(":private:apps:saml:saml-api")
+	testCompile project(":private:apps:saml:saml-impl")
+	testCompile project(":private:apps:saml:saml-persistence-api")
 }
