@@ -186,7 +186,7 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 
 							this.get('responseData.samlSloRequestInfos').forEach(
 								function(item, index, collection) {
-									logoutPending = item.status < 2;
+									logoutPending |= item.status < 2;
 
 									instance.updateStatus(item);
 								}
