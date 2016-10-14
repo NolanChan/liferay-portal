@@ -70,8 +70,9 @@ public class ReportsPortletMessagingConfigurator {
 	@Deactivate
 	protected void deactivate() {
 		if (!_destinationServiceRegistrations.isEmpty()) {
-			for (ServiceRegistration<Destination> destinationServiceRegistration
-					: _destinationServiceRegistrations) {
+			for (ServiceRegistration<Destination>
+					destinationServiceRegistration :
+						_destinationServiceRegistrations) {
 
 				Destination destination = _bundleContext.getService(
 					destinationServiceRegistration.getReference());
