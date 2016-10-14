@@ -14,6 +14,8 @@
 
 package com.liferay.osb.ldn.documentation.project.index.web.internal.portlet.action;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.osb.ldn.documentation.project.index.web.internal.constants.DocumentationProjectPortletKeys;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalService;
@@ -30,9 +32,12 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,7 +45,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -87,6 +94,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		template.put("documentationProjects", documentationProjectsList);
 
+		template.put("defaultTags", getTagsList(renderRequest, renderResponse));
+
 		Map<String, Object> strings = getStringsMap(
 			themeDisplay.getLanguageId(), documentationProjectsList.size());
 
@@ -101,6 +110,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		List<Map<String, Object>> documentationProjectList = new LinkedList<>();
 
+		String allTag = renderRequest.getParameter("allTag");
+
+		String selectedTag = renderRequest.getParameter("tag");
+
 		List<DocumentationProject> documentationProjects =
 			_documentationProjectLocalService.getDocumentationProjects(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -112,6 +125,26 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				documentationProjects) {
 
 			Map<String, Object> documentationProjectMap = new HashMap<>(3);
+
+			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+				DocumentationProject.class.getName(),
+				documentationProject.getDocumentationProjectId());
+
+			String[] tagNames = assetEntry.getTagNames();
+
+			List<String> tagNamesList = Arrays.asList(tagNames);
+
+			if (tagNamesList.size() > _NUMBER_OF_TAGS) {
+				tagNamesList = tagNamesList.subList(0, _NUMBER_OF_TAGS);
+			}
+
+			if (Validator.isNull(allTag) && Validator.isNotNull(selectedTag) &&
+				!tagNamesList.contains(selectedTag)) {
+
+				continue;
+			}
+
+			documentationProjectMap.put("assetTagNames", tagNamesList);
 
 			documentationProjectMap.put(
 				"description", documentationProject.getDescription());
@@ -166,6 +199,69 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		return strings;
 	}
+
+	protected List<Map<String, Object>> getTagsList(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		List<Map<String, Object>> tagsList = new LinkedList<>();
+
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
+
+		String selectedTag = renderRequest.getParameter("tag");
+
+		if (Validator.isNotNull(selectedTag)) {
+			selectedTag = selectedTag.trim();
+		}
+
+		String isAllTag = renderRequest.getParameter("allTag");
+
+		String defaultTags = portletPreferences.getValue("defaultTags", "");
+
+		String[] defaultTagsSplit = defaultTags.split(StringPool.COMMA);
+
+		Map<String, Object> allTag = new HashMap<>();
+
+		PortletURL url = renderResponse.createRenderURL();
+
+		url.setParameter("tag", "ALL");
+		url.setParameter("allTag", "true");
+
+		allTag.put("tag", "ALL");
+		allTag.put("url", url.toString());
+
+		if (Validator.isNull(selectedTag) || Validator.isNotNull(isAllTag)) {
+			allTag.put("selected", true);
+		}
+
+		tagsList.add(allTag);
+
+		String removeTag = null;
+
+		url.setParameter("allTag", removeTag);
+
+		for (String tag : defaultTagsSplit) {
+			tag = tag.trim();
+
+			Map<String, Object> tagObjectMap = new HashMap<>();
+
+			url.setParameter("tag", tag);
+
+			if (Validator.isNull(isAllTag) && tag.equals(selectedTag)) {
+				tagObjectMap.put("selected", true);
+			}
+
+			tagObjectMap.put("tag", tag);
+			tagObjectMap.put("url", url.toString());
+			tagsList.add(tagObjectMap);
+		}
+
+		return tagsList;
+	}
+
+	private static final int _NUMBER_OF_TAGS = 3;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private DocumentationProjectLocalService _documentationProjectLocalService;

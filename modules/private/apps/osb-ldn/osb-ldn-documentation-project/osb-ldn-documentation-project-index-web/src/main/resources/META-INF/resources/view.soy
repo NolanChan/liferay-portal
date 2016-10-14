@@ -3,6 +3,7 @@
 /**
  * Renders a list of documentation projects.
  *
+ * @param defaultTags
  * @param documentationProjects
  * @param strings
  */
@@ -11,6 +12,15 @@
 		<div class="content-header">
 			<div class="content-title">
 				{$strings['projects']}
+			</div>
+			<div class="tag-container">
+				<ul class="default-tags">
+					{foreach $tag in $defaultTags}
+						<li {if $tag.selected }class="active"{/if} >
+							<a href="{$tag.url}" >{$tag.tag} </a>
+						</li>
+					{/foreach}
+				</ul>
 			</div>
 		</div>
 
@@ -41,6 +51,11 @@
 			<span class="icon"><img src="{$documentationProject.iconURL}" /></span>
 			<span class="name">{$documentationProject.name}</span>
 			<span class="description">{$documentationProject.description}</span>
+			<span class="documentation-project-tags">
+				{foreach $tagName in $documentationProject.assetTagNames}
+					#{$tagName}
+				{/foreach}
+			</span>
 		</a>
 	</li>
 {/template}
