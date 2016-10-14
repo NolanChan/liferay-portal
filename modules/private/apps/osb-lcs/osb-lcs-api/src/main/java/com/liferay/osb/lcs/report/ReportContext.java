@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.report;
+package com.liferay.osb.lcs.report;
 
 import com.liferay.lcs.util.LCSConstants;
 
@@ -24,6 +24,7 @@ import java.util.Locale;
 
 /**
  * @author Ivica Cardic
+ * @author Igor Beslic
  */
 public class ReportContext {
 

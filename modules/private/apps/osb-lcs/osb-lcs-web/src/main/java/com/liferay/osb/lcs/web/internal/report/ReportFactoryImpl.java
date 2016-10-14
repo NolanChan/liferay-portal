@@ -14,6 +14,8 @@
 
 package com.liferay.osb.lcs.web.internal.report;
 
+import com.liferay.osb.lcs.report.Report;
+
 import java.util.HashMap;
 import java.util.Map;
 

@@ -33,6 +33,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.osb.lcs.advisor.CompanyAdvisor;
 import com.liferay.osb.lcs.model.LCSClusterNodeUptime;
+import com.liferay.osb.lcs.report.ReportContext;
 import com.liferay.osb.lcs.service.LCSClusterNodeUptimeService;
 import com.liferay.osb.lcs.service.LCSProjectService;
 import com.liferay.portal.kernel.language.LanguageUtil;

@@ -14,6 +14,7 @@
 
 package com.liferay.osb.lcs.web.internal.report;
 
+import com.liferay.osb.lcs.report.Report;
 import com.liferay.portal.kernel.util.StringPool;
 
 /**

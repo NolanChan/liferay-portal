@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.report;
+package com.liferay.osb.lcs.report;
 
 import java.io.ByteArrayOutputStream;
 
