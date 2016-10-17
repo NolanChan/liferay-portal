@@ -18,4 +18,4 @@ test-coverage/
 test-results/
 tmp/
 
-!/saml-portlet/docroot/WEB-INF/lib
+!/saml-hook/docroot/WEB-INF/lib
