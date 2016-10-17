@@ -62,9 +62,6 @@ public interface PortletPropsKeys {
 	public static final String DIGITAL_SIGNATURE_SIGNING_ALGORITHM =
 		"digital.signature.signing.algorithm";
 
-	public static final String JIRA_SUPPORT_PROJECT_URL =
-		"jira.support.project.url";
-
 	public static final String KEY_GENERATOR_KEY_ALIAS =
 		"key.generator.key.alias";
 
@@ -84,6 +81,8 @@ public interface PortletPropsKeys {
 
 	public static final String LRDCOM_SALES_EMAIL_ADDRESS =
 		"lrdcom.sales.email.address";
+
+	public static final String LRDCOM_SUPPORT_URL = "lrdcom.support.url";
 
 	public static final String LRDCOM_USER_DOCUMENTATION_URL =
 		"lrdcom.user.documentation.url";

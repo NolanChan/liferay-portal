@@ -74,9 +74,6 @@ public class PortletPropsValues {
 	public static final String DIGITAL_SIGNATURE_SIGNING_ALGORITHM =
 		PortletProps.get(PortletPropsKeys.DIGITAL_SIGNATURE_SIGNING_ALGORITHM);
 
-	public static final String JIRA_SUPPORT_PROJECT_URL = PortletProps.get(
-		PortletPropsKeys.JIRA_SUPPORT_PROJECT_URL);
-
 	public static final String KEY_GENERATOR_KEY_ALIAS = PortletProps.get(
 		PortletPropsKeys.KEY_GENERATOR_KEY_ALIAS);
 
@@ -97,6 +94,9 @@ public class PortletPropsValues {
 
 	public static final String LRDCOM_SALES_EMAIL_ADDRESS = PortletProps.get(
 		PortletPropsKeys.LRDCOM_SALES_EMAIL_ADDRESS);
+
+	public static final String LRDCOM_SUPPORT_URL = PortletProps.get(
+		PortletPropsKeys.LRDCOM_SUPPORT_URL);
 
 	public static final String LRDCOM_USER_DOCUMENTATION_URL = PortletProps.get(
 		PortletPropsKeys.LRDCOM_USER_DOCUMENTATION_URL);
