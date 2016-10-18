@@ -16,20 +16,20 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
+<div class="configuration">
+	<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationURL" />
 
-<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
+	<aui:form action="<%= configurationURL %>" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-<aui:form action="<%= configurationActionURL %>" cssClass="documentation-project-index-config" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+		<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="redirect" />
 
-	<aui:input name="redirect" type="hidden"
-		value="<%= configurationRenderURL %>"
-	/>
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-	<aui:input name="predefinedFilterTags" value="<%= predefinedFilterTags %>" />
+		<aui:input name="predefinedFilterTags" value="<%= predefinedFilterTags %>" />
 
-	<aui:button-row>
-		<aui:button type="submit"></aui:button>
-	</aui:button-row>
-</aui:form>
+		<aui:button-row>
+			<aui:button type="submit" />
+		</aui:button-row>
+	</aui:form>
+</div>

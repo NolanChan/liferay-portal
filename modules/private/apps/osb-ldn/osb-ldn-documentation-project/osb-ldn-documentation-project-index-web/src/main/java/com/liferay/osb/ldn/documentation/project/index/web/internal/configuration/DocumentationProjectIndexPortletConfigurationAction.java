@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 @Component(
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
-		"javax.portlet.name=" +
-			DocumentationProjectPortletKeys.DOCUMENTATION_PROJECT_INDEX
+		"javax.portlet.name=" + DocumentationProjectPortletKeys.DOCUMENTATION_PROJECT_INDEX
 	},
 	service = ConfigurationAction.class
 )

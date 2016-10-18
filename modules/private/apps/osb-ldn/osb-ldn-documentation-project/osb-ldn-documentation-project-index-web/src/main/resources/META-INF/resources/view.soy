@@ -13,11 +13,12 @@
 			<div class="content-title">
 				{$strings['projects']}
 			</div>
+
 			<div class="tag-container">
 				<ul class="predefined-fitler-tags">
 					{foreach $tag in $predefinedFilterTags}
-						<li {if $tag.selected }class="active"{/if} >
-							<a href="{$tag.url}" >{$tag.tag} </a>
+						<li {if $tag.selected}class="selected"{/if}>
+							<a href="{$tag.url}">{$tag.tagName}</a>
 						</li>
 					{/foreach}
 				</ul>

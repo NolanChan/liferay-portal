@@ -21,11 +21,12 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.portal.kernel.util.Constants" %>
+<%@ page import="com.liferay.portal.kernel.util.StringPool" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-	String predefinedFilterTags = portletPreferences.getValue("predefinedFilterTags", "");
+String predefinedFilterTags = portletPreferences.getValue("predefinedFilterTags", StringPool.BLANK);
 %>

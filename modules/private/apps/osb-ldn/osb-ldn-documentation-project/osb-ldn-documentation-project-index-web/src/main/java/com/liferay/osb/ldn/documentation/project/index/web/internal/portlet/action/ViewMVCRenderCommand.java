@@ -61,8 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" +
-			DocumentationProjectPortletKeys.DOCUMENTATION_PROJECT_INDEX,
+		"javax.portlet.name=" + DocumentationProjectPortletKeys.DOCUMENTATION_PROJECT_INDEX,
 		"mvc.command.name=/", "mvc.command.name=/view"
 	},
 	service = MVCRenderCommand.class
@@ -96,7 +95,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		template.put("documentationProjects", documentationProjectsList);
 
 		template.put(
-			"predefinedFilterTags", getTagsList(renderRequest, renderResponse));
+			"predefinedFilterTags",
+			getPredefinedFilterTagsList(renderRequest, renderResponse));
 
 		Map<String, Object> strings = getStringsMap(
 			themeDisplay.getLanguageId(), documentationProjectsList.size());
@@ -110,11 +110,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		List<Map<String, Object>> documentationProjectList = new LinkedList<>();
-
 		String allTag = renderRequest.getParameter("allTag");
-
 		String selectedTag = renderRequest.getParameter("tag");
+
+		List<Map<String, Object>> documentationProjectList = new LinkedList<>();
 
 		List<DocumentationProject> documentationProjects =
 			_documentationProjectLocalService.getDocumentationProjects(
@@ -126,7 +125,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		for (DocumentationProject documentationProject :
 				documentationProjects) {
 
-			Map<String, Object> documentationProjectMap = new HashMap<>(3);
+			Map<String, Object> documentationProjectMap = new HashMap<>(5);
 
 			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 				DocumentationProject.class.getName(),
@@ -202,7 +201,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return strings;
 	}
 
-	protected List<Map<String, Object>> getTagsList(
+	protected List<Map<String, Object>> getPredefinedFilterTagsList(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		List<Map<String, Object>> tagsList = new LinkedList<>();
@@ -254,8 +253,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				tagObjectMap.put("selected", true);
 			}
 
-			tagObjectMap.put("tag", tag);
+			tagObjectMap.put("tagName", tag);
 			tagObjectMap.put("url", url.toString());
+
 			tagsList.add(tagObjectMap);
 		}
 

@@ -1,10 +1,12 @@
 /* ---------- Pages ---------- */
 
-/* ---------- View ---------- */
+/* ---------- Configuration ---------- */
 
-.documentation-project-index-config {
+.documentation-project-index .configuration {
 	 padding: 20px;
 }
+
+/* ---------- View ---------- */
 
 .documentation-project-index .view {
 	margin-top: -64px;
@@ -39,16 +41,16 @@
 		li {
 			display: inline-block;
 			margin-right: 30px;
-		 	margin-bottom: 6px;
+			margin-bottom: 6px;
 
-		 &.active{
-			 border-bottom: 6px solid rgba(0, 0, 0, 0.1);
-			 margin-bottom: 0px;
-		 }
+			&.active{
+				border-bottom: 6px solid rgba(0, 0, 0, 0.1);
+				margin-bottom: 0;
+			}
 		}
 
-		margin-bottom: 0px;
-	 	padding-left: 0px;
+		margin-bottom: 0;
+		padding-left: 0;
 		list-style-type: none;
 	}
 
@@ -58,7 +60,6 @@
 
 		.documentation-project-tags {
 			color: #8693A1;
-			font-family: SourceSansPro;
 			font-size: 14px;
 			font-stretch: normal;
 			font-style: normal;
