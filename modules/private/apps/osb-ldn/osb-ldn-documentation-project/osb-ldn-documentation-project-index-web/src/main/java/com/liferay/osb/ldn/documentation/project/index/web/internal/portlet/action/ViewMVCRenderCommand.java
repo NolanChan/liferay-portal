@@ -98,6 +98,19 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			"predefinedFilterTags",
 			getPredefinedFilterTagsList(renderRequest, renderResponse));
 
+		PortletURL viewUrl = renderResponse.createRenderURL();
+
+		template.put("viewURL", viewUrl.toString());
+
+		String selectedTag = renderRequest.getParameter("tag");
+
+		if (Validator.isNull(selectedTag)) {
+			template.put("allSelected", "true");
+		}
+		else {
+			template.put("allSelected", "false");
+		}
+
 		Map<String, Object> strings = getStringsMap(
 			themeDisplay.getLanguageId(), documentationProjectsList.size());
 
@@ -110,7 +123,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		String allTag = renderRequest.getParameter("allTag");
 		String selectedTag = renderRequest.getParameter("tag");
 
 		List<Map<String, Object>> documentationProjectList = new LinkedList<>();
@@ -139,7 +151,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				tagNamesList = tagNamesList.subList(0, _NUMBER_OF_TAGS);
 			}
 
-			if (Validator.isNull(allTag) && Validator.isNotNull(selectedTag) &&
+			if (Validator.isNotNull(selectedTag) &&
 				!tagNamesList.contains(selectedTag)) {
 
 				continue;
@@ -177,6 +189,47 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return documentationProjectList;
 	}
 
+	protected List<Map<String, Object>> getPredefinedFilterTagsList(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		List<Map<String, Object>> tagsList = new LinkedList<>();
+
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
+
+		String selectedTag = renderRequest.getParameter("tag");
+
+		if (Validator.isNotNull(selectedTag)) {
+			selectedTag = selectedTag.trim();
+		}
+
+		String predefinedFilterTags = portletPreferences.getValue(
+			"predefinedFilterTags", StringPool.BLANK);
+
+		String[] predefinedFilterTagsSplit = predefinedFilterTags.split(
+			StringPool.COMMA);
+
+		PortletURL url = renderResponse.createRenderURL();
+
+		for (String tag : predefinedFilterTagsSplit) {
+			tag = tag.trim();
+
+			Map<String, Object> tagObjectMap = new HashMap<>();
+
+			url.setParameter("tag", tag);
+
+			if (Validator.isNotNull(selectedTag) && tag.equals(selectedTag)) {
+				tagObjectMap.put("selected", true);
+			}
+
+			tagObjectMap.put("tagName", tag);
+			tagObjectMap.put("url", url.toString());
+
+			tagsList.add(tagObjectMap);
+		}
+
+		return tagsList;
+	}
+
 	protected Map<String, Object> getStringsMap(
 		String languageId, int documentationProjectCount) {
 
@@ -185,6 +238,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(languageId);
 
+		strings.put("all", LanguageUtil.get(resourceBundle, "all"));
 		strings.put("projects", LanguageUtil.get(resourceBundle, "projects"));
 
 		if (documentationProjectCount == 1) {
@@ -199,67 +253,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		return strings;
-	}
-
-	protected List<Map<String, Object>> getPredefinedFilterTagsList(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		List<Map<String, Object>> tagsList = new LinkedList<>();
-
-		PortletPreferences portletPreferences = renderRequest.getPreferences();
-
-		String selectedTag = renderRequest.getParameter("tag");
-
-		if (Validator.isNotNull(selectedTag)) {
-			selectedTag = selectedTag.trim();
-		}
-
-		String isAllTag = renderRequest.getParameter("allTag");
-
-		String predefinedFilterTags = portletPreferences.getValue(
-			"predefinedFilterTags", "");
-
-		String[] predefinedFilterTagsSplit = predefinedFilterTags.split(
-			StringPool.COMMA);
-
-		Map<String, Object> allTag = new HashMap<>();
-
-		PortletURL url = renderResponse.createRenderURL();
-
-		url.setParameter("tag", "ALL");
-		url.setParameter("allTag", "true");
-
-		allTag.put("tag", "ALL");
-		allTag.put("url", url.toString());
-
-		if (Validator.isNull(selectedTag) || Validator.isNotNull(isAllTag)) {
-			allTag.put("selected", true);
-		}
-
-		tagsList.add(allTag);
-
-		String removeTag = null;
-
-		url.setParameter("allTag", removeTag);
-
-		for (String tag : predefinedFilterTagsSplit) {
-			tag = tag.trim();
-
-			Map<String, Object> tagObjectMap = new HashMap<>();
-
-			url.setParameter("tag", tag);
-
-			if (Validator.isNull(isAllTag) && tag.equals(selectedTag)) {
-				tagObjectMap.put("selected", true);
-			}
-
-			tagObjectMap.put("tagName", tag);
-			tagObjectMap.put("url", url.toString());
-
-			tagsList.add(tagObjectMap);
-		}
-
-		return tagsList;
 	}
 
 	private static final int _NUMBER_OF_TAGS = 3;

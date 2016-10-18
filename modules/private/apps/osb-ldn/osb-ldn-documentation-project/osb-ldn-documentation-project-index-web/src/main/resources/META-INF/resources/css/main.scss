@@ -40,18 +40,18 @@
 	.predefined-fitler-tags {
 		li {
 			display: inline-block;
-			margin-right: 30px;
 			margin-bottom: 6px;
+			margin-right: 30px;
 
-			&.active{
+			&.selected{
 				border-bottom: 6px solid rgba(0, 0, 0, 0.1);
 				margin-bottom: 0;
 			}
 		}
 
+		list-style-type: none;
 		margin-bottom: 0;
 		padding-left: 0;
-		list-style-type: none;
 	}
 
 	.documentation-project {
@@ -59,12 +59,14 @@
 		padding: 0;
 
 		.documentation-project-tags {
+			bottom: 0;
 			color: #8693A1;
 			font-size: 14px;
 			font-stretch: normal;
 			font-style: normal;
 			font-weight: 600;
 			height: 36px;
+			position: absolute;
 			width: 216px;
 		}
 
@@ -82,6 +84,7 @@
 				display: block;
 				height: 340px;
 				padding: 32px;
+				position: relative;
 				text-decoration: none;
 				width: 268px;
 			}
