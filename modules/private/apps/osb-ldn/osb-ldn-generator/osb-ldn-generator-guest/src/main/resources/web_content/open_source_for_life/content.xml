@@ -81,7 +81,7 @@
 					<div class="converse-with-the-community">
 						<a href="">
 							<div class="item-icon">
-								<img src="converse-with-the-community.png">
+								<img src="converse.png">
 							</div>
 
 							<div class="item-title">Converse with the community</div>
@@ -93,7 +93,7 @@
 					<div class="discover-how-it-works">
 						<a href="">
 							<div class="item-icon">
-								<img src="discover-how-it-works.png">
+								<img src="discover.png">
 							</div>
 
 							<div class="item-title">Discover how it works</div>
@@ -105,7 +105,7 @@
 					<div class="share-perspective">
 						<a href="">
 							<div class="item-icon">
-								<img src="share-perspective.png">
+								<img src="share.png">
 							</div>
 
 							<div class="item-title">Share perspective</div>
