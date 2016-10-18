@@ -166,7 +166,9 @@ public interface OSBLCSConfiguration {
 	)
 	public String lrdcomUserDocumentationUrl();
 
-	@Meta.AD(deflt = "https://www.liferay.com/web/{0}/projects", required = true)
+	@Meta.AD(
+		deflt = "https://www.liferay.com/web/{0}/projects", required = true
+	)
 	public String lrdcomUserProjectsUrl();
 
 	@Meta.AD(
@@ -214,7 +216,8 @@ public interface OSBLCSConfiguration {
 	public String osbLcsPortletMembersEmailFromAddress();
 
 	@Meta.AD(deflt = "false", required = true)
-	public boolean osbLcsPortletMembersEmailMembershipInvitationAcceptedEnabled();
+	public boolean
+		osbLcsPortletMembersEmailMembershipInvitationAcceptedEnabled();
 
 	@Meta.AD(deflt = "false", required = true)
 	public boolean osbLcsPortletMembersEmailMembershipInvitationEnabled();

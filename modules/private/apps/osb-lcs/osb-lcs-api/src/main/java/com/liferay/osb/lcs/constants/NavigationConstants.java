@@ -39,13 +39,11 @@ public class NavigationConstants {
 
 	public static final String FRIENDLY_URL_LCS_CLUSTER_NODE = "/server";
 
-	public static final String FRIENDLY_URL_LCS_PRIVATE_SITE =
-		PropsUtil.get(PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING) +
-			"/guest";
+	public static final String FRIENDLY_URL_LCS_PRIVATE_SITE = PropsUtil.get(
+		PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING) + "/guest";
 
-	public static final String FRIENDLY_URL_LCS_PUBLIC_SITE =
-		PropsUtil.get(PropsKeys.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING) +
-			"/guest";
+	public static final String FRIENDLY_URL_LCS_PUBLIC_SITE = PropsUtil.get(
+		PropsKeys.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING) + "/guest";
 
 	public static final String FRIENDLY_URL_PROJECTS = "/projects";
 
