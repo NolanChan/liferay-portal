@@ -47,21 +47,6 @@ import java.util.List;
 @ProviderType
 public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 
-	@Deprecated
-	@Override
-	public LCSClusterEntry addLCSClusterEntry(
-			long lcsProjectId, String name, String description, String location,
-			int type)
-		throws PortalException {
-
-		LCSProjectPermission.check(
-			getPermissionChecker(), lcsProjectId,
-			OSBLCSActionKeys.MANAGE_ENTRY);
-
-		return lcsClusterEntryLocalService.addLCSClusterEntry(
-			lcsProjectId, name, description, location, null, type);
-	}
-
 	@Override
 	public LCSClusterEntry addLCSClusterEntry(
 			long lcsProjectId, String name, String description, String location,

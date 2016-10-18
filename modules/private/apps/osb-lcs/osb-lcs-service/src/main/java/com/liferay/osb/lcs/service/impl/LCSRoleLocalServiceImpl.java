@@ -223,23 +223,6 @@ public class LCSRoleLocalServiceImpl extends LCSRoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the user's LCS role in the LCS project.
-	 *
-	 * @param      userId the primary key of the user
-	 * @param      lcsProjectId the primary key of the LCS project
-	 * @return     the LCS role in the LCS project, or <code>null</code> if no
-	 *             matching LCS role is found
-	 * @since      LCS 0.1
-	 * @deprecated As of 1.0.0, As of LCS 1.1, replaced by {@link
-	 *             #hasUserLCSAdministratorLCSRole(long, long)}
-	 */
-	@Deprecated
-	@Override
-	public LCSRole fetchLCSRole(long userId, long lcsProjectId) {
-		return lcsRolePersistence.fetchByU_LPI_Last(userId, lcsProjectId, null);
-	}
-
-	/**
 	 * Returns the user's LCS role in the LCS project and environment.
 	 *
 	 * @param  userId the primary key of the user

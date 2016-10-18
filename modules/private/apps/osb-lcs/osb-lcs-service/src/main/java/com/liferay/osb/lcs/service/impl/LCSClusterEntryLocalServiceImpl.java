@@ -83,17 +83,6 @@ public class LCSClusterEntryLocalServiceImpl
 		return lcsClusterEntryPersistence.update(lcsClusterEntry);
 	}
 
-	@Deprecated
-	@Override
-	public LCSClusterEntry addLCSClusterEntry(
-			long lcsProjectId, String name, String description, String location,
-			int type)
-		throws PortalException {
-
-		return addLCSClusterEntry(
-			lcsProjectId, name, description, location, null, type);
-	}
-
 	@Override
 	public LCSClusterEntry addLCSClusterEntry(
 			long lcsProjectId, String name, String description, String location,
@@ -368,17 +357,6 @@ public class LCSClusterEntryLocalServiceImpl
 		}
 
 		return lcsClusterEntryPersistence.update(lcsClusterEntry);
-	}
-
-	@Deprecated
-	@Override
-	public LCSClusterEntry updateLCSClusterEntry(
-			long lcsClusterEntryId, String name, String description,
-			String location)
-		throws PortalException {
-
-		return updateLCSClusterEntry(
-			lcsClusterEntryId, name, description, null, location);
 	}
 
 	@Override

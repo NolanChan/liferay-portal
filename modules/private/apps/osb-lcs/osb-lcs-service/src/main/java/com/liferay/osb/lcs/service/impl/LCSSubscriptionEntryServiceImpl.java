@@ -122,23 +122,6 @@ public class LCSSubscriptionEntryServiceImpl
 		return lcsClusterEntryLCSSubscriptionEntry;
 	}
 
-	@Deprecated
-	@Override
-	public List<LCSSubscriptionEntry> getCorpProjectLCSSubscriptionEntries(
-			long corpProjectId)
-		throws PortalException {
-
-		LCSProject lcsProject = lcsProjectLocalService.fetchByCorpProject(
-			corpProjectId);
-
-		if (lcsProject == null) {
-			throw new NoSuchLCSProjectException();
-		}
-
-		return getLCSProjectLCSSubscriptionEntries(
-			lcsProject.getLcsProjectId());
-	}
-
 	@Override
 	public List<LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
 			long lcsProjectId)

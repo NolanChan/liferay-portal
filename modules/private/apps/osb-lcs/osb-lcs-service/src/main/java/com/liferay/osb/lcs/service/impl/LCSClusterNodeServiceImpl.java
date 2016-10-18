@@ -48,33 +48,6 @@ import java.util.List;
 @ProviderType
 public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 
-	/**
-	 * Adds a new LCS cluster node.
-	 *
-	 * @param lcsClusterEntryId the primary key of the parent environment
-	 * @param name              the portal instance friendly name
-	 * @param description       the portal instance description
-	 * @param buildNumber       the portal instance build number
-	 * @param key               the portal instance key provided by the licence tool
-	 * @param location          the portal instance physical location
-	 * @return LCS cluster node
-	 * @throws PortalException if any one of the LCS cluster node attributes was
-	 *                         invalid or an operation was not allowed by the LCS cluster entry
-	 *                         membership policy
-	 * @since LCS 0.1
-	 */
-	@Deprecated
-	@Override
-	public LCSClusterNode addLCSClusterNode(
-			long lcsClusterEntryId, String name, String description,
-			int buildNumber, String key, String location)
-		throws PortalException {
-
-		return addLCSClusterNode(
-			lcsClusterEntryId, name, description, buildNumber, key, location,
-			0);
-	}
-
 	@Override
 	public LCSClusterNode addLCSClusterNode(
 			long lcsClusterEntryId, String name, String description,
@@ -89,37 +62,6 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 		return lcsClusterNodeLocalService.addLCSClusterNode(
 			lcsClusterEntryId, name, description, buildNumber, key, location,
 			processorCoresTotal);
-	}
-
-	/**
-	 * Adds a new LCS cluster node.
-	 * <p>
-	 * <p>
-	 * This method uses sibling LCS cluster node attributes
-	 * <code>lcsClusterEntryId</code> and <code>buildNumber</code> to add a new
-	 * LCS cluster node.
-	 * </p>
-	 *
-	 * @param siblingKey  the portal key of sibling portal instance
-	 * @param name        the portal instance friendly name
-	 * @param description the portal instance description
-	 * @param key         the portal instance key provided by the licence tool
-	 * @param location    the portal instance physical location
-	 * @return LCS cluster node
-	 * @throws PortalException if any one of the LCS cluster node attributes was
-	 *                         invalid or an operation was not allowed by the LCS cluster entry
-	 *                         membership policy
-	 * @since LCS 0.1
-	 */
-	@Deprecated
-	@Override
-	public LCSClusterNode addLCSClusterNode(
-			String siblingKey, String name, String description, String key,
-			String location)
-		throws PortalException {
-
-		return addLCSClusterNode(
-			siblingKey, name, description, key, location, 0);
 	}
 
 	@Override
