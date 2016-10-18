@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
 
+import org.osgi.framework.BundleContext;
+
 /**
  * @author Yury Butrymovich
  * @author Ryan Park
@@ -60,7 +62,11 @@ public abstract class BaseLayoutGenerator implements LayoutGenerator {
 
 	public abstract int getLayoutVersion() throws Exception;
 
-	protected void activate(Map<String, Object> config) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> config) {
+
+		this.bundleContext = bundleContext;
+
 		_layoutDescription = GetterUtil.getString(
 			config.get("osb.ldn.layout.description"));
 		_layoutFriendlyURL = GetterUtil.getString(
@@ -74,6 +80,7 @@ public abstract class BaseLayoutGenerator implements LayoutGenerator {
 
 	protected abstract void doGenerate(long plid) throws Exception;
 
+	protected BundleContext bundleContext;
 	protected LayoutVersion layoutVersion;
 
 	private String _layoutDescription;
