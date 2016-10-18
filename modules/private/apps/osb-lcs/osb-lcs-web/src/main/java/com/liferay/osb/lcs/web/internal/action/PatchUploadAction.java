@@ -17,7 +17,7 @@ package com.liferay.osb.lcs.web.internal.action;
 import com.liferay.osb.lcs.advisor.PatchAdvisor;
 import com.liferay.osb.lcs.constants.OSBLCSConstants;
 import com.liferay.osb.lcs.exception.NoSuchLCSPatchEntryException;
-import com.liferay.osb.lcs.service.LCSPatchEntryLocalServiceUtil;
+import com.liferay.osb.lcs.service.LCSPatchEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
@@ -86,6 +86,12 @@ public class PatchUploadAction extends BaseStrutsAction {
 		return null;
 	}
 
+	public void setLCSPatchEntryLocalService(
+		LCSPatchEntryLocalService lcsPatchEntryLocalService) {
+
+		_lcsPatchEntryLocalService = lcsPatchEntryLocalService;
+	}
+
 	@Reference(unbind = "-")
 	public void setPatchAdvisor(PatchAdvisor patchAdvisor) {
 		_patchAdvisor = patchAdvisor;
@@ -113,7 +119,7 @@ public class PatchUploadAction extends BaseStrutsAction {
 		String patchId = getTextContent(rootElement, "id");
 
 		try {
-			LCSPatchEntryLocalServiceUtil.getLCSPatchEntry(patchId);
+			_lcsPatchEntryLocalService.getLCSPatchEntry(patchId);
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Patch " + patchId + " already exists");
@@ -153,7 +159,7 @@ public class PatchUploadAction extends BaseStrutsAction {
 			DateFormat.getDateTimeInstance());
 		String builtFor = getTextContent(rootElement, "built-for");
 
-		LCSPatchEntryLocalServiceUtil.addLCSPatchEntry(
+		_lcsPatchEntryLocalService.addLCSPatchEntry(
 			patchId, name, description, patchingToolVersion, incremental,
 			singular, version, size, rank, requirements, component,
 			compatibleBuild, product, fixedIssues, moduleName, moduleId,
@@ -305,6 +311,7 @@ public class PatchUploadAction extends BaseStrutsAction {
 	private static final File _tmpDir = new File(
 		SystemProperties.get(SystemProperties.TMP_DIR));
 
+	private LCSPatchEntryLocalService _lcsPatchEntryLocalService;
 	private PatchAdvisor _patchAdvisor;
 
 }

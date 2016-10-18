@@ -144,7 +144,7 @@ public class LCSClusterEntryTokenAdvisorImpl
 	}
 
 	@Reference(bind = "-", unbind = "-")
-	public void setLcsClusterEntryTokenService(
+	public void setLCSClusterEntryTokenService(
 		LCSClusterEntryTokenService lcsClusterEntryTokenService) {
 
 		_lcsClusterEntryTokenService = lcsClusterEntryTokenService;

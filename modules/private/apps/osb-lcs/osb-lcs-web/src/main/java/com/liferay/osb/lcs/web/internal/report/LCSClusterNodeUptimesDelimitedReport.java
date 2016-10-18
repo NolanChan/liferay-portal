@@ -85,7 +85,7 @@ public class LCSClusterNodeUptimesDelimitedReport extends BaseReport {
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsClusterNodeUptimeService(
+	public void setLCSClusterNodeUptimeService(
 		LCSClusterNodeUptimeService lcsClusterNodeUptimeService) {
 
 		_lcsClusterNodeUptimeService = lcsClusterNodeUptimeService;

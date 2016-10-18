@@ -19,7 +19,7 @@ import com.liferay.osb.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.exception.DuplicateLCSClusterEntryNameException;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
-import com.liferay.osb.lcs.service.LCSClusterEntryServiceUtil;
+import com.liferay.osb.lcs.service.LCSClusterEntryService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -51,6 +51,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
@@ -108,7 +109,7 @@ public class EnvironmentPortlet extends MVCPortlet {
 		}
 
 		LCSClusterEntry lscClusterEntry =
-			LCSClusterEntryServiceUtil.addLCSClusterEntry(
+			_lcsClusterEntryService.addLCSClusterEntry(
 				layoutLCSProjectId, name, description, location,
 				lcsClusterEntryType);
 
@@ -133,7 +134,7 @@ public class EnvironmentPortlet extends MVCPortlet {
 		long lcsClusterEntryId = ParamUtil.getLong(
 			actionRequest, "lcsClusterEntryId");
 
-		LCSClusterEntryServiceUtil.deleteLCSClusterEntry(lcsClusterEntryId);
+		_lcsClusterEntryService.deleteLCSClusterEntry(lcsClusterEntryId);
 	}
 
 	public void generateLCSClusterEntryToken(
@@ -191,7 +192,14 @@ public class EnvironmentPortlet extends MVCPortlet {
 		}
 	}
 
-	public void setLcsClusterEntryTokenAdvisor(
+	@Reference(unbind = "-")
+	public void setLCSClusterEntryService(
+		LCSClusterEntryService lcsClusterEntryService) {
+
+		_lcsClusterEntryService = lcsClusterEntryService;
+	}
+
+	public void setLCSClusterEntryTokenAdvisor(
 		LCSClusterEntryTokenAdvisor lcsClusterEntryTokenAdvisor) {
 
 		_lcsClusterEntryTokenAdvisor = lcsClusterEntryTokenAdvisor;
@@ -209,7 +217,7 @@ public class EnvironmentPortlet extends MVCPortlet {
 		String location = ParamUtil.getString(actionRequest, "location");
 
 		try {
-			LCSClusterEntryServiceUtil.updateLCSClusterEntry(
+			_lcsClusterEntryService.updateLCSClusterEntry(
 				lcsClusterEntryId, name, description, location);
 		}
 		catch (DuplicateLCSClusterEntryNameException dlcscene) {
@@ -278,6 +286,7 @@ public class EnvironmentPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EnvironmentPortlet.class);
 
+	private LCSClusterEntryService _lcsClusterEntryService;
 	private LCSClusterEntryTokenAdvisor _lcsClusterEntryTokenAdvisor;
 
 }

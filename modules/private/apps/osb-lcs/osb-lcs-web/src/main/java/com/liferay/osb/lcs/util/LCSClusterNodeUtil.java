@@ -16,7 +16,6 @@ package com.liferay.osb.lcs.util;
 
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.service.LCSClusterNodeService;
-import com.liferay.osb.lcs.service.LCSClusterNodeServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.ArrayList;
@@ -69,12 +68,12 @@ public class LCSClusterNodeUtil {
 	public List<LCSClusterNode> getLCSProjectLCSClusterNodes(long lcsProjectId)
 		throws PortalException {
 
-		return LCSClusterNodeServiceUtil.getLCSProjectLCSClusterNodes(
+		return _lcsClusterNodeService.getLCSProjectLCSClusterNodes(
 			lcsProjectId, true);
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsClusterNodeService(
+	public void setLCSClusterNodeService(
 		LCSClusterNodeService lcsClusterNodeService) {
 
 		_lcsClusterNodeService = lcsClusterNodeService;
@@ -84,15 +83,14 @@ public class LCSClusterNodeUtil {
 			long lcsClusterEntryId)
 		throws PortalException {
 
-		return LCSClusterNodeServiceUtil.getLCSClusterEntryLCSClusterNodes(
+		return _lcsClusterNodeService.getLCSClusterEntryLCSClusterNodes(
 			lcsClusterEntryId, true);
 	}
 
 	protected LCSClusterNode getLCSClusterNode(long lcsClusterNodeId)
 		throws PortalException {
 
-		return LCSClusterNodeServiceUtil.getLCSClusterNode(
-			lcsClusterNodeId, true);
+		return _lcsClusterNodeService.getLCSClusterNode(lcsClusterNodeId, true);
 	}
 
 	private LCSClusterNodeService _lcsClusterNodeService;

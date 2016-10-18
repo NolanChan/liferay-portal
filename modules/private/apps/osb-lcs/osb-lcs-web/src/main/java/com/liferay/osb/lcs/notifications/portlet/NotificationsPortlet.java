@@ -16,7 +16,7 @@ package com.liferay.osb.lcs.notifications.portlet;
 
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
-import com.liferay.osb.lcs.service.LCSClusterNodePatchesLocalServiceUtil;
+import com.liferay.osb.lcs.service.LCSClusterNodePatchesLocalService;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -34,6 +34,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -104,6 +105,15 @@ public class NotificationsPortlet extends MVCPortlet {
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
 
+	@Reference(unbind = "-")
+	public void setLCSClusterNodePatchesLocalService(
+		LCSClusterNodePatchesLocalService
+			lcsLcsClusterNodePatchesLocalService) {
+
+		_lcsLcsClusterNodePatchesLocalService =
+			lcsLcsClusterNodePatchesLocalService;
+	}
+
 	protected void downloadPatch(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
@@ -117,7 +127,7 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		String patchName = ParamUtil.getString(resourceRequest, "patchName");
 
-		LCSClusterNodePatchesLocalServiceUtil.downloadPatch(
+		_lcsLcsClusterNodePatchesLocalService.downloadPatch(
 			lcsClusterNodeIds, patchName);
 	}
 
@@ -131,11 +141,14 @@ public class NotificationsPortlet extends MVCPortlet {
 			resourceRequest, "lcsClusterNodeKeys");
 		String patchId = ParamUtil.getString(resourceRequest, "patchId");
 
-		return LCSClusterNodePatchesLocalServiceUtil.getDownloadPatchStatus(
+		return _lcsLcsClusterNodePatchesLocalService.getDownloadPatchStatus(
 			lcsClusterNodeIds, lcsClusterNodeKeys, patchId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		NotificationsPortlet.class);
+
+	private LCSClusterNodePatchesLocalService
+		_lcsLcsClusterNodePatchesLocalService;
 
 }

@@ -17,9 +17,9 @@ package com.liferay.osb.lcs.hook.messaging;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSInvitation;
 import com.liferay.osb.lcs.model.LCSProject;
-import com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSInvitationLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil;
+import com.liferay.osb.lcs.service.LCSClusterEntryLocalService;
+import com.liferay.osb.lcs.service.LCSInvitationLocalService;
+import com.liferay.osb.lcs.service.LCSProjectLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 
 import java.text.Format;
@@ -55,6 +55,32 @@ import org.osgi.service.component.annotations.Reference;
 public class CheckStaleLCSInvitationsMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
+	@Reference(unbind = "-")
+	public void setLCSClusterEntryLocalService(
+		LCSClusterEntryLocalService lcsClusterEntryService) {
+
+		_lcsClusterEntryLocalService = lcsClusterEntryService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSInvitationLocalServiceService(
+		LCSInvitationLocalService lcsInvitationLocalService) {
+
+		_lcsInvitationLocalService = lcsInvitationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSProjectLocalService(
+		LCSProjectLocalService lcsProjectLocalService) {
+
+		_lcsProjectLocalService = lcsProjectLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	@Activate
 	protected void activate() {
 		schedulerEntryImpl.setTrigger(
@@ -74,7 +100,7 @@ public class CheckStaleLCSInvitationsMessageListener
 	protected void deleteLCSInvitation(LCSInvitation lcsInvitation)
 		throws PortalException {
 
-		LCSInvitationLocalServiceUtil.deleteLCSInvitation(
+		_lcsInvitationLocalService.deleteLCSInvitation(
 			lcsInvitation.getLcsInvitationId());
 
 		if (_log.isInfoEnabled()) {
@@ -95,7 +121,7 @@ public class CheckStaleLCSInvitationsMessageListener
 		_lastCheckDate = new Date();
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			LCSInvitationLocalServiceUtil.getActionableDynamicQuery();
+			_lcsInvitationLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<LCSInvitation>() {
@@ -105,7 +131,7 @@ public class CheckStaleLCSInvitationsMessageListener
 					throws PortalException {
 
 					LCSProject lcsProject =
-						LCSProjectLocalServiceUtil.fetchLCSProject(
+						_lcsProjectLocalService.fetchLCSProject(
 							lcsInvitation.getLcsProjectId());
 
 					if ((lcsProject == null) || lcsProject.isArchived()) {
@@ -114,7 +140,7 @@ public class CheckStaleLCSInvitationsMessageListener
 						return;
 					}
 
-					User user = UserLocalServiceUtil.fetchUser(
+					User user = _userLocalService.fetchUser(
 						lcsInvitation.getUserId());
 
 					if (user == null) {
@@ -128,7 +154,7 @@ public class CheckStaleLCSInvitationsMessageListener
 					}
 
 					LCSClusterEntry lcsClusterEntry =
-						LCSClusterEntryLocalServiceUtil.fetchLCSClusterEntry(
+						_lcsClusterEntryLocalService.fetchLCSClusterEntry(
 							lcsInvitation.getLcsClusterEntryId());
 
 					if (lcsClusterEntry == null) {
@@ -164,6 +190,10 @@ public class CheckStaleLCSInvitationsMessageListener
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"MMM d, " + "yyyy - hh:mm:ss");
 	private Date _lastCheckDate = new Date();
+	private LCSClusterEntryLocalService _lcsClusterEntryLocalService;
+	private LCSInvitationLocalService _lcsInvitationLocalService;
+	private LCSProjectLocalService _lcsProjectLocalService;
 	private SchedulerEngineHelper _schedulerEngineHelper;
+	private UserLocalService _userLocalService;
 
 }

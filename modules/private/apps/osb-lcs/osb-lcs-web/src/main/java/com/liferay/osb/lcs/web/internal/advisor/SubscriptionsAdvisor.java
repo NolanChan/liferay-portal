@@ -24,7 +24,7 @@ import com.liferay.osb.lcs.model.LCSSubscriptionEntry;
 import com.liferay.osb.lcs.service.LCSClusterEntryService;
 import com.liferay.osb.lcs.service.LCSClusterNodeService;
 import com.liferay.osb.lcs.service.LCSClusterNodeUptimeService;
-import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
+import com.liferay.osb.lcs.service.LCSProjectService;
 import com.liferay.osb.lcs.service.LCSSubscriptionEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -183,18 +183,21 @@ public class SubscriptionsAdvisor {
 		Hours hours = Hours.hoursBetween(startDateTime, endDateTime);
 
 		sb.append(numberFormat.format(hours.getHours() % 24));
+
 		sb.append(LanguageUtil.get(resourceBundle, "hours-abbreviation"));
 		sb.append(StringPool.COLON);
 
 		Minutes minutes = Minutes.minutesBetween(startDateTime, endDateTime);
 
 		sb.append(numberFormat.format(minutes.getMinutes() % 60));
+
 		sb.append(LanguageUtil.get(resourceBundle, "minutes-abbreviation"));
 		sb.append(StringPool.COLON);
 
 		Seconds seconds = Seconds.secondsBetween(startDateTime, endDateTime);
 
 		sb.append(numberFormat.format(seconds.getSeconds() % 60));
+
 		sb.append(LanguageUtil.get(resourceBundle, "seconds-abbreviation"));
 
 		return sb.toString();
@@ -281,7 +284,7 @@ public class SubscriptionsAdvisor {
 			Locale locale)
 		throws Exception {
 
-		JSONObject JSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		Format format = FastDateFormatFactoryUtil.getDateTime(
 			DateFormat.MEDIUM, DateFormat.MEDIUM, locale,
@@ -339,10 +342,10 @@ public class SubscriptionsAdvisor {
 			jsonArray.put(lcsClusterNodeUptimesJSONObject);
 		}
 
-		JSONObject.put("entries", jsonArray);
-		JSONObject.put("totalDuration", getDuration(0, totalDuration, locale));
+		jsonObject.put("entries", jsonArray);
+		jsonObject.put("totalDuration", getDuration(0, totalDuration, locale));
 
-		return JSONObject;
+		return jsonObject;
 	}
 
 	public JSONArray getLCSSubscriptionEntriesJSONArray(
@@ -468,8 +471,7 @@ public class SubscriptionsAdvisor {
 		Map<SubscriptionType, int[]> subscriptionTypesServersCounts =
 			new HashMap<>();
 
-		LCSProject lcsProject = LCSProjectServiceUtil.getLCSProject(
-			lcsProjectId);
+		LCSProject lcsProject = _lcsProjectService.getLCSProject(lcsProjectId);
 
 		List<LCSSubscriptionEntry> lcsSubscriptionEntries =
 			_lcsSubscriptionEntryService.getLCSProjectLCSSubscriptionEntries(
@@ -526,6 +528,7 @@ public class SubscriptionsAdvisor {
 				resourceBundle, subscriptionType.getLabel());
 
 			jsonObject.put("subscriptionTypeLabel", subscriptionTypeLabel);
+
 			jsonObject.put("subscriptionTypeName", subscriptionType.name());
 
 			jsonArray.put(jsonObject);
@@ -551,28 +554,33 @@ public class SubscriptionsAdvisor {
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsClusterEntryService(
+	public void setLCSClusterEntryService(
 		LCSClusterEntryService lcsClusterEntryService) {
 
 		_lcsClusterEntryService = lcsClusterEntryService;
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsClusterNodeService(
+	public void setLCSClusterNodeService(
 		LCSClusterNodeService lcsClusterNodeService) {
 
 		_lcsClusterNodeService = lcsClusterNodeService;
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsClusterNodeUptimeService(
+	public void setLCSClusterNodeUptimeService(
 		LCSClusterNodeUptimeService lcsClusterNodeUptimeService) {
 
 		_lcsClusterNodeUptimeService = lcsClusterNodeUptimeService;
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsSubscriptionEntryService(
+	public void setLCSProjectService(LCSProjectService lcsProjectService) {
+		this._lcsProjectService = lcsProjectService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSSubscriptionEntryService(
 		LCSSubscriptionEntryService lcsSubscriptionEntryService) {
 
 		_lcsSubscriptionEntryService = lcsSubscriptionEntryService;
@@ -618,6 +626,7 @@ public class SubscriptionsAdvisor {
 	private LCSClusterEntryService _lcsClusterEntryService;
 	private LCSClusterNodeService _lcsClusterNodeService;
 	private LCSClusterNodeUptimeService _lcsClusterNodeUptimeService;
+	private LCSProjectService _lcsProjectService;
 	private LCSSubscriptionEntryService _lcsSubscriptionEntryService;
 	private ResourceBundleLoader _resourceBundleLoader;
 

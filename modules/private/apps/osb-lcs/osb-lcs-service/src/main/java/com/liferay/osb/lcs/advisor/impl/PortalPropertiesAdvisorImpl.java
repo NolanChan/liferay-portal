@@ -158,7 +158,7 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 	}
 
 	@Reference(bind = "-", unbind = "-")
-	public void setLcsClusterEntryPropertyDifferencesService(
+	public void setLCSClusterEntryPropertyDifferencesService(
 		LCSClusterEntryPropertyDifferencesService
 			lcsClusterEntryPropertyDifferencesService) {
 
@@ -167,28 +167,28 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 	}
 
 	@Reference(bind = "-", unbind = "-")
-	public void setLcsClusterNodePropertiesService(
+	public void setLCSClusterNodePropertiesService(
 		LCSClusterNodePropertiesService lcsClusterNodePropertiesService) {
 
 		_lcsClusterNodePropertiesService = lcsClusterNodePropertiesService;
 	}
 
 	@Reference(bind = "-", unbind = "-")
-	public void setLcsClusterNodeService(
+	public void setLCSClusterNodeService(
 		LCSClusterNodeService lcsClusterNodeService) {
 
 		_lcsClusterNodeService = lcsClusterNodeService;
 	}
 
 	@Reference(bind = "-", unbind = "-")
-	public void setLcsMetadataDetailsService(
+	public void setLCSMetadataDetailsService(
 		LCSMetadataDetailsService lcsMetadataDetailsService) {
 
 		_lcsMetadataDetailsService = lcsMetadataDetailsService;
 	}
 
 	@Reference(bind = "-", unbind = "-")
-	public void setLcsMetadataLocalService(
+	public void setLCSMetadataLocalService(
 		LCSMetadataLocalService lcsMetadataLocalService) {
 
 		_lcsMetadataLocalService = lcsMetadataLocalService;

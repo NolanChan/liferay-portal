@@ -18,9 +18,9 @@ import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
-import com.liferay.osb.lcs.service.LCSNotificationLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil;
+import com.liferay.osb.lcs.service.LCSNotificationLocalService;
+import com.liferay.osb.lcs.service.LCSProjectLocalService;
+import com.liferay.osb.lcs.service.LCSRoleLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 
 import java.text.Format;
@@ -55,8 +55,34 @@ public class CheckStaleLCSRolesMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
 	@Reference(unbind = "-")
+	public void setLCSNotificationLocalService(
+		LCSNotificationLocalService lcsNotificationLocalService) {
+
+		_lcsNotificationLocalService = lcsNotificationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSProjectLocalService(
+		LCSProjectLocalService lcsProjectLocalService) {
+
+		_lcsProjectLocalService = lcsProjectLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSRoleLocalService(
+		LCSRoleLocalService lcsRoleLocalService) {
+
+		_lcsRoleLocalService = lcsRoleLocalService;
+	}
+
+	@Reference(unbind = "-")
 	public void setOsbPortletService(OSBPortletService osbPortletService) {
 		_osbPortletService = osbPortletService;
+	}
+
+	@Reference(unbind = "-")
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
 	}
 
 	@Activate
@@ -78,7 +104,7 @@ public class CheckStaleLCSRolesMessageListener
 	protected void deleteLCSRole(LCSRole lcsRole, User user)
 		throws PortalException {
 
-		LCSRoleLocalServiceUtil.deleteLCSRole(lcsRole.getLcsRoleId());
+		_lcsRoleLocalService.deleteLCSRole(lcsRole.getLcsRoleId());
 
 		if (_log.isInfoEnabled()) {
 			if (user != null) {
@@ -102,7 +128,7 @@ public class CheckStaleLCSRolesMessageListener
 		_lastCheckDate = new Date();
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new LCSRoleLocalServiceUtil().getActionableDynamicQuery();
+			_lcsRoleLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<LCSRole>() {
@@ -111,7 +137,7 @@ public class CheckStaleLCSRolesMessageListener
 				public void performAction(LCSRole lcsRole)
 					throws PortalException {
 
-					User user = UserLocalServiceUtil.fetchUser(
+					User user = _userLocalService.fetchUser(
 						lcsRole.getUserId());
 
 					if (user == null) {
@@ -121,13 +147,13 @@ public class CheckStaleLCSRolesMessageListener
 					}
 
 					LCSProject lcsProject =
-						LCSProjectLocalServiceUtil.fetchLCSProject(
+						_lcsProjectLocalService.fetchLCSProject(
 							lcsRole.getLcsProjectId());
 
 					if ((lcsProject == null) || lcsProject.isArchived()) {
 						deleteLCSRole(lcsRole, user);
 
-						LCSNotificationLocalServiceUtil.
+						_lcsNotificationLocalService.
 							deleteLCSProjectLCSNotification(
 								lcsRole.getLcsProjectId());
 
@@ -178,7 +204,11 @@ public class CheckStaleLCSRolesMessageListener
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"MMM d, " + "yyyy - hh:mm:ss");
 	private Date _lastCheckDate = new Date();
+	private LCSNotificationLocalService _lcsNotificationLocalService;
+	private LCSProjectLocalService _lcsProjectLocalService;
+	private LCSRoleLocalService _lcsRoleLocalService;
 	private OSBPortletService _osbPortletService;
 	private SchedulerEngineHelper _schedulerEngineHelper;
+	private UserLocalService _userLocalService;
 
 }

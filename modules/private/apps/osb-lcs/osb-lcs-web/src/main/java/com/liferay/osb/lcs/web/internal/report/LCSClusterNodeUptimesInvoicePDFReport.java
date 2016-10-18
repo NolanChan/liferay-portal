@@ -122,14 +122,14 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsClusterNodeUptimeService(
+	public void setLCSClusterNodeUptimeService(
 		LCSClusterNodeUptimeService lcsClusterNodeUptimeService) {
 
 		_lcsClusterNodeUptimeService = lcsClusterNodeUptimeService;
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsProjectService(LCSProjectService lcsProjectService) {
+	public void setLCSProjectService(LCSProjectService lcsProjectService) {
 		_lcsProjectService = lcsProjectService;
 	}
 

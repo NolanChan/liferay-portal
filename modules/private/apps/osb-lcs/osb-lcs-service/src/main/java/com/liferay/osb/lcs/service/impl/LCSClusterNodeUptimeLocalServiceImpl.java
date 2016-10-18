@@ -646,6 +646,7 @@ public class LCSClusterNodeUptimeLocalServiceImpl
 				lcsClusterEntry.getLcsClusterEntryId());
 			lcsClusterNodeUptime.setLcsClusterEntryName(
 				lcsClusterEntry.getName());
+
 			lcsClusterNodeUptime.setLcsClusterNodeKey(lcsClusterNode.getKey());
 			lcsClusterNodeUptime.setLcsClusterNodeName(
 				lcsClusterNode.getName());

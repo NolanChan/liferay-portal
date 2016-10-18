@@ -146,33 +146,33 @@ public class CheckLCSInvitationAction extends BaseStrutsAction {
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsInvitationLocalService(
+	public void setLCSInvitationLocalService(
 		LCSInvitationLocalService lcsInvitationLocalService) {
 
 		_lcsInvitationLocalService = lcsInvitationLocalService;
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsMembersLocalService(
+	public void setLCSMembersLocalService(
 		LCSMembersLocalService lcsMembersLocalService) {
 
 		_lcsMembersLocalService = lcsMembersLocalService;
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsMessageAdvisor(LCSMessageAdvisorImpl lcsMessageAdvisor) {
+	public void setLCSMessageAdvisor(LCSMessageAdvisorImpl lcsMessageAdvisor) {
 		_lcsMessageAdvisor = lcsMessageAdvisor;
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsProjectLocalService(
+	public void setLCSProjectLocalService(
 		LCSProjectLocalService lcsProjectLocalService) {
 
 		_lcsProjectLocalService = lcsProjectLocalService;
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsRoleLocalService(
+	public void setLCSRoleLocalService(
 		LCSRoleLocalService lcsRoleLocalService) {
 
 		_lcsRoleLocalService = lcsRoleLocalService;

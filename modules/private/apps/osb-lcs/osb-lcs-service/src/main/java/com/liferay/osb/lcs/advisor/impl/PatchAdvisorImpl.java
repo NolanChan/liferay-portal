@@ -158,14 +158,14 @@ public class PatchAdvisorImpl implements PatchAdvisor {
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsClusterNodePatchesService(
+	public void setLCSClusterNodePatchesService(
 		LCSClusterNodePatchesService lcsClusterNodePatchesService) {
 
 		_lcsClusterNodePatchesService = lcsClusterNodePatchesService;
 	}
 
 	@Reference
-	public void setLcsPatchingAdvisorService(
+	public void setLCSPatchingAdvisorService(
 		LCSPatchingAdvisorService lcsPatchingAdvisorService) {
 
 		_lcsPatchingAdvisorService = lcsPatchingAdvisorService;

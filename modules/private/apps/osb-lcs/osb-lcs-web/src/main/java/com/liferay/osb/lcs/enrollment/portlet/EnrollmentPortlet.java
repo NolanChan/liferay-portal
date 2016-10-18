@@ -137,6 +137,7 @@ public class EnrollmentPortlet extends MVCPortlet {
 				resourceRequest.getLocale(), "your-request-failed-to-complete");
 
 			jsonObject.put(LCSConstants.JSON_KEY_MESSAGE, message);
+
 			jsonObject.put(
 				LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_FAILURE);
 
@@ -155,24 +156,24 @@ public class EnrollmentPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsMessageAdvisor(LCSMessageAdvisorImpl lcsMessageAdvisor) {
+	public void setLCSMessageAdvisor(LCSMessageAdvisorImpl lcsMessageAdvisor) {
 		_lcsMessageAdvisor = lcsMessageAdvisor;
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsProjectLocalService(
+	public void setLCSProjectLocalService(
 		LCSProjectLocalService lcsProjectLocalService) {
 
 		_lcsProjectLocalService = lcsProjectLocalService;
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsProjectService(LCSProjectService lcsProjectService) {
+	public void setLCSProjectService(LCSProjectService lcsProjectService) {
 		_lcsProjectService = lcsProjectService;
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsRoleService(LCSRoleService lcsRoleService) {
+	public void setLCSRoleService(LCSRoleService lcsRoleService) {
 		_lcsRoleService = lcsRoleService;
 	}
 

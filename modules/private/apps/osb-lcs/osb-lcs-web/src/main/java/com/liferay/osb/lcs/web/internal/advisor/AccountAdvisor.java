@@ -23,11 +23,11 @@ import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSMessage;
 import com.liferay.osb.lcs.model.LCSNotification;
 import com.liferay.osb.lcs.model.LCSProject;
-import com.liferay.osb.lcs.service.LCSClusterEntryServiceUtil;
-import com.liferay.osb.lcs.service.LCSClusterNodeServiceUtil;
+import com.liferay.osb.lcs.service.LCSClusterEntryService;
+import com.liferay.osb.lcs.service.LCSClusterNodeService;
 import com.liferay.osb.lcs.service.LCSMessageService;
-import com.liferay.osb.lcs.service.LCSNotificationServiceUtil;
-import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
+import com.liferay.osb.lcs.service.LCSNotificationService;
+import com.liferay.osb.lcs.service.LCSProjectService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -83,7 +83,7 @@ public class AccountAdvisor {
 			}
 			else if (lcsNotification.isLCSClusterEntryNotification()) {
 				LCSClusterEntry lcsClusterEntry =
-					LCSClusterEntryServiceUtil.getLCSClusterEntry(
+					_lcsClusterEntryService.getLCSClusterEntry(
 						lcsNotification.getClassPK());
 
 				lcsClusterEntryId = lcsClusterEntry.getLcsClusterEntryId();
@@ -92,14 +92,15 @@ public class AccountAdvisor {
 			}
 			else {
 				LCSClusterNode lcsClusterNode =
-					LCSClusterNodeServiceUtil.getLCSClusterNode(
+					_lcsClusterNodeService.getLCSClusterNode(
 						lcsNotification.getClassPK());
 
 				LCSClusterEntry lcsClusterEntry =
-					LCSClusterEntryServiceUtil.getLCSClusterEntry(
+					_lcsClusterEntryService.getLCSClusterEntry(
 						lcsClusterNode.getLcsClusterEntryId());
 
 				lcsClusterEntryId = lcsClusterNode.getLcsClusterEntryId();
+
 				lcsClusterEntryName = lcsClusterEntry.getName();
 				lcsClusterNodeId = lcsClusterNode.getLcsClusterNodeId();
 				lcsClusterNodeName = lcsClusterNode.getName();
@@ -123,7 +124,7 @@ public class AccountAdvisor {
 				continue;
 			}
 
-			LCSProject lcsProject = LCSProjectServiceUtil.getLCSProject(
+			LCSProject lcsProject = _lcsProjectService.getLCSProject(
 				lcsProjectId);
 
 			Object[] lcsNotificationsRule = {
@@ -144,7 +145,7 @@ public class AccountAdvisor {
 
 		JSONArray lcsProjectsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		List<LCSProject> lcsProjects = LCSProjectServiceUtil.getUserLCSProjects(
+		List<LCSProject> lcsProjects = _lcsProjectService.getUserLCSProjects(
 			false,
 			LCSRoleConstants.ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER);
 
@@ -161,7 +162,7 @@ public class AccountAdvisor {
 
 			for (LCSEventType lcsEventType : LCSEventType.getSupported()) {
 				LCSNotification lcsNotification =
-					LCSNotificationServiceUtil.fetchLCSProjectLCSNotification(
+					_lcsNotificationService.fetchLCSProjectLCSNotification(
 						lcsProject.getLcsProjectId(), lcsEventType.getType());
 
 				boolean enabled = false;
@@ -187,6 +188,7 @@ public class AccountAdvisor {
 
 			lcsProjectJSON.put(
 				"environments", lcsClusterEntriesLCSNotificationsJSONArray);
+
 			lcsProjectJSON.put("notifications", lcsNotificationsJSONArray);
 
 			lcsProjectsJSONArray.put(lcsProjectJSON);
@@ -219,10 +221,11 @@ public class AccountAdvisor {
 			if (classNameId == _classNameLocalService.getClassNameId(
 					LCSProject.class)) {
 
-				LCSProject lcsProject = LCSProjectServiceUtil.getLCSProject(
+				LCSProject lcsProject = _lcsProjectService.getLCSProject(
 					classPK);
 
 				name = lcsProject.getName();
+
 				url = _navigationAdvisor.getLCSProjectURL(classPK);
 			}
 
@@ -230,9 +233,10 @@ public class AccountAdvisor {
 					LCSClusterEntry.class)) {
 
 				LCSClusterEntry lcsClusterEntry =
-					LCSClusterEntryServiceUtil.getLCSClusterEntry(classPK);
+					_lcsClusterEntryService.getLCSClusterEntry(classPK);
 
 				name = lcsClusterEntry.getName();
+
 				url = _navigationAdvisor.getLCSClusterEntryURL(classPK);
 			}
 
@@ -240,9 +244,10 @@ public class AccountAdvisor {
 					LCSClusterNode.class)) {
 
 				LCSClusterNode lcsClusterNode =
-					LCSClusterNodeServiceUtil.getLCSClusterNode(classPK);
+					_lcsClusterNodeService.getLCSClusterNode(classPK);
 
 				name = lcsClusterNode.getName();
+
 				url = _navigationAdvisor.getLCSClusterNodeURL(classPK);
 			}
 
@@ -252,9 +257,7 @@ public class AccountAdvisor {
 			LCSEventType lcsEventType = LCSEventType.valueOf(
 				lcsMessage.getType());
 
-			if (lcsEventType ==
-					LCSEventType.OSB_SUBSCRIPTION_STATUS_RECEIVED) {
-
+			if (lcsEventType == LCSEventType.OSB_SUBSCRIPTION_STATUS_RECEIVED) {
 				content = getSubscriptionsStatusContent(
 					content, classPK, locale);
 			}
@@ -294,8 +297,34 @@ public class AccountAdvisor {
 		_classNameLocalService = classNameLocalService;
 	}
 
-	public void setLcsMessageService(LCSMessageService lcsMessageService) {
+	@Reference(unbind = "-")
+	public void setLCSClusterEntryService(
+		LCSClusterEntryService lcsClusterEntryService) {
+
+		_lcsClusterEntryService = lcsClusterEntryService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSClusterNodeService(
+		LCSClusterNodeService lcsClusterNodeService) {
+
+		_lcsClusterNodeService = lcsClusterNodeService;
+	}
+
+	public void setLCSMessageService(LCSMessageService lcsMessageService) {
 		_lcsMessageService = lcsMessageService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSNotificationService(
+		LCSNotificationService lcsNotificationService) {
+
+		_lcsNotificationService = lcsNotificationService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSProjectService(LCSProjectService lcsProjectService) {
+		_lcsProjectService = lcsProjectService;
 	}
 
 	@Reference(unbind = "-")
@@ -319,7 +348,7 @@ public class AccountAdvisor {
 			JSONFactoryUtil.createJSONArray();
 
 		List<LCSClusterEntry> lcsClusterEntries =
-			LCSClusterEntryServiceUtil.getLCSProjectLCSClusterEntries(
+			_lcsClusterEntryService.getLCSProjectLCSClusterEntries(
 				lcsProjectId);
 
 		for (LCSClusterEntry lcsClusterEntry : lcsClusterEntries) {
@@ -338,9 +367,8 @@ public class AccountAdvisor {
 
 			for (LCSEventType lcsEventType : LCSEventType.getSupported()) {
 				LCSNotification lcsNotification =
-					LCSNotificationServiceUtil.
-						fetchLCSClusterEntryLCSNotification(
-							lcsClusterEntryId, lcsEventType.getType());
+					_lcsNotificationService.fetchLCSClusterEntryLCSNotification(
+						lcsClusterEntryId, lcsEventType.getType());
 
 				boolean enabled = parentLCSNotificationTypesEnabled.get(
 					lcsEventType.getType());
@@ -380,7 +408,7 @@ public class AccountAdvisor {
 		JSONArray lcsClusterNodesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		List<LCSClusterNode> lcsClusterNodes =
-			LCSClusterNodeServiceUtil.getLCSClusterEntryLCSClusterNodes(
+			_lcsClusterNodeService.getLCSClusterEntryLCSClusterNodes(
 				lcsClusterEntryId);
 
 		for (LCSClusterNode lcsClusterNode : lcsClusterNodes) {
@@ -394,8 +422,7 @@ public class AccountAdvisor {
 
 			for (LCSEventType lcsEventType : LCSEventType.getSupported()) {
 				LCSNotification lcsNotification =
-					LCSNotificationServiceUtil.
-						fetchLCSClusterNodeLCSNotification(
+					_lcsNotificationService.fetchLCSClusterNodeLCSNotification(
 							lcsClusterNode.getLcsClusterNodeId(),
 							lcsEventType.getType());
 
@@ -454,7 +481,11 @@ public class AccountAdvisor {
 	}
 
 	private ClassNameLocalService _classNameLocalService;
+	private LCSClusterEntryService _lcsClusterEntryService;
+	private LCSClusterNodeService _lcsClusterNodeService;
 	private LCSMessageService _lcsMessageService;
+	private LCSNotificationService _lcsNotificationService;
+	private LCSProjectService _lcsProjectService;
 	private NavigationAdvisor _navigationAdvisor;
 	private ResourceBundleLoader _resourceBundleLoader;
 

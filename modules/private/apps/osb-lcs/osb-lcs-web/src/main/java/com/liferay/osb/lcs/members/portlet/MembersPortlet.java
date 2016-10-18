@@ -151,6 +151,7 @@ public class MembersPortlet extends MVCPortlet {
 				resourceRequest.getLocale(), "your-request-failed-to-complete");
 
 			jsonObject.put(LCSConstants.JSON_KEY_MESSAGE, message);
+
 			jsonObject.put(
 				LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_FAILURE);
 
@@ -344,6 +345,7 @@ public class MembersPortlet extends MVCPortlet {
 					"you-cannot-invite-a-user-who-is-already-a-project-member");
 
 				jsonObject.put(LCSConstants.JSON_KEY_MESSAGE, message);
+
 				jsonObject.put(
 					LCSConstants.JSON_KEY_RESULT,
 					LCSConstants.JSON_VALUE_FAILURE);

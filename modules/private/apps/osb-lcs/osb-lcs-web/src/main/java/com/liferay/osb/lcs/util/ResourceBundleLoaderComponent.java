@@ -35,7 +35,9 @@ public class ResourceBundleLoaderComponent implements ResourceBundleLoader {
 		return _aggregateResourceBundleLoader.loadResourceBundle(languageId);
 	}
 
-	@Reference(target = "(bundle.symbolic.name=com.liferay.osb.lcs.web)", unbind = "-")
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.osb.lcs.web)", unbind = "-"
+	)
 	public void setResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader) {
 

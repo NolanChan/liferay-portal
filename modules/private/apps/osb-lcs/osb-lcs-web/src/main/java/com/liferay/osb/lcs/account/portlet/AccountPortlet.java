@@ -18,7 +18,7 @@ import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.advisor.UserAdvisor;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.model.LCSNotification;
-import com.liferay.osb.lcs.service.LCSNotificationServiceUtil;
+import com.liferay.osb.lcs.service.LCSNotificationService;
 import com.liferay.osb.lcs.web.internal.advisor.AccountAdvisor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -96,22 +96,22 @@ public class AccountPortlet extends MVCPortlet {
 
 		if (lcsClusterNodeId != LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID) {
 			lcsNotifications =
-				LCSNotificationServiceUtil.getLCSClusterNodeLCSNotifications(
+				_lcsNotificationService.getLCSClusterNodeLCSNotifications(
 					lcsClusterNodeId);
 		}
 		else if (lcsClusterEntryId != LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID) {
 			lcsNotifications =
-				LCSNotificationServiceUtil.getLCSClusterEntryLCSNotifications(
+				_lcsNotificationService.getLCSClusterEntryLCSNotifications(
 					lcsClusterEntryId);
 		}
 		else {
 			lcsNotifications =
-				LCSNotificationServiceUtil.getLCSProjectLCSNotifications(
+				_lcsNotificationService.getLCSProjectLCSNotifications(
 					lcsProjectId);
 		}
 
 		for (LCSNotification lcsNotification : lcsNotifications) {
-			LCSNotificationServiceUtil.deleteLCSNotification(
+			_lcsNotificationService.deleteLCSNotification(
 				lcsNotification.getLcsNotificationId());
 		}
 	}
@@ -139,17 +139,17 @@ public class AccountPortlet extends MVCPortlet {
 				(lcsClusterNodeId == LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID)) {
 
 				LCSNotification lcsNotification =
-					LCSNotificationServiceUtil.fetchLCSProjectLCSNotification(
+					_lcsNotificationService.fetchLCSProjectLCSNotification(
 						lcsProjectId, type);
 
 				if (lcsNotification == null) {
-					LCSNotificationServiceUtil.addLCSProjectLCSNotification(
+					_lcsNotificationService.addLCSProjectLCSNotification(
 						lcsProjectId, enabled, type);
 				}
 				else {
 					lcsNotification.setEnabled(enabled);
 
-					LCSNotificationServiceUtil.updateLCSNotification(
+					_lcsNotificationService.updateLCSNotification(
 						lcsNotification);
 				}
 			}
@@ -157,36 +157,33 @@ public class AccountPortlet extends MVCPortlet {
 						LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID) {
 
 				LCSNotification lcsNotification =
-					LCSNotificationServiceUtil.
-						fetchLCSClusterEntryLCSNotification(
-							lcsClusterEntryId, type);
+					_lcsNotificationService.fetchLCSClusterEntryLCSNotification(
+						lcsClusterEntryId, type);
 
 				if (lcsNotification == null) {
-					LCSNotificationServiceUtil.
-						addLCSClusterEntryLCSNotification(
-							lcsClusterEntryId, enabled, type);
+					_lcsNotificationService.addLCSClusterEntryLCSNotification(
+						lcsClusterEntryId, enabled, type);
 				}
 				else {
 					lcsNotification.setEnabled(enabled);
 
-					LCSNotificationServiceUtil.updateLCSNotification(
+					_lcsNotificationService.updateLCSNotification(
 						lcsNotification);
 				}
 			}
 			else {
 				LCSNotification lcsNotification =
-					LCSNotificationServiceUtil.
-						fetchLCSClusterNodeLCSNotification(
-							lcsClusterNodeId, type);
+					_lcsNotificationService.fetchLCSClusterNodeLCSNotification(
+						lcsClusterNodeId, type);
 
 				if (lcsNotification == null) {
-					LCSNotificationServiceUtil.addLCSClusterNodeLCSNotification(
+					_lcsNotificationService.addLCSClusterNodeLCSNotification(
 						lcsClusterNodeId, enabled, type);
 				}
 				else {
 					lcsNotification.setEnabled(enabled);
 
-					LCSNotificationServiceUtil.updateLCSNotification(
+					_lcsNotificationService.updateLCSNotification(
 						lcsNotification);
 				}
 			}
@@ -218,6 +215,7 @@ public class AccountPortlet extends MVCPortlet {
 				resourceRequest.getLocale(), "your-request-failed-to-complete");
 
 			jsonObject.put(LCSConstants.JSON_KEY_MESSAGE, message);
+
 			jsonObject.put(
 				LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_FAILURE);
 
@@ -228,6 +226,18 @@ public class AccountPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	public void setAccountAdvisor(AccountAdvisor accountAdvisor) {
 		_accountAdvisor = accountAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSNotificationService(
+		LCSNotificationService lcsNotificationService) {
+
+		_lcsNotificationService = lcsNotificationService;
+	}
+
+	@Reference(unbind = "-")
+	public void setPatchAdvisor(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -254,7 +264,7 @@ public class AccountPortlet extends MVCPortlet {
 		user.setLanguageId(languageId);
 		user.setTimeZoneId(timeZoneId);
 
-		UserLocalServiceUtil.updateUser(user);
+		_userLocalService.updateUser(user);
 
 		long defaultLCSProjectId = ParamUtil.getLong(
 			actionRequest, "defaultLCSProjectId");
@@ -306,6 +316,7 @@ public class AccountPortlet extends MVCPortlet {
 			themeDisplay.getTimeZone());
 
 		jsonObject.put(LCSConstants.JSON_KEY_DATA, jsonArray);
+
 		jsonObject.put(
 			LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_SUCCESS);
 
@@ -315,6 +326,8 @@ public class AccountPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(AccountPortlet.class);
 
 	private AccountAdvisor _accountAdvisor;
+	private LCSNotificationService _lcsNotificationService;
 	private UserAdvisor _userAdvisor;
+	private UserLocalService _userLocalService;
 
 }

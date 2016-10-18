@@ -20,8 +20,8 @@ import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.model.LCSSubscriptionEntry;
 import com.liferay.osb.lcs.report.Report;
 import com.liferay.osb.lcs.report.ReportContext;
-import com.liferay.osb.lcs.service.LCSClusterEntryServiceUtil;
-import com.liferay.osb.lcs.service.LCSSubscriptionEntryServiceUtil;
+import com.liferay.osb.lcs.service.LCSClusterEntryService;
+import com.liferay.osb.lcs.service.LCSSubscriptionEntryService;
 import com.liferay.osb.lcs.util.ApplicationProfile;
 import com.liferay.osb.lcs.web.internal.advisor.SubscriptionsAdvisor;
 import com.liferay.osb.lcs.web.internal.report.ReportFactory;
@@ -151,11 +151,24 @@ public class SubscriptionsPortlet extends MVCPortlet {
 				resourceRequest.getLocale(), "your-request-failed-to-complete");
 
 			jsonObject.put(LCSConstants.JSON_KEY_MESSAGE, message);
+
 			jsonObject.put(
 				LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_FAILURE);
 
 			writeJSON(resourceRequest, resourceResponse, jsonObject);
 		}
+	}
+
+	public void setLCSClusterEntryService(
+		LCSClusterEntryService lcsClusterEntryService) {
+
+		_lcsClusterEntryService = lcsClusterEntryService;
+	}
+
+	public void setLCSSubscriptionEntryService(
+		LCSSubscriptionEntryService lcsSubscriptionEntryService) {
+
+		_lcsSubscriptionEntryService = lcsSubscriptionEntryService;
 	}
 
 	public void setSubscriptionsAdvisor(
@@ -263,6 +276,7 @@ public class SubscriptionsPortlet extends MVCPortlet {
 			themeDisplay.getLocale());
 
 		jsonObject.put(LCSConstants.JSON_KEY_DATA, billsJSONObject);
+
 		jsonObject.put(
 			LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_SUCCESS);
 
@@ -342,6 +356,7 @@ public class SubscriptionsPortlet extends MVCPortlet {
 
 		jsonObject.put(
 			LCSConstants.JSON_KEY_DATA, lcsClusterNodeUptimesJSONObject);
+
 		jsonObject.put(
 			LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_SUCCESS);
 
@@ -367,6 +382,7 @@ public class SubscriptionsPortlet extends MVCPortlet {
 			endPeriodArray[1], endPeriodArray[0]);
 
 		jsonObject.put(LCSConstants.JSON_KEY_DATA, jsonArray);
+
 		jsonObject.put(
 			LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_SUCCESS);
 
@@ -417,13 +433,13 @@ public class SubscriptionsPortlet extends MVCPortlet {
 			boolean refresh = ParamUtil.getBoolean(resourceRequest, "refresh");
 
 			if (refresh) {
-				LCSSubscriptionEntryServiceUtil.
+				_lcsSubscriptionEntryService.
 					refreshLCSProjectLCSSubscriptionEntries(lcsProjectId);
 			}
 		}
 
 		List<LCSSubscriptionEntry> lcsOrderEntries =
-			LCSSubscriptionEntryServiceUtil.getLCSProjectLCSSubscriptionEntries(
+			_lcsSubscriptionEntryService.getLCSProjectLCSSubscriptionEntries(
 				lcsProjectId);
 
 		JSONArray lcsSubscriptionEntriesJSONArray =
@@ -467,14 +483,13 @@ public class SubscriptionsPortlet extends MVCPortlet {
 			"hasElasticSubscription",
 			_subscriptionsAdvisor.hasElasticSubscription(lcsProjectId));
 
-		LCSClusterEntryServiceUtil.updateSubscriptionType(
+		_lcsClusterEntryService.updateSubscriptionType(
 			lcsClusterEntryId, subscriptionType);
 
 		if (_subscriptionsAdvisor.hasElasticSubscription(lcsProjectId)) {
 			boolean elastic = ParamUtil.getBoolean(resourceRequest, "elastic");
 
-			LCSClusterEntryServiceUtil.updateElastic(
-				lcsClusterEntryId, elastic);
+			_lcsClusterEntryService.updateElastic(lcsClusterEntryId, elastic);
 		}
 
 		PortletConfig portletConfig = getPortletConfig();
@@ -525,6 +540,8 @@ public class SubscriptionsPortlet extends MVCPortlet {
 
 	private static volatile OSBLCSConfiguration _osbLCSConfiguration;
 
+	private LCSClusterEntryService _lcsClusterEntryService;
+	private LCSSubscriptionEntryService _lcsSubscriptionEntryService;
 	private SubscriptionsAdvisor _subscriptionsAdvisor;
 
 }

@@ -76,7 +76,7 @@ public class LCSClusterNodeUptimesPDFReport extends BaseReport {
 			lcsClusterNodeUptime.getLcsProjectName(), month, year);
 	}
 
-	public void setLcsClusterNodeUptimeService(
+	public void setLCSClusterNodeUptimeService(
 		LCSClusterNodeUptimeService lcsClusterNodeUptimeService) {
 
 		_lcsClusterNodeUptimeService = lcsClusterNodeUptimeService;

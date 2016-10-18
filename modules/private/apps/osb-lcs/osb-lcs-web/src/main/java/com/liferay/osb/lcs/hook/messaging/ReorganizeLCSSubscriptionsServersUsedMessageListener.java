@@ -15,8 +15,8 @@
 package com.liferay.osb.lcs.hook.messaging;
 
 import com.liferay.osb.lcs.model.LCSProject;
-import com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSSubscriptionEntryLocalServiceUtil;
+import com.liferay.osb.lcs.service.LCSProjectLocalService;
+import com.liferay.osb.lcs.service.LCSSubscriptionEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -47,6 +47,18 @@ import org.osgi.service.component.annotations.Reference;
 public class ReorganizeLCSSubscriptionsServersUsedMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
+	public void setLCSProjectLocalService(
+		LCSProjectLocalService lcsProjectLocalService) {
+
+		_lcsProjectLocalService = lcsProjectLocalService;
+	}
+
+	public void setLCSSubscriptionEntryLocalService(
+		LCSSubscriptionEntryLocalService lcsSubscriptionEntryLocalService) {
+
+		_lcsSubscriptionEntryLocalService = lcsSubscriptionEntryLocalService;
+	}
+
 	@Activate
 	protected void activate() {
 		schedulerEntryImpl.setTrigger(
@@ -70,7 +82,7 @@ public class ReorganizeLCSSubscriptionsServersUsedMessageListener
 		}
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			LCSProjectLocalServiceUtil.getActionableDynamicQuery();
+			_lcsProjectLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<LCSProject>() {
@@ -85,7 +97,7 @@ public class ReorganizeLCSSubscriptionsServersUsedMessageListener
 						return;
 					}
 
-					LCSSubscriptionEntryLocalServiceUtil.
+					_lcsSubscriptionEntryLocalService.
 						reorganizeLCSSubsriptionsServersUsed(
 							lcsProject.getLcsProjectId());
 				}
@@ -114,6 +126,8 @@ public class ReorganizeLCSSubscriptionsServersUsedMessageListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReorganizeLCSSubscriptionsServersUsedMessageListener.class);
 
+	private LCSProjectLocalService _lcsProjectLocalService;
+	private LCSSubscriptionEntryLocalService _lcsSubscriptionEntryLocalService;
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

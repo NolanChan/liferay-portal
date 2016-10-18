@@ -145,6 +145,7 @@ public class ServerPortlet extends MVCPortlet {
 				resourceRequest.getLocale(), "your-request-failed-to-complete");
 
 			jsonObject.put(LCSConstants.JSON_KEY_MESSAGE, message);
+
 			jsonObject.put(
 				LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_FAILURE);
 
@@ -153,7 +154,7 @@ public class ServerPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsClusterNodeCurrentThreadsMetricsService(
+	public void setLCSClusterNodeCurrentThreadsMetricsService(
 		LCSClusterNodeCurrentThreadsMetricsService
 			lcsClusterNodeCurrentThreadsMetricsService) {
 
@@ -162,7 +163,7 @@ public class ServerPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsClusterNodeJDBCConnectionPoolMetricsService(
+	public void setLCSClusterNodeJDBCConnectionPoolMetricsService(
 		LCSClusterNodeJDBCConnectionPoolMetricsService
 			lcsClusterNodeJDBCConnectionPoolMetricsService) {
 
@@ -171,14 +172,14 @@ public class ServerPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsClusterNodeJVMMetricsService(
+	public void setLCSClusterNodeJVMMetricsService(
 		LCSClusterNodeJVMMetricsService lcsClusterNodeJVMMetricsService) {
 
 		_lcsClusterNodeJVMMetricsService = lcsClusterNodeJVMMetricsService;
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsClusterNodeService(
+	public void setLCSClusterNodeService(
 		LCSClusterNodeService lcsClusterNodeService) {
 
 		_lcsClusterNodeService = lcsClusterNodeService;

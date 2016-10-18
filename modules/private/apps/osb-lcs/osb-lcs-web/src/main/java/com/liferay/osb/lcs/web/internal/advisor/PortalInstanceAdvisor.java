@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -303,7 +304,7 @@ public class PortalInstanceAdvisor {
 			String javaInputArguments = softwareMetadata.get(key);
 
 			javaInputArguments = StringUtil.replaceFirst(
-				javaInputArguments, StringPool.DASH, StringPool.BLANK);
+				javaInputArguments, CharPool.DASH, StringPool.BLANK);
 
 			String[] javaInputArgumentsArray = javaInputArguments.split(
 				StringPool.COMMA + StringPool.DASH);
@@ -546,6 +547,7 @@ public class PortalInstanceAdvisor {
 			String name = lcsStatsLayoutMetricsEvents.getName();
 
 			summaryJSONObject.put("name", name);
+
 			summaryJSONObject.put(
 				"pageViews", lcsStatsLayoutMetricsEvents.getSampleCount());
 
@@ -573,6 +575,7 @@ public class PortalInstanceAdvisor {
 
 		jsonObject.put(
 			LCSConstants.JSON_KEY_DATA, portalPropertiesDifferenceJSONArray);
+
 		jsonObject.put(
 			LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_SUCCESS);
 
@@ -605,12 +608,14 @@ public class PortalInstanceAdvisor {
 		String offsetHour = numberFormat.format(offset / Time.HOUR);
 
 		sb.append(offsetHour);
+
 		sb.append(StringPool.COLON);
 
 		String offsetMinute = numberFormat.format(
 			Math.abs(offset % Time.HOUR) / Time.MINUTE);
 
 		sb.append(offsetMinute);
+
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
@@ -623,7 +628,7 @@ public class PortalInstanceAdvisor {
 		_lcsClusterNodeDetailsService = lcsClusterNodeDetailsService;
 	}
 
-	public void setLcsClusterNodeHibernateMetricsService(
+	public void setLCSClusterNodeHibernateMetricsService(
 		LCSClusterNodeHibernateMetricsService
 			lcsClusterNodeHibernateMetricsService) {
 
@@ -631,7 +636,7 @@ public class PortalInstanceAdvisor {
 			lcsClusterNodeHibernateMetricsService;
 	}
 
-	public void setLcsClusterNodeInstallationEnvironmentService(
+	public void setLCSClusterNodeInstallationEnvironmentService(
 		LCSClusterNodeInstallationEnvironmentService
 			lcsClusterNodeInstallationEnvironmentService) {
 
@@ -639,13 +644,13 @@ public class PortalInstanceAdvisor {
 			lcsClusterNodeInstallationEnvironmentService;
 	}
 
-	public void setLcsClusterNodeJVMMetricsService(
+	public void setLCSClusterNodeJVMMetricsService(
 		LCSClusterNodeJVMMetricsService lcsClusterNodeJVMMetricsService) {
 
 		_lcsClusterNodeJVMMetricsService = lcsClusterNodeJVMMetricsService;
 	}
 
-	public void setLcsClusterNodeLiferayVMMetricsService(
+	public void setLCSClusterNodeLiferayVMMetricsService(
 		LCSClusterNodeLiferayVMMetricsService
 			lcsClusterNodeLiferayVMMetricsService) {
 
@@ -654,19 +659,19 @@ public class PortalInstanceAdvisor {
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsClusterNodeService(
+	public void setLCSClusterNodeService(
 		LCSClusterNodeService lcsClusterNodeService) {
 
 		_lcsClusterNodeService = lcsClusterNodeService;
 	}
 
-	public void setLcsClusterNodeSiteService(
+	public void setLCSClusterNodeSiteService(
 		LCSClusterNodeSiteService lcsClusterNodeSiteService) {
 
 		_lcsClusterNodeSiteService = lcsClusterNodeSiteService;
 	}
 
-	public void setLcsStatsLayoutMetricsEventsService(
+	public void setLCSStatsLayoutMetricsEventsService(
 		LCSStatsLayoutMetricsEventsService lcsStatsLayoutMetricsEventsService) {
 
 		_lcsStatsLayoutMetricsEventsService =

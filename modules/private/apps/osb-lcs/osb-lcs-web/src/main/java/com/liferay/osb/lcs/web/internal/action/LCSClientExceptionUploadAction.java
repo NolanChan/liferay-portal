@@ -55,7 +55,7 @@ public class LCSClientExceptionUploadAction extends BaseStrutsAction {
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsPortletLogAdvisor(
+	public void setLCSPortletLogAdvisor(
 		LCSPortletLogAdvisor lcsPortletLogAdvisor) {
 
 		_lcsPortletLogAdvisor = lcsPortletLogAdvisor;

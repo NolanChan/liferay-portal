@@ -16,16 +16,16 @@ package com.liferay.osb.lcs.hook.messaging;
 
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.model.ExpandoValue;
-import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.model.CorpProject;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
-import com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSNotificationLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil;
+import com.liferay.osb.lcs.service.LCSClusterEntryLocalService;
+import com.liferay.osb.lcs.service.LCSNotificationLocalService;
+import com.liferay.osb.lcs.service.LCSProjectLocalService;
+import com.liferay.osb.lcs.service.LCSRoleLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -63,6 +63,48 @@ import org.osgi.service.component.annotations.Reference;
 public class CheckCorruptedLCSProjectMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
+	@Reference(unbind = "-")
+	public void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setExpandoValueLocalService(
+		ExpandoValueLocalService expandoValueLocalService) {
+
+		_expandoValueLocalService = expandoValueLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSClusterEntryLocalService(
+		LCSClusterEntryLocalService lcsClusterEntryLocalService) {
+
+		_lcsClusterEntryLocalService = lcsClusterEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSNotificationLocalService(
+		LCSNotificationLocalService lcsNotificationLocalService) {
+
+		_lcsNotificationLocalService = lcsNotificationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSProjectLocalService(
+		LCSProjectLocalService lcsProjectLocalService) {
+
+		_lcsProjectLocalService = lcsProjectLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSRoleLocalService(
+		LCSRoleLocalService lcsRoleLocalService) {
+
+		_lcsRoleLocalService = lcsRoleLocalService;
+	}
+
 	@Activate
 	protected void activate() {
 		schedulerEntryImpl.setTrigger(
@@ -82,25 +124,25 @@ public class CheckCorruptedLCSProjectMessageListener
 	protected void deleteLCSProject(LCSProject lcsProject)
 		throws PortalException {
 
-		LCSProjectLocalServiceUtil.deleteLCSProject(lcsProject);
+		_lcsProjectLocalService.deleteLCSProject(lcsProject);
 
-		LCSClusterEntryLocalServiceUtil.deleteLCSProjectClusters(
+		_lcsClusterEntryLocalService.deleteLCSProjectClusters(
 			lcsProject.getLcsProjectId());
 
-		LCSNotificationLocalServiceUtil.deleteLCSProjectLCSNotification(
+		_lcsNotificationLocalService.deleteLCSProjectLCSNotification(
 			lcsProject.getLcsProjectId());
 
 		long companyId = PortalUtil.getDefaultCompanyId();
-		long classNameId = ClassNameLocalServiceUtil.getClassNameId(User.class);
+		long classNameId = _classNameLocalService.getClassNameId(User.class);
 
 		List<ExpandoValue> expandoValues =
-			ExpandoValueLocalServiceUtil.getColumnValues(
+			_expandoValueLocalService.getColumnValues(
 				companyId, classNameId,
 				ExpandoTableConstants.DEFAULT_TABLE_NAME, "defaultLCSProjectId",
 				String.valueOf(lcsProject.getLcsProjectId()), -1, -1);
 
 		for (ExpandoValue expandoValue : expandoValues) {
-			ExpandoValueLocalServiceUtil.deleteExpandoValue(expandoValue);
+			_expandoValueLocalService.deleteExpandoValue(expandoValue);
 		}
 
 		if (_log.isInfoEnabled()) {
@@ -121,7 +163,7 @@ public class CheckCorruptedLCSProjectMessageListener
 		_lastCheckDate = new Date();
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			LCSProjectLocalServiceUtil.getActionableDynamicQuery();
+			_lcsProjectLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<LCSProject>() {
@@ -139,12 +181,12 @@ public class CheckCorruptedLCSProjectMessageListener
 					return;
 				}
 
-				int count = LCSRoleLocalServiceUtil.getLCSProjectLCSRolesCount(
+				int count = _lcsRoleLocalService.getLCSProjectLCSRolesCount(
 					lcsProject.getLcsProjectId());
 
 				if (count != 0) {
 					List<LCSRole> lcsRoles =
-						LCSRoleLocalServiceUtil.getLCSProjectLCSRoles(
+						_lcsRoleLocalService.getLCSProjectLCSRoles(
 							lcsProject.getLcsProjectId(),
 							LCSRoleConstants.ROLE_LCS_ADMINISTRATOR);
 
@@ -185,10 +227,16 @@ public class CheckCorruptedLCSProjectMessageListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		CheckCorruptedLCSProjectMessageListener.class);
 
+	private ClassNameLocalService _classNameLocalService;
 	private final Format _dateFormatDateTime =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"MMM d, " + "yyyy - hh:mm:ss");
+	private ExpandoValueLocalService _expandoValueLocalService;
 	private Date _lastCheckDate = new Date();
+	private LCSClusterEntryLocalService _lcsClusterEntryLocalService;
+	private LCSNotificationLocalService _lcsNotificationLocalService;
+	private LCSProjectLocalService _lcsProjectLocalService;
+	private LCSRoleLocalService _lcsRoleLocalService;
 	private OSBPortletService _osbPortletService;
 	private SchedulerEngineHelper _schedulerEngineHelper;
 

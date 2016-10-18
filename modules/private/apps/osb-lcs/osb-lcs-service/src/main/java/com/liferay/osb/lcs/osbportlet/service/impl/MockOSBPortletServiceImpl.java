@@ -401,14 +401,14 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsProjectLocalService(
+	public void setLCSProjectLocalService(
 		LCSProjectLocalService lcsProjectLocalService) {
 
 		_lcsProjectLocalService = lcsProjectLocalService;
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsSubscriptionEntryLocalService(
+	public void setLCSSubscriptionEntryLocalService(
 		LCSSubscriptionEntryLocalService lcsSubscriptionEntryLocalService) {
 
 		_lcsSubscriptionEntryLocalService = lcsSubscriptionEntryLocalService;

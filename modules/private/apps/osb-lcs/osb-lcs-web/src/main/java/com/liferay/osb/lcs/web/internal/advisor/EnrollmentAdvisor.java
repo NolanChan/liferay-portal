@@ -49,7 +49,7 @@ public class EnrollmentAdvisor {
 	}
 
 	@Reference(unbind = "-")
-	public void setLcsRoleLocalService(
+	public void setLCSRoleLocalService(
 		LCSRoleLocalService lcsRoleLocalService) {
 
 		_lcsRoleLocalService = lcsRoleLocalService;
