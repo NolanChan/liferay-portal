@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.lcs.subscription.SubscriptionType;
 import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
-import com.liferay.osb.lcs.exception.NoSuchLCSProjectException;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSProject;
