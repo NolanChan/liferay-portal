@@ -3,6 +3,7 @@
 /**
  * Renders a list of documentation projects.
  *
+ * @param viewURL
  * @param documentationProjects
  * @param predefinedFilterTags
  * @param strings
@@ -16,6 +17,10 @@
 
 			<div class="tag-container">
 				<ul class="predefined-fitler-tags">
+					<li>
+						<a href="{$viewURL}">{$strings['all']}</a>
+					</li>
+
 					{foreach $tag in $predefinedFilterTags}
 						<li {if $tag.selected}class="selected"{/if}>
 							<a href="{$tag.url}">{$tag.tagName}</a>
