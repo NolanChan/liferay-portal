@@ -16,12 +16,12 @@ package com.liferay.osb.lcs.email;
 
 import com.liferay.osb.lcs.advisor.NavigationAdvisor;
 import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
+import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.util.ContentUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,7 +97,11 @@ public abstract class BaseEmailTemplate implements EmailTemplate {
 
 		Map<Locale, String> map = new HashMap<>();
 
-		map.put(LocaleUtil.getDefault(), ContentUtil.get(templatePath));
+		Class clazz = getClass();
+
+		map.put(
+			LocaleUtil.getDefault(),
+			ContentUtil.get(clazz.getClassLoader(), templatePath));
 
 		return map;
 	}
