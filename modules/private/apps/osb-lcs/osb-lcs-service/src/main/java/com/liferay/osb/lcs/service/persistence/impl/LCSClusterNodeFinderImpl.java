@@ -17,6 +17,7 @@ package com.liferay.osb.lcs.service.persistence.impl;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.impl.LCSClusterNodeImpl;
 import com.liferay.osb.lcs.service.persistence.LCSClusterNodeFinder;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class LCSClusterNodeFinderImpl
 		String lcsClusterEntryName, String lcsProjectName, boolean andOperator,
 		int start, int end) {
 
-		String sql = CustomSQLUtil.get(FIND_BY_LCEN_LPN);
+		String sql = CustomSQLUtil.get(getClass(), FIND_BY_LCEN_LPN);
 
 		if (Validator.isNull(lcsClusterEntryName)) {
 			sql = StringUtil.replace(
@@ -111,7 +111,7 @@ public class LCSClusterNodeFinderImpl
 	public List<LCSClusterNode> findByU_A(
 		long userId, boolean archived, int start, int end) {
 
-		String sql = CustomSQLUtil.get(FIND_BY_U_A);
+		String sql = CustomSQLUtil.get(getClass(), FIND_BY_U_A);
 
 		sql = StringUtil.replace(
 			sql, "[$LCS_CLUSTER_NODE_ACTIVE_TEMPLATE$]",
