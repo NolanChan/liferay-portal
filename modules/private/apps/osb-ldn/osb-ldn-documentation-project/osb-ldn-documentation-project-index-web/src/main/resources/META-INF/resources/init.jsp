@@ -27,5 +27,5 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <portlet:defineObjects />
 
 <%
-	String defaultTags = portletPreferences.getValue("defaultTags", "");
+	String predefinedFilterTags = portletPreferences.getValue("predefinedFilterTags", "");
 %>

@@ -27,7 +27,7 @@
 		value="<%= configurationRenderURL %>"
 	/>
 
-	<aui:input name="defaultTags" value="<%= defaultTags %>" />
+	<aui:input name="predefinedFilterTags" value="<%= predefinedFilterTags %>" />
 
 	<aui:button-row>
 		<aui:button type="submit"></aui:button>

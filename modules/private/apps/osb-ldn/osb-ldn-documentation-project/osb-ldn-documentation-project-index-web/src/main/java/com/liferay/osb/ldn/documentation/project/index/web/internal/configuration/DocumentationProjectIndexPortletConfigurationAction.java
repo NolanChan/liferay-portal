@@ -46,9 +46,11 @@ public class DocumentationProjectIndexPortletConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
-		String defaultTags = ParamUtil.getString(actionRequest, "defaultTags");
+		String predefinedFilterTags = ParamUtil.getString(
+			actionRequest, "predefinedFilterTags");
 
-		setPreference(actionRequest, "defaultTags", defaultTags);
+		setPreference(
+			actionRequest, "predefinedFilterTags", predefinedFilterTags);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

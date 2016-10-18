@@ -61,7 +61,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + DocumentationProjectPortletKeys.DOCUMENTATION_PROJECT_INDEX,
+		"javax.portlet.name=" +
+			DocumentationProjectPortletKeys.DOCUMENTATION_PROJECT_INDEX,
 		"mvc.command.name=/", "mvc.command.name=/view"
 	},
 	service = MVCRenderCommand.class
@@ -94,7 +95,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		template.put("documentationProjects", documentationProjectsList);
 
-		template.put("defaultTags", getTagsList(renderRequest, renderResponse));
+		template.put(
+			"predefinedFilterTags", getTagsList(renderRequest, renderResponse));
 
 		Map<String, Object> strings = getStringsMap(
 			themeDisplay.getLanguageId(), documentationProjectsList.size());
@@ -215,9 +217,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		String isAllTag = renderRequest.getParameter("allTag");
 
-		String defaultTags = portletPreferences.getValue("defaultTags", "");
+		String predefinedFilterTags = portletPreferences.getValue(
+			"predefinedFilterTags", "");
 
-		String[] defaultTagsSplit = defaultTags.split(StringPool.COMMA);
+		String[] predefinedFilterTagsSplit = predefinedFilterTags.split(
+			StringPool.COMMA);
 
 		Map<String, Object> allTag = new HashMap<>();
 
@@ -239,7 +243,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		url.setParameter("allTag", removeTag);
 
-		for (String tag : defaultTagsSplit) {
+		for (String tag : predefinedFilterTagsSplit) {
 			tag = tag.trim();
 
 			Map<String, Object> tagObjectMap = new HashMap<>();
