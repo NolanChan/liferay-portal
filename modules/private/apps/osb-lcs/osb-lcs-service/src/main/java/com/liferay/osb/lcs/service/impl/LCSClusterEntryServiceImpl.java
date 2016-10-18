@@ -257,7 +257,7 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterEntryLocalService.updateLCSClusterEntry(
-			lcsClusterEntryId, name, description, location);
+			lcsClusterEntryId, name, description, null, location);
 	}
 
 	@Override

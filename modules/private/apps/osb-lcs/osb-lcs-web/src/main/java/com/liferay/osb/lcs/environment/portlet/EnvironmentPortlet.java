@@ -14,6 +14,7 @@
 
 package com.liferay.osb.lcs.environment.portlet;
 
+import com.liferay.lcs.subscription.SubscriptionType;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
@@ -111,7 +112,7 @@ public class EnvironmentPortlet extends MVCPortlet {
 		LCSClusterEntry lscClusterEntry =
 			_lcsClusterEntryService.addLCSClusterEntry(
 				layoutLCSProjectId, name, description, location,
-				lcsClusterEntryType);
+				SubscriptionType.UNDEFINED.name(), lcsClusterEntryType);
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
 			actionRequest, OSBLCSPortletKeys.ENVIRONMENT,
