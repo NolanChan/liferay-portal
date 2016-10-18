@@ -129,12 +129,12 @@ public class LCSMessageServiceSoap {
 		}
 	}
 
-	public static com.liferay.osb.lcs.model.LCSMessageSoap[] getLCSProjectLCSMessages(
-		long lcsProjectId, java.lang.String sourceSystemName)
+	public static com.liferay.osb.lcs.model.LCSMessageSoap[] getLCSMessages(
+		java.util.Date modifyDateGT, java.util.Date modifyDateLT)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.osb.lcs.model.LCSMessage> returnValue = LCSMessageServiceUtil.getLCSProjectLCSMessages(lcsProjectId,
-					sourceSystemName);
+			java.util.List<com.liferay.osb.lcs.model.LCSMessage> returnValue = LCSMessageServiceUtil.getLCSMessages(modifyDateGT,
+					modifyDateLT);
 
 			return com.liferay.osb.lcs.model.LCSMessageSoap.toSoapModels(returnValue);
 		}
@@ -145,12 +145,12 @@ public class LCSMessageServiceSoap {
 		}
 	}
 
-	public static com.liferay.osb.lcs.model.LCSMessageSoap[] getLCSMessages(
-		java.util.Date modifyDateGT, java.util.Date modifyDateLT)
+	public static com.liferay.osb.lcs.model.LCSMessageSoap[] getLCSProjectLCSMessages(
+		long lcsProjectId, java.lang.String sourceSystemName)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.osb.lcs.model.LCSMessage> returnValue = LCSMessageServiceUtil.getLCSMessages(modifyDateGT,
-					modifyDateLT);
+			java.util.List<com.liferay.osb.lcs.model.LCSMessage> returnValue = LCSMessageServiceUtil.getLCSProjectLCSMessages(lcsProjectId,
+					sourceSystemName);
 
 			return com.liferay.osb.lcs.model.LCSMessageSoap.toSoapModels(returnValue);
 		}

@@ -57,45 +57,12 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class LCSClusterEntryServiceHttp {
 	public static com.liferay.osb.lcs.model.LCSClusterEntry addLCSClusterEntry(
 		HttpPrincipal httpPrincipal, long lcsProjectId, java.lang.String name,
-		java.lang.String description, java.lang.String location, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
-					"addLCSClusterEntry", _addLCSClusterEntryParameterTypes0);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					lcsProjectId, name, description, location, type);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.osb.lcs.model.LCSClusterEntry)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static com.liferay.osb.lcs.model.LCSClusterEntry addLCSClusterEntry(
-		HttpPrincipal httpPrincipal, long lcsProjectId, java.lang.String name,
 		java.lang.String description, java.lang.String location,
 		java.lang.String subscriptionType, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
-					"addLCSClusterEntry", _addLCSClusterEntryParameterTypes1);
+					"addLCSClusterEntry", _addLCSClusterEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId, name, description, location,
@@ -129,7 +96,7 @@ public class LCSClusterEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
 					"deleteLCSClusterEntry",
-					_deleteLCSClusterEntryParameterTypes2);
+					_deleteLCSClusterEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterEntryId);
@@ -162,7 +129,7 @@ public class LCSClusterEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
 					"deleteLCSProjectClusters",
-					_deleteLCSProjectClustersParameterTypes3);
+					_deleteLCSProjectClustersParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId);
@@ -193,7 +160,7 @@ public class LCSClusterEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
 					"exportLCSClusterEntryToken",
-					_exportLCSClusterEntryTokenParameterTypes4);
+					_exportLCSClusterEntryTokenParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId, lcsClusterEntryName, subscriptionType, type);
@@ -227,7 +194,7 @@ public class LCSClusterEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
 					"getArchivedLCSProjectLCSClusterEntries",
-					_getArchivedLCSProjectLCSClusterEntriesParameterTypes5);
+					_getArchivedLCSProjectLCSClusterEntriesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId, subscriptionType);
@@ -259,7 +226,7 @@ public class LCSClusterEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
-					"getLCSClusterEntry", _getLCSClusterEntryParameterTypes6);
+					"getLCSClusterEntry", _getLCSClusterEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterEntryId);
@@ -292,7 +259,7 @@ public class LCSClusterEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
 					"getLCSProjectLCSClusterEntries",
-					_getLCSProjectLCSClusterEntriesParameterTypes7);
+					_getLCSProjectLCSClusterEntriesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId);
@@ -326,7 +293,7 @@ public class LCSClusterEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
 					"getLCSProjectLCSClusterEntries",
-					_getLCSProjectLCSClusterEntriesParameterTypes8);
+					_getLCSProjectLCSClusterEntriesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId, subscriptionType);
@@ -359,7 +326,7 @@ public class LCSClusterEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
 					"getLCSProjectManageableLCSClusterEntries",
-					_getLCSProjectManageableLCSClusterEntriesParameterTypes9);
+					_getLCSProjectManageableLCSClusterEntriesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId);
@@ -392,7 +359,7 @@ public class LCSClusterEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
 					"getUserLCSClusterEntries",
-					_getUserLCSClusterEntriesParameterTypes10);
+					_getUserLCSClusterEntriesParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -424,7 +391,7 @@ public class LCSClusterEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
 					"getUserLCSClusterEntries",
-					_getUserLCSClusterEntriesParameterTypes11);
+					_getUserLCSClusterEntriesParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId);
@@ -456,7 +423,7 @@ public class LCSClusterEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
-					"updateElastic", _updateElasticParameterTypes12);
+					"updateElastic", _updateElasticParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterEntryId, elastic);
@@ -490,7 +457,7 @@ public class LCSClusterEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
 					"updateHighPageLoadTime",
-					_updateHighPageLoadTimeParameterTypes13);
+					_updateHighPageLoadTimeParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterEntryId, highPageLoadTime);
@@ -525,7 +492,7 @@ public class LCSClusterEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
 					"updateLCSClusterEntry",
-					_updateLCSClusterEntryParameterTypes14);
+					_updateLCSClusterEntryParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterEntryId, name, description, location);
@@ -559,7 +526,7 @@ public class LCSClusterEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
 					"updateMediumPageLoadTime",
-					_updateMediumPageLoadTimeParameterTypes15);
+					_updateMediumPageLoadTimeParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterEntryId, mediumPageLoadTime);
@@ -593,7 +560,7 @@ public class LCSClusterEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryServiceUtil.class,
 					"updateSubscriptionType",
-					_updateSubscriptionTypeParameterTypes16);
+					_updateSubscriptionTypeParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterEntryId, subscriptionType);
@@ -623,53 +590,49 @@ public class LCSClusterEntryServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(LCSClusterEntryServiceHttp.class);
 	private static final Class<?>[] _addLCSClusterEntryParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, int.class
-		};
-	private static final Class<?>[] _addLCSClusterEntryParameterTypes1 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, int.class
 		};
-	private static final Class<?>[] _deleteLCSClusterEntryParameterTypes2 = new Class[] {
+	private static final Class<?>[] _deleteLCSClusterEntryParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _deleteLCSProjectClustersParameterTypes3 = new Class[] {
+	private static final Class<?>[] _deleteLCSProjectClustersParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _exportLCSClusterEntryTokenParameterTypes4 = new Class[] {
+	private static final Class<?>[] _exportLCSClusterEntryTokenParameterTypes3 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			int.class
 		};
-	private static final Class<?>[] _getArchivedLCSProjectLCSClusterEntriesParameterTypes5 =
+	private static final Class<?>[] _getArchivedLCSProjectLCSClusterEntriesParameterTypes4 =
 		new Class[] { long.class, java.lang.String.class };
-	private static final Class<?>[] _getLCSClusterEntryParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getLCSClusterEntryParameterTypes5 = new Class[] {
 			long.class
 		};
+	private static final Class<?>[] _getLCSProjectLCSClusterEntriesParameterTypes6 =
+		new Class[] { long.class };
 	private static final Class<?>[] _getLCSProjectLCSClusterEntriesParameterTypes7 =
-		new Class[] { long.class };
-	private static final Class<?>[] _getLCSProjectLCSClusterEntriesParameterTypes8 =
 		new Class[] { long.class, java.lang.String.class };
-	private static final Class<?>[] _getLCSProjectManageableLCSClusterEntriesParameterTypes9 =
+	private static final Class<?>[] _getLCSProjectManageableLCSClusterEntriesParameterTypes8 =
 		new Class[] { long.class };
-	private static final Class<?>[] _getUserLCSClusterEntriesParameterTypes10 = new Class[] {
+	private static final Class<?>[] _getUserLCSClusterEntriesParameterTypes9 = new Class[] {
 			
 		};
-	private static final Class<?>[] _getUserLCSClusterEntriesParameterTypes11 = new Class[] {
+	private static final Class<?>[] _getUserLCSClusterEntriesParameterTypes10 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateElasticParameterTypes12 = new Class[] {
+	private static final Class<?>[] _updateElasticParameterTypes11 = new Class[] {
 			long.class, boolean.class
 		};
-	private static final Class<?>[] _updateHighPageLoadTimeParameterTypes13 = new Class[] {
+	private static final Class<?>[] _updateHighPageLoadTimeParameterTypes12 = new Class[] {
 			long.class, int.class
 		};
-	private static final Class<?>[] _updateLCSClusterEntryParameterTypes14 = new Class[] {
+	private static final Class<?>[] _updateLCSClusterEntryParameterTypes13 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class
 		};
-	private static final Class<?>[] _updateMediumPageLoadTimeParameterTypes15 = new Class[] {
+	private static final Class<?>[] _updateMediumPageLoadTimeParameterTypes14 = new Class[] {
 			long.class, int.class
 		};
-	private static final Class<?>[] _updateSubscriptionTypeParameterTypes16 = new Class[] {
+	private static final Class<?>[] _updateSubscriptionTypeParameterTypes15 = new Class[] {
 			long.class, java.lang.String.class
 		};
 }

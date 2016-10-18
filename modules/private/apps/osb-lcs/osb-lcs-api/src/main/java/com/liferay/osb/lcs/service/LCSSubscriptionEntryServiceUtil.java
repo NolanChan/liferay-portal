@@ -63,13 +63,6 @@ public class LCSSubscriptionEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	@Deprecated
-	public static java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getCorpProjectLCSSubscriptionEntries(
-		long corpProjectId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCorpProjectLCSSubscriptionEntries(corpProjectId);
-	}
-
 	public static java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
 		long lcsProjectId)
 		throws com.liferay.portal.kernel.exception.PortalException {

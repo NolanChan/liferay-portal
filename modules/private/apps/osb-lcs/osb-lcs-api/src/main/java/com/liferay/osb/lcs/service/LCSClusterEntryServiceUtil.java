@@ -50,16 +50,6 @@ public class LCSClusterEntryServiceUtil {
 			lcsClusterEntryName, subscriptionType, type);
 	}
 
-	@Deprecated
-	public static com.liferay.osb.lcs.model.LCSClusterEntry addLCSClusterEntry(
-		long lcsProjectId, java.lang.String name, java.lang.String description,
-		java.lang.String location, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addLCSClusterEntry(lcsProjectId, name, description,
-			location, type);
-	}
-
 	public static com.liferay.osb.lcs.model.LCSClusterEntry addLCSClusterEntry(
 		long lcsProjectId, java.lang.String name, java.lang.String description,
 		java.lang.String location, java.lang.String subscriptionType, int type)

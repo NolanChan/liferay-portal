@@ -33,37 +33,6 @@ public class LCSClusterNodeServiceWrapper implements LCSClusterNodeService,
 		_lcsClusterNodeService = lcsClusterNodeService;
 	}
 
-	/**
-	* Adds a new LCS cluster node.
-	* <p>
-	* <p>
-	* This method uses sibling LCS cluster node attributes
-	* <code>lcsClusterEntryId</code> and <code>buildNumber</code> to add a new
-	* LCS cluster node.
-	* </p>
-	*
-	* @param siblingKey  the portal key of sibling portal instance
-	* @param name        the portal instance friendly name
-	* @param description the portal instance description
-	* @param key         the portal instance key provided by the licence tool
-	* @param location    the portal instance physical location
-	* @return LCS cluster node
-	* @throws PortalException if any one of the LCS cluster node attributes was
-	invalid or an operation was not allowed by the LCS cluster entry
-	membership policy
-	* @since LCS 0.1
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.osb.lcs.model.LCSClusterNode addLCSClusterNode(
-		java.lang.String siblingKey, java.lang.String name,
-		java.lang.String description, java.lang.String key,
-		java.lang.String location)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _lcsClusterNodeService.addLCSClusterNode(siblingKey, name,
-			description, key, location);
-	}
-
 	@Override
 	public com.liferay.osb.lcs.model.LCSClusterNode addLCSClusterNode(
 		java.lang.String siblingKey, java.lang.String name,
@@ -72,32 +41,6 @@ public class LCSClusterNodeServiceWrapper implements LCSClusterNodeService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _lcsClusterNodeService.addLCSClusterNode(siblingKey, name,
 			description, key, location, processorCoresTotal);
-	}
-
-	/**
-	* Adds a new LCS cluster node.
-	*
-	* @param lcsClusterEntryId the primary key of the parent environment
-	* @param name              the portal instance friendly name
-	* @param description       the portal instance description
-	* @param buildNumber       the portal instance build number
-	* @param key               the portal instance key provided by the licence tool
-	* @param location          the portal instance physical location
-	* @return LCS cluster node
-	* @throws PortalException if any one of the LCS cluster node attributes was
-	invalid or an operation was not allowed by the LCS cluster entry
-	membership policy
-	* @since LCS 0.1
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.osb.lcs.model.LCSClusterNode addLCSClusterNode(
-		long lcsClusterEntryId, java.lang.String name,
-		java.lang.String description, int buildNumber, java.lang.String key,
-		java.lang.String location)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _lcsClusterNodeService.addLCSClusterNode(lcsClusterEntryId,
-			name, description, buildNumber, key, location);
 	}
 
 	@Override

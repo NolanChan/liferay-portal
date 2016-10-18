@@ -57,14 +57,6 @@ public class LCSSubscriptionEntryServiceWrapper
 		return _lcsSubscriptionEntryService.getOSGiServiceIdentifier();
 	}
 
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getCorpProjectLCSSubscriptionEntries(
-		long corpProjectId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _lcsSubscriptionEntryService.getCorpProjectLCSSubscriptionEntries(corpProjectId);
-	}
-
 	@Override
 	public java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
 		long lcsProjectId)

@@ -76,11 +76,6 @@ public interface LCSClusterEntryLocalService extends BaseLocalService,
 		int mediumPageLoadTime, java.lang.String subscriptionType, int type)
 		throws PortalException;
 
-	@java.lang.Deprecated
-	public LCSClusterEntry addLCSClusterEntry(long lcsProjectId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String location, int type) throws PortalException;
-
 	public LCSClusterEntry addLCSClusterEntry(long lcsProjectId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String location, java.lang.String subscriptionType, int type)
@@ -145,11 +140,6 @@ public interface LCSClusterEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public LCSClusterEntry updateLCSClusterEntry(
 		LCSClusterEntry lcsClusterEntry);
-
-	@java.lang.Deprecated
-	public LCSClusterEntry updateLCSClusterEntry(long lcsClusterEntryId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String location) throws PortalException;
 
 	public LCSClusterEntry updateLCSClusterEntry(long lcsClusterEntryId,
 		java.lang.String name, java.lang.String description,

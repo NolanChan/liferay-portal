@@ -64,16 +64,6 @@ public class LCSClusterEntryLocalServiceUtil {
 			type);
 	}
 
-	@Deprecated
-	public static com.liferay.osb.lcs.model.LCSClusterEntry addLCSClusterEntry(
-		long lcsProjectId, java.lang.String name, java.lang.String description,
-		java.lang.String location, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addLCSClusterEntry(lcsProjectId, name, description,
-			location, type);
-	}
-
 	public static com.liferay.osb.lcs.model.LCSClusterEntry addLCSClusterEntry(
 		long lcsProjectId, java.lang.String name, java.lang.String description,
 		java.lang.String location, java.lang.String subscriptionType, int type)
@@ -160,16 +150,6 @@ public class LCSClusterEntryLocalServiceUtil {
 	public static com.liferay.osb.lcs.model.LCSClusterEntry updateLCSClusterEntry(
 		com.liferay.osb.lcs.model.LCSClusterEntry lcsClusterEntry) {
 		return getService().updateLCSClusterEntry(lcsClusterEntry);
-	}
-
-	@Deprecated
-	public static com.liferay.osb.lcs.model.LCSClusterEntry updateLCSClusterEntry(
-		long lcsClusterEntryId, java.lang.String name,
-		java.lang.String description, java.lang.String location)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateLCSClusterEntry(lcsClusterEntryId, name, description,
-			location);
 	}
 
 	public static com.liferay.osb.lcs.model.LCSClusterEntry updateLCSClusterEntry(

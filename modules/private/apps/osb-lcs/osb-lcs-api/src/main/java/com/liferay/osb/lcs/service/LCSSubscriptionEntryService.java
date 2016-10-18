@@ -69,11 +69,6 @@ public interface LCSSubscriptionEntryService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LCSSubscriptionEntry> getCorpProjectLCSSubscriptionEntries(
-		long corpProjectId) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
 		long lcsProjectId) throws PortalException;

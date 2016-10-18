@@ -42,16 +42,6 @@ public class LCSClusterEntryServiceWrapper implements LCSClusterEntryService,
 			lcsClusterEntryName, subscriptionType, type);
 	}
 
-	@Deprecated
-	@Override
-	public com.liferay.osb.lcs.model.LCSClusterEntry addLCSClusterEntry(
-		long lcsProjectId, java.lang.String name, java.lang.String description,
-		java.lang.String location, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _lcsClusterEntryService.addLCSClusterEntry(lcsProjectId, name,
-			description, location, type);
-	}
-
 	@Override
 	public com.liferay.osb.lcs.model.LCSClusterEntry addLCSClusterEntry(
 		long lcsProjectId, java.lang.String name, java.lang.String description,

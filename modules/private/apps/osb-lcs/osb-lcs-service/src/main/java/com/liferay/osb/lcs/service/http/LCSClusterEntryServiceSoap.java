@@ -65,23 +65,6 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class LCSClusterEntryServiceSoap {
-	@Deprecated
-	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap addLCSClusterEntry(
-		long lcsProjectId, java.lang.String name, java.lang.String description,
-		java.lang.String location, int type) throws RemoteException {
-		try {
-			com.liferay.osb.lcs.model.LCSClusterEntry returnValue = LCSClusterEntryServiceUtil.addLCSClusterEntry(lcsProjectId,
-					name, description, location, type);
-
-			return com.liferay.osb.lcs.model.LCSClusterEntrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.osb.lcs.model.LCSClusterEntrySoap addLCSClusterEntry(
 		long lcsProjectId, java.lang.String name, java.lang.String description,
 		java.lang.String location, java.lang.String subscriptionType, int type)

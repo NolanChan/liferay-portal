@@ -55,57 +55,9 @@ public interface LCSClusterNodeService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LCSClusterNodeServiceUtil} to access the l c s cluster node remote service. Add custom service methods to {@link com.liferay.osb.lcs.service.impl.LCSClusterNodeServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-
-	/**
-	* Adds a new LCS cluster node.
-	* <p>
-	* <p>
-	* This method uses sibling LCS cluster node attributes
-	* <code>lcsClusterEntryId</code> and <code>buildNumber</code> to add a new
-	* LCS cluster node.
-	* </p>
-	*
-	* @param siblingKey  the portal key of sibling portal instance
-	* @param name        the portal instance friendly name
-	* @param description the portal instance description
-	* @param key         the portal instance key provided by the licence tool
-	* @param location    the portal instance physical location
-	* @return LCS cluster node
-	* @throws PortalException if any one of the LCS cluster node attributes was
-	        invalid or an operation was not allowed by the LCS cluster entry
-	        membership policy
-	* @since LCS 0.1
-	*/
-	@java.lang.Deprecated
-	public LCSClusterNode addLCSClusterNode(java.lang.String siblingKey,
-		java.lang.String name, java.lang.String description,
-		java.lang.String key, java.lang.String location)
-		throws PortalException;
-
 	public LCSClusterNode addLCSClusterNode(java.lang.String siblingKey,
 		java.lang.String name, java.lang.String description,
 		java.lang.String key, java.lang.String location, int processorCoresTotal)
-		throws PortalException;
-
-	/**
-	* Adds a new LCS cluster node.
-	*
-	* @param lcsClusterEntryId the primary key of the parent environment
-	* @param name              the portal instance friendly name
-	* @param description       the portal instance description
-	* @param buildNumber       the portal instance build number
-	* @param key               the portal instance key provided by the licence tool
-	* @param location          the portal instance physical location
-	* @return LCS cluster node
-	* @throws PortalException if any one of the LCS cluster node attributes was
-	        invalid or an operation was not allowed by the LCS cluster entry
-	        membership policy
-	* @since LCS 0.1
-	*/
-	@java.lang.Deprecated
-	public LCSClusterNode addLCSClusterNode(long lcsClusterEntryId,
-		java.lang.String name, java.lang.String description, int buildNumber,
-		java.lang.String key, java.lang.String location)
 		throws PortalException;
 
 	public LCSClusterNode addLCSClusterNode(long lcsClusterEntryId,

@@ -146,46 +146,13 @@ public class LCSSubscriptionEntryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getCorpProjectLCSSubscriptionEntries(
-		HttpPrincipal httpPrincipal, long corpProjectId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(LCSSubscriptionEntryServiceUtil.class,
-					"getCorpProjectLCSSubscriptionEntries",
-					_getCorpProjectLCSSubscriptionEntriesParameterTypes3);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					corpProjectId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
 		HttpPrincipal httpPrincipal, long lcsProjectId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSSubscriptionEntryServiceUtil.class,
 					"getLCSProjectLCSSubscriptionEntries",
-					_getLCSProjectLCSSubscriptionEntriesParameterTypes4);
+					_getLCSProjectLCSSubscriptionEntriesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId);
@@ -218,7 +185,7 @@ public class LCSSubscriptionEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSSubscriptionEntryServiceUtil.class,
 					"getLCSProjectLCSSubscriptionEntries",
-					_getLCSProjectLCSSubscriptionEntriesParameterTypes5);
+					_getLCSProjectLCSSubscriptionEntriesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId, status);
@@ -251,7 +218,7 @@ public class LCSSubscriptionEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSSubscriptionEntryServiceUtil.class,
 					"hasLCSProjectElasticLCSSubscriptionEntry",
-					_hasLCSProjectElasticLCSSubscriptionEntryParameterTypes6);
+					_hasLCSProjectElasticLCSSubscriptionEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId);
@@ -284,7 +251,7 @@ public class LCSSubscriptionEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSSubscriptionEntryServiceUtil.class,
 					"refreshLCSProjectLCSSubscriptionEntries",
-					_refreshLCSProjectLCSSubscriptionEntriesParameterTypes7);
+					_refreshLCSProjectLCSSubscriptionEntriesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -312,7 +279,7 @@ public class LCSSubscriptionEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSSubscriptionEntryServiceUtil.class,
 					"refreshLCSProjectLCSSubscriptionEntries",
-					_refreshLCSProjectLCSSubscriptionEntriesParameterTypes8);
+					_refreshLCSProjectLCSSubscriptionEntriesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId);
@@ -343,16 +310,14 @@ public class LCSSubscriptionEntryServiceHttp {
 		};
 	private static final Class<?>[] _fetchLCSClusterNodeActiveLCSSubscriptionEntryParameterTypes2 =
 		new Class[] { java.lang.String.class };
-	private static final Class<?>[] _getCorpProjectLCSSubscriptionEntriesParameterTypes3 =
+	private static final Class<?>[] _getLCSProjectLCSSubscriptionEntriesParameterTypes3 =
 		new Class[] { long.class };
 	private static final Class<?>[] _getLCSProjectLCSSubscriptionEntriesParameterTypes4 =
-		new Class[] { long.class };
-	private static final Class<?>[] _getLCSProjectLCSSubscriptionEntriesParameterTypes5 =
 		new Class[] { long.class, boolean.class };
-	private static final Class<?>[] _hasLCSProjectElasticLCSSubscriptionEntryParameterTypes6 =
+	private static final Class<?>[] _hasLCSProjectElasticLCSSubscriptionEntryParameterTypes5 =
 		new Class[] { long.class };
-	private static final Class<?>[] _refreshLCSProjectLCSSubscriptionEntriesParameterTypes7 =
+	private static final Class<?>[] _refreshLCSProjectLCSSubscriptionEntriesParameterTypes6 =
 		new Class[] {  };
-	private static final Class<?>[] _refreshLCSProjectLCSSubscriptionEntriesParameterTypes8 =
+	private static final Class<?>[] _refreshLCSProjectLCSSubscriptionEntriesParameterTypes7 =
 		new Class[] { long.class };
 }

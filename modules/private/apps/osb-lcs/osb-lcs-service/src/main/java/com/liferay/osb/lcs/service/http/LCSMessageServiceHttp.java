@@ -186,17 +186,16 @@ public class LCSMessageServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.osb.lcs.model.LCSMessage> getLCSProjectLCSMessages(
-		HttpPrincipal httpPrincipal, long lcsProjectId,
-		java.lang.String sourceSystemName)
+	public static java.util.List<com.liferay.osb.lcs.model.LCSMessage> getLCSMessages(
+		HttpPrincipal httpPrincipal, java.util.Date modifyDateGT,
+		java.util.Date modifyDateLT)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSMessageServiceUtil.class,
-					"getLCSProjectLCSMessages",
-					_getLCSProjectLCSMessagesParameterTypes4);
+					"getLCSMessages", _getLCSMessagesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					lcsProjectId, sourceSystemName);
+					modifyDateGT, modifyDateLT);
 
 			Object returnObj = null;
 
@@ -220,16 +219,17 @@ public class LCSMessageServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.osb.lcs.model.LCSMessage> getLCSMessages(
-		HttpPrincipal httpPrincipal, java.util.Date modifyDateGT,
-		java.util.Date modifyDateLT)
+	public static java.util.List<com.liferay.osb.lcs.model.LCSMessage> getLCSProjectLCSMessages(
+		HttpPrincipal httpPrincipal, long lcsProjectId,
+		java.lang.String sourceSystemName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSMessageServiceUtil.class,
-					"getLCSMessages", _getLCSMessagesParameterTypes5);
+					"getLCSProjectLCSMessages",
+					_getLCSProjectLCSMessagesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					modifyDateGT, modifyDateLT);
+					lcsProjectId, sourceSystemName);
 
 			Object returnObj = null;
 
@@ -268,10 +268,10 @@ public class LCSMessageServiceHttp {
 	private static final Class<?>[] _deleteLCSProjectLCSMessageParameterTypes3 = new Class[] {
 			long.class, long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _getLCSProjectLCSMessagesParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class
-		};
-	private static final Class<?>[] _getLCSMessagesParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getLCSMessagesParameterTypes4 = new Class[] {
 			java.util.Date.class, java.util.Date.class
+		};
+	private static final Class<?>[] _getLCSProjectLCSMessagesParameterTypes5 = new Class[] {
+			long.class, java.lang.String.class
 		};
 }

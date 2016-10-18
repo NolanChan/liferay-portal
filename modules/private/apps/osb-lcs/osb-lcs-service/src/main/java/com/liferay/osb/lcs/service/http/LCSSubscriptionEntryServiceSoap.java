@@ -106,22 +106,6 @@ public class LCSSubscriptionEntryServiceSoap {
 		}
 	}
 
-	@Deprecated
-	public static com.liferay.osb.lcs.model.LCSSubscriptionEntrySoap[] getCorpProjectLCSSubscriptionEntries(
-		long corpProjectId) throws RemoteException {
-		try {
-			java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> returnValue =
-				LCSSubscriptionEntryServiceUtil.getCorpProjectLCSSubscriptionEntries(corpProjectId);
-
-			return com.liferay.osb.lcs.model.LCSSubscriptionEntrySoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.osb.lcs.model.LCSSubscriptionEntrySoap[] getLCSProjectLCSSubscriptionEntries(
 		long lcsProjectId) throws RemoteException {
 		try {
