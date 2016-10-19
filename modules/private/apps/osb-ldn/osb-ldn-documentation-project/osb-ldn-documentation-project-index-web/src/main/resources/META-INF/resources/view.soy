@@ -3,11 +3,11 @@
 /**
  * Renders a list of documentation projects.
  *
- * @param allSelected
- * @param viewURL
  * @param documentationProjects
+ * @param predefinedFilterTag
  * @param predefinedFilterTags
  * @param strings
+ * @param viewURL
  */
 {template .render}
 	<div class="view">
@@ -18,13 +18,13 @@
 
 			<div class="tag-container">
 				<ul class="predefined-fitler-tags">
-					<li {if $allSelected == 'true'}class="selected"{/if}>
+					<li {if $predefinedFilterTag == ''}class="selected"{/if}>
 						<a href="{$viewURL}">{$strings['all']}</a>
 					</li>
 
 					{foreach $tag in $predefinedFilterTags}
-						<li {if $tag.selected}class="selected"{/if}>
-							<a href="{$tag.url}">{$tag.tagName}</a>
+						<li {if $predefinedFilterTag == $tag.name}class="selected"{/if}>
+							<a href="{$tag.url}">{$tag.name}</a>
 						</li>
 					{/foreach}
 				</ul>
@@ -59,8 +59,8 @@
 			<span class="name">{$documentationProject.name}</span>
 			<span class="description">{$documentationProject.description}</span>
 			<span class="documentation-project-tags">
-				{foreach $tagName in $documentationProject.assetTagNames}
-					#{$tagName}
+				{foreach $assetTagName in $documentationProject.assetTagNames}
+					#{$assetTagName}
 				{/foreach}
 			</span>
 		</a>

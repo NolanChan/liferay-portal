@@ -31,8 +31,10 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -57,6 +59,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Enoch Chu
  * @author Howie Chou
+ * @author Yury Butrymovich
+ * @author Ryan Park
  */
 @Component(
 	immediate = true,
@@ -75,6 +79,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String predefinedFilterTag = ParamUtil.getString(
+			renderRequest, "predefinedFilterTag");
+
 		Template template = (Template)renderRequest.getAttribute(
 			WebKeys.TEMPLATE);
 
@@ -82,12 +89,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			documentationProjectsList = getDocumentationProjectList(
-				renderRequest, themeDisplay);
+				renderRequest, themeDisplay, predefinedFilterTag);
 		}
 		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
+			_log.error(e, e);
 
 			documentationProjectsList = new ArrayList<>(0);
 		}
@@ -98,18 +103,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			"predefinedFilterTags",
 			getPredefinedFilterTagsList(renderRequest, renderResponse));
 
+		template.put("predefinedFilterTag", predefinedFilterTag);
+
 		PortletURL viewUrl = renderResponse.createRenderURL();
 
 		template.put("viewURL", viewUrl.toString());
-
-		String selectedTag = renderRequest.getParameter("tag");
-
-		if (Validator.isNull(selectedTag)) {
-			template.put("allSelected", "true");
-		}
-		else {
-			template.put("allSelected", "false");
-		}
 
 		Map<String, Object> strings = getStringsMap(
 			themeDisplay.getLanguageId(), documentationProjectsList.size());
@@ -120,10 +118,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	protected List<Map<String, Object>> getDocumentationProjectList(
-			RenderRequest renderRequest, ThemeDisplay themeDisplay)
+			RenderRequest renderRequest, ThemeDisplay themeDisplay,
+			String predefinedFilterTag)
 		throws Exception {
-
-		String selectedTag = renderRequest.getParameter("tag");
 
 		List<Map<String, Object>> documentationProjectList = new LinkedList<>();
 
@@ -151,8 +148,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				tagNamesList = tagNamesList.subList(0, _NUMBER_OF_TAGS);
 			}
 
-			if (Validator.isNotNull(selectedTag) &&
-				!tagNamesList.contains(selectedTag)) {
+			if (Validator.isNotNull(predefinedFilterTag) &&
+				!tagNamesList.contains(predefinedFilterTag)) {
 
 				continue;
 			}
@@ -192,42 +189,31 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	protected List<Map<String, Object>> getPredefinedFilterTagsList(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		List<Map<String, Object>> tagsList = new LinkedList<>();
+		List<Map<String, Object>> predefinedFilterTagsList = new LinkedList<>();
 
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
-		String selectedTag = renderRequest.getParameter("tag");
-
-		if (Validator.isNotNull(selectedTag)) {
-			selectedTag = selectedTag.trim();
-		}
-
-		String predefinedFilterTags = portletPreferences.getValue(
+		String predefinedFilterTagsString = portletPreferences.getValue(
 			"predefinedFilterTags", StringPool.BLANK);
 
-		String[] predefinedFilterTagsSplit = predefinedFilterTags.split(
-			StringPool.COMMA);
+		String[] predefinedFilterTags = StringUtil.split(
+			predefinedFilterTagsString);
 
-		PortletURL url = renderResponse.createRenderURL();
+		PortletURL portletURL = renderResponse.createRenderURL();
 
-		for (String tag : predefinedFilterTagsSplit) {
-			tag = tag.trim();
+		for (String predefinedFilterTag : predefinedFilterTags) {
+			Map<String, Object> predefinedFilterTagMap = new HashMap<>();
+			
+			predefinedFilterTagMap.put("name", predefinedFilterTag);
 
-			Map<String, Object> tagObjectMap = new HashMap<>();
+			portletURL.setParameter("predefinedFilterTag", predefinedFilterTag);
 
-			url.setParameter("tag", tag);
+			predefinedFilterTagMap.put("url", portletURL.toString());
 
-			if (Validator.isNotNull(selectedTag) && tag.equals(selectedTag)) {
-				tagObjectMap.put("selected", true);
-			}
-
-			tagObjectMap.put("tagName", tag);
-			tagObjectMap.put("url", url.toString());
-
-			tagsList.add(tagObjectMap);
+			predefinedFilterTagsList.add(predefinedFilterTagMap);
 		}
 
-		return tagsList;
+		return predefinedFilterTagsList;
 	}
 
 	protected Map<String, Object> getStringsMap(
