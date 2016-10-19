@@ -26,20 +26,16 @@ portletURL.setParameter("mvcRenderCommandName", "/view");
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item
 			href="<%= portletURL.toString() %>"
-			label="documentation-projects"
+			label="open-source-projects"
 			selected="<%= true %>"
 		/>
 	</aui:nav>
 </aui:nav-bar>
 
 <div class="container-fluid-1280 main-content-body">
-	<liferay-ui:categorization-filter
-		assetType="documentation-projects"
-		portletURL="<%= portletURL %>"
-	/>
 
 	<liferay-ui:search-container
-		emptyResultsMessage="no-documentation-projects-were-found"
+		emptyResultsMessage="no-open-source-projects-were-found"
 		id="documentationProjects"
 		iteratorURL="<%= portletURL %>"
 	>
@@ -97,6 +93,6 @@ portletURL.setParameter("mvcRenderCommandName", "/view");
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-documentation-project") %>' url="<%= addDocumentationProjectURL %>" />
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-open-source-project") %>' url="<%= addDocumentationProjectURL %>" />
 	</liferay-frontend:add-menu>
 </div>

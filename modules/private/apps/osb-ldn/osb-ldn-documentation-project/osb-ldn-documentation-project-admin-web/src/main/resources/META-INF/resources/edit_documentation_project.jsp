@@ -23,7 +23,7 @@ long documentationProjectId = ParamUtil.getLong(request, "documentationProjectId
 
 DocumentationProject documentationProject = DocumentationProjectLocalServiceUtil.fetchDocumentationProject(documentationProjectId);
 
-String headerTitle = (documentationProjectId > 0) ? LanguageUtil.format(request, "edit-x", documentationProject.getName(), false) : LanguageUtil.get(request, "add-documentation-project");
+String headerTitle = (documentationProjectId > 0) ? LanguageUtil.format(request, "edit-x", documentationProject.getName(), false) : LanguageUtil.get(request, "add-open-source-project");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
