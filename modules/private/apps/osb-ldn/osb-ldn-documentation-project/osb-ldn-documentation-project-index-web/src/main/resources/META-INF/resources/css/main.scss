@@ -33,19 +33,28 @@
 		font-size: 16px;
 		font-weight: 600;
 		letter-spacing: 1.6px;
-		line-height: 1.5;
 		margin: 100px 0;
+		text-transform: uppercase;
 	}
 
 	.predefined-fitler-tags {
 		li {
 			display: inline-block;
 			margin-bottom: 6px;
-			margin-right: 30px;
+			margin-right: 64px;
 
 			&.selected{
-				border-bottom: 6px solid rgba(0, 0, 0, 0.1);
+				border-bottom: 6px solid #DFE1E1;
 				margin-bottom: 0;
+
+				a {
+					color: #52585F;
+				}
+			}
+
+			a {
+				color: #C5C7CB;
+				text-transform: uppercase;
 			}
 		}
 
