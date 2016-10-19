@@ -30,21 +30,25 @@ public class LCSPatcherUtil {
 
 	public static String[] getFixedIssues() {
 		_resetProperties();
+
 		return PatcherUtil.getFixedIssues();
 	}
 
 	public static String[] getInstalledPatches() {
 		_resetProperties();
+
 		return PatcherUtil.getInstalledPatches();
 	}
 
 	public static File getPatchDirectory() {
 		_resetProperties();
+
 		return PatcherUtil.getPatchDirectory();
 	}
 
 	public static int getPatchingToolVersion() {
 		_resetProperties();
+
 		return PatcherUtil.getPatchingToolVersion();
 	}
 
