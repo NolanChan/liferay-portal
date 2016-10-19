@@ -18,9 +18,9 @@ import com.liferay.lcs.messaging.CommandMessage;
 import com.liferay.lcs.messaging.ResponseMessage;
 import com.liferay.lcs.util.LCSConnectionManager;
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.lcs.util.LCSPatcherUtil;
 import com.liferay.lcs.util.ResponseMessageUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -37,7 +37,7 @@ public class SendPatchesCommand implements Command {
 
 	@Override
 	public void execute(CommandMessage commandMessage) throws PortalException {
-		String[] fixedIssues = PatcherUtil.getFixedIssues();
+		String[] fixedIssues = LCSPatcherUtil.getFixedIssues();
 
 		String hashCode = null;
 
@@ -45,11 +45,11 @@ public class SendPatchesCommand implements Command {
 			hashCode = (String)commandMessage.getPayload();
 		}
 
-		String[] installedPatches = PatcherUtil.getInstalledPatches();
+		String[] installedPatches = LCSPatcherUtil.getInstalledPatches();
 
 		Map<String, Object> payload = new HashMap<>();
 
-		if (PatcherUtil.isConfigured()) {
+		if (LCSPatcherUtil.isConfigured()) {
 			StringBundler sb = new StringBundler(installedPatches.length + 1);
 
 			if (installedPatches.length > 0) {
@@ -62,11 +62,12 @@ public class SendPatchesCommand implements Command {
 
 			sb.append(
 				DigesterUtil.digestHex(
-					Digester.MD5, String.valueOf(PatcherUtil.isConfigured())));
+					Digester.MD5,
+					String.valueOf(LCSPatcherUtil.isConfigured())));
 			sb.append(
 				DigesterUtil.digestHex(
 					Digester.MD5,
-					String.valueOf(PatcherUtil.getPatchingToolVersion())));
+					String.valueOf(LCSPatcherUtil.getPatchingToolVersion())));
 
 			String installedHashCode = DigesterUtil.digestHex(
 				Digester.MD5, sb.toString());

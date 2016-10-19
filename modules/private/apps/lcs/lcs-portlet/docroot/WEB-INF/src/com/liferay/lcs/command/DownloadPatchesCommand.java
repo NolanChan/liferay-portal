@@ -18,11 +18,11 @@ import com.liferay.lcs.messaging.CommandMessage;
 import com.liferay.lcs.messaging.ResponseMessage;
 import com.liferay.lcs.util.LCSConnectionManager;
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.lcs.util.LCSPatcherUtil;
 import com.liferay.lcs.util.ResponseMessageUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.BufferedInputStream;
@@ -48,8 +48,8 @@ public class DownloadPatchesCommand implements Command {
 
 	@Override
 	public void execute(CommandMessage commandMessage) throws PortalException {
-		if (!PatcherUtil.isConfigured() ||
-			(PatcherUtil.getPatchDirectory() == null)) {
+		if (!LCSPatcherUtil.isConfigured() ||
+			(LCSPatcherUtil.getPatchDirectory() == null)) {
 
 			return;
 		}
@@ -72,7 +72,7 @@ public class DownloadPatchesCommand implements Command {
 
 			_lcsConnectionManager.sendMessage(responseMessage);
 
-			File file = new File(PatcherUtil.getPatchDirectory(), fileName);
+			File file = new File(LCSPatcherUtil.getPatchDirectory(), fileName);
 
 			String urlString = payload.get(fileName);
 

@@ -22,6 +22,7 @@ import com.liferay.lcs.messaging.ResponseMessage;
 import com.liferay.lcs.util.KeyGenerator;
 import com.liferay.lcs.util.LCSConnectionManager;
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.lcs.util.LCSPatcherUtil;
 import com.liferay.lcs.util.LCSUtil;
 import com.liferay.lcs.util.comparator.MessagePriorityComparator;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.monitoring.PortalMonitoringControl;
-import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.LiferayFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -57,10 +57,6 @@ import org.osgi.framework.ServiceReference;
  * @author Marko Cikos
  */
 public class HandshakeTask implements Task {
-
-	public HandshakeTask() {
-		PatcherUtil.getProperties();
-	}
 
 	@Override
 	public void run() {
@@ -140,7 +136,7 @@ public class HandshakeTask implements Task {
 		handshakeMessage.put(
 			Message.KEY_HEARTBEAT_INTERVAL, String.valueOf(_heartbeatInterval));
 
-		if (PatcherUtil.isConfigured()) {
+		if (LCSPatcherUtil.isConfigured()) {
 			handshakeMessage.put(
 				Message.KEY_PATCHING_TOOL_STATUS,
 				LCSConstants.PATCHING_TOOL_AVAILABLE);
@@ -153,7 +149,7 @@ public class HandshakeTask implements Task {
 
 		handshakeMessage.put(
 			Message.KEY_PATCHING_TOOL_VERSION,
-			PatcherUtil.getPatchingToolVersion());
+			LCSPatcherUtil.getPatchingToolVersion());
 		handshakeMessage.put(
 			Message.KEY_LCS_PORTLET_BUILD_NUMBER,
 			LCSUtil.getLCSPortletBuildNumber());
