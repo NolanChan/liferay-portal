@@ -22,6 +22,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -203,6 +204,9 @@ public class LayoutWebContentHelper {
 
 	@Reference
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
+
+	@Reference
+	private JournalFolderLocalService _journalFolderLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
