@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"osb.ldn.layout.description=", "osb.ldn.layout.friendly.url=/forums",
 		"osb.ldn.layout.hidden:Boolean=false", "osb.ldn.layout.name=Forums",
-		"osb.ldn.layout.order:Integer=3", "osb.ldn.layout.title=Forums",
+		"osb.ldn.layout.title=Forums",
 		"osb.ldn.layout.type=" + LayoutConstants.TYPE_PORTLET,
 		"osb.ldn.site.generator.key=" + GuestSiteConstants.GUEST_SITE_KEY
 	},

@@ -15,7 +15,6 @@
 package com.liferay.osb.ldn.generator.guest.internal.runner;
 
 import com.liferay.osb.ldn.generator.guest.site.constants.GuestSiteConstants;
-import com.liferay.osb.ldn.generator.layout.LayoutGenerator;
 import com.liferay.osb.ldn.generator.site.SiteGenerator;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -46,12 +45,6 @@ public class GuestGeneratorRunner {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(target = "(osb.ldn.layout.friendly.url=/blogs)")
-	private LayoutGenerator _blogLayoutGenerator;
-
-	@Reference(target = "(osb.ldn.layout.friendly.url=/forums)")
-	private LayoutGenerator _forumsLayoutGenerator;
-
 	@Reference
 	private GroupLocalService _groupLocalService;
 
@@ -59,11 +52,5 @@ public class GuestGeneratorRunner {
 		target = "(osb.ldn.site.generator.key=" + GuestSiteConstants.GUEST_SITE_KEY + ")"
 	)
 	private SiteGenerator _guestSiteGenerator;
-
-	@Reference(target = "(osb.ldn.layout.friendly.url=/home)")
-	private LayoutGenerator _homeLayoutGenerator;
-
-	@Reference(target = "(osb.ldn.layout.friendly.url=/projects)")
-	private LayoutGenerator _projectsLayoutGenerator;
 
 }
