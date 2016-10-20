@@ -1,3 +1,11 @@
+Bundle-ClassPath:\
+	.,\
+	lib/amazon-sqs-java-extended-client-lib.jar,\
+	lib/aws-java-sdk-core.jar,\
+	lib/aws-java-sdk-ec2.jar,\
+	lib/aws-java-sdk-kms.jar,\
+	lib/aws-java-sdk-s3.jar,\
+	lib/aws-java-sdk-sqs.jar
 Bundle-Name: Liferay OSB LCS Service
 Bundle-SymbolicName: com.liferay.osb.lcs.service
 Bundle-Version: 1.0.0
@@ -5,3 +13,10 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: LCS Portal
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
+-includeresource:\
+	lib/amazon-sqs-java-extended-client-lib.jar=amazon-sqs-java-extended-client-lib-*.jar;lib:=true,\
+	lib/aws-java-sdk-core.jar=aws-java-sdk-core-*.jar;lib:=true,\
+	lib/aws-java-sdk-ec2.jar=aws-java-sdk-ec2-*.jar;lib:=true,\
+	lib/aws-java-sdk-kms.jar=aws-java-sdk-kms-*.jar;lib:=true,\
+	lib/aws-java-sdk-s3.jar=aws-java-sdk-s3-*.jar;lib:=true,\
+	lib/aws-java-sdk-sqs.jar=aws-java-sdk-sqs-*.jar;lib:=true
