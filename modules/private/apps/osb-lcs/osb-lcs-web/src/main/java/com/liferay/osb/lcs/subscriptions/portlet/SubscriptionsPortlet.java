@@ -50,7 +50,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.Portlet;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -413,8 +412,6 @@ public class SubscriptionsPortlet extends MVCPortlet {
 			"hasElasticSubscription",
 			_subscriptionsAdvisor.hasElasticSubscription(lcsProjectId));
 
-		PortletConfig portletConfig = getPortletConfig();
-
 		JSONArray lcsClusterEntriesJSONArray =
 			_subscriptionsAdvisor.getLCSClusterEntriesJSONArray(
 				lcsProjectId, themeDisplay.getLocale());
@@ -491,8 +488,6 @@ public class SubscriptionsPortlet extends MVCPortlet {
 
 			_lcsClusterEntryService.updateElastic(lcsClusterEntryId, elastic);
 		}
-
-		PortletConfig portletConfig = getPortletConfig();
 
 		JSONArray lcsClusterEntriesJSONArray =
 			_subscriptionsAdvisor.getLCSClusterEntriesJSONArray(

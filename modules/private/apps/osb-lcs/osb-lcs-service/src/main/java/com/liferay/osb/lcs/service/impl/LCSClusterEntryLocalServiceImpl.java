@@ -101,9 +101,6 @@ public class LCSClusterEntryLocalServiceImpl
 			LCSClusterEntry lcsClusterEntry)
 		throws PortalException {
 
-		SubscriptionType subscriptionType = SubscriptionType.valueOf(
-			lcsClusterEntry.getSubscriptionType());
-
 		lcsClusterNodeLocalService.deleteLCSClusterEntryLCSClusterNodes(
 			lcsClusterEntry.getLcsClusterEntryId());
 

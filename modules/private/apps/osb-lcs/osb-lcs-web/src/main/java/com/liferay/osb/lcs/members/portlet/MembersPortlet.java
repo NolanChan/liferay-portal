@@ -53,8 +53,6 @@ import javax.portlet.Portlet;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -221,9 +219,6 @@ public class MembersPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			resourceRequest);
-
 		long lcsProjectId = ParamUtil.getLong(resourceRequest, "lcsProjectId");
 
 		LCSMessage lcsMessage = _lcsMessageAdvisor.addLCSProjectLCSMessage(
@@ -253,7 +248,7 @@ public class MembersPortlet extends MVCPortlet {
 			emailContextBuilder.user(user);
 			emailContextBuilder.locale(user.getLocale());
 
-			LCSRole lcsRole = _lcsRoleService.addLCSRole(
+			_lcsRoleService.addLCSRole(
 				userId, lcsProjectId, lcsClusterEntryId, role);
 
 			_lcsMembersLocalService.validateLCSSiteMembership(
@@ -317,9 +312,6 @@ public class MembersPortlet extends MVCPortlet {
 	protected void invite(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			resourceRequest);
 
 		String emailAddress = ParamUtil.getString(
 			resourceRequest, "emailAddress");
