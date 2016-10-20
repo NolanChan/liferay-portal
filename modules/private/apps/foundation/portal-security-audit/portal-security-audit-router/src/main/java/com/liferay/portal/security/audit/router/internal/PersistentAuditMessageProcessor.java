@@ -14,13 +14,19 @@
 
 package com.liferay.portal.security.audit.router.internal;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.audit.AuditEventManager;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
+import com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -28,6 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
+	configurationPid = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration",
 	immediate = true, property = "eventTypes=*",
 	service = AuditMessageProcessor.class
 )
@@ -43,8 +50,21 @@ public class PersistentAuditMessageProcessor implements AuditMessageProcessor {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		PersistentAuditMessageProcessorConfiguration
+			messageProcessorConfiguration = ConfigurableUtil.createConfigurable(
+				PersistentAuditMessageProcessorConfiguration.class, properties);
+
+		_enabled = messageProcessorConfiguration != null &&
+			 messageProcessorConfiguration.enabled();
+	}
+
 	protected void doProcess(AuditMessage auditMessage) throws Exception {
-		_auditEventManager.addAuditEvent(auditMessage);
+		if (_enabled) {
+			_auditEventManager.addAuditEvent(auditMessage);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -52,5 +72,7 @@ public class PersistentAuditMessageProcessor implements AuditMessageProcessor {
 
 	@Reference
 	private AuditEventManager _auditEventManager;
+
+	private volatile boolean _enabled;
 
 }
