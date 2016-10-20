@@ -20,6 +20,7 @@ import com.liferay.osb.lcs.exception.NoSuchLCSPatchEntryException;
 import com.liferay.osb.lcs.service.LCSPatchEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -307,7 +308,7 @@ public class PatchUploadAction extends BaseStrutsAction {
 		PatchUploadAction.class);
 
 	private static final DocumentBuilderFactory _documentBuilderFactory =
-		DocumentBuilderFactory.newInstance();
+		SecureXMLFactoryProviderUtil.newDocumentBuilderFactory();
 	private static final File _tmpDir = new File(
 		SystemProperties.get(SystemProperties.TMP_DIR));
 
