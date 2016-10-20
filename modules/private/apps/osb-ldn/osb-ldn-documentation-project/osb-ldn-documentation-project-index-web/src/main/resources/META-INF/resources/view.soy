@@ -32,9 +32,20 @@
 		</div>
 
 		<div class="content-container">
-			<div class="count">
-				{$strings['x-projects']}
-			</div>
+			 <div class="live-search-filter">
+				<div class="filter-input">
+					<span>
+						{$strings['filter']}
+					</span>
+					<span>
+						<input class="input" />
+					</span>
+				</div>
+
+				<div class="count">
+					{$strings['x-projects']}
+				</div>
+			 </div>
 
 			<ul class="documentation-project">
 				{foreach $documentationProject in $documentationProjects}

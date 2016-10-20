@@ -225,6 +225,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			_resourceBundleLoader.loadResourceBundle(languageId);
 
 		strings.put("all", LanguageUtil.get(resourceBundle, "all"));
+		strings.put("filter", LanguageUtil.get(resourceBundle, "filter"));
 		strings.put("projects", LanguageUtil.get(resourceBundle, "projects"));
 
 		if (documentationProjectCount == 1) {

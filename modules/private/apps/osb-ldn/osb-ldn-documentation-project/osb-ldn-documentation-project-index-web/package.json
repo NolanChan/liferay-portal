@@ -1,0 +1,7 @@
+{
+	"dependencies": {
+		"metal-components": "1.0.0-rc.19"
+	},
+	"name": "osb-ldn-documentation-project-index-web",
+	"version": "1.0.0"
+}
