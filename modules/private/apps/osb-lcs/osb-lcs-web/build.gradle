@@ -1,3 +1,5 @@
+task deployDependencies(type: Copy)
+
 dependencies {
 	provided group: "com.itextpdf", name: "itextpdf", version: "5.5.5"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
@@ -17,4 +19,26 @@ dependencies {
 	provided project(":private:apps:osb-lcs-nosql:osb-lcs-nosql-api")
 	provided project(":private:apps:osb-lcs:osb-lcs-api")
 	provided project(":private:apps:osb-lcs:osb-lcs-service")
+}
+
+deploy {
+	finalizedBy deployDependencies
+}
+
+deployDependencies {
+	ext {
+		autoClean = false
+	}
+
+	from configurations.provided
+
+	include "itextpdf-*.jar"
+	include "commons-configuration-*.jar"
+	include "joda-time-*.jar"
+	include "httpclient-*.jar"
+	include "httpcore-*.jar"
+
+	into {
+		liferay.deployDir
+	}
 }
