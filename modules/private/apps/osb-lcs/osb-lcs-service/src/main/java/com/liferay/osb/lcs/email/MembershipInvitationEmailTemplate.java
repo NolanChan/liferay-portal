@@ -70,8 +70,8 @@ public class MembershipInvitationEmailTemplate extends BaseEmailTemplate {
 		contextAttributes.add(
 			translate(
 				emailContext,
-				"use-the-link-below-to-accept-this-invitation-and-access-" +
-					"the-liferay-connected-services-site"));
+				"use-the-link-below-to-accept-this-invitation-and-access-the-" +
+					"liferay-connected-services-site"));
 		contextAttributes.add("[$SUBJECT$]");
 		contextAttributes.add(translate(emailContext, "membership-invitation"));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");

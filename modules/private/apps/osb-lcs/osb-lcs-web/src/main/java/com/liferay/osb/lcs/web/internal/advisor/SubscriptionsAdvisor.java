@@ -576,7 +576,7 @@ public class SubscriptionsAdvisor {
 
 	@Reference(unbind = "-")
 	public void setLCSProjectService(LCSProjectService lcsProjectService) {
-		this._lcsProjectService = lcsProjectService;
+		_lcsProjectService = lcsProjectService;
 	}
 
 	@Reference(unbind = "-")

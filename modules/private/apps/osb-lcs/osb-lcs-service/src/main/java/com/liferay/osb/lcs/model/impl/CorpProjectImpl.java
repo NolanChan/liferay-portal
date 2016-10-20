@@ -34,7 +34,7 @@ public class CorpProjectImpl implements CorpProject {
 	}
 
 	public void setCorpProjectId(long corpProjectId) {
-		this._corpProjectId = corpProjectId;
+		_corpProjectId = corpProjectId;
 	}
 
 	public void setName(String name) {

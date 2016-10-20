@@ -488,9 +488,8 @@ public class LCSClusterNodeLocalServiceImpl
 
 		long lcsClusterEntryId = currentLCSClusterNode.getLcsClusterEntryId();
 
-		if (1 >=
-				lcsClusterNodePersistence.countByLCEI_A(
-					lcsClusterEntryId, false)) {
+		if (lcsClusterNodePersistence.countByLCEI_A(lcsClusterEntryId, false) <=
+				1) {
 
 			return Collections.emptyList();
 		}

@@ -447,7 +447,7 @@ public class LCSSubscriptionEntryLocalServiceImpl
 		List<LCSSubscriptionEntry> lcsSubscriptionEntries =
 			lcsSubscriptionEntryPersistence.findWithDynamicQuery(dynamicQuery);
 
-		if (lcsSubscriptionEntries.size() == 0) {
+		if (lcsSubscriptionEntries.isEmpty()) {
 			StringBundler sb = new StringBundler(11);
 
 			sb.append("{errorCode: ");

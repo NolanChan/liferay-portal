@@ -201,8 +201,7 @@ public class CheckStaleLCSRolesMessageListener
 		CheckStaleLCSRolesMessageListener.class);
 
 	private final Format _dateFormatDateTime =
-		FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"MMM d, " + "yyyy - hh:mm:ss");
+		FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d, yyyy - hh:mm:ss");
 	private Date _lastCheckDate = new Date();
 	private LCSNotificationLocalService _lcsNotificationLocalService;
 	private LCSProjectLocalService _lcsProjectLocalService;

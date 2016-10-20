@@ -53,8 +53,8 @@ public class LCSClusterNodeClusterLinkFailedEmailTemplate
 		contextAttributes.add(
 			translate(
 				emailContext,
-				"there-is-a-communication-error-between-nodes-in-one-of-" +
-					"your-clusters"));
+				"there-is-a-communication-error-between-nodes-in-one-of-your-" +
+					"clusters"));
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
 			translate(

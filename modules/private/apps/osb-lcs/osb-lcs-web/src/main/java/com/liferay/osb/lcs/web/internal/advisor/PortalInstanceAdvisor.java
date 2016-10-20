@@ -159,7 +159,7 @@ public class PortalInstanceAdvisor {
 			long runs = garbageCollectorMetrics.get("runs");
 			long time = garbageCollectorMetrics.get("time");
 
-			long averageTime = ((runs == 0) ? 0 : (time / runs));
+			long averageTime = (runs == 0) ? 0 : (time / runs);
 
 			Object[] lcsGarbageCollectorMetric =
 				{garbageCollectorName, runs, time, averageTime};

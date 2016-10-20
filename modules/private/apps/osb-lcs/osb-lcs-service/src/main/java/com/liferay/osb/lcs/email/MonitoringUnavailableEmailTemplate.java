@@ -59,7 +59,7 @@ public class MonitoringUnavailableEmailTemplate extends BaseEmailTemplate {
 				emailContext,
 				"please-make-sure-the-property-com-liferay-portal-servlet-" +
 					"filters-monitoring-monitoringfilter-is-set-to-true-in-" +
-					"your-portal-ext-properties-file",
+						"your-portal-ext-properties-file",
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$SUBJECT$]");
 		contextAttributes.add(

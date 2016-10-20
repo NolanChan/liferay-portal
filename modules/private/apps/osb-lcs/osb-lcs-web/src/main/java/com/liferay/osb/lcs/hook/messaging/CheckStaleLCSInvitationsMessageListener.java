@@ -187,8 +187,7 @@ public class CheckStaleLCSInvitationsMessageListener
 		CheckStaleLCSInvitationsMessageListener.class);
 
 	private final Format _dateFormatDateTime =
-		FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"MMM d, " + "yyyy - hh:mm:ss");
+		FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d, yyyy - hh:mm:ss");
 	private Date _lastCheckDate = new Date();
 	private LCSClusterEntryLocalService _lcsClusterEntryLocalService;
 	private LCSInvitationLocalService _lcsInvitationLocalService;

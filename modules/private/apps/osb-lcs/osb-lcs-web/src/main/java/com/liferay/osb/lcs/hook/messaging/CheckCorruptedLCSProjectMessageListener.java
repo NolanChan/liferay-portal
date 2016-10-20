@@ -229,8 +229,7 @@ public class CheckCorruptedLCSProjectMessageListener
 
 	private ClassNameLocalService _classNameLocalService;
 	private final Format _dateFormatDateTime =
-		FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"MMM d, " + "yyyy - hh:mm:ss");
+		FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d, yyyy - hh:mm:ss");
 	private ExpandoValueLocalService _expandoValueLocalService;
 	private Date _lastCheckDate = new Date();
 	private LCSClusterEntryLocalService _lcsClusterEntryLocalService;

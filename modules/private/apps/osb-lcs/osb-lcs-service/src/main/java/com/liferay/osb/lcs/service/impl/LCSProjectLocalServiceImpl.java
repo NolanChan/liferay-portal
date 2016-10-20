@@ -179,7 +179,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 			_log.debug(
 				_stringAdvisor.concat(
 					"LCS project created. Setting up LCS project for",
-					(users.size() - 1), "other corp project members."));
+					users.size() - 1, "other corp project members."));
 		}
 
 		for (int i = 1; i < users.size(); i++) {
