@@ -144,8 +144,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 			List<String> tagNamesList = Arrays.asList(tagNames);
 
-			if (tagNamesList.size() > _NUMBER_OF_TAGS) {
-				tagNamesList = tagNamesList.subList(0, _NUMBER_OF_TAGS);
+			if (tagNamesList.size() > _TAG_NAMES_COUNT) {
+				tagNamesList = tagNamesList.subList(0, _TAG_NAMES_COUNT);
 			}
 
 			if (Validator.isNotNull(predefinedFilterTag) &&
@@ -241,7 +241,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return strings;
 	}
 
-	private static final int _NUMBER_OF_TAGS = 3;
+	private static final int _TAG_NAMES_COUNT = 3;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
