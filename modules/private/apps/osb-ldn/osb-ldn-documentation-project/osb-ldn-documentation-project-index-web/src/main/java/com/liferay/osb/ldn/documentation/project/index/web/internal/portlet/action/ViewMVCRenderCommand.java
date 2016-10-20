@@ -203,7 +203,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		for (String predefinedFilterTag : predefinedFilterTags) {
 			Map<String, Object> predefinedFilterTagMap = new HashMap<>();
-			
+
 			predefinedFilterTagMap.put("name", predefinedFilterTag);
 
 			portletURL.setParameter("predefinedFilterTag", predefinedFilterTag);
