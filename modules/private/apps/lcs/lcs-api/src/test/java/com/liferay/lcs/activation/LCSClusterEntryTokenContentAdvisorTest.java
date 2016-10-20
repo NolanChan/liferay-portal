@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.lcs.internal.activation;
+package com.liferay.lcs.activation;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.lcs.internal.activation;
+package com.liferay.lcs.activation;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
