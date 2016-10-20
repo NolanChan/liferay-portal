@@ -63,18 +63,19 @@ public class LCSPatcherUtil {
 
 			Class<?> clazz = patcherUtil.getClass();
 
-			Field patcher = clazz.getDeclaredField("_patcher");
+			Field patcherField = clazz.getDeclaredField("_patcher");
 
-			patcher.setAccessible(true);
+			patcherField.setAccessible(true);
 
-			Object patcherImpl = patcher.get(patcherUtil);
+			Object patcherImpl = patcherField.get(patcherUtil);
 
 			clazz = patcherImpl.getClass();
 
-			Field properties = clazz.getDeclaredField("_properties");
+			Field propertiesField = clazz.getDeclaredField("_properties");
 
-			properties.setAccessible(true);
-			properties.set(patcherImpl, null);
+			propertiesField.setAccessible(true);
+
+			propertiesField.set(patcherImpl, null);
 		}
 		catch (Exception e) {
 			_log.error(e.getMessage(), e);
