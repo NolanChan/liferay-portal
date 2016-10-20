@@ -18,12 +18,14 @@ import com.liferay.lcs.messaging.Message;
 import com.liferay.lcs.service.LCSGatewayService;
 import com.liferay.lcs.util.CompressionUtil;
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.lcs.util.LCSUtil;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -108,7 +110,12 @@ public class LCSGatewayServiceImpl
 
 		Map<String, String> headers = new HashMap<>();
 
+		headers.put(
+			"BUILD_NUMBER", String.valueOf(ReleaseInfo.getBuildNumber()));
 		headers.put("HASH_CODE", String.valueOf(key.hashCode()));
+		headers.put(
+			"LCS_PORTLET_BUILD_NUMBER",
+			String.valueOf(LCSUtil.getLCSPortletBuildNumber()));
 		headers.put("PROTOCOL_VERSION", LCSConstants.PROTOCOL_VERSION_CURRENT);
 
 		List<Message> messages = doGetToList(
@@ -134,9 +141,13 @@ public class LCSGatewayServiceImpl
 
 		String key = message.getKey();
 
+		headers.put(
+			"BUILD_NUMBER", String.valueOf(ReleaseInfo.getBuildNumber()));
 		headers.put("HASH_CODE", String.valueOf(key.hashCode()));
 		headers.put("KEY", key);
-
+		headers.put(
+			"LCS_PORTLET_BUILD_NUMBER",
+			String.valueOf(LCSUtil.getLCSPortletBuildNumber()));
 		headers.put("MESSAGE_TYPE_CODE", _getMessageNameHashCode(message));
 		headers.put("PROTOCOL_VERSION", LCSConstants.PROTOCOL_VERSION_CURRENT);
 
