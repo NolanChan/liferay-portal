@@ -14,7 +14,7 @@
 
 package com.liferay.osb.lcs.advisor.impl;
 
-import com.liferay.lcs.internal.activation.LCSClusterEntryTokenContentAdvisor;
+import com.liferay.lcs.activation.LCSClusterEntryTokenContentAdvisor;
 import com.liferay.lcs.security.KeyStoreAdvisor;
 import com.liferay.lcs.security.KeyStoreFactory;
 import com.liferay.lcs.util.LCSConstants;
