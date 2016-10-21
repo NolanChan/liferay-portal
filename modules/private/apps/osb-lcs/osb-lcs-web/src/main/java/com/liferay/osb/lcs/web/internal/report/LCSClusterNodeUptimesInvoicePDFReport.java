@@ -37,6 +37,8 @@ import com.liferay.osb.lcs.report.ReportContext;
 import com.liferay.osb.lcs.service.LCSClusterNodeUptimeService;
 import com.liferay.osb.lcs.service.LCSProjectService;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -686,6 +688,13 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 				getFileName(reportContext.getMonth(), reportContext.getYear()));
 		}
 		catch (NoSuchFileEntryException nsfee) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfee, nsfee);
+			}
+
 			return null;
 		}
 	}
@@ -718,6 +727,13 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 				"Invoices");
 		}
 		catch (NoSuchFolderException nsfe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfe, nsfe);
+			}
+
 			invoicesFolder = _dlAppLocalService.addFolder(
 				user.getUserId(), group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Invoices",
@@ -730,6 +746,13 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 				String.valueOf(reportContext.getLcsProjectId()));
 		}
 		catch (NoSuchFolderException nsfe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfe, nsfe);
+			}
+
 			return _dlAppLocalService.addFolder(
 				user.getUserId(), group.getGroupId(),
 				invoicesFolder.getFolderId(),
@@ -742,6 +765,9 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		return Image.getInstance(
 			reportContext.getReportDependenciesPath() + "/logo.png");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LCSClusterNodeUptimesInvoicePDFReport.class);
 
 	private CompanyAdvisor _companyAdvisor;
 	private DLAppLocalService _dlAppLocalService;

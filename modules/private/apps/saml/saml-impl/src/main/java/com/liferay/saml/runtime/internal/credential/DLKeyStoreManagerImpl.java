@@ -70,6 +70,13 @@ public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 			keyStore.load(inputStream, samlKeyStorePassword.toCharArray());
 		}
 		catch (NoSuchFileException nsfe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfe, nsfe);
+			}
+
 			try {
 				keyStore.load(null, null);
 			}

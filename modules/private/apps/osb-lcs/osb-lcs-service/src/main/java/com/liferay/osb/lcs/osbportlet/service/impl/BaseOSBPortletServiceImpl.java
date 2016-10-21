@@ -112,6 +112,13 @@ public abstract class BaseOSBPortletServiceImpl
 			return getCorpProject(corpProjectId);
 		}
 		catch (NoSuchModelException nsme) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsme, nsme);
+			}
+
 			return null;
 		}
 	}
@@ -129,6 +136,13 @@ public abstract class BaseOSBPortletServiceImpl
 			return getRole(name);
 		}
 		catch (NoSuchRoleException nsre) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsre, nsre);
+			}
+
 			return null;
 		}
 	}

@@ -494,7 +494,8 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 			catch (PortalException pe) {
 				_log.error(
 					"No LCS project with corp project ID " +
-						corpProject.getCorpProjectId());
+						corpProject.getCorpProjectId(),
+					pe);
 
 				continue;
 			}

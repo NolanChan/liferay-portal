@@ -347,7 +347,7 @@ public class LCSClusterEntryLocalServiceImpl
 			configuration = getConfiguration();
 		}
 		catch (ConfigurationException ce) {
-			throw new SystemException("Configuration is not available.");
+			throw new SystemException("Configuration is not available.", ce);
 		}
 
 		if (configuration.applicationProfile() ==

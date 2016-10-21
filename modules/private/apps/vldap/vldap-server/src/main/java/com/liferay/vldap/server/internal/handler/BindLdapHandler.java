@@ -284,7 +284,7 @@ public class BindLdapHandler extends BaseLdapHandler {
 		}
 		catch (NoSuchCompanyException nsce) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get company with web ID " + webId);
+				_log.warn("Unable to get company with web ID " + webId, nsce);
 			}
 
 			long companyId = PortalUtil.getDefaultCompanyId();

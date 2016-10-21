@@ -94,6 +94,13 @@ public class LayoutVersion {
 				companyId, Layout.class.getName(), _TABLE_NAME);
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			expandoTable = _expandoTableLocalService.addDefaultTable(
 				companyId, Layout.class.getName());
 		}

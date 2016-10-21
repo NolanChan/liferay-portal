@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -177,6 +179,13 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 			return getAccountEntry(corpProject);
 		}
 		catch (NoSuchModelException nsme) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsme, nsme);
+			}
+
 			return null;
 		}
 	}
@@ -586,6 +595,9 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	private static final String _ORGANIZATION_NAMESPACE_LCS = "LCSORG";
 
 	private static final String _ORGANIZATION_NAMESPACE_OSB = "OSBORG";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MockOSBPortletServiceImpl.class);
 
 	private final Map<Long, AccountEntry> _allAccountEntries = new HashMap<>();
 	private final Map<Long, CorpProject> _allCorpProjects = new HashMap<>();

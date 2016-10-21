@@ -181,7 +181,8 @@ public class DirectoryTree {
 		}
 		catch (NoSuchCompanyException nsce) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get company with web ID " + companyWebId);
+				_log.warn(
+					"Unable to get company with web ID " + companyWebId, nsce);
 			}
 
 			return null;
