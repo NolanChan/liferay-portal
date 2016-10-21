@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import com.liferay.lcs.util.LCSConstants;
 
@@ -106,8 +107,12 @@ public abstract class Message implements Serializable {
 	public static final String KEY_UPTIMES = "uptimes";
 
 	public static <T extends Message> T fromJSON(String json) {
+		return fromJSON(json, Message.class);
+	}
+
+	public static <T extends Message> T fromJSON(String json, Class clazz) {
 		try {
-			return (T)_objectMapper.readValue(json, Message.class);
+			return (T)_objectMapper.readValue(json, clazz);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
@@ -471,6 +476,10 @@ public abstract class Message implements Serializable {
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
+
+	static {
+		_objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+	}
 
 	private long _createTime = System.currentTimeMillis();
 	private long _deliveryTag;

@@ -40,6 +40,8 @@ public class CommandMessage extends Message {
 	public static final String COMMAND_TYPE_INITIATE_HANDSHAKE =
 		"initiateHandshake";
 
+	public static final String COMMAND_TYPE_MESSAGE_BUS = "messageBus";
+
 	public static final String COMMAND_TYPE_SCHEDULE_MESSAGE_LISTENERS =
 		"scheduleMessageListeners";
 
@@ -140,6 +142,11 @@ public class CommandMessage extends Message {
 	@JsonIgnore
 	public boolean isCommandTypeInitiateHandshake() {
 		return isCommandType(COMMAND_TYPE_INITIATE_HANDSHAKE);
+	}
+
+	@JsonIgnore
+	public boolean isCommandTypeMessageBus() {
+		return isCommandType(COMMAND_TYPE_MESSAGE_BUS);
 	}
 
 	@JsonIgnore
