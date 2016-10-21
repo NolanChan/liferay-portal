@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import com.liferay.lcs.messaging.Message;
 
 import java.util.Collections;
@@ -32,11 +33,13 @@ import java.util.List;
 	{
 		@JsonSubTypes.Type(name = "AT", value = ATAnalyticsEventsMessage.class),
 		@JsonSubTypes.Type(
-			name = "SCREENS", value = ScreensAnalyticsEventsMessage.class)
+			name = "SCREENS", value = ScreensAnalyticsEventsMessage.class
+		)
 	})
 @JsonTypeInfo(
-	use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY,
-	property = "messageFormat", visible = true)
+	include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "messageFormat",
+	use = JsonTypeInfo.Id.NAME, visible = true
+)
 public class AnalyticsEventsMessage extends Message {
 
 	public long getAnonymousUserId() {
@@ -185,8 +188,9 @@ public class AnalyticsEventsMessage extends Message {
 		private Properties _properties;
 
 		@JsonFormat(
-			shape = JsonFormat.Shape.STRING,
-			pattern ="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
+			pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+			shape = JsonFormat.Shape.STRING, timezone = "UTC"
+		)
 		private Date _timestamp;
 
 	}

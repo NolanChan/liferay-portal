@@ -27,8 +27,16 @@ public class MessageBusCommandMessage extends CommandMessage {
 		return (String)super.getPayload();
 	}
 
+	public String getResponse() {
+		return _response;
+	}
+
 	public String getResponseDestinationName() {
 		return _responseDestinationName;
+	}
+
+	public String getResponseId() {
+		return _responseId;
 	}
 
 	public void setDestinationName(String destinationName) {
@@ -39,24 +47,16 @@ public class MessageBusCommandMessage extends CommandMessage {
 		super.setPayload(payload);
 	}
 
+	public void setResponse(String response) {
+		_response = response;
+	}
+
 	public void setResponseDestinationName(String responseDestinationName) {
 		_responseDestinationName = responseDestinationName;
 	}
 
-	public String getResponse() {
-		return _response;
-	}
-
-	public void setResponse(String _response) {
-		this._response = _response;
-	}
-
-	public String getResponseId() {
-		return _responseId;
-	}
-
-	public void setResponseId(String _responseId) {
-		this._responseId = _responseId;
+	public void setResponseId(String responseId) {
+		_responseId = responseId;
 	}
 
 	private String _destinationName;

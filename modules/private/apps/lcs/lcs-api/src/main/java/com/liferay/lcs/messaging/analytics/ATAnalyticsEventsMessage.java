@@ -173,8 +173,8 @@ public class ATAnalyticsEventsMessage extends AnalyticsEventsMessage {
 			_addSessionIdToURL = addSessionIdToURL;
 		}
 
-		public void setAnonymousUserId(long _anonymousUserId) {
-			this._anonymousUserId = _anonymousUserId;
+		public void setAnonymousUserId(long anonymousUserId) {
+			_anonymousUserId = anonymousUserId;
 		}
 
 		public void setBCP47LanguageId(String bcp47LanguageId) {
