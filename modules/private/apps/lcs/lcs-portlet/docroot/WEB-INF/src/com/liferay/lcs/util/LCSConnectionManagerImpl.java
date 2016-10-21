@@ -450,6 +450,18 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 				int i = 0;
 
 				do {
+					float multiplier = _multipliers[i];
+
+					i = getNextIndex(i);
+
+					try {
+						TimeUnit.MILLISECONDS.sleep(
+							(long)
+								(multiplier * _lcsGatewayUnavailableWaitTime));
+					}
+					catch (InterruptedException ie) {
+					}
+
 					_log.warn("Checking for LCS gateway availability");
 
 					lcsGatewayAvailable =
@@ -462,18 +474,6 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 						else {
 							_log.warn("LCS gateway is unavailable");
 						}
-					}
-
-					float multiplier = _multipliers[i];
-
-					i = getNextIndex(i);
-
-					try {
-						TimeUnit.MILLISECONDS.sleep(
-							(long)
-								(multiplier * _lcsGatewayUnavailableWaitTime));
-					}
-					catch (InterruptedException ie) {
 					}
 				}
 				while (!_cancelRunnable && !isReady() && !lcsGatewayAvailable);
@@ -509,10 +509,10 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 				else {
 					setLCSGatewayAvailable(true);
 					setReady(true);
-
-					LCSUtil.sendServiceAvailabilityNotification(
-						LCSPortletState.NO_SUBSCRIPTION);
 				}
+
+				LCSUtil.sendServiceAvailabilityNotification(
+					LCSPortletState.NO_SUBSCRIPTION);
 			}
 
 			if (_log.isWarnEnabled()) {
