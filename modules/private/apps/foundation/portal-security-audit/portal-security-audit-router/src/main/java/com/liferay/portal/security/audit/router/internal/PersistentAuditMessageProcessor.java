@@ -62,9 +62,11 @@ public class PersistentAuditMessageProcessor implements AuditMessageProcessor {
 	}
 
 	protected void doProcess(AuditMessage auditMessage) throws Exception {
-		if (_enabled) {
-			_auditEventManager.addAuditEvent(auditMessage);
+		if (!_enabled) {
+			return;
 		}
+
+		_auditEventManager.addAuditEvent(auditMessage);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
