@@ -35,12 +35,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author Yury Butrymovich
  */
 @Component(
-		immediate = true,
-		property = {
-			"javax.portlet.name=" + DocumentationProjectPortletKeys.DOCUMENTATION_PROJECT_ADMIN,
-			"mvc.command.name=/serve_documentation_project_icon"
-		},
-		service = MVCResourceCommand.class
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DocumentationProjectPortletKeys.DOCUMENTATION_PROJECT_ADMIN,
+		"mvc.command.name=/serve_documentation_project_icon"
+	},
+	service = MVCResourceCommand.class
 )
 public class ServeDocumentationProjectIconMVCResourceCommand
 	implements MVCResourceCommand {

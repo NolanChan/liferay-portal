@@ -344,10 +344,10 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		PdfPTable pdfPTable = new PdfPTable(1);
 
 		Phrase phrase = new Phrase(
-				LanguageUtil.format(
-						reportContext.getLocale(),
-						"this-invoice-is-for-the-billing-period", (Object)null),
-				normalFont);
+			LanguageUtil.format(
+				reportContext.getLocale(),
+				"this-invoice-is-for-the-billing-period", (Object)null),
+			normalFont);
 
 		PdfPCell pdfPCell = new PdfPCell(phrase);
 
@@ -357,12 +357,11 @@ public class LCSClusterNodeUptimesInvoicePDFReport extends BaseReport {
 		pdfPTable.addCell(pdfPCell);
 
 		pdfPCell = new PdfPCell(
-				new Phrase(
-						LanguageUtil.format(
-								reportContext.getLocale(),
-								"greetings-from-liferay-connected-services",
-								(Object)null),
-						smallFont));
+			new Phrase(
+				LanguageUtil.format(
+					reportContext.getLocale(),
+					"greetings-from-liferay-connected-services", (Object)null),
+				smallFont));
 
 		pdfPCell.setBorder(Rectangle.NO_BORDER);
 		pdfPCell.setUseDescender(true);

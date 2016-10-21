@@ -219,9 +219,9 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 		}
 
 		Map<String, Map<String, String>> lcsClusterEntryPropertyDifferencesMap =
-				_lcsClusterEntryPropertyDifferencesService.
-					getLCSClusterEntryPropertyDifferencesMap(
-						randomSiblingLCSClusterNode.getLcsClusterEntryId());
+			_lcsClusterEntryPropertyDifferencesService.
+				getLCSClusterEntryPropertyDifferencesMap(
+					randomSiblingLCSClusterNode.getLcsClusterEntryId());
 
 		LCSClusterNodeProperties lcsClusterNodeProperties =
 			_lcsClusterNodePropertiesService.fetchLCSClusterNodeProperties(key);

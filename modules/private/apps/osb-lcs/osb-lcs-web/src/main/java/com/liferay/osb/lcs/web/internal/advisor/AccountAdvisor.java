@@ -423,8 +423,8 @@ public class AccountAdvisor {
 			for (LCSEventType lcsEventType : LCSEventType.getSupported()) {
 				LCSNotification lcsNotification =
 					_lcsNotificationService.fetchLCSClusterNodeLCSNotification(
-							lcsClusterNode.getLcsClusterNodeId(),
-							lcsEventType.getType());
+						lcsClusterNode.getLcsClusterNodeId(),
+						lcsEventType.getType());
 
 				boolean enabled = parentLCSNotificationTypesEnabled.get(
 					lcsEventType.getType());

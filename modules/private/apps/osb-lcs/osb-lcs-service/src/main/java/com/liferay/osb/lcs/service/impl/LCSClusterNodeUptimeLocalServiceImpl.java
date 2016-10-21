@@ -392,9 +392,9 @@ public class LCSClusterNodeUptimeLocalServiceImpl
 						filteredLCSClusterNodeUptimes) {
 
 					List<LCSClusterNodeUptime>
-							lcsClusterNodeLCSClusterNodeUptimes =
-								lcsClusterNodeUptimesMap.get(
-									lcsClusterNodeUptime.getLcsClusterNodeId());
+						lcsClusterNodeLCSClusterNodeUptimes =
+							lcsClusterNodeUptimesMap.get(
+								lcsClusterNodeUptime.getLcsClusterNodeId());
 
 					if (lcsClusterNodeLCSClusterNodeUptimes == null) {
 						lcsClusterNodeLCSClusterNodeUptimes = new ArrayList<>();

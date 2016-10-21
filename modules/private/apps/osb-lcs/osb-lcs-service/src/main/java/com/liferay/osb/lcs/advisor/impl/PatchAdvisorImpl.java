@@ -111,8 +111,8 @@ public class PatchAdvisorImpl implements PatchAdvisor {
 
 		for (int start = 0, end = 20; start < count; end += 20, start += 20) {
 			List<LCSClusterNode> lcsClusterNodes =
-					LCSClusterNodeLocalServiceUtil.getLCSClusterNodes(
-						start, end, true);
+				LCSClusterNodeLocalServiceUtil.getLCSClusterNodes(
+					start, end, true);
 
 			for (LCSClusterNode lcsClusterNode : lcsClusterNodes) {
 				if (!_resetInstallablePatches(lcsClusterNode)) {
@@ -128,8 +128,8 @@ public class PatchAdvisorImpl implements PatchAdvisor {
 				Message message = new Message();
 
 				LCSClusterEntry lcsClusterEntry =
-						LCSClusterEntryLocalServiceUtil.getLCSClusterEntry(
-							lcsClusterNode.getLcsClusterEntryId());
+					LCSClusterEntryLocalServiceUtil.getLCSClusterEntry(
+						lcsClusterNode.getLcsClusterEntryId());
 
 				if (lcsClusterEntry.isCluster()) {
 					message.put("cluster", true);
@@ -248,19 +248,18 @@ public class PatchAdvisorImpl implements PatchAdvisor {
 		}
 
 		LCSClusterNodePatches lcsClusterNodePatches =
-				_lcsClusterNodePatchesService.fetchLCSClusterNodePatches(
-					lcsClusterNode.getKey());
+			_lcsClusterNodePatchesService.fetchLCSClusterNodePatches(
+				lcsClusterNode.getKey());
 
 		if (lcsClusterNodePatches == null) {
 			List<String> installablePatchIds =
-					_lcsPatchingAdvisorService.getInstallablePatchIds(
-							lcsClusterNode,
-							lcsClusterNode.getPatchingToolVersion(),
-							new String[0]);
+				_lcsPatchingAdvisorService.getInstallablePatchIds(
+					lcsClusterNode, lcsClusterNode.getPatchingToolVersion(),
+					new String[0]);
 
 			_lcsClusterNodePatchesService.addLCSClusterNodePatches(
-					null, null, null, installablePatchIds,
-					lcsClusterNode.getKey(), new Date(), null);
+				null, null, null, installablePatchIds, lcsClusterNode.getKey(),
+				new Date(), null);
 
 			if (installablePatchIds.isEmpty()) {
 				return false;
@@ -273,9 +272,9 @@ public class PatchAdvisorImpl implements PatchAdvisor {
 			lcsClusterNodePatches.getInstallablePatchIds();
 
 		List<String> newInstallablePatchIds =
-				_lcsPatchingAdvisorService.getInstallablePatchIds(
-						lcsClusterNode, lcsClusterNode.getPatchingToolVersion(),
-						getInstalledPatchIds(lcsClusterNodePatches));
+			_lcsPatchingAdvisorService.getInstallablePatchIds(
+				lcsClusterNode, lcsClusterNode.getPatchingToolVersion(),
+				getInstalledPatchIds(lcsClusterNodePatches));
 
 		if ((oldInstallablePatchIds.size() == newInstallablePatchIds.size()) &&
 			oldInstallablePatchIds.containsAll(newInstallablePatchIds)) {
