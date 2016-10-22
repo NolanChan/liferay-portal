@@ -4,7 +4,6 @@ Bundle-ClassPath:\
 	lib/commons-collections.jar,\
 	lib/commons-dbcp2.jar,\
 	lib/commons-digester.jar,\
-	lib/commons-javaflow.jar,\
 	lib/core.jar,\
 	lib/groovy-all.jar,\
 	lib/itext.jar,\
@@ -117,7 +116,6 @@ Liferay-Releng-Module-Group-Title: Reports Engine
 	lib/commons-collections.jar=commons-collections-[0-9]*.jar,\
 	lib/commons-dbcp2.jar=commons-dbcp2-[0-9]*.jar,\
 	lib/commons-digester.jar=commons-digester-[0-9]*.jar,\
-	lib/commons-javaflow.jar=commons-javaflow-[0-9]*.jar,\
 	lib/core.jar=core-[0-9]*.jar,\
 	lib/groovy-all.jar=groovy-all-[0-9]*.jar,\
 	lib/itext.jar=itext-[0-9]*.jar,\

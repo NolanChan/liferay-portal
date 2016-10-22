@@ -8,7 +8,6 @@ dependencies {
 	provided group: "com.lowagie", name: "itext", version: "4.2.0"
 	provided group: "commons-collections", name: "commons-collections", version: "2.1.1"
 	provided group: "commons-digester", name: "commons-digester", version: "2.1"
-	provided group: "commons-javaflow", name: "commons-javaflow", version: "20060411"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "jfree", name: "jcommon", version: "1.0.15"
 	provided group: "jfree", name: "jfreechart", version: "1.0.12"
