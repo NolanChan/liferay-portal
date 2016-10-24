@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,6 +53,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -110,7 +113,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		template.put("viewURL", viewUrl.toString());
 
 		Map<String, Object> strings = getStringsMap(
-			themeDisplay.getLanguageId(), documentationProjectsList.size());
+			renderRequest, themeDisplay.getLanguageId(),
+			documentationProjectsList.size());
 
 		template.put("strings", strings);
 
@@ -217,16 +221,21 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	protected Map<String, Object> getStringsMap(
-		String languageId, int documentationProjectCount) {
+		RenderRequest renderRequest, String languageId,
+		int documentationProjectCount) {
 
 		Map<String, Object> strings = new HashMap<>();
+
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(renderRequest);
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(languageId);
 
-		strings.put("all", LanguageUtil.get(resourceBundle, "all"));
-		strings.put("filter", LanguageUtil.get(resourceBundle, "filter"));
-		strings.put("projects", LanguageUtil.get(resourceBundle, "projects"));
+		strings.put("all", LanguageUtil.get(httpServletRequest, "all"));
+		strings.put("filter", LanguageUtil.get(httpServletRequest, "filter"));
+		strings.put(
+			"projects", LanguageUtil.get(httpServletRequest, "projects"));
 
 		if (documentationProjectCount == 1) {
 			strings.put(
