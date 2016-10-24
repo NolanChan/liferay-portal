@@ -4,7 +4,6 @@ Bundle-ClassPath:\
 	lib/commons-collections.jar,\
 	lib/commons-dbcp2.jar,\
 	lib/commons-digester.jar,\
-	lib/commons-javaflow.jar,\
 	lib/core.jar,\
 	lib/groovy-all.jar,\
 	lib/itext.jar,\
@@ -13,7 +12,6 @@ Bundle-ClassPath:\
 	lib/jcommon.jar,\
 	lib/jfreechart.jar,\
 	lib/jxl.jar,\
-	lib/png-encoder.jar,\
 	lib/poi-ooxml-schemas.jar,\
 	lib/poi-ooxml.jar,\
 	lib/poi.jar,\
@@ -27,6 +25,8 @@ Import-Package:\
 	!antlr.*,\
 	\
 	!bsh,\
+	\
+	!com.keypoint.*,\
 	\
 	!com.fasterxml.jackson.*,\
 	\
@@ -61,6 +61,7 @@ Import-Package:\
 	!org.apache.commons.jci.*,\
 	!org.apache.commons.pool2.*,\
 	!org.apache.ivy.*,\
+	!org.apache.javaflow.*,\
 	!org.apache.log.*,\
 	!org.apache.oro.*,\
 	!org.apache.poi.hdgf.*,\
@@ -117,7 +118,6 @@ Liferay-Releng-Module-Group-Title: Reports Engine
 	lib/commons-collections.jar=commons-collections-[0-9]*.jar,\
 	lib/commons-dbcp2.jar=commons-dbcp2-[0-9]*.jar,\
 	lib/commons-digester.jar=commons-digester-[0-9]*.jar,\
-	lib/commons-javaflow.jar=commons-javaflow-[0-9]*.jar,\
 	lib/core.jar=core-[0-9]*.jar,\
 	lib/groovy-all.jar=groovy-all-[0-9]*.jar,\
 	lib/itext.jar=itext-[0-9]*.jar,\
@@ -126,7 +126,6 @@ Liferay-Releng-Module-Group-Title: Reports Engine
 	lib/jcommon.jar=jcommon-[0-9]*.jar,\
 	lib/jfreechart.jar=jfreechart-[0-9]*.jar,\
 	lib/jxl.jar=jxl-[0-9]*.jar,\
-	lib/png-encoder.jar=png-encoder-[0-9]*.jar,\
 	lib/poi-ooxml-schemas.jar=poi-ooxml-schemas-[0-9]*.jar,\
 	lib/poi-ooxml.jar=poi-ooxml-[0-9]*.jar,\
 	lib/poi.jar=poi-[0-9]*.jar,\
