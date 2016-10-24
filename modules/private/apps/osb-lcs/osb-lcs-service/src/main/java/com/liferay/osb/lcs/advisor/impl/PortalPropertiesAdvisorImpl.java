@@ -417,7 +417,11 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 					sb.append(key);
 					sb.append("\\|");
 
-					keys.replaceAll(sb.toString(), StringPool.BLANK);
+					String newKey = keys.replaceAll(
+						sb.toString(), StringPool.BLANK);
+
+					propertyValuesMap.put(
+						newKey, propertyValuesMap.remove(keys));
 
 					break;
 				}
