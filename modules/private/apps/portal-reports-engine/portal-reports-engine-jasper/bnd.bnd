@@ -26,9 +26,9 @@ Import-Package:\
 	\
 	!bsh,\
 	\
-	!com.keypoint.*,\
-	\
 	!com.fasterxml.jackson.*,\
+	\
+	!com.keypoint.*,\
 	\
 	!com.sun.*,\
 	\
