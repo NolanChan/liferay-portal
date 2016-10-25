@@ -14,13 +14,23 @@
 
 package com.liferay.osb.ldn.generator.site;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.util.Map;
+
 /**
  * @author Ryan Park
  */
-public interface SiteGenerator {
+public abstract class BaseSiteGenerator implements SiteGenerator {
 
-	public void generate(long groupId) throws Exception;
+	public String getName() {
+		return _name;
+	}
 
-	public String getName() throws Exception;
+	protected void activate(Map<String, Object> config) {
+		_name = GetterUtil.getString(config.get("osb.ldn.layout.description"));
+	}
+
+	private String _name;
 
 }

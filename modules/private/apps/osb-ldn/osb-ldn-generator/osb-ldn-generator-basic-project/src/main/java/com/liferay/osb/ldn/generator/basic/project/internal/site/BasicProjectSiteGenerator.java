@@ -16,6 +16,7 @@ package com.liferay.osb.ldn.generator.basic.project.internal.site;
 
 import com.liferay.osb.ldn.generator.basic.project.site.constants.BasicProjectSiteConstants;
 import com.liferay.osb.ldn.generator.layout.LayoutGenerator;
+import com.liferay.osb.ldn.generator.site.BaseSiteGenerator;
 import com.liferay.osb.ldn.generator.site.SiteGenerator;
 import com.liferay.osb.ldn.generator.site.helper.SiteLayoutHelper;
 import com.liferay.portal.kernel.model.Layout;
@@ -32,11 +33,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osb.ldn.site.generator.key=" + BasicProjectSiteConstants.BASIC_PROJECT_SITE_KEY
+		"osb.ldn.site.generator.key=" + BasicProjectSiteConstants.BASIC_PROJECT_SITE_KEY,
+		"osb.ldn.site.generator.name=Basic Project"
 	},
 	service = SiteGenerator.class
 )
-public class BasicProjectSiteGenerator implements SiteGenerator {
+public class BasicProjectSiteGenerator extends BaseSiteGenerator {
 
 	public void generate(long groupId) throws Exception {
 		generateLayout(groupId, _overviewLayoutGenerator);
