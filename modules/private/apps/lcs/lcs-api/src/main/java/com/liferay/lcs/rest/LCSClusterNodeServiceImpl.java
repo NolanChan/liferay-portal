@@ -15,6 +15,7 @@
 package com.liferay.lcs.rest;
 
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,11 +93,14 @@ public class LCSClusterNodeServiceImpl
 				LCSClusterNodeImpl.class, _URL_LCS_CLUSTER_NODE, "key", key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
-			if (jsonwsie.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
+			throw new RuntimeException(jsonwsie);
+				}
+		catch (JSONWebServiceTransportException jsonwste) {
+			if (jsonwste.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
 				return null;
 			}
 
-			throw new RuntimeException(jsonwsie);
+			throw new RuntimeException(jsonwste);
 		}
 	}
 
