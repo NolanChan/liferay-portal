@@ -23,10 +23,10 @@ deployDependencies {
 
 	from configurations.provided
 
+	include "com.liferay.petra.json.web.service.client-*.jar"
 	include "jackson-annotations-*.jar"
 	include "jackson-core-*.jar"
 	include "jackson-databind-*.jar"
-	include "com.liferay.petra.json.web.service.client-*.jar"
 
 	into {
 		liferay.deployDir

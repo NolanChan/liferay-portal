@@ -32,11 +32,11 @@ deployDependencies {
 
 	from configurations.provided
 
-	include "itextpdf-*.jar"
 	include "commons-configuration-*.jar"
-	include "joda-time-*.jar"
 	include "httpclient-*.jar"
 	include "httpcore-*.jar"
+	include "itextpdf-*.jar"
+	include "joda-time-*.jar"
 
 	into {
 		liferay.deployDir
