@@ -7,5 +7,5 @@ Web-ContextPath: /osb-lcs-web
 -plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin
 -includeresource:\
 	lib/httpclient.jar=httpclient-[0-9]*.jar;lib:=true,\
-	lib/httpcore.jar=httpcore-[0-9]*.jar;lib:=tru
--sources: true;e
+	lib/httpcore.jar=httpcore-[0-9]*.jar;lib:=true
+-sources: true
