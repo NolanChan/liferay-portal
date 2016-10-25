@@ -58,10 +58,10 @@ Import-Package:\
 	!org.apache.bcel.*,\
 	!org.apache.bsf.*,\
 	!org.apache.commons.cli.*,\
+	!org.apache.commons.javaflow.*,\
 	!org.apache.commons.jci.*,\
 	!org.apache.commons.pool2.*,\
 	!org.apache.ivy.*,\
-	!org.apache.javaflow.*,\
 	!org.apache.log.*,\
 	!org.apache.oro.*,\
 	!org.apache.poi.hdgf.*,\
