@@ -19,12 +19,9 @@ import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSMessage;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Igor Beslic
  */
-@Component(immediate = true)
 public interface LCSMessageAdvisor {
 
 	public void addClusterLCSMessage(

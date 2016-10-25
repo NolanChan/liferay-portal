@@ -17,12 +17,9 @@ package com.liferay.osb.lcs.advisor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Igor Beslic
  */
-@Component(immediate = true)
 public interface UserAdvisor {
 
 	public User addLDAPUser(String uuid) throws PortalException;

@@ -24,16 +24,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-
 /**
  * @author Igor Beslic
  */
-@Component(
-	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
-)
 public interface PatchAdvisor {
 
 	public URL getPatchAsURL(String patchFileName);

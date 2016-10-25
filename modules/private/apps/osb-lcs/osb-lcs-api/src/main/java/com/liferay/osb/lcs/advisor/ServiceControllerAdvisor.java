@@ -16,12 +16,9 @@ package com.liferay.osb.lcs.advisor;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Igor Beslic
  */
-@Component(immediate = true)
 public interface ServiceControllerAdvisor {
 
 	public String execute(Map<String, String> serviceControllerMap)

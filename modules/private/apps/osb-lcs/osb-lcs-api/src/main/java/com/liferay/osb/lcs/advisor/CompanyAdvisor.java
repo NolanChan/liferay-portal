@@ -16,12 +16,9 @@ package com.liferay.osb.lcs.advisor;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Igor Beslic
  */
-@Component(immediate = true)
 public interface CompanyAdvisor {
 
 	public long getCompanyId() throws PortalException;

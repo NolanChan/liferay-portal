@@ -19,13 +19,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-@Component(immediate = true)
 public interface CommandMessageAdvisor {
 
 	public void deregister(String key);

@@ -14,12 +14,9 @@
 
 package com.liferay.osb.lcs.advisor;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Igor Beslic
  */
-@Component(immediate = true)
 public interface StringAdvisor {
 
 	public String concat(Object... args);
