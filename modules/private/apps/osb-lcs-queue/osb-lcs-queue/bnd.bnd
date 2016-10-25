@@ -1,6 +1,17 @@
+Bundle-ClassPath:\
+	.,\
+	lib/amazon-sqs-java-extended-client-lib.jar,\
+	lib/aws-java-sdk-core.jar,\
+	lib/aws-java-sdk-ec2.jar,\
+	lib/aws-java-sdk-s3.jar
 Bundle-Name: Liferay OSB LCS Queue
 Bundle-SymbolicName: com.liferay.osb.lcs.queue
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.osb.lcs.queue
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: OSB LCS Queue
+-includeresource:\
+	lib/amazon-sqs-java-extended-client-lib.jar=amazon-sqs-java-extended-client-lib-*.jar;lib:=true,\
+	lib/aws-java-sdk-core.jar=aws-java-sdk-core-*.jar;lib:=true,\
+	lib/aws-java-sdk-ec2.jar=aws-java-sdk-ec2-*.jar;lib:=true,\
+	lib/aws-java-sdk-s3.jar=aws-java-sdk-s3-*.jar;lib:=true
