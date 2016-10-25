@@ -94,7 +94,7 @@ public class LCSClusterNodeServiceImpl
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);
-				}
+		}
 		catch (JSONWebServiceTransportException jsonwste) {
 			if (jsonwste.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
 				return null;
