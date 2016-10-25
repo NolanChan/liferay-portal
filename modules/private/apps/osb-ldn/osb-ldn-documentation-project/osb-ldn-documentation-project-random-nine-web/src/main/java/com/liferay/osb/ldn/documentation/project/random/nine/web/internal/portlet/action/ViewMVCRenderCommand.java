@@ -22,10 +22,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -89,6 +91,25 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		Map<String, Object> strings = getStringsMap(
 			themeDisplay.getLanguageId());
+
+		Layout themeDisplayLayout = themeDisplay.getLayout();
+
+		try {
+			long plid = _layoutLocalService.getDefaultPlid(
+				themeDisplayLayout.getGroupId(), false,
+				DOCUMENTATION_PROJECT_INDEX_PORTLET_ID);
+
+			Layout layout = _layoutLocalService.getLayout(plid);
+
+			strings.put(
+				"all-projects-url",
+				layout.getFriendlyURL(themeDisplay.getLocale()));
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
 
 		template.put("strings", strings);
 
@@ -158,11 +179,18 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return strings;
 	}
 
+	protected static final String DOCUMENTATION_PROJECT_INDEX_PORTLET_ID =
+		"com_liferay_osb_ldn_documentation_project_index_web_" +
+			"DocumentationProjectIndexPortlet";
+
 	@Reference
 	private DocumentationProjectLocalService _documentationProjectLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	private final Log _log = LogFactoryUtil.getLog(ViewMVCRenderCommand.class);
 
