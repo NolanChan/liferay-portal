@@ -14,9 +14,9 @@ Liferay-Releng-Module-Group-Title: LCS Portal
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
 -includeresource:\
-	lib/amazon-sqs-java-extended-client-lib.jar=amazon-sqs-java-extended-client-lib-*.jar;lib:=true,\
-	lib/aws-java-sdk-core.jar=aws-java-sdk-core-*.jar;lib:=true,\
-	lib/aws-java-sdk-ec2.jar=aws-java-sdk-ec2-*.jar;lib:=true,\
-	lib/aws-java-sdk-kms.jar=aws-java-sdk-kms-*.jar;lib:=true,\
-	lib/aws-java-sdk-s3.jar=aws-java-sdk-s3-*.jar;lib:=true,\
-	lib/aws-java-sdk-sqs.jar=aws-java-sdk-sqs-*.jar;lib:=true
+	lib/amazon-sqs-java-extended-client-lib.jar=amazon-sqs-java-extended-client-lib-[0-9]*.jar;lib:=true,\
+	lib/aws-java-sdk-core.jar=aws-java-sdk-core-[0-9]*.jar;lib:=true,\
+	lib/aws-java-sdk-ec2.jar=aws-java-sdk-ec2-[0-9]*.jar;lib:=true,\
+	lib/aws-java-sdk-kms.jar=aws-java-sdk-kms-[0-9]*.jar;lib:=true,\
+	lib/aws-java-sdk-s3.jar=aws-java-sdk-s3-[0-9]*.jar;lib:=true,\
+	lib/aws-java-sdk-sqs.jar=aws-java-sdk-sqs-[0-9]*.jar;lib:=true

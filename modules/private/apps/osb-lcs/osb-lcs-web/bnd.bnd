@@ -6,6 +6,6 @@ Provide-Capability: liferay.resource.bundle;bundle.symbolic.name=com.liferay.osb
 Web-ContextPath: /osb-lcs-web
 -plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin
 -includeresource:\
-	lib/httpclient.jar=httpclient-*.jar;lib:=true,\
-	lib/httpcore.jar=httpcore-*.jar;lib:=tru
+	lib/httpclient.jar=httpclient-[0-9]*.jar;lib:=true,\
+	lib/httpcore.jar=httpcore-[0-9]*.jar;lib:=tru
 -sources: true;e
