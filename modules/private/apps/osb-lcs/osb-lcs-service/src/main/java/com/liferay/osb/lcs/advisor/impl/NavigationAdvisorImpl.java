@@ -40,6 +40,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
@@ -49,6 +51,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Shin
  * @author Igor Beslic
  */
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = NavigationAdvisor.class
+)
 public class NavigationAdvisorImpl implements NavigationAdvisor {
 
 	@Override

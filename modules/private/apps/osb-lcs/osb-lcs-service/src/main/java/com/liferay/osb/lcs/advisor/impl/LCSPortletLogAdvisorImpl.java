@@ -24,15 +24,22 @@ import com.liferay.portal.kernel.exception.SystemException;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
  */
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = LCSPortletLogAdvisor.class
+)
 public class LCSPortletLogAdvisorImpl implements LCSPortletLogAdvisor {
 
-	@Reference(bind = "-")
+	@Reference(bind = "-", unbind = "-")
 	public void setStringAdvisor(StringAdvisor stringAdvisor) {
 		_stringAdvisor = stringAdvisor;
 	}

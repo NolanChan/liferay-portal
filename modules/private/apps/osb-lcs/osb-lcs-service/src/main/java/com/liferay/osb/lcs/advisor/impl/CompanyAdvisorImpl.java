@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
  */
+@Component(immediate = true, service = CompanyAdvisor.class)
 public class CompanyAdvisorImpl implements CompanyAdvisor {
 
 	public long getCompanyId() throws PortalException {

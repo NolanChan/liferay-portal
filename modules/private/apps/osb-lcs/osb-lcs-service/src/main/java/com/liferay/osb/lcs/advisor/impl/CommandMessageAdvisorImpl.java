@@ -19,6 +19,7 @@ import com.liferay.lcs.messaging.HandshakeMessage;
 import com.liferay.lcs.messaging.Message;
 import com.liferay.lcs.security.DigitalSignature;
 import com.liferay.lcs.util.PatchUtil;
+import com.liferay.osb.lcs.advisor.CommandMessageAdvisor;
 import com.liferay.osb.lcs.advisor.PatchAdvisor;
 import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSClusterNode;
@@ -40,14 +41,15 @@ import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-public class CommandMessageAdvisorImpl
-	implements com.liferay.osb.lcs.advisor.CommandMessageAdvisor {
+@Component(immediate = true, service = CommandMessageAdvisor.class)
+public class CommandMessageAdvisorImpl implements CommandMessageAdvisor {
 
 	@Override
 	public void deregister(String key) {
@@ -101,12 +103,12 @@ public class CommandMessageAdvisorImpl
 		sendHandshakeMessage(key, false);
 	}
 
-	@Reference(bind = "-")
+	@Reference(bind = "-", unbind = "-")
 	public void setDigitalSignature(DigitalSignature digitalSignature) {
 		_digitalSignature = digitalSignature;
 	}
 
-	@Reference(bind = "-")
+	@Reference(bind = "-", unbind = "-")
 	public void setLCSClusterNodeInstallationEnvironmentService(
 		LCSClusterNodeInstallationEnvironmentService
 			lcsClusterNodeInstallationEnvironmentService) {
@@ -115,19 +117,19 @@ public class CommandMessageAdvisorImpl
 			lcsClusterNodeInstallationEnvironmentService;
 	}
 
-	@Reference(bind = "-")
+	@Reference(bind = "-", unbind = "-")
 	public void setLCSClusterNodeScriptService(
 		LCSClusterNodeScriptService lcsClusterNodeScriptService) {
 
 		_lcsClusterNodeScriptService = lcsClusterNodeScriptService;
 	}
 
-	@Reference(bind = "-")
+	@Reference(bind = "-", unbind = "-")
 	public void setPatchStorageManager(PatchAdvisor patchAdvisor) {
 		_patchAdvisor = patchAdvisor;
 	}
 
-	@Reference(bind = "-")
+	@Reference(bind = "-", unbind = "-")
 	public void setQueueManager(QueueManager queueManager) {
 		_queueManager = queueManager;
 	}

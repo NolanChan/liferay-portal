@@ -52,12 +52,14 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Matija Petanjek
  */
+@Component(immediate = true, service = EmailAdvisor.class)
 public class EmailAdvisorImpl implements EmailAdvisor {
 
 	@Override
@@ -121,7 +123,7 @@ public class EmailAdvisorImpl implements EmailAdvisor {
 		}
 	}
 
-	@Reference(bind = "-")
+	@Reference(bind = "-", unbind = "-")
 	public void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}

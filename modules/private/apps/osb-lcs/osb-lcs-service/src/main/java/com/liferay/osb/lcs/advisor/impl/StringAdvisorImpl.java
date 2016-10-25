@@ -18,9 +18,12 @@ import com.liferay.osb.lcs.advisor.StringAdvisor;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Igor Beslic
  */
+@Component(immediate = true, service = StringAdvisor.class)
 public class StringAdvisorImpl implements StringAdvisor {
 
 	public String concat(Object... args) {

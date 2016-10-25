@@ -46,12 +46,19 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
  */
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = PatchAdvisor.class
+)
 public class PatchAdvisorImpl implements PatchAdvisor {
 
 	@Override
@@ -150,7 +157,7 @@ public class PatchAdvisorImpl implements PatchAdvisor {
 		}
 	}
 
-	@Reference(bind = "-")
+	@Reference(bind = "-", unbind = "-")
 	public void setDownloadURLResolver(
 		DownloadURLResolver downloadURLResolver) {
 
@@ -164,14 +171,14 @@ public class PatchAdvisorImpl implements PatchAdvisor {
 		_lcsClusterNodePatchesService = lcsClusterNodePatchesService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setLCSPatchingAdvisorService(
 		LCSPatchingAdvisorService lcsPatchingAdvisorService) {
 
 		_lcsPatchingAdvisorService = lcsPatchingAdvisorService;
 	}
 
-	@Reference(bind = "-")
+	@Reference(bind = "-", unbind = "-")
 	public void setStringAdvisor(StringAdvisor stringAdvisor) {
 		_stringAdvisor = stringAdvisor;
 	}

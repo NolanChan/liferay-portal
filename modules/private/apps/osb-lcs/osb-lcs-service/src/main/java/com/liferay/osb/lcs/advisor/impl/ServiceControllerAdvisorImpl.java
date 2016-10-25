@@ -36,9 +36,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+
 /**
  * @author Igor Beslic
  */
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = ServiceControllerAdvisor.class
+)
 public class ServiceControllerAdvisorImpl implements ServiceControllerAdvisor {
 
 	public String execute(Map<String, String> serviceControllerMap)

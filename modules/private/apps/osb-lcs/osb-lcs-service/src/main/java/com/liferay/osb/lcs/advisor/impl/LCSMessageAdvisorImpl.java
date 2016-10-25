@@ -25,9 +25,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Date;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Matija Petanjek
  */
+@Component(immediate = true, service = LCSMessageAdvisor.class)
 public class LCSMessageAdvisorImpl implements LCSMessageAdvisor {
 
 	public void addClusterLCSMessage(

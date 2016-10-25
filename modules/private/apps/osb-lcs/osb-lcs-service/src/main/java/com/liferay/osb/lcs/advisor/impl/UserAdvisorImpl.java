@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
  */
+@Component(immediate = true, service = UserAdvisor.class)
 public class UserAdvisorImpl implements UserAdvisor {
 
 	public User addLDAPUser(String uuid) throws PortalException {
@@ -91,22 +93,22 @@ public class UserAdvisorImpl implements UserAdvisor {
 		return false;
 	}
 
-	@Reference(bind = "-")
+	@Reference(bind = "-", unbind = "-")
 	public void setCompanyAdvisor(CompanyAdvisorImpl companyAdvisor) {
 		_companyAdvisor = companyAdvisor;
 	}
 
-	@Reference(bind = "-")
+	@Reference(bind = "-", unbind = "-")
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		_roleLocalService = roleLocalService;
 	}
 
-	@Reference(bind = "-")
+	@Reference(bind = "-", unbind = "-")
 	public void setStringAdvisor(StringAdvisor stringAdvisor) {
 		_stringAdvisor = stringAdvisor;
 	}
 
-	@Reference(bind = "-")
+	@Reference(bind = "-", unbind = "-")
 	public void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
