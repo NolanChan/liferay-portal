@@ -32,15 +32,9 @@ public interface GitHubServiceConfiguration {
 	@Meta.AD(deflt = "", description = "api-key", required = true)
 	public String apiKey();
 
-	@Meta.AD(deflt = "10", name = "top-contributor-count", required = true)
-	public int topContributorCount();
-
-	@Meta.AD(deflt = "24", name = "update-interval-hours", required = true)
-	public int updateIntervalHours();
-
 	@Meta.AD(
-		deflt = "600000", name = "update-window-milliseconds", required = true
+		deflt = "10", name = "github-contributor-max-count", required = true
 	)
-	public int updateWindowMilliseconds();
+	public int gitHubContributorMaxCount();
 
 }

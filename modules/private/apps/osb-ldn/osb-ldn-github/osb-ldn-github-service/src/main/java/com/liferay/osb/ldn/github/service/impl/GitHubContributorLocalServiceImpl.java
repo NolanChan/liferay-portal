@@ -16,26 +16,18 @@ package com.liferay.osb.ldn.github.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osb.ldn.github.exception.GitHubContributorAvatarURLException;
-import com.liferay.osb.ldn.github.exception.GitHubContributorContributionsException;
-import com.liferay.osb.ldn.github.exception.GitHubContributorNameException;
+import com.liferay.osb.ldn.github.exception.GitHubContributorCountException;
 import com.liferay.osb.ldn.github.internal.configuration.GitHubServiceConfiguration;
 import com.liferay.osb.ldn.github.internal.util.GitHubCommunicatorUtil;
 import com.liferay.osb.ldn.github.internal.util.GitHubServiceConfigurationUtil;
 import com.liferay.osb.ldn.github.model.GitHubContributor;
 import com.liferay.osb.ldn.github.model.GitHubRepository;
 import com.liferay.osb.ldn.github.service.base.GitHubContributorLocalServiceBaseImpl;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.lock.model.Lock;
-import com.liferay.portal.lock.service.LockLocalService;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +42,11 @@ public class GitHubContributorLocalServiceImpl
 			long userId, String owner, String name, int count)
 		throws Exception {
 
+		_gitHubServiceConfiguration =
+			GitHubServiceConfigurationUtil.getGitHubServiceConfiguration();
+
+		String apiKey = _gitHubServiceConfiguration.apiKey();
+
 		GitHubRepository gitHubRepository =
 			gitHubRepositoryPersistence.findByO_N(owner, name);
 
@@ -57,32 +54,34 @@ public class GitHubContributorLocalServiceImpl
 			gitHubContributorPersistence.findByGitHubRepositoryId(
 				gitHubRepository.getGitHubRepositoryId());
 
-		_gitHubServiceConfiguration =
-			GitHubServiceConfigurationUtil.getGitHubServiceConfiguration();
+		int gitHubContributorMaxCount =
+			_gitHubServiceConfiguration.gitHubContributorMaxCount();
+
+		validateCount(count, gitHubContributorMaxCount);
 
 		if (gitHubContributors.isEmpty()) {
-			return getNewGitHubContributors(
+			gitHubContributors = addGitHubContributors(
 				userId, gitHubRepository.getGitHubRepositoryId(), owner, name,
-				_gitHubServiceConfiguration.apiKey(), count);
+				apiKey, gitHubContributorMaxCount);
 		}
 
-		if (isExpired(gitHubContributors.get(0))) {
-			return getUpdatedGitHubContributors(
-				userId, gitHubRepository.getGitHubRepositoryId(), owner, name,
-				_gitHubServiceConfiguration.apiKey(), count,
-				gitHubContributors.size());
+		if (count < gitHubContributorMaxCount) {
+			return ListUtil.subList(gitHubContributors, 0, count);
 		}
 
-		return getExistingGitHubContributors(
-			userId, gitHubRepository.getGitHubRepositoryId(), owner, name,
-			_gitHubServiceConfiguration.apiKey(), count,
-			gitHubContributors.size(), gitHubContributors);
+		return gitHubContributors;
 	}
 
-	protected GitHubContributor addGitHubContributor(
-			Date now, long userId, long gitHubRepositoryId, String name,
-			String avatarURL, int contributions)
-		throws PortalException {
+	protected List<GitHubContributor> addGitHubContributors(
+			long userId, long gitHubRepositoryId, String owner, String name,
+			String apiKey, int count)
+		throws Exception {
+
+		List<GitHubContributor> gitHubContributorsHolders =
+			GitHubCommunicatorUtil.getTopContributors(
+				owner, name, count, apiKey);
+
+		List<GitHubContributor> gitHubContributors = new ArrayList<>();
 
 		if (userId == 0) {
 			userId = userLocalService.getDefaultUserId(
@@ -91,44 +90,30 @@ public class GitHubContributorLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		validate(name, avatarURL, contributions);
-
-		long gitHubContributorId = counterLocalService.increment();
-
-		GitHubContributor gitHubContributor =
-			gitHubContributorPersistence.create(gitHubContributorId);
-
-		gitHubContributor.setCompanyId(user.getCompanyId());
-		gitHubContributor.setUserId(userId);
-		gitHubContributor.setUserName(user.getFullName());
-		gitHubContributor.setCreateDate(now);
-		gitHubContributor.setModifiedDate(now);
-		gitHubContributor.setGitHubRepositoryId(gitHubRepositoryId);
-		gitHubContributor.setName(name);
-		gitHubContributor.setAvatarURL(avatarURL);
-		gitHubContributor.setContributions(contributions);
-
-		return gitHubContributorPersistence.update(gitHubContributor);
-	}
-
-	protected List<GitHubContributor> addGitHubContributors(
-			long userId, long gitHubRepositoryId, String owner, String name,
-			String apiKey, int count)
-		throws Exception {
-
-		List<GitHubContributor> gitHubContributorsHolder =
-			GitHubCommunicatorUtil.getTopContributors(
-				owner, name, count, apiKey);
-
-		List<GitHubContributor> gitHubContributors = new ArrayList<>();
-
 		Date now = new Date();
 
-		for (GitHubContributor gitHubContributor : gitHubContributorsHolder) {
-			gitHubContributor = addGitHubContributor(
-				now, userId, gitHubRepositoryId, gitHubContributor.getName(),
-				gitHubContributor.getAvatarURL(),
-				gitHubContributor.getContributions());
+		for (GitHubContributor gitHubContributorsHolder :
+				gitHubContributorsHolders) {
+
+			long gitHubContributorId = counterLocalService.increment();
+
+			GitHubContributor gitHubContributor =
+				gitHubContributorPersistence.create(gitHubContributorId);
+
+			gitHubContributor.setCompanyId(user.getCompanyId());
+			gitHubContributor.setUserId(userId);
+			gitHubContributor.setUserName(user.getFullName());
+			gitHubContributor.setCreateDate(now);
+			gitHubContributor.setModifiedDate(now);
+			gitHubContributor.setGitHubRepositoryId(gitHubRepositoryId);
+			gitHubContributor.setName(gitHubContributorsHolder.getName());
+			gitHubContributor.setAvatarURL(
+				gitHubContributorsHolder.getAvatarURL());
+			gitHubContributor.setContributions(
+				gitHubContributorsHolder.getContributions());
+
+			gitHubContributor = gitHubContributorPersistence.update(
+				gitHubContributor);
 
 			gitHubContributors.add(gitHubContributor);
 		}
@@ -136,165 +121,21 @@ public class GitHubContributorLocalServiceImpl
 		return gitHubContributors;
 	}
 
-	protected List<GitHubContributor> getExistingGitHubContributors(
-			long userId, long gitHubRepositoryId, String owner, String name,
-			String apiKey, int count, int currentCount,
-			List<GitHubContributor> gitHubContributors)
+	protected void validateCount(int count, int gitHubContributorMaxCount)
 		throws Exception {
 
-		if (count <= currentCount) {
-			if ((count > 0) && (count < currentCount)) {
-				return ListUtil.subList(gitHubContributors, 0, count);
-			}
-
-			return gitHubContributors;
+		if (count <= 0) {
+			throw new GitHubContributorCountException(
+				"GitHub contributor count must greater than 0");
 		}
 
-		return updateGitHubContributors(
-			userId, gitHubRepositoryId, owner, name, apiKey, count);
-	}
-
-	protected List<GitHubContributor> getNewGitHubContributors(
-			long userId, long gitHubRepositoryId, String owner, String name,
-			String apiKey, int count)
-		throws Exception {
-
-		_gitHubServiceConfiguration =
-			GitHubServiceConfigurationUtil.getGitHubServiceConfiguration();
-
-		int topContributorCount =
-			_gitHubServiceConfiguration.topContributorCount();
-
-		if (count <= topContributorCount) {
-			List<GitHubContributor> gitHubContributors = addGitHubContributors(
-				userId, gitHubRepositoryId, owner, name, apiKey,
-				topContributorCount);
-
-			if ((count > 0) && (count < topContributorCount)) {
-				return ListUtil.subList(gitHubContributors, 0, count);
-			}
-
-			return gitHubContributors;
-		}
-
-		return addGitHubContributors(
-			userId, gitHubRepositoryId, owner, name, apiKey, count);
-	}
-
-	protected List<GitHubContributor> getUpdatedGitHubContributors(
-			long userId, long gitHubRepositoryId, String owner, String name,
-			String apiKey, int count, int currentCount)
-		throws Exception {
-
-		if (count <= currentCount) {
-			List<GitHubContributor> gitHubContributors =
-				updateGitHubContributors(
-					userId, gitHubRepositoryId, owner, name, apiKey,
-					currentCount);
-
-			if ((count > 0) && (count < currentCount)) {
-				return ListUtil.subList(gitHubContributors, 0, count);
-			}
-
-			return gitHubContributors;
-		}
-
-		return updateGitHubContributors(
-			userId, gitHubRepositoryId, owner, name, apiKey, count);
-	}
-
-	protected boolean isExpired(GitHubContributor gitHubContributor)
-		throws Exception {
-
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.setTime(gitHubContributor.getModifiedDate());
-
-		_gitHubServiceConfiguration =
-			GitHubServiceConfigurationUtil.getGitHubServiceConfiguration();
-
-		int updateIntervalHours =
-			_gitHubServiceConfiguration.updateIntervalHours();
-
-		calendar.add(Calendar.HOUR_OF_DAY, updateIntervalHours);
-
-		calendar.getTime();
-
-		Date gitHubContributorExpirationTime = calendar.getTime();
-
-		if (gitHubContributorExpirationTime.compareTo(new Date()) < 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected List<GitHubContributor> updateGitHubContributors(
-			long userId, long gitHubRepositoryId, String owner, String name,
-			String apiKey, int count)
-		throws Exception {
-
-		List<GitHubContributor> gitHubContributors = null;
-
-		while (gitHubContributors == null) {
-			Lock lock = _lockLocalService.lock(
-				GitHubContributor.class.getName(),
-				String.valueOf(gitHubRepositoryId),
-				GitHubContributorLocalServiceImpl.class.getName());
-
-			if (lock.isNew() || lock.isExpired()) {
-				_gitHubServiceConfiguration =
-					GitHubServiceConfigurationUtil.
-						getGitHubServiceConfiguration();
-
-				_lockLocalService.refresh(
-					lock.getUuid(), lock.getCompanyId(),
-					_gitHubServiceConfiguration.updateWindowMilliseconds());
-			}
-			else {
-				continue;
-			}
-
-			try {
-				gitHubContributorPersistence.removeByGitHubRepositoryId(
-					gitHubRepositoryId);
-
-				gitHubContributors = addGitHubContributors(
-					userId, gitHubRepositoryId, owner, name, apiKey, count);
-			}
-			finally {
-				_lockLocalService.unlock(
-					GitHubContributor.class.getName(),
-					String.valueOf(gitHubRepositoryId),
-					GitHubContributorLocalServiceImpl.class.getName());
-			}
-		}
-
-		return gitHubContributors;
-	}
-
-	protected void validate(String name, String avatarUrl, int contributions)
-		throws PortalException {
-
-		if (Validator.isNull(name)) {
-			throw new GitHubContributorNameException(
-				"Contributor name is null");
-		}
-
-		if (!Validator.isUrl(avatarUrl)) {
-			throw new GitHubContributorAvatarURLException(
-				"Avatar URL is invalid");
-		}
-
-		if (contributions < 0) {
-			throw new GitHubContributorContributionsException(
-				"Contributions is less than 0");
+		if (count > gitHubContributorMaxCount) {
+			throw new GitHubContributorCountException(
+				"GitHub contributor count is greater than contributor max " +
+					"count");
 		}
 	}
 
 	private GitHubServiceConfiguration _gitHubServiceConfiguration;
-
-	@ServiceReference(type = LockLocalService.class)
-	private LockLocalService _lockLocalService;
 
 }

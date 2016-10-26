@@ -15,6 +15,14 @@
 package com.liferay.osb.ldn.github.internal.util;
 
 import com.liferay.osb.ldn.github.exception.GitHubAPIException;
+import com.liferay.osb.ldn.github.exception.GitHubContributorAvatarURLException;
+import com.liferay.osb.ldn.github.exception.GitHubContributorContributionsException;
+import com.liferay.osb.ldn.github.exception.GitHubContributorCountException;
+import com.liferay.osb.ldn.github.exception.GitHubContributorNameException;
+import com.liferay.osb.ldn.github.exception.GitHubRepositoryCommitsException;
+import com.liferay.osb.ldn.github.exception.GitHubRepositoryOpenIssuesException;
+import com.liferay.osb.ldn.github.exception.GitHubRepositoryStarsException;
+import com.liferay.osb.ldn.github.exception.GitHubRepositoryURLException;
 import com.liferay.osb.ldn.github.model.GitHubContributor;
 import com.liferay.osb.ldn.github.model.GitHubRepository;
 import com.liferay.osb.ldn.github.service.GitHubContributorLocalServiceUtil;
@@ -47,9 +55,7 @@ public class GitHubCommunicatorUtil {
 			String owner, String name, String apiKey)
 		throws Exception {
 
-		if (Validator.isNull(apiKey)) {
-			throw new GitHubAPIException("API key is null");
-		}
+		validateAPIKey(apiKey);
 
 		Http.Options options = new Http.Options();
 
@@ -89,7 +95,9 @@ public class GitHubCommunicatorUtil {
 		int openIssues = jsonObject.getInt("open_issues");
 		int stars = jsonObject.getInt("stargazers_count");
 
-		int commits = getCommits(owner, name, options, response);
+		int commits = getCommits(owner, name, apiKey);
+
+		validateGitHubRepository(commits, openIssues, stars, url);
 
 		GitHubRepository gitHubRepository =
 			GitHubRepositoryLocalServiceUtil.createGitHubRepository(0);
@@ -107,9 +115,9 @@ public class GitHubCommunicatorUtil {
 			String owner, String name, int count, String apiKey)
 		throws Exception {
 
-		if (Validator.isNull(apiKey)) {
-			throw new GitHubAPIException("API key is null");
-		}
+		validateCount(count);
+
+		validateAPIKey(apiKey);
 
 		Http.Options options = new Http.Options();
 
@@ -150,6 +158,9 @@ public class GitHubCommunicatorUtil {
 			int contributions = jsonObject.getInt("contributions");
 			String contributorName = jsonObject.getString("login");
 
+			validateGitHubContributor(
+				contributorName, avatarURL, contributions);
+
 			gitHubContributor =
 				GitHubContributorLocalServiceUtil.createGitHubContributor(0);
 
@@ -163,15 +174,24 @@ public class GitHubCommunicatorUtil {
 		return gitHubContributors;
 	}
 
-	protected static int getCommits(
-			String owner, String name, Options options, Response response)
+	protected static int getCommits(String owner, String name, String apiKey)
 		throws Exception {
 
-		options.setLocation(
-			_API_CALL_PREFIX + owner + StringPool.SLASH + name +
-				"/commits?per_page=1");
+		Http.Options options = new Http.Options();
+
+		String apiCallURL =
+			_API_CALL_PREFIX + owner + StringPool.SLASH + name + "/commits";
+
+		apiCallURL = HttpUtil.addParameter(apiCallURL, "access_token", apiKey);
+
+		apiCallURL = HttpUtil.addParameter(
+			apiCallURL, "per_page", String.valueOf(1));
+
+		options.setLocation(apiCallURL);
 
 		HttpUtil.URLtoString(options);
+
+		Http.Response response = options.getResponse();
 
 		response = options.getResponse();
 
@@ -189,6 +209,62 @@ public class GitHubCommunicatorUtil {
 		String commits = pagenationInfo.substring(begin + 16, end - 3);
 
 		return Integer.valueOf(commits);
+	}
+
+	protected static void validateAPIKey(String apiKey) throws Exception {
+		if (Validator.isNull(apiKey)) {
+			throw new GitHubAPIException("API key is empty");
+		}
+	}
+
+	protected static void validateCount(int count) throws Exception {
+		if (count <= 0) {
+			throw new GitHubContributorCountException(
+				"GitHub contributor max count must grater than 0");
+		}
+	}
+
+	protected static void validateGitHubContributor(
+			String name, String avatarUrl, int contributions)
+		throws Exception {
+
+		if (Validator.isNull(name)) {
+			throw new GitHubContributorNameException(
+				"Contributor name is empty");
+		}
+
+		if (!Validator.isUrl(avatarUrl)) {
+			throw new GitHubContributorAvatarURLException(
+				"Avatar URL is invalid");
+		}
+
+		if (contributions < 0) {
+			throw new GitHubContributorContributionsException(
+				"Contributions is less than 0");
+		}
+	}
+
+	protected static void validateGitHubRepository(
+			int commits, int openIssues, int stars, String url)
+		throws Exception {
+
+		if (commits < 0) {
+			throw new GitHubRepositoryCommitsException(
+				"Commits is less than 0");
+		}
+
+		if (openIssues < 0) {
+			throw new GitHubRepositoryOpenIssuesException(
+				"Open issues is less than 0");
+		}
+
+		if (stars < 0) {
+			throw new GitHubRepositoryStarsException("Stars is less than 0");
+		}
+
+		if (!Validator.isUrl(url)) {
+			throw new GitHubRepositoryURLException("Repository URL is invalid");
+		}
 	}
 
 	private static final String _API_CALL_PREFIX =
