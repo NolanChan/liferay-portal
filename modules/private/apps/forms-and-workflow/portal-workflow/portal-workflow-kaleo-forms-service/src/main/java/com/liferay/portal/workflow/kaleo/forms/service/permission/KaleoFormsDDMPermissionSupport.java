@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {"model.class.name=com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"}
 )
-public class KaleoDDMPermissionSupport
+public class KaleoFormsDDMPermissionSupport
 	implements DDMStructurePermissionSupport, DDMTemplatePermissionSupport {
 
 	@Override
