@@ -1005,11 +1005,15 @@ public class LCSClusterNodeUptimePersistenceImpl extends BasePersistenceImpl<LCS
 						finderArgs, list);
 				}
 				else {
-					if ((list.size() > 1) && _log.isWarnEnabled()) {
-						_log.warn(
-							"LCSClusterNodeUptimePersistenceImpl.fetchByLCNI_ST(long, long, boolean) with parameters (" +
-							StringUtil.merge(finderArgs) +
-							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"LCSClusterNodeUptimePersistenceImpl.fetchByLCNI_ST(long, long, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
 					}
 
 					LCSClusterNodeUptime lcsClusterNodeUptime = list.get(0);
@@ -1240,11 +1244,15 @@ public class LCSClusterNodeUptimePersistenceImpl extends BasePersistenceImpl<LCS
 						finderArgs, list);
 				}
 				else {
-					if ((list.size() > 1) && _log.isWarnEnabled()) {
-						_log.warn(
-							"LCSClusterNodeUptimePersistenceImpl.fetchByLCNI_ET(long, long, boolean) with parameters (" +
-							StringUtil.merge(finderArgs) +
-							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"LCSClusterNodeUptimePersistenceImpl.fetchByLCNI_ET(long, long, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
 					}
 
 					LCSClusterNodeUptime lcsClusterNodeUptime = list.get(0);
