@@ -40,7 +40,7 @@
 							</div>
 						</div>
 					<#else>
-						<a class="${logo_css_class} pull-left" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
+						<a class="${logo_css_class} pull-left" href="${site_default_url}" key="go-to-x" title="<@liferay.language_format arguments="${site_name}" />">
 							<img alt="${logo_description}" height="64" src="${site_logo}" width="64" />
 						</a>
 					</#if>
