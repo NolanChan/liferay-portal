@@ -76,6 +76,7 @@
 		<exception>GitHubAPI</exception>
 		<exception>GitHubContributorAvatarURL</exception>
 		<exception>GitHubContributorContributions</exception>
+		<exception>GitHubContributorCount</exception>
 		<exception>GitHubContributorName</exception>
 		<exception>GitHubRepositoryCommits</exception>
 		<exception>GitHubRepositoryOpenIssues</exception>
