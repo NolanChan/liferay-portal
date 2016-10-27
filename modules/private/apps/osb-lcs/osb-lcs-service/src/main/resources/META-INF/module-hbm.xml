@@ -5,16 +5,13 @@
 	<import class="com.liferay.osb.lcs.model.LCSClusterEntry" />
 	<import class="com.liferay.osb.lcs.model.LCSClusterEntryToken" />
 	<import class="com.liferay.osb.lcs.model.LCSClusterNode" />
-	<import class="com.liferay.osb.lcs.model.LCSClusterNodePatches" />
 	<import class="com.liferay.osb.lcs.model.LCSClusterNodeUptime" />
 	<import class="com.liferay.osb.lcs.model.LCSInvitation" />
-	<import class="com.liferay.osb.lcs.model.LCSMembers" />
 	<import class="com.liferay.osb.lcs.model.LCSMessage" />
 	<import class="com.liferay.osb.lcs.model.LCSMetadata" />
 	<import class="com.liferay.osb.lcs.model.LCSNotification" />
 	<import class="com.liferay.osb.lcs.model.LCSNotificationAuditEntry" />
 	<import class="com.liferay.osb.lcs.model.LCSPatchEntry" />
-	<import class="com.liferay.osb.lcs.model.LCSPatchingAdvisor" />
 	<import class="com.liferay.osb.lcs.model.LCSProject" />
 	<import class="com.liferay.osb.lcs.model.LCSRole" />
 	<import class="com.liferay.osb.lcs.model.LCSSubscriptionEntry" />
