@@ -14,10 +14,8 @@
 		color: $fontColor;
 	}
 
-	&.light-font {
-		a {
-			color: $lightFontColor;
-		}
+	&.light-navigation a {
+		color: $lightFontColor;
 	}
 
 	.logo.custom-logo {
