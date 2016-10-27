@@ -1,0 +1,5 @@
+Bundle-Name: Liferay OSB LCS Admin
+Bundle-SymbolicName: com.liferay.osb.lcs.admin
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: LCS Portal

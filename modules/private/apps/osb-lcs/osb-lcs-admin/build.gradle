@@ -1,0 +1,7 @@
+dependencies {
+	provided 'biz.aQute.bnd:biz.aQute.bndlib:3.1.0'
+	provided 'com.liferay.portal:com.liferay.portal.kernel:2.0.0'
+	provided 'com.liferay:com.liferay.osgi.util:3.0.0'
+	provided 'org.osgi:org.osgi.core:5.0.0'
+	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.3"
+}
