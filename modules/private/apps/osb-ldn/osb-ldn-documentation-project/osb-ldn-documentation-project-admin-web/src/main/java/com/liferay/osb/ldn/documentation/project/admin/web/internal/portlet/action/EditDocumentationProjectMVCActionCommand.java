@@ -15,7 +15,11 @@
 package com.liferay.osb.ldn.documentation.project.admin.web.internal.portlet.action;
 
 import com.liferay.osb.ldn.documentation.project.admin.web.internal.constants.DocumentationProjectPortletKeys;
+import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectService;
+import com.liferay.osb.ldn.generator.basic.project.site.constants.BasicProjectSiteConstants;
+import com.liferay.osb.ldn.generator.site.SiteGenerator;
+import com.liferay.osb.ldn.generator.site.SiteGeneratorRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -66,19 +70,31 @@ public class EditDocumentationProjectMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
+		DocumentationProject documentationProject = null;
+
 		if (documentationProjectId > 0) {
-			_documentationProjectService.updateDocumentationProject(
-				documentationProjectId, name, description, iconFileName,
-				iconFile, status, serviceContext);
+			documentationProject =
+				_documentationProjectService.updateDocumentationProject(
+					documentationProjectId, name, description, iconFileName,
+					iconFile, status, serviceContext);
 		}
 		else {
-			_documentationProjectService.addDocumentationProject(
-				name, description, iconFileName, iconFile, status,
-				serviceContext);
+			documentationProject =
+				_documentationProjectService.addDocumentationProject(
+					name, description, iconFileName, iconFile, status,
+					serviceContext);
 		}
+
+		SiteGenerator siteGenerator = _siteGeneratorRegistry.getSiteGenerator(
+			BasicProjectSiteConstants.BASIC_PROJECT_SITE_KEY);
+
+		siteGenerator.generate(documentationProject.getGroupId());
 	}
 
 	@Reference
 	private DocumentationProjectService _documentationProjectService;
+
+	@Reference
+	private SiteGeneratorRegistry _siteGeneratorRegistry;
 
 }
