@@ -264,6 +264,10 @@ public class GitHubRepositoryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static void updateGitHubRopositoryCache() throws java.lang.Exception {
+		getService().updateGitHubRopositoryCache();
+	}
+
 	public static GitHubRepositoryLocalService getService() {
 		return _serviceTracker.getService();
 	}

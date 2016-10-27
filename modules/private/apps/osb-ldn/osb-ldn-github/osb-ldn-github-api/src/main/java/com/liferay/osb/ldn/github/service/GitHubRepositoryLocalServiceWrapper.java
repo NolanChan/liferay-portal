@@ -282,6 +282,11 @@ public class GitHubRepositoryLocalServiceWrapper
 	}
 
 	@Override
+	public void updateGitHubRopositoryCache() throws java.lang.Exception {
+		_gitHubRepositoryLocalService.updateGitHubRopositoryCache();
+	}
+
+	@Override
 	public GitHubRepositoryLocalService getWrappedService() {
 		return _gitHubRepositoryLocalService;
 	}

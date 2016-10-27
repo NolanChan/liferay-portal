@@ -237,4 +237,6 @@ public interface GitHubRepositoryLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void updateGitHubRopositoryCache() throws java.lang.Exception;
 }
