@@ -33,7 +33,6 @@ portletURL.setParameter("mvcRenderCommandName", "/view");
 </aui:nav-bar>
 
 <div class="container-fluid-1280 main-content-body">
-
 	<liferay-ui:search-container
 		emptyResultsMessage="no-open-source-projects-were-found"
 		id="documentationProjects"
