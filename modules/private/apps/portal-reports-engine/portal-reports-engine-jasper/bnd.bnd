@@ -25,9 +25,13 @@ Import-Package:\
 	\
 	!bsh,\
 	\
+	!com.apple.mrj.*,\
+	\
 	!com.fasterxml.jackson.*,\
 	\
 	!com.keypoint.*,\
+	\
+	!com.lowagie.toolbox.*,\
 	\
 	!com.sun.*,\
 	\
