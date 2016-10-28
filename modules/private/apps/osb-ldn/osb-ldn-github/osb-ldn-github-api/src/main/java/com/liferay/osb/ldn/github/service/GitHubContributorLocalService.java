@@ -215,7 +215,7 @@ public interface GitHubContributorLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<GitHubContributor> getTopGitHubContributors(long userId,
 		java.lang.String owner, java.lang.String name, int count)
-		throws java.lang.Exception;
+		throws PortalException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.

@@ -66,8 +66,7 @@ public class GitHubContributorPersistenceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED,
-				"com.liferay.osb.ldn.github.service"));
+			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
 	public void setUp() {

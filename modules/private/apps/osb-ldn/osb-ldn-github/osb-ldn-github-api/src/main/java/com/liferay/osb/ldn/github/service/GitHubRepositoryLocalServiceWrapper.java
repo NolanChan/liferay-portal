@@ -114,7 +114,7 @@ public class GitHubRepositoryLocalServiceWrapper
 	@Override
 	public com.liferay.osb.ldn.github.model.GitHubRepository getGitHubRepository(
 		long userId, java.lang.String owner, java.lang.String name)
-		throws java.lang.Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _gitHubRepositoryLocalService.getGitHubRepository(userId, owner,
 			name);
 	}
@@ -282,8 +282,9 @@ public class GitHubRepositoryLocalServiceWrapper
 	}
 
 	@Override
-	public void updateGitHubRopositoryCache() throws java.lang.Exception {
-		_gitHubRepositoryLocalService.updateGitHubRopositoryCache();
+	public void updateGitHubRepositoryCache()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_gitHubRepositoryLocalService.updateGitHubRepositoryCache();
 	}
 
 	@Override

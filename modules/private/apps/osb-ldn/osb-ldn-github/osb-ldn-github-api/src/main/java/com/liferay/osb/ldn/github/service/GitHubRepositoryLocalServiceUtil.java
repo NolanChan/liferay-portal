@@ -114,7 +114,7 @@ public class GitHubRepositoryLocalServiceUtil {
 
 	public static com.liferay.osb.ldn.github.model.GitHubRepository getGitHubRepository(
 		long userId, java.lang.String owner, java.lang.String name)
-		throws java.lang.Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getGitHubRepository(userId, owner, name);
 	}
 
@@ -264,8 +264,9 @@ public class GitHubRepositoryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static void updateGitHubRopositoryCache() throws java.lang.Exception {
-		getService().updateGitHubRopositoryCache();
+	public static void updateGitHubRepositoryCache()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateGitHubRepositoryCache();
 	}
 
 	public static GitHubRepositoryLocalService getService() {

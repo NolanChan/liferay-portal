@@ -120,7 +120,7 @@ public interface GitHubRepositoryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public GitHubRepository getGitHubRepository(long userId,
 		java.lang.String owner, java.lang.String name)
-		throws java.lang.Exception;
+		throws PortalException;
 
 	/**
 	* Updates the git hub repository in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -238,5 +238,5 @@ public interface GitHubRepositoryLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	public void updateGitHubRopositoryCache() throws java.lang.Exception;
+	public void updateGitHubRepositoryCache() throws PortalException;
 }

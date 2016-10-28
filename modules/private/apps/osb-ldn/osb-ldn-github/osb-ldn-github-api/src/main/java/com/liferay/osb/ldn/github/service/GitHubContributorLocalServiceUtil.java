@@ -230,7 +230,7 @@ public class GitHubContributorLocalServiceUtil {
 
 	public static java.util.List<com.liferay.osb.ldn.github.model.GitHubContributor> getTopGitHubContributors(
 		long userId, java.lang.String owner, java.lang.String name, int count)
-		throws java.lang.Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTopGitHubContributors(userId, owner, name, count);
 	}
 
