@@ -40,6 +40,8 @@ public class LCSExceptionSender {
 			PortletPropsValues.OSB_LCS_PORTLET_HOST_NAME);
 		_jsonWebServiceClient.setHostPort(
 			PortletPropsValues.OSB_LCS_PORTLET_HOST_PORT);
+		_jsonWebServiceClient.setProtocol(
+			PortletPropsValues.OSB_LCS_PORTLET_PROTOCOL);
 	}
 
 	public void sendMessage(String message, Throwable t) {
