@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -37,7 +35,7 @@ public class CheckGitHubMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
 	@Activate
-	protected void activate(Map<String, Object> properties) throws Exception {
+	protected void activate() throws Exception {
 		schedulerEntryImpl.setTrigger(
 			TriggerFactoryUtil.createTrigger(
 				getEventListenerClass(), getEventListenerClass(), 1,
@@ -54,7 +52,7 @@ public class CheckGitHubMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_gitHubRepositoryLocalService.updateGitHubRopositoryCache();
+		_gitHubRepositoryLocalService.updateGitHubRepositoryCache();
 	}
 
 	@Reference

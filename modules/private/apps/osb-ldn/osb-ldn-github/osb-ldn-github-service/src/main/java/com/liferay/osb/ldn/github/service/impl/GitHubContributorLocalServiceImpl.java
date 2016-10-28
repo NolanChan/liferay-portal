@@ -16,13 +16,14 @@ package com.liferay.osb.ldn.github.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osb.ldn.github.exception.GitHubAPIException;
 import com.liferay.osb.ldn.github.exception.GitHubContributorCountException;
-import com.liferay.osb.ldn.github.internal.configuration.GitHubServiceConfiguration;
 import com.liferay.osb.ldn.github.internal.util.GitHubCommunicatorUtil;
 import com.liferay.osb.ldn.github.internal.util.GitHubServiceConfigurationUtil;
 import com.liferay.osb.ldn.github.model.GitHubContributor;
 import com.liferay.osb.ldn.github.model.GitHubRepository;
 import com.liferay.osb.ldn.github.service.base.GitHubContributorLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -40,48 +41,48 @@ public class GitHubContributorLocalServiceImpl
 
 	public List<GitHubContributor> getTopGitHubContributors(
 			long userId, String owner, String name, int count)
-		throws Exception {
+		throws PortalException {
 
-		_gitHubServiceConfiguration =
-			GitHubServiceConfigurationUtil.getGitHubServiceConfiguration();
-
-		String apiKey = _gitHubServiceConfiguration.apiKey();
+		validate(count);
 
 		GitHubRepository gitHubRepository =
 			gitHubRepositoryPersistence.findByO_N(owner, name);
 
 		List<GitHubContributor> gitHubContributors =
 			gitHubContributorPersistence.findByGitHubRepositoryId(
-				gitHubRepository.getGitHubRepositoryId());
+				gitHubRepository.getGitHubRepositoryId(), 0, count);
 
-		int gitHubContributorMaxCount =
-			_gitHubServiceConfiguration.gitHubContributorMaxCount();
-
-		validateCount(count, gitHubContributorMaxCount);
+		if (!gitHubContributors.isEmpty()) {
+			return gitHubContributors;
+		}
 
 		if (gitHubContributors.isEmpty()) {
 			gitHubContributors = addGitHubContributors(
-				userId, gitHubRepository.getGitHubRepositoryId(), owner, name,
-				apiKey, gitHubContributorMaxCount);
+				userId, gitHubRepository.getGitHubRepositoryId(), owner, name);
 		}
 
-		if (count < gitHubContributorMaxCount) {
-			return ListUtil.subList(gitHubContributors, 0, count);
-		}
-
-		return gitHubContributors;
+		return ListUtil.subList(gitHubContributors, 0, count);
 	}
 
 	protected List<GitHubContributor> addGitHubContributors(
-			long userId, long gitHubRepositoryId, String owner, String name,
-			String apiKey, int count)
-		throws Exception {
-
-		List<GitHubContributor> gitHubContributorsHolders =
-			GitHubCommunicatorUtil.getTopContributors(
-				owner, name, count, apiKey);
+			long userId, long gitHubRepositoryId, String owner, String name)
+		throws PortalException {
 
 		List<GitHubContributor> gitHubContributors = new ArrayList<>();
+
+		List<GitHubContributor> gitHubContributorsHolders = null;
+
+		try {
+			gitHubContributorsHolders =
+				GitHubCommunicatorUtil.getTopContributors(
+					owner, name,
+					GitHubServiceConfigurationUtil.
+						getGitHubContributorMaxCount(),
+					GitHubServiceConfigurationUtil.getAPIKey());
+		}
+		catch (Exception e) {
+			throw new GitHubAPIException(e);
+		}
 
 		if (userId == 0) {
 			userId = userLocalService.getDefaultUserId(
@@ -121,21 +122,19 @@ public class GitHubContributorLocalServiceImpl
 		return gitHubContributors;
 	}
 
-	protected void validateCount(int count, int gitHubContributorMaxCount)
-		throws Exception {
-
+	protected void validate(int count) throws PortalException {
 		if (count <= 0) {
 			throw new GitHubContributorCountException(
 				"GitHub contributor count must greater than 0");
 		}
 
-		if (count > gitHubContributorMaxCount) {
+		if (count >
+				GitHubServiceConfigurationUtil.getGitHubContributorMaxCount()) {
+
 			throw new GitHubContributorCountException(
 				"GitHub contributor count is greater than contributor max " +
 					"count");
 		}
 	}
-
-	private GitHubServiceConfiguration _gitHubServiceConfiguration;
 
 }

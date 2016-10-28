@@ -16,7 +16,7 @@ package com.liferay.osb.ldn.github.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osb.ldn.github.internal.configuration.GitHubServiceConfiguration;
+import com.liferay.osb.ldn.github.exception.GitHubAPIException;
 import com.liferay.osb.ldn.github.internal.util.GitHubCommunicatorUtil;
 import com.liferay.osb.ldn.github.internal.util.GitHubServiceConfigurationUtil;
 import com.liferay.osb.ldn.github.model.GitHubContributor;
@@ -73,22 +73,22 @@ public class GitHubRepositoryLocalServiceImpl
 
 	public GitHubRepository getGitHubRepository(
 			long userId, String owner, String name)
-		throws Exception {
-
-		_gitHubServiceConfiguration =
-			GitHubServiceConfigurationUtil.getGitHubServiceConfiguration();
-
-		String apiKey = _gitHubServiceConfiguration.apiKey();
+		throws PortalException {
 
 		GitHubRepository gitHubRepository =
 			gitHubRepositoryPersistence.fetchByO_N(owner, name);
 
 		if (gitHubRepository == null) {
-			gitHubRepository = GitHubCommunicatorUtil.getRepository(
-				owner, name, apiKey);
+			try {
+				gitHubRepository = GitHubCommunicatorUtil.getRepository(
+					owner, name, GitHubServiceConfigurationUtil.getAPIKey());
+			}
+			catch (Exception e) {
+				throw new GitHubAPIException(e);
+			}
 
 			return addGitHubRepository(
-				userId, owner, name, apiKey, gitHubRepository.getCommits(),
+				userId, owner, name, gitHubRepository.getCommits(),
 				gitHubRepository.getOpenIssues(),
 				gitHubRepository.getRepositoryCreateDate(),
 				gitHubRepository.getStars(), gitHubRepository.getUrl());
@@ -97,23 +97,21 @@ public class GitHubRepositoryLocalServiceImpl
 		return gitHubRepository;
 	}
 
-	public void updateGitHubRopositoryCache() throws Exception {
-		_gitHubServiceConfiguration =
-			GitHubServiceConfigurationUtil.getGitHubServiceConfiguration();
-
-		String apiKey = _gitHubServiceConfiguration.apiKey();
-
-		int gitHubContributorMaxCount =
-			_gitHubServiceConfiguration.gitHubContributorMaxCount();
-
+	public void updateGitHubRepositoryCache() throws PortalException {
 		List<GitHubRepository> gitHubRepositories =
 			gitHubRepositoryPersistence.findAll();
 
 		for (GitHubRepository gitHubRepository : gitHubRepositories) {
-			GitHubRepository gitHubRepositoryHolder =
+			GitHubRepository gitHubRepositoryHolder = null;
+
+			try {
 				GitHubCommunicatorUtil.getRepository(
 					gitHubRepository.getOwner(), gitHubRepository.getName(),
-					apiKey);
+					GitHubServiceConfigurationUtil.getAPIKey());
+			}
+			catch (Exception e) {
+				throw new GitHubAPIException(e);
+			}
 
 			gitHubRepository.setModifiedDate(new Date());
 			gitHubRepository.setCommits(gitHubRepositoryHolder.getCommits());
@@ -126,15 +124,14 @@ public class GitHubRepositoryLocalServiceImpl
 
 			updateGitHubContributorCache(
 				gitHubRepository.getGitHubRepositoryId(),
-				gitHubRepository.getOwner(), gitHubRepository.getName(), apiKey,
-				gitHubContributorMaxCount);
+				gitHubRepository.getOwner(), gitHubRepository.getName());
 		}
 	}
 
 	protected GitHubRepository addGitHubRepository(
-			long userId, String owner, String name, String apiKey, int commits,
-			int openIssues, Date repositoryCreateDate, int stars, String url)
-		throws Exception {
+			long userId, String owner, String name, int commits, int openIssues,
+			Date repositoryCreateDate, int stars, String url)
+		throws PortalException {
 
 		if (userId == 0) {
 			userId = userLocalService.getDefaultUserId(
@@ -167,25 +164,45 @@ public class GitHubRepositoryLocalServiceImpl
 	}
 
 	protected void updateGitHubContributorCache(
-			long gitHubRepositoryId, String owner, String name, String apiKey,
-			int count)
-		throws Exception {
+			long gitHubRepositoryId, String owner, String name)
+		throws PortalException {
 
-		List<GitHubContributor> gitHubContributors =
-			gitHubContributorPersistence.findByGitHubRepositoryId(
-				gitHubRepositoryId);
+		gitHubContributorPersistence.removeByGitHubRepositoryId(
+			gitHubRepositoryId);
 
-		List<GitHubContributor> gitHubContributorHolders =
-			GitHubCommunicatorUtil.getTopContributors(
-				owner, name, count, apiKey);
+		Date now = new Date();
 
-		for (int i = 0; i < count; i++) {
-			GitHubContributor gitHubContributor = gitHubContributors.get(i);
+		GitHubRepository gitHubRepository =
+			gitHubRepositoryPersistence.findByPrimaryKey(gitHubRepositoryId);
 
-			GitHubContributor gitHubContributorHolder =
-				gitHubContributorHolders.get(i);
+		List<GitHubContributor> gitHubContributorHolders = null;
 
-			gitHubContributor.setModifiedDate(new Date());
+		try {
+			gitHubContributorHolders =
+				GitHubCommunicatorUtil.getTopContributors(
+					owner, name,
+					GitHubServiceConfigurationUtil.
+						getGitHubContributorMaxCount(),
+					GitHubServiceConfigurationUtil.getAPIKey());
+		}
+		catch (Exception e) {
+			throw new GitHubAPIException(e);
+		}
+
+		for (GitHubContributor gitHubContributorHolder :
+				gitHubContributorHolders) {
+
+			long gitHubContributorId = counterLocalService.increment();
+
+			GitHubContributor gitHubContributor =
+				gitHubContributorPersistence.create(gitHubContributorId);
+
+			gitHubContributor.setCompanyId(gitHubRepository.getCompanyId());
+			gitHubContributor.setUserId(gitHubRepository.getUserId());
+			gitHubContributor.setUserName(gitHubRepository.getUserName());
+			gitHubContributor.setCreateDate(now);
+			gitHubContributor.setModifiedDate(now);
+			gitHubContributor.setGitHubRepositoryId(gitHubRepositoryId);
 			gitHubContributor.setName(gitHubContributorHolder.getName());
 			gitHubContributor.setAvatarURL(
 				gitHubContributorHolder.getAvatarURL());
@@ -195,7 +212,5 @@ public class GitHubRepositoryLocalServiceImpl
 			gitHubContributorPersistence.update(gitHubContributor);
 		}
 	}
-
-	private GitHubServiceConfiguration _gitHubServiceConfiguration;
 
 }

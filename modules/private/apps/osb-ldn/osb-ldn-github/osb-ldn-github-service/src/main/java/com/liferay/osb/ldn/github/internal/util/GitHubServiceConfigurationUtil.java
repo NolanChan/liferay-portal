@@ -14,7 +14,6 @@
 
 package com.liferay.osb.ldn.github.internal.util;
 
-import com.liferay.osb.ldn.github.exception.GitHubServiceConfigurationException;
 import com.liferay.osb.ldn.github.internal.configuration.GitHubServiceConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
@@ -34,14 +33,15 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class GitHubServiceConfigurationUtil {
 
-	public static GitHubServiceConfiguration getGitHubServiceConfiguration()
-		throws Exception {
+	public static String getAPIKey() {
+		return _gitHubServiceConfiguration.apiKey();
+	}
 
-		if (_gitHubServiceConfiguration == null) {
-			throw new GitHubServiceConfigurationException(
-				"GitHub service configuration is null");
-		}
+	public static int getGitHubContributorMaxCount() {
+		return _gitHubServiceConfiguration.gitHubContributorMaxCount();
+	}
 
+	public static GitHubServiceConfiguration getGitHubServiceConfiguration() {
 		return _gitHubServiceConfiguration;
 	}
 
