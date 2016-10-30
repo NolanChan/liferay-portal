@@ -240,7 +240,7 @@ public class GitHubCommunicatorUtil {
 
 		if (contributions < 0) {
 			throw new GitHubContributorContributionsException(
-				"Contributions is less than 0");
+				"Contributions are less than 0");
 		}
 	}
 
@@ -250,16 +250,16 @@ public class GitHubCommunicatorUtil {
 
 		if (commits < 0) {
 			throw new GitHubRepositoryCommitsException(
-				"Commits is less than 0");
+				"Commits are less than 0");
 		}
 
 		if (openIssues < 0) {
 			throw new GitHubRepositoryOpenIssuesException(
-				"Open issues is less than 0");
+				"Open issues are less than 0");
 		}
 
 		if (stars < 0) {
-			throw new GitHubRepositoryStarsException("Stars is less than 0");
+			throw new GitHubRepositoryStarsException("Stars are less than 0");
 		}
 
 		if (!Validator.isUrl(url)) {
