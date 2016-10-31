@@ -15,8 +15,6 @@
 package com.liferay.portal.reports.engine.console.internal.upgrade;
 
 import com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_0.UpgradeReportDefinition;
-import com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_0.UpgradeReportEntry;
-import com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_1.UpgradeEntry;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,11 +30,15 @@ public class ReportsServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.portal.reports.engine.console.service", "0.0.1",
-			"1.0.0", new UpgradeReportDefinition(), new UpgradeReportEntry());
+			"1.0.0", new UpgradeReportDefinition(),
+			new com.liferay.portal.reports.engine.console.internal.upgrade.
+				v1_0_0.UpgradeReportEntry());
 
 		registry.register(
 			"com.liferay.portal.reports.engine.console.service", "1.0.0",
-			"1.0.1", new UpgradeEntry());
+			"1.0.1",
+			new com.liferay.portal.reports.engine.console.internal.upgrade.
+				v1_0_1.UpgradeReportEntry());
 	}
 
 }

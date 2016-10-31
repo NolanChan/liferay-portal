@@ -20,7 +20,7 @@ import com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_1.util.En
 /**
  * @author Inácio Nery
  */
-public class UpgradeEntry extends UpgradeProcess {
+public class UpgradeReportEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
