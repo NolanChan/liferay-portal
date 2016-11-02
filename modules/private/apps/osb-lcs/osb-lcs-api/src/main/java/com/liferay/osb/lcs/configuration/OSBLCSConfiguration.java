@@ -181,7 +181,7 @@ public interface OSBLCSConfiguration {
 		deflt = "Dashboard,Downloads,Environment,Feedback,Projects,Server,Subscriptions,Users,Account",
 		required = true
 	)
-	public String osbLcsPortalPrivateLayoutNames();
+	public String[] osbLcsPortalPrivateLayoutNames();
 
 	@Meta.AD(deflt = "1_column", required = true)
 	public String osbLcsPortalPrivateLayoutTemplateId();
@@ -190,7 +190,7 @@ public interface OSBLCSConfiguration {
 	public String[] osbLcsPortalPublicLayoutPortlets();
 
 	@Meta.AD(deflt = "Home,Info", required = true)
-	public String osbLcsPortalPublicLayoutNames();
+	public String[] osbLcsPortalPublicLayoutNames();
 
 	@Meta.AD(deflt = "1_column", required = true)
 	public String osbLcsPortalPublicLayoutTemplateId();
