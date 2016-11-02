@@ -23,14 +23,20 @@ import java.util.Map;
  */
 public abstract class BaseSiteGenerator implements SiteGenerator {
 
+	public String getKey() {
+		return _key;
+	}
+
 	public String getName() {
 		return _name;
 	}
 
 	protected void activate(Map<String, Object> config) {
-		_name = GetterUtil.getString(config.get("osb.ldn.layout.description"));
+		_key = GetterUtil.getString(config.get("osb.ldn.site.generator.key"));
+		_name = GetterUtil.getString(config.get("osb.ldn.site.generator.name"));
 	}
 
+	private String _key;
 	private String _name;
 
 }

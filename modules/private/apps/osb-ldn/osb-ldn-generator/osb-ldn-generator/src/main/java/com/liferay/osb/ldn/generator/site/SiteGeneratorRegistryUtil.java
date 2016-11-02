@@ -14,15 +14,32 @@
 
 package com.liferay.osb.ldn.generator.site;
 
+import java.util.Collection;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Ryan Park
  */
-public interface SiteGenerator {
+@Component
+public class SiteGeneratorRegistryUtil {
 
-	public void generate(long groupId) throws Exception;
+	public static SiteGenerator getSiteGenerator(String key) {
+		return _siteGeneratorRegistry.getSiteGenerator(key);
+	}
 
-	public String getKey();
+	public static Collection<SiteGenerator> getSiteGenerators() {
+		return _siteGeneratorRegistry.getSiteGenerators();
+	}
 
-	public String getName();
+	@Reference(unbind = "-")
+	protected void setSiteGeneratorRegistry(
+		SiteGeneratorRegistry siteGeneratorRegistry) {
+
+		_siteGeneratorRegistry = siteGeneratorRegistry;
+	}
+
+	private static SiteGeneratorRegistry _siteGeneratorRegistry;
 
 }
