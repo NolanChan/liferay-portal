@@ -3,15 +3,29 @@ Bundle-ClassPath:\
 	lib/amazon-sqs-java-extended-client-lib.jar,\
 	lib/aws-java-sdk-core.jar,\
 	lib/aws-java-sdk-ec2.jar,\
-	lib/aws-java-sdk-s3.jar
+	lib/aws-java-sdk-kms.jar,\
+	lib/aws-java-sdk-s3.jar,\
+	lib/aws-java-sdk-sqs.jar,\
+	lib/httpclient.jar,\
+	lib/httpcore.jar
 Bundle-Name: Liferay OSB LCS Queue
 Bundle-SymbolicName: com.liferay.osb.lcs.queue
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.osb.lcs.queue
+Import-Package:\
+	com.rabbitmq.*; resolution:=optional,\
+	com.sun.org.apache.xerces.internal.*; resolution:=optional,\
+	com.sun.org.apache.xml.internal.*; resolution:=optional,\
+	com.sun.org.apache.xpath.internal.*; resolution:=optional,\
+	*;
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: OSB LCS Queue
 -includeresource:\
 	lib/amazon-sqs-java-extended-client-lib.jar=amazon-sqs-java-extended-client-lib-[0-9]*.jar;lib:=true,\
 	lib/aws-java-sdk-core.jar=aws-java-sdk-core-[0-9]*.jar;lib:=true,\
 	lib/aws-java-sdk-ec2.jar=aws-java-sdk-ec2-[0-9]*.jar;lib:=true,\
-	lib/aws-java-sdk-s3.jar=aws-java-sdk-s3-[0-9]*.jar;lib:=true
+	lib/aws-java-sdk-kms.jar=aws-java-sdk-kms-[0-9]*.jar;lib:=true,\
+	lib/aws-java-sdk-s3.jar=aws-java-sdk-s3-[0-9]*.jar;lib:=true,\
+	lib/aws-java-sdk-sqs.jar=aws-java-sdk-sqs-[0-9]*.jar;lib:=true,\
+	lib/httpclient.jar=httpclient-[0-9]*.jar;lib:=true,\
+	lib/httpcore.jar=httpcore-[0-9]*.jar;lib:=true

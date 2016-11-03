@@ -1,7 +1,10 @@
+task deployDependencies(type: Copy)
+
 dependencies {
 	provided group: "com.amazonaws", name: "amazon-sqs-java-extended-client-lib", version: "1.0.0"
 	provided group: "com.amazonaws", name: "aws-java-sdk-core", version: "1.10.27"
 	provided group: "com.amazonaws", name: "aws-java-sdk-ec2", version: "1.10.27"
+    provided group: "com.amazonaws", name: "aws-java-sdk-kms", version: "1.10.27"
 	provided group: "com.amazonaws", name: "aws-java-sdk-s3", version: "1.10.27"
 	provided group: "com.amazonaws", name: "aws-java-sdk-sqs", version: "1.10.27"
 	provided group: "com.liferay", name: "com.liferay.lcs.api", version: "4.0.0"
@@ -11,4 +14,31 @@ dependencies {
 	provided group: "org.apache.httpcomponents", name: "httpclient", version: "4.3.3"
 	provided group: "org.apache.httpcomponents", name: "httpcore", version: "4.3.2"
 	provided group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
+}
+
+deploy {
+    finalizedBy deployDependencies
+}
+
+deployDependencies {
+    boolean keepDependencyVersions = Boolean.getBoolean("deploy.dependencies.keep.versions")
+
+    ext {
+        autoClean = false
+    }
+
+    from configurations.provided
+
+    include "httpclient-*.jar"
+    include "httpcore-*.jar"
+    include "joda-time-*.jar"
+
+    into {
+        liferay.deployDir
+    }
+
+    outputs.upToDateWhen {
+        false
+    }
+
 }
