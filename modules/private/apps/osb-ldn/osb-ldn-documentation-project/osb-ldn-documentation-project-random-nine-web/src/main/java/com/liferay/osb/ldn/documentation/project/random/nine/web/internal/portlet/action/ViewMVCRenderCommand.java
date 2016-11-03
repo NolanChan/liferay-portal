@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -73,6 +74,25 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		Template template = (Template)renderRequest.getAttribute(
 			WebKeys.TEMPLATE);
 
+		String allProjectsURL = StringPool.BLANK;
+
+		try {
+			long plid = _layoutLocalService.getDefaultPlid(
+				themeDisplay.getScopeGroupId(), false,
+				DOCUMENTATION_PROJECT_INDEX_PORTLET_ID);
+
+			Layout layout = _layoutLocalService.getLayout(plid);
+
+			allProjectsURL = layout.getFriendlyURL(themeDisplay.getLocale());
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		template.put("allProjectsURL", allProjectsURL);
+
 		List<Map<String, Object>> documentationProjects = null;
 
 		try {
@@ -91,25 +111,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		Map<String, Object> strings = getStringsMap(
 			themeDisplay.getLanguageId());
-
-		Layout themeDisplayLayout = themeDisplay.getLayout();
-
-		try {
-			long plid = _layoutLocalService.getDefaultPlid(
-				themeDisplayLayout.getGroupId(), false,
-				DOCUMENTATION_PROJECT_INDEX_PORTLET_ID);
-
-			Layout layout = _layoutLocalService.getLayout(plid);
-
-			strings.put(
-				"all-projects-url",
-				layout.getFriendlyURL(themeDisplay.getLocale()));
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
 
 		template.put("strings", strings);
 
