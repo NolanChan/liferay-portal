@@ -31,4 +31,15 @@ deployDependencies {
 	into {
 		liferay.deployDir
 	}
+
+	String renameSuffix = ".jar"
+
+	if (keepDependencyVersions) {
+		renameSuffix = '-$1.jar'
+	}
+
+	rename(/com.liferay.petra.json.web.service.client-(.+)\.jar/, "com.liferay.petra.json.web.service.client" + renameSuffix)
+	rename(/jackson-annotations-(.+)\.jar/, "com.fasterxml.jackson.core.jackson.annotations" + renameSuffix)
+	rename(/jackson-core-(.+)\.jar/, "com.fasterxml.jackson.core.jackson.core" + renameSuffix)
+	rename(/jackson-databind-(.+)\.jar/, "com.fasterxml.jackson.core.jackson.databind" + renameSuffix)
 }

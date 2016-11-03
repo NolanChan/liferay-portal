@@ -43,4 +43,16 @@ deployDependencies {
 	into {
 		liferay.deployDir
 	}
+
+	String renameSuffix = ".jar"
+
+	if (keepDependencyVersions) {
+		renameSuffix = '-$1.jar'
+	}
+
+	rename(/commons-configuration-(.+)\.jar/, "org.apache.commons.configuration" + renameSuffix)
+	rename(/httpclient-(.+)\.jar/, "org.apache.httpcomponents.httpclient" + renameSuffix)
+	rename(/httpcore-(.+)\.jar/, "org.apache.httpcomponents.httpcore" + renameSuffix)
+	rename(/itextpdf-(.+)\.jar/, "com.itextpdf" + renameSuffix)
+	rename(/joda-time-(.+)\.jar/, "org.joda.time" + renameSuffix)
 }

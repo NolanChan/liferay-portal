@@ -53,4 +53,24 @@ deployDependencies {
 	outputs.upToDateWhen {
 		false
 	}
+
+	String renameSuffix = ".jar"
+
+	if (keepDependencyVersions) {
+		renameSuffix = '-$1.jar'
+	}
+
+	rename(/cassandra-driver-core-(.+)\.jar/, "com.datastax.driver.core" + renameSuffix)
+	rename(/cassandra-driver-mapping-(.+)\.jar/, "com.datastax.driver.mapping" + renameSuffix)
+	rename(/guava-(.+)\.jar/, "com.google.guava" + renameSuffix)
+	rename(/jackson-annotations-(.+)\.jar/, "com.fasterxml.jackson.core.jackson.annotations" + renameSuffix)
+	rename(/jackson-core-(.+)\.jar/, "com.fasterxml.jackson.core.jackson.core" + renameSuffix)
+	rename(/jackson-databind-(.+)\.jar/, "com.fasterxml.jackson.core.jackson.databind" + renameSuffix)
+	rename(/metrics-core-(.+)\.jar/, "io.dropwizard.metrics.core" + renameSuffix)
+	rename(/netty-buffer-(.+)\.jar/, "io.netty.buffer" + renameSuffix)
+	rename(/netty-codec-(.+)\.jar/, "io.netty.codec" + renameSuffix)
+	rename(/netty-common-(.+)\.jar/, "io.netty.common" + renameSuffix)
+	rename(/netty-handler-(.+)\.jar/, "io.netty.handler" + renameSuffix)
+	rename(/netty-transport-(.+)\.jar/, "io.netty.transport" + renameSuffix)
+	rename(/snappy-java-(.+)\.jar/, "org.xerial.snappy.snappy.java" + renameSuffix)
 }

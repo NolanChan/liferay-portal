@@ -40,4 +40,14 @@ deployDependencies {
 	outputs.upToDateWhen {
 		false
 	}
+
+	String renameSuffix = ".jar"
+
+	if (keepDependencyVersions) {
+		renameSuffix = '-$1.jar'
+	}
+
+	rename(/httpclient-(.+)\.jar/, "org.apache.httpcomponents.httpclient" + renameSuffix)
+	rename(/httpcore-(.+)\.jar/, "org.apache.httpcomponents.httpcore" + renameSuffix)
+	rename(/joda-time-(.+)\.jar/, "org.joda.time" + renameSuffix)
 }
