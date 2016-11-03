@@ -26,7 +26,7 @@ deploy {
 }
 
 deployDependencies {
-    boolean keepDependencyVersions = Boolean.getBoolean("deploy.dependencies.keep.versions")
+	boolean keepDependencyVersions = Boolean.getBoolean("deploy.dependencies.keep.versions")
 
 	ext {
 		autoClean = false

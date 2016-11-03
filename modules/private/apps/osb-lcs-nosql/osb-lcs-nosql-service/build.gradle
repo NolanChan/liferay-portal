@@ -39,11 +39,11 @@ deployDependencies {
 	include "jackson-core-*.jar"
 	include "jackson-databind-*.jar"
 	include "metrics-core-*.jar"
-	include "netty-handler-*.jar"
 	include "netty-buffer-*.jar"
-	include "netty-transport-*.jar"
 	include "netty-codec-*.jar"
 	include "netty-common-*.jar"
+	include "netty-handler-*.jar"
+	include "netty-transport-*.jar"
 	include "snappy-java-*.jar"
 
 	into {
@@ -53,5 +53,4 @@ deployDependencies {
 	outputs.upToDateWhen {
 		false
 	}
-
 }

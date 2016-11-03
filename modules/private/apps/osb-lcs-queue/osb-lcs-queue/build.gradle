@@ -4,7 +4,7 @@ dependencies {
 	provided group: "com.amazonaws", name: "amazon-sqs-java-extended-client-lib", version: "1.0.0"
 	provided group: "com.amazonaws", name: "aws-java-sdk-core", version: "1.10.27"
 	provided group: "com.amazonaws", name: "aws-java-sdk-ec2", version: "1.10.27"
-    provided group: "com.amazonaws", name: "aws-java-sdk-kms", version: "1.10.27"
+	provided group: "com.amazonaws", name: "aws-java-sdk-kms", version: "1.10.27"
 	provided group: "com.amazonaws", name: "aws-java-sdk-s3", version: "1.10.27"
 	provided group: "com.amazonaws", name: "aws-java-sdk-sqs", version: "1.10.27"
 	provided group: "com.liferay", name: "com.liferay.lcs.api", version: "4.0.0"
@@ -17,28 +17,27 @@ dependencies {
 }
 
 deploy {
-    finalizedBy deployDependencies
+	finalizedBy deployDependencies
 }
 
 deployDependencies {
-    boolean keepDependencyVersions = Boolean.getBoolean("deploy.dependencies.keep.versions")
+	boolean keepDependencyVersions = Boolean.getBoolean("deploy.dependencies.keep.versions")
 
-    ext {
-        autoClean = false
-    }
+	ext {
+		autoClean = false
+	}
 
-    from configurations.provided
+	from configurations.provided
 
-    include "httpclient-*.jar"
-    include "httpcore-*.jar"
-    include "joda-time-*.jar"
+	include "httpclient-*.jar"
+	include "httpcore-*.jar"
+	include "joda-time-*.jar"
 
-    into {
-        liferay.deployDir
-    }
+	into {
+		liferay.deployDir
+	}
 
-    outputs.upToDateWhen {
-        false
-    }
-
+	outputs.upToDateWhen {
+		false
+	}
 }
