@@ -11,7 +11,7 @@ create table Reports_Definition (
 	description STRING null,
 	sourceId LONG,
 	reportName VARCHAR(75) null,
-	reportParameters VARCHAR(255) null,
+	reportParameters TEXT null,
 	lastPublishDate DATE null
 );
 
@@ -34,7 +34,7 @@ create table Reports_Entry (
 	emailDelivery VARCHAR(200) null,
 	portletId VARCHAR(75) null,
 	pageURL STRING null,
-	reportParameters VARCHAR(255) null,
+	reportParameters TEXT null,
 	status VARCHAR(75) null,
 	errorMessage STRING null
 );

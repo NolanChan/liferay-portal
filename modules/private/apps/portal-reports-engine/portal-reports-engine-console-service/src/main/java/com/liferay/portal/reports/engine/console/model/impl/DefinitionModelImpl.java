@@ -92,7 +92,7 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 			{ "description", Types.VARCHAR },
 			{ "sourceId", Types.BIGINT },
 			{ "reportName", Types.VARCHAR },
-			{ "reportParameters", Types.VARCHAR },
+			{ "reportParameters", Types.CLOB },
 			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -110,11 +110,11 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("sourceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("reportName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("reportParameters", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("reportParameters", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Reports_Definition (uuid_ VARCHAR(75) null,definitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,sourceId LONG,reportName VARCHAR(75) null,reportParameters VARCHAR(255) null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Reports_Definition (uuid_ VARCHAR(75) null,definitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,sourceId LONG,reportName VARCHAR(75) null,reportParameters TEXT null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table Reports_Definition";
 	public static final String ORDER_BY_JPQL = " ORDER BY definition.modifiedDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Reports_Definition.modifiedDate ASC";

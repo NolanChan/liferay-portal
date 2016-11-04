@@ -261,8 +261,7 @@ public class DefinitionPersistenceTest {
 			"uuid", true, "definitionId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "description", true,
-			"sourceId", true, "reportName", true, "reportParameters", true,
-			"lastPublishDate", true);
+			"sourceId", true, "reportName", true, "lastPublishDate", true);
 	}
 
 	@Test

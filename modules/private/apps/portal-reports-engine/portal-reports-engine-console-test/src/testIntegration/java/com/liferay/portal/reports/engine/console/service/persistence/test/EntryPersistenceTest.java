@@ -233,8 +233,8 @@ public class EntryPersistenceTest {
 			"definitionId", true, "format", true, "scheduleRequest", true,
 			"startDate", true, "endDate", true, "repeating", true,
 			"recurrence", true, "emailNotifications", true, "emailDelivery",
-			true, "portletId", true, "pageURL", true, "reportParameters", true,
-			"status", true, "errorMessage", true);
+			true, "portletId", true, "pageURL", true, "status", true,
+			"errorMessage", true);
 	}
 
 	@Test

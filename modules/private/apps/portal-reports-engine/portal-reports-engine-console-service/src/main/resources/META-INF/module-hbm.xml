@@ -20,7 +20,7 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="sourceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="reportName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="reportParameters" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reportParameters" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.reports.engine.console.model.impl.EntryImpl" table="Reports_Entry">
@@ -44,7 +44,7 @@
 		<property name="emailDelivery" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="portletId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="pageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="reportParameters" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reportParameters" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="errorMessage" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
