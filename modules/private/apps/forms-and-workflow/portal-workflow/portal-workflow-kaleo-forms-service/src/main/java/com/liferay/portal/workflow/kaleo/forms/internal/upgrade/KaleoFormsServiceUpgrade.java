@@ -17,10 +17,16 @@ package com.liferay.portal.workflow.kaleo.forms.internal.upgrade;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.workflow.kaleo.forms.internal.upgrade.v1_0_2.UpgradeKaleoProcessTemplateLink;
+import com.liferay.portal.workflow.kaleo.forms.internal.upgrade.v1_1_0.UpgradeKaleoProcess;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,6 +59,13 @@ public class KaleoFormsServiceUpgrade implements UpgradeStepRegistrator {
 					_ddlRecordSetLocalService),
 			new UpgradeKaleoProcessTemplateLink(
 				_classNameLocalService, _ddmTemplateLinkLocalService));
+
+		registry.register(
+			"com.liferay.portal.workflow.kaleo.forms.service", "1.0.2", "1.1.0",
+			new UpgradeKaleoProcess(
+				_ddlRecordSetLocalService, _ddmStructureLocalService,
+				_ddmTemplateLocalService, _resourceActionLocalService,
+				_resourceActions, _resourcePermissionLocalService));
 	}
 
 	@Reference(unbind = "-")
@@ -77,10 +90,43 @@ public class KaleoFormsServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	@Reference(unbind = "-")
+	public void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
 	public void setDDMTemplateLinkLocalService(
 		DDMTemplateLinkLocalService ddmTemplateLinkLocalService) {
 
 		_ddmTemplateLinkLocalService = ddmTemplateLinkLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setResourceActionLocalService(
+		ResourceActionLocalService resourceActionLocalService) {
+
+		_resourceActionLocalService = resourceActionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setResourceActions(ResourceActions resourceActions) {
+		_resourceActions = resourceActions;
+	}
+
+	@Reference(unbind = "-")
+	public void setResourcePermissionLocalService(
+		ResourcePermissionLocalService resourcePermissionLocalService) {
+
+		_resourcePermissionLocalService = resourcePermissionLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -94,6 +140,11 @@ public class KaleoFormsServiceUpgrade implements UpgradeStepRegistrator {
 	private ClassNameLocalService _classNameLocalService;
 	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private ResourceActionLocalService _resourceActionLocalService;
+	private ResourceActions _resourceActions;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }
