@@ -167,7 +167,9 @@ public class KeyGeneratorImplTest extends PowerMockito {
 			"lcsServerId"
 		).when(
 			keyGenerator
-		).getLcsServerId(Matchers.anyBoolean());
+		).getLcsServerId(
+			Matchers.anyBoolean()
+		);
 
 		keyGenerator.getKey();
 
@@ -177,7 +179,9 @@ public class KeyGeneratorImplTest extends PowerMockito {
 
 		Mockito.verify(
 			keyGenerator, Mockito.times(1)
-		).getLcsServerId(Matchers.anyBoolean());
+		).getLcsServerId(
+			Matchers.anyBoolean()
+		);
 	}
 
 	@Test
@@ -217,7 +221,9 @@ public class KeyGeneratorImplTest extends PowerMockito {
 			true
 		).when(
 			keyGenerator
-		).isValid(Matchers.anyString());
+		).isValid(
+			Matchers.anyString()
+		);
 
 		keyGenerator.getKey();
 
