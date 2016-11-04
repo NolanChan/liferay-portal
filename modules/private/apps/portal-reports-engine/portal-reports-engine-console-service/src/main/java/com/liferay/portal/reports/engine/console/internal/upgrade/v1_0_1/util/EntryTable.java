@@ -46,7 +46,7 @@ public class EntryTable {
 		{"emailDelivery", Types.VARCHAR},
 		{"portletId", Types.VARCHAR},
 		{"pageURL", Types.VARCHAR},
-		{"reportParameters", Types.VARCHAR},
+		{"reportParameters", Types.CLOB},
 		{"status", Types.VARCHAR},
 		{"errorMessage", Types.VARCHAR}
 	};
@@ -90,14 +90,14 @@ TABLE_COLUMNS_MAP.put("portletId", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("pageURL", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("reportParameters", Types.VARCHAR);
+TABLE_COLUMNS_MAP.put("reportParameters", Types.CLOB);
 
 TABLE_COLUMNS_MAP.put("status", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("errorMessage", Types.VARCHAR);
 
 }
-	public static final String TABLE_SQL_CREATE = "create table Reports_Entry (entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,definitionId LONG,format VARCHAR(75) null,scheduleRequest BOOLEAN,startDate DATE null,endDate DATE null,repeating BOOLEAN,recurrence VARCHAR(75) null,emailNotifications VARCHAR(200) null,emailDelivery VARCHAR(200) null,portletId VARCHAR(75) null,pageURL STRING null,reportParameters VARCHAR(255) null,status VARCHAR(75) null,errorMessage STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table Reports_Entry (entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,definitionId LONG,format VARCHAR(75) null,scheduleRequest BOOLEAN,startDate DATE null,endDate DATE null,repeating BOOLEAN,recurrence VARCHAR(75) null,emailNotifications VARCHAR(200) null,emailDelivery VARCHAR(200) null,portletId VARCHAR(75) null,pageURL STRING null,reportParameters TEXT null,status VARCHAR(75) null,errorMessage STRING null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Reports_Entry";
 

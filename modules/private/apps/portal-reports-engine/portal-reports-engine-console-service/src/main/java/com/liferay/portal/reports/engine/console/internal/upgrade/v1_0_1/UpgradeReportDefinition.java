@@ -15,19 +15,18 @@
 package com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_1;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_1.util.EntryTable;
+import com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_1.util.DefinitionTable;
 
 /**
- * @author Inácio Nery
+ * @author Eduardo Perez
  */
-public class UpgradeReportEntry extends UpgradeProcess {
+public class UpgradeReportDefinition extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		alter(
-			EntryTable.class,
-			new AlterColumnType("reportParameters", "TEXT null"),
-			new AlterColumnType("errorMessage", "STRING null"));
+			DefinitionTable.class,
+			new AlterColumnType("reportParameters", "TEXT null"));
 	}
 
 }
