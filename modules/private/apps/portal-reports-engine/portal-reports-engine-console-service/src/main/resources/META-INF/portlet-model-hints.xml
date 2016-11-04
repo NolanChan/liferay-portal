@@ -15,7 +15,7 @@
 		<field name="sourceId" type="long" />
 		<field name="reportName" type="String" />
 		<field name="reportParameters" type="String">
-			<hint name="max-length">255</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
@@ -45,7 +45,7 @@
 			<hint-collection name="URL" />
 		</field>
 		<field name="reportParameters" type="String">
-			<hint name="max-length">255</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="status" type="String" />
 		<field name="errorMessage" type="String">
