@@ -13,6 +13,9 @@
 	<bean class="com.liferay.portal.kernel.messaging.ParallelDestination" id="destination.lcs_commands">
 		<property name="name" value="liferay/lcs_commands" />
 	</bean>
+	<bean class="com.liferay.portal.kernel.messaging.ParallelDestination" id="destination.lcs_messagebus">
+		<property name="name" value="liferay/lcs_messagebus" />
+	</bean>
 	<bean class="com.liferay.portal.kernel.messaging.ParallelDestination" id="destination.lcs_request">
 		<property name="name" value="#{T(com.liferay.portal.kernel.license.messaging.LicenseManagerMessageType).MESSAGE_BUS_DESTINATION_REQUEST}" />
 		<property name="workersCoreSize" value="1" />
@@ -31,6 +34,7 @@
 				<entry key="#{T(com.liferay.lcs.messaging.CommandMessage).COMMAND_TYPE_DEREGISTER}" value-ref="com.liferay.lcs.command.DeregisterCommand" />
 				<entry key="#{T(com.liferay.lcs.messaging.CommandMessage).COMMAND_TYPE_DOWNLOAD_PATCHES}" value-ref="com.liferay.lcs.command.DownloadPatchesCommand" />
 				<entry key="#{T(com.liferay.lcs.messaging.CommandMessage).COMMAND_TYPE_EXECUTE_SCRIPT}" value-ref="com.liferay.lcs.command.ExecuteScriptCommand" />
+				<entry key="#{T(com.liferay.lcs.messaging.CommandMessage).COMMAND_TYPE_MESSAGE_BUS}" value-ref="com.liferay.lcs.command.MessageBusCommand" />
 				<entry key="#{T(com.liferay.lcs.messaging.CommandMessage).COMMAND_TYPE_SCHEDULE_MESSAGE_LISTENERS}" value-ref="com.liferay.lcs.command.ScheduleMessageListenersCommand" />
 				<entry key="#{T(com.liferay.lcs.messaging.CommandMessage).COMMAND_TYPE_SCHEDULE_TASKS}" value-ref="com.liferay.lcs.command.ScheduleTasksCommand" />
 				<entry key="#{T(com.liferay.lcs.messaging.CommandMessage).COMMAND_TYPE_SEND_INSTALLATION_ENVIRONMENT}" value-ref="com.liferay.lcs.command.SendInstallationEnvironmentCommand" />
@@ -44,6 +48,10 @@
 	<bean class="com.liferay.lcs.messaging.LCSHotDeployMessageListener" id="messageListener.lcs_hot_deploy">
 		<property name="LCSClusterEntryTokenAdvisor" ref="com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor" />
 		<property name="uptimeMonitoringAdvisor" ref="com.liferay.lcs.advisor.UptimeMonitoringAdvisor" />
+	</bean>
+	<bean class="com.liferay.lcs.messaging.LCSMessageBusMessageListener" id="messageListener.lcs_messagebus">
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
 	</bean>
 	<bean class="com.liferay.lcs.task.scheduler.messaging.TaskSchedulerReceiverMessageListener" id="messageListener.lcs_scheduler" >
 		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
@@ -76,6 +84,11 @@
 						<ref bean="messageListener.lcs_commands" />
 					</list>
 				</entry>
+				<entry key="liferay/lcs_messagebus">
+					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
+						<ref bean="messageListener.lcs_messagebus" />
+					</list>
+				</entry>
 				<entry key="liferay/lcs_scheduler">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.lcs_scheduler" />
@@ -86,6 +99,7 @@
 		<property name="destinations">
 			<list>
 				<ref bean="destination.lcs_commands" />
+				<ref bean="destination.lcs_messagebus" />
 				<ref bean="destination.lcs_request" />
 				<ref bean="destination.lcs_scheduler" />
 			</list>

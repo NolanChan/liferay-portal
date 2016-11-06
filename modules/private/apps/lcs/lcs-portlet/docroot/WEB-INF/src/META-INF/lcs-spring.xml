@@ -35,6 +35,7 @@
 	<bean class="com.liferay.lcs.command.ExecuteScriptCommand" id="com.liferay.lcs.command.ExecuteScriptCommand">
 		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
 	</bean>
+	<bean class="com.liferay.lcs.command.MessageBusCommand" id="com.liferay.lcs.command.MessageBusCommand" />
 	<bean class="com.liferay.lcs.command.ScheduleMessageListenersCommand" id="com.liferay.lcs.command.ScheduleMessageListenersCommand">
 		<property name="messageListenerSchedulerService" ref="com.liferay.lcs.messaging.scheduler.impl.MessageListenerSchedulerService" />
 	</bean>
