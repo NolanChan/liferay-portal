@@ -166,18 +166,6 @@ public abstract class Message implements Serializable {
 	}
 
 	/**
-	 * Returns the message's delivery tag.
-	 *
-	 * @return the message's delivery tag
-	 * @see    #setDeliveryTag(long)
-	 * @since  LCS 0.1
-	 */
-	@JsonIgnore
-	public long getDeliveryTag() {
-		return _deliveryTag;
-	}
-
-	/**
 	 * Returns the message creator's cluster node key.
 	 *
 	 * @return the message creator's cluster node key
@@ -185,18 +173,6 @@ public abstract class Message implements Serializable {
 	 */
 	public String getKey() {
 		return _key;
-	}
-
-	/**
-	 * Returns the message's original message ID.
-	 *
-	 * @return the message's original message ID
-	 * @see    #setOriginalMessageId(String)
-	 * @since  LCS 0.1
-	 */
-	@JsonIgnore
-	public String getOriginalMessageId() {
-		return _originalMessageId;
 	}
 
 	/**
@@ -231,28 +207,8 @@ public abstract class Message implements Serializable {
 		return _queueName;
 	}
 
-	/**
-	 * Returns the message's queue URL.
-	 *
-	 * @return the message's queue URL
-	 * @see    #setQueueURL(String)
-	 * @since  LCS 0.1
-	 */
-	@JsonIgnore
-	public String getQueueURL() {
-		return _queueURL;
-	}
-
-	/**
-	 * Returns the message's recipient handle.
-	 *
-	 * @return the message's recipient handle
-	 * @see    #setRecipientHandle(String)
-	 * @since  LCS 0.1
-	 */
-	@JsonIgnore
-	public String getRecipientHandle() {
-		return _recipientHandle;
+	public <T extends TransportMetadata> T getTransportMetadata() {
+		return (T) _transportMetadata;
 	}
 
 	/**
@@ -328,18 +284,6 @@ public abstract class Message implements Serializable {
 	}
 
 	/**
-	 * Sets the message's delivery tag. The delivery tag is used by some message
-	 * queue implementations to set the sequence number for the confirmed
-	 * message.
-	 *
-	 * @param deliveryTag the message's delivery tag
-	 * @since LCS 0.1
-	 */
-	public void setDeliveryTag(long deliveryTag) {
-		_deliveryTag = deliveryTag;
-	}
-
-	/**
 	 * Sets the message creator's cluster node key.
 	 *
 	 * @param key the message creator's cluster node key
@@ -349,18 +293,6 @@ public abstract class Message implements Serializable {
 		_key = key;
 
 		_toString = null;
-	}
-
-	/**
-	 * Sets the message's original message ID. The original message ID
-	 * represents the message ID given by the underlying message queue
-	 * implementation.
-	 *
-	 * @param originalMessageId the message's original message ID
-	 * @since LCS 0.1
-	 */
-	public void setOriginalMessageId(String originalMessageId) {
-		_originalMessageId = originalMessageId;
 	}
 
 	/**
@@ -397,31 +329,6 @@ public abstract class Message implements Serializable {
 	}
 
 	/**
-	 * Sets the message's queue URL. The queue URL is associated with the
-	 * underlying message queue implementation where the message was read from.
-	 *
-	 * @param queueURL the message's queue URL
-	 * @since LCS 0.1
-	 */
-	public void setQueueURL(String queueURL) {
-		_queueURL = queueURL;
-	}
-
-	/**
-	 * Sets the message's recipient handle. In some underlying message queue
-	 * implementations, the recipient handle is used as confirmation that the
-	 * message was read and the reader has control over it. In those
-	 * implementations, the message can be updated or deleted only if the reader
-	 * possesses the recipient's handle.
-	 *
-	 * @param recipientHandle the message's recipient handle
-	 * @since LCS 0.1
-	 */
-	public void setRecipientHandle(String recipientHandle) {
-		_recipientHandle = recipientHandle;
-	}
-
-	/**
 	 * Sets the message's key-value map.
 	 *
 	 * @param values the key-value map
@@ -431,6 +338,10 @@ public abstract class Message implements Serializable {
 		_values = values;
 
 		_toString = null;
+	}
+
+	public void setTransportMetadata(TransportMetadata transportMetadata) {
+		_transportMetadata = transportMetadata;
 	}
 
 	public String toJSON() {
@@ -482,15 +393,12 @@ public abstract class Message implements Serializable {
 	}
 
 	private long _createTime = System.currentTimeMillis();
-	private long _deliveryTag;
 	private String _key;
-	private transient String _originalMessageId;
 	private Object _payload;
 	private String _protocolVersion = LCSConstants.PROTOCOL_VERSION_CURRENT;
 	private String _queueName;
-	private String _queueURL;
-	private transient String _recipientHandle;
 	private String _toString;
+	private TransportMetadata _transportMetadata;
 	private Map<String, Object> _values;
 
 }
