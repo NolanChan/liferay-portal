@@ -33,12 +33,11 @@ public class MessageBusCommand implements Command {
 			(MessageBusCommandMessage)commandMessage;
 
 		String destinationName = messageBusCommandMessage.getDestinationName();
-		String payload = messageBusCommandMessage.getPayload();
 
 		Message message = new Message();
 
 		message.setDestinationName(destinationName);
-		message.setPayload(payload);
+		message.setPayload(messageBusCommandMessage.getPayload());
 		message.setResponse(messageBusCommandMessage.getResponse());
 		message.setResponseDestinationName(
 			messageBusCommandMessage.getResponseDestinationName());
