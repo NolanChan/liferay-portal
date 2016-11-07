@@ -13,7 +13,7 @@
 	<bean class="com.liferay.portal.kernel.messaging.ParallelDestination" id="destination.lcs_commands">
 		<property name="name" value="liferay/lcs_commands" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.messaging.ParallelDestination" id="destination.lcs_messagebus">
+	<bean class="com.liferay.portal.kernel.messaging.ParallelDestination" id="destination.lcs_message_bus">
 		<property name="name" value="liferay/lcs_messagebus" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.messaging.ParallelDestination" id="destination.lcs_request">
@@ -49,7 +49,7 @@
 		<property name="LCSClusterEntryTokenAdvisor" ref="com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor" />
 		<property name="uptimeMonitoringAdvisor" ref="com.liferay.lcs.advisor.UptimeMonitoringAdvisor" />
 	</bean>
-	<bean class="com.liferay.lcs.messaging.LCSMessageBusMessageListener" id="messageListener.lcs_messagebus">
+	<bean class="com.liferay.lcs.messaging.LCSMessageBusMessageListener" id="messageListener.lcs_message_bus">
 		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
 		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
 	</bean>
@@ -86,7 +86,7 @@
 				</entry>
 				<entry key="liferay/lcs_messagebus">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.lcs_messagebus" />
+						<ref bean="messageListener.lcs_message_bus" />
 					</list>
 				</entry>
 				<entry key="liferay/lcs_scheduler">
@@ -99,7 +99,7 @@
 		<property name="destinations">
 			<list>
 				<ref bean="destination.lcs_commands" />
-				<ref bean="destination.lcs_messagebus" />
+				<ref bean="destination.lcs_message_bus" />
 				<ref bean="destination.lcs_request" />
 				<ref bean="destination.lcs_scheduler" />
 			</list>
