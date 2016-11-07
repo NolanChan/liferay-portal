@@ -12,6 +12,7 @@
 		<field name="name" type="String" />
 		<field name="avatarURL" type="String" />
 		<field name="contributions" type="int" />
+		<field name="profileURL" type="String" />
 	</model>
 	<model name="com.liferay.osb.ldn.github.model.GitHubRepository">
 		<field name="gitHubRepositoryId" type="long" />

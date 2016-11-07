@@ -74,7 +74,8 @@ public class GitHubContributorModelImpl extends BaseModelImpl<GitHubContributor>
 			{ "gitHubRepositoryId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "avatarURL", Types.VARCHAR },
-			{ "contributions", Types.INTEGER }
+			{ "contributions", Types.INTEGER },
+			{ "profileURL", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -89,9 +90,10 @@ public class GitHubContributorModelImpl extends BaseModelImpl<GitHubContributor>
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("avatarURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("contributions", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("profileURL", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OSB_LDN_GitHubContributor (gitHubContributorId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,gitHubRepositoryId LONG,name VARCHAR(75) null,avatarURL VARCHAR(75) null,contributions INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table OSB_LDN_GitHubContributor (gitHubContributorId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,gitHubRepositoryId LONG,name VARCHAR(75) null,avatarURL VARCHAR(75) null,contributions INTEGER,profileURL VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table OSB_LDN_GitHubContributor";
 	public static final String ORDER_BY_JPQL = " ORDER BY gitHubContributor.contributions DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY OSB_LDN_GitHubContributor.contributions DESC";
@@ -159,6 +161,7 @@ public class GitHubContributorModelImpl extends BaseModelImpl<GitHubContributor>
 		attributes.put("name", getName());
 		attributes.put("avatarURL", getAvatarURL());
 		attributes.put("contributions", getContributions());
+		attributes.put("profileURL", getProfileURL());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -226,6 +229,12 @@ public class GitHubContributorModelImpl extends BaseModelImpl<GitHubContributor>
 
 		if (contributions != null) {
 			setContributions(contributions);
+		}
+
+		String profileURL = (String)attributes.get("profileURL");
+
+		if (profileURL != null) {
+			setProfileURL(profileURL);
 		}
 	}
 
@@ -380,6 +389,21 @@ public class GitHubContributorModelImpl extends BaseModelImpl<GitHubContributor>
 		_contributions = contributions;
 	}
 
+	@Override
+	public String getProfileURL() {
+		if (_profileURL == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _profileURL;
+		}
+	}
+
+	@Override
+	public void setProfileURL(String profileURL) {
+		_profileURL = profileURL;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -421,6 +445,7 @@ public class GitHubContributorModelImpl extends BaseModelImpl<GitHubContributor>
 		gitHubContributorImpl.setName(getName());
 		gitHubContributorImpl.setAvatarURL(getAvatarURL());
 		gitHubContributorImpl.setContributions(getContributions());
+		gitHubContributorImpl.setProfileURL(getProfileURL());
 
 		gitHubContributorImpl.resetOriginalValues();
 
@@ -556,12 +581,20 @@ public class GitHubContributorModelImpl extends BaseModelImpl<GitHubContributor>
 
 		gitHubContributorCacheModel.contributions = getContributions();
 
+		gitHubContributorCacheModel.profileURL = getProfileURL();
+
+		String profileURL = gitHubContributorCacheModel.profileURL;
+
+		if ((profileURL != null) && (profileURL.length() == 0)) {
+			gitHubContributorCacheModel.profileURL = null;
+		}
+
 		return gitHubContributorCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{gitHubContributorId=");
 		sb.append(getGitHubContributorId());
@@ -583,6 +616,8 @@ public class GitHubContributorModelImpl extends BaseModelImpl<GitHubContributor>
 		sb.append(getAvatarURL());
 		sb.append(", contributions=");
 		sb.append(getContributions());
+		sb.append(", profileURL=");
+		sb.append(getProfileURL());
 		sb.append("}");
 
 		return sb.toString();
@@ -590,7 +625,7 @@ public class GitHubContributorModelImpl extends BaseModelImpl<GitHubContributor>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.osb.ldn.github.model.GitHubContributor");
@@ -636,6 +671,10 @@ public class GitHubContributorModelImpl extends BaseModelImpl<GitHubContributor>
 			"<column><column-name>contributions</column-name><column-value><![CDATA[");
 		sb.append(getContributions());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>profileURL</column-name><column-value><![CDATA[");
+		sb.append(getProfileURL());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -659,6 +698,7 @@ public class GitHubContributorModelImpl extends BaseModelImpl<GitHubContributor>
 	private String _name;
 	private String _avatarURL;
 	private int _contributions;
+	private String _profileURL;
 	private long _columnBitmask;
 	private GitHubContributor _escapedModel;
 }

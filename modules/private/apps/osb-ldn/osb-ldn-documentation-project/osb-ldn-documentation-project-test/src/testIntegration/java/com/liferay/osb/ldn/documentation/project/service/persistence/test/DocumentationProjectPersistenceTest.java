@@ -215,6 +215,13 @@ public class DocumentationProjectPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
+	}
+
+	@Test
 	public void testCountByName() throws Exception {
 		_persistence.countByName(StringPool.BLANK);
 
@@ -464,6 +471,11 @@ public class DocumentationProjectPersistenceTest {
 				existingDocumentationProject.getUuid(),
 				ReflectionTestUtil.invoke(existingDocumentationProject,
 					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingDocumentationProject.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDocumentationProject,
+				"getOriginalGroupId", new Class<?>[0]));
+
 		Assert.assertEquals(Long.valueOf(
 				existingDocumentationProject.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingDocumentationProject,

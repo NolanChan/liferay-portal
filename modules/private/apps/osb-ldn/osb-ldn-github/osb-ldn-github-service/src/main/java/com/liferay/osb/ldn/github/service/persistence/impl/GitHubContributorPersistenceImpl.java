@@ -911,6 +911,7 @@ public class GitHubContributorPersistenceImpl extends BasePersistenceImpl<GitHub
 		gitHubContributorImpl.setName(gitHubContributor.getName());
 		gitHubContributorImpl.setAvatarURL(gitHubContributor.getAvatarURL());
 		gitHubContributorImpl.setContributions(gitHubContributor.getContributions());
+		gitHubContributorImpl.setProfileURL(gitHubContributor.getProfileURL());
 
 		return gitHubContributorImpl;
 	}

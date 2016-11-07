@@ -132,6 +132,12 @@ public class DocumentationProjectLocalServiceUtil {
 		return getService().getDocumentationProject(documentationProjectId);
 	}
 
+	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject getDocumentationProjectByGroupId(
+		long groupId)
+		throws com.liferay.osb.ldn.documentation.project.exception.NoSuchDocumentationProjectException {
+		return getService().getDocumentationProjectByGroupId(groupId);
+	}
+
 	/**
 	* Returns the documentation project matching the UUID and group.
 	*

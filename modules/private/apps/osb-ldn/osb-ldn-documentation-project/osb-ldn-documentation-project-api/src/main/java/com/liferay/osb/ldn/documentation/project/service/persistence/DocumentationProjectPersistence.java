@@ -374,6 +374,51 @@ public interface DocumentationProjectPersistence extends BasePersistence<Documen
 	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
+	* Returns the documentation project where groupId = &#63; or throws a {@link NoSuchDocumentationProjectException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @return the matching documentation project
+	* @throws NoSuchDocumentationProjectException if a matching documentation project could not be found
+	*/
+	public DocumentationProject findByGroupId(long groupId)
+		throws NoSuchDocumentationProjectException;
+
+	/**
+	* Returns the documentation project where groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @return the matching documentation project, or <code>null</code> if a matching documentation project could not be found
+	*/
+	public DocumentationProject fetchByGroupId(long groupId);
+
+	/**
+	* Returns the documentation project where groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching documentation project, or <code>null</code> if a matching documentation project could not be found
+	*/
+	public DocumentationProject fetchByGroupId(long groupId,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the documentation project where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @return the documentation project that was removed
+	*/
+	public DocumentationProject removeByGroupId(long groupId)
+		throws NoSuchDocumentationProjectException;
+
+	/**
+	* Returns the number of documentation projects where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching documentation projects
+	*/
+	public int countByGroupId(long groupId);
+
+	/**
 	* Returns the documentation project where name = &#63; or throws a {@link NoSuchDocumentationProjectException} if it could not be found.
 	*
 	* @param name the name

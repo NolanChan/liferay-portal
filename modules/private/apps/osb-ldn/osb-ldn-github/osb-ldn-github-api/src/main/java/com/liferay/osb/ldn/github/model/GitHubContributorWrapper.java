@@ -68,6 +68,7 @@ public class GitHubContributorWrapper implements GitHubContributor,
 		attributes.put("name", getName());
 		attributes.put("avatarURL", getAvatarURL());
 		attributes.put("contributions", getContributions());
+		attributes.put("profileURL", getProfileURL());
 
 		return attributes;
 	}
@@ -132,6 +133,12 @@ public class GitHubContributorWrapper implements GitHubContributor,
 
 		if (contributions != null) {
 			setContributions(contributions);
+		}
+
+		String profileURL = (String)attributes.get("profileURL");
+
+		if (profileURL != null) {
+			setProfileURL(profileURL);
 		}
 	}
 
@@ -218,6 +225,16 @@ public class GitHubContributorWrapper implements GitHubContributor,
 	@Override
 	public java.lang.String getName() {
 		return _gitHubContributor.getName();
+	}
+
+	/**
+	* Returns the profile u r l of this git hub contributor.
+	*
+	* @return the profile u r l of this git hub contributor
+	*/
+	@Override
+	public java.lang.String getProfileURL() {
+		return _gitHubContributor.getProfileURL();
 	}
 
 	/**
@@ -444,6 +461,16 @@ public class GitHubContributorWrapper implements GitHubContributor,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_gitHubContributor.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the profile u r l of this git hub contributor.
+	*
+	* @param profileURL the profile u r l of this git hub contributor
+	*/
+	@Override
+	public void setProfileURL(java.lang.String profileURL) {
+		_gitHubContributor.setProfileURL(profileURL);
 	}
 
 	/**

@@ -43,6 +43,7 @@ public class GitHubContributorSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setAvatarURL(model.getAvatarURL());
 		soapModel.setContributions(model.getContributions());
+		soapModel.setProfileURL(model.getProfileURL());
 
 		return soapModel;
 	}
@@ -178,6 +179,14 @@ public class GitHubContributorSoap implements Serializable {
 		_contributions = contributions;
 	}
 
+	public String getProfileURL() {
+		return _profileURL;
+	}
+
+	public void setProfileURL(String profileURL) {
+		_profileURL = profileURL;
+	}
+
 	private long _gitHubContributorId;
 	private long _companyId;
 	private long _userId;
@@ -188,4 +197,5 @@ public class GitHubContributorSoap implements Serializable {
 	private String _name;
 	private String _avatarURL;
 	private int _contributions;
+	private String _profileURL;
 }

@@ -140,6 +140,8 @@ public class GitHubContributorPersistenceTest {
 
 		newGitHubContributor.setContributions(RandomTestUtil.nextInt());
 
+		newGitHubContributor.setProfileURL(RandomTestUtil.randomString());
+
 		_gitHubContributors.add(_persistence.update(newGitHubContributor));
 
 		GitHubContributor existingGitHubContributor = _persistence.findByPrimaryKey(newGitHubContributor.getPrimaryKey());
@@ -166,6 +168,8 @@ public class GitHubContributorPersistenceTest {
 			newGitHubContributor.getAvatarURL());
 		Assert.assertEquals(existingGitHubContributor.getContributions(),
 			newGitHubContributor.getContributions());
+		Assert.assertEquals(existingGitHubContributor.getProfileURL(),
+			newGitHubContributor.getProfileURL());
 	}
 
 	@Test
@@ -202,7 +206,7 @@ public class GitHubContributorPersistenceTest {
 			"gitHubContributorId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"gitHubRepositoryId", true, "name", true, "avatarURL", true,
-			"contributions", true);
+			"contributions", true, "profileURL", true);
 	}
 
 	@Test
@@ -422,6 +426,8 @@ public class GitHubContributorPersistenceTest {
 		gitHubContributor.setAvatarURL(RandomTestUtil.randomString());
 
 		gitHubContributor.setContributions(RandomTestUtil.nextInt());
+
+		gitHubContributor.setProfileURL(RandomTestUtil.randomString());
 
 		_gitHubContributors.add(_persistence.update(gitHubContributor));
 

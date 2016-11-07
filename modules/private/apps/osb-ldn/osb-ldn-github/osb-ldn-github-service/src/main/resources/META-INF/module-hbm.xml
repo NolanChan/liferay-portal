@@ -17,6 +17,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="avatarURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="contributions" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="profileURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.osb.ldn.github.model.impl.GitHubRepositoryImpl" table="OSB_LDN_GitHubRepository">
 		<id name="gitHubRepositoryId" type="long">

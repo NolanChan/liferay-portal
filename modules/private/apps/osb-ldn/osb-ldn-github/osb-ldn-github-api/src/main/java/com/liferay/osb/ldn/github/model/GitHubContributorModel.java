@@ -234,6 +234,21 @@ public interface GitHubContributorModel extends AuditedModel,
 	 */
 	public void setContributions(int contributions);
 
+	/**
+	 * Returns the profile u r l of this git hub contributor.
+	 *
+	 * @return the profile u r l of this git hub contributor
+	 */
+	@AutoEscape
+	public String getProfileURL();
+
+	/**
+	 * Sets the profile u r l of this git hub contributor.
+	 *
+	 * @param profileURL the profile u r l of this git hub contributor
+	 */
+	public void setProfileURL(String profileURL);
+
 	@Override
 	public boolean isNew();
 

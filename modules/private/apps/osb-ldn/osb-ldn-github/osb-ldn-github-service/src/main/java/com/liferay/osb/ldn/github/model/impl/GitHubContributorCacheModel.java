@@ -66,7 +66,7 @@ public class GitHubContributorCacheModel implements CacheModel<GitHubContributor
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{gitHubContributorId=");
 		sb.append(gitHubContributorId);
@@ -88,6 +88,8 @@ public class GitHubContributorCacheModel implements CacheModel<GitHubContributor
 		sb.append(avatarURL);
 		sb.append(", contributions=");
 		sb.append(contributions);
+		sb.append(", profileURL=");
+		sb.append(profileURL);
 		sb.append("}");
 
 		return sb.toString();
@@ -140,6 +142,13 @@ public class GitHubContributorCacheModel implements CacheModel<GitHubContributor
 
 		gitHubContributorImpl.setContributions(contributions);
 
+		if (profileURL == null) {
+			gitHubContributorImpl.setProfileURL(StringPool.BLANK);
+		}
+		else {
+			gitHubContributorImpl.setProfileURL(profileURL);
+		}
+
 		gitHubContributorImpl.resetOriginalValues();
 
 		return gitHubContributorImpl;
@@ -161,6 +170,7 @@ public class GitHubContributorCacheModel implements CacheModel<GitHubContributor
 		avatarURL = objectInput.readUTF();
 
 		contributions = objectInput.readInt();
+		profileURL = objectInput.readUTF();
 	}
 
 	@Override
@@ -199,6 +209,13 @@ public class GitHubContributorCacheModel implements CacheModel<GitHubContributor
 		}
 
 		objectOutput.writeInt(contributions);
+
+		if (profileURL == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(profileURL);
+		}
 	}
 
 	public long gitHubContributorId;
@@ -211,4 +228,5 @@ public class GitHubContributorCacheModel implements CacheModel<GitHubContributor
 	public String name;
 	public String avatarURL;
 	public int contributions;
+	public String profileURL;
 }

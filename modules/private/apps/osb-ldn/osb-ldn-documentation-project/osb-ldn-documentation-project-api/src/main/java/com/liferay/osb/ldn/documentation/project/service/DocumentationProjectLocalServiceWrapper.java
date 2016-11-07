@@ -132,6 +132,13 @@ public class DocumentationProjectLocalServiceWrapper
 		return _documentationProjectLocalService.getDocumentationProject(documentationProjectId);
 	}
 
+	@Override
+	public com.liferay.osb.ldn.documentation.project.model.DocumentationProject getDocumentationProjectByGroupId(
+		long groupId)
+		throws com.liferay.osb.ldn.documentation.project.exception.NoSuchDocumentationProjectException {
+		return _documentationProjectLocalService.getDocumentationProjectByGroupId(groupId);
+	}
+
 	/**
 	* Returns the documentation project matching the UUID and group.
 	*

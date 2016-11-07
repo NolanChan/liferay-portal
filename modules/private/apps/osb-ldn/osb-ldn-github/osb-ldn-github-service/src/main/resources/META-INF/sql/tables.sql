@@ -8,7 +8,8 @@ create table OSB_LDN_GitHubContributor (
 	gitHubRepositoryId LONG,
 	name VARCHAR(75) null,
 	avatarURL VARCHAR(75) null,
-	contributions INTEGER
+	contributions INTEGER,
+	profileURL VARCHAR(75) null
 );
 
 create table OSB_LDN_GitHubRepository (

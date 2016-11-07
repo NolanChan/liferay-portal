@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
+import com.liferay.osb.ldn.documentation.project.exception.NoSuchDocumentationProjectException;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -138,6 +139,10 @@ public interface DocumentationProjectLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DocumentationProject getDocumentationProject(
 		long documentationProjectId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DocumentationProject getDocumentationProjectByGroupId(long groupId)
+		throws NoSuchDocumentationProjectException;
 
 	/**
 	* Returns the documentation project matching the UUID and group.
