@@ -61,7 +61,7 @@ public class DocumentationProjectLocalServiceImpl
 			File iconFile, int status, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 
 		validate(name, description, iconFileName, iconFile);

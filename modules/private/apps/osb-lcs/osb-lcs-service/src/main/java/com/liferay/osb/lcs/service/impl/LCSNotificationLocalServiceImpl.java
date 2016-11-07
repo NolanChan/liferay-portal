@@ -92,13 +92,8 @@ public class LCSNotificationLocalServiceImpl
 	public LCSNotification addLCSProjectLCSNotification(
 		long userId, long lcsProjectId, boolean enabled, int type) {
 
-		ClassName className = classNamePersistence.fetchByValue(
+		ClassName className = classNameLocalService.getClassName(
 			LCSProject.class.getName());
-
-		if (className == null) {
-			className = classNameLocalService.addClassName(
-				LCSProject.class.getName());
-		}
 
 		return addLCSNotification(
 			userId, className.getClassNameId(), lcsProjectId, enabled, type);
@@ -288,7 +283,8 @@ public class LCSNotificationLocalServiceImpl
 	 * @return the primary key
 	 */
 	protected long getClassNameId(String classNameValue) {
-		ClassName className = classNamePersistence.fetchByValue(classNameValue);
+		ClassName className = classNameLocalService.fetchClassName(
+			classNameValue);
 
 		return className.getClassNameId();
 	}

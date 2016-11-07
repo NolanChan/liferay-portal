@@ -62,7 +62,7 @@ public class KaleoDraftDefinitionLocalServiceImpl
 
 		// Kaleo draft definition
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 
 		validate(user.getCompanyId(), name, version, draftVersion);

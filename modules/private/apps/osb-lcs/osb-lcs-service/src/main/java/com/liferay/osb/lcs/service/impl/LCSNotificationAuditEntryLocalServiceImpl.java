@@ -192,7 +192,7 @@ public class LCSNotificationAuditEntryLocalServiceImpl
 			lcsNotificationAuditEntry.setLcsClusterNodeKey(
 				lcsClusterNode.getKey());
 
-			User user = userPersistence.findByPrimaryKey(
+			User user = userLocalService.getUser(
 				lcsNotificationAuditEntry.getUserId());
 
 			lcsNotificationAuditEntry.setUserEmailAddress(

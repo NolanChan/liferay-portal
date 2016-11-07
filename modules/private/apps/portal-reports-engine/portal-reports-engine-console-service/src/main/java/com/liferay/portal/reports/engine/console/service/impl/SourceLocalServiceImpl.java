@@ -57,7 +57,7 @@ public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 
 		// Source
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 
 		validate(driverClassName, driverUrl, driverUserName, driverPassword);

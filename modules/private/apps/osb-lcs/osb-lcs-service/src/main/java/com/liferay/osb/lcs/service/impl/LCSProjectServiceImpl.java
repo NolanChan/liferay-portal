@@ -125,7 +125,7 @@ public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {
 
 		LCSRole lcsRole = lcsProjectLCSRoles.get(0);
 
-		User user = userPersistence.findByPrimaryKey(lcsRole.getUserId());
+		User user = userLocalService.getUser(lcsRole.getUserId());
 
 		return user.getEmailAddress();
 	}
@@ -135,7 +135,7 @@ public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {
 	public long getUserDefaultLCSProjectId() throws PortalException {
 		checkSignedIn();
 
-		User user = userPersistence.findByPrimaryKey(getUserId());
+		User user = userLocalService.getUser(getUserId());
 
 		ExpandoBridge expandoBridge = user.getExpandoBridge();
 

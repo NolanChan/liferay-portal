@@ -39,7 +39,7 @@ public class OAuthUserLocalServiceImpl extends OAuthUserLocalServiceBaseImpl {
 
 		// OAuth user
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 
 		validate(oAuthApplicationId);

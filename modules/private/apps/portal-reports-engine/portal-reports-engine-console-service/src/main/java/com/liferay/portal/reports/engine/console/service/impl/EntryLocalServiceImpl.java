@@ -101,7 +101,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		// Entry
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 
 		validate(emailNotifications, emailDelivery, reportName);

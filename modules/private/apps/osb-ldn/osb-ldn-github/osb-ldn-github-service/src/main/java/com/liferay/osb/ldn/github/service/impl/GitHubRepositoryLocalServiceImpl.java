@@ -138,7 +138,7 @@ public class GitHubRepositoryLocalServiceImpl
 				PortalUtil.getDefaultCompanyId());
 		}
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		long gitHubRepositoryId = counterLocalService.increment();
 

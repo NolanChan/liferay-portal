@@ -82,7 +82,7 @@ public class LCSInvitationLocalServiceImpl
 
 	@Override
 	public boolean hasUserLCSInvitation(long userId) throws PortalException {
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		if (lcsInvitationPersistence.countByEmailAddress(
 				user.getEmailAddress()) > 0) {

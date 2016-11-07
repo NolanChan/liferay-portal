@@ -483,7 +483,7 @@ public class LCSRoleLocalServiceImpl extends LCSRoleLocalServiceBaseImpl {
 	public LCSRole toLCSRole(LCSInvitation lcsInvitation)
 		throws PortalException {
 
-		User user = userPersistence.fetchByC_EA(
+		User user = userLocalService.fetchUserByEmailAddress(
 			_companyAdvisor.getCompanyId(), lcsInvitation.getEmailAddress());
 
 		if (user == null) {
