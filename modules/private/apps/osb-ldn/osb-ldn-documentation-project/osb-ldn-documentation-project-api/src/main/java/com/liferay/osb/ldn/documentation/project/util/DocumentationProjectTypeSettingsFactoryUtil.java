@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ryan Park
  */
-@Component
+@Component(immediate = true)
 public class DocumentationProjectTypeSettingsFactoryUtil {
 
 	public static DocumentationProjectTypeSettings create(

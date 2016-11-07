@@ -42,9 +42,13 @@
 		<finder name="Name">
 			<finder-column name="name" />
 		</finder>
+		<finder name="GroupId">
+			<finder-column name="groupId" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>DocumentationProjectDescription</exception>
+		<exception>DocumentationProjectHeaderGradientColor</exception>
 		<exception>DocumentationProjectIcon</exception>
 		<exception>DocumentationProjectIconExtension</exception>
 		<exception>DocumentationProjectName</exception>

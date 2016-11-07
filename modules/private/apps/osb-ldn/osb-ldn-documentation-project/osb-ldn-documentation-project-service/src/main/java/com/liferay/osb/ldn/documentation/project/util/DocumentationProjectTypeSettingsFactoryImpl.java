@@ -25,9 +25,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Ryan Park
  */
-@Component(service = DocumentationProjectTypeSettings.class)
+@Component(service = DocumentationProjectTypeSettingsFactory.class)
 public class DocumentationProjectTypeSettingsFactoryImpl
-	implements DocumentationProjectTypeSettings {
+	implements DocumentationProjectTypeSettingsFactory {
 
 	public DocumentationProjectTypeSettings create(
 		DocumentationProject documentationProject) {

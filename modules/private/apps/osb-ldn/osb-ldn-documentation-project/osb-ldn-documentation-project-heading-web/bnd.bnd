@@ -1,0 +1,5 @@
+Bundle-Name: Liferay OSB LDN Documentation Project Heading Web
+Bundle-SymbolicName: com.liferay.osb.ldn.documentation.project.heading.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

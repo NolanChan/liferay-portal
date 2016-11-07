@@ -1,0 +1,24 @@
+/* ---------- View ---------- */
+
+.documentation-project-heading .view {
+	.project {
+		.xsmall {
+			max-height: 80px;
+			max-width: 80px;
+		}
+
+		.project-name {
+			float: right;
+			font-size: 48px;
+			font-weight: 300;
+			margin-left: 20px;
+		}
+
+		left: 25%;
+		position: absolute;
+		top: 38%;
+	}
+
+	margin-top: -64px;
+	min-height: 360px;
+}

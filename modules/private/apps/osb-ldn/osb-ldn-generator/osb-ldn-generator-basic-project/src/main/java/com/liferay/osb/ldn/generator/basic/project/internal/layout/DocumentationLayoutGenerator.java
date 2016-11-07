@@ -14,6 +14,8 @@
 
 package com.liferay.osb.ldn.generator.basic.project.internal.layout;
 
+import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
+import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalService;
 import com.liferay.osb.ldn.generator.basic.project.site.constants.BasicProjectSiteConstants;
 import com.liferay.osb.ldn.generator.layout.BaseLayoutGenerator;
 import com.liferay.osb.ldn.generator.layout.LayoutGenerator;
@@ -21,8 +23,13 @@ import com.liferay.osb.ldn.generator.layout.LayoutVersion;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringPool;
+
+import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -64,9 +71,31 @@ public class DocumentationLayoutGenerator extends BaseLayoutGenerator {
 		layoutTypePortlet.setLayoutTemplateId(
 			layout.getUserId(), "1_column", false);
 
+		User user = _userLocalService.getDefaultUser(layout.getCompanyId());
+
+		if (!layoutTypePortlet.hasPortletId(_PROJECT_HEADER_PORTLET_ID)) {
+			String projectHeaderPortletId = layoutTypePortlet.addPortletId(
+				layout.getUserId(), _PROJECT_HEADER_PORTLET_ID, "column-1", 0,
+				false);
+		}
+
 		layoutTypePortlet.addPortletId(
 			layout.getUserId(), KNOWLEDGE_BASE_DISPLAY_PORTLET_ID, "column-1",
-			0, false);
+			1, false);
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getStrictPortletSetup(
+				layout, _PROJECT_HEADER_PORTLET_ID);
+
+		DocumentationProject documentationProject =
+			_documentationProjectLocalService.getDocumentationProjectByGroupId(
+				layout.getGroupId());
+
+		portletPreferences.setValue(
+			"documentationProjectId",
+			String.valueOf(documentationProject.getDocumentationProjectId()));
+
+		portletPreferences.store();
 
 		_layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.getPrivateLayout(),
@@ -81,7 +110,17 @@ public class DocumentationLayoutGenerator extends BaseLayoutGenerator {
 		this.layoutVersion = layoutVersion;
 	}
 
+	private static final String _PROJECT_HEADER_PORTLET_ID =
+		"com_liferay_osb_ldn_documentation_project_heading_web_" +
+			"ProjectHeadingPortlet";
+
+	@Reference
+	private DocumentationProjectLocalService _documentationProjectLocalService;
+
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

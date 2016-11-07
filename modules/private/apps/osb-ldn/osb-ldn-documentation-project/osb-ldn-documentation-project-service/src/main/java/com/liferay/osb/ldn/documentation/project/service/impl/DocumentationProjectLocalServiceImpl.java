@@ -22,6 +22,7 @@ import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectD
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconException;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconExtensionException;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectNameException;
+import com.liferay.osb.ldn.documentation.project.exception.NoSuchDocumentationProjectException;
 import com.liferay.osb.ldn.documentation.project.internal.file.util.DocumentationProjectFileUtil;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.base.DocumentationProjectLocalServiceBaseImpl;
@@ -161,6 +162,15 @@ public class DocumentationProjectLocalServiceImpl
 				documentationProjectId);
 
 		return deleteDocumentationProject(documentationProject);
+	}
+
+	public DocumentationProject getDocumentationProjectByGroupId(long groupId)
+		throws NoSuchDocumentationProjectException {
+
+		DocumentationProject documentationProject =
+			documentationProjectPersistence.findByGroupId(groupId);
+
+		return documentationProject;
 	}
 
 	@Override
