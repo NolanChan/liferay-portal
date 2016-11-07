@@ -102,15 +102,27 @@ public class LCSMessageLocalServiceImpl extends LCSMessageLocalServiceBaseImpl {
 		long classPK, String content, Date endDate, boolean global,
 		int severityLevel, int type) {
 
-		LCSMessage lcsMessage = createLCSMessage(
-			counterLocalService.increment(LCSMessage.class.getName()));
+		LCSMessage lcsMessage = null;
 
-		lcsMessage.setCreateDate(new Date());
-		lcsMessage.setModifiedDate(new Date());
-		lcsMessage.setSourceMessageId(sourceMessageId);
-		lcsMessage.setSourceSystemName(sourceSystemName);
-		lcsMessage.setClassNameId(classNameId);
-		lcsMessage.setClassPK(classPK);
+		if (sourceMessageId != 0) {
+			lcsMessage = lcsMessagePersistence.fetchByS_S_C_C(
+				sourceMessageId, sourceSystemName, classNameId, classPK);
+
+			lcsMessage.setModifiedDate(new Date());
+		}
+
+		if (lcsMessage == null) {
+			lcsMessage = createLCSMessage(
+				counterLocalService.increment(LCSMessage.class.getName()));
+
+			lcsMessage.setCreateDate(new Date());
+			lcsMessage.setModifiedDate(lcsMessage.getCreateDate());
+			lcsMessage.setSourceMessageId(sourceMessageId);
+			lcsMessage.setSourceSystemName(sourceSystemName);
+			lcsMessage.setClassNameId(classNameId);
+			lcsMessage.setClassPK(classPK);
+		}
+
 		lcsMessage.setContent(content);
 		lcsMessage.setEndDate(endDate);
 		lcsMessage.setGlobal(global);
