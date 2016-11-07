@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.forms.web.internal.upgrade.v1_0_1;
+package com.liferay.portal.workflow.kaleo.forms.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Inácio Nery
+ * @author Marcellus Tavares
  */
 public class UpgradeSchema extends UpgradeProcess {
 

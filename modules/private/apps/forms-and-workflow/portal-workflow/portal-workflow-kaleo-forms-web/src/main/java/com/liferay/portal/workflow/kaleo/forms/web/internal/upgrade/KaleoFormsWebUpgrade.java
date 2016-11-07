@@ -14,17 +14,11 @@
 
 package com.liferay.portal.workflow.kaleo.forms.web.internal.upgrade;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.workflow.kaleo.forms.web.internal.upgrade.v1_0_2.UpgradeKaleoProcessTemplateLink;
 import com.liferay.portal.workflow.kaleo.forms.web.internal.upgrade.v1_0_2.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -35,67 +29,12 @@ public class KaleoFormsWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.forms.web", "0.0.1", "1.0.0",
-			new com.liferay.portal.workflow.kaleo.forms.web.internal.upgrade.
-				v1_0_0.UpgradeSchema());
+			"com.liferay.portal.workflow.kaleo.forms.web", "0.0.0", "1.0.2",
+			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.forms.web", "1.0.0", "1.0.1",
-			new com.liferay.portal.workflow.kaleo.forms.web.internal.upgrade.
-				v1_0_1.UpgradeKaleoProcess(),
-			new com.liferay.portal.workflow.kaleo.forms.web.internal.upgrade.
-				v1_0_1.UpgradeSchema());
-
-		registry.register(
-			"com.liferay.portal.workflow.kaleo.forms.web", "1.0.1", "1.0.2",
-			new com.liferay.portal.workflow.kaleo.forms.web.internal.upgrade.
-				v1_0_2.UpgradeKaleoProcess(
-					_assetEntryLocalService, _ddlRecordLocalService,
-					_ddlRecordSetLocalService),
-			new UpgradeKaleoProcessTemplateLink(
-				_classNameLocalService, _ddmTemplateLinkLocalService),
+			"com.liferay.portal.workflow.kaleo.forms.web", "0.0.1", "1.0.2",
 			new UpgradePortletId());
 	}
-
-	@Reference(unbind = "-")
-	public void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setDDLRecordLocalService(
-		DDLRecordLocalService ddlRecordLocalService) {
-
-		_ddlRecordLocalService = ddlRecordLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setDDLRecordSetLocalService(
-		DDLRecordSetLocalService ddlRecordSetLocalService) {
-
-		_ddlRecordSetLocalService = ddlRecordSetLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setDDMTemplateLinkLocalService(
-		DDMTemplateLinkLocalService ddmTemplateLinkLocalService) {
-
-		_ddmTemplateLinkLocalService = ddmTemplateLinkLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
-
-		_classNameLocalService = classNameLocalService;
-	}
-
-	private AssetEntryLocalService _assetEntryLocalService;
-	private ClassNameLocalService _classNameLocalService;
-	private DDLRecordLocalService _ddlRecordLocalService;
-	private DDLRecordSetLocalService _ddlRecordSetLocalService;
-	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 
 }

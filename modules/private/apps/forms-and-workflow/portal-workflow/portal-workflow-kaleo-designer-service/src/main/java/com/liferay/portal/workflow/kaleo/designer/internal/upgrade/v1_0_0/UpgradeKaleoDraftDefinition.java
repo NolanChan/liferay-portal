@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.web.internal.upgrade.v1_0_0;
+package com.liferay.portal.workflow.kaleo.designer.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;

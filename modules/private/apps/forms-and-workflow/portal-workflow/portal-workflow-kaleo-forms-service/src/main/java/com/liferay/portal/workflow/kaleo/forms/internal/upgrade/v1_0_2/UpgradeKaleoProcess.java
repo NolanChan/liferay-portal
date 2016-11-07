@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.forms.web.internal.upgrade.v1_0_2;
+package com.liferay.portal.workflow.kaleo.forms.internal.upgrade.v1_0_2;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
