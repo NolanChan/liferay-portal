@@ -14,7 +14,7 @@
 		<property name="name" value="liferay/lcs_commands" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.messaging.ParallelDestination" id="destination.lcs_message_bus">
-		<property name="name" value="liferay/lcs_messagebus" />
+		<property name="name" value="liferay/lcs_message_bus" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.messaging.ParallelDestination" id="destination.lcs_request">
 		<property name="name" value="#{T(com.liferay.portal.kernel.license.messaging.LicenseManagerMessageType).MESSAGE_BUS_DESTINATION_REQUEST}" />
@@ -84,7 +84,7 @@
 						<ref bean="messageListener.lcs_commands" />
 					</list>
 				</entry>
-				<entry key="liferay/lcs_messagebus">
+				<entry key="liferay/lcs_message_bus">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.lcs_message_bus" />
 					</list>
