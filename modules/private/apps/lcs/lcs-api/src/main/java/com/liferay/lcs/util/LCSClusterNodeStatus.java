@@ -36,7 +36,6 @@ public enum LCSClusterNodeStatus {
 	METRICS_LCS_SERVICE_ENABLED(
 		"metrics-lcs-service-enabled", "metrics-lcs-service-disabled", 0x40),
 	MONITORING_ENABLED("monitoring-enabled", "monitoring-disabled", 0x10),
-	NO_OP("no-op", "no-op", 0x00),
 	PATCHES_LCS_SERVICE_ENABLED(
 		"patches-lcs-service-enabled", "patches-lcs-service-disabled", 0x80),
 	PATCHING_TOOL_ENABLED(
