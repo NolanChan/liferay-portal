@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.workflow.kaleo.designer.internal.upgrade.v1_0_0.UpgradeKaleoDraftDefinition;
-import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,8 +34,7 @@ public class KaleoDesignerServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.portal.workflow.kaleo.designer.service", "0.0.1",
 			"1.0.0",
 			new UpgradeKaleoDraftDefinition(
-				_companyLocalService, _kaleoDraftDefinitionLocalService,
-				_resourceLocalService));
+				_companyLocalService, _resourceLocalService));
 	}
 
 	@Reference(unbind = "-")
@@ -47,13 +45,6 @@ public class KaleoDesignerServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	@Reference(unbind = "-")
-	protected void setKaleoDraftDefinitionLocalService(
-		KaleoDraftDefinitionLocalService kaleoDraftDefinitionLocalService) {
-
-		_kaleoDraftDefinitionLocalService = kaleoDraftDefinitionLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setResourceLocalService(
 		ResourceLocalService resourceLocalService) {
 
@@ -61,7 +52,6 @@ public class KaleoDesignerServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	private CompanyLocalService _companyLocalService;
-	private KaleoDraftDefinitionLocalService _kaleoDraftDefinitionLocalService;
 	private ResourceLocalService _resourceLocalService;
 
 }

@@ -14,18 +14,15 @@
 
 package com.liferay.portal.workflow.kaleo.designer.internal.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
-import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalService;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Leonardo Barros
@@ -34,64 +31,64 @@ public class UpgradeKaleoDraftDefinition extends UpgradeProcess {
 
 	public UpgradeKaleoDraftDefinition(
 		CompanyLocalService companyLocalService,
-		KaleoDraftDefinitionLocalService kaleoDraftDefinitionLocalService,
 		ResourceLocalService resourceLocalService) {
 
 		_companyLocalService = companyLocalService;
-		_kaleoDraftDefinitionLocalService = kaleoDraftDefinitionLocalService;
 		_resourceLocalService = resourceLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_kaleoDraftDefinitionLocalService.getActionableDynamicQuery();
+		ServiceContext serviceContext = new ServiceContext();
 
-		final ServiceContext serviceContext = new ServiceContext();
+		for (Company company : _companyLocalService.getCompanies()) {
+			long groupId = company.getGroupId();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select kaleoDraftDefinitionId, userId from " +
+						"KaleoDraftDefinition where companyId = ? and " +
+							"groupId = ?")) {
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property groupIdProperty = PropertyFactoryUtil.forName(
-						"groupId");
+				ps.setLong(1, company.getCompanyId());
+				ps.setLong(2, 0);
 
-					dynamicQuery.add(groupIdProperty.eq(Long.valueOf(0)));
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						long kaleoDraftDefinitionId = rs.getLong(
+							"kaleoDraftDefinitionId");
+						long userId = rs.getLong("userId");
+
+						updateKaleoDraftDefinition(
+							company.getCompanyId(), groupId, userId,
+							kaleoDraftDefinitionId, serviceContext);
+					}
 				}
+			}
+		}
+	}
 
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<KaleoDraftDefinition>() {
+	protected void updateKaleoDraftDefinition(
+			long companyId, long groupId, long userId,
+			long kaleoDraftDefinitionId, ServiceContext serviceContext)
+		throws Exception {
 
-				@Override
-				public void performAction(
-						KaleoDraftDefinition kaleoDraftDefinition)
-					throws PortalException {
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update KaleoDraftDefinition set groupId = ? where " +
+					"kaleoDraftDefinitionId = ?")) {
 
-					long companyId = kaleoDraftDefinition.getCompanyId();
+			ps.setLong(1, groupId);
+			ps.setLong(2, kaleoDraftDefinitionId);
 
-					Company company = _companyLocalService.getCompany(
-						companyId);
+			ps.executeUpdate();
 
-					kaleoDraftDefinition.setGroupId(company.getGroupId());
-
-					_kaleoDraftDefinitionLocalService.
-						updateKaleoDraftDefinition(kaleoDraftDefinition);
-
-					_resourceLocalService.addModelResources(
-						kaleoDraftDefinition, serviceContext);
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
+			_resourceLocalService.addModelResources(
+				companyId, groupId, userId,
+				KaleoDraftDefinition.class.getName(), kaleoDraftDefinitionId,
+				serviceContext.getModelPermissions());
+		}
 	}
 
 	private final CompanyLocalService _companyLocalService;
-	private final KaleoDraftDefinitionLocalService
-		_kaleoDraftDefinitionLocalService;
 	private final ResourceLocalService _resourceLocalService;
 
 }
