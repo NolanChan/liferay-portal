@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
-import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;

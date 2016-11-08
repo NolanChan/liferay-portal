@@ -54,11 +54,11 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsActionKeys" %><%@
+page import="com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsWebKeys" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoProcessPermission" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.ArrayList" %><%@

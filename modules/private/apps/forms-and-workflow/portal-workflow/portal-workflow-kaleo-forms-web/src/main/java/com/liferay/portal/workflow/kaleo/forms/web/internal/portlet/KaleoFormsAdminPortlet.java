@@ -88,6 +88,7 @@ import com.liferay.portal.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefi
 import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
 import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionService;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
+import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsWebKeys;
 import com.liferay.portal.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException;
 import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
@@ -96,7 +97,6 @@ import com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessService;
 import com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
 import com.liferay.portal.workflow.kaleo.forms.web.configuration.KaleoFormsWebConfiguration;
-import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.web.internal.display.context.KaleoFormsAdminDisplayContext;
 
 import java.io.IOException;

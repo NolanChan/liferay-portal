@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.forms.web.constants;
+package com.liferay.portal.workflow.kaleo.forms.constants;
 
 /**
- * @author     Marcellus Tavares
- * @deprecated As of 1.0.0, replaced by {@link
- *             #com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys}
+ * @author Marcellus Tavares
  */
-@Deprecated
 public class KaleoFormsPortletKeys {
 
 	public static final String KALEO_FORMS_ADMIN =

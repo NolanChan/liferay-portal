@@ -22,11 +22,11 @@ import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalService;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalService;
 import com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
-import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 
 import javax.servlet.ServletContext;
 

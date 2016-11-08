@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
-import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

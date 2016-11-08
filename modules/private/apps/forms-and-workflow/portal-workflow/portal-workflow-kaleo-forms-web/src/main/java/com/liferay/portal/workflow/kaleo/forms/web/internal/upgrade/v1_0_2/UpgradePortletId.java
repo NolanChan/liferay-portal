@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
+import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

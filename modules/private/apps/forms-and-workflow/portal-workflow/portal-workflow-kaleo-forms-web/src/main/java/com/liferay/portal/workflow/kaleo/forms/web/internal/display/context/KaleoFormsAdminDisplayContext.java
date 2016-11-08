@@ -25,11 +25,11 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.util.comparator.KaleoProcessCreateDateComparator;
 import com.liferay.portal.workflow.kaleo.forms.util.comparator.KaleoProcessModifiedDateComparator;
 import com.liferay.portal.workflow.kaleo.forms.web.configuration.KaleoFormsWebConfiguration;
-import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.web.internal.display.context.util.KaleoFormsAdminRequestHelper;
 import com.liferay.portal.workflow.kaleo.forms.web.internal.search.KaleoProcessSearch;
 

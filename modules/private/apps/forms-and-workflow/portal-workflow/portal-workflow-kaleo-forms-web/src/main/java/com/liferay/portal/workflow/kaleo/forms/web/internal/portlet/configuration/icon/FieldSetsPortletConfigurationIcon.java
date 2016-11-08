@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
-import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
+import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 
 import java.util.ResourceBundle;
 

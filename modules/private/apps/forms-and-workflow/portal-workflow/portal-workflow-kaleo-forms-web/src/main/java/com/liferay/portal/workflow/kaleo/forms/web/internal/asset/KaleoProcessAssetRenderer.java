@@ -33,12 +33,12 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
+import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsWebKeys;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalService;
 import com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
-import com.liferay.portal.workflow.kaleo.forms.web.constants.KaleoFormsPortletKeys;
 
 import java.util.Locale;
 
