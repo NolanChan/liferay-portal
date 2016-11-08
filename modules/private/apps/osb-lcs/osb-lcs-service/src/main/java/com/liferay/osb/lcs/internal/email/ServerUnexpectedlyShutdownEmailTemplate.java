@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.osb.lcs.email;
+package com.liferay.osb.lcs.internal.email;
 
+import com.liferay.osb.lcs.email.EmailContext;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -24,9 +25,9 @@ import java.util.Map;
  * @author Marko Cikos
  * @author Matija Petanjek
  */
-public class ServerManuallyShutdownEmailTemplate extends BaseEmailTemplate {
+public class ServerUnexpectedlyShutdownEmailTemplate extends BaseEmailTemplate {
 
-	public ServerManuallyShutdownEmailTemplate(EmailContext emailContext) {
+	public ServerUnexpectedlyShutdownEmailTemplate(EmailContext emailContext) {
 		super(emailContext);
 	}
 
@@ -50,13 +51,15 @@ public class ServerManuallyShutdownEmailTemplate extends BaseEmailTemplate {
 		contextAttributes.add(
 			translate(
 				emailContext,
-				"the-server-x-environment-x-project-x-was-manually-shutdown",
+				"the-server-x-environment-x-project-x-was-unexpectedly-" +
+					"shutdown",
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$SUBJECT$]");
 		contextAttributes.add(
 			translate(
 				emailContext,
-				"the-server-was-manually-shutdown-x-environment-x-project-x",
+				"the-server-was-unexpectedly-shutdown-x-environment-x-" +
+					"project-x",
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$URL_FIRST_LINE$]");
 		contextAttributes.add(
@@ -73,7 +76,7 @@ public class ServerManuallyShutdownEmailTemplate extends BaseEmailTemplate {
 
 	@Override
 	public String getPopPrefix() {
-		return "server_manually_shutdown_id";
+		return "server_unexpectedly_shutdown_id";
 	}
 
 }

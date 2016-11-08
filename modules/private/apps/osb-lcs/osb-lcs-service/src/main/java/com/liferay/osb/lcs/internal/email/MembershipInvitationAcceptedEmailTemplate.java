@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.osb.lcs.email;
+package com.liferay.osb.lcs.internal.email;
 
+import com.liferay.osb.lcs.email.EmailContext;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
@@ -22,12 +24,14 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * @author Marko Cikos
  * @author Matija Petanjek
  */
-public class MembershipRequestAcceptedEmailTemplate extends BaseEmailTemplate {
+public class MembershipInvitationAcceptedEmailTemplate
+	extends BaseEmailTemplate {
 
-	public MembershipRequestAcceptedEmailTemplate(EmailContext emailContext) {
+	public MembershipInvitationAcceptedEmailTemplate(
+		EmailContext emailContext) {
+
 		super(emailContext);
 	}
 
@@ -44,28 +48,32 @@ public class MembershipRequestAcceptedEmailTemplate extends BaseEmailTemplate {
 		List<Object> contextAttributes = getBaseContextAttributes();
 
 		contextAttributes.add("[$MESSAGE_FIRST_LINE$]");
+
+		User user = emailContext.getUser();
+
 		contextAttributes.add(
 			translate(
-				emailContext,
-				"your-membership-request-for-project-x-has-been-accepted",
-				emailContext.getLCSProjectName()));
+				emailContext, "x-x-joined-the-project-x", user.getFullName(),
+				user.getEmailAddress(), emailContext.getLCSProjectName()));
+
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
 			translate(
 				emailContext,
-				"you-can-access-the-project-dashboard-by-clicking-on-the-" +
-					"link-below"));
+				"you-can-see-and-manage-your-project-members-by-clicking-on-" +
+					"the-link-below"));
 		contextAttributes.add("[$SUBJECT$]");
 		contextAttributes.add(
-			translate(emailContext, "your-membership-request-was-accepted"));
+			translate(emailContext, "membership-invitation-accepted"));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(StringPool.BLANK);
+		contextAttributes.add("[$URL_SECOND_LINE$]");
 
-		String lcsProjectURL = navigationAdvisor.getLCSProjectURL(
+		String lcsProjectURL = navigationAdvisor.getLCSProjectUsersURL(
 			emailContext.getLCSProjectId());
 
-		contextAttributes.add("[$URL_SECOND_LINE$]");
 		contextAttributes.add(lcsProjectURL);
+
 		contextAttributes.add("[$URL_TEXT_SECOND_LINE$]");
 		contextAttributes.add(lcsProjectURL);
 
@@ -74,7 +82,7 @@ public class MembershipRequestAcceptedEmailTemplate extends BaseEmailTemplate {
 
 	@Override
 	public String getPopPrefix() {
-		return "lcs_membership_request_accepted_id";
+		return "lcs_membership_invitation_accepted_id";
 	}
 
 }

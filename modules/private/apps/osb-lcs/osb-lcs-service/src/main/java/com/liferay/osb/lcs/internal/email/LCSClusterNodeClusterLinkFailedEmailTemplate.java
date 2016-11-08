@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.osb.lcs.email;
+package com.liferay.osb.lcs.internal.email;
 
+import com.liferay.osb.lcs.email.EmailContext;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -24,9 +25,12 @@ import java.util.Map;
  * @author Marko Cikos
  * @author Matija Petanjek
  */
-public class ServerUnexpectedlyShutdownEmailTemplate extends BaseEmailTemplate {
+public class LCSClusterNodeClusterLinkFailedEmailTemplate
+	extends BaseEmailTemplate {
 
-	public ServerUnexpectedlyShutdownEmailTemplate(EmailContext emailContext) {
+	public LCSClusterNodeClusterLinkFailedEmailTemplate(
+		EmailContext emailContext) {
+
 		super(emailContext);
 	}
 
@@ -34,8 +38,8 @@ public class ServerUnexpectedlyShutdownEmailTemplate extends BaseEmailTemplate {
 	public Map<Locale, String> getBodyMap() {
 		return getLocalizationMap(
 			"com/liferay/osb/lcs/email/dependencies" +
-				"/email_notification_type_1_body.tmpl",
-			"emailNotificationType1Body");
+				"/email_notification_type_3_body.tmpl",
+			"emailNotificationType3Body");
 	}
 
 	@Override
@@ -50,32 +54,44 @@ public class ServerUnexpectedlyShutdownEmailTemplate extends BaseEmailTemplate {
 		contextAttributes.add(
 			translate(
 				emailContext,
-				"the-server-x-environment-x-project-x-was-unexpectedly-" +
-					"shutdown",
+				"there-is-a-communication-error-between-nodes-in-one-of-your-" +
+					"clusters"));
+		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
+		contextAttributes.add(
+			translate(
+				emailContext,
+				"lcs-detected-a-cluster-link-failure-on-server-x-in-cluster-" +
+					"x-for-project-x",
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
+		contextAttributes.add("[$MESSAGE_THIRD_LINE$]");
+		contextAttributes.add(
+			translate(
+				emailContext, "x-has-no-link-to-the-following-nodes",
+				lcsClusterNodeName));
+		contextAttributes.add("[$SIBLING_SERVER_NAMES$]");
+		contextAttributes.add(emailContext.getSiblingLCSClusterNodeNames());
 		contextAttributes.add("[$SUBJECT$]");
 		contextAttributes.add(
 			translate(
 				emailContext,
-				"the-server-was-unexpectedly-shutdown-x-environment-x-" +
-					"project-x",
-				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
+				"broken-connections-detected-in-cluster-x-project-x",
+				lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$URL_FIRST_LINE$]");
 		contextAttributes.add(
-			navigationAdvisor.getLCSClusterNodeURL(
-				emailContext.getLCSClusterNodeId()));
+			navigationAdvisor.getLCSClusterEntryURL(
+				emailContext.getLCSClusterEntryId()));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(
 			translate(
 				emailContext, "see-x-on-liferay-connected-services",
-				lcsClusterNodeName));
+				lcsClusterEntryName));
 
 		return contextAttributes.toArray();
 	}
 
 	@Override
 	public String getPopPrefix() {
-		return "server_unexpectedly_shutdown_id";
+		return "lcs_cluster_node_cluster_link_failed_id";
 	}
 
 }

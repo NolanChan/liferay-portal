@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.osb.lcs.email;
+package com.liferay.osb.lcs.internal.email;
 
+import com.liferay.osb.lcs.email.EmailContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.StringPool;

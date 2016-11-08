@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.osb.lcs.email;
+package com.liferay.osb.lcs.internal.email;
 
+import com.liferay.osb.lcs.email.EmailContext;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -24,12 +25,9 @@ import java.util.Map;
  * @author Marko Cikos
  * @author Matija Petanjek
  */
-public class LCSClusterNodeClusterLinkFailedEmailTemplate
-	extends BaseEmailTemplate {
+public class MonitoringUnavailableEmailTemplate extends BaseEmailTemplate {
 
-	public LCSClusterNodeClusterLinkFailedEmailTemplate(
-		EmailContext emailContext) {
-
+	public MonitoringUnavailableEmailTemplate(EmailContext emailContext) {
 		super(emailContext);
 	}
 
@@ -37,8 +35,8 @@ public class LCSClusterNodeClusterLinkFailedEmailTemplate
 	public Map<Locale, String> getBodyMap() {
 		return getLocalizationMap(
 			"com/liferay/osb/lcs/email/dependencies" +
-				"/email_notification_type_3_body.tmpl",
-			"emailNotificationType3Body");
+				"/email_notification_type_2_body.tmpl",
+			"emailNotificationType2Body");
 	}
 
 	@Override
@@ -53,44 +51,42 @@ public class LCSClusterNodeClusterLinkFailedEmailTemplate
 		contextAttributes.add(
 			translate(
 				emailContext,
-				"there-is-a-communication-error-between-nodes-in-one-of-your-" +
-					"clusters"));
+				"monitoring-for-the-server-x-environment-x-project-x-is-" +
+					"currently-unavailable",
+				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
 			translate(
 				emailContext,
-				"lcs-detected-a-cluster-link-failure-on-server-x-in-cluster-" +
-					"x-for-project-x",
+				"please-make-sure-the-property-com-liferay-portal-servlet-" +
+					"filters-monitoring-monitoringfilter-is-set-to-true-in-" +
+						"your-portal-ext-properties-file",
 				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
-		contextAttributes.add("[$MESSAGE_THIRD_LINE$]");
-		contextAttributes.add(
-			translate(
-				emailContext, "x-has-no-link-to-the-following-nodes",
-				lcsClusterNodeName));
-		contextAttributes.add("[$SIBLING_SERVER_NAMES$]");
-		contextAttributes.add(emailContext.getSiblingLCSClusterNodeNames());
 		contextAttributes.add("[$SUBJECT$]");
 		contextAttributes.add(
 			translate(
 				emailContext,
-				"broken-connections-detected-in-cluster-x-project-x",
-				lcsClusterEntryName, lcsProjectName));
+				"monitoring-is-unavailable-for-the-server-x-environment-x-" +
+					"project-x",
+				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
 		contextAttributes.add("[$URL_FIRST_LINE$]");
 		contextAttributes.add(
-			navigationAdvisor.getLCSClusterEntryURL(
-				emailContext.getLCSClusterEntryId()));
+			navigationAdvisor.getLCSClusterNodeURL(
+				emailContext.getLCSClusterNodeId()));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
 		contextAttributes.add(
 			translate(
 				emailContext, "see-x-on-liferay-connected-services",
-				lcsClusterEntryName));
+				lcsClusterNodeName));
+		contextAttributes.add("[$URL_TEXT_SECOND_LINE$]");
+		contextAttributes.add("");
 
 		return contextAttributes.toArray();
 	}
 
 	@Override
 	public String getPopPrefix() {
-		return "lcs_cluster_node_cluster_link_failed_id";
+		return "monitoring_unavailable_id";
 	}
 
 }

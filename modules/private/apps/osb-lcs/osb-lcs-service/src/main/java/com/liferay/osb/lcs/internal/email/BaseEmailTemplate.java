@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.osb.lcs.email;
+package com.liferay.osb.lcs.internal.email;
 
 import com.liferay.osb.lcs.advisor.NavigationAdvisor;
 import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
+import com.liferay.osb.lcs.email.EmailContext;
+import com.liferay.osb.lcs.email.EmailTemplate;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;

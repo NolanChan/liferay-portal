@@ -12,9 +12,12 @@
  * details.
  */
 
-package com.liferay.osb.lcs.email;
+package com.liferay.osb.lcs.internal.email;
 
+import com.liferay.osb.lcs.email.EmailContext;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 import java.util.Locale;
@@ -24,9 +27,9 @@ import java.util.Map;
  * @author Marko Cikos
  * @author Matija Petanjek
  */
-public class PatchingToolUnavailableEmailTemplate extends BaseEmailTemplate {
+public class MembershipRequestEmailTemplate extends BaseEmailTemplate {
 
-	public PatchingToolUnavailableEmailTemplate(EmailContext emailContext) {
+	public MembershipRequestEmailTemplate(EmailContext emailContext) {
 		super(emailContext);
 	}
 
@@ -42,52 +45,37 @@ public class PatchingToolUnavailableEmailTemplate extends BaseEmailTemplate {
 	public Object[] getContextAttributes() throws PortalException {
 		List<Object> contextAttributes = getBaseContextAttributes();
 
-		String lcsClusterEntryName = emailContext.getLCSClusterEntryName();
-		String lcsClusterNodeName = emailContext.getLCSClusterNodeName();
-		String lcsProjectName = emailContext.getLCSProjectName();
+		User user = emailContext.getUser();
 
 		contextAttributes.add("[$MESSAGE_FIRST_LINE$]");
 		contextAttributes.add(
 			translate(
-				emailContext,
-				"the-patching-tool-for-the-server-x-environment-x-project-x-" +
-					"is-currently-unavailable",
-				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
+				emailContext, "x-x-wants-to-join-project-x", user.getFullName(),
+				user.getEmailAddress(), emailContext.getLCSProjectName()));
 		contextAttributes.add("[$MESSAGE_SECOND_LINE$]");
 		contextAttributes.add(
 			translate(
 				emailContext,
-				"click-the-following-link-for-the-patching-tool-" +
-					"configuration-instructions"));
+				"you-can-manage-membership-requests-following-the-link-below"));
 		contextAttributes.add("[$SUBJECT$]");
-		contextAttributes.add(
-			translate(
-				emailContext,
-				"the-patching-tool-is-unavailable-for-the-server-x-" +
-					"environment-x-project-x",
-				lcsClusterNodeName, lcsClusterEntryName, lcsProjectName));
-		contextAttributes.add("[$URL_FIRST_LINE$]");
-		contextAttributes.add(
-			navigationAdvisor.getLCSClusterNodeURL(
-				emailContext.getLCSClusterNodeId()));
-		contextAttributes.add("[$URL_SECOND_LINE$]");
-		contextAttributes.add(
-			osbLCSConfiguration.lrdcomPatchingToolOverviewUrl());
+		contextAttributes.add(translate(emailContext, "membership-request"));
 		contextAttributes.add("[$URL_TEXT_FIRST_LINE$]");
-		contextAttributes.add(
-			translate(
-				emailContext, "see-x-on-liferay-connected-services",
-				lcsClusterNodeName));
+		contextAttributes.add(StringPool.BLANK);
+
+		String lcsProjectURL = navigationAdvisor.getLCSProjectURL(
+			emailContext.getLCSProjectId());
+
+		contextAttributes.add("[$URL_SECOND_LINE$]");
+		contextAttributes.add(lcsProjectURL);
 		contextAttributes.add("[$URL_TEXT_SECOND_LINE$]");
-		contextAttributes.add(
-			osbLCSConfiguration.lrdcomPatchingToolOverviewUrl());
+		contextAttributes.add(lcsProjectURL);
 
 		return contextAttributes.toArray();
 	}
 
 	@Override
 	public String getPopPrefix() {
-		return "patch_tool_unavailable_id";
+		return "lcs_membership_request_id";
 	}
 
 }
