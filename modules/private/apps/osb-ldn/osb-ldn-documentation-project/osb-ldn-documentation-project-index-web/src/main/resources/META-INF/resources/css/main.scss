@@ -57,6 +57,7 @@
 
 	.documentation-project {
 		list-style-type: none;
+		margin-right: -40px;
 		padding: 0;
 
 		.documentation-project-tags {
@@ -77,10 +78,6 @@
 			display: inline-flex;
 			margin: 0 40px 40px 0;
 			padding: 0;
-
-			&:nth-child(4n+4) {
-				margin-right: 0;
-			}
 
 			a {
 				display: block;
