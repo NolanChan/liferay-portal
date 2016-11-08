@@ -208,7 +208,7 @@ public abstract class Message implements Serializable {
 	}
 
 	public <T extends TransportMetadata> T getTransportMetadata() {
-		return (T) _transportMetadata;
+		return (T)_transportMetadata;
 	}
 
 	/**
@@ -328,6 +328,10 @@ public abstract class Message implements Serializable {
 		_queueName = queueName;
 	}
 
+	public void setTransportMetadata(TransportMetadata transportMetadata) {
+		_transportMetadata = transportMetadata;
+	}
+
 	/**
 	 * Sets the message's key-value map.
 	 *
@@ -338,10 +342,6 @@ public abstract class Message implements Serializable {
 		_values = values;
 
 		_toString = null;
-	}
-
-	public void setTransportMetadata(TransportMetadata transportMetadata) {
-		_transportMetadata = transportMetadata;
 	}
 
 	public String toJSON() {
