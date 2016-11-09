@@ -1,0 +1,93 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<aui:form action='<%= "/c/portal/lcs/patch/upload?p_auth=" + AuthTokenUtil.getToken(request) %>' enctype="multipart/form-data" method="post" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
+	<liferay-portlet:actionURL name="resetInstallablePatches" var="resetInstallablePatchesURL">
+		<portlet:param name="tabs1" value="patches" />
+	</liferay-portlet:actionURL>
+
+	<aui:button href="<%= resetInstallablePatchesURL %>" value="reset-installable-patches" />
+
+	<hr />
+
+	<aui:field-wrapper>
+		<c:if test="<%= ArrayUtil.contains(PortletPropsValues.OSB_PORTLET_SYNCHRONIZATION_SAFE_HOST_NAMES, PortletPropsValues.OSB_PORTLET_HOST_NAME) %>">
+			<aui:input label="patch-file" name="file" size="50" type="file" />
+
+			<aui:button-row>
+				<aui:button type="submit" value="upload-patch" />
+			</aui:button-row>
+		</c:if>
+	</aui:field-wrapper>
+</aui:form>
+
+<hr />
+
+<liferay-portlet:renderURL varImpl="iteratorURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
+	<portlet:param name="mvcPath" value="/admin/view.jsp" />
+	<portlet:param name="tabs1" value="patches" />
+</liferay-portlet:renderURL>
+
+<liferay-ui:search-container
+	emptyResultsMessage="there-are-no-patches"
+	iteratorURL="<%= iteratorURL %>"
+>
+	<liferay-ui:search-container-results>
+
+		<%
+		results = LCSPatchEntryLocalServiceUtil.getLCSPatchEntries(searchContainer.getStart(), searchContainer.getEnd());
+		total = LCSPatchEntryLocalServiceUtil.getLCSPatchEntriesCount();
+
+		pageContext.setAttribute("results", results);
+		pageContext.setAttribute("total", total);
+		%>
+
+	</liferay-ui:search-container-results>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.osb.lcs.model.LCSPatchEntry"
+		modelVar="lcsPatchEntry"
+	>
+		<liferay-ui:search-container-column-text name="patch-id" property="patchId" />
+
+		<liferay-ui:search-container-column-text name="name" />
+
+		<liferay-ui:search-container-column-text name="component" />
+
+		<liferay-ui:search-container-column-text name="patching-tool-version" property="patchingToolVersion" />
+
+		<liferay-ui:search-container-column-text name="version" />
+
+		<liferay-ui:search-container-column-text name="singular" />
+
+		<liferay-ui:search-container-column-text name="requirements" />
+
+		<liferay-ui:search-container-column-text name="product" />
+
+		<liferay-ui:search-container-column-text name="size-mb">
+
+			<%
+			long size = lcsPatchEntry.getSize();
+			%>
+
+			<%= decimalFormat.format((double)size / 1048576) %>
+		</liferay-ui:search-container-column-text>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator />
+</liferay-ui:search-container>

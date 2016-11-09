@@ -1,0 +1,144 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+long lcsClusterEntryId = ParamUtil.getLong(request, "lcsClusterEntryId");
+long lcsClusterNodeId = ParamUtil.getLong(request, "lcsClusterNodeId");
+long lcsProjectId = ParamUtil.getLong(request, "lcsProjectId");
+%>
+
+<aui:form action="<%= portletURL %>" method="get" name="fm">
+	<liferay-portlet:renderURLParams varImpl="portletURL" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="key" type="hidden" />
+
+	<aui:fieldset>
+		<aui:select label="projects" name="lcsProjectId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
+			<aui:option label='<%= LanguageUtil.get(pageContext, "all-projects") %>' />
+
+			<%
+			for (LCSProject lcsProject : LCSProjectLocalServiceUtil.getLCSProjects(QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+			%>
+
+				<aui:option label="<%= HtmlUtil.escape(lcsProject.getName()) %>" selected="<%= (lcsProject.getLcsProjectId() == lcsProjectId) %>" value="<%= lcsProject.getLcsProjectId() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+		<aui:select label="environments" name="lcsClusterEntryId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
+			<aui:option label='<%= LanguageUtil.get(pageContext, "all-environments") %>' />
+
+			<%
+			for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSProjectLCSClusterEntries(lcsProjectId)) {
+			%>
+
+				<aui:option label="<%= HtmlUtil.escape(lcsClusterEntry.getName()) %>" selected="<%= (lcsClusterEntry.getLcsClusterEntryId() == lcsClusterEntryId) %>" value="<%= lcsClusterEntry.getLcsClusterEntryId() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+		<aui:select label="servers" name="lcsClusterNodeId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
+			<aui:option label='<%= LanguageUtil.get(pageContext, "all-nodes") %>' />
+
+			<%
+			for (LCSClusterNode lcsClusterNode : LCSClusterNodeLocalServiceUtil.getLCSClusterEntryLCSClusterNodes(lcsClusterEntryId)) {
+			%>
+
+				<aui:option label="<%= HtmlUtil.escape(lcsClusterNode.getName()) %>" selected="<%= (lcsClusterNode.getLcsClusterNodeId() == lcsClusterNodeId) %>" value="<%= lcsClusterNode.getLcsClusterNodeId() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+
+		<%
+		LCSClusterNode lcsClusterNode = LCSClusterNodeLocalServiceUtil.fetchLCSClusterNode(lcsClusterNodeId);
+		%>
+
+		<c:if test="<%= lcsClusterNode != null %>">
+
+			<%
+			portletURL.setParameter("lcsProjectId", String.valueOf(lcsProjectId));
+			portletURL.setParameter("lcsClusterEntryId", String.valueOf(lcsClusterEntryId));
+			portletURL.setParameter("lcsClusterNodeId", String.valueOf(lcsClusterNodeId));
+			%>
+
+			<liferay-ui:search-container
+				emptyResultsMessage="there-are-no-scripts"
+				iteratorURL="<%= portletURL %>"
+			>
+				<liferay-ui:search-container-results>
+
+					<%
+					List<LCSClusterNodeScript> lcsClusterNodeScripts = LCSClusterNodeScriptServiceUtil.getLCSClusterNodeScripts(lcsClusterNode.getKey());
+
+					results = ListUtil.subList(lcsClusterNodeScripts, searchContainer.getStart(), searchContainer.getEnd());
+					total = lcsClusterNodeScripts.size();
+
+					pageContext.setAttribute("results", results);
+					pageContext.setAttribute("total", total);
+					%>
+
+				</liferay-ui:search-container-results>
+
+				<liferay-ui:search-container-row
+					className="com.liferay.osb.lcs.nosql.model.LCSClusterNodeScript"
+					escapedModel="<%= true %>"
+					keyProperty="key"
+					modelVar="lcsClusterNodeScript"
+				>
+					<liferay-ui:search-container-column-text name="modified-date">
+						<%= mediumDateFormatDate.format(lcsClusterNodeScript.getModifiedDate()) %>
+
+						<%= longDateFormatTime.format(lcsClusterNodeScript.getModifiedDate()) %>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text name="script" property="command" />
+
+					<liferay-ui:search-container-column-text property="result" />
+
+					<liferay-ui:search-container-column-text property="error" />
+				</liferay-ui:search-container-row>
+
+				<aui:input label="groovy-script" name="script" type="textarea" />
+
+				<aui:button-row>
+
+					<%
+					String taglibOnClick = renderResponse.getNamespace() + "sendScript('" + UnicodeFormatter.toString(lcsClusterNode.getKey()) + "');";
+					%>
+
+					<aui:button onClick="<%= taglibOnClick %>" value="send" />
+				</aui:button-row>
+
+				<liferay-ui:search-iterator />
+			</liferay-ui:search-container>
+		</c:if>
+	</aui:fieldset>
+</aui:form>
+
+<aui:script>
+	function <portlet:namespace />sendScript(key) {
+		document.<portlet:namespace />fm.method = 'post';
+		document.<portlet:namespace />fm.<portlet:namespace />key.value = key;
+		submitForm(document.<portlet:namespace />fm, '<liferay-portlet:actionURL name="sendScript" />');
+	}
+</aui:script>

@@ -1,0 +1,216 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+long lcsClusterEntryId = ParamUtil.getLong(request, "lcsClusterEntryId", LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID);
+long lcsClusterNodeId = ParamUtil.getLong(request, "lcsClusterNodeId", LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID);
+long lcsProjectId = ParamUtil.getLong(request, "lcsProjectId", LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID);
+
+int month = ParamUtil.getInteger(request, "month", -1);
+int year = ParamUtil.getInteger(request, "year", -1);
+
+long selLCSClusterEntryId = LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID;
+long selLCSClusterNodeId = LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID;
+
+for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSProjectLCSClusterEntries(lcsProjectId)) {
+	if (lcsClusterEntryId == lcsClusterEntry.getLcsClusterEntryId()) {
+		selLCSClusterEntryId = lcsClusterEntryId;
+		selLCSClusterNodeId = lcsClusterNodeId;
+
+		break;
+	}
+}
+%>
+
+<aui:form action="<%= portletURL %>" method="get" name="fm">
+	<liferay-portlet:renderURLParams varImpl="portletURL" />
+
+	<aui:fieldset>
+		<aui:row>
+			<aui:column>
+				<aui:select label="project" name="lcsProjectId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>' required="<%= true %>">
+					<aui:option label='<%= LanguageUtil.get(pageContext, "all-projects") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />
+
+					<%
+					for (LCSProject lcsProject : LCSProjectLocalServiceUtil.getLCSProjects(QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+					%>
+
+						<aui:option label='<%= HtmlUtil.escape(lcsProject.getName() + " - " + LCSProjectServiceUtil.getLCSProjectAdministratorEmailAddress(lcsProject.getLcsProjectId())) %>' selected="<%= lcsProjectId == lcsProject.getLcsProjectId() %>" value="<%= lcsProject.getLcsProjectId() %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</aui:column>
+			<aui:column>
+				<aui:select label="environment" name="lcsClusterEntryId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
+					<aui:option label='<%= LanguageUtil.get(pageContext, "all-environments") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />
+
+					<%
+					for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSProjectLCSClusterEntries(lcsProjectId)) {
+					%>
+
+						<aui:option label="<%= HtmlUtil.escape(lcsClusterEntry.getName()) %>" selected="<%= lcsClusterEntryId == lcsClusterEntry.getLcsClusterEntryId() %>" value="<%= lcsClusterEntry.getLcsClusterEntryId() %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</aui:column>
+			<aui:column>
+				<aui:select label="node" name="lcsClusterNodeId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
+					<aui:option label='<%= LanguageUtil.get(pageContext, "all-nodes") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />
+
+					<%
+					for (LCSClusterNode lcsClusterNode : LCSClusterNodeLocalServiceUtil.getLCSClusterEntryLCSClusterNodes(selLCSClusterEntryId)) {
+					%>
+
+						<aui:option label="<%= HtmlUtil.escape(lcsClusterNode.getName()) %>" selected="<%= selLCSClusterNodeId == lcsClusterNode.getLcsClusterNodeId() %>" value="<%= lcsClusterNode.getLcsClusterNodeId() %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</aui:column>
+			<aui:column>
+				<aui:select label="month" name="month" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>' required="<%= true %>">
+					<aui:option label='<%= LanguageUtil.get(pageContext, "all-months") %>' />
+
+					<%
+					String[] months = CalendarUtil.getMonths(locale);
+
+					for (int i = 0; i < 12; i++) {
+					%>
+
+						<aui:option label="<%= months[i] %>" selected="<%= month == i %>" value="<%= i %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</aui:column>
+			<aui:column>
+				<aui:select label="year" name="year" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>' required="<%= true %>">
+					<aui:option label='<%= LanguageUtil.get(pageContext, "all-years") %>' />
+
+					<%
+					for (int i = 2015; i < 2025; i++) {
+					%>
+
+						<aui:option label="<%= i %>" selected="<%= year == i %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</aui:column>
+		</aui:row>
+		<c:if test="<%= (lcsProjectId != LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID) && (month != -1) && (year != -1) %>">
+			<aui:row>
+				<aui:column>
+					<portlet:resourceURL id="downloadLCSClusterNodeUptimesDelimitedReport" var="downloadLCSClusterNodeUptimesDelimitedReportURL">
+						<portlet:param name="lcsProjectId" value="<%= String.valueOf(lcsProjectId) %>" />
+						<portlet:param name="lcsClusterEntryId" value="<%= String.valueOf(selLCSClusterEntryId) %>" />
+						<portlet:param name="lcsClusterNodeId" value="<%= String.valueOf(selLCSClusterNodeId) %>" />
+						<portlet:param name="month" value="<%= String.valueOf(month) %>" />
+						<portlet:param name="year" value="<%= String.valueOf(year) %>" />
+					</portlet:resourceURL>
+
+					<aui:button href="<%= downloadLCSClusterNodeUptimesDelimitedReportURL %>" value="download-csv-report" />
+				</aui:column>
+				<aui:column>
+					<portlet:resourceURL id="downloadLCSClusterNodeUptimesPDFReport" var="downloadLCSClusterNodeUptimesPDFReportURL">
+						<portlet:param name="lcsProjectId" value="<%= String.valueOf(lcsProjectId) %>" />
+						<portlet:param name="lcsClusterEntryId" value="<%= String.valueOf(selLCSClusterEntryId) %>" />
+						<portlet:param name="lcsClusterNodeId" value="<%= String.valueOf(selLCSClusterNodeId) %>" />
+						<portlet:param name="month" value="<%= String.valueOf(month) %>" />
+						<portlet:param name="year" value="<%= String.valueOf(year) %>" />
+					</portlet:resourceURL>
+
+					<aui:button href="<%= downloadLCSClusterNodeUptimesPDFReportURL %>" value="download-pdf-report" />
+				</aui:column>
+				<aui:column>
+					<portlet:resourceURL id="downloadLCSClusterNodeUptimesInvoicePDFReport" var="downloadLCSClusterNodeUptimesInvoicePDFReportURL">
+						<portlet:param name="lcsProjectId" value="<%= String.valueOf(lcsProjectId) %>" />
+						<portlet:param name="month" value="<%= String.valueOf(month) %>" />
+						<portlet:param name="year" value="<%= String.valueOf(year) %>" />
+					</portlet:resourceURL>
+
+					<aui:button href="<%= downloadLCSClusterNodeUptimesInvoicePDFReportURL %>" value="download-pdf-invoice" />
+				</aui:column>
+			</aui:row>
+		</c:if>
+	</aui:fieldset>
+</aui:form>
+
+<liferay-portlet:renderURL varImpl="iteratorURL">
+	<portlet:param name="mvcPath" value="/admin/view.jsp" />
+	<portlet:param name="tabs1" value="uptimes" />
+	<portlet:param name="lcsProjectId" value="<%= String.valueOf(lcsProjectId) %>" />
+	<portlet:param name="lcsClusterEntryId" value="<%= String.valueOf(selLCSClusterEntryId) %>" />
+	<portlet:param name="lcsClusterNodeId" value="<%= String.valueOf(selLCSClusterNodeId) %>" />
+	<portlet:param name="month" value="<%= String.valueOf(month) %>" />
+	<portlet:param name="year" value="<%= String.valueOf(year) %>" />
+</liferay-portlet:renderURL>
+
+<liferay-ui:search-container
+	emptyResultsMessage="there-are-no-uptimes"
+	iteratorURL="<%= iteratorURL %>"
+>
+	<liferay-ui:search-container-results>
+
+		<%
+		List<LCSClusterNodeUptime> lcsClusterNodeUptimes = LCSClusterNodeUptimeLocalServiceUtil.getMonthlyLCSClusterNodeUptimes(selLCSClusterEntryId, selLCSClusterNodeId, lcsProjectId, month, year, true, false, SubscriptionType.UNDEFINED);
+
+		results = ListUtil.subList(lcsClusterNodeUptimes, searchContainer.getStart(), searchContainer.getEnd());
+		total = lcsClusterNodeUptimes.size();
+
+		pageContext.setAttribute("results", results);
+		pageContext.setAttribute("total", total);
+		%>
+
+	</liferay-ui:search-container-results>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.osb.lcs.model.LCSClusterNodeUptime"
+		modelVar="lcsClusterNodeUptime"
+	>
+		<liferay-ui:search-container-column-text name="lcs-project" value="<%= HtmlUtil.escape(lcsClusterNodeUptime.getLcsProjectName()) %>" />
+
+		<liferay-ui:search-container-column-text name="environment" value="<%= HtmlUtil.escape(lcsClusterNodeUptime.getLcsClusterEntryName()) %>" />
+
+		<liferay-ui:search-container-column-text name="server" value="<%= HtmlUtil.escape(lcsClusterNodeUptime.getLcsClusterNodeName()) %>" />
+
+		<liferay-ui:search-container-column-text name="lcs-server-key" value="<%= HtmlUtil.escape(lcsClusterNodeUptime.getLcsClusterNodeKey()) %>" />
+
+		<liferay-ui:search-container-column-text name="start-time" value="<%= mediumDateFormatDateTime.format(lcsClusterNodeUptime.getStartTime()) %>" />
+
+		<liferay-ui:search-container-column-text name="end-time" value="<%= mediumDateFormatDateTime.format(lcsClusterNodeUptime.getEndTime()) %>" />
+
+		<liferay-ui:search-container-column-text name="uptime" value="<%= HtmlUtil.escape(numberFormat.format(lcsClusterNodeUptime.getUptime())) %>" />
+
+		<liferay-ui:search-container-column-text name="rate" value="<%= HtmlUtil.escape(numberFormat.format(lcsClusterNodeUptime.getRate())) %>" />
+
+		<liferay-ui:search-container-column-text name="amount" value="<%= HtmlUtil.escape(numberFormat.format(lcsClusterNodeUptime.getAmount())) %>" />
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator />
+</liferay-ui:search-container>

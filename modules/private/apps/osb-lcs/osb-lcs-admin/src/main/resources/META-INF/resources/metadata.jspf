@@ -1,0 +1,88 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-portlet:renderURL var="addLCSMetadataURL">
+	<portlet:param name="mvcPath" value="/admin/metadata_edit.jsp" />
+	<portlet:param name="tabs1" value="metadata" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</liferay-portlet:renderURL>
+
+<div class="lfr-portlet-toolbar">
+	<span class="add-button lfr-toolbar-button">
+		<aui:a cssClass="btn btn-primary" href="<%= addLCSMetadataURL %>" label="add" />
+	</span>
+</div>
+
+<liferay-portlet:renderURL varImpl="iteratorURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
+	<portlet:param name="mvcPath" value="/admin/view.jsp" />
+	<portlet:param name="tabs1" value="metadata" />
+</liferay-portlet:renderURL>
+
+<liferay-ui:search-container
+	iteratorURL="<%= iteratorURL %>"
+>
+	<liferay-ui:search-container-results>
+
+		<%
+		pageContext.setAttribute("results", LCSMetadataLocalServiceUtil.getLCSMetadatas(searchContainer.getStart(), searchContainer.getEnd()));
+		pageContext.setAttribute("total", LCSMetadataLocalServiceUtil.getLCSMetadatasCount());
+		%>
+
+	</liferay-ui:search-container-results>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.osb.lcs.model.LCSMetadata"
+		modelVar="lcsMetadata"
+	>
+		<liferay-ui:search-container-column-text name="build-number" value="<%= String.valueOf(lcsMetadata.getBuildNumber()) %>" />
+
+		<liferay-ui:search-container-column-text name="git-tag" value="<%= HtmlUtil.escape(lcsMetadata.getGitTag()) %>" />
+
+		<liferay-ui:search-container-column-text name="portal-edition" value="<%= HtmlUtil.escape(lcsMetadata.getPortalEdition()) %>" />
+
+		<liferay-ui:search-container-column-text name="supported-l-c-s-portlet" value="<%= HtmlUtil.escape(String.valueOf(lcsMetadata.getSupportedLCSPortlet())) %>" />
+
+		<liferay-ui:search-container-column-text name="supported-patching-tool" value="<%= HtmlUtil.escape(String.valueOf(lcsMetadata.getSupportedPatchingTool())) %>" />
+
+		<liferay-ui:search-container-column-text name="availability-index">
+
+			<%
+			for (LCSMetadataAvailabilityIndex lcsMetadataAvailabilityIndex : LCSMetadataAvailabilityIndex.getLCSMetadataAvailabilityIndexes(lcsMetadata.getAvailabilityIndex())) {
+			%>
+
+				<div class="status-item <%= (lcsMetadataAvailabilityIndex == LCSMetadataAvailabilityIndex.PORTAL_PROPERTIES_AVAILABLE) ? "portal-properties-available" : StringPool.BLANK %>">
+					<%= LanguageUtil.get(pageContext, lcsMetadataAvailabilityIndex.getLabel()) %>
+				</div>
+
+			<%
+			}
+			%>
+
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text align="right">
+			<liferay-portlet:renderURL var="editURL">
+				<portlet:param name="mvcPath" value="/admin/metadata_edit.jsp" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="lcsMetadataId" value="<%= String.valueOf(lcsMetadata.getLcsMetadataId()) %>" />
+			</liferay-portlet:renderURL>
+
+			<aui:a cssClass="btn btn-primary" href="<%= editURL %>" label="edit" />
+		</liferay-ui:search-container-column-text>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator />
+</liferay-ui:search-container>

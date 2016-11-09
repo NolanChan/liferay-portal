@@ -1,0 +1,144 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+long lcsClusterEntryId = ParamUtil.getLong(request, "lcsClusterEntryId", LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID);
+long lcsClusterNodeId = ParamUtil.getLong(request, "lcsClusterNodeId", LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID);
+long lcsProjectId = ParamUtil.getLong(request, "lcsProjectId", LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID);
+
+long selLCSClusterEntryId = LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID;
+long selLCSClusterNodeId = LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID;
+
+for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSProjectLCSClusterEntries(lcsProjectId)) {
+	if (lcsClusterEntryId == lcsClusterEntry.getLcsClusterEntryId()) {
+		selLCSClusterEntryId = lcsClusterEntryId;
+		selLCSClusterNodeId = lcsClusterNodeId;
+
+		break;
+	}
+}
+%>
+
+<aui:form action="<%= portletURL %>" method="get" name="fm">
+	<liferay-portlet:renderURLParams varImpl="portletURL" />
+
+	<aui:fieldset>
+		<aui:row>
+			<aui:column>
+				<aui:select label="project" name="lcsProjectId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>' required="<%= true %>">
+					<aui:option label='<%= LanguageUtil.get(pageContext, "all-projects") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />
+
+					<%
+					for (LCSProject lcsProject : LCSProjectLocalServiceUtil.getLCSProjects(QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+					%>
+
+						<aui:option label='<%= HtmlUtil.escape(lcsProject.getName() + " - " + LCSProjectServiceUtil.getLCSProjectAdministratorEmailAddress(lcsProject.getLcsProjectId())) %>' selected="<%= lcsProjectId == lcsProject.getLcsProjectId() %>" value="<%= lcsProject.getLcsProjectId() %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</aui:column>
+			<aui:column>
+				<aui:select label="environment" name="lcsClusterEntryId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
+					<aui:option label='<%= LanguageUtil.get(pageContext, "all-environments") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />
+
+					<%
+					for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSProjectLCSClusterEntries(lcsProjectId)) {
+					%>
+
+						<aui:option label="<%= HtmlUtil.escape(lcsClusterEntry.getName()) %>" selected="<%= lcsClusterEntryId == lcsClusterEntry.getLcsClusterEntryId() %>" value="<%= lcsClusterEntry.getLcsClusterEntryId() %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</aui:column>
+			<aui:column>
+				<aui:select label="node" name="lcsClusterNodeId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
+					<aui:option label='<%= LanguageUtil.get(pageContext, "all-nodes") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />
+
+					<%
+					for (LCSClusterNode lcsClusterNode : LCSClusterNodeLocalServiceUtil.getLCSClusterEntryLCSClusterNodes(selLCSClusterEntryId)) {
+					%>
+
+						<aui:option label="<%= HtmlUtil.escape(lcsClusterNode.getName()) %>" selected="<%= selLCSClusterNodeId == lcsClusterNode.getLcsClusterNodeId() %>" value="<%= lcsClusterNode.getLcsClusterNodeId() %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</aui:column>
+		</aui:row>
+	</aui:fieldset>
+</aui:form>
+
+<liferay-portlet:renderURL varImpl="iteratorURL">
+	<portlet:param name="mvcPath" value="/admin/view.jsp" />
+	<portlet:param name="tabs1" value="notification-audits" />
+	<portlet:param name="lcsProjectId" value="<%= String.valueOf(lcsProjectId) %>" />
+	<portlet:param name="lcsClusterEntryId" value="<%= String.valueOf(selLCSClusterEntryId) %>" />
+	<portlet:param name="lcsClusterNodeId" value="<%= String.valueOf(selLCSClusterNodeId) %>" />
+</liferay-portlet:renderURL>
+
+<liferay-ui:search-container
+	emptyResultsMessage="there-are-no-notification-audits"
+	iteratorURL="<%= iteratorURL %>"
+>
+	<liferay-ui:search-container-results>
+
+		<%
+		if ((lcsProjectId == LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID) && (selLCSClusterEntryId == LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID) && (selLCSClusterNodeId == LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID)) {
+			results = LCSNotificationAuditEntryLocalServiceUtil.getLCSNotificationAuditEntries(searchContainer.getStart(), searchContainer.getEnd(), true);
+			total = LCSNotificationAuditEntryLocalServiceUtil.getLCSNotificationAuditEntriesCount();
+		}
+		else {
+			List<LCSNotificationAuditEntry> lcsNotificationAuditEntries = LCSNotificationAuditEntryLocalServiceUtil.getLCSNotificationAuditEntries(lcsProjectId, selLCSClusterEntryId, selLCSClusterNodeId, true);
+
+			results = ListUtil.subList(lcsNotificationAuditEntries, searchContainer.getStart(), searchContainer.getEnd());
+			total = lcsNotificationAuditEntries.size();
+		}
+
+		pageContext.setAttribute("results", results);
+		pageContext.setAttribute("total", total);
+		%>
+
+	</liferay-ui:search-container-results>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.osb.lcs.model.LCSNotificationAuditEntry"
+		modelVar="lcsNotificationAuditEntry"
+	>
+		<liferay-ui:search-container-column-text name="lcs-project" value="<%= HtmlUtil.escape(lcsNotificationAuditEntry.getLcsProjectName()) %>" />
+
+		<liferay-ui:search-container-column-text name="environment" value="<%= HtmlUtil.escape(lcsNotificationAuditEntry.getLcsClusterEntryName()) %>" />
+
+		<liferay-ui:search-container-column-text name="server" value="<%= HtmlUtil.escape(lcsNotificationAuditEntry.getLcsClusterNodeName()) %>" />
+
+		<liferay-ui:search-container-column-text name="lcs-server-key" value="<%= HtmlUtil.escape(lcsNotificationAuditEntry.getLcsClusterNodeKey()) %>" />
+
+		<liferay-ui:search-container-column-text name="type" value="<%= String.valueOf(LCSEventType.valueOf(lcsNotificationAuditEntry.getType())) %>" />
+
+		<liferay-ui:search-container-column-text name="create-date" value="<%= mediumDateFormatDateTime.format(lcsNotificationAuditEntry.getCreateDate()) %>" />
+
+		<liferay-ui:search-container-column-text name="user-email-address" value="<%= HtmlUtil.escape(lcsNotificationAuditEntry.getUserEmailAddress()) %>" />
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator />
+</liferay-ui:search-container>

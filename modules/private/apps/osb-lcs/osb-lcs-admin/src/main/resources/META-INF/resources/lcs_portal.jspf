@@ -1,0 +1,113 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+boolean billingEnabled = AdminUtil.isBillingEnabled();
+boolean messageForwardDevEnabled = AdminUtil.isMessageForwardEnabled("dev");
+boolean messageForwardQAEnabled = AdminUtil.isMessageForwardEnabled("qa");
+boolean sendingEmailsEnabled = AdminUtil.isSendingEmailsEnabled();
+boolean subscriptionsEnabled = AdminUtil.isSubscriptionsEnabled();
+%>
+
+<liferay-portlet:actionURL name="saveLCSPortalPreferences" var="saveLCSPortalPreferencesURL">
+	<portlet:param name="tabs1" value="lcs-portal" />
+</liferay-portlet:actionURL>
+
+<aui:form action="<%= saveLCSPortalPreferencesURL %>" method="post" name="fm">
+	<aui:input name="billingEnabled" type="hidden" value="<%= billingEnabled %>" />
+	<aui:input name="messageForwardDevEnabled" type="hidden" value="<%= messageForwardDevEnabled %>" />
+	<aui:input name="messageForwardQAEnabled" type="hidden" value="<%= messageForwardQAEnabled %>" />
+	<aui:input name="sendingEmailsEnabled" type="hidden" value="<%= sendingEmailsEnabled %>" />
+	<aui:input name="subscriptionsEnabled" type="hidden" value="<%= subscriptionsEnabled %>" />
+
+	<div class="togglers-container">
+		<aui:row>
+			<aui:col cssClass="feature-name" width="<%= 20 %>">
+				<liferay-ui:message key="billing" />
+			</aui:col>
+
+			<aui:col width="<%= 10 %>">
+				<aui:button cssClass='<%= "btn " + (billingEnabled ? "btn-success" : "btn-danger") %>' name="billingButton" value='<%= billingEnabled ? LanguageUtil.get(pageContext, "on") : LanguageUtil.get(pageContext, "off") %>' />
+			</aui:col>
+		</aui:row>
+
+		<aui:row>
+			<aui:col cssClass="feature-name" width="<%= 20 %>">
+				<liferay-ui:message key="forward-messages-to-dev-queue" />
+			</aui:col>
+
+			<aui:col width="<%= 10 %>">
+				<aui:button cssClass='<%= "btn " + (messageForwardDevEnabled ? "btn-success" : "btn-danger") %>' name="messageForwardDevButton" value='<%= messageForwardDevEnabled ? LanguageUtil.get(pageContext, "on") : LanguageUtil.get(pageContext, "off") %>' />
+			</aui:col>
+		</aui:row>
+
+		<aui:row>
+			<aui:col cssClass="feature-name" width="<%= 20 %>">
+				<liferay-ui:message key="forward-messages-to-qa-queue" />
+			</aui:col>
+
+			<aui:col width="<%= 10 %>">
+				<aui:button cssClass='<%= "btn " + (messageForwardQAEnabled ? "btn-success" : "btn-danger") %>' name="messageForwardQAButton" value='<%= messageForwardQAEnabled ? LanguageUtil.get(pageContext, "on") : LanguageUtil.get(pageContext, "off") %>' />
+			</aui:col>
+		</aui:row>
+
+		<aui:row>
+			<aui:col cssClass="feature-name" width="<%= 20 %>">
+				<liferay-ui:message key="sending-emails" />
+			</aui:col>
+
+			<aui:col width="<%= 10 %>">
+				<aui:button cssClass='<%= "btn " + (sendingEmailsEnabled ? "btn-success" : "btn-danger") %>' name="sendingEmailsButton" value='<%= sendingEmailsEnabled ? LanguageUtil.get(pageContext, "on") : LanguageUtil.get(pageContext, "off") %>' />
+			</aui:col>
+		</aui:row>
+
+		<aui:row>
+			<aui:col cssClass="feature-name" width="<%= 20 %>">
+				<liferay-ui:message key="subscriptions" />
+			</aui:col>
+
+			<aui:col width="<%= 10 %>">
+				<aui:button cssClass='<%= "btn " + (subscriptionsEnabled ? "btn-success" : "btn-danger") %>' name="subscriptionsButton" value='<%= subscriptionsEnabled ? LanguageUtil.get(pageContext, "on") : LanguageUtil.get(pageContext, "off") %>' />
+			</aui:col>
+		</aui:row>
+	</div>
+
+	<aui:button-row>
+		<aui:button type="submit" value="save" />
+	</aui:button-row>
+</aui:form>
+
+<aui:script use="lcs-admin">
+	var lcsAdmin = new Liferay.Portlet.LCSAdmin(
+		{
+			namespace: '<portlet:namespace />'
+		}
+	);
+
+	lcsAdmin.initializeLCSPortalPage(
+		{
+			billingEnabled: <%= billingEnabled %>,
+			labels: {
+				off: '<%= UnicodeLanguageUtil.get(pageContext, "off") %>',
+				on: '<%= UnicodeLanguageUtil.get(pageContext, "on") %>'
+			},
+			messageForwardDevEnabled: <%= messageForwardDevEnabled %>,
+			messageForwardQAEnabled: <%= messageForwardQAEnabled %>,
+			sendingEmailsEnabled: <%= sendingEmailsEnabled %>,
+			subscriptionsEnabled: <%= subscriptionsEnabled %>
+		}
+	);
+</aui:script>

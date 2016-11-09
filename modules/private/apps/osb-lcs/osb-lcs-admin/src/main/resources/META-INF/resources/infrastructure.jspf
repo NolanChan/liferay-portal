@@ -1,0 +1,79 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-portlet:actionURL name="checkLCSProjects" var="checkLCSProjectsURL">
+	<portlet:param name="tabs1" value="infrastructure" />
+</liferay-portlet:actionURL>
+
+<aui:form action="<%= checkLCSProjectsURL %>" method="post" name="fm">
+	<liferay-ui:success key="notSynchronized" message="the-server-is-not-synchronized-with-liferay.com" />
+	<liferay-ui:success key="synchronized" message="the-server-is-synchronized-with-liferay.com" />
+
+	<liferay-ui:error key="corpProjectsCountMismatch" message="the-server-is-not-synchronized-with-liferay.com" />
+	<liferay-ui:error key="noLCSClusterEntries" message="the-server-must-have-at-least-one-environment" />
+	<liferay-ui:error key="unsafeSynchronizationHostName" message="please-use-a-valid-osb-application-host-name" />
+
+	<aui:field-wrapper label="ldap">
+		<span><liferay-ui:message key="server-name" />: <%= PropsUtil.get("ldap.server.name.1") %></span><br />
+
+		<span><liferay-ui:message key="base-provider-url" />: <%= PropsUtil.get("ldap.base.provider.url.1") %></span>
+	</aui:field-wrapper>
+
+	<aui:field-wrapper label="osb-application">
+		<span><liferay-ui:message key="server-name" />: <%= PortletPropsValues.OSB_PORTLET_HOST_NAME %></span><br />
+
+		<span><liferay-ui:message key="server-port" />: <%= PortletPropsValues.OSB_PORTLET_HOST_PORT %></span><br />
+
+		<span><liferay-ui:message key="username" />: <%= PortletPropsValues.OSB_PORTLET_LOGIN %></span>
+	</aui:field-wrapper>
+
+	<aui:field-wrapper label="osb-lcs-application">
+
+		<%
+		Date signingKeyExpirationDate = KeyStoreFactory.getSigningKeyExpirationDate(PortletPropsValues.OSB_PORTLET_KEY_STORE_PATH, PortletPropsValues.OSB_PORTLET_KEY_STORE_TYPE, PortletPropsValues.OSB_PORTLET_KEY_STORE_DIGITAL_SIGNATURE_KEY_NAME);
+		%>
+
+		<span><liferay-ui:message key="lcs-signing-key-expiration-date" />: <%= mediumDateFormatDate.format(signingKeyExpirationDate) %></span><br />
+
+		<%
+		long serviceComponentBuildNumber = 0;
+
+		for (ServiceComponent serviceComponent : ServiceComponentLocalServiceUtil.getServiceComponents(QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+			if (Validator.equals(serviceComponent.getBuildNamespace(), "OSBLCS")) {
+				if (serviceComponentBuildNumber < serviceComponent.getBuildNumber()) {
+					serviceComponentBuildNumber = serviceComponent.getBuildNumber();
+				}
+			}
+		}
+		%>
+
+		<span><liferay-ui:message key="service-build-number" />: <%= String.valueOf(serviceComponentBuildNumber) %></span>
+	</aui:field-wrapper>
+
+	<aui:field-wrapper label="actions">
+		<c:if test="<%= ArrayUtil.contains(PortletPropsValues.OSB_PORTLET_SYNCHRONIZATION_SAFE_HOST_NAMES, PortletPropsValues.OSB_PORTLET_HOST_NAME) %>">
+			<liferay-portlet:actionURL name="resetLCSOrderEntries" var="resetLCSOrderEntriesURL">
+				<portlet:param name="tabs1" value="infrastructure" />
+			</liferay-portlet:actionURL>
+
+			<aui:button href="<%= resetLCSOrderEntriesURL %>" value="reset-lcs-order-entries" />
+		</c:if>
+
+		<aui:button-row>
+			<aui:button type="submit" value="check-projects" />
+		</aui:button-row>
+	</aui:field-wrapper>
+</aui:form>
