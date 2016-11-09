@@ -14,7 +14,7 @@
 
 package com.liferay.osb.ldn.generator.sample.data.internal;
 
-import com.liferay.osb.ldn.documentation.project.constants.DocumentationProjectStatusConstants;
+import com.liferay.osb.ldn.documentation.project.constants.DocumentationProjectConstants;
 import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -73,8 +73,9 @@ public class SampleDataGenerator {
 			serviceContext.setAssetTagNames(assetTagNames);
 
 			_documentationProjectLocalService.addDocumentationProject(
-				userId, name, description, iconFileName, iconFile, status,
-				serviceContext);
+				userId, name, description, iconFileName, iconFile,
+				DocumentationProjectConstants.TYPE_SITE, StringPool.BLANK,
+				status, serviceContext);
 		}
 		finally {
 			FileUtil.delete(iconFile);
@@ -87,71 +88,67 @@ public class SampleDataGenerator {
 
 		addSampleProject(
 			userId, "Alloy UI", "Alloy UI Sample Description",
-			"alloy_ui_icon.png",
-			DocumentationProjectStatusConstants.STATUS_OFFLINE,
+			"alloy_ui_icon.png", DocumentationProjectConstants.STATUS_OFFLINE,
 			new String[] {"components", "javascript", "portal", "ui"});
 
 		addSampleProject(
 			userId, "Developer Tools", "Developer Tools Sample Description",
 			"developer_tools_icon.png",
-			DocumentationProjectStatusConstants.STATUS_OFFLINE,
+			DocumentationProjectConstants.STATUS_OFFLINE,
 			new String[] {"ide", "portal", "tools"});
 
 		addSampleProject(
 			userId, "Liferay Faces", "Liferay Faces Sample Description",
 			"liferay_faces_icon.png",
-			DocumentationProjectStatusConstants.STATUS_OFFLINE,
+			DocumentationProjectConstants.STATUS_OFFLINE,
 			new String[] {"framework", "jsf", "portal", "ui"});
 
 		addSampleProject(
 			userId, "Liferay Portal", "Liferay Portal Sample Description",
 			"liferay_portal_icon.png",
-			DocumentationProjectStatusConstants.STATUS_OFFLINE,
+			DocumentationProjectConstants.STATUS_OFFLINE,
 			new String[] {"liferay", "platform", "portal"});
 
 		addSampleProject(
 			userId, "Marketplace", "Marketplace Sample Description",
 			"marketplace_icon.png",
-			DocumentationProjectStatusConstants.STATUS_OFFLINE,
+			DocumentationProjectConstants.STATUS_OFFLINE,
 			new String[] {"apps", "store", "portal"});
 
 		addSampleProject(
 			userId, "Metal.js", "Metal.js Sample Description",
-			"metaljs_icon.png",
-			DocumentationProjectStatusConstants.STATUS_OFFLINE,
+			"metaljs_icon.png", DocumentationProjectConstants.STATUS_OFFLINE,
 			new String[] {"components", "javascript", "ui"});
 
 		addSampleProject(
 			userId, "Push", "Push Sample Description", "push_icon.png",
-			DocumentationProjectStatusConstants.STATUS_OFFLINE,
+			DocumentationProjectConstants.STATUS_OFFLINE,
 			new String[] {"app", "mobile", "portal"});
 
 		addSampleProject(
 			userId, "Screens", "Screens Sample Description", "screens_icon.png",
-			DocumentationProjectStatusConstants.STATUS_OFFLINE,
+			DocumentationProjectConstants.STATUS_OFFLINE,
 			new String[] {"framework", "mobile", "portal"});
 
 		addSampleProject(
 			userId, "Senna.js", "Senna.js Sample Description",
-			"sennajs_icon.png",
-			DocumentationProjectStatusConstants.STATUS_OFFLINE,
+			"sennajs_icon.png", DocumentationProjectConstants.STATUS_OFFLINE,
 			new String[] {"javascript", "ui"});
 
 		addSampleProject(
 			userId, "Social Office", "Social Office Sample Description",
 			"social_office_icon.png",
-			DocumentationProjectStatusConstants.STATUS_OFFLINE,
+			DocumentationProjectConstants.STATUS_OFFLINE,
 			new String[] {"app", "collaboration", "portal"});
 
 		addSampleProject(
 			userId, "Sync", "Sync Sample Description", "sync_icon.png",
-			DocumentationProjectStatusConstants.STATUS_OFFLINE,
+			DocumentationProjectConstants.STATUS_OFFLINE,
 			new String[] {"app", "documents", "portal"});
 
 		addSampleProject(
 			userId, "WeDeploy", "WeDeploy Sample Description",
-			"wedeploy_icon.png",
-			DocumentationProjectStatusConstants.STATUS_OFFLINE,
+			"wedeploy_icon.png", DocumentationProjectConstants.STATUS_OFFLINE,
 			new String[] {"paas", "platform", "service"});
 	}
 

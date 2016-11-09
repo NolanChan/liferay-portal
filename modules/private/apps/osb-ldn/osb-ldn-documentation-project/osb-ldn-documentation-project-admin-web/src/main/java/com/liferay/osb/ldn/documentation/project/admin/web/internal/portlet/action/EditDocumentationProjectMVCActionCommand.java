@@ -15,6 +15,7 @@
 package com.liferay.osb.ldn.documentation.project.admin.web.internal.portlet.action;
 
 import com.liferay.osb.ldn.documentation.project.admin.web.internal.constants.DocumentationProjectPortletKeys;
+import com.liferay.osb.ldn.documentation.project.constants.DocumentationProjectConstants;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectService;
 import com.liferay.osb.ldn.generator.basic.project.site.constants.BasicProjectSiteConstants;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
 
@@ -76,13 +78,15 @@ public class EditDocumentationProjectMVCActionCommand
 			documentationProject =
 				_documentationProjectService.updateDocumentationProject(
 					documentationProjectId, name, description, iconFileName,
-					iconFile, status, serviceContext);
+					iconFile, DocumentationProjectConstants.TYPE_SITE,
+					StringPool.BLANK, status, serviceContext);
 		}
 		else {
 			documentationProject =
 				_documentationProjectService.addDocumentationProject(
-					name, description, iconFileName, iconFile, status,
-					serviceContext);
+					name, description, iconFileName, iconFile,
+					DocumentationProjectConstants.TYPE_SITE, StringPool.BLANK,
+					status, serviceContext);
 		}
 
 		SiteGenerator siteGenerator = _siteGeneratorRegistry.getSiteGenerator(
