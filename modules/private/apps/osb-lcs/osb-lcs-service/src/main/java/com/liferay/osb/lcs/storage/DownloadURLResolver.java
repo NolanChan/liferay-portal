@@ -40,12 +40,16 @@ import org.apache.http.util.EntityUtils;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Igor Beslic
  */
-@Component(immediate = true)
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
+)
 public class DownloadURLResolver {
 
 	public URL getAsURL(String fileName) {
