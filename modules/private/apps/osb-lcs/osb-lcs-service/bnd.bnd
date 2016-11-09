@@ -5,10 +5,17 @@ Bundle-ClassPath:\
 	lib/aws-java-sdk-ec2.jar,\
 	lib/aws-java-sdk-kms.jar,\
 	lib/aws-java-sdk-s3.jar,\
-	lib/aws-java-sdk-sqs.jar
+	lib/aws-java-sdk-sqs.jar,\
+	lib/httpclient.jar,\
+	lib/httpcore.jar
 Bundle-Name: Liferay OSB LCS Service
 Bundle-SymbolicName: com.liferay.osb.lcs.service
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.sun.org.apache.xerces.internal.*; resolution:=optional,\
+	com.sun.org.apache.xml.internal.*; resolution:=optional,\
+	com.sun.org.apache.xpath.internal.*; resolution:=optional,\
+	*;
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: LCS Portal
 Liferay-Require-SchemaVersion: 1.0.0
@@ -19,4 +26,6 @@ Liferay-Service: true
 	lib/aws-java-sdk-ec2.jar=aws-java-sdk-ec2-[0-9]*.jar;lib:=true,\
 	lib/aws-java-sdk-kms.jar=aws-java-sdk-kms-[0-9]*.jar;lib:=true,\
 	lib/aws-java-sdk-s3.jar=aws-java-sdk-s3-[0-9]*.jar;lib:=true,\
-	lib/aws-java-sdk-sqs.jar=aws-java-sdk-sqs-[0-9]*.jar;lib:=true
+	lib/aws-java-sdk-sqs.jar=aws-java-sdk-sqs-[0-9]*.jar;lib:=true,\
+	lib/httpclient.jar=httpclient-[0-9]*.jar;lib:=true,\
+	lib/httpcore.jar=httpcore-[0-9]*.jar;lib:=true
