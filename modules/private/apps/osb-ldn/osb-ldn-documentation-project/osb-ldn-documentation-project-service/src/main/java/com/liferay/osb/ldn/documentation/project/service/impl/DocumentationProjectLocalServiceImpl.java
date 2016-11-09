@@ -17,7 +17,7 @@ package com.liferay.osb.ldn.documentation.project.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.osb.ldn.documentation.project.constants.DocumentationProjectStatusConstants;
+import com.liferay.osb.ldn.documentation.project.constants.DocumentationProjectConstants;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectDescriptionException;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconException;
 import com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconExtensionException;
@@ -58,7 +58,8 @@ public class DocumentationProjectLocalServiceImpl
 	@Override
 	public DocumentationProject addDocumentationProject(
 			long userId, String name, String description, String iconFileName,
-			File iconFile, int status, ServiceContext serviceContext)
+			File iconFile, String type, String typeSettings, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -79,7 +80,7 @@ public class DocumentationProjectLocalServiceImpl
 
 		boolean active = false;
 
-		if (status == DocumentationProjectStatusConstants.STATUS_LIVE) {
+		if (status == DocumentationProjectConstants.STATUS_LIVE) {
 			active = true;
 		}
 
@@ -102,6 +103,8 @@ public class DocumentationProjectLocalServiceImpl
 		documentationProject.setName(name);
 		documentationProject.setDescription(description);
 		documentationProject.setIconFileName(getIconFileName(iconFileName));
+		documentationProject.setType(type);
+		documentationProject.setTypeSettings(typeSettings);
 		documentationProject.setStatus(status);
 
 		documentationProjectPersistence.update(documentationProject);
@@ -173,7 +176,7 @@ public class DocumentationProjectLocalServiceImpl
 		boolean visible = false;
 
 		if (documentationProject.getStatus() ==
-				DocumentationProjectStatusConstants.STATUS_LIVE) {
+				DocumentationProjectConstants.STATUS_LIVE) {
 
 			visible = true;
 		}
@@ -193,8 +196,8 @@ public class DocumentationProjectLocalServiceImpl
 	@Override
 	public DocumentationProject updateDocumentationProject(
 			long documentationProjectId, String name, String description,
-			String iconFileName, File iconFile, int status,
-			ServiceContext serviceContext)
+			String iconFileName, File iconFile, String type,
+			String typeSettings, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		DocumentationProject documentationProject =
@@ -220,6 +223,8 @@ public class DocumentationProjectLocalServiceImpl
 		documentationProject.setModifiedDate(new Date());
 		documentationProject.setName(name);
 		documentationProject.setDescription(description);
+		documentationProject.setType(type);
+		documentationProject.setTypeSettings(typeSettings);
 		documentationProject.setStatus(status);
 
 		if (!skipIconUpdate) {
@@ -255,7 +260,7 @@ public class DocumentationProjectLocalServiceImpl
 
 		boolean active = false;
 
-		if (status == DocumentationProjectStatusConstants.STATUS_LIVE) {
+		if (status == DocumentationProjectConstants.STATUS_LIVE) {
 			active = true;
 		}
 

@@ -35,7 +35,8 @@ public class DocumentationProjectServiceImpl
 	@Override
 	public DocumentationProject addDocumentationProject(
 			String name, String description, String iconFileName, File iconFile,
-			int status, ServiceContext serviceContext)
+			String type, String typeSettings, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		DocumentationProjectPermission.check(
@@ -43,15 +44,15 @@ public class DocumentationProjectServiceImpl
 			DocumentationProjectActionKeys.ADD_DOCUMENTATION_PROJECT);
 
 		return documentationProjectLocalService.addDocumentationProject(
-			getUserId(), name, description, iconFileName, iconFile, status,
-			serviceContext);
+			getUserId(), name, description, iconFileName, iconFile, type,
+			typeSettings, status, serviceContext);
 	}
 
 	@Override
 	public DocumentationProject updateDocumentationProject(
 			long documentationProjectId, String name, String description,
-			String iconFileName, File iconFile, int status,
-			ServiceContext serviceContext)
+			String iconFileName, File iconFile, String type,
+			String typeSettings, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		DocumentationProjectPermission.check(
@@ -60,7 +61,7 @@ public class DocumentationProjectServiceImpl
 
 		return documentationProjectLocalService.updateDocumentationProject(
 			documentationProjectId, name, description, iconFileName, iconFile,
-			status, serviceContext);
+			type, typeSettings, status, serviceContext);
 	}
 
 }

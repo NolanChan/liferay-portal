@@ -16,11 +16,16 @@ package com.liferay.osb.ldn.documentation.project.constants;
 
 /**
  * @author Yury Butrymovich
+ * @author Ryan Park
  */
-public class DocumentationProjectStatusConstants {
+public class DocumentationProjectConstants {
 
 	public static final int STATUS_LIVE = 1;
 
 	public static final int STATUS_OFFLINE = 0;
+
+	public static final String TYPE_SITE = "site";
+
+	public static final String TYPE_URL = "url";
 
 }

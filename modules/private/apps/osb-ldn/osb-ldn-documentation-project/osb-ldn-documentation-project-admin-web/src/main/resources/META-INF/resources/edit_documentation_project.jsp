@@ -75,8 +75,8 @@ renderResponse.setTitle(headerTitle);
 
 				<aui:fieldset label="status">
 					<aui:select label="site-status" name="status">
-						<aui:option label="offline" value="<%= DocumentationProjectStatusConstants.STATUS_OFFLINE %>" />
-						<aui:option label="live" value="<%= DocumentationProjectStatusConstants.STATUS_LIVE %>" />
+						<aui:option label="offline" value="<%= DocumentationProjectConstants.STATUS_OFFLINE %>" />
+						<aui:option label="live" value="<%= DocumentationProjectConstants.STATUS_LIVE %>" />
 					</aui:select>
 				</aui:fieldset>
 			</aui:fieldset-group>
