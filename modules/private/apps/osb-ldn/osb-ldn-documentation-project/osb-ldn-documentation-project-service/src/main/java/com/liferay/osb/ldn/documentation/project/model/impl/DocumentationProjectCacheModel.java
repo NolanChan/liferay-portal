@@ -66,7 +66,7 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -90,6 +90,10 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 		sb.append(description);
 		sb.append(", iconFileName=");
 		sb.append(iconFileName);
+		sb.append(", type=");
+		sb.append(type);
+		sb.append(", typeSettings=");
+		sb.append(typeSettings);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append("}");
@@ -155,6 +159,20 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 			documentationProjectImpl.setIconFileName(iconFileName);
 		}
 
+		if (type == null) {
+			documentationProjectImpl.setType(StringPool.BLANK);
+		}
+		else {
+			documentationProjectImpl.setType(type);
+		}
+
+		if (typeSettings == null) {
+			documentationProjectImpl.setTypeSettings(StringPool.BLANK);
+		}
+		else {
+			documentationProjectImpl.setTypeSettings(typeSettings);
+		}
+
 		documentationProjectImpl.setStatus(status);
 
 		documentationProjectImpl.resetOriginalValues();
@@ -179,6 +197,8 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		iconFileName = objectInput.readUTF();
+		type = objectInput.readUTF();
+		typeSettings = objectInput.readUTF();
 
 		status = objectInput.readInt();
 	}
@@ -232,6 +252,20 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 			objectOutput.writeUTF(iconFileName);
 		}
 
+		if (type == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
+
+		if (typeSettings == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(typeSettings);
+		}
+
 		objectOutput.writeInt(status);
 	}
 
@@ -246,5 +280,7 @@ public class DocumentationProjectCacheModel implements CacheModel<DocumentationP
 	public String name;
 	public String description;
 	public String iconFileName;
+	public String type;
+	public String typeSettings;
 	public int status;
 }

@@ -145,6 +145,10 @@ public class DocumentationProjectPersistenceTest {
 
 		newDocumentationProject.setIconFileName(RandomTestUtil.randomString());
 
+		newDocumentationProject.setType(RandomTestUtil.randomString());
+
+		newDocumentationProject.setTypeSettings(RandomTestUtil.randomString());
+
 		newDocumentationProject.setStatus(RandomTestUtil.nextInt());
 
 		_documentationProjects.add(_persistence.update(newDocumentationProject));
@@ -175,6 +179,10 @@ public class DocumentationProjectPersistenceTest {
 			newDocumentationProject.getDescription());
 		Assert.assertEquals(existingDocumentationProject.getIconFileName(),
 			newDocumentationProject.getIconFileName());
+		Assert.assertEquals(existingDocumentationProject.getType(),
+			newDocumentationProject.getType());
+		Assert.assertEquals(existingDocumentationProject.getTypeSettings(),
+			newDocumentationProject.getTypeSettings());
 		Assert.assertEquals(existingDocumentationProject.getStatus(),
 			newDocumentationProject.getStatus());
 	}
@@ -243,7 +251,7 @@ public class DocumentationProjectPersistenceTest {
 			"uuid", true, "documentationProjectId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "name", true, "description", true,
-			"iconFileName", true, "status", true);
+			"iconFileName", true, "type", true, "status", true);
 	}
 
 	@Test
@@ -492,6 +500,10 @@ public class DocumentationProjectPersistenceTest {
 		documentationProject.setDescription(RandomTestUtil.randomString());
 
 		documentationProject.setIconFileName(RandomTestUtil.randomString());
+
+		documentationProject.setType(RandomTestUtil.randomString());
+
+		documentationProject.setTypeSettings(RandomTestUtil.randomString());
 
 		documentationProject.setStatus(RandomTestUtil.nextInt());
 

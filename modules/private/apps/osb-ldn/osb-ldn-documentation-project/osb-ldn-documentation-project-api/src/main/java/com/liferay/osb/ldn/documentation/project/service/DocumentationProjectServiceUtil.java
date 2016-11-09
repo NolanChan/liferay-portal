@@ -43,23 +43,26 @@ public class DocumentationProjectServiceUtil {
 	 */
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject addDocumentationProject(
 		java.lang.String name, java.lang.String description,
-		java.lang.String iconFileName, java.io.File iconFile, int status,
+		java.lang.String iconFileName, java.io.File iconFile,
+		java.lang.String type, java.lang.String typeSettings, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addDocumentationProject(name, description, iconFileName,
-			iconFile, status, serviceContext);
+			iconFile, type, typeSettings, status, serviceContext);
 	}
 
 	public static com.liferay.osb.ldn.documentation.project.model.DocumentationProject updateDocumentationProject(
 		long documentationProjectId, java.lang.String name,
 		java.lang.String description, java.lang.String iconFileName,
-		java.io.File iconFile, int status,
+		java.io.File iconFile, java.lang.String type,
+		java.lang.String typeSettings, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateDocumentationProject(documentationProjectId, name,
-			description, iconFileName, iconFile, status, serviceContext);
+			description, iconFileName, iconFile, type, typeSettings, status,
+			serviceContext);
 	}
 
 	/**

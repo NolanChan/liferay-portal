@@ -46,6 +46,8 @@ public class DocumentationProjectSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setIconFileName(model.getIconFileName());
+		soapModel.setType(model.getType());
+		soapModel.setTypeSettings(model.getTypeSettings());
 		soapModel.setStatus(model.getStatus());
 
 		return soapModel;
@@ -190,6 +192,22 @@ public class DocumentationProjectSoap implements Serializable {
 		_iconFileName = iconFileName;
 	}
 
+	public String getType() {
+		return _type;
+	}
+
+	public void setType(String type) {
+		_type = type;
+	}
+
+	public String getTypeSettings() {
+		return _typeSettings;
+	}
+
+	public void setTypeSettings(String typeSettings) {
+		_typeSettings = typeSettings;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -209,5 +227,7 @@ public class DocumentationProjectSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private String _iconFileName;
+	private String _type;
+	private String _typeSettings;
 	private int _status;
 }

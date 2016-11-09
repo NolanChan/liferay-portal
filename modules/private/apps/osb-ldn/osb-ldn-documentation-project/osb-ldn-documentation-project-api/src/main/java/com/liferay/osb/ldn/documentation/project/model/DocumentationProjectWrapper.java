@@ -72,6 +72,8 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("iconFileName", getIconFileName());
+		attributes.put("type", getType());
+		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -146,6 +148,18 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 			setIconFileName(iconFileName);
 		}
 
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
+		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
+		}
+
 		Integer status = (Integer)attributes.get("status");
 
 		if (status != null) {
@@ -161,6 +175,11 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 	@Override
 	public DocumentationProject toUnescapedModel() {
 		return new DocumentationProjectWrapper(_documentationProject.toUnescapedModel());
+	}
+
+	@Override
+	public DocumentationProjectTypeSettings getDocumentationProjectTypeSettings() {
+		return _documentationProject.getDocumentationProjectTypeSettings();
 	}
 
 	@Override
@@ -252,6 +271,26 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 	@Override
 	public java.lang.String getName() {
 		return _documentationProject.getName();
+	}
+
+	/**
+	* Returns the type of this documentation project.
+	*
+	* @return the type of this documentation project
+	*/
+	@Override
+	public java.lang.String getType() {
+		return _documentationProject.getType();
+	}
+
+	/**
+	* Returns the type settings of this documentation project.
+	*
+	* @return the type settings of this documentation project
+	*/
+	@Override
+	public java.lang.String getTypeSettings() {
+		return _documentationProject.getTypeSettings();
 	}
 
 	/**
@@ -498,6 +537,26 @@ public class DocumentationProjectWrapper implements DocumentationProject,
 	@Override
 	public void setStatus(int status) {
 		_documentationProject.setStatus(status);
+	}
+
+	/**
+	* Sets the type of this documentation project.
+	*
+	* @param type the type of this documentation project
+	*/
+	@Override
+	public void setType(java.lang.String type) {
+		_documentationProject.setType(type);
+	}
+
+	/**
+	* Sets the type settings of this documentation project.
+	*
+	* @param typeSettings the type settings of this documentation project
+	*/
+	@Override
+	public void setTypeSettings(java.lang.String typeSettings) {
+		_documentationProject.setTypeSettings(typeSettings);
 	}
 
 	/**

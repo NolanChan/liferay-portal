@@ -2166,6 +2166,8 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 		documentationProjectImpl.setName(documentationProject.getName());
 		documentationProjectImpl.setDescription(documentationProject.getDescription());
 		documentationProjectImpl.setIconFileName(documentationProject.getIconFileName());
+		documentationProjectImpl.setType(documentationProject.getType());
+		documentationProjectImpl.setTypeSettings(documentationProject.getTypeSettings());
 		documentationProjectImpl.setStatus(documentationProject.getStatus());
 
 		return documentationProjectImpl;
@@ -2592,6 +2594,6 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DocumentationProject exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(DocumentationProjectPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
+				"uuid", "type"
 			});
 }

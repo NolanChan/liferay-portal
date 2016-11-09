@@ -256,6 +256,36 @@ public interface DocumentationProjectModel extends BaseModel<DocumentationProjec
 	public void setIconFileName(String iconFileName);
 
 	/**
+	 * Returns the type of this documentation project.
+	 *
+	 * @return the type of this documentation project
+	 */
+	@AutoEscape
+	public String getType();
+
+	/**
+	 * Sets the type of this documentation project.
+	 *
+	 * @param type the type of this documentation project
+	 */
+	public void setType(String type);
+
+	/**
+	 * Returns the type settings of this documentation project.
+	 *
+	 * @return the type settings of this documentation project
+	 */
+	@AutoEscape
+	public String getTypeSettings();
+
+	/**
+	 * Sets the type settings of this documentation project.
+	 *
+	 * @param typeSettings the type settings of this documentation project
+	 */
+	public void setTypeSettings(String typeSettings);
+
+	/**
 	 * Returns the status of this documentation project.
 	 *
 	 * @return the status of this documentation project

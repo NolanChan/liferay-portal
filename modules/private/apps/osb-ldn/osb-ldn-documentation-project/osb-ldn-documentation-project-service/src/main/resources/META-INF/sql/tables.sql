@@ -10,5 +10,7 @@ create table OSB_LDN_DocumentationProject (
 	name VARCHAR(75) null,
 	description STRING null,
 	iconFileName VARCHAR(75) null,
+	type_ VARCHAR(75) null,
+	typeSettings TEXT null,
 	status INTEGER
 );

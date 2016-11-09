@@ -84,6 +84,8 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "iconFileName", Types.VARCHAR },
+			{ "type_", Types.VARCHAR },
+			{ "typeSettings", Types.CLOB },
 			{ "status", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -100,10 +102,12 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("iconFileName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OSB_LDN_DocumentationProject (uuid_ VARCHAR(75) null,documentationProjectId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,iconFileName VARCHAR(75) null,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table OSB_LDN_DocumentationProject (uuid_ VARCHAR(75) null,documentationProjectId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,iconFileName VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings TEXT null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table OSB_LDN_DocumentationProject";
 	public static final String ORDER_BY_JPQL = " ORDER BY documentationProject.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OSB_LDN_DocumentationProject.name ASC";
@@ -149,6 +153,8 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setIconFileName(soapModel.getIconFileName());
+		model.setType(soapModel.getType());
+		model.setTypeSettings(soapModel.getTypeSettings());
 		model.setStatus(soapModel.getStatus());
 
 		return model;
@@ -226,6 +232,8 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("iconFileName", getIconFileName());
+		attributes.put("type", getType());
+		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("status", getStatus());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -301,6 +309,18 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 		if (iconFileName != null) {
 			setIconFileName(iconFileName);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
+		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -522,6 +542,38 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 	@JSON
 	@Override
+	public String getType() {
+		if (_type == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _type;
+		}
+	}
+
+	@Override
+	public void setType(String type) {
+		_type = type;
+	}
+
+	@JSON
+	@Override
+	public String getTypeSettings() {
+		if (_typeSettings == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _typeSettings;
+		}
+	}
+
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		_typeSettings = typeSettings;
+	}
+
+	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -579,6 +631,8 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		documentationProjectImpl.setName(getName());
 		documentationProjectImpl.setDescription(getDescription());
 		documentationProjectImpl.setIconFileName(getIconFileName());
+		documentationProjectImpl.setType(getType());
+		documentationProjectImpl.setTypeSettings(getTypeSettings());
 		documentationProjectImpl.setStatus(getStatus());
 
 		documentationProjectImpl.resetOriginalValues();
@@ -727,6 +781,22 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 			documentationProjectCacheModel.iconFileName = null;
 		}
 
+		documentationProjectCacheModel.type = getType();
+
+		String type = documentationProjectCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			documentationProjectCacheModel.type = null;
+		}
+
+		documentationProjectCacheModel.typeSettings = getTypeSettings();
+
+		String typeSettings = documentationProjectCacheModel.typeSettings;
+
+		if ((typeSettings != null) && (typeSettings.length() == 0)) {
+			documentationProjectCacheModel.typeSettings = null;
+		}
+
 		documentationProjectCacheModel.status = getStatus();
 
 		return documentationProjectCacheModel;
@@ -734,7 +804,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -758,6 +828,10 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		sb.append(getDescription());
 		sb.append(", iconFileName=");
 		sb.append(getIconFileName());
+		sb.append(", type=");
+		sb.append(getType());
+		sb.append(", typeSettings=");
+		sb.append(getTypeSettings());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append("}");
@@ -767,7 +841,7 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -819,6 +893,14 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 		sb.append(getIconFileName());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>type</column-name><column-value><![CDATA[");
+		sb.append(getType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
+		sb.append(getTypeSettings());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
@@ -850,6 +932,8 @@ public class DocumentationProjectModelImpl extends BaseModelImpl<DocumentationPr
 	private String _originalName;
 	private String _description;
 	private String _iconFileName;
+	private String _type;
+	private String _typeSettings;
 	private int _status;
 	private long _columnBitmask;
 	private DocumentationProject _escapedModel;
