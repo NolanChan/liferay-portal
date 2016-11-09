@@ -14,11 +14,35 @@
 
 package com.liferay.osb.ldn.documentation.project.model.impl;
 
+import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProjectURLTypeSettings;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 /**
  * @author Ryan Park
  */
 public class DocumentationProjectURLTypeSettingsImpl
 	implements DocumentationProjectURLTypeSettings {
+
+	public DocumentationProjectURLTypeSettingsImpl(
+		DocumentationProject documentationProject) {
+
+		_properties = new UnicodeProperties(true);
+
+		_properties.fastLoad(documentationProject.getTypeSettings());
+	}
+
+	@Override
+	public String getURL() {
+		return GetterUtil.getString(_properties.getProperty("url"));
+	}
+
+	@Override
+	public void setURL(String url) {
+		_properties.setProperty("url", url);
+	}
+
+	private final UnicodeProperties _properties;
+
 }

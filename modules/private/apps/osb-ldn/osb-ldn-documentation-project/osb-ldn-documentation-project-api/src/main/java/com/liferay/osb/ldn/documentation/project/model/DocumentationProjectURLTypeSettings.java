@@ -19,4 +19,9 @@ package com.liferay.osb.ldn.documentation.project.model;
  */
 public interface DocumentationProjectURLTypeSettings
 	extends DocumentationProjectTypeSettings {
+
+	public String getURL();
+
+	public void setURL(String url);
+
 }

@@ -31,10 +31,12 @@ public class DocumentationProjectTypeSettingsFactoryUtil {
 		String type = documentationProject.getType();
 
 		if (type.equals(DocumentationProjectConstants.TYPE_SITE)) {
-			return new DocumentationProjectSiteTypeSettingsImpl();
+			return new DocumentationProjectSiteTypeSettingsImpl(
+				documentationProject);
 		}
 		else if (type.equals(DocumentationProjectConstants.TYPE_URL)) {
-			return new DocumentationProjectURLTypeSettingsImpl();
+			return new DocumentationProjectURLTypeSettingsImpl(
+				documentationProject);
 		}
 
 		return null;
