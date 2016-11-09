@@ -54,7 +54,7 @@ if (definition != null) {
 </portlet:actionURL>
 
 <aui:form action="<%= actionURL %>" enctype="multipart/form-data" method="post" name="fm">
-	<liferay-ui:error exception="<%= DefinitionFileException.class %>" message="please-enter-a-valid-file" />
+	<liferay-ui:error exception="<%= DefinitionFileException.InvalidDefinitionFile.class %>" message="please-enter-a-valid-file" />
 	<liferay-ui:error exception="<%= DefinitionNameException.class %>" message="please-enter-a-valid-name" />
 
 	<aui:model-context bean="<%= definition %>" model="<%= Definition.class %>" />
