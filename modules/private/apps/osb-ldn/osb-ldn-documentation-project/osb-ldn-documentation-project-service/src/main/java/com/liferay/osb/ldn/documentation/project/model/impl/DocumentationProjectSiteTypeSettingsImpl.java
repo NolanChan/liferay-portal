@@ -79,6 +79,11 @@ public class DocumentationProjectSiteTypeSettingsImpl
 			"headerGradientStartColor", headerGradientStartColor);
 	}
 
+	@Override
+	public String toString() {
+		return _properties.toString();
+	}
+
 	private final UnicodeProperties _properties;
 
 }

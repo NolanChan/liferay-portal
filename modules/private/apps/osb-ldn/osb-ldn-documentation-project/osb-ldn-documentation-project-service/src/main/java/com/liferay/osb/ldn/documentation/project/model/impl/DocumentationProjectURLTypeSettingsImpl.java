@@ -43,6 +43,11 @@ public class DocumentationProjectURLTypeSettingsImpl
 		_properties.setProperty("url", url);
 	}
 
+	@Override
+	public String toString() {
+		return _properties.toString();
+	}
+
 	private final UnicodeProperties _properties;
 
 }
