@@ -17,6 +17,8 @@ package com.liferay.osb.ldn.documentation.project.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osb.ldn.documentation.project.internal.file.util.DocumentationProjectFileUtil;
+import com.liferay.osb.ldn.documentation.project.internal.service.util.DocumentationProjectTypeSettingsFactoryUtil;
+import com.liferay.osb.ldn.documentation.project.model.DocumentationProjectTypeSettings;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.InputStream;
@@ -31,9 +33,33 @@ public class DocumentationProjectImpl extends DocumentationProjectBaseImpl {
 	}
 
 	@Override
+	public DocumentationProjectTypeSettings
+		getDocumentationProjectTypeSettings() {
+
+		if (_documentationProjectTypeSettings == null) {
+			_documentationProjectTypeSettings =
+				DocumentationProjectTypeSettingsFactoryUtil.create(this);
+		}
+
+		return _documentationProjectTypeSettings;
+	}
+
+	@Override
 	public InputStream getIconInputStream() throws PortalException {
 		return DocumentationProjectFileUtil.getDocumentProjectFileAsStream(
 			getDocumentationProjectId(), getIconFileName());
 	}
+
+	@Override
+	public String getTypeSettings() {
+		if (_documentationProjectTypeSettings == null) {
+			return super.getTypeSettings();
+		}
+		else {
+			return _documentationProjectTypeSettings.toString();
+		}
+	}
+
+	private DocumentationProjectTypeSettings _documentationProjectTypeSettings;
 
 }
