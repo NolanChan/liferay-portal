@@ -15,6 +15,10 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="iconFileName" type="String" />
+		<field name="type" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="status" type="int" />
 	</model>
 </model-hints>
