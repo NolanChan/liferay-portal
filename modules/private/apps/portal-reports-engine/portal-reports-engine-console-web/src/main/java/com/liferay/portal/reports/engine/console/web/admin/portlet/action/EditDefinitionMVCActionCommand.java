@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
+import com.liferay.portal.reports.engine.console.exception.DefinitionFileException;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.service.DefinitionService;
 import com.liferay.portal.reports.engine.console.util.ReportsEngineConsoleUtil;
@@ -100,6 +103,14 @@ public class EditDefinitionMVCActionCommand extends BaseMVCActionCommand {
 					sourceId, reportParameters, fileName, inputStream,
 					serviceContext);
 			}
+		}
+		catch (DefinitionFileException.InvalidDefinitionFile e) {
+			SessionErrors.add(actionRequest, e.getClass());
+
+			SessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
