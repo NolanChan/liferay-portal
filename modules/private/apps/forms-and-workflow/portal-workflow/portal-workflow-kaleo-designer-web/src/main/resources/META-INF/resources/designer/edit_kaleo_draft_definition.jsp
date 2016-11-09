@@ -446,6 +446,22 @@
 						);
 
 						Liferay.provide(
+								window,
+								'<portlet:namespace />closeKaleoDialog',
+								function() {
+									var A = AUI();
+
+									var dialog = Liferay.Util.getWindow();
+
+									if(dialog){
+										dialog.destroy();
+									}
+								},
+								['aui-base']
+							);
+							
+
+						Liferay.provide(
 							window,
 							'<portlet:namespace />updateToolbarButtons',
 							function() {
@@ -724,7 +740,11 @@
 				<c:if test="<%= Validator.isNotNull(backURL) %>">
 					<aui:button href="<%= backURL %>" value="cancel" />
 				</c:if>
-
+				
+				<c:if test="<%= Validator.isNull(backURL) %>">
+					<aui:button  onClick='<%= renderResponse.getNamespace() + "closeKaleoDialog();" %>' value="cancel" />
+				</c:if>
+				
 				<span class="lfr-portlet-workflowdesigner-message" id="<portlet:namespace />toolbarMessage"></span>
 			</aui:button-row>
 		</aui:form>
