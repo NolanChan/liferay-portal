@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 public class DocumentationProjectURLTypeSettingsImpl
 	implements DocumentationProjectURLTypeSettings {
 
+	public DocumentationProjectURLTypeSettingsImpl() {
+		_properties = new UnicodeProperties(true);
+	}
+
 	public DocumentationProjectURLTypeSettingsImpl(
 		DocumentationProject documentationProject) {
 

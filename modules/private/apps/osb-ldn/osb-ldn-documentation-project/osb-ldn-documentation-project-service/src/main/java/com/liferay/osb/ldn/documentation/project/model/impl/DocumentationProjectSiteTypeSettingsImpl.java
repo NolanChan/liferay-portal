@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 public class DocumentationProjectSiteTypeSettingsImpl
 	implements DocumentationProjectSiteTypeSettings {
 
+	public DocumentationProjectSiteTypeSettingsImpl() {
+		_properties = new UnicodeProperties(true);
+	}
+
 	public DocumentationProjectSiteTypeSettingsImpl(
 		DocumentationProject documentationProject) {
 

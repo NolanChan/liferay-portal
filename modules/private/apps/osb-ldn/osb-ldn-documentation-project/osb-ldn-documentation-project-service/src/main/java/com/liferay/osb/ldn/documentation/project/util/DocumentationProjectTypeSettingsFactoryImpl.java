@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.ldn.documentation.project.internal.service.util;
+package com.liferay.osb.ldn.documentation.project.util;
 
 import com.liferay.osb.ldn.documentation.project.constants.DocumentationProjectConstants;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
@@ -20,12 +20,16 @@ import com.liferay.osb.ldn.documentation.project.model.DocumentationProjectTypeS
 import com.liferay.osb.ldn.documentation.project.model.impl.DocumentationProjectSiteTypeSettingsImpl;
 import com.liferay.osb.ldn.documentation.project.model.impl.DocumentationProjectURLTypeSettingsImpl;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ryan Park
  */
-public class DocumentationProjectTypeSettingsFactoryUtil {
+@Component(service = DocumentationProjectTypeSettings.class)
+public class DocumentationProjectTypeSettingsFactoryImpl
+	implements DocumentationProjectTypeSettings {
 
-	public static DocumentationProjectTypeSettings create(
+	public DocumentationProjectTypeSettings create(
 		DocumentationProject documentationProject) {
 
 		String type = documentationProject.getType();
@@ -37,6 +41,17 @@ public class DocumentationProjectTypeSettingsFactoryUtil {
 		else if (type.equals(DocumentationProjectConstants.TYPE_URL)) {
 			return new DocumentationProjectURLTypeSettingsImpl(
 				documentationProject);
+		}
+
+		return null;
+	}
+
+	public DocumentationProjectTypeSettings create(String type) {
+		if (type.equals(DocumentationProjectConstants.TYPE_SITE)) {
+			return new DocumentationProjectSiteTypeSettingsImpl();
+		}
+		else if (type.equals(DocumentationProjectConstants.TYPE_URL)) {
+			return new DocumentationProjectURLTypeSettingsImpl();
 		}
 
 		return null;

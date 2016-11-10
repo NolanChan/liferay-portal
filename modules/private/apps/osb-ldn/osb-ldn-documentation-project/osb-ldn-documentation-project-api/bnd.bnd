@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.osb.ldn.documentation.project.exception,\
 	com.liferay.osb.ldn.documentation.project.model,\
 	com.liferay.osb.ldn.documentation.project.service,\
-	com.liferay.osb.ldn.documentation.project.service.persistence
+	com.liferay.osb.ldn.documentation.project.service.persistence,\
+	com.liferay.osb.ldn.documentation.project.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

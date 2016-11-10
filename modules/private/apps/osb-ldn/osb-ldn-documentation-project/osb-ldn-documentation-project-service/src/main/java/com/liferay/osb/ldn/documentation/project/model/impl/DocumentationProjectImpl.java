@@ -17,8 +17,8 @@ package com.liferay.osb.ldn.documentation.project.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osb.ldn.documentation.project.internal.file.util.DocumentationProjectFileUtil;
-import com.liferay.osb.ldn.documentation.project.internal.service.util.DocumentationProjectTypeSettingsFactoryUtil;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProjectTypeSettings;
+import com.liferay.osb.ldn.documentation.project.util.DocumentationProjectTypeSettingsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.InputStream;
