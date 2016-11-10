@@ -14,9 +14,13 @@
 
 package com.liferay.portal.reports.engine.console.internal.upgrade;
 
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.release.BaseUpgradeServiceModuleRelease;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Wesley Gong
@@ -27,6 +31,29 @@ public class ReportsServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
+		try {
+			BaseUpgradeServiceModuleRelease upgradeServiceModuleRelease =
+				new BaseUpgradeServiceModuleRelease() {
+
+					@Override
+					protected String getNewBundleSymbolicName() {
+						return
+							"com.liferay.portal.reports.engine.console.service";
+					}
+
+					@Override
+					protected String getOldBundleSymbolicName() {
+						return "reports-portlet";
+					}
+
+				};
+
+			upgradeServiceModuleRelease.upgrade();
+		}
+		catch (UpgradeException ue) {
+			throw new RuntimeException(ue);
+		}
+
 		registry.register(
 			"com.liferay.portal.reports.engine.console.service", "0.0.1",
 			"1.0.0",
@@ -42,6 +69,11 @@ public class ReportsServiceUpgrade implements UpgradeStepRegistrator {
 				v1_0_1.UpgradeReportDefinition(),
 			new com.liferay.portal.reports.engine.console.internal.upgrade.
 				v1_0_1.UpgradeReportEntry());
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }
