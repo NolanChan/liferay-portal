@@ -196,7 +196,7 @@ public interface OSBLCSConfiguration {
 	public String osbLcsPortalPublicLayoutTemplateId();
 
 	@Meta.AD(deflt = "lcs.liferay.com", required = true)
-	public String osbLcsPortalSecuredDomains();
+	public String[] osbLcsPortalSecuredDomains();
 
 	@Meta.AD(
 		deflt = "/file-repository-web|/portal/lcs/check_lcs_health|/portal/lcs/patch/upload|/portal/lcs/upload_lcs_client_exception|/portal/oauth/access_token|/portal/oauth/authorize|/portal/oauth/request_token"
