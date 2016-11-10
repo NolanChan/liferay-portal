@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 
@@ -69,9 +68,116 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 	}
 
-	protected void addModelPermissions(
-			long primKey, long companyId, String resourceName,
-			ServiceContext serviceContext)
+	@Override
+	protected void doUpgrade() throws Exception {
+		initKaleoFormsDDMCompositeModelsResourceActions();
+
+		updateKaleoProcess();
+		updateKaleoProcessLink();
+	}
+
+	protected String getDDMStructureModelResourceName(DDMStructure ddmStructure)
+		throws PortalException {
+
+		return DDMStructurePermission.getStructureModelResourceName(
+			ddmStructure.getClassNameId());
+	}
+
+	protected String getDDMTemplateModelResourceName(DDMTemplate ddmTemplate)
+		throws PortalException {
+
+		return DDMTemplatePermission.getTemplateModelResourceName(
+			ddmTemplate.getResourceClassNameId());
+	}
+
+	protected Long getNewDDMStructureId(long oldDDMStructureId)
+		throws PortalException {
+
+		Long newDDMStructureId = _ddmStructureMap.get(oldDDMStructureId);
+
+		if (newDDMStructureId != null) {
+			return newDDMStructureId;
+		}
+
+		DDMStructure oldDDMStructure = _ddmStructureLocalService.getStructure(
+			oldDDMStructureId);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		DDMStructureVersion ddmStructureVersion =
+			oldDDMStructure.getStructureVersion();
+
+		serviceContext.setAttribute("status", ddmStructureVersion.getStatus());
+
+		ModelPermissions oldDDMStructureModelPermissions =
+			getResourceModelPermissions(
+				oldDDMStructure.getCompanyId(),
+				getDDMStructureModelResourceName(oldDDMStructure),
+				oldDDMStructureId);
+
+		serviceContext.setModelPermissions(oldDDMStructureModelPermissions);
+
+		DDMStructure newDDMStructure = _ddmStructureLocalService.addStructure(
+			oldDDMStructure.getUserId(), oldDDMStructure.getGroupId(),
+			oldDDMStructure.getParentStructureId(), _kaleoProcessClassNameId,
+			oldDDMStructure.getStructureKey(), oldDDMStructure.getNameMap(),
+			oldDDMStructure.getDescriptionMap(), oldDDMStructure.getDDMForm(),
+			oldDDMStructure.getDDMFormLayout(),
+			oldDDMStructure.getStorageType(), oldDDMStructure.getType(),
+			serviceContext);
+
+		newDDMStructureId = newDDMStructure.getStructureId();
+
+		_ddmStructureMap.put(oldDDMStructureId, newDDMStructureId);
+
+		return newDDMStructureId;
+	}
+
+	protected Long getNewDDMTemplateId(long oldDDMTemplateId)
+		throws PortalException {
+
+		Long newDDMTemplateId = _ddmTemplateMap.get(oldDDMTemplateId);
+
+		if (newDDMTemplateId != null) {
+			return newDDMTemplateId;
+		}
+
+		DDMTemplate oldDDMTemplate = _ddmTemplateLocalService.getTemplate(
+			oldDDMTemplateId);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		DDMTemplateVersion ddmTemplateVersion =
+			oldDDMTemplate.getTemplateVersion();
+
+		serviceContext.setAttribute("status", ddmTemplateVersion.getStatus());
+
+		ModelPermissions modelPermissions = getResourceModelPermissions(
+			oldDDMTemplate.getCompanyId(),
+			getDDMTemplateModelResourceName(oldDDMTemplate), oldDDMTemplateId);
+
+		serviceContext.setModelPermissions(modelPermissions);
+
+		Long newDDMStructureId = getNewDDMStructureId(
+			oldDDMTemplate.getClassPK());
+
+		DDMTemplate newDDMTemplate = _ddmTemplateLocalService.addTemplate(
+			oldDDMTemplate.getUserId(), oldDDMTemplate.getGroupId(),
+			oldDDMTemplate.getClassNameId(), newDDMStructureId,
+			_kaleoProcessClassNameId, oldDDMTemplate.getNameMap(),
+			oldDDMTemplate.getDescriptionMap(), oldDDMTemplate.getType(),
+			oldDDMTemplate.getMode(), oldDDMTemplate.getLanguage(),
+			oldDDMTemplate.getScript(), serviceContext);
+
+		newDDMTemplateId = newDDMTemplate.getTemplateId();
+
+		_ddmTemplateMap.put(oldDDMTemplateId, newDDMTemplateId);
+
+		return newDDMTemplateId;
+	}
+
+	protected ModelPermissions getResourceModelPermissions(
+			long companyId, String resourceName, long primKey)
 		throws PortalException {
 
 		ModelPermissions modelPermissions = new ModelPermissions();
@@ -90,107 +196,10 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 			}
 		}
 
-		serviceContext.setModelPermissions(modelPermissions);
+		return modelPermissions;
 	}
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		initKaleoDDMCompositeModelsResourceActions();
-
-		updateKaleoProcess();
-		updateKaleoProcessLink();
-	}
-
-	protected Long getNewDDMStructureId(long oldDDMStructureId)
-		throws PortalException {
-
-		Long newDDMStructureId = _ddmStructureMap.get(oldDDMStructureId);
-
-		if (Validator.isNull(newDDMStructureId)) {
-			DDMStructure oldDDMStructure =
-				_ddmStructureLocalService.getDDMStructure(oldDDMStructureId);
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			DDMStructureVersion ddmStructureVersion =
-				oldDDMStructure.getLatestStructureVersion();
-
-			serviceContext.setAttribute(
-				"status", ddmStructureVersion.getStatus());
-
-			String resourceName =
-				DDMStructurePermission.getStructureModelResourceName(
-					oldDDMStructure.getClassNameId());
-
-			addModelPermissions(
-				oldDDMStructureId, oldDDMStructure.getCompanyId(), resourceName,
-				serviceContext);
-
-			DDMStructure newDDMStructure =
-				_ddmStructureLocalService.addStructure(
-					oldDDMStructure.getUserId(), oldDDMStructure.getGroupId(),
-					oldDDMStructure.getParentStructureId(),
-					_kaleoProcessClassNameId, oldDDMStructure.getStructureKey(),
-					oldDDMStructure.getNameMap(),
-					oldDDMStructure.getDescriptionMap(),
-					oldDDMStructure.getDDMForm(),
-					oldDDMStructure.getDDMFormLayout(),
-					oldDDMStructure.getStorageType(), oldDDMStructure.getType(),
-					serviceContext);
-
-			newDDMStructureId = newDDMStructure.getStructureId();
-
-			_ddmStructureMap.put(oldDDMStructureId, newDDMStructureId);
-		}
-
-		return newDDMStructureId;
-	}
-
-	protected Long getNewDDMTemplateId(long oldDDMTemplateId)
-		throws PortalException {
-
-		Long newDDMTemplateId = _ddmTemplateMap.get(oldDDMTemplateId);
-
-		if (Validator.isNull(newDDMTemplateId)) {
-			DDMTemplate oldDDMTemplate =
-				_ddmTemplateLocalService.getDDMTemplate(oldDDMTemplateId);
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			DDMTemplateVersion ddmTemplateVersion =
-				oldDDMTemplate.getLatestTemplateVersion();
-
-			serviceContext.setAttribute(
-				"status", ddmTemplateVersion.getStatus());
-
-			String resourceName =
-				DDMTemplatePermission.getTemplateModelResourceName(
-					oldDDMTemplate.getResourceClassNameId());
-
-			addModelPermissions(
-				oldDDMTemplateId, oldDDMTemplate.getCompanyId(), resourceName,
-				serviceContext);
-
-			Long newDDMStructureId = getNewDDMStructureId(
-				oldDDMTemplate.getClassPK());
-
-			DDMTemplate newDDMTemplate = _ddmTemplateLocalService.addTemplate(
-				oldDDMTemplate.getUserId(), oldDDMTemplate.getGroupId(),
-				oldDDMTemplate.getClassNameId(), newDDMStructureId,
-				_kaleoProcessClassNameId, oldDDMTemplate.getNameMap(),
-				oldDDMTemplate.getDescriptionMap(), oldDDMTemplate.getType(),
-				oldDDMTemplate.getMode(), oldDDMTemplate.getLanguage(),
-				oldDDMTemplate.getScript(), serviceContext);
-
-			newDDMTemplateId = newDDMTemplate.getTemplateId();
-
-			_ddmTemplateMap.put(oldDDMTemplateId, newDDMTemplateId);
-		}
-
-		return newDDMTemplateId;
-	}
-
-	protected void initKaleoDDMCompositeModelsResourceActions()
+	protected void initKaleoFormsDDMCompositeModelsResourceActions()
 		throws Exception {
 
 		_resourceActions.read(
@@ -213,7 +222,7 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 			long ddlRecordSetId, Long newDDMStructureId)
 		throws PortalException {
 
-		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getDDLRecordSet(
+		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
 			ddlRecordSetId);
 
 		ddlRecordSet.setDDMStructureId(newDDMStructureId);
