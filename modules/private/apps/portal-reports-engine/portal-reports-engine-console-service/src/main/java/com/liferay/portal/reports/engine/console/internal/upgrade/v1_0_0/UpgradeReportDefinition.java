@@ -51,8 +51,7 @@ public class UpgradeReportDefinition extends UpgradeProcess {
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,
 						"update Reports_Definition set reportParameters = ? " +
-							"where " +
-							"companyId = ? and definitionId = ?");
+							"where companyId = ? and definitionId = ?");
 				ResultSet rs = ps1.executeQuery()) {
 
 				while (rs.next()) {
