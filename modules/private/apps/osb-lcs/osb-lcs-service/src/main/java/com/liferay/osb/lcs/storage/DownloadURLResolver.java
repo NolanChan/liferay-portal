@@ -98,6 +98,9 @@ public class DownloadURLResolver {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
+		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
+			OSBLCSConfiguration.class, properties);
+
 		_contextPath = _osbLCSConfiguration.patchStorageManagerContextPath();
 
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
@@ -111,9 +114,6 @@ public class DownloadURLResolver {
 			poolingHttpClientConnectionManager);
 
 		_httpClient = httpClientBuilder.build();
-
-		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
-			OSBLCSConfiguration.class, properties);
 
 		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
 
