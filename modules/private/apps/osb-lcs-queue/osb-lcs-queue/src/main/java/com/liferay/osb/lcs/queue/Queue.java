@@ -31,16 +31,6 @@ public enum Queue {
 	CLOUD_OUT_DEAD_LETTER(-1, "cloud-out-dead-letter", -1, -1),
 	CLOUD_TEST(-1, "cloud-test", -1, -1);
 
-	Queue(
-		int messageRetentionPeriod, String name,
-		int receiveMessageWaitTimeSeconds, int visibilityTimeout) {
-
-		_messageRetentionPeriod = messageRetentionPeriod;
-		_name = name;
-		_receiveMessageWaitTimeSeconds = receiveMessageWaitTimeSeconds;
-		_visibilityTimeout = visibilityTimeout;
-	}
-
 	public static Queue toQueue(String name) {
 		if (name.equals(CLOUD_ANALYTICS_EVENTS.getName())) {
 			return CLOUD_ANALYTICS_EVENTS;
@@ -97,9 +87,19 @@ public enum Queue {
 		return _visibilityTimeout;
 	}
 
-	private int _messageRetentionPeriod;
-	private String _name;
-	private int _receiveMessageWaitTimeSeconds;
-	private int _visibilityTimeout;
+	private Queue(
+		int messageRetentionPeriod, String name,
+		int receiveMessageWaitTimeSeconds, int visibilityTimeout) {
+
+		_messageRetentionPeriod = messageRetentionPeriod;
+		_name = name;
+		_receiveMessageWaitTimeSeconds = receiveMessageWaitTimeSeconds;
+		_visibilityTimeout = visibilityTimeout;
+	}
+
+	private final int _messageRetentionPeriod;
+	private final String _name;
+	private final int _receiveMessageWaitTimeSeconds;
+	private final int _visibilityTimeout;
 
 }
