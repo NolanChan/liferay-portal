@@ -102,7 +102,7 @@ public class CQLImporter {
 			}
 		}
 
-		List<String> sqls = new ArrayList<>();
+		List<String> cqls = new ArrayList<>();
 
 		String content = new String(bytes);
 
@@ -111,14 +111,14 @@ public class CQLImporter {
 		StringTokenizer stringTokenizer = new StringTokenizer(content, ";");
 
 		while (stringTokenizer.hasMoreTokens()) {
-			String sql = stringTokenizer.nextToken().trim();
+			String cql = stringTokenizer.nextToken().trim();
 
-			if (sql.length() > 0) {
-				sqls.add(sql);
+			if (cql.length() > 0) {
+				cqls.add(cql);
 			}
 		}
 
-		return sqls;
+		return cqls;
 	}
 
 	protected void importIndexes() throws Exception {
@@ -126,22 +126,22 @@ public class CQLImporter {
 
 		KeyspaceMetadata keyspaceMetadata = metadata.getKeyspace(_keyspace);
 
-		List<String> sqls = getCQLs("indexes");
+		List<String> cqls = getCQLs("indexes");
 
-		for (String sql : sqls) {
-			int beginIndex = sql.indexOf(" on ") + 4;
-			int endIndex = sql.indexOf("(");
+		for (String cql : cqls) {
+			int beginIndex = cql.indexOf(" on ") + 4;
+			int endIndex = cql.indexOf("(");
 
-			String tableName = sql.substring(beginIndex, endIndex);
+			String tableName = cql.substring(beginIndex, endIndex);
 
 			tableName = tableName.toLowerCase();
 
 			TableMetadata tableMetadata = keyspaceMetadata.getTable(tableName);
 
-			beginIndex = sql.indexOf("create index ") + 13;
-			endIndex = sql.indexOf(" on");
+			beginIndex = cql.indexOf("create index ") + 13;
+			endIndex = cql.indexOf(" on");
 
-			String indexName = sql.substring(beginIndex, endIndex);
+			String indexName = cql.substring(beginIndex, endIndex);
 
 			indexName = indexName.toLowerCase();
 
@@ -159,7 +159,7 @@ public class CQLImporter {
 			}
 
 			if (!indexExists) {
-				_session.execute(sql);
+				_session.execute(cql);
 			}
 		}
 	}
@@ -168,13 +168,13 @@ public class CQLImporter {
 		Metadata metadata = _cluster.getMetadata();
 
 		if (metadata.getKeyspace(_keyspace) == null) {
-			List<String> sqls = getCQLs("keyspace");
+			List<String> cqls = getCQLs("keyspace");
 
-			String sql = sqls.get(0);
+			String cql = cqls.get(0);
 
-			sql = sql.replace("[$KEYSPACE_PLACEHOLDER$]", _keyspace);
+			cql = cql.replace("[$KEYSPACE_PLACEHOLDER$]", _keyspace);
 
-			_session.execute(sql);
+			_session.execute(cql);
 		}
 
 		_session.execute("use " + _keyspace);
@@ -185,19 +185,19 @@ public class CQLImporter {
 
 		KeyspaceMetadata keyspaceMetadata = metadata.getKeyspace(_keyspace);
 
-		List<String> sqls = getCQLs("views");
+		List<String> cqls = getCQLs("views");
 
-		for (String sql : sqls) {
-			int index = sql.indexOf(" as");
+		for (String cql : cqls) {
+			int index = cql.indexOf(" as");
 
-			String materializedViewName = sql.substring(25, index);
+			String materializedViewName = cql.substring(25, index);
 
 			materializedViewName = materializedViewName.toLowerCase();
 
 			if (keyspaceMetadata.getMaterializedView(materializedViewName) ==
 					null) {
 
-				_session.execute(sql);
+				_session.execute(cql);
 			}
 		}
 	}
@@ -207,17 +207,17 @@ public class CQLImporter {
 
 		KeyspaceMetadata keyspaceMetadata = metadata.getKeyspace(_keyspace);
 
-		List<String> sqls = getCQLs("tables");
+		List<String> cqls = getCQLs("tables");
 
-		for (String sql : sqls) {
-			int index = sql.indexOf(" (");
+		for (String cql : cqls) {
+			int index = cql.indexOf(" (");
 
-			String tableName = sql.substring(13, index);
+			String tableName = cql.substring(13, index);
 
 			tableName = tableName.toLowerCase();
 
 			if (keyspaceMetadata.getTable(tableName) == null) {
-				_session.execute(sql);
+				_session.execute(cql);
 			}
 		}
 	}
