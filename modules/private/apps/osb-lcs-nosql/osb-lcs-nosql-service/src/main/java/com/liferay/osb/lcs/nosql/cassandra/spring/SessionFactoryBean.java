@@ -20,17 +20,35 @@ import com.datastax.driver.core.Session;
 import com.datastax.driver.core.policies.LoggingRetryPolicy;
 import com.datastax.driver.core.policies.Policies;
 
+import com.liferay.osb.lcs.nosql.importer.CQLImporter;
+
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
+ * @author Riccardo Ferrari
  */
 public class SessionFactoryBean {
+
+	public void afterPropertiesSet() throws Exception {
+		if (_cqlImporterEnabled) {
+			CQLImporter cqlImporter = new CQLImporter();
+
+			cqlImporter.setCluster(getCluster());
+			cqlImporter.setKeyspace(_keyspace);
+
+			cqlImporter.importCQL();
+		}
+	}
 
 	public void destroy() {
 		_cluster.close();
 	}
 
-	public Session getSession() throws Exception {
+	public Cluster getCluster() throws Exception {
+		if (_cluster != null) {
+			return _cluster;
+		}
+
 		Cluster.Builder builder = Cluster.builder();
 
 		for (String hostName : _hostNames) {
@@ -62,11 +80,21 @@ public class SessionFactoryBean {
 
 		_cluster = builder.build();
 
-		return _cluster.connect(_keyspace);
+		return _cluster;
+	}
+
+	public Session getSession() throws Exception {
+		Cluster cluster = getCluster();
+
+		return cluster.connect(_keyspace);
 	}
 
 	public void setCompression(String compression) {
 		_compression = compression;
+	}
+
+	public void setCqlImporterEnabled(boolean cqlImporterEnabled) {
+		_cqlImporterEnabled = cqlImporterEnabled;
 	}
 
 	public void setHostNames(String hostNames) {
@@ -89,6 +117,7 @@ public class SessionFactoryBean {
 
 	private Cluster _cluster;
 	private String _compression;
+	private boolean _cqlImporterEnabled;
 	private String[] _hostNames;
 	private int _hostPort;
 	private String _keyspace;

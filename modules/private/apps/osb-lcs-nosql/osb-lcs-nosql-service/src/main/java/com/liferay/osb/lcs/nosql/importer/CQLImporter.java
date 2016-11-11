@@ -21,75 +21,56 @@ import com.datastax.driver.core.Metadata;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.TableMetadata;
 
-import com.liferay.osb.lcs.nosql.cassandra.spring.SessionFactoryBean;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
+ * @author Riccardo Ferrari
  */
-public class SQLImporter {
+public class CQLImporter {
 
-	public void importSQL() throws Exception {
-		SessionFactoryBean sessionFactoryBean = new SessionFactoryBean();
-
-		sessionFactoryBean.setCompression(_compression);
-		sessionFactoryBean.setHostNames(_hostNames);
-		sessionFactoryBean.setHostPort(_hostPort);
-		sessionFactoryBean.setKeyspace(_keyspace);
-		sessionFactoryBean.setLoggingRetryPolicyEnabled(
-			_loggingRetryPolicyEnabled);
-
-		_session = sessionFactoryBean.getSession();
-
-		_cluster = _session.getCluster();
+	public void importCQL() throws Exception {
+		_session = _cluster.connect();
 
 		importKeyspace();
 
 		importTables();
 
+		importMaterializedViews();
+
 		importIndexes();
 
-		sessionFactoryBean.destroy();
+		_session.close();
 	}
 
-	public void setCompression(String compression) {
-		_compression = compression;
-	}
-
-	public void setHostNames(String hostNames) {
-		_hostNames = hostNames;
-	}
-
-	public void setHostPort(int hostPort) {
-		_hostPort = hostPort;
+	public void setCluster(Cluster cluster) {
+		_cluster = cluster;
 	}
 
 	public void setKeyspace(String keyspace) {
 		_keyspace = keyspace;
 	}
 
-	public void setLoggingRetryPolicyEnabled(
-		boolean loggingRetryPolicyEnabled) {
-
-		_loggingRetryPolicyEnabled = loggingRetryPolicyEnabled;
-	}
-
-	protected List<String> getSQLs(String fileName) throws IOException {
+	protected List<String> getCQLs(String fileName) throws IOException {
 		Class<?> clazz = getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/osb/lcs/nosql/dependencies/" + fileName + ".sql");
+			"com/liferay/osb/lcs/nosql/dependencies/" + fileName + ".cql");
+
+		if (inputStream == null) {
+			Collections.emptyList();
+		}
 
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -107,6 +88,9 @@ public class SQLImporter {
 			byteArrayOutputStream.flush();
 
 			bytes = byteArrayOutputStream.toByteArray();
+		}
+		catch (NullPointerException npe) {
+			return Collections.emptyList();
 		}
 		finally {
 			if (byteArrayOutputStream != null) {
@@ -142,7 +126,7 @@ public class SQLImporter {
 
 		KeyspaceMetadata keyspaceMetadata = metadata.getKeyspace(_keyspace);
 
-		List<String> sqls = getSQLs("indexes");
+		List<String> sqls = getCQLs("indexes");
 
 		for (String sql : sqls) {
 			int beginIndex = sql.indexOf(" on ") + 4;
@@ -184,11 +168,11 @@ public class SQLImporter {
 		Metadata metadata = _cluster.getMetadata();
 
 		if (metadata.getKeyspace(_keyspace) == null) {
-			List<String> sqls = getSQLs("keyspace");
+			List<String> sqls = getCQLs("keyspace");
 
 			String sql = sqls.get(0);
 
-			sql = sql.replace("[$OSB_LCS_KEYSPACE$]", _keyspace);
+			sql = sql.replace("[$KEYSPACE_PLACEHOLDER$]", _keyspace);
 
 			_session.execute(sql);
 		}
@@ -196,12 +180,34 @@ public class SQLImporter {
 		_session.execute("use " + _keyspace);
 	}
 
+	protected void importMaterializedViews() throws Exception {
+		Metadata metadata = _cluster.getMetadata();
+
+		KeyspaceMetadata keyspaceMetadata = metadata.getKeyspace(_keyspace);
+
+		List<String> sqls = getCQLs("views");
+
+		for (String sql : sqls) {
+			int index = sql.indexOf(" as");
+
+			String materializedViewName = sql.substring(25, index);
+
+			materializedViewName = materializedViewName.toLowerCase();
+
+			if (keyspaceMetadata.getMaterializedView(materializedViewName) ==
+					null) {
+
+				_session.execute(sql);
+			}
+		}
+	}
+
 	protected void importTables() throws Exception {
 		Metadata metadata = _cluster.getMetadata();
 
 		KeyspaceMetadata keyspaceMetadata = metadata.getKeyspace(_keyspace);
 
-		List<String> sqls = getSQLs("tables");
+		List<String> sqls = getCQLs("tables");
 
 		for (String sql : sqls) {
 			int index = sql.indexOf(" (");
@@ -217,11 +223,7 @@ public class SQLImporter {
 	}
 
 	private Cluster _cluster;
-	private String _compression;
-	private String _hostNames;
-	private int _hostPort;
 	private String _keyspace;
-	private boolean _loggingRetryPolicyEnabled;
 	private Session _session;
 
 }
