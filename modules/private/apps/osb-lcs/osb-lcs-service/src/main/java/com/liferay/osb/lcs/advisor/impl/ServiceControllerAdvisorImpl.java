@@ -22,22 +22,18 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 
 import java.io.UnsupportedEncodingException;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
 import java.net.URLDecoder;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 
 /**
  * @author Igor Beslic
@@ -85,7 +81,15 @@ public class ServiceControllerAdvisorImpl implements ServiceControllerAdvisor {
 		}
 		catch (Exception e) {
 			if (e instanceof InvocationTargetException) {
-				throw (Exception)e.getCause();
+				if (e.getCause() instanceof NoSuchMethodError) {
+					NoSuchMethodError noSuchMethodError =
+						(NoSuchMethodError)e.getCause();
+
+					throw new RuntimeException(noSuchMethodError.getMessage());
+				}
+				else {
+					throw (Exception)e.getCause();
+				}
 			}
 
 			throw e;
