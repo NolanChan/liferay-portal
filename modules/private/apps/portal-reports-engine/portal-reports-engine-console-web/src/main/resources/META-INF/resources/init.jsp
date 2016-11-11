@@ -37,6 +37,7 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
@@ -55,7 +56,6 @@ page import="com.liferay.portal.reports.engine.ReportDataSourceType" %><%@
 page import="com.liferay.portal.reports.engine.ReportFormat" %><%@
 page import="com.liferay.portal.reports.engine.console.configuration.ReportsGroupServiceEmailConfiguration" %><%@
 page import="com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleConstants" %><%@
-page import="com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys" %><%@
 page import="com.liferay.portal.reports.engine.console.exception.DefinitionFileException" %><%@
 page import="com.liferay.portal.reports.engine.console.exception.DefinitionNameException" %><%@
 page import="com.liferay.portal.reports.engine.console.exception.EntryEmailDeliveryException" %><%@
@@ -79,8 +79,9 @@ page import="com.liferay.portal.reports.engine.console.service.permission.Report
 page import="com.liferay.portal.reports.engine.console.service.permission.SourcePermissionChecker" %><%@
 page import="com.liferay.portal.reports.engine.console.status.ReportStatus" %><%@
 page import="com.liferay.portal.reports.engine.console.util.ReportsEngineConsoleUtil" %><%@
+page import="com.liferay.portal.reports.engine.console.web.admin.internal.display.context.ReportsEngineDisplayContext" %><%@
+page import="com.liferay.portal.reports.engine.console.web.admin.internal.display.context.util.ReportsEngineRequestHelper" %><%@
 page import="com.liferay.portal.reports.engine.console.web.admin.util.EmailConfigurationUtil" %><%@
-page import="com.liferay.portal.reports.engine.console.web.admin.util.ReportWebRequestHelper" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.text.Format" %>
@@ -102,8 +103,15 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-ReportsGroupServiceEmailConfiguration reportsGroupServiceEmailConfiguration = ReportWebRequestHelper.getReportsGroupServiceEmailConfiguration(request);
-
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+
+ReportsEngineDisplayContext reportsEngineDisplayContext = new ReportsEngineDisplayContext(liferayPortletRequest, liferayPortletResponse);
+
+ReportsEngineRequestHelper reportsEngineRequestHelper = new ReportsEngineRequestHelper(request);
+
+ReportsGroupServiceEmailConfiguration reportsGroupServiceEmailConfiguration = reportsEngineRequestHelper.getReportsGroupServiceEmailConfiguration();
+
+boolean hasAddDefinitionPermission = AdminResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_DEFINITION);
+boolean hasAddSourcePermission = AdminResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ReportsActionKeys.ADD_SOURCE);
 %>

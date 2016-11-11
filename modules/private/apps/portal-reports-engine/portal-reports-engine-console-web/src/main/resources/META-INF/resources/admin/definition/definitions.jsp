@@ -47,10 +47,6 @@ String reportName = ParamUtil.getString(request, "reportName");
 		headerNames="definition-name,source-name,create-date"
 		iteratorURL="<%= iteratorURL %>"
 	>
-		<liferay-ui:search-form
-			page="/admin/definition/definition_search.jsp"
-			servletContext="<%= application %>"
-		/>
 
 		<%
 		DisplayTerms displayTerms = searchContainer.getDisplayTerms();

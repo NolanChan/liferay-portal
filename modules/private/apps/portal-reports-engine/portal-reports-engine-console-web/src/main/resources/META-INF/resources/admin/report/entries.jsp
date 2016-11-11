@@ -58,10 +58,6 @@
 		headerNames="definition-name,requested-by,create-date"
 		iteratorURL="<%= iteratorURL %>"
 	>
-		<liferay-ui:search-form
-			page="/admin/report/entry_search.jsp"
-			servletContext="<%= application %>"
-		/>
 
 		<%
 		DisplayTerms displayTerms = searchContainer.getDisplayTerms();

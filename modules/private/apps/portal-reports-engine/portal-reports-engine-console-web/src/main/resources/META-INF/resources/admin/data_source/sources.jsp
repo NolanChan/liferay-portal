@@ -43,10 +43,6 @@ String driverUrl = ParamUtil.getString(request, "driverUrl");
 		headerNames="source-name,create-date"
 		iteratorURL="<%= iteratorURL %>"
 	>
-		<liferay-ui:search-form
-			page="/admin/data_source/source_search.jsp"
-			servletContext="<%= application %>"
-		/>
 
 		<%
 		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
