@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.reports.engine.console.configuration.ReportsGroupServiceEmailConfiguration;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
-import com.liferay.portal.reports.engine.console.web.admin.util.ReportWebRequestHelper;
+import com.liferay.portal.reports.engine.console.web.admin.internal.display.context.util.ReportsEngineRequestHelper;
 
 import javax.portlet.PortletRequest;
 
@@ -58,10 +58,13 @@ public class ReportsConfigurationAction
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
+		ReportsEngineRequestHelper reportsEngineRequestHelper =
+			new ReportsEngineRequestHelper(request);
+
 		ReportsGroupServiceEmailConfiguration
 			reportsGroupServiceEmailConfiguration =
-				ReportWebRequestHelper.getReportsGroupServiceEmailConfiguration(
-					request);
+				reportsEngineRequestHelper.
+					getReportsGroupServiceEmailConfiguration();
 
 		removeDefaultValue(
 			portletRequest, modifiableSettings, "emailDeliveryBody",

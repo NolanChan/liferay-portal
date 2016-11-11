@@ -15,7 +15,18 @@
 package com.liferay.portal.reports.engine.console.web.admin.internal.display.context.util;
 
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.reports.engine.console.configuration.ReportsGroupServiceEmailConfiguration;
+import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleConstants;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -36,6 +47,45 @@ public class ReportsEngineRequestHelper extends BaseRequestHelper {
 		_portletPreferences = _renderRequest.getPreferences();
 	}
 
+	public ReportsGroupServiceEmailConfiguration
+		getReportsGroupServiceEmailConfiguration() {
+
+	try {
+		if (_reportsGroupServiceEmailConfiguration == null) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_renderRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			if (Validator.isNotNull(portletDisplay.getPortletResource())) {
+				_reportsGroupServiceEmailConfiguration =
+					ConfigurationProviderUtil.getConfiguration(
+						ReportsGroupServiceEmailConfiguration.class,
+						new ParameterMapSettingsLocator(
+							_renderRequest.getParameterMap(),
+							new GroupServiceSettingsLocator(
+								themeDisplay.getSiteGroupId(),
+								ReportsEngineConsoleConstants.SERVICE_NAME)));
+			}
+			else {
+				_reportsGroupServiceEmailConfiguration =
+					ConfigurationProviderUtil.getConfiguration(
+						ReportsGroupServiceEmailConfiguration.class,
+						new GroupServiceSettingsLocator(
+							themeDisplay.getSiteGroupId(),
+							ReportsEngineConsoleConstants.SERVICE_NAME));
+			}
+		}
+
+		return _reportsGroupServiceEmailConfiguration;
+	}
+
+	catch (PortalException pe) {
+		throw new SystemException(pe);
+	}
+}
+
 	public PortletPreferences getPortletPreferences() {
 		return _portletPreferences;
 	}
@@ -44,6 +94,8 @@ public class ReportsEngineRequestHelper extends BaseRequestHelper {
 		return _renderRequest;
 	}
 
+	private ReportsGroupServiceEmailConfiguration
+	_reportsGroupServiceEmailConfiguration;
 	private final PortletPreferences _portletPreferences;
 	private final RenderRequest _renderRequest;
 
