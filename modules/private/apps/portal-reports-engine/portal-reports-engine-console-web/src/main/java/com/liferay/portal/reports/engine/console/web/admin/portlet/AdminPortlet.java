@@ -15,9 +15,11 @@
 package com.liferay.portal.reports.engine.console.web.admin.portlet;
 
 import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,21 +27,29 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
+import com.liferay.portal.reports.engine.console.web.admin.configuration.ReportsEngineAdminWebConfiguration;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Map;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Gavin Wan
  */
 @Component(
+	configurationPid = "com.liferay.portal.reports.engine.console.web.admin.configuration.ReportsEngineAdminWebConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=reports-portlet",
@@ -72,6 +82,29 @@ import org.osgi.service.component.annotations.Component;
 public class AdminPortlet extends MVCPortlet {
 
 	@Override
+	public void render(RenderRequest request, RenderResponse response)
+		throws IOException, PortletException {
+
+		try {
+			request.setAttribute(
+				ReportsEngineAdminWebConfiguration.class.getName(),
+				_reportsEngineAdminWebConfiguration);
+		}
+		catch (Exception e) {
+			if (isSessionErrorException(e)) {
+				hideDefaultErrorMessage(request);
+
+				SessionErrors.add(request, e.getClass());
+			}
+			else {
+				throw new PortletException(e);
+			}
+		}
+
+		super.render(request, response);
+	}
+
+	@Override
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
@@ -94,6 +127,14 @@ public class AdminPortlet extends MVCPortlet {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_reportsEngineAdminWebConfiguration =
+			ConfigurableUtil.createConfigurable(
+				ReportsEngineAdminWebConfiguration.class, properties);
+	}
+
 	protected void serveDownload(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
@@ -113,5 +154,8 @@ public class AdminPortlet extends MVCPortlet {
 			resourceRequest, resourceResponse, shortFileName, inputStream,
 			contentType);
 	}
+
+	private volatile ReportsEngineAdminWebConfiguration
+		_reportsEngineAdminWebConfiguration;
 
 }
