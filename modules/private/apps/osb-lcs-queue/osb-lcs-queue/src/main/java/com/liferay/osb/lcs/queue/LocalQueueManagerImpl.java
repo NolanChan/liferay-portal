@@ -56,7 +56,9 @@ public class LocalQueueManagerImpl extends AbstractQueueManagerImpl {
 	}
 
 	@Override
-	public <T extends Message> List<T> getMessages(String queueName) {
+	public <T extends Message> List<T> getMessages(
+		String queueName, Class clazz) {
+
 		List<T> messages = new ArrayList<>();
 
 		Queue<String> queue = getQueue(queueName);
@@ -67,7 +69,7 @@ public class LocalQueueManagerImpl extends AbstractQueueManagerImpl {
 			int counter = 0;
 
 			while (!queue.isEmpty() && (counter < Integer.MAX_VALUE)) {
-				T message = Message.fromJSON(queue.poll());
+				T message = Message.fromJSON(queue.poll(), clazz);
 
 				messages.add(message);
 			}

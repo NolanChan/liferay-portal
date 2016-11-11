@@ -16,6 +16,8 @@ package com.liferay.osb.lcs.queue;
 
 import com.liferay.lcs.messaging.Message;
 
+import java.util.List;
+
 /**
  * @author Ivica Cardic
  */
@@ -23,6 +25,10 @@ public abstract class AbstractQueueManagerImpl implements QueueManager {
 
 	@Override
 	public void afterPropertiesSet() {
+	}
+
+	public <T extends Message> List<T> getMessages(String queueName) {
+		return getMessages(queueName, Message.class);
 	}
 
 	@Override

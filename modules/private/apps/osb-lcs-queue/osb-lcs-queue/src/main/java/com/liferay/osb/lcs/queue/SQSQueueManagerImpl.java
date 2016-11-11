@@ -39,7 +39,6 @@ import com.amazonaws.services.sqs.model.SendMessageRequest;
 import com.amazonaws.services.sqs.model.SetQueueAttributesRequest;
 
 import com.liferay.lcs.messaging.Message;
-import com.liferay.lcs.util.LCSConstants;
 
 import java.text.SimpleDateFormat;
 
@@ -87,7 +86,7 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 
 		_amazonSQS.setRegion(region);
 
-		String globalOutQueueURL = getQueueURL(QueueUtil.getOutQueueName());
+		String globalOutQueueURL = getQueueURL(Queue.CLOUD_OUT.getName());
 
 		configureDeadLetterQueue(globalOutQueueURL);
 	}
@@ -111,14 +110,16 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 
 		for (Message message : messages) {
 			List<Message> queueMessages = null;
+			SQSTransportMetadata sqsTransportMetadata =
+				message.getTransportMetadata();
 
-			if (map.containsKey(message.getQueueURL())) {
-				queueMessages = map.get(message.getQueueURL());
+			if (map.containsKey(sqsTransportMetadata.getQueueURL())) {
+				queueMessages = map.get(sqsTransportMetadata.getQueueURL());
 			}
 			else {
 				queueMessages = new ArrayList<>();
 
-				map.put(message.getQueueURL(), queueMessages);
+				map.put(sqsTransportMetadata.getQueueURL(), queueMessages);
 			}
 
 			queueMessages.add(message);
@@ -129,10 +130,13 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 				deleteMessageBatchRequestEntries = new ArrayList<>();
 
 			for (Message message : entry.getValue()) {
+				SQSTransportMetadata sqsTrasnportMetadata =
+					message.getTransportMetadata();
+
 				DeleteMessageBatchRequestEntry deleteMessageBatchRequestEntry =
 					new DeleteMessageBatchRequestEntry(
-						message.getOriginalMessageId(),
-						message.getRecipientHandle());
+						sqsTrasnportMetadata.getMessageId(),
+						sqsTrasnportMetadata.getReceiptHandle());
 
 				deleteMessageBatchRequestEntries.add(
 					deleteMessageBatchRequestEntry);
@@ -147,7 +151,9 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 	}
 
 	@Override
-	public <T extends Message> List<T> getMessages(String queueName) {
+	public <T extends Message> List<T> getMessages(
+		String queueName, Class clazz) {
+
 		List<T> messages = new ArrayList<>();
 
 		String queueURL = getQueueURL(queueName);
@@ -168,12 +174,18 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 
 			String body = sqsMessage.getBody();
 
-			T message = Message.fromJSON(body);
+			T message = Message.fromJSON(body, clazz);
 
-			message.setOriginalMessageId(sqsMessage.getMessageId());
+			SQSTransportMetadata sqsTransportMetadata =
+				new SQSTransportMetadata();
+
+			sqsTransportMetadata.setMessageId(sqsMessage.getMessageId());
+			sqsTransportMetadata.setQueueURL(queueURL);
+			sqsTransportMetadata.setReceiptHandle(
+				sqsMessage.getReceiptHandle());
+
 			message.setQueueName(queueName);
-			message.setQueueURL(queueURL);
-			message.setRecipientHandle(sqsMessage.getReceiptHandle());
+			message.setTransportMetadata(sqsTransportMetadata);
 
 			messages.add(message);
 		}
@@ -183,7 +195,7 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 
 	public <T extends Message> void moveMessageToDeadLetterQueue(T message) {
 		String cloudOutDeadLetterQueueURL = getQueueURL(
-			QueueUtil.getOutDeadLetterQueueName());
+			Queue.CLOUD_OUT_DEAD_LETTER.getName());
 
 		_amazonSQS.sendMessage(
 			new SendMessageRequest(
@@ -223,7 +235,7 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 
 		CreateQueueResult globalOutDeadLetterCreateQueueResult =
 			_amazonSQS.createQueue(
-				getPrefixedQueueName(QueueUtil.getOutDeadLetterQueueName()));
+				getPrefixedQueueName(Queue.CLOUD_OUT_DEAD_LETTER.getName()));
 
 		GetQueueAttributesRequest deadLetterGetQueueAttributesRequest =
 			new GetQueueAttributesRequest(
@@ -273,38 +285,29 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 		CreateQueueRequest createQueueRequest = new CreateQueueRequest(
 			getPrefixedQueueName(queueName));
 
-		if (QueueUtil.isInQueue(queueName) ||
-			QueueUtil.isHandshakeQueue(queueName) ||
-			QueueUtil.isHeartbeatQueue(queueName)) {
+		Queue queue = Queue.toQueue(queueName);
 
-			Map<String, String> attributes = new HashMap<>();
+		Map<String, String> attributes = new HashMap<>();
 
+		if (queue.getMessageRetentionPeriod() != -1) {
 			attributes.put(
 				QueueAttributeName.MessageRetentionPeriod.toString(),
-				String.valueOf(
-					LCSConstants.COMMAND_MESSAGE_TASK_SCHEDULE_PERIOD * 6));
-
-			if (QueueUtil.isHandshakeQueue(queueName) ||
-				QueueUtil.isHeartbeatQueue(queueName)) {
-
-				attributes.put(
-					QueueAttributeName.ReceiveMessageWaitTimeSeconds.toString(),
-					String.valueOf(20));
-			}
-
-			createQueueRequest.setAttributes(attributes);
+				String.valueOf(queue.getMessageRetentionPeriod()));
 		}
 
-		if (QueueUtil.isOutQueue(queueName)) {
-			Map<String, String> attributes = new HashMap<>();
-
+		if (queue.getReceiveMessageWaitTimeSeconds() != -1) {
 			attributes.put(
 				QueueAttributeName.ReceiveMessageWaitTimeSeconds.toString(),
-				String.valueOf(20));
+				String.valueOf(queue.getReceiveMessageWaitTimeSeconds()));
+		}
+
+		if (queue.getVisibilityTimeout() != -1) {
 			attributes.put(
 				QueueAttributeName.VisibilityTimeout.toString(),
-				String.valueOf(300));
+				String.valueOf(queue.getVisibilityTimeout()));
+		}
 
+		if (!attributes.isEmpty()) {
 			createQueueRequest.setAttributes(attributes);
 		}
 

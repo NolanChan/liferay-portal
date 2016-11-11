@@ -32,6 +32,9 @@ public interface QueueManager {
 
 	public <T extends Message> List<T> getMessages(String queueName);
 
+	public <T extends Message> List<T> getMessages(
+		String queueName, Class clazz);
+
 	public <T extends Message> void moveMessageToDeadLetterQueue(T message);
 
 	public <T extends Message> void sendMessage(T message);

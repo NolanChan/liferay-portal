@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * @author Ivica Cardic
  */
-public class RabitMQQueueManagerImpl extends AbstractQueueManagerImpl {
+public class RabbitMQQueueManagerImpl extends AbstractQueueManagerImpl {
 
 	@Override
 	public void deleteMessage(Message message) {
@@ -50,7 +50,10 @@ public class RabitMQQueueManagerImpl extends AbstractQueueManagerImpl {
 			Channel channel = getChannel(message.getQueueName());
 
 			try {
-				channel.basicAck(message.getDeliveryTag(), false);
+				RabbitMQTransportMetadata trasnportMetadata =
+					message.getTransportMetadata();
+
+				channel.basicAck(trasnportMetadata.getDeliveryTag(), false);
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);
@@ -59,7 +62,9 @@ public class RabitMQQueueManagerImpl extends AbstractQueueManagerImpl {
 	}
 
 	@Override
-	public <T extends Message> List<T> getMessages(String queueName) {
+	public <T extends Message> List<T> getMessages(
+		String queueName, Class clazz) {
+
 		List<T> messages = new ArrayList<>();
 
 		try {
@@ -74,13 +79,19 @@ public class RabitMQQueueManagerImpl extends AbstractQueueManagerImpl {
 
 				String body = new String(getResponse.getBody());
 
-				T message = Message.fromJSON(body);
+				T message = Message.fromJSON(body, clazz);
+
+				message.setQueueName(queueName);
 
 				Envelope envelope = getResponse.getEnvelope();
 
-				message.setDeliveryTag(envelope.getDeliveryTag());
+				RabbitMQTransportMetadata rabbitMQTransportMetadata =
+					new RabbitMQTransportMetadata();
 
-				message.setQueueName(queueName);
+				rabbitMQTransportMetadata.setDeliveryTag(
+					envelope.getDeliveryTag());
+
+				message.setTransportMetadata(rabbitMQTransportMetadata);
 
 				messages.add(message);
 
