@@ -39,7 +39,7 @@ public class LocalQueueManagerImpl extends AbstractQueueManagerImpl {
 			currentThread.setContextClassLoader(
 				PortalClassLoaderUtil.getClassLoader());
 
-			_portalCache = SingleVMPoolUtil.getCache(
+			_portalCache = SingleVMPoolUtil.getPortalCache(
 				LocalQueueManagerImpl.class.getName());
 		}
 		finally {
@@ -94,7 +94,7 @@ public class LocalQueueManagerImpl extends AbstractQueueManagerImpl {
 	}
 
 	protected Queue<String> getQueue(String queueName) {
-		Queue<String> queue = (Queue<String>)_portalCache.get(queueName);
+		Queue<String> queue = _portalCache.get(queueName);
 
 		if (queue == null) {
 			queue = new ConcurrentLinkedQueue<>();
@@ -105,6 +105,6 @@ public class LocalQueueManagerImpl extends AbstractQueueManagerImpl {
 		return queue;
 	}
 
-	private final PortalCache _portalCache;
+	private final PortalCache<String, Queue<String>> _portalCache;
 
 }
