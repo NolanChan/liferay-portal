@@ -69,7 +69,7 @@ public class CQLImporter {
 			"com/liferay/osb/lcs/nosql/dependencies/" + fileName + ".cql");
 
 		if (inputStream == null) {
-			Collections.emptyList();
+			return Collections.emptyList();
 		}
 
 		ByteArrayOutputStream byteArrayOutputStream =
@@ -89,17 +89,10 @@ public class CQLImporter {
 
 			bytes = byteArrayOutputStream.toByteArray();
 		}
-		catch (NullPointerException npe) {
-			return Collections.emptyList();
-		}
 		finally {
-			if (byteArrayOutputStream != null) {
-				byteArrayOutputStream.close();
-			}
+			byteArrayOutputStream.close();
 
-			if (inputStream != null) {
-				inputStream.close();
-			}
+			inputStream.close();
 		}
 
 		List<String> cqls = new ArrayList<>();
