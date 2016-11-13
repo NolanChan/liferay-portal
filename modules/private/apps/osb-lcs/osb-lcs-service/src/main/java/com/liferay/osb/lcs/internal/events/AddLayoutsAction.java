@@ -14,53 +14,68 @@
 
 package com.liferay.osb.lcs.internal.events;
 
-import com.liferay.osb.lcs.util.ActionKeys;
-import com.liferay.osb.lcs.util.PortletKeys;
-import com.liferay.osb.lcs.util.PortletPropsValues;
-import com.liferay.osb.model.CorpProject;
-import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
+import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
+import com.liferay.osb.lcs.model.CorpProject;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.events.LifecycleEvent;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.LayoutTypePortlet;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.service.ResourcePermissionServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.util.portlet.PortletProps;
 
 import java.util.List;
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
- * @see    com.liferay.portal.events.AddDefaultLayoutPrototypesAction
- * @see    com.liferay.portal.events.AddDefaultLayoutSetPrototypesAction
  */
-public class AddLayoutsAction extends SimpleAction {
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	property = {"key=application.startup.events"},
+	service = LifecycleAction.class
+)
+public class AddLayoutsAction implements LifecycleAction {
 
 	@Override
-	public void run(String[] ids) throws ActionException {
+	public void processLifecycleEvent(LifecycleEvent lifecycleEvent)
+		throws ActionException {
+
+		String[] ids = lifecycleEvent.getIds();
+
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		try {
@@ -81,6 +96,55 @@ public class AddLayoutsAction extends SimpleAction {
 		}
 	}
 
+	@Reference(bind = "-", unbind = "-")
+	public void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setLayoutLocalService(LayoutLocalService layoutLocalService) {
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setLayoutSetLocalService(
+		LayoutSetLocalService layoutSetLocalService) {
+
+		_layoutSetLocalService = layoutSetLocalService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setResourcePermissionService(
+		ResourcePermissionService resourcePermissionService) {
+
+		_resourcePermissionService = resourcePermissionService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
+			OSBLCSConfiguration.class, properties);
+
+		System.out.println("Component activated");
+	}
+
 	protected Layout addLayout(
 			LayoutSet layoutSet, String name, String friendlyURL,
 			String layouteTemplateId)
@@ -90,7 +154,7 @@ public class AddLayoutsAction extends SimpleAction {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		Layout layout = LayoutLocalServiceUtil.addLayout(
+		Layout layout = _layoutLocalService.addLayout(
 			group.getCreatorUserId(), group.getGroupId(),
 			layoutSet.isPrivateLayout(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, StringPool.BLANK,
@@ -102,7 +166,7 @@ public class AddLayoutsAction extends SimpleAction {
 
 		layoutTypePortlet.setLayoutTemplateId(0, layouteTemplateId, false);
 
-		LayoutLocalServiceUtil.updateLayout(layout);
+		_layoutLocalService.updateLayout(layout);
 
 		return layout;
 	}
@@ -117,7 +181,7 @@ public class AddLayoutsAction extends SimpleAction {
 		portletId = layoutTypePortlet.addPortletId(
 			userId, portletId, columnId, -1, false);
 
-		LayoutLocalServiceUtil.updateLayout(layout);
+		_layoutLocalService.updateLayout(layout);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -129,20 +193,20 @@ public class AddLayoutsAction extends SimpleAction {
 	}
 
 	protected void checkCorpProjectClassName() throws Exception {
-		ClassNameLocalServiceUtil.addClassName(CorpProject.class.getName());
+		_classNameLocalService.addClassName(CorpProject.class.getName());
 	}
 
 	protected void checkLayoutSet(
 			long userId, Group group, boolean privateLayout)
 		throws Exception {
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			group.getGroupId(), privateLayout);
 
-		String[] names = PortletPropsValues.OSB_LCS_PORTAL_PUBLIC_LAYOUT_NAMES;
+		String[] names = _osbLCSConfiguration.osbLcsPortalPublicLayoutNames();
 
 		if (privateLayout) {
-			names = PortletPropsValues.OSB_LCS_PORTAL_PRIVATE_LAYOUT_NAMES;
+			names = _osbLCSConfiguration.osbLcsPortalPrivateLayoutNames();
 		}
 
 		for (int i = 0; i < names.length; i++) {
@@ -157,17 +221,17 @@ public class AddLayoutsAction extends SimpleAction {
 			Layout layout = null;
 
 			try {
-				layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+				layout = _layoutLocalService.getFriendlyURLLayout(
 					group.getGroupId(), privateLayout, normalizedFriendlyURL);
 			}
 			catch (NoSuchLayoutException nsle) {
 				String layoutTemplateId =
-					PortletPropsValues.OSB_LCS_PORTAL_PUBLIC_LAYOUT_TEMPLATE_ID;
+					_osbLCSConfiguration.osbLcsPortalPublicLayoutTemplateId();
 
 				if (privateLayout) {
 					layoutTemplateId =
-						PortletPropsValues.
-							OSB_LCS_PORTAL_PRIVATE_LAYOUT_TEMPLATE_ID;
+						_osbLCSConfiguration.
+							osbLcsPortalPrivateLayoutTemplateId();
 				}
 
 				layout = addLayout(
@@ -186,12 +250,12 @@ public class AddLayoutsAction extends SimpleAction {
 			String[] portletIds = null;
 
 			if (privateLayout) {
-				portletIds = PortletProps.getArray(
-					"osb.lcs.portal.private.layout." + i + ".portlets");
+				portletIds =
+					_osbLCSConfiguration.osbLcsPortalPrivateLayoutPortlets();
 			}
 			else {
-				portletIds = PortletProps.getArray(
-					"osb.lcs.portal.public.layout." + i + ".portlets");
+				portletIds =
+					_osbLCSConfiguration.osbLcsPortalPublicLayoutPortlets();
 			}
 
 			for (String portletId : portletIds) {
@@ -212,7 +276,7 @@ public class AddLayoutsAction extends SimpleAction {
 	}
 
 	protected void doRun(long companyId, long userId) throws Exception {
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			companyId, GroupConstants.GUEST);
 
 		checkCorpProjectClassName();
@@ -243,58 +307,58 @@ public class AddLayoutsAction extends SimpleAction {
 	}
 
 	protected User getUser(long companyId) throws Exception {
-		Role role = RoleLocalServiceUtil.getRole(
+		Role role = _roleLocalService.getRole(
 			companyId, RoleConstants.ADMINISTRATOR);
 
-		List<User> users = UserLocalServiceUtil.getRoleUsers(role.getRoleId());
+		List<User> users = _userLocalService.getRoleUsers(role.getRoleId());
 
 		return users.get(0);
 	}
 
 	protected void setRolePermissions(Layout layout) throws Exception {
-		Role role = RoleLocalServiceUtil.getRole(
+		Role role = _roleLocalService.getRole(
 			layout.getCompanyId(), RoleConstants.GUEST);
 
-		ResourcePermissionServiceUtil.setIndividualResourcePermissions(
+		_resourcePermissionService.setIndividualResourcePermissions(
 			layout.getGroupId(), layout.getCompanyId(), Layout.class.getName(),
 			String.valueOf(layout.getPlid()), role.getRoleId(), new String[0]);
 
-		role = RoleLocalServiceUtil.getRole(
+		role = _roleLocalService.getRole(
 			layout.getCompanyId(), RoleConstants.POWER_USER);
 
-		ResourcePermissionServiceUtil.setIndividualResourcePermissions(
+		_resourcePermissionService.setIndividualResourcePermissions(
 			layout.getGroupId(), layout.getCompanyId(), Layout.class.getName(),
 			String.valueOf(layout.getPlid()), role.getRoleId(),
-			new String[] {ActionKeys.VIEW});
+			new String[] {OSBLCSActionKeys.VIEW});
 
-		role = RoleLocalServiceUtil.getRole(
+		role = _roleLocalService.getRole(
 			layout.getCompanyId(), RoleConstants.USER);
 
-		ResourcePermissionServiceUtil.setIndividualResourcePermissions(
+		_resourcePermissionService.setIndividualResourcePermissions(
 			layout.getGroupId(), layout.getCompanyId(), Layout.class.getName(),
 			String.valueOf(layout.getPlid()), role.getRoleId(),
-			new String[] {ActionKeys.VIEW});
+			new String[] {OSBLCSActionKeys.VIEW});
 	}
 
 	protected void updateLookAndFeel(long companyId) throws Exception {
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			companyId, GroupConstants.GUEST);
 
-		LayoutSetLocalServiceUtil.updateLookAndFeel(
+		_layoutSetLocalService.updateLookAndFeel(
 			group.getGroupId(), "osblcs_WAR_osblcstheme", "01",
-			StringPool.BLANK, false);
+			StringPool.BLANK);
 	}
 
 	protected void updateWebGuestHomeLayout(long groupId, long userId)
 		throws Exception {
 
 		try {
-			Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+			Layout layout = _layoutLocalService.getFriendlyURLLayout(
 				groupId, false, StringPool.SLASH + "home");
 
-			layout = LayoutLocalServiceUtil.updateLookAndFeel(
+			layout = _layoutLocalService.updateLookAndFeel(
 				groupId, false, layout.getLayoutId(), "osblcs_WAR_osblcstheme",
-				"01", StringPool.BLANK, false);
+				"01", StringPool.BLANK);
 
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
@@ -307,7 +371,7 @@ public class AddLayoutsAction extends SimpleAction {
 
 			layoutTypePortlet.setLayoutTemplateId(userId, "1_column", false);
 
-			layout = LayoutLocalServiceUtil.updateLayout(layout);
+			layout = _layoutLocalService.updateLayout(layout);
 
 			addPortletId(userId, layout, PortletKeys.LOGIN, "column-1");
 		}
@@ -316,6 +380,17 @@ public class AddLayoutsAction extends SimpleAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AddLayoutsAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		AddLayoutsAction.class);
+
+	private static volatile OSBLCSConfiguration _osbLCSConfiguration;
+
+	private ClassNameLocalService _classNameLocalService;
+	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private LayoutSetLocalService _layoutSetLocalService;
+	private ResourcePermissionService _resourcePermissionService;
+	private RoleLocalService _roleLocalService;
+	private UserLocalService _userLocalService;
 
 }

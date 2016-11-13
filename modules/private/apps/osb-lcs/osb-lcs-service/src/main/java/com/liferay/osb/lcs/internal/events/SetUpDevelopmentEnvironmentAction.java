@@ -16,14 +16,17 @@ package com.liferay.osb.lcs.internal.events;
 
 import com.liferay.lcs.subscription.SubscriptionType;
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.advisor.DevelopmentAdvisor;
 import com.liferay.osb.lcs.advisor.UserAdvisor;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSProject;
-import com.liferay.osb.lcs.model.LCSRoleConstants;
 import com.liferay.osb.lcs.model.LCSSubscriptionEntry;
 import com.liferay.osb.lcs.model.impl.LCSSubscriptionEntryImpl;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodeDetailsService;
+import com.liferay.osb.lcs.service.LCSClusterEntryLocalService;
 import com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSClusterEntryServiceUtil;
 import com.liferay.osb.lcs.service.LCSClusterNodeLocalServiceUtil;
@@ -32,21 +35,21 @@ import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
 import com.liferay.osb.lcs.service.LCSRoleServiceUtil;
 import com.liferay.osb.lcs.service.LCSSubscriptionEntryLocalServiceUtil;
 import com.liferay.osb.lcs.util.ApplicationProfile;
-import com.liferay.osb.lcs.util.DevelopmentUtil;
-import com.liferay.osb.lcs.util.PortletPropsValues;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.events.LifecycleEvent;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextThreadLocal;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,11 +60,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-public class SetUpDevelopmentEnvironmentAction extends SimpleAction {
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	property = {"key=application.startup.events"},
+	service = LifecycleAction.class
+)
+public class SetUpDevelopmentEnvironmentAction implements LifecycleAction {
 
 	public static final String[] ORGANIZATION_NAMES = {
 		"Delvian", "Human", "Leviathan", "Sebacean"
@@ -79,7 +93,11 @@ public class SetUpDevelopmentEnvironmentAction extends SimpleAction {
 	};
 
 	@Override
-	public void run(String[] ids) throws ActionException {
+	public void processLifecycleEvent(LifecycleEvent lifecycleEvent)
+		throws ActionException {
+
+		String[] ids = lifecycleEvent.getIds();
+
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 		_originalPrincipalThreadLocalName = PrincipalThreadLocal.getName();
@@ -117,6 +135,41 @@ public class SetUpDevelopmentEnvironmentAction extends SimpleAction {
 		}
 	}
 
+	@Reference(bind = "-", unbind = "-")
+	public void setDevelopmentAdvisor(DevelopmentAdvisor developmentAdvisor) {
+		_developmentAdvisor = developmentAdvisor;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setLCSClusterEntryLocalService(
+		LCSClusterEntryLocalService lcsClusterEntryLocalService) {
+
+		_lcsClusterEntryLocalService = lcsClusterEntryLocalService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setLCSClusterNodeDetailsService(
+		LCSClusterNodeDetailsService lcsClusterNodeDetailsService) {
+
+		_lcsClusterNodeDetailsService = lcsClusterNodeDetailsService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setUserAdvisor(UserAdvisor userAdvisor) {
+		_userAdvisor = userAdvisor;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
+			OSBLCSConfiguration.class, properties);
+	}
+
 	protected void addLCSClusterEntries() throws Exception {
 		if (LCSClusterEntryLocalServiceUtil.getLCSClusterEntriesCount() > 0) {
 			return;
@@ -129,11 +182,12 @@ public class SetUpDevelopmentEnvironmentAction extends SimpleAction {
 
 			for (int j = 1; j < count; j++) {
 				LCSClusterEntry lcsClusterEntry =
-					LCSClusterEntryLocalServiceUtil.addLCSClusterEntry(
+					_lcsClusterEntryLocalService.addLCSClusterEntry(
 						lcsProject.getLcsProjectId(),
 						"Environment " + lcsProject.getLcsProjectId() + j,
 						"Description " + lcsProject.getLcsProjectId() + j,
-						"Location " + lcsProject.getLcsProjectId() + j, j % 2);
+						"Location " + lcsProject.getLcsProjectId() + j,
+						SubscriptionType.UNDEFINED.name(), j % 2);
 
 				addLCSClusterNodes(lcsClusterEntry.getLcsClusterEntryId());
 			}
@@ -143,7 +197,7 @@ public class SetUpDevelopmentEnvironmentAction extends SimpleAction {
 	protected void addLCSClusterNodes(long lcsClusterEntryId) throws Exception {
 		int count = _random.nextInt(10);
 
-		List<LCSClusterNode> lcsClusterNodes = new ArrayList<LCSClusterNode>();
+		List<LCSClusterNode> lcsClusterNodes = new ArrayList<>();
 
 		for (int i = 1; i < count; i++) {
 			LCSClusterNode lcsClusterNode =
@@ -240,7 +294,7 @@ public class SetUpDevelopmentEnvironmentAction extends SimpleAction {
 	}
 
 	protected List<LCSProject> addLCSProjects() throws Exception {
-		List<LCSProject> lcsProjects = new ArrayList<LCSProject>();
+		List<LCSProject> lcsProjects = new ArrayList<>();
 
 		List<LCSProject> userLCSProjects =
 			LCSProjectServiceUtil.getUserLCSProjects();
@@ -365,7 +419,7 @@ public class SetUpDevelopmentEnvironmentAction extends SimpleAction {
 		for (String userFullName : USER_NAMES) {
 			String[] userFirstLastName = userFullName.split("\\s");
 
-			User mockUser = DevelopmentUtil.addUser(
+			User mockUser = _developmentAdvisor.addUser(
 				user.getUserId(), companyId, userFirstLastName[0],
 				userFirstLastName[1]);
 
@@ -401,13 +455,13 @@ public class SetUpDevelopmentEnvironmentAction extends SimpleAction {
 	}
 
 	protected void doRun(long companyId) throws Exception {
-		if (PortletPropsValues.APPLICATION_PROFILE !=
+		if (_osbLCSConfiguration.applicationProfile() !=
 				ApplicationProfile.LOCAL_DEVELOPMENT) {
 
 			return;
 		}
 
-		DevelopmentUtil.addLCSUserRole(companyId);
+		_developmentAdvisor.addLCSUserRole(companyId);
 
 		List<LCSProject> lcsProjects = addLCSProjects();
 
@@ -440,7 +494,7 @@ public class SetUpDevelopmentEnvironmentAction extends SimpleAction {
 		}
 
 		long randomTime =
-			(long) (multiplier * (endDate.getTime() - startDate.getTime()) +
+			(long)(multiplier * (endDate.getTime() - startDate.getTime()) +
 				startDate.getTime());
 
 		Date randomDate = new Date(randomTime);
@@ -478,16 +532,17 @@ public class SetUpDevelopmentEnvironmentAction extends SimpleAction {
 		}
 	}
 
-	@BeanReference(type = LCSClusterNodeDetailsService.class)
-	private static LCSClusterNodeDetailsService _lcsClusterNodeDetailsService;
+	private static volatile OSBLCSConfiguration _osbLCSConfiguration;
 
-	@BeanReference(type = UserAdvisor.class)
-	private static UserAdvisor _userAdvisor;
-
+	private DevelopmentAdvisor _developmentAdvisor;
+	private LCSClusterEntryLocalService _lcsClusterEntryLocalService;
+	private LCSClusterNodeDetailsService _lcsClusterNodeDetailsService;
 	private PermissionChecker _originalPermissionChecker;
 	private String _originalPrincipalThreadLocalName;
-	private Random _random = new Random();
-	private Map<SubscriptionType, Integer> _subscriptionTypeCounts =
-		new HashMap<SubscriptionType, Integer>();
+	private final Random _random = new Random();
+	private RoleLocalService _roleLocalService;
+	private final Map<SubscriptionType, Integer> _subscriptionTypeCounts =
+		new HashMap<>();
+	private UserAdvisor _userAdvisor;
 
 }

@@ -14,46 +14,67 @@
 
 package com.liferay.osb.lcs.internal.events;
 
-import com.liferay.osb.lcs.navigation.util.NavigationUtil;
-import com.liferay.osb.lcs.service.LCSClusterNodeLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil;
-import com.liferay.portal.kernel.events.Action;
+import com.liferay.osb.lcs.constants.NavigationConstants;
+import com.liferay.osb.lcs.service.LCSClusterNodeLocalService;
+import com.liferay.osb.lcs.service.LCSProjectLocalService;
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.events.LifecycleEvent;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.User;
-import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mladen Cikara
  */
-public class RedirectUserAction extends Action {
+@Component(
+	immediate = true, property = {"key=servlet.service.events.pre"},
+	service = LifecycleAction.class
+)
+public class RedirectUserAction implements LifecycleAction {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response)
+	public void processLifecycleEvent(LifecycleEvent lifecycleEvent)
 		throws ActionException {
 
 		try {
-			doRun(request, response);
+			doRun(lifecycleEvent.getRequest(), lifecycleEvent.getResponse());
 		}
 		catch (Exception e) {
 			throw new ActionException(e);
 		}
 	}
 
+	@Reference(bind = "-", unbind = "-")
+	public void setLcsClusterNodeLocalService(
+		LCSClusterNodeLocalService lcsClusterNodeLocalService) {
+
+		_lcsClusterNodeLocalService = lcsClusterNodeLocalService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setLcsProjectLocalService(
+		LCSProjectLocalService lcsProjectLocalService) {
+
+		_lcsProjectLocalService = lcsProjectLocalService;
+	}
+
 	protected void doRun(
 			HttpServletRequest request, HttpServletResponse response)
-		throws IOException, PortalException, SystemException {
+		throws IOException, PortalException {
 
-		if (!isDefaultLandingPageRequest(request)) {
+		if (!_isDefaultLandingPageRequest(request)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Skipping default landing page");
 			}
@@ -71,9 +92,9 @@ public class RedirectUserAction extends Action {
 			return;
 		}
 
-		LCSProjectLocalServiceUtil.checkUserAccountEntryLCSProject(user);
+		_lcsProjectLocalService.checkUserAccountEntryLCSProject(user);
 
-		if (!LCSClusterNodeLocalServiceUtil.hasUserLCSClusterNodes(
+		if (!_lcsClusterNodeLocalService.hasUserLCSClusterNodes(
 				user.getUserId())) {
 
 			if (_log.isDebugEnabled()) {
@@ -90,7 +111,7 @@ public class RedirectUserAction extends Action {
 		response.sendRedirect(_REDIRECT);
 	}
 
-	private boolean isDefaultLandingPageRequest(HttpServletRequest request) {
+	private boolean _isDefaultLandingPageRequest(HttpServletRequest request) {
 		String currentURL = PortalUtil.getCurrentURL(request);
 
 		if (_log.isTraceEnabled()) {
@@ -105,9 +126,13 @@ public class RedirectUserAction extends Action {
 	}
 
 	private static final String _REDIRECT =
-		NavigationUtil.FRIENDLY_URL_LCS_PRIVATE_SITE +
-			NavigationUtil.FRIENDLY_URL_DASHBOARD;
+		NavigationConstants.FRIENDLY_URL_LCS_PRIVATE_SITE +
+			NavigationConstants.FRIENDLY_URL_DASHBOARD;
 
-	private static Log _log = LogFactoryUtil.getLog(RedirectUserAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		RedirectUserAction.class);
+
+	private LCSClusterNodeLocalService _lcsClusterNodeLocalService;
+	private LCSProjectLocalService _lcsProjectLocalService;
 
 }

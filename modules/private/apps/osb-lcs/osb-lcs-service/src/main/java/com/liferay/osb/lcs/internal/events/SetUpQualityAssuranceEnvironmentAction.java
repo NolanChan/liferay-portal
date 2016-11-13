@@ -14,45 +14,57 @@
 
 package com.liferay.osb.lcs.internal.events;
 
-import com.liferay.osb.lcs.DuplicateLCSProjectCorpProjectIdException;
-import com.liferay.osb.lcs.NoSuchLCSRoleException;
 import com.liferay.osb.lcs.advisor.CompanyAdvisor;
+import com.liferay.osb.lcs.advisor.impl.CompanyAdvisorImpl;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
+import com.liferay.osb.lcs.constants.OSBPortletConstants;
+import com.liferay.osb.lcs.exception.DuplicateLCSProjectCorpProjectIdException;
+import com.liferay.osb.lcs.exception.NoSuchLCSRoleException;
+import com.liferay.osb.lcs.model.CorpProject;
 import com.liferay.osb.lcs.model.LCSProject;
-import com.liferay.osb.lcs.model.LCSRoleConstants;
-import com.liferay.osb.lcs.osbportlet.service.OSBPortletServiceUtil;
-import com.liferay.osb.lcs.osbportlet.util.OSBPortletUtil;
-import com.liferay.osb.lcs.service.LCSMembersServiceUtil;
+import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
+import com.liferay.osb.lcs.service.LCSMembersLocalService;
 import com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil;
 import com.liferay.osb.lcs.util.ApplicationProfile;
-import com.liferay.osb.lcs.util.PortletPropsValues;
-import com.liferay.osb.model.CorpProject;
-import com.liferay.portal.NoSuchUserException;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.events.LifecycleEvent;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Igor Beslic
  */
-public class SetUpQualityAssuranceEnvironmentAction extends SimpleAction {
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	property = {"key=application.startup.events"},
+	service = LifecycleAction.class
+)
+public class SetUpQualityAssuranceEnvironmentAction implements LifecycleAction {
 
-	public static final String[] CORP_PROJECT_NAMES = {
-		"Liferay QA"
-	};
+	public static final String[] CORP_PROJECT_NAMES = {"Liferay QA"};
 
 	public static final String[] USER_EMAIL_ADDRESSES = {
 		"liferay.qa.cloud1@gmail.com", "liferay.qa.cloud2@gmail.com",
@@ -64,8 +76,10 @@ public class SetUpQualityAssuranceEnvironmentAction extends SimpleAction {
 	};
 
 	@Override
-	public void run(String[] ids) throws ActionException {
-		if (PortletPropsValues.APPLICATION_PROFILE !=
+	public void processLifecycleEvent(LifecycleEvent lifecycleEvent)
+		throws ActionException {
+
+		if (_osbLCSConfiguration.applicationProfile() !=
 				ApplicationProfile.QUALITY_ASSURANCE) {
 
 			return;
@@ -88,12 +102,46 @@ public class SetUpQualityAssuranceEnvironmentAction extends SimpleAction {
 					}
 				}
 
-			}, 5, TimeUnit.MINUTES);
+			},
+			5, TimeUnit.MINUTES);
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setCompanyAdvisor(CompanyAdvisorImpl companyAdvisor) {
+		_companyAdvisor = companyAdvisor;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setLCSMembersLocalService(
+		LCSMembersLocalService lcsMembersLocalService) {
+
+		_lcsMembersLocalService = lcsMembersLocalService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setOSBPortletService(OSBPortletService osbPortletService) {
+		_osbPortletService = osbPortletService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
+			OSBLCSConfiguration.class, properties);
 	}
 
 	protected void checkUserCorpProject(User user) throws Exception {
 		List<CorpProject> corpProjects =
-			(List<CorpProject>)OSBPortletServiceUtil.getUserCorpProjects(
+			(List<CorpProject>)_osbPortletService.getUserCorpProjects(
 				user.getUserId());
 
 		for (CorpProject corpProject : corpProjects) {
@@ -104,12 +152,12 @@ public class SetUpQualityAssuranceEnvironmentAction extends SimpleAction {
 			}
 		}
 
-		CorpProject corpProject = OSBPortletServiceUtil.addCorpProject(
+		CorpProject corpProject = _osbPortletService.addCorpProject(
 			user.getUserId(), CORP_PROJECT_NAMES[0]);
 
-		OSBPortletServiceUtil.addUserCorpProjectRoles(
+		_osbPortletService.addUserCorpProjectRoles(
 			corpProject.getCorpProjectId(), new long[] {user.getUserId()},
-			OSBPortletUtil.ROLE_OSB_CORP_LCS_USER);
+			OSBPortletConstants.ROLE_OSB_CORP_LCS_USER);
 
 		LCSProject lcsProject = null;
 
@@ -117,7 +165,7 @@ public class SetUpQualityAssuranceEnvironmentAction extends SimpleAction {
 			lcsProject = LCSProjectLocalServiceUtil.addLCSProject(
 				corpProject, user.getUserId());
 		}
-		catch (DuplicateLCSProjectCorpProjectIdException dlcspcpide) {
+		catch (DuplicateLCSProjectCorpProjectIdException dlcspcpie) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Reusing existing LCS project");
 			}
@@ -133,7 +181,7 @@ public class SetUpQualityAssuranceEnvironmentAction extends SimpleAction {
 
 	protected void checkUserLCSRole(User user) throws Exception {
 		List<CorpProject> corpProjects =
-			(List<CorpProject>)OSBPortletServiceUtil.getUserCorpProjects(
+			(List<CorpProject>)_osbPortletService.getUserCorpProjects(
 				user.getUserId());
 
 		for (CorpProject corpProject : corpProjects) {
@@ -165,7 +213,7 @@ public class SetUpQualityAssuranceEnvironmentAction extends SimpleAction {
 					LCSRoleConstants.ROLE_LCS_ADMINISTRATOR);
 			}
 
-			LCSMembersServiceUtil.validateLCSSiteMembership(
+			_lcsMembersLocalService.validateLCSSiteMembership(
 				user.getCompanyId(), user.getUserId());
 
 			return;
@@ -185,10 +233,10 @@ public class SetUpQualityAssuranceEnvironmentAction extends SimpleAction {
 			String emailAddress = USER_EMAIL_ADDRESSES[i];
 
 			try {
-				User remoteUser = OSBPortletServiceUtil.getRemoteUser(
+				User remoteUser = _osbPortletService.getRemoteUser(
 					emailAddress);
 
-				User localUser = UserLocalServiceUtil.fetchUserByEmailAddress(
+				User localUser = _userLocalService.fetchUserByEmailAddress(
 					_companyAdvisor.getCompanyId(),
 					remoteUser.getEmailAddress());
 
@@ -197,7 +245,7 @@ public class SetUpQualityAssuranceEnvironmentAction extends SimpleAction {
 
 					String[] userFullNameParts = userFullName.split("\\s");
 
-					localUser = UserLocalServiceUtil.addUser(
+					localUser = _userLocalService.addUser(
 						user.getUserId(), _companyAdvisor.getCompanyId(), false,
 						"liferayqa", "liferayqa", true, null, emailAddress, 0,
 						null, null, userFullNameParts[0], null,
@@ -211,7 +259,7 @@ public class SetUpQualityAssuranceEnvironmentAction extends SimpleAction {
 				if (!remoteUserUuid.equals(localUser.getUuid())) {
 					localUser.setUuid(remoteUserUuid);
 
-					localUser = UserLocalServiceUtil.updateUser(localUser);
+					localUser = _userLocalService.updateUser(localUser);
 				}
 
 				if (!StringUtil.equalsIgnoreCase(
@@ -239,21 +287,25 @@ public class SetUpQualityAssuranceEnvironmentAction extends SimpleAction {
 	}
 
 	protected User getUser(long companyId) throws Exception {
-		Role role = RoleLocalServiceUtil.getRole(
+		Role role = _roleLocalService.getRole(
 			companyId, RoleConstants.ADMINISTRATOR);
 
-		List<User> users = UserLocalServiceUtil.getRoleUsers(role.getRoleId());
+		List<User> users = _userLocalService.getRoleUsers(role.getRoleId());
 
 		return users.get(0);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SetUpQualityAssuranceEnvironmentAction.class);
 
-	@BeanReference(type = CompanyAdvisor.class)
-	private static CompanyAdvisor _companyAdvisor;
-
-	private static ScheduledExecutorService _scheduledExecutorService =
+	private static volatile OSBLCSConfiguration _osbLCSConfiguration;
+	private static final ScheduledExecutorService _scheduledExecutorService =
 		Executors.newScheduledThreadPool(1);
+
+	private CompanyAdvisor _companyAdvisor;
+	private LCSMembersLocalService _lcsMembersLocalService;
+	private OSBPortletService _osbPortletService;
+	private RoleLocalService _roleLocalService;
+	private UserLocalService _userLocalService;
 
 }

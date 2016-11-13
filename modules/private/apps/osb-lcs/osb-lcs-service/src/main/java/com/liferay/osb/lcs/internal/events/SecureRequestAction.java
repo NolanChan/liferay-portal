@@ -14,26 +14,42 @@
 
 package com.liferay.osb.lcs.internal.events;
 
-import com.liferay.osb.lcs.util.PortletPropsValues;
-import com.liferay.portal.kernel.events.Action;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.events.LifecycleEvent;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.PortalUtil;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+
 /**
  * @author Ivica Cardic
  */
-public class SecureRequestAction extends Action {
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	property = {"key=servlet.service.events.pre"},
+	service = LifecycleAction.class
+)
+public class SecureRequestAction implements LifecycleAction {
 
 	@Override
-	public void run(HttpServletRequest request, HttpServletResponse response)
+	public void processLifecycleEvent(LifecycleEvent lifecycleEvent)
 		throws ActionException {
+
+		HttpServletRequest request = lifecycleEvent.getRequest();
 
 		try {
 			if (request.isSecure()) {
@@ -52,6 +68,8 @@ public class SecureRequestAction extends Action {
 				return;
 			}
 
+			HttpServletResponse response = lifecycleEvent.getResponse();
+
 			if (response.isCommitted()) {
 				return;
 			}
@@ -69,6 +87,12 @@ public class SecureRequestAction extends Action {
 		catch (Exception e) {
 			throw new ActionException(e);
 		}
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
+			OSBLCSConfiguration.class, properties);
 	}
 
 	protected String getRedirect(HttpServletRequest request) {
@@ -101,7 +125,7 @@ public class SecureRequestAction extends Action {
 		boolean securedDomain = false;
 
 		for (String domain :
-				PortletPropsValues.OSB_LCS_PORTAL_SECURED_DOMAINS) {
+				_osbLCSConfiguration.osbLcsPortalSecuredDomains()) {
 
 			if (requestURL.contains(domain)) {
 				securedDomain = true;
@@ -114,7 +138,7 @@ public class SecureRequestAction extends Action {
 			return false;
 		}
 
-		for (String path : PortletPropsValues.OSB_LCS_PORTAL_UNSECURED_PATHS) {
+		for (String path : _osbLCSConfiguration.osbLcsPortalUnsecuredPaths()) {
 			if (requestURL.contains(path)) {
 				return false;
 			}
@@ -125,6 +149,9 @@ public class SecureRequestAction extends Action {
 
 	private static final boolean _REQUIRES_SECURE = true;
 
-	private static Log _log = LogFactoryUtil.getLog(SecureRequestAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SecureRequestAction.class);
+
+	private static volatile OSBLCSConfiguration _osbLCSConfiguration;
 
 }

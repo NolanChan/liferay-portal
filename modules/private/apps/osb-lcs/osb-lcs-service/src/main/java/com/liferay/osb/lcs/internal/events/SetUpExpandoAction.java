@@ -14,46 +14,74 @@
 
 package com.liferay.osb.lcs.internal.events;
 
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.events.LifecycleEvent;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.model.User;
-import com.liferay.portlet.expando.model.ExpandoColumn;
-import com.liferay.portlet.expando.model.ExpandoColumnConstants;
-import com.liferay.portlet.expando.model.ExpandoTable;
-import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
-import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
  */
-public class SetUpExpandoAction extends SimpleAction {
+@Component(
+	immediate = true, property = {"key=application.startup.events"},
+	service = LifecycleAction.class
+)
+public class SetUpExpandoAction implements LifecycleAction {
 
 	@Override
-	public void run(String[] ids) throws ActionException {
+	public void processLifecycleEvent(LifecycleEvent lifecycleEvent)
+		throws ActionException {
+
+		String[] ids = lifecycleEvent.getIds();
+
 		try {
 			ExpandoTable expandoTable =
-				ExpandoTableLocalServiceUtil.fetchDefaultTable(
+				_expandoTableLocalService.fetchDefaultTable(
 					GetterUtil.getLong(ids[0]), User.class.getName());
 
 			if (expandoTable == null) {
-				expandoTable = ExpandoTableLocalServiceUtil.addDefaultTable(
+				expandoTable = _expandoTableLocalService.addDefaultTable(
 					GetterUtil.getLong(ids[0]), User.class.getName());
 			}
 
-			ExpandoColumn expandoColumn =
-				ExpandoColumnLocalServiceUtil.getColumn(
-					expandoTable.getTableId(), "defaultLCSProjectId");
+			ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
+				expandoTable.getTableId(), "defaultLCSProjectId");
 
 			if (expandoColumn == null) {
-				ExpandoColumnLocalServiceUtil.addColumn(
+				_expandoColumnLocalService.addColumn(
 					expandoTable.getTableId(), "defaultLCSProjectId",
-					ExpandoColumnConstants.LONG, 0l);
+					ExpandoColumnConstants.LONG, 0L);
 			}
 		}
 		catch (Exception e) {
 			throw new ActionException(e);
 		}
 	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setExpandoColumnLocalService(
+		ExpandoColumnLocalService expandoColumnLocalService) {
+
+		_expandoColumnLocalService = expandoColumnLocalService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setExpandoTableLocalService(
+		ExpandoTableLocalService expandoTableLocalService) {
+
+		_expandoTableLocalService = expandoTableLocalService;
+	}
+
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 }

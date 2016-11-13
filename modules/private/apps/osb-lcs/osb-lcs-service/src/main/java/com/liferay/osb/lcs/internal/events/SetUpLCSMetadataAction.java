@@ -14,15 +14,17 @@
 
 package com.liferay.osb.lcs.internal.events;
 
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
 import com.liferay.osb.lcs.model.LCSMetadata;
-import com.liferay.osb.lcs.nosql.service.LCSMetadataDetailsServiceUtil;
+import com.liferay.osb.lcs.nosql.service.LCSMetadataDetailsService;
 import com.liferay.osb.lcs.service.LCSMetadataLocalServiceUtil;
 import com.liferay.osb.lcs.util.ApplicationProfile;
-import com.liferay.osb.lcs.util.PortletPropsValues;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.events.LifecycleEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.util.portlet.PortletProps;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,14 +33,26 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+
 /**
  * @author Matija Petanjek
  */
-public class SetUpLCSMetadataAction extends SimpleAction {
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	property = {"key=application.startup.events"},
+	service = LifecycleAction.class
+)
+public class SetUpLCSMetadataAction implements LifecycleAction {
 
 	@Override
-	public void run(String[] strings) throws ActionException {
-		if (PortletPropsValues.APPLICATION_PROFILE ==
+	public void processLifecycleEvent(LifecycleEvent lifecycleEvent)
+		throws ActionException {
+
+		if (_osbLCSConfiguration.applicationProfile() ==
 				ApplicationProfile.PRODUCTION) {
 
 			return;
@@ -52,16 +66,26 @@ public class SetUpLCSMetadataAction extends SimpleAction {
 		}
 	}
 
+	public void setLCSMetadataDetailsService(
+		LCSMetadataDetailsService lcsMetadataDetailsService) {
+
+		_lcsMetadataDetailsService = lcsMetadataDetailsService;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
+			OSBLCSConfiguration.class, properties);
+	}
+
 	protected void addLCSMetadata() throws Exception {
 		int i = 0;
 
-		while (true) {
-			String[] lcsMetadataAttributes = PortletProps.getArray(
-				"osb.lcs.portlet.model.lcsmetadata." + i++);
+		for (String lcsMetadataEntry :
+				_osbLCSConfiguration.osbLcsPortletModelLcsmetadata()) {
 
-			if (lcsMetadataAttributes.length == 0) {
-				return;
-			}
+			String[] lcsMetadataAttributes = lcsMetadataEntry.split(
+				StringPool.COMMA);
 
 			int buildNumber = GetterUtil.getInteger(lcsMetadataAttributes[0]);
 			String gitTag = lcsMetadataAttributes[1];
@@ -81,7 +105,7 @@ public class SetUpLCSMetadataAction extends SimpleAction {
 					buildNumber, gitTag, portalEdition, supportedLCSPortlet,
 					supportedPatchingTool);
 
-				LCSMetadataDetailsServiceUtil.addLCSMetadataDetails(
+				_lcsMetadataDetailsService.addLCSMetadataDetails(
 					buildNumber, new HashMap<String, String>(), gitTag,
 					portalEdition, getPortalProperties(gitTag));
 			}
@@ -91,7 +115,7 @@ public class SetUpLCSMetadataAction extends SimpleAction {
 	protected Map<String, String> getPortalProperties(String gitTag)
 		throws IOException {
 
-		Map<String, String> portalProperties = new HashMap<String, String>();
+		Map<String, String> portalProperties = new HashMap<>();
 
 		InputStream inputStream =
 			SetUpLCSMetadataAction.class.getResourceAsStream(
@@ -107,5 +131,9 @@ public class SetUpLCSMetadataAction extends SimpleAction {
 
 		return portalProperties;
 	}
+
+	private static volatile OSBLCSConfiguration _osbLCSConfiguration;
+
+	private LCSMetadataDetailsService _lcsMetadataDetailsService;
 
 }
