@@ -41,9 +41,9 @@ public class SetUpExpandoAction implements LifecycleAction {
 	public void processLifecycleEvent(LifecycleEvent lifecycleEvent)
 		throws ActionException {
 
-		String[] ids = lifecycleEvent.getIds();
-
 		try {
+			String[] ids = lifecycleEvent.getIds();
+
 			ExpandoTable expandoTable =
 				_expandoTableLocalService.fetchDefaultTable(
 					GetterUtil.getLong(ids[0]), User.class.getName());
