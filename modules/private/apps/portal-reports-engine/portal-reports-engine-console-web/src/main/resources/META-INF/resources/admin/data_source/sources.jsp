@@ -43,25 +43,9 @@ String driverUrl = ParamUtil.getString(request, "driverUrl");
 		headerNames="source-name,create-date"
 		iteratorURL="<%= iteratorURL %>"
 	>
-
-		<%
-		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
-
-		if (displayTerms.isAdvancedSearch()) {
-			total = SourceServiceUtil.getSourcesCount(themeDisplay.getSiteGroupId(), name, driverUrl, displayTerms.isAndOperator());
-
-			searchContainer.setTotal(total);
-
-			searchContainer.setResults(SourceServiceUtil.getSources(themeDisplay.getSiteGroupId(), name, driverUrl, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), null));
-		}
-		else {
-			total = SourceServiceUtil.getSourcesCount(themeDisplay.getSiteGroupId(), displayTerms.getKeywords(), displayTerms.getKeywords(), false);
-
-			searchContainer.setTotal(total);
-
-			searchContainer.setResults(SourceServiceUtil.getSources(themeDisplay.getSiteGroupId(), displayTerms.getKeywords(), displayTerms.getKeywords(), false, searchContainer.getStart(), searchContainer.getEnd(), null));
-		}
-		%>
+		<liferay-ui:search-container-results>
+			<%@ include file="/admin/data_source/source_search_results.jspf" %>
+		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.reports.engine.console.model.Source"

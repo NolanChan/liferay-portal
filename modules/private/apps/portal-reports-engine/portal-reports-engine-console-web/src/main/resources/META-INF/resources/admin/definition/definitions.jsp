@@ -47,25 +47,9 @@ String reportName = ParamUtil.getString(request, "reportName");
 		headerNames="definition-name,source-name,create-date"
 		iteratorURL="<%= iteratorURL %>"
 	>
-
-		<%
-		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
-
-		if (displayTerms.isAdvancedSearch()) {
-			total = DefinitionServiceUtil.getDefinitionsCount(themeDisplay.getSiteGroupId(), definitionName, description, sourceId, reportName, displayTerms.isAndOperator());
-
-			searchContainer.setTotal(total);
-
-			searchContainer.setResults(DefinitionServiceUtil.getDefinitions(themeDisplay.getSiteGroupId(), definitionName, description, sourceId, reportName, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), null));
-		}
-		else {
-			total = DefinitionServiceUtil.getDefinitionsCount(themeDisplay.getSiteGroupId(), displayTerms.getKeywords(), displayTerms.getKeywords(), null, displayTerms.getKeywords(), false);
-
-			searchContainer.setTotal(total);
-
-			searchContainer.setResults(DefinitionServiceUtil.getDefinitions(themeDisplay.getSiteGroupId(), displayTerms.getKeywords(), displayTerms.getKeywords(), null, displayTerms.getKeywords(), false, searchContainer.getStart(), searchContainer.getEnd(), null));
-		}
-		%>
+		<liferay-ui:search-container-results>
+			<%@ include file="/admin/definition/definition_search_results.jspf" %>
+		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.reports.engine.console.model.Definition"

@@ -58,28 +58,9 @@
 		headerNames="definition-name,requested-by,create-date"
 		iteratorURL="<%= iteratorURL %>"
 	>
-
-		<%
-		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
-
-		Date startDate = PortalUtil.getDate(startDateMonth, startDateDay, startDateYear, timeZone, null);
-		Date endDate = PortalUtil.getDate(endDateMonth, endDateDay + 1, endDateYear, timeZone, null);
-
-		if (displayTerms.isAdvancedSearch()) {
-			total = EntryServiceUtil.getEntriesCount(themeDisplay.getSiteGroupId(), definitionName, null, startDate, endDate, displayTerms.isAndOperator());
-
-			searchContainer.setTotal(total);
-
-			searchContainer.setResults(EntryServiceUtil.getEntries(themeDisplay.getSiteGroupId(), definitionName, null, startDate, endDate, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), null));
-		}
-		else {
-			total = EntryServiceUtil.getEntriesCount(themeDisplay.getSiteGroupId(), displayTerms.getKeywords(), null, null, null, false);
-
-			searchContainer.setTotal(total);
-
-			searchContainer.setResults(EntryServiceUtil.getEntries(themeDisplay.getSiteGroupId(), displayTerms.getKeywords(), null, null, null, false, searchContainer.getStart(), searchContainer.getEnd(), null));
-		}
-		%>
+		<liferay-ui:search-container-results>
+			<%@ include file="/admin/report/entry_search_results.jspf" %>
+		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.reports.engine.console.model.Entry"
