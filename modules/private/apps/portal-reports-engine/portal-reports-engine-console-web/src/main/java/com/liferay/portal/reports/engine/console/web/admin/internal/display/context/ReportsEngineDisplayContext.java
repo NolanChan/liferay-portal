@@ -14,7 +14,6 @@
 
 package com.liferay.portal.reports.engine.console.web.admin.internal.display.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -27,6 +26,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
 import com.liferay.portal.reports.engine.console.web.admin.configuration.ReportsEngineAdminWebConfiguration;
 import com.liferay.portal.reports.engine.console.web.admin.internal.display.context.util.ReportsEngineRequestHelper;
+import com.liferay.portal.reports.engine.console.web.admin.internal.search.DefinitionSearch;
+import com.liferay.portal.reports.engine.console.web.admin.internal.search.EntrySearch;
+import com.liferay.portal.reports.engine.console.web.admin.internal.search.SourceSearch;
 
 import javax.portlet.PortletURL;
 
@@ -57,6 +59,11 @@ public class ReportsEngineDisplayContext {
 			_liferayPortletRequest, _liferayPortletResponse);
 
 		return portletURL.toString();
+	}
+
+	public DefinitionSearch getDefinitionSearch() {
+		return new DefinitionSearch(
+			_reportsEngineRequestHelper.getRenderRequest(), getPortletURL());
 	}
 
 	public String getDisplayStyle() {
@@ -96,6 +103,11 @@ public class ReportsEngineDisplayContext {
 
 	public String[] getDisplayViews() {
 		return _DISPLAY_VIEWS;
+	}
+
+	public EntrySearch getEntrySearch() {
+		return new EntrySearch(
+			_reportsEngineRequestHelper.getRenderRequest(), getPortletURL());
 	}
 
 	public String getKeywords() {
@@ -158,12 +170,17 @@ public class ReportsEngineDisplayContext {
 		return _orderByType;
 	}
 
-	public PortletURL getPortletURL() throws PortalException {
+	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("tabs1", getTabs1());
 
 		return portletURL;
+	}
+
+	public SourceSearch getSourceSearch() {
+		return new SourceSearch(
+			_reportsEngineRequestHelper.getRenderRequest(), getPortletURL());
 	}
 
 	public String getTabs1() {
@@ -223,7 +240,7 @@ public class ReportsEngineDisplayContext {
 		return _reportsEngineRequestHelper.getPortletName();
 	}
 
-	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
+	private static final String[] _DISPLAY_VIEWS = {"list"};
 
 	private String _displayStyle;
 	private String _keywords;
