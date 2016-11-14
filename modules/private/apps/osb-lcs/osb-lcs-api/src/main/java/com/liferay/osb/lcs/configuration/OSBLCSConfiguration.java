@@ -29,6 +29,9 @@ public interface OSBLCSConfiguration {
 	@Meta.AD(deflt = "LOCAL_DEVELOPMENT", required = true)
 	public ApplicationProfile applicationProfile();
 
+	@Meta.AD(deflt = "false", required = false)
+	public boolean billingEnabled();
+
 	@Meta.AD(deflt = "none", required = true)
 	public String cassandraSessionFactoryCompression();
 
@@ -314,6 +317,9 @@ public interface OSBLCSConfiguration {
 
 	@Meta.AD(deflt = "false", required = true)
 	public boolean sendingEmailsEnabled();
+
+	@Meta.AD(deflt = "false", required = false)
+	public boolean subscriptionsEnabled();
 
 	@Meta.AD(deflt = "aws-key", required = true)
 	public String queueFactoryAccessKey();
