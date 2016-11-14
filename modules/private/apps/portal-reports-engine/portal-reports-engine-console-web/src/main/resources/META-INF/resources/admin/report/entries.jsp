@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+EntrySearch entrySearch = reportsEngineDisplayContext.getEntrySearch();
+%>
+
 <liferay-portlet:renderURL varImpl="searchURL">
 	<portlet:param name="mvcPath" value="/admin/view.jsp" />
 </liferay-portlet:renderURL>
@@ -23,40 +27,8 @@
 <aui:form action="<%= searchURL %>" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
 
-	<%
-	String definitionName = ParamUtil.getString(request, "definitionName");
-
-	Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
-
-	int endDateDay = ParamUtil.getInteger(request, "endDateDay", calendar.get(Calendar.DATE));
-	int endDateMonth = ParamUtil.getInteger(request, "endDateMonth", calendar.get(Calendar.MONTH));
-	int endDateYear = ParamUtil.getInteger(request, "endDateYear", calendar.get(Calendar.YEAR));
-
-	calendar.add(Calendar.DATE, -1);
-
-	int startDateDay = ParamUtil.getInteger(request, "startDateDay", calendar.get(Calendar.DATE));
-	int startDateMonth = ParamUtil.getInteger(request, "startDateMonth", calendar.get(Calendar.MONTH));
-	int startDateYear = ParamUtil.getInteger(request, "startDateYear", calendar.get(Calendar.YEAR));
-
-	String userName = ParamUtil.getString(request, "userName");
-	%>
-
-	<liferay-portlet:renderURL varImpl="iteratorURL">
-		<portlet:param name="definitionName" value="<%= definitionName %>" />
-		<portlet:param name="endDateDay" value="<%= String.valueOf(endDateDay) %>" />
-		<portlet:param name="endDateMonth" value="<%= String.valueOf(endDateMonth) %>" />
-		<portlet:param name="endDateYear" value="<%= String.valueOf(endDateYear) %>" />
-		<portlet:param name="startDateDay" value="<%= String.valueOf(startDateDay) %>" />
-		<portlet:param name="startDateMonth" value="<%= String.valueOf(startDateMonth) %>" />
-		<portlet:param name="startDateYear" value="<%= String.valueOf(startDateYear) %>" />
-		<portlet:param name="userName" value="<%= userName %>" />
-	</liferay-portlet:renderURL>
-
 	<liferay-ui:search-container
-		displayTerms="<%= new DisplayTerms(renderRequest) %>"
-		emptyResultsMessage="there-are-no-entries"
-		headerNames="definition-name,requested-by,create-date"
-		iteratorURL="<%= iteratorURL %>"
+		searchContainer="<%= entrySearch %>"
 	>
 		<liferay-ui:search-container-results>
 			<%@ include file="/admin/report/entry_search_results.jspf" %>
@@ -103,8 +75,6 @@
 				path="/admin/report/requested_report_actions.jsp"
 			/>
 		</liferay-ui:search-container-row>
-
-		<div class="separator"><!-- --></div>
 
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>

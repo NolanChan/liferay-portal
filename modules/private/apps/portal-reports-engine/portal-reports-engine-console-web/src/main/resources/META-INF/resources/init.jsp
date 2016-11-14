@@ -28,7 +28,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
-page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
@@ -81,6 +80,12 @@ page import="com.liferay.portal.reports.engine.console.status.ReportStatus" %><%
 page import="com.liferay.portal.reports.engine.console.util.ReportsEngineConsoleUtil" %><%@
 page import="com.liferay.portal.reports.engine.console.web.admin.internal.display.context.ReportsEngineDisplayContext" %><%@
 page import="com.liferay.portal.reports.engine.console.web.admin.internal.display.context.util.ReportsEngineRequestHelper" %><%@
+page import="com.liferay.portal.reports.engine.console.web.admin.internal.search.DefinitionDisplayTerms" %><%@
+page import="com.liferay.portal.reports.engine.console.web.admin.internal.search.DefinitionSearch" %><%@
+page import="com.liferay.portal.reports.engine.console.web.admin.internal.search.EntryDisplayTerms" %><%@
+page import="com.liferay.portal.reports.engine.console.web.admin.internal.search.EntrySearch" %><%@
+page import="com.liferay.portal.reports.engine.console.web.admin.internal.search.SourceDisplayTerms" %><%@
+page import="com.liferay.portal.reports.engine.console.web.admin.internal.search.SourceSearch" %><%@
 page import="com.liferay.portal.reports.engine.console.web.admin.util.EmailConfigurationUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 

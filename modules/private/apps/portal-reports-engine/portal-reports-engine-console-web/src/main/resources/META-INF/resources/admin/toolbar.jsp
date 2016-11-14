@@ -17,12 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(renderRequest, "tabs1", "reports");
-
-PortletURL portletURL = renderResponse.createRenderURL();
+PortletURL portletURL = reportsEngineDisplayContext.getPortletURL();
 
 portletURL.setParameter("mvcPath", "/admin/view.jsp");
-portletURL.setParameter("tabs1", tabs1);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -35,7 +32,7 @@ portletURL.setParameter("tabs1", tabs1);
 		<aui:nav-item
 			href="<%= viewReportsURL %>"
 			label="reports"
-			selected='<%= tabs1.equals("reports") %>'
+			selected="<%= reportsEngineDisplayContext.isReportsTabSelected() %>"
 		/>
 		<c:if test="<%= hasAddDefinitionPermission %>">
 			<portlet:renderURL var="viewDefinitionsURL">
@@ -46,7 +43,7 @@ portletURL.setParameter("tabs1", tabs1);
 			<aui:nav-item
 				href="<%= viewDefinitionsURL %>"
 				label="definitions"
-				selected='<%= tabs1.equals("definitions") %>'
+				selected="<%= reportsEngineDisplayContext.isDefinitionsTabSelected() %>"
 			/>
 		</c:if>
 
@@ -59,7 +56,7 @@ portletURL.setParameter("tabs1", tabs1);
 			<aui:nav-item
 				href="<%= viewSourcesURL %>"
 				label="sources"
-				selected='<%= tabs1.equals("sources") %>'
+				selected="<%= reportsEngineDisplayContext.isSourcesTabSelected() %>"
 			/>
 		</c:if>
 	</aui:nav>

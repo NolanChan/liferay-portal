@@ -17,24 +17,19 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
-
-DisplayTerms displayTerms = searchContainer.getDisplayTerms();
-
-String definitionName = ParamUtil.getString(request, "definitionName");
-String description = ParamUtil.getString(request, "description");
-String reportName = ParamUtil.getString(request, "reportName");
+DefinitionDisplayTerms displayTerms = new DefinitionDisplayTerms(renderRequest);
 %>
 
 <liferay-ui:search-toggle
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_reports_definition_search"
+	markupView="lexicon"
 >
 	<aui:fieldset>
-		<aui:input name="definitionName" size="20" value="<%= definitionName %>" />
+		<aui:input name="<%= DefinitionDisplayTerms.DEFINITION_NAME %>" size="20" value="<%= displayTerms.getDefinitionName() %>" />
 
-		<aui:select label="data-source-name" name="sourceId">
+		<aui:select label="data-source-name" name="<%= DefinitionDisplayTerms.SOURCE_ID %>">
 			<aui:option label="all" />
 			<aui:option label="<%= ReportDataSourceType.PORTAL %>" value="0" />
 
@@ -52,8 +47,8 @@ String reportName = ParamUtil.getString(request, "reportName");
 
 		</aui:select>
 
-		<aui:input name="description" size="20" value="<%= description %>" />
+		<aui:input name="<%= DefinitionDisplayTerms.DESCRIPTION %>" size="20" value="<%= displayTerms.getDescription() %>" />
 
-		<aui:input label="template" name="reportName" size="20" value="<%= reportName %>" />
+		<aui:input label="template" name="<%= DefinitionDisplayTerms.REPORT_NAME %>" size="20" value="<%= displayTerms.getReportName() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>

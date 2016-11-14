@@ -17,31 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1");
+PortletURL portletURL = reportsEngineDisplayContext.getPortletURL();
 
-String name = ParamUtil.getString(request, "name");
-String driverUrl = ParamUtil.getString(request, "driverUrl");
+portletURL.setParameter("mvcPath", "/admin/view.jsp");
+
+SourceSearch sourceSearch = reportsEngineDisplayContext.getSourceSearch();
 %>
 
-<liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="mvcPath" value="/admin/view.jsp" />
-	<portlet:param name="tabs1" value="<%= tabs1 %>" />
-</liferay-portlet:renderURL>
-
-<aui:form action="<%= searchURL %>" method="get" name="fm">
+<aui:form action="<%= portletURL %>" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
 
-	<liferay-portlet:renderURL varImpl="iteratorURL">
-		<portlet:param name="tabs1" value="<%= tabs1 %>" />
-		<portlet:param name="name" value="<%= name %>" />
-		<portlet:param name="driverUrl" value="<%= driverUrl %>" />
-	</liferay-portlet:renderURL>
-
 	<liferay-ui:search-container
-		displayTerms="<%= new DisplayTerms(renderRequest) %>"
-		emptyResultsMessage="there-are-no-sources"
-		headerNames="source-name,create-date"
-		iteratorURL="<%= iteratorURL %>"
+		searchContainer="<%= sourceSearch %>"
 	>
 		<liferay-ui:search-container-results>
 			<%@ include file="/admin/data_source/source_search_results.jspf" %>
@@ -81,8 +68,6 @@ String driverUrl = ParamUtil.getString(request, "driverUrl");
 				path="/admin/data_source/data_source_actions.jsp"
 			/>
 		</liferay-ui:search-container-row>
-
-		<div class="separator"><!-- --></div>
 
 		<aui:button-row cssClass="search-buttons">
 			<portlet:renderURL var="addSourceURL">

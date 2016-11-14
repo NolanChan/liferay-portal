@@ -17,35 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1");
+PortletURL portletURL = reportsEngineDisplayContext.getPortletURL();
 
-String definitionName = ParamUtil.getString(request, "definitionName");
-String description = ParamUtil.getString(request, "description");
-String sourceId = ParamUtil.getString(request, "sourceId");
-String reportName = ParamUtil.getString(request, "reportName");
+portletURL.setParameter("mvcPath", "/admin/view.jsp");
+
+DefinitionSearch definitionSearch = reportsEngineDisplayContext.getDefinitionSearch();
 %>
 
-<liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="mvcPath" value="/admin/view.jsp" />
-	<portlet:param name="tabs1" value="<%= tabs1 %>" />
-</liferay-portlet:renderURL>
-
-<aui:form action="<%= searchURL %>" method="get" name="fm">
-	<liferay-portlet:renderURLParams varImpl="searchURL" />
-
-	<liferay-portlet:renderURL varImpl="iteratorURL">
-		<portlet:param name="tabs1" value="<%= tabs1 %>" />
-		<portlet:param name="definitionName" value="<%= definitionName %>" />
-		<portlet:param name="description" value="<%= description %>" />
-		<portlet:param name="sourceId" value="<%= sourceId %>" />
-		<portlet:param name="reportName" value="<%= reportName %>" />
-	</liferay-portlet:renderURL>
+<aui:form action="<%= portletURL %>" method="get" name="fm">
+	<liferay-portlet:renderURLParams varImpl="portletURL" />
 
 	<liferay-ui:search-container
-		displayTerms="<%= new DisplayTerms(renderRequest) %>"
-		emptyResultsMessage="there-are-no-definitions"
-		headerNames="definition-name,source-name,create-date"
-		iteratorURL="<%= iteratorURL %>"
+		searchContainer="<%= definitionSearch %>"
 	>
 		<liferay-ui:search-container-results>
 			<%@ include file="/admin/definition/definition_search_results.jspf" %>
@@ -89,8 +72,6 @@ String reportName = ParamUtil.getString(request, "reportName");
 				path="/admin/definition/definition_actions.jsp"
 			/>
 		</liferay-ui:search-container-row>
-
-		<div class="separator"><!-- --></div>
 
 		<aui:button-row cssClass="search-buttons">
 			<portlet:renderURL var="addDefinitionURL">

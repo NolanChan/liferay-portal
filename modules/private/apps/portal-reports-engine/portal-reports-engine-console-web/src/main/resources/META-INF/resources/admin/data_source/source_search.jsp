@@ -17,22 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
-
-DisplayTerms displayTerms = searchContainer.getDisplayTerms();
-
-String name = ParamUtil.getString(request, "name");
-String driverUrl = ParamUtil.getString(request, "driverUrl");
+SourceDisplayTerms displayTerms = new SourceDisplayTerms(renderRequest);
 %>
 
 <liferay-ui:search-toggle
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_reports_source_search"
+	markupView="lexicon"
 >
 	<aui:fieldset>
-		<aui:input label="source-name" name="name" size="20" value="<%= name %>" />
+		<aui:input label="source-name" name="<%= SourceDisplayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
 
-		<aui:input label="jdbc-url" name="driverUrl" size="20" value="<%= driverUrl %>" />
+		<aui:input label="jdbc-url" name="<%= SourceDisplayTerms.DRIVER_URL %>" size="20" value="<%= displayTerms.getDriverUrl() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>
