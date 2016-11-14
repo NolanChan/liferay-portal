@@ -29,10 +29,10 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import com.liferay.osb.lcs.advisor.SubscriptionsAdvisor;
 import com.liferay.osb.lcs.model.LCSClusterNodeUptime;
 import com.liferay.osb.lcs.report.ReportContext;
 import com.liferay.osb.lcs.service.LCSClusterNodeUptimeService;
-import com.liferay.osb.lcs.advisor.SubscriptionsAdvisor;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;

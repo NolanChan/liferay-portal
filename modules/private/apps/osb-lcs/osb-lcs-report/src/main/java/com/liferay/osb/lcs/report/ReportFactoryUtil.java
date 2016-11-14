@@ -14,8 +14,6 @@
 
 package com.liferay.osb.lcs.report;
 
-import com.liferay.osb.lcs.report.Report;
-
 /**
  * @author Ivica Cardic
  */
