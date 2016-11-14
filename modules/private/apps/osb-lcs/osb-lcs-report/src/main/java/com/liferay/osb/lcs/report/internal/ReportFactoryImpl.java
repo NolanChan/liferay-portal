@@ -16,23 +16,44 @@ package com.liferay.osb.lcs.report.internal;
 
 import com.liferay.osb.lcs.report.Report;
 import com.liferay.osb.lcs.report.ReportFactory;
+import com.liferay.osb.lcs.report.ReportType;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  */
+@Component(immediate = true, service = ReportFactory.class)
 public class ReportFactoryImpl implements ReportFactory {
 
-	public Report getReport(Type type) {
-		return _reports.get(type);
+	@Activate
+	public void activate() {
+		for (ReportType reportType : ReportType.values()) {
+			Class<?> reportClass = reportType.getReportClass();
+
+			try {
+				_reports.put(reportType, (Report)reportClass.newInstance());
+			}
+			catch (Exception e) {
+				_log.error(
+					"Failed to initalize report type " + reportType.name());
+			}
+		}
 	}
 
-	public void setReports(Map<Type, Report> reports) {
-		_reports = reports;
+	public Report getReport(ReportType reportType) {
+		return _reports.get(reportType);
 	}
 
-	private Map<Type, Report> _reports = new HashMap<>();
+	private static final Log _log = LogFactoryUtil.getLog(
+		ReportFactoryImpl.class);
+
+	private final Map<ReportType, Report> _reports = new HashMap<>();
 
 }

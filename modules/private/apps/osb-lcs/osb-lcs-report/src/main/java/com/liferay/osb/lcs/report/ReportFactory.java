@@ -19,13 +19,6 @@ package com.liferay.osb.lcs.report;
  */
 public interface ReportFactory {
 
-	public Report getReport(Type type);
-
-	public enum Type {
-
-		LCS_CLUSTER_NODE_DELIMITED, LCS_CLUSTER_NODE_UPTIMES_DELIMITED,
-		LCS_CLUSTER_NODE_UPTIMES_INVOICE_PDF, LCS_CLUSTER_NODE_UPTIMES_PDF
-
-	}
+	public Report getReport(ReportType reportType);
 
 }
