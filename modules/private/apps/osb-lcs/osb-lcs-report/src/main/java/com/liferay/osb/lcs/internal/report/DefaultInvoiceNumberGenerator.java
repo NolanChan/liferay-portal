@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.report.internal;
+package com.liferay.osb.lcs.internal.report;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.exception.SystemException;

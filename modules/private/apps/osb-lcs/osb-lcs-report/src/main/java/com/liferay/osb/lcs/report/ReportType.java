@@ -14,9 +14,9 @@
 
 package com.liferay.osb.lcs.report;
 
-import com.liferay.osb.lcs.report.internal.LCSClusterNodeUptimesDelimitedReport;
-import com.liferay.osb.lcs.report.internal.LCSClusterNodeUptimesInvoicePDFReport;
-import com.liferay.osb.lcs.report.internal.LCSClusterNodeUptimesPDFReport;
+import com.liferay.osb.lcs.internal.report.LCSClusterNodeUptimesDelimitedReport;
+import com.liferay.osb.lcs.internal.report.LCSClusterNodeUptimesInvoicePDFReport;
+import com.liferay.osb.lcs.internal.report.LCSClusterNodeUptimesPDFReport;
 
 /**
  * @author Igor Beslic
