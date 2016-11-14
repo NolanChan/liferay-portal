@@ -14,8 +14,11 @@
 
 package com.liferay.osb.lcs.internal.events;
 
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.lcs.subscription.SubscriptionType;
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.oauth.model.OAuthApplication;
+import com.liferay.oauth.service.OAuthApplicationLocalService;
 import com.liferay.osb.lcs.advisor.DevelopmentAdvisor;
 import com.liferay.osb.lcs.advisor.UserAdvisor;
 import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
@@ -31,6 +34,7 @@ import com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSClusterEntryServiceUtil;
 import com.liferay.osb.lcs.service.LCSClusterNodeLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSMessageLocalServiceUtil;
+import com.liferay.osb.lcs.service.LCSMetadataLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSProjectServiceUtil;
 import com.liferay.osb.lcs.service.LCSRoleServiceUtil;
 import com.liferay.osb.lcs.service.LCSSubscriptionEntryLocalServiceUtil;
@@ -136,6 +140,13 @@ public class SetUpDevelopmentEnvironmentAction implements LifecycleAction {
 	}
 
 	@Reference(bind = "-", unbind = "-")
+	public void setCounterLocalService(
+		CounterLocalService counterLocalService) {
+
+		_counterLocalService = counterLocalService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
 	public void setDevelopmentAdvisor(DevelopmentAdvisor developmentAdvisor) {
 		_developmentAdvisor = developmentAdvisor;
 	}
@@ -152,6 +163,13 @@ public class SetUpDevelopmentEnvironmentAction implements LifecycleAction {
 		LCSClusterNodeDetailsService lcsClusterNodeDetailsService) {
 
 		_lcsClusterNodeDetailsService = lcsClusterNodeDetailsService;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setOAuthApplicationLocalService(
+		OAuthApplicationLocalService oAuthApplicationLocalService) {
+
+		_oAuthApplicationLocalService = oAuthApplicationLocalService;
 	}
 
 	@Reference(bind = "-", unbind = "-")
@@ -293,6 +311,15 @@ public class SetUpDevelopmentEnvironmentAction implements LifecycleAction {
 		}
 	}
 
+	protected void addLCSMetadata() throws Exception {
+		if (LCSMetadataLocalServiceUtil.getLCSMetadatasCount() > 0) {
+			return;
+		}
+
+		LCSMetadataLocalServiceUtil.addLCSMetadata(
+			7010, "7.0.x", "GA1", 14, 21);
+	}
+
 	protected List<LCSProject> addLCSProjects() throws Exception {
 		List<LCSProject> lcsProjects = new ArrayList<>();
 
@@ -411,6 +438,36 @@ public class SetUpDevelopmentEnvironmentAction implements LifecycleAction {
 		}
 	}
 
+	protected void addOAuth(long companyId) throws Exception {
+		if (_oAuthApplicationLocalService.getOAuthApplicationsCount() > 0) {
+			return;
+		}
+
+		User user = _userAdvisor.getAdminUser(companyId);
+
+		long oAuthApplicationId = _counterLocalService.increment();
+
+		OAuthApplication oAuthApplication =
+			_oAuthApplicationLocalService.createOAuthApplication(
+				oAuthApplicationId);
+
+		oAuthApplication.setCompanyId(user.getCompanyId());
+		oAuthApplication.setUserId(user.getUserId());
+		oAuthApplication.setUserName(user.getFullName());
+		oAuthApplication.setCreateDate(new Date());
+		oAuthApplication.setModifiedDate(new Date());
+		oAuthApplication.setName("LoacalOAuth");
+		oAuthApplication.setDescription("");
+		oAuthApplication.setConsumerKey("9b1dea2f-ca69-4d49-8aaf-ac7e8275f68a");
+		oAuthApplication.setConsumerSecret("fe8691a9fbc1ff95c2b65f0f4faa1e61");
+		oAuthApplication.setAccessLevel(0);
+		oAuthApplication.setShareableAccessToken(false);
+		oAuthApplication.setCallbackURI("http://localhost");
+		oAuthApplication.setWebsiteURL("localhost");
+
+		_oAuthApplicationLocalService.addOAuthApplication(oAuthApplication);
+	}
+
 	protected void addUsers(long companyId, List<LCSProject> lcsProjects)
 		throws Exception {
 
@@ -470,6 +527,10 @@ public class SetUpDevelopmentEnvironmentAction implements LifecycleAction {
 		addLCSSubscriptionEntries();
 
 		addUsers(companyId, lcsProjects);
+
+		addOAuth(companyId);
+
+		addLCSMetadata();
 
 		addLCSMessages();
 	}
@@ -534,9 +595,11 @@ public class SetUpDevelopmentEnvironmentAction implements LifecycleAction {
 
 	private static volatile OSBLCSConfiguration _osbLCSConfiguration;
 
+	private CounterLocalService _counterLocalService;
 	private DevelopmentAdvisor _developmentAdvisor;
 	private LCSClusterEntryLocalService _lcsClusterEntryLocalService;
 	private LCSClusterNodeDetailsService _lcsClusterNodeDetailsService;
+	private OAuthApplicationLocalService _oAuthApplicationLocalService;
 	private PermissionChecker _originalPermissionChecker;
 	private String _originalPrincipalThreadLocalName;
 	private final Random _random = new Random();
