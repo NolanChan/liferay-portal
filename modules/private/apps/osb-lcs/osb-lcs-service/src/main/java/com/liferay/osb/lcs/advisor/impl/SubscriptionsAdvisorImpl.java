@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.advisor;
+package com.liferay.osb.lcs.advisor.impl;
 
 import com.liferay.lcs.subscription.SubscriptionType;
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.advisor.SubscriptionsAdvisor;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSClusterNodeUptime;
@@ -64,12 +65,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matija Petanjek
  */
 @Component(immediate = true)
-public class SubscriptionsAdvisor {
+public class SubscriptionsAdvisorImpl implements SubscriptionsAdvisor {
 
 	public static final int UPTIMES_START_MONTH = Calendar.JANUARY;
 
 	public static final int UPTIMES_START_YEAR = 2016;
 
+	@Override
 	public String formatUptime(long startTime, long endTime, Locale locale) {
 		String duration = getDuration(startTime, endTime, locale);
 
@@ -89,8 +91,9 @@ public class SubscriptionsAdvisor {
 		return duration.replaceAll(sb.toString(), StringPool.BLANK);
 	}
 
+	@Override
 	public JSONObject getBillsJSONObject(
-			long lcsProjectId, int month, int year, Locale locale)
+		long lcsProjectId, int month, int year, Locale locale)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -161,6 +164,7 @@ public class SubscriptionsAdvisor {
 		return jsonObject;
 	}
 
+	@Override
 	public String getDuration(long start, long end, Locale locale) {
 		StringBundler sb = new StringBundler(11);
 
@@ -203,8 +207,9 @@ public class SubscriptionsAdvisor {
 		return sb.toString();
 	}
 
+	@Override
 	public JSONArray getLCSClusterEntriesJSONArray(
-			long lcsProjectId, Locale locale)
+		long lcsProjectId, Locale locale)
 		throws PortalException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -240,8 +245,9 @@ public class SubscriptionsAdvisor {
 		return jsonArray;
 	}
 
+	@Override
 	public JSONArray getLCSClusterNodesJSONArray(
-			long lcsProjectId, Locale locale)
+		long lcsProjectId, Locale locale)
 		throws PortalException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -279,9 +285,10 @@ public class SubscriptionsAdvisor {
 		return jsonArray;
 	}
 
+	@Override
 	public JSONObject getLCSClusterNodeUptimesJSONObject(
-			long lcsClusterEntryId, long lcsProjectId, int month, int year,
-			Locale locale)
+		long lcsClusterEntryId, long lcsProjectId, int month, int year,
+		Locale locale)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -348,6 +355,7 @@ public class SubscriptionsAdvisor {
 		return jsonObject;
 	}
 
+	@Override
 	public JSONArray getLCSSubscriptionEntriesJSONArray(
 		List<LCSSubscriptionEntry> lcsOrderEntries, Locale locale,
 		TimeZone timeZone) {
@@ -430,9 +438,10 @@ public class SubscriptionsAdvisor {
 		return jsonArray;
 	}
 
+	@Override
 	public JSONArray getPaymentsJSONArray(
-			long lcsProjectId, int startMonth, int startYear, int endMonth,
-			int endYear)
+		long lcsProjectId, int startMonth, int startYear, int endMonth,
+		int endYear)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -462,8 +471,9 @@ public class SubscriptionsAdvisor {
 		return jsonArray;
 	}
 
+	@Override
 	public JSONArray getSubscriptionsUsageJSONArray(
-			long lcsProjectId, Locale locale)
+		long lcsProjectId, Locale locale)
 		throws PortalException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -537,6 +547,7 @@ public class SubscriptionsAdvisor {
 		return jsonArray;
 	}
 
+	@Override
 	public boolean hasElasticSubscription(long lcsProjectId)
 		throws PortalException {
 
@@ -544,6 +555,7 @@ public class SubscriptionsAdvisor {
 			hasLCSProjectElasticLCSSubscriptionEntry(lcsProjectId);
 	}
 
+	@Override
 	public int[] parsePeriod(String period) {
 		String[] periodArray = period.split(StringPool.DASH);
 
