@@ -1,0 +1,9 @@
+Bundle-Name: Liferay OSB LCS Web
+Bundle-SymbolicName: com.liferay.osb.lcs.report
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.osb.lcs.report
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: LCS Portal
+Provide-Capability: liferay.resource.bundle;bundle.symbolic.name=com.liferay.osb.lcs;resource.bundle.base.name=content.Language
+
