@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.report;
+package com.liferay.osb.lcs.report.internal;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;

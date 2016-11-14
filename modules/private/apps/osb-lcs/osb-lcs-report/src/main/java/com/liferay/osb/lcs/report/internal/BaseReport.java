@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.report;
+package com.liferay.osb.lcs.report.internal;
 
 import com.liferay.osb.lcs.report.Report;
 import com.liferay.portal.kernel.util.StringPool;

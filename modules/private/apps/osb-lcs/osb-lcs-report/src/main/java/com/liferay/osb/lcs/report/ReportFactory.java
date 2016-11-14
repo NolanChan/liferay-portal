@@ -12,26 +12,20 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.report;
-
-import com.liferay.osb.lcs.report.Report;
-
-import java.util.HashMap;
-import java.util.Map;
+package com.liferay.osb.lcs.report;
 
 /**
  * @author Ivica Cardic
  */
-public class ReportFactoryImpl implements ReportFactory {
+public interface ReportFactory {
 
-	public Report getReport(Type type) {
-		return _reports.get(type);
+	public Report getReport(Type type);
+
+	public enum Type {
+
+		LCS_CLUSTER_NODE_DELIMITED, LCS_CLUSTER_NODE_UPTIMES_DELIMITED,
+		LCS_CLUSTER_NODE_UPTIMES_INVOICE_PDF, LCS_CLUSTER_NODE_UPTIMES_PDF
+
 	}
-
-	public void setReports(Map<Type, Report> reports) {
-		_reports = reports;
-	}
-
-	private Map<Type, Report> _reports = new HashMap<>();
 
 }

@@ -12,22 +12,13 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.report;
-
-import com.liferay.osb.lcs.report.Report;
+package com.liferay.osb.lcs.report.internal;
 
 /**
  * @author Ivica Cardic
  */
-public interface ReportFactory {
+public interface InvoiceNumberGenerator {
 
-	public Report getReport(Type type);
-
-	public enum Type {
-
-		LCS_CLUSTER_NODE_DELIMITED, LCS_CLUSTER_NODE_UPTIMES_DELIMITED,
-		LCS_CLUSTER_NODE_UPTIMES_INVOICE_PDF, LCS_CLUSTER_NODE_UPTIMES_PDF
-
-	}
+	public long getInvoiceNumber();
 
 }

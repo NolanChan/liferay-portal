@@ -12,16 +12,27 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.report;
+package com.liferay.osb.lcs.report.internal;
 
-import org.osgi.service.component.annotations.Component;
+import com.liferay.osb.lcs.report.Report;
+import com.liferay.osb.lcs.report.ReportFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Ivica Cardic
  */
-@Component(immediate = true)
-public interface InvoiceNumberGenerator {
+public class ReportFactoryImpl implements ReportFactory {
 
-	public long getInvoiceNumber();
+	public Report getReport(Type type) {
+		return _reports.get(type);
+	}
+
+	public void setReports(Map<Type, Report> reports) {
+		_reports = reports;
+	}
+
+	private Map<Type, Report> _reports = new HashMap<>();
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.report;
+package com.liferay.osb.lcs.report.internal;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -32,7 +32,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.liferay.osb.lcs.model.LCSClusterNodeUptime;
 import com.liferay.osb.lcs.report.ReportContext;
 import com.liferay.osb.lcs.service.LCSClusterNodeUptimeService;
-import com.liferay.osb.lcs.web.internal.advisor.SubscriptionsAdvisor;
+import com.liferay.osb.lcs.advisor.SubscriptionsAdvisor;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;

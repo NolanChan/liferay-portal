@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.report;
+package com.liferay.osb.lcs.report.internal;
 
 import com.liferay.osb.lcs.model.LCSClusterNodeUptime;
 import com.liferay.osb.lcs.report.ReportContext;
 import com.liferay.osb.lcs.service.LCSClusterNodeUptimeService;
-import com.liferay.osb.lcs.web.internal.advisor.SubscriptionsAdvisor;
+import com.liferay.osb.lcs.advisor.SubscriptionsAdvisor;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.BufferedWriter;

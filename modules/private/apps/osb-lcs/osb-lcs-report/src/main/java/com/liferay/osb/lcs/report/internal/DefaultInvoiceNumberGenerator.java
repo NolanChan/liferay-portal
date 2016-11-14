@@ -12,16 +12,18 @@
  * details.
  */
 
-package com.liferay.osb.lcs.web.internal.report;
+package com.liferay.osb.lcs.report.internal;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
  */
+@Component(immediate = true, service = InvoiceNumberGenerator.class)
 public class DefaultInvoiceNumberGenerator implements InvoiceNumberGenerator {
 
 	@Override
