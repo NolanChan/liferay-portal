@@ -78,6 +78,9 @@ public interface OSBPortletService {
 	public List<User> getCorpProjectUsers(long corpProjectId, boolean active)
 		throws PortalException;
 
+	public int getInvalidRemoteCorpProjectsCount(long[] localCorpProjectIds)
+		throws PortalException;
+
 	public User getRemoteUser(String emailAddress) throws PortalException;
 
 	public Role getRole(String name) throws PortalException;

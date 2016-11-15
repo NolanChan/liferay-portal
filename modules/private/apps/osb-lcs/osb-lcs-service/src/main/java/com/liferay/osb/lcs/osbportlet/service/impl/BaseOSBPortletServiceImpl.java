@@ -206,6 +206,26 @@ public abstract class BaseOSBPortletServiceImpl
 	}
 
 	@Override
+	public int getInvalidRemoteCorpProjectsCount(long[] localCorpProjectIds)
+		throws PortalException {
+
+		int invalidRemoteCorpProjectsCount = 0;
+
+		for (long localCorpProjectId : localCorpProjectIds) {
+			CorpProject remoteCorpProject = fetchCorpProject(
+				localCorpProjectId);
+
+			if ((remoteCorpProject == null) ||
+				(remoteCorpProject.getCorpProjectId() == 0)) {
+
+				invalidRemoteCorpProjectsCount++;
+			}
+		}
+
+		return invalidRemoteCorpProjectsCount;
+	}
+
+	@Override
 	public User getRemoteUser(String emailAddress) throws PortalException {
 		throw new UnsupportedOperationException();
 	}

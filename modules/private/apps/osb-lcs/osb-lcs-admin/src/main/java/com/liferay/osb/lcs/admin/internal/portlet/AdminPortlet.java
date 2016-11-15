@@ -23,6 +23,7 @@ import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSMetadata;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodePatchesService;
 import com.liferay.osb.lcs.nosql.service.LCSMetadataDetailsService;
+import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.report.Report;
 import com.liferay.osb.lcs.report.ReportContext;
 import com.liferay.osb.lcs.web.internal.report.ReportFactory;
@@ -137,7 +138,7 @@ public class AdminPortlet extends MVCPortlet {
 			_lcsProjectLocalService.getLocalCorpProjectIds();
 
 		int invalidRemoteCorpProjectsCount =
-			OSBPortletUtil.getInvalidRemoteCorpProjectsCount(
+			_osbPortletService.getInvalidRemoteCorpProjectsCount(
 				localCorpProjectIds);
 
 		if (invalidRemoteCorpProjectsCount == 0) {
@@ -586,6 +587,12 @@ public class AdminPortlet extends MVCPortlet {
 		_lcsSubscriptionEntryService = lcsSubscriptionEntryService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setOSBPortletService(OSBPortletService osbPortletService) {
+
+		_osbPortletService = osbPortletService;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(AdminPortlet.class);
 
 	private AdminAdvisor _adminAdvisor;
@@ -596,5 +603,6 @@ public class AdminPortlet extends MVCPortlet {
 	private LCSMetadataLocalService _lcsMetadataLocalService;
 	private LCSProjectLocalService _lcsProjectLocalService;
 	private LCSSubscriptionEntryService _lcsSubscriptionEntryService;
+	private OSBPortletService _osbPortletService;
 
 }
