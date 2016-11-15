@@ -79,8 +79,6 @@ public class SetUpLCSMetadataAction implements LifecycleAction {
 	}
 
 	protected void addLCSMetadata() throws Exception {
-		int i = 0;
-
 		for (String lcsMetadataEntry :
 				_osbLCSConfiguration.osbLcsPortletModelLcsmetadata()) {
 
