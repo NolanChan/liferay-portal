@@ -15,14 +15,14 @@
 package com.liferay.osb.lcs.admin.portlet;
 
 import com.liferay.lcs.util.LCSConstants;
-import com.liferay.osb.lcs.admin.internal.AdminAdvisor;
+import com.liferay.osb.lcs.admin.internal.advisor.AdminAdvisor;
+import com.liferay.osb.lcs.admin.internal.advisor.LCSMetadataDetailsAdvisor;
 import com.liferay.osb.lcs.advisor.CommandMessageAdvisor;
+import com.liferay.osb.lcs.advisor.PatchAdvisor;
 import com.liferay.osb.lcs.advisor.PortalPropertiesAdvisor;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSMetadata;
-import com.liferay.osb.lcs.nosql.service.LCSClusterNodePatchesService;
-import com.liferay.osb.lcs.nosql.service.LCSMetadataDetailsService;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.report.Report;
 import com.liferay.osb.lcs.report.ReportContext;
@@ -167,7 +167,7 @@ public class AdminPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		LCSClusterNodePatchesServiceUtil.resetInstallablePatches();
+		_patchAdvisor.resetInstallablePatches();
 	}
 
 	public void resetLCSOrderEntries(
@@ -481,7 +481,7 @@ public class AdminPortlet extends MVCPortlet {
 			}
 
 			if (!portalProperties.isEmpty()) {
-				LCSMetadataDetailsServiceUtil.
+				_lcsMetadataDetailsAdvisor.
 					updateLCSMetadataDetailsPortletProperties(
 						lcsMetadataId, portalProperties);
 			}
@@ -592,6 +592,19 @@ public class AdminPortlet extends MVCPortlet {
 
 		_osbPortletService = osbPortletService;
 	}
+	@Reference(bind = "-", unbind = "-")
+	public void setLCSMetadataDetailsAdvisor(
+		LCSMetadataDetailsAdvisor lcsMetadataDetailsAdvisor) {
+
+		_lcsMetadataDetailsAdvisor = lcsMetadataDetailsAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setPatchAdvisor(PatchAdvisor patchAdvisor) {
+		_patchAdvisor = patchAdvisor;
+	}
+
+	private LCSMetadataDetailsAdvisor _lcsMetadataDetailsAdvisor;
 
 	private static Log _log = LogFactoryUtil.getLog(AdminPortlet.class);
 
@@ -604,5 +617,6 @@ public class AdminPortlet extends MVCPortlet {
 	private LCSProjectLocalService _lcsProjectLocalService;
 	private LCSSubscriptionEntryService _lcsSubscriptionEntryService;
 	private OSBPortletService _osbPortletService;
+	private PatchAdvisor _patchAdvisor;
 
 }
