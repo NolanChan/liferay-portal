@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.osb.lcs.advisor;
 
 import com.liferay.osb.lcs.model.LCSSubscriptionEntry;
@@ -10,45 +24,47 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 /**
- * Created by matijap on 14.11.16..
+ * @author Matija Petanjek
  */
 public interface SubscriptionsAdvisor {
-	String formatUptime(long startTime, long endTime, Locale locale);
 
-	JSONObject getBillsJSONObject(
-		long lcsProjectId, int month, int year, Locale locale)
+	public String formatUptime(long startTime, long endTime, Locale locale);
+
+	public JSONObject getBillsJSONObject(
+			long lcsProjectId, int month, int year, Locale locale)
 		throws Exception;
 
-	String getDuration(long start, long end, Locale locale);
+	public String getDuration(long start, long end, Locale locale);
 
-	JSONArray getLCSClusterEntriesJSONArray(
-		long lcsProjectId, Locale locale)
-			throws PortalException;
+	public JSONArray getLCSClusterEntriesJSONArray(
+			long lcsProjectId, Locale locale)
+		throws PortalException;
 
-	JSONArray getLCSClusterNodesJSONArray(
-		long lcsProjectId, Locale locale)
-				throws PortalException;
+	public JSONArray getLCSClusterNodesJSONArray(
+			long lcsProjectId, Locale locale)
+		throws PortalException;
 
-	JSONObject getLCSClusterNodeUptimesJSONObject(
-		long lcsClusterEntryId, long lcsProjectId, int month, int year,
-		Locale locale)
-					throws Exception;
+	public JSONObject getLCSClusterNodeUptimesJSONObject(
+			long lcsClusterEntryId, long lcsProjectId, int month, int year,
+			Locale locale)
+		throws Exception;
 
-	JSONArray getLCSSubscriptionEntriesJSONArray(
+	public JSONArray getLCSSubscriptionEntriesJSONArray(
 		List<LCSSubscriptionEntry> lcsOrderEntries, Locale locale,
 		TimeZone timeZone);
 
-	JSONArray getPaymentsJSONArray(
-		long lcsProjectId, int startMonth, int startYear, int endMonth,
-		int endYear)
-							throws Exception;
+	public JSONArray getPaymentsJSONArray(
+			long lcsProjectId, int startMonth, int startYear, int endMonth,
+			int endYear)
+		throws Exception;
 
-	JSONArray getSubscriptionsUsageJSONArray(
-		long lcsProjectId, Locale locale)
-								throws PortalException;
+	public JSONArray getSubscriptionsUsageJSONArray(
+			long lcsProjectId, Locale locale)
+		throws PortalException;
 
-	boolean hasElasticSubscription(long lcsProjectId)
-									throws PortalException;
+	public boolean hasElasticSubscription(long lcsProjectId)
+		throws PortalException;
 
-	int[] parsePeriod(String period);
+	public int[] parsePeriod(String period);
+
 }
