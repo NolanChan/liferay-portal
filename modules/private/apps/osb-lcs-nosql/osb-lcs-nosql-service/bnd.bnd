@@ -2,12 +2,9 @@ Bundle-Name: Liferay OSB LCS NoSQL Service
 Bundle-SymbolicName: com.liferay.osb.lcs.nosql.service
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.osb.lcs.nosql.cassandra.spring,\
-	com.liferay.osb.lcs.nosql.importer,\
 	com.liferay.osb.lcs.nosql.model.impl,\
 	com.liferay.osb.lcs.nosql.service.impl,\
 	com.liferay.osb.lcs.nosql.service.persistence,\
-	com.liferay.osb.lcs.nosql.util,\
 	com.liferay.osb.lcs.nosql.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: OSB LCS NoSQL
