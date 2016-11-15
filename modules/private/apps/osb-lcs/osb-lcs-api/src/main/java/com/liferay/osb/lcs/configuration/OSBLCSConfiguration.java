@@ -113,7 +113,7 @@ public interface OSBLCSConfiguration {
 	public String logStorageManagerBucketName();
 
 	@Meta.AD(
-		deflt = "com.liferay.osb.lcsStorage.LogFileSystemStorageManagerImpl",
+		deflt = "com.liferay.osb.lcs.storage.impl.FileSystemStorageManagerImpl",
 		required = true
 	)
 	public String logStorageManagerClassName();
@@ -178,7 +178,7 @@ public interface OSBLCSConfiguration {
 	public String[] osbLcsPortalPrivateLayoutPortlets();
 
 	@Meta.AD(
-		deflt = "Dashboard,Downloads,Environment,Feedback,Projects,Server,Subscriptions,Users,Account",
+		deflt = "Dashboard|Downloads|Environment|Feedback|Projects|Server|Subscriptions|Users|Account",
 		required = true
 	)
 	public String[] osbLcsPortalPrivateLayoutNames();
@@ -189,7 +189,7 @@ public interface OSBLCSConfiguration {
 	@Meta.AD(deflt = "58|15_WAR_osblcsportlet", required = true)
 	public String[] osbLcsPortalPublicLayoutPortlets();
 
-	@Meta.AD(deflt = "Home,Info", required = true)
+	@Meta.AD(deflt = "Home|Info", required = true)
 	public String[] osbLcsPortalPublicLayoutNames();
 
 	@Meta.AD(deflt = "1_column", required = true)
@@ -279,7 +279,7 @@ public interface OSBLCSConfiguration {
 	@Meta.AD(deflt = "ke8eJgsT2nla73NsRe", required = true)
 	public String osbPortletSecureApiToken();
 
-	@Meta.AD(deflt = "127.0.0.1,localhost,web-uat.liferay.com", required = true)
+	@Meta.AD(deflt = "127.0.0.1|localhost|web-uat.liferay.com", required = true)
 	public String[] osbPortletSynchronizationSafeHostNames();
 
 	@Meta.AD(deflt = "s3_bucket_name", required = true)
