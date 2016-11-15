@@ -1,0 +1,3 @@
+dependencies {
+	provided project(":private:apps:osb-lcs-nosql:osb-lcs-nosql")
+}
