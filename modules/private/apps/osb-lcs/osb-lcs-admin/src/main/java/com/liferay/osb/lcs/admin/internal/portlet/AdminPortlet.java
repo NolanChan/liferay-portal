@@ -15,38 +15,40 @@
 package com.liferay.osb.lcs.admin.portlet;
 
 import com.liferay.lcs.util.LCSConstants;
-import com.liferay.osb.lcs.admin.util.AdminUtil;
+import com.liferay.osb.lcs.admin.internal.AdminAdvisor;
+import com.liferay.osb.lcs.advisor.CommandMessageAdvisor;
 import com.liferay.osb.lcs.advisor.PortalPropertiesAdvisor;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
-import com.liferay.osb.lcs.messaging.CommandMessageSenderUtil;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSMetadata;
-import com.liferay.osb.lcs.nosql.service.LCSClusterNodePatchesServiceUtil;
-import com.liferay.osb.lcs.nosql.service.LCSMetadataDetailsServiceUtil;
-import com.liferay.osb.lcs.osbportlet.util.OSBPortletUtil;
+import com.liferay.osb.lcs.nosql.service.LCSClusterNodePatchesService;
+import com.liferay.osb.lcs.nosql.service.LCSMetadataDetailsService;
 import com.liferay.osb.lcs.report.Report;
 import com.liferay.osb.lcs.report.ReportContext;
-import com.liferay.osb.lcs.report.ReportFactory;
-import com.liferay.osb.lcs.report.ReportFactoryUtil;
-import com.liferay.osb.lcs.service.CorpProjectServiceUtil;
-import com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSClusterNodeServiceUtil;
-import com.liferay.osb.lcs.service.LCSMetadataLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSSubscriptionEntryServiceUtil;
+import com.liferay.osb.lcs.web.internal.report.ReportFactory;
+import com.liferay.osb.lcs.web.internal.report.ReportFactoryUtil;
+import com.liferay.osb.lcs.service.LCSClusterEntryLocalService;
+import com.liferay.osb.lcs.service.LCSClusterNodeService;
+import com.liferay.osb.lcs.service.LCSMetadataLocalService;
+import com.liferay.osb.lcs.service.LCSProjectLocalService;
+import com.liferay.osb.lcs.service.LCSSubscriptionEntryService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.util.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -64,9 +66,11 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletPreferences;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -111,7 +115,7 @@ public class AdminPortlet extends MVCPortlet {
 		int supportedPatchingTool = ParamUtil.getInteger(
 			actionRequest, "supportedPatchingTool");
 
-		LCSMetadata lcsMetadata = LCSMetadataLocalServiceUtil.addLCSMetadata(
+		LCSMetadata lcsMetadata = _lcsMetadataLocalService.addLCSMetadata(
 			buildNumber, gitTag, portalEdition, supportedLCSPortlet,
 			supportedPatchingTool);
 
@@ -123,14 +127,14 @@ public class AdminPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		if (LCSClusterEntryLocalServiceUtil.getLCSClusterEntriesCount() == 0) {
+		if (_lcsClusterEntryLocalService.getLCSClusterEntriesCount() == 0) {
 			SessionErrors.add(actionRequest, "noLCSClusterEntries");
 
 			return;
 		}
 
 		long[] localCorpProjectIds =
-			CorpProjectServiceUtil.getLocalCorpProjectIds();
+			_lcsProjectLocalService.getLocalCorpProjectIds();
 
 		int invalidRemoteCorpProjectsCount =
 			OSBPortletUtil.getInvalidRemoteCorpProjectsCount(
@@ -147,13 +151,13 @@ public class AdminPortlet extends MVCPortlet {
 	public void deleteCache(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		AdminUtil.deleteCache(ParamUtil.getString(actionRequest, "key"));
+		_adminAdvisor.deleteCache(ParamUtil.getString(actionRequest, "key"));
 	}
 
 	public void enableLCSClusterNodeLogging(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		AdminUtil.enableLCSClusterNodeLogging(
+		_adminAdvisor.enableLCSClusterNodeLogging(
 			ParamUtil.getString(actionRequest, "key"),
 			ParamUtil.getBoolean(actionRequest, "enableLogging"));
 	}
@@ -169,7 +173,7 @@ public class AdminPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		LCSSubscriptionEntryServiceUtil.
+		_lcsSubscriptionEntryService.
 			refreshLCSProjectLCSSubscriptionEntries();
 	}
 
@@ -178,18 +182,18 @@ public class AdminPortlet extends MVCPortlet {
 		throws Exception {
 
 		PortletPreferences portletPreferences =
-			AdminUtil.getPortletPreferences();
+			_adminAdvisor.getPortletPreferences();
 
 		String billingEnabled = ParamUtil.getString(
 			actionRequest, "billingEnabled");
 
 		portletPreferences.setValue("billing-enabled", billingEnabled);
 
-		AdminUtil.enableMessageForward(
+		_adminAdvisor.enableMessageForward(
 			"dev",
 			ParamUtil.getBoolean(actionRequest, "messageForwardDevEnabled"));
 
-		AdminUtil.enableMessageForward(
+		_adminAdvisor.enableMessageForward(
 			"qa",
 			ParamUtil.getBoolean(actionRequest, "messageForwardQAEnabled"));
 
@@ -215,11 +219,11 @@ public class AdminPortlet extends MVCPortlet {
 		String key = actionRequest.getParameter("key");
 
 		LCSClusterNode lcsClusterNode =
-			LCSClusterNodeServiceUtil.getLCSClusterNode(key);
+			_lcsClusterNodeService.getLCSClusterNode(key);
 
 		String script = actionRequest.getParameter("script");
 
-		CommandMessageSenderUtil.executeScript(lcsClusterNode, script);
+		_commandMessageAdvisor.executeScript(lcsClusterNode, script);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -276,9 +280,9 @@ public class AdminPortlet extends MVCPortlet {
 		int supportedPatchingTool = ParamUtil.getInteger(
 			actionRequest, "supportedPatchingTool");
 
-		LCSMetadataLocalServiceUtil.updateSupportedLCSPortlet(
+		_lcsMetadataLocalService.updateSupportedLCSPortlet(
 			lcsMetadataId, supportedLCSPortlet);
-		LCSMetadataLocalServiceUtil.updateSupportedPatchingTool(
+		_lcsMetadataLocalService.updateSupportedPatchingTool(
 			lcsMetadataId, supportedPatchingTool);
 
 		uploadPortalPropertiesFile(actionRequest, lcsMetadataId);
@@ -291,9 +295,13 @@ public class AdminPortlet extends MVCPortlet {
 		Report report = ReportFactoryUtil.getReport(
 			ReportFactory.Type.LCS_CLUSTER_NODE_DELIMITED);
 
-		ByteArrayOutputStream byteArrayOutputStream = report.process(
-			new ReportContext(
-				getPortletConfig(), getPortletContext(), resourceRequest));
+		ReportContext.ReportContextBuilder reportContextBuilder =
+			new ReportContext.ReportContextBuilder();
+
+		reportContextBuilder.lineSeparator(getLineSeparator(resourceRequest));
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			report.process(reportContextBuilder.build());
 
 		writeFile(
 			resourceResponse, byteArrayOutputStream,
@@ -308,9 +316,26 @@ public class AdminPortlet extends MVCPortlet {
 		Report report = ReportFactoryUtil.getReport(
 			ReportFactory.Type.LCS_CLUSTER_NODE_UPTIMES_DELIMITED);
 
-		ByteArrayOutputStream byteArrayOutputStream = report.process(
-			new ReportContext(
-				getPortletConfig(), getPortletContext(), resourceRequest));
+		ReportContext.ReportContextBuilder reportContextBuilder =
+			new ReportContext.ReportContextBuilder();
+
+		ThemeDisplay themeDisplay = getThemeDisplay(resourceRequest);
+
+		reportContextBuilder.lcsClusterEntryId(Long.parseLong(
+			resourceRequest.getParameter("lcsClusterEntryId")));
+		reportContextBuilder.lcsClusterNodeId(Long.parseLong(
+			resourceRequest.getParameter("lcsClusterNodeId")));
+		reportContextBuilder.lcsProjectId(Long.parseLong(
+			resourceRequest.getParameter("lcsProjectId")));
+		reportContextBuilder.lineSeparator(getLineSeparator(resourceRequest));
+		reportContextBuilder.locale(themeDisplay.getLocale());
+		reportContextBuilder.month(Integer.parseInt(
+			resourceRequest.getParameter("month")));
+		reportContextBuilder.year(Integer.parseInt(
+			resourceRequest.getParameter("year")));
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			report.process(reportContextBuilder.build());
 
 		writeFile(
 			resourceResponse, byteArrayOutputStream,
@@ -326,9 +351,26 @@ public class AdminPortlet extends MVCPortlet {
 		Report report = ReportFactoryUtil.getReport(
 			ReportFactory.Type.LCS_CLUSTER_NODE_UPTIMES_INVOICE_PDF);
 
+		ReportContext.ReportContextBuilder reportContextBuilder =
+			new ReportContext.ReportContextBuilder();
+
+		ThemeDisplay themeDisplay = getThemeDisplay(resourceRequest);
+
+		reportContextBuilder.lcsClusterEntryId(Long.parseLong(
+			resourceRequest.getParameter("lcsClusterEntryId")));
+		reportContextBuilder.lcsClusterNodeId(Long.parseLong(
+			resourceRequest.getParameter("lcsClusterNodeId")));
+		reportContextBuilder.lcsProjectId(Long.parseLong(
+			resourceRequest.getParameter("lcsProjectId")));
+		reportContextBuilder.locale(themeDisplay.getLocale());
+		reportContextBuilder.month(Integer.parseInt(
+			resourceRequest.getParameter("month")));
+		reportContextBuilder.userId(themeDisplay.getUserId());
+		reportContextBuilder.year(Integer.parseInt(
+			resourceRequest.getParameter("year")));
+
 		ByteArrayOutputStream byteArrayOutputStream = report.process(
-			new ReportContext(
-				getPortletConfig(), getPortletContext(), resourceRequest));
+			reportContextBuilder.build());
 
 		writeFile(
 			resourceResponse, byteArrayOutputStream,
@@ -344,9 +386,21 @@ public class AdminPortlet extends MVCPortlet {
 		Report report = ReportFactoryUtil.getReport(
 			ReportFactory.Type.LCS_CLUSTER_NODE_UPTIMES_PDF);
 
+		ReportContext.ReportContextBuilder reportContextBuilder =
+			new ReportContext.ReportContextBuilder();
+
+		ThemeDisplay themeDisplay = getThemeDisplay(resourceRequest);
+
+		reportContextBuilder.lcsProjectId(Long.parseLong(
+			resourceRequest.getParameter("lcsProjectId")));
+		reportContextBuilder.locale(themeDisplay.getLocale());
+		reportContextBuilder.month(Integer.parseInt(
+			resourceRequest.getParameter("month")));
+		reportContextBuilder.year(Integer.parseInt(
+			resourceRequest.getParameter("year")));
+
 		ByteArrayOutputStream byteArrayOutputStream = report.process(
-			new ReportContext(
-				getPortletConfig(), getPortletContext(), resourceRequest));
+			reportContextBuilder.build());
 
 		writeFile(
 			resourceResponse, byteArrayOutputStream,
@@ -361,12 +415,8 @@ public class AdminPortlet extends MVCPortlet {
 
 		String key = ParamUtil.getString(resourceRequest, "key");
 
-		PortalPropertiesAdvisor portalPropertiesAdvisor =
-			(PortalPropertiesAdvisor)PortletBeanLocatorUtil.locate(
-				"com.liferay.osb.lcs.advisor.PortalPropertiesAdvisor");
-
 		JSONArray portalPropertiesDifferenceJSONArray =
-			portalPropertiesAdvisor.getPortalPropertiesDifference(key);
+			_portalPropertiesAdvisor.getPortalPropertiesDifference(key);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -376,6 +426,13 @@ public class AdminPortlet extends MVCPortlet {
 			LCSConstants.JSON_KEY_RESULT, LCSConstants.JSON_VALUE_SUCCESS);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
+	}
+
+	@Reference(unbind = "-")
+	public void setCommandMessageAdvisor(
+		CommandMessageAdvisor commandMessageAdvisor) {
+
+		_commandMessageAdvisor = commandMessageAdvisor;
 	}
 
 	protected void uploadPortalPropertiesFile(
@@ -465,6 +522,79 @@ public class AdminPortlet extends MVCPortlet {
 		outputStream.close();
 	}
 
+	protected ThemeDisplay getThemeDisplay(ResourceRequest resourceRequest) {
+		return (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
+
+	protected String getLineSeparator(ResourceRequest resourceRequest) {
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(resourceRequest);
+
+		if (BrowserSnifferUtil.isWindows(httpServletRequest)) {
+			return StringPool.RETURN_NEW_LINE;
+		}
+		else {
+			return StringPool.NEW_LINE;
+		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setAdminAdvisor(AdminAdvisor adminAdvisor) {
+		_adminAdvisor = adminAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortalPropertiesAdvisor(
+		PortalPropertiesAdvisor portalPropertiesAdvisor) {
+
+		_portalPropertiesAdvisor = portalPropertiesAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLCSClusterEntryLocalService(
+		LCSClusterEntryLocalService lcsClusterEntryLocalService) {
+
+		_lcsClusterEntryLocalService = lcsClusterEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLCSClusterNodeService(
+		LCSClusterNodeService lcsClusterNodeService) {
+
+		_lcsClusterNodeService = lcsClusterNodeService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLCSMetadataLocalService(
+		LCSMetadataLocalService lcsMetadataLocalService) {
+
+		_lcsMetadataLocalService = lcsMetadataLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLCSProjectLocalService(
+		LCSProjectLocalService lcsProjectLocalService) {
+
+		_lcsProjectLocalService = lcsProjectLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLCSSubscriptionEntryService(
+		LCSSubscriptionEntryService lcsSubscriptionEntryService) {
+
+		_lcsSubscriptionEntryService = lcsSubscriptionEntryService;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(AdminPortlet.class);
+
+	private AdminAdvisor _adminAdvisor;
+	private CommandMessageAdvisor _commandMessageAdvisor;
+	private PortalPropertiesAdvisor _portalPropertiesAdvisor;
+	private LCSClusterEntryLocalService _lcsClusterEntryLocalService;
+	private LCSClusterNodeService _lcsClusterNodeService;
+	private LCSMetadataLocalService _lcsMetadataLocalService;
+	private LCSProjectLocalService _lcsProjectLocalService;
+	private LCSSubscriptionEntryService _lcsSubscriptionEntryService;
 
 }
