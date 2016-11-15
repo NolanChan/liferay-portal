@@ -3,12 +3,18 @@
 		<nav class="${nav_css_class} site-navigation" id="navigation" role="navigation">
 			<div class="navbar-right">
 				<#assign
-					VOID = freeMarkerPortletPreferences.setValue("displayDepth", "1")
-					VOID = freeMarkerPortletPreferences.setValue("displayStyle", "ddmTemplate_LIST-MENU-FTL")
-					VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone")
+					guestGroup = group_service.getGroup(portalUtil.getDefaultCompanyId(), "Guest")
+
+					navigation_layouts = layout_service.getLayouts(guestGroup.getGroupId(), false, "portlet")
 				/>
 
-				<@liferay.navigation_menu default_preferences="${freeMarkerPortletPreferences}" />
+				<ul class="layouts">
+					<#list navigation_layouts as navigation_layout>
+						<li class="lfr-nav-item">
+							<a href="${navigation_layout.getFriendlyURL(locale)}" class="lfr-nav-item">${navigation_layout.getHTMLTitle(locale)}</a>
+						</li>
+					</#list>
+				</ul>
 			</div>
 		</nav>
 	</#if>
