@@ -14,12 +14,14 @@
 
 package com.liferay.osb.lcs.nosql.model;
 
+import com.liferay.osb.lcs.nosql.model.base.DMLModel;
+
 import java.util.Date;
 
 /**
  * @author Ivica Cardic
  */
-public interface LCSClusterNode {
+public interface LCSClusterNode extends DMLModel {
 
 	public String getKey();
 
@@ -27,13 +29,9 @@ public interface LCSClusterNode {
 
 	public String getUUID();
 
-	public boolean isNew();
-
 	public void setKey(String key);
 
 	public void setModifiedDate(Date modifiedDate);
-
-	public void setNew(boolean n);
 
 	public void setUUID(String uuid);
 

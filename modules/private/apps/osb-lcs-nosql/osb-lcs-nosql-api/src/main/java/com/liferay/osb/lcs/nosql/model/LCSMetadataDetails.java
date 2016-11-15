@@ -31,13 +31,13 @@ public interface LCSMetadataDetails {
 
 	public Map<String, String> getProperties();
 
-	public boolean isNew();
+	void setNew(boolean n);
+
+	boolean isNew();
 
 	public void setBuildNumber(int buildNumber);
 
 	public void setGitTag(String gitTag);
-
-	public void setNew(boolean n);
 
 	public void setPortalEdition(String portalEdition);
 
