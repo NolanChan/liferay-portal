@@ -16,6 +16,7 @@ dependencies {
 	provided group: "io.netty", name: "netty-transport", version: "4.0.33.Final"
 	provided group: "net.jpountz.lz4", name: "lz4", version: "1.2.0"
 	provided group: "org.xerial.snappy", name: "snappy-java", version: "1.0.5"
+	provided project(":private:apps:osb-lcs-nosql:osb-lcs-nosql")
 	provided project(":private:apps:osb-lcs-nosql:osb-lcs-nosql-api")
 }
 
