@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.nosql.service.persistence;
+package com.liferay.osb.lcs.nosql.service.persistence.base;
 
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
@@ -37,7 +37,7 @@ import java.util.Set;
  * @author Igor Beslic
  * @author Ivica Cardic
  */
-public abstract class BaseLCSClusterNodePersistenceImpl<E> {
+public abstract class BasePersistenceImpl<E> {
 
 	public abstract E create();
 

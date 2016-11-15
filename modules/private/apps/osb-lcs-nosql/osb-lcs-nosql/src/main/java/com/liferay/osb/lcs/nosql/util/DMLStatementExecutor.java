@@ -20,7 +20,7 @@ import com.datastax.driver.core.querybuilder.Insert;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.core.querybuilder.Update;
 
-import com.liferay.osb.lcs.nosql.model.LCSClusterNode;
+import com.liferay.osb.lcs.nosql.model.base.DMLModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,10 +31,8 @@ import java.util.List;
  */
 public class DMLStatementExecutor {
 
-	public DMLStatementExecutor(
-		LCSClusterNode lcsClusterNode, String tableName) {
-
-		_lcsClusterNode = lcsClusterNode;
+	public DMLStatementExecutor(DMLModel dmlModel, String tableName) {
+		_dmlModel = dmlModel;
 		_tableName = tableName;
 	}
 
@@ -45,7 +43,7 @@ public class DMLStatementExecutor {
 	}
 
 	public DMLStatementExecutor addPrimaryKeyColumns(Object... columns) {
-		if (_lcsClusterNode.isNew()) {
+		if (_dmlModel.isNew()) {
 			addColumns(columns);
 		}
 
@@ -71,7 +69,7 @@ public class DMLStatementExecutor {
 
 		Statement statement = null;
 
-		if (_lcsClusterNode.isNew()) {
+		if (_dmlModel.isNew()) {
 			Insert insert = QueryBuilder.insertInto(_tableName);
 
 			for (int i = 0; i < _columns.size(); i += 2) {
@@ -109,14 +107,14 @@ public class DMLStatementExecutor {
 
 		session.execute(statement);
 
-		_lcsClusterNode.setNew(false);
+		_dmlModel.setNew(false);
 
 		_columns.clear();
 		_primaryKeys.clear();
 	}
 
 	private final List<Object> _columns = new ArrayList<>();
-	private final LCSClusterNode _lcsClusterNode;
+	private final DMLModel _dmlModel;
 	private final List<Object> _primaryKeys = new ArrayList<>();
 	private final String _tableName;
 
