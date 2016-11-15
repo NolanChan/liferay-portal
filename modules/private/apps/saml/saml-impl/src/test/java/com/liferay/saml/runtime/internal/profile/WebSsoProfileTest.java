@@ -43,45 +43,36 @@ public class WebSsoProfileTest {
 	}
 
 	@Test
-	public void testVerifyNotOnOrAfterDateTimeLessThanNowSmallerSkew() {
+	public void testVerifyNotOnOrAfterDateTimeLessThanNowSmallerSkew()
+		throws PortalException {
+
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 
 		dateTime = dateTime.minusMillis(300);
 
-		try {
-			_webSsoProfileImpl.verifyNotOnOrAfterDateTime(3000, dateTime);
-		}
-		catch (PortalException pe) {
-			Assert.fail();
-		}
+		_webSsoProfileImpl.verifyNotOnOrAfterDateTime(3000, dateTime);
 	}
 
 	@Test
-	public void testVerifyNotOnOrAfterDateTimeLessThanSkew() {
+	public void testVerifyNotOnOrAfterDateTimeLessThanSkew()
+		throws PortalException {
+
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 
 		dateTime = dateTime.plusMillis(200);
 
-		try {
-			_webSsoProfileImpl.verifyNotOnOrAfterDateTime(3000, dateTime);
-		}
-		catch (PortalException pe) {
-			Assert.fail();
-		}
+		_webSsoProfileImpl.verifyNotOnOrAfterDateTime(3000, dateTime);
 	}
 
 	@Test
-	public void testVerifyNotOnOrAfterDateTimeMoreThanSkew() {
+	public void testVerifyNotOnOrAfterDateTimeMoreThanSkew()
+		throws PortalException {
+
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 
 		dateTime = dateTime.plusMillis(50000);
 
-		try {
-			_webSsoProfileImpl.verifyNotOnOrAfterDateTime(3000, dateTime);
-		}
-		catch (PortalException pe) {
-			Assert.fail();
-		}
+		_webSsoProfileImpl.verifyNotOnOrAfterDateTime(3000, dateTime);
 	}
 
 	private final WebSsoProfileImpl _webSsoProfileImpl =
