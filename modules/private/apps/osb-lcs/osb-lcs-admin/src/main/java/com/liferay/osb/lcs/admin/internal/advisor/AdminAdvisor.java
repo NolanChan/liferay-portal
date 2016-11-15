@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.osb.lcs.admin.util;
+package com.liferay.osb.lcs.admin.internal.advisor;
 
 import com.liferay.lcs.util.LCSClusterNodeStatus;
-import com.liferay.osb.lcs.NoSuchLCSClusterNodeException;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
+import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
+import com.liferay.osb.lcs.exception.NoSuchLCSClusterNodeException;
 import com.liferay.osb.lcs.amazon.EC2Instance;
 import com.liferay.osb.lcs.cache.ActiveLCSCLusterNodeCacheManager;
 import com.liferay.osb.lcs.cache.LCSClusterNodeLoggingCacheManager;
@@ -25,7 +27,7 @@ import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.model.LCSRoleConstants;
+import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeDetails;
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeInstallationEnvironment;
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeJVMMetrics;
@@ -34,25 +36,29 @@ import com.liferay.osb.lcs.nosql.service.LCSClusterNodeDetailsService;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodeInstallationEnvironmentService;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodeJVMMetricsService;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodePatchesService;
-import com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSClusterNodeLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil;
-import com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil;
+import com.liferay.osb.lcs.service.LCSClusterEntryLocalService;
+import com.liferay.osb.lcs.service.LCSClusterNodeLocalService;
+import com.liferay.osb.lcs.service.LCSProjectLocalService;
+import com.liferay.osb.lcs.service.LCSRoleLocalService;
 import com.liferay.osb.lcs.util.ApplicationProfile;
-import com.liferay.osb.lcs.util.PortletKeys;
-import com.liferay.osb.lcs.util.PortletPropsValues;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 import java.text.NumberFormat;
 
@@ -71,13 +77,17 @@ import javax.portlet.PortletPreferences;
  * @author Igor Beslic
  * @author Marko Cikos
  */
-public class AdminUtil {
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
+)
+public class AdminAdvisor {
 
-	public static void deleteCache(String key) {
+	public void deleteCache(String key) {
 		_activeLCSCLusterNodeCacheManager.remove("ACTIVE_" + key);
 	}
 
-	public static void enableLCSClusterNodeLogging(
+	public void enableLCSClusterNodeLogging(
 		String key, boolean enableLogging) {
 
 		if (enableLogging) {
@@ -88,7 +98,7 @@ public class AdminUtil {
 		}
 	}
 
-	public static void enableMessageForward(
+	public void enableMessageForward(
 		String queuePrefix, boolean enableMessageForward) {
 
 		if (enableMessageForward) {
@@ -99,8 +109,8 @@ public class AdminUtil {
 		}
 	}
 
-	public static Map<String, String> getEC2IpAddresses() {
-		if (PortletPropsValues.APPLICATION_PROFILE ==
+	public Map<String, String> getEC2IpAddresses() {
+		if (_osbLCSConfiguration.applicationProfile() ==
 				ApplicationProfile.LOCAL_DEVELOPMENT) {
 
 			Map<String, String> ec2IpAddresses = new HashMap<String, String>();
@@ -122,21 +132,21 @@ public class AdminUtil {
 
 				String key = entry.getKey();
 
-				if (PortletPropsValues.APPLICATION_PROFILE ==
+				if (_osbLCSConfiguration.applicationProfile() ==
 						ApplicationProfile.PRODUCTION) {
 
 					if (!StringUtil.startsWith(key, "prod")) {
 						iterator.remove();
 					}
 				}
-				else if (PortletPropsValues.APPLICATION_PROFILE ==
+				else if (_osbLCSConfiguration.applicationProfile() ==
 							ApplicationProfile.QUALITY_ASSURANCE) {
 
 					if (!StringUtil.startsWith(key, "qa")) {
 						iterator.remove();
 					}
 				}
-				else if (PortletPropsValues.APPLICATION_PROFILE ==
+				else if (_osbLCSConfiguration.applicationProfile() ==
 							ApplicationProfile.REMOTE_DEVELOPMENT) {
 
 					if (!StringUtil.startsWith(key, "dev")) {
@@ -149,21 +159,21 @@ public class AdminUtil {
 		}
 	}
 
-	public static List<Object[]> getLCSClusterNodeObjectArrays()
+	public List<Object[]> getLCSClusterNodeObjectArrays()
 		throws PortalException, SystemException {
 
 		return getLCSClusterNodeObjectArrays(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
-	public static List<Object[]> getLCSClusterNodeObjectArrays(
+	public List<Object[]> getLCSClusterNodeObjectArrays(
 			int start, int end)
 		throws PortalException, SystemException {
 
 		List<Object[]> lcsClusterNodeObjectArrays = new ArrayList<Object[]>();
 
 		List<LCSClusterNode> lcsClusterNodes =
-			LCSClusterNodeLocalServiceUtil.getLCSClusterNodes(start, end);
+			_lcsClusterNodeLocalService.getLCSClusterNodes(start, end);
 
 		for (LCSClusterNode lcsClusterNode : lcsClusterNodes) {
 			lcsClusterNodeObjectArrays.add(getColumns(lcsClusterNode));
@@ -172,7 +182,7 @@ public class AdminUtil {
 		return lcsClusterNodeObjectArrays;
 	}
 
-	public static List<Object[]> getLCSClusterNodeObjectArrays(
+	public List<Object[]> getLCSClusterNodeObjectArrays(
 			String lcsClusterNodeKey)
 		throws PortalException, SystemException {
 
@@ -180,7 +190,7 @@ public class AdminUtil {
 
 		try {
 			LCSClusterNode lcsClusterNode =
-				LCSClusterNodeLocalServiceUtil.getLCSClusterNode(
+				_lcsClusterNodeLocalService.getLCSClusterNode(
 					lcsClusterNodeKey);
 
 			lcsClusterNodeObjectArrays.add(getColumns(lcsClusterNode));
@@ -191,7 +201,7 @@ public class AdminUtil {
 		return lcsClusterNodeObjectArrays;
 	}
 
-	public static List<Object[]> getLCSClusterNodeObjectArrays(
+	public List<Object[]> getLCSClusterNodeObjectArrays(
 			String lcsClusterEntryName, String lcsClusterNodeStatusName,
 			String lcsProjectName, boolean andOperator)
 		throws PortalException, SystemException {
@@ -204,12 +214,12 @@ public class AdminUtil {
 			Validator.isNull(lcsClusterEntryName)) {
 
 			lcsClusterNodes.addAll(
-				LCSClusterNodeLocalServiceUtil.getLCSClusterNodes(
+				_lcsClusterNodeLocalService.getLCSClusterNodes(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, true));
 		}
 		else {
 			lcsClusterNodes.addAll(
-				LCSClusterNodeLocalServiceUtil.getLCSClusterNodes(
+				_lcsClusterNodeLocalService.getLCSClusterNodes(
 					lcsClusterEntryName, lcsProjectName, andOperator, true));
 		}
 
@@ -241,7 +251,7 @@ public class AdminUtil {
 		Set<LCSClusterNode> allLCSClusterNodes = new HashSet<LCSClusterNode>();
 
 		allLCSClusterNodes.addAll(
-			LCSClusterNodeLocalServiceUtil.getLCSClusterNodes(
+			_lcsClusterNodeLocalService.getLCSClusterNodes(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, true));
 
 		allLCSClusterNodes.removeAll(lcsClusterNodes);
@@ -257,7 +267,7 @@ public class AdminUtil {
 		return lcsClusterNodeObjectArrays;
 	}
 
-	public static Map<String, List<Object[]>>
+	public Map<String, List<Object[]>>
 		getLCSModulePropertiesObjectArraysMap(String hostName) {
 
 		Map<String, List<Object[]>> lcsModulePropertiesObjectArraysMap =
@@ -283,55 +293,55 @@ public class AdminUtil {
 		return lcsModulePropertiesObjectArraysMap;
 	}
 
-	public static PortletPreferences getPortletPreferences()
+	public PortletPreferences getPortletPreferences()
 		throws SystemException {
 
-		return PortletPreferencesLocalServiceUtil.getPreferences(
+		return _portletPreferencesLocalService.getPreferences(
 			CompanyConstants.SYSTEM, CompanyConstants.SYSTEM,
 			PortletKeys.PREFS_OWNER_TYPE_COMPANY, PortletKeys.PREFS_PLID_SHARED,
-			PortletKeys.ADMIN, null);
+			OSBLCSPortletKeys.ADMIN, null);
 	}
 
-	public static boolean isBillingEnabled() throws SystemException {
+	public boolean isBillingEnabled() throws SystemException {
 		PortletPreferences portletPreferences = getPortletPreferences();
 
 		return GetterUtil.getBoolean(
 			portletPreferences.getValue("billing-enabled", null));
 	}
 
-	public static boolean isLCSClusterNodeLoggingEnabled(String key) {
+	public boolean isLCSClusterNodeLoggingEnabled(String key) {
 		return GetterUtil.getBoolean(
 			_lcsClusterNodeLoggingCacheManager.isEnabled(key), false);
 	}
 
-	public static boolean isMessageForwardEnabled(String queuePrefix) {
+	public boolean isMessageForwardEnabled(String queuePrefix) {
 		return _messageForwardCacheManager.isEnabled(queuePrefix);
 	}
 
-	public static boolean isSendingEmailsEnabled() throws SystemException {
+	public boolean isSendingEmailsEnabled() throws SystemException {
 		PortletPreferences portletPreferences = getPortletPreferences();
 
 		return GetterUtil.getBoolean(
 			portletPreferences.getValue("sending-emails-enabled", null));
 	}
 
-	public static boolean isSubscriptionsEnabled() throws SystemException {
+	public boolean isSubscriptionsEnabled() throws SystemException {
 		PortletPreferences portletPreferences = getPortletPreferences();
 
 		return GetterUtil.getBoolean(
 			portletPreferences.getValue("subscriptions-enabled", null));
 	}
 
-	protected static Object[] getColumns(LCSClusterNode lcsClusterNode)
+	protected Object[] getColumns(LCSClusterNode lcsClusterNode)
 		throws PortalException, SystemException {
 
 		Object[] columns = new Object[14];
 
 		LCSClusterEntry lcsClusterEntry =
-			LCSClusterEntryLocalServiceUtil.getLCSClusterEntry(
+			_lcsClusterEntryLocalService.getLCSClusterEntry(
 				lcsClusterNode.getLcsClusterEntryId());
 
-		LCSProject lcsProject = LCSProjectLocalServiceUtil.getLCSProject(
+		LCSProject lcsProject = _lcsProjectLocalService.getLCSProject(
 			lcsClusterEntry.getLcsProjectId());
 
 		columns[0] = lcsProject.getName();
@@ -388,7 +398,7 @@ public class AdminUtil {
 		List<String> emailAddresses = new UniqueList<String>();
 
 		List<LCSRole> lcsRoles =
-			LCSRoleLocalServiceUtil.getLCSProjectLCSRoles(
+			_lcsRoleLocalService.getLCSProjectLCSRoles(
 				lcsProject.getLcsProjectId(),
 				LCSRoleConstants.ROLE_LCS_ADMINISTRATOR);
 
@@ -410,40 +420,142 @@ public class AdminUtil {
 		return columns;
 	}
 
-	@BeanReference(type = ActiveLCSCLusterNodeCacheManager.class)
-	private static ActiveLCSCLusterNodeCacheManager
-		_activeLCSCLusterNodeCacheManager;
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
+			OSBLCSConfiguration.class, properties);
+	}
 
-	@BeanReference(type = EC2Instance.class)
-	private static EC2Instance _ec2Instance;
+	@Deactivate
+	protected void deactivate() {
+		_osbLCSConfiguration = null;
+	}
 
-	@BeanReference(type = LCSClusterNodeDetailsService.class)
-	private static LCSClusterNodeDetailsService _lcsClusterNodeDetailsService;
+	@Reference(unbind = "-")
+	protected void setPortletPreferencesLocalService(
+		PortletPreferencesLocalService portletPreferencesLocalService) {
 
-	@BeanReference(type = LCSClusterNodeInstallationEnvironmentService.class)
-	private static LCSClusterNodeInstallationEnvironmentService
+		_portletPreferencesLocalService = portletPreferencesLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setActiveLCSCLusterNodeCacheManager(
+		ActiveLCSCLusterNodeCacheManager activeLCSCLusterNodeCacheManager) {
+
+		_activeLCSCLusterNodeCacheManager = activeLCSCLusterNodeCacheManager;
+	}
+
+	@Reference(unbind = "-")
+	protected void setEc2Instance(EC2Instance ec2Instance) {
+
+		_ec2Instance = ec2Instance;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLCSClusterNodeDetailsService(
+		LCSClusterNodeDetailsService lcsClusterNodeDetailsService) {
+
+		_lcsClusterNodeDetailsService = lcsClusterNodeDetailsService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLCSClusterNodeInstallationEnvironmentService(
+		LCSClusterNodeInstallationEnvironmentService
+			lcsClusterNodeInstallationEnvironmentService) {
+
+		_lcsClusterNodeInstallationEnvironmentService =
+			lcsClusterNodeInstallationEnvironmentService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLcsClusterNodeJVMMetricsService(
+		LCSClusterNodeJVMMetricsService lcsClusterNodeJVMMetricsService) {
+
+		_lcsClusterNodeJVMMetricsService = lcsClusterNodeJVMMetricsService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLCSClusterNodeLoggingCacheManager(
+		LCSClusterNodeLoggingCacheManager lcsClusterNodeLoggingCacheManager) {
+
+		_lcsClusterNodeLoggingCacheManager = lcsClusterNodeLoggingCacheManager;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLCSClusterNodePatchesService(
+		LCSClusterNodePatchesService lcsClusterNodePatchesService) {
+
+		_lcsClusterNodePatchesService = lcsClusterNodePatchesService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBeanAttributeProvider(
+		MBeanAttributeProvider mBeanAttributeProvider) {
+
+		_mBeanAttributeProvider = mBeanAttributeProvider;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMessageForwardCacheManager(
+		MessageForwardCacheManager messageForwardCacheManager) {
+
+		_messageForwardCacheManager = messageForwardCacheManager;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLCSClusterEntryLocalService(
+		LCSClusterEntryLocalService lcsClusterEntryLocalService) {
+
+		_lcsClusterEntryLocalService = lcsClusterEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLCSClusterNodeLocalService(
+		LCSClusterNodeLocalService lcsClusterNodeLocalService) {
+
+		_lcsClusterNodeLocalService = lcsClusterNodeLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLCSProjectLocalService(
+		LCSProjectLocalService lcsProjectLocalService) {
+
+		_lcsProjectLocalService = lcsProjectLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLCSRoleLocalService(
+		LCSRoleLocalService lcsRoleLocalService) {
+
+		_lcsRoleLocalService = lcsRoleLocalService;
+	}
+
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+	private ActiveLCSCLusterNodeCacheManager _activeLCSCLusterNodeCacheManager;
+	private EC2Instance _ec2Instance;
+	private LCSClusterNodeDetailsService _lcsClusterNodeDetailsService;
+	private LCSClusterNodeInstallationEnvironmentService
 		_lcsClusterNodeInstallationEnvironmentService;
 
-	@BeanReference(type = LCSClusterNodeJVMMetricsService.class)
-	private static LCSClusterNodeJVMMetricsService
-		_lcsClusterNodeJVMMetricsService;
-
-	@BeanReference(type = LCSClusterNodeLoggingCacheManager.class)
-	private static LCSClusterNodeLoggingCacheManager
+	private LCSClusterNodeJVMMetricsService _lcsClusterNodeJVMMetricsService;
+	private LCSClusterNodeLoggingCacheManager
 		_lcsClusterNodeLoggingCacheManager;
 
-	@BeanReference(type = LCSClusterNodePatchesService.class)
-	private static LCSClusterNodePatchesService _lcsClusterNodePatchesService;
+	private LCSClusterNodePatchesService _lcsClusterNodePatchesService;
+	private MBeanAttributeProvider _mBeanAttributeProvider;
+	private MessageForwardCacheManager _messageForwardCacheManager;
 
-	@BeanReference(type = MBeanAttributeProvider.class)
-	private static MBeanAttributeProvider _mBeanAttributeProvider;
-
-	@BeanReference(type = MessageForwardCacheManager.class)
-	private static MessageForwardCacheManager _messageForwardCacheManager;
+	private LCSClusterEntryLocalService _lcsClusterEntryLocalService;
+	private LCSClusterNodeLocalService _lcsClusterNodeLocalService;
+	private LCSProjectLocalService _lcsProjectLocalService;
+	private LCSRoleLocalService _lcsRoleLocalService;
 
 	private static NumberFormat _numberFormat = NumberFormat.getInstance();
 	private static Pattern _pattern = Pattern.compile(
 		"(com.liferay.osb.lcs:name=(Gateway|Portlet|Processor))");
+
+	private static volatile OSBLCSConfiguration _osbLCSConfiguration;
+
 
 	static {
 		_numberFormat.setMaximumFractionDigits(2);
