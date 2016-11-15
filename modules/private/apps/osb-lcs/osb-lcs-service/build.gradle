@@ -29,6 +29,7 @@ dependencies {
 	provided project(":apps:foundation:petra:petra-content")
 	provided project(":apps:foundation:petra:petra-encryptor")
 	provided project(":apps:foundation:portal:portal-dao-orm-custom-sql")
+	provided project(":private:apps:osb-lcs-nosql:osb-lcs-nosql")
 	provided project(":private:apps:osb-lcs-nosql:osb-lcs-nosql-api")
 	provided project(":private:apps:osb-lcs-queue:osb-lcs-queue")
 	provided project(":private:apps:osb-lcs:osb-lcs-api")
