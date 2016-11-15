@@ -141,8 +141,6 @@ public class AddLayoutsAction implements LifecycleAction {
 	protected void activate(Map<String, Object> properties) {
 		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
 			OSBLCSConfiguration.class, properties);
-
-		System.out.println("Component activated");
 	}
 
 	protected Layout addLayout(
