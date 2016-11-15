@@ -18,6 +18,7 @@ import com.datastax.driver.core.Row;
 
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeProperties;
 import com.liferay.osb.lcs.nosql.model.impl.LCSClusterNodePropertiesImpl;
+import com.liferay.osb.lcs.nosql.service.persistence.base.BasePersistenceImpl;
 
 import java.util.Date;
 
@@ -26,7 +27,7 @@ import java.util.Date;
  * @author Igor Beslic
  */
 public class LCSClusterNodePropertiesPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl<LCSClusterNodeProperties>
+	extends BasePersistenceImpl<LCSClusterNodeProperties>
 	implements LCSClusterNodePropertiesPersistence {
 
 	@Override

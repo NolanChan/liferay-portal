@@ -18,14 +18,14 @@ import com.datastax.driver.core.Row;
 
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeInstallationEnvironment;
 import com.liferay.osb.lcs.nosql.model.impl.LCSClusterNodeInstallationEnvironmentImpl;
+import com.liferay.osb.lcs.nosql.service.persistence.base.BasePersistenceImpl;
 import com.liferay.osb.lcs.nosql.util.DMLStatementExecutor;
 
 /**
  * @author Igor Beslic
  */
 public class LCSClusterNodeInstallationEnvironmentPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl
-		<LCSClusterNodeInstallationEnvironment>
+	extends BasePersistenceImpl<LCSClusterNodeInstallationEnvironment>
 	implements LCSClusterNodeInstallationEnvironmentPersistence {
 
 	@Override

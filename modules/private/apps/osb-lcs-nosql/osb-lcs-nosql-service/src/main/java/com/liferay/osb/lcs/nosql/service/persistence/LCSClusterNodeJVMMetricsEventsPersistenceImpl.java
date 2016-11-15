@@ -19,6 +19,7 @@ import com.datastax.driver.core.utils.UUIDs;
 
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeJVMMetricsEvents;
 import com.liferay.osb.lcs.nosql.model.impl.LCSClusterNodeJVMMetricsEventsImpl;
+import com.liferay.osb.lcs.nosql.service.persistence.base.BasePersistenceImpl;
 import com.liferay.osb.lcs.nosql.util.DMLStatementExecutor;
 
 import java.util.Map;
@@ -27,7 +28,7 @@ import java.util.Map;
  * @author Riccardo Ferrari
  */
 public class LCSClusterNodeJVMMetricsEventsPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl<LCSClusterNodeJVMMetricsEvents>
+	extends BasePersistenceImpl<LCSClusterNodeJVMMetricsEvents>
 	implements LCSClusterNodeJVMMetricsEventsPersistence {
 
 	@Override

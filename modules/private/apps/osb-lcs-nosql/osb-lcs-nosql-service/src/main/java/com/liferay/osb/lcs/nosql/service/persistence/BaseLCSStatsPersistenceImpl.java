@@ -14,6 +14,8 @@
 
 package com.liferay.osb.lcs.nosql.service.persistence;
 
+import com.liferay.osb.lcs.nosql.service.persistence.base.BasePersistenceImpl;
+
 import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
@@ -25,7 +27,7 @@ import java.util.Set;
  * @author Riccardo Ferrari
  */
 public abstract class BaseLCSStatsPersistenceImpl<E>
-	extends BaseLCSClusterNodePersistenceImpl<E> {
+	extends BasePersistenceImpl<E> {
 
 	public void destroy() {
 		_simpleDateFormatThreadLocal.remove();

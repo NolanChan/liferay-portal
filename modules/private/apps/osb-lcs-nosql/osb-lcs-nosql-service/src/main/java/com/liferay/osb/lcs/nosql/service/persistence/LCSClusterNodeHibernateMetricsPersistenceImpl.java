@@ -19,6 +19,7 @@ import com.datastax.driver.core.utils.UUIDs;
 
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeHibernateMetrics;
 import com.liferay.osb.lcs.nosql.model.impl.LCSClusterNodeHibernateMetricsImpl;
+import com.liferay.osb.lcs.nosql.service.persistence.base.BasePersistenceImpl;
 import com.liferay.osb.lcs.nosql.util.DMLStatementExecutor;
 
 /**
@@ -26,7 +27,7 @@ import com.liferay.osb.lcs.nosql.util.DMLStatementExecutor;
  * @author Igor Beslic
  */
 public class LCSClusterNodeHibernateMetricsPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl<LCSClusterNodeHibernateMetrics>
+	extends BasePersistenceImpl<LCSClusterNodeHibernateMetrics>
 	implements LCSClusterNodeHibernateMetricsPersistence {
 
 	@Override

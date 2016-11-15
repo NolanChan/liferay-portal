@@ -22,6 +22,7 @@ import com.datastax.driver.core.utils.UUIDs;
 
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeLiferayVMMetrics;
 import com.liferay.osb.lcs.nosql.model.impl.LCSClusterNodeLiferayVMMetricsImpl;
+import com.liferay.osb.lcs.nosql.service.persistence.base.BasePersistenceImpl;
 import com.liferay.osb.lcs.nosql.util.DMLStatementExecutor;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import java.util.List;
  * @author Igor Beslic
  */
 public class LCSClusterNodeLiferayVMMetricsPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl<LCSClusterNodeLiferayVMMetrics>
+	extends BasePersistenceImpl<LCSClusterNodeLiferayVMMetrics>
 	implements LCSClusterNodeLiferayVMMetricsPersistence {
 
 	@Override

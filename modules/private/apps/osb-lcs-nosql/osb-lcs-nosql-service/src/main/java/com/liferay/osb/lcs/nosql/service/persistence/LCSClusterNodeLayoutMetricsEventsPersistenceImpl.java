@@ -19,13 +19,14 @@ import com.datastax.driver.core.utils.UUIDs;
 
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeLayoutMetricsEvents;
 import com.liferay.osb.lcs.nosql.model.impl.LCSClusterNodeLayoutMetricsEventsImpl;
+import com.liferay.osb.lcs.nosql.service.persistence.base.BasePersistenceImpl;
 import com.liferay.osb.lcs.nosql.util.DMLStatementExecutor;
 
 /**
  * @author Riccardo Ferrari
  */
 public class LCSClusterNodeLayoutMetricsEventsPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl<LCSClusterNodeLayoutMetricsEvents>
+	extends BasePersistenceImpl<LCSClusterNodeLayoutMetricsEvents>
 	implements LCSClusterNodeLayoutMetricsEventsPersistence {
 
 	@Override

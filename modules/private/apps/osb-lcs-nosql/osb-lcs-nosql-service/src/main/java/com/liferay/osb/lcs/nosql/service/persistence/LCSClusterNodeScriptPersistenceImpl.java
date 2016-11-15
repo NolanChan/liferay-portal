@@ -23,6 +23,7 @@ import com.datastax.driver.core.utils.UUIDs;
 
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeScript;
 import com.liferay.osb.lcs.nosql.model.impl.LCSClusterNodeScriptImpl;
+import com.liferay.osb.lcs.nosql.service.persistence.base.BasePersistenceImpl;
 import com.liferay.osb.lcs.nosql.util.DMLStatementExecutor;
 
 import java.util.Iterator;
@@ -33,7 +34,7 @@ import java.util.List;
  * @author Igor Beslic
  */
 public class LCSClusterNodeScriptPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl<LCSClusterNodeScript>
+	extends BasePersistenceImpl<LCSClusterNodeScript>
 	implements LCSClusterNodeScriptPersistence {
 
 	@Override

@@ -22,11 +22,19 @@ public enum LCSClusterNodeSiteType {
 	ORGANIZATION("organization-site", 0), SITE("site", 1);
 
 	public static boolean isOrganization(int type) {
-		return ORGANIZATION.getType() == type;
+		if (ORGANIZATION.getType() == type) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isSite(int type) {
-		return SITE.getType() == type;
+		if (SITE.getType() == type) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static LCSClusterNodeSiteType toLCSClusterNodeSiteType(int type) {
@@ -51,7 +59,7 @@ public enum LCSClusterNodeSiteType {
 		_type = type;
 	}
 
-	private String _label;
-	private int _type;
+	private final String _label;
+	private final int _type;
 
 }

@@ -23,6 +23,7 @@ import com.datastax.driver.core.querybuilder.Update;
 
 import com.liferay.osb.lcs.nosql.model.LCSClusterEntryPropertyDifferences;
 import com.liferay.osb.lcs.nosql.model.impl.LCSClusterEntryPropertyDifferencesImpl;
+import com.liferay.osb.lcs.nosql.service.persistence.base.BasePersistenceImpl;
 
 import java.util.List;
 
@@ -30,8 +31,7 @@ import java.util.List;
  * @author Matija Petanjek
  */
 public class LCSClusterEntryPropertyDifferencesPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl
-		<LCSClusterEntryPropertyDifferences>
+	extends BasePersistenceImpl<LCSClusterEntryPropertyDifferences>
 	implements LCSClusterEntryPropertyDifferencesPersistence {
 
 	@Override

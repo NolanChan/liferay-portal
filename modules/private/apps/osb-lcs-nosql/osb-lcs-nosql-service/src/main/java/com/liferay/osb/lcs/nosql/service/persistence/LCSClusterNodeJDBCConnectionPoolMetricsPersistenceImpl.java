@@ -19,6 +19,7 @@ import com.datastax.driver.core.utils.UUIDs;
 
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeJDBCConnectionPoolMetrics;
 import com.liferay.osb.lcs.nosql.model.impl.LCSClusterNodeJDBCConnectionPoolMetricsImpl;
+import com.liferay.osb.lcs.nosql.service.persistence.base.BasePersistenceImpl;
 import com.liferay.osb.lcs.nosql.util.DMLStatementExecutor;
 
 import java.util.Arrays;
@@ -29,8 +30,7 @@ import java.util.List;
  * @author Igor Beslic
  */
 public class LCSClusterNodeJDBCConnectionPoolMetricsPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl
-		<LCSClusterNodeJDBCConnectionPoolMetrics>
+	extends BasePersistenceImpl<LCSClusterNodeJDBCConnectionPoolMetrics>
 	implements LCSClusterNodeJDBCConnectionPoolMetricsPersistence {
 
 	@Override

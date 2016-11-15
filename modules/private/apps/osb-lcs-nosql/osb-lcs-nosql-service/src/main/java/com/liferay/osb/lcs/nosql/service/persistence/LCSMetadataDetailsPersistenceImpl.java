@@ -22,12 +22,13 @@ import com.datastax.driver.core.querybuilder.Update;
 
 import com.liferay.osb.lcs.nosql.model.LCSMetadataDetails;
 import com.liferay.osb.lcs.nosql.model.impl.LCSMetadataDetailsImpl;
+import com.liferay.osb.lcs.nosql.service.persistence.base.BasePersistenceImpl;
 
 /**
  * @author Ivica Cardic
  */
 public class LCSMetadataDetailsPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl<LCSMetadataDetails>
+	extends BasePersistenceImpl<LCSMetadataDetails>
 	implements LCSMetadataDetailsPersistence {
 
 	@Override

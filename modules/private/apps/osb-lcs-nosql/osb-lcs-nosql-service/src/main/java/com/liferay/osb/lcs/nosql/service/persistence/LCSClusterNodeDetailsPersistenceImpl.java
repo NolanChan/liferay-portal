@@ -22,6 +22,7 @@ import com.datastax.driver.core.querybuilder.Select;
 import com.liferay.lcs.util.LCSClusterNodeStatus;
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeDetails;
 import com.liferay.osb.lcs.nosql.model.impl.LCSClusterNodeDetailsImpl;
+import com.liferay.osb.lcs.nosql.service.persistence.base.BasePersistenceImpl;
 import com.liferay.osb.lcs.nosql.util.DMLStatementExecutor;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import java.util.List;
  * @author Igor Beslic
  */
 public class LCSClusterNodeDetailsPersistenceImpl
-	extends BaseLCSClusterNodePersistenceImpl<LCSClusterNodeDetails>
+	extends BasePersistenceImpl<LCSClusterNodeDetails>
 	implements LCSClusterNodeDetailsPersistence {
 
 	@Override
