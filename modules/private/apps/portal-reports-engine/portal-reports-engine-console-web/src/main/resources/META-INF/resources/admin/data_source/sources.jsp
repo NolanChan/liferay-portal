@@ -64,23 +64,23 @@ SourceSearch sourceSearch = reportsEngineDisplayContext.getSourceSearch();
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action"
+				align="right"
 				path="/admin/data_source/data_source_actions.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
-		<aui:button-row cssClass="search-buttons">
-			<portlet:renderURL var="addSourceURL">
-				<portlet:param name="mvcPath" value="/admin/data_source/edit_data_source.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:renderURL>
-
-			<aui:button href="<%= addSourceURL %>" value="add-source" />
-		</aui:button-row>
-
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator displayStyle="<%= reportsEngineDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<portlet:renderURL var="addSourceURL">
+	<portlet:param name="mvcPath" value="/admin/data_source/edit_data_source.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:renderURL>
+
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-source") %>' url="<%= addSourceURL.toString() %>" />
+</liferay-frontend:add-menu>
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "sources"), currentURL);

@@ -68,23 +68,23 @@ DefinitionSearch definitionSearch = reportsEngineDisplayContext.getDefinitionSea
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action"
+				align="right"
 				path="/admin/definition/definition_actions.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
-		<aui:button-row cssClass="search-buttons">
-			<portlet:renderURL var="addDefinitionURL">
-				<portlet:param name="mvcPath" value="/admin/definition/edit_definition.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:renderURL>
-
-			<aui:button href="<%= addDefinitionURL %>" value="add-definition" />
-		</aui:button-row>
-
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator displayStyle="<%= reportsEngineDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<portlet:renderURL var="addDefinitionURL">
+	<portlet:param name="mvcPath" value="/admin/definition/edit_definition.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:renderURL>
+
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-definition") %>' url="<%= addDefinitionURL.toString() %>" />
+</liferay-frontend:add-menu>
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "definitions"), currentURL);

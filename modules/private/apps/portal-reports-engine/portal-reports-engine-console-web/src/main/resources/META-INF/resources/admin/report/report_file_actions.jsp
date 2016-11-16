@@ -24,7 +24,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 String fileName = (String)row.getObject();
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="deliverReportURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 		<portlet:param name="mvcPath" value="/admin/report/deliver_report.jsp" />
 		<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
@@ -32,7 +32,6 @@ String fileName = (String)row.getObject();
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		iconCssClass="icon-signin"
 		message="deliver-report"
 		url="<%= deliverReportURL %>"
 	/>
@@ -43,7 +42,6 @@ String fileName = (String)row.getObject();
 	</portlet:resourceURL>
 
 	<liferay-ui:icon
-		iconCssClass="icon-download"
 		message="download"
 		method="get"
 		url="<%= downloadURL %>"

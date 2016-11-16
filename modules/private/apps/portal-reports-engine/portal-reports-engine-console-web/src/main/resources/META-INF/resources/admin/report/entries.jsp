@@ -71,12 +71,12 @@ EntrySearch entrySearch = reportsEngineDisplayContext.getEntrySearch();
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action"
+				align="right"
 				path="/admin/report/requested_report_actions.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator displayStyle="<%= reportsEngineDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
