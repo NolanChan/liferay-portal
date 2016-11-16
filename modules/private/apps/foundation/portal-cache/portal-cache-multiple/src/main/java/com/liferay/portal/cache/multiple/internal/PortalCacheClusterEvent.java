@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
-import java.util.Objects;
-
 /**
  * @author Shuyang Zhou
  */
@@ -75,37 +73,6 @@ public class PortalCacheClusterEvent implements Serializable {
 		_portalCacheClusterEventType = portalCacheClusterEventType;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PortalCacheClusterEvent)) {
-			return false;
-		}
-
-		PortalCacheClusterEvent portalCacheClusterEvent =
-			(PortalCacheClusterEvent)obj;
-
-		if (Objects.equals(_elementKey, portalCacheClusterEvent._elementKey) &&
-			Objects.equals(
-				_elementValue, portalCacheClusterEvent._elementValue) &&
-			Objects.equals(
-				_portalCacheClusterEventType,
-				portalCacheClusterEvent._portalCacheClusterEventType) &&
-			Objects.equals(
-				_portalCacheManagerName,
-				portalCacheClusterEvent._portalCacheManagerName) &&
-			Objects.equals(
-				_portalCacheName, portalCacheClusterEvent._portalCacheName)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public Serializable getElementKey() {
 		return SerializableObjectWrapper.unwrap(_elementKey);
 	}
@@ -128,11 +95,6 @@ public class PortalCacheClusterEvent implements Serializable {
 
 	public int getTimeToLive() {
 		return _timeToLive;
-	}
-
-	@Override
-	public int hashCode() {
-		return toString().hashCode();
 	}
 
 	public void setElementValue(Serializable elementValue) {
