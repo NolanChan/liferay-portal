@@ -42,15 +42,19 @@ public class PortalCacheClusterEventCoalesceComparator
 			return -1;
 		}
 
+		if (!Objects.equals(
+				portalCacheClusterEvent1.getPortalCacheManagerName(),
+				portalCacheClusterEvent2.getPortalCacheManagerName()) ||
+			!Objects.equals(
+				portalCacheClusterEvent1.getPortalCacheName(),
+				portalCacheClusterEvent2.getPortalCacheName())) {
+
+			return -1;
+		}
+
 		// Must compare keys last as some cache keys do direct casting.
 
 		if (Objects.equals(
-				portalCacheClusterEvent1.getPortalCacheManagerName(),
-				portalCacheClusterEvent2.getPortalCacheManagerName()) &&
-			Objects.equals(
-				portalCacheClusterEvent1.getPortalCacheName(),
-				portalCacheClusterEvent2.getPortalCacheName()) &&
-			Objects.equals(
 				portalCacheClusterEvent1.getElementKey(),
 				portalCacheClusterEvent2.getElementKey())) {
 
