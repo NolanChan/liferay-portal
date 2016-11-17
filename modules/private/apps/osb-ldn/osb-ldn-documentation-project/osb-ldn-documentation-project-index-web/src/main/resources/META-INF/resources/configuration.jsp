@@ -26,7 +26,7 @@
 
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-		<aui:input name="predefinedFilterTags" title="predefined-fitler-tags" value="<%= predefinedFilterTags %>" />
+		<aui:input name="predefinedFilterTags" value="<%= predefinedFilterTags %>" />
 
 		<aui:button-row>
 			<aui:button type="submit" />
