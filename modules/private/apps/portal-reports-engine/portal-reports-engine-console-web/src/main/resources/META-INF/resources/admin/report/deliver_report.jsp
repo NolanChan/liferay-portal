@@ -19,12 +19,24 @@
 <%
 long entryId = ParamUtil.getLong(request, "entryId", -1);
 String fileName = ParamUtil.getString(request, "fileName");
-%>
 
-<portlet:renderURL var="backURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-	<portlet:param name="mvcPath" value="/admin/report/requested_report_detail.jsp" />
-	<portlet:param name="entryId" value="<%= String.valueOf(entryId) %>" />
-</portlet:renderURL>
+PortletURL backURL = reportsEngineDisplayContext.getPortletURL();
+
+backURL.setParameter("mvcPath", "/admin/report/requested_report_detail.jsp");
+backURL.setParameter("entryId", String.valueOf(entryId));
+
+if (reportsEngineDisplayContext.isAdminPortlet()) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL.toString());
+
+	renderResponse.setTitle(LanguageUtil.get(request, "deliver-report"));
+}
+else {
+	portletDisplay.setShowBackIcon(false);
+
+	renderResponse.setTitle(LanguageUtil.get(request, "deliver-report"));
+}
+%>
 
 <portlet:actionURL name="deliverReport" var="actionURL">
 	<portlet:param name="redirect" value="<%= backURL.toString() %>" />
@@ -36,22 +48,24 @@ String fileName = ParamUtil.getString(request, "fileName");
 	<portlet:param name="mvcPath" value="/admin/data_source/edit_data_source.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= actionURL %>" method="post" name="fm">
+<aui:form action="<%= actionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
 
 	<liferay-ui:error exception="<%= EntryEmailDeliveryException.class %>" message="please-enter-a-valid-email-address" />
 
-	<aui:fieldset>
-		<aui:field-wrapper label="report-name">
-			<%= StringUtil.extractLast(fileName, StringPool.FORWARD_SLASH) %>
-		</aui:field-wrapper>
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:field-wrapper label="report-name">
+				<%= StringUtil.extractLast(fileName, StringPool.FORWARD_SLASH) %>
+			</aui:field-wrapper>
 
-		<aui:input label="email-recipient" name="emailAddresses" type="text" />
-	</aui:fieldset>
+			<aui:input label="email-recipient" name="emailAddresses" type="text" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button type="submit" value="deliver" />
+		<aui:button cssClass="btn-lg" type="submit" value="deliver" />
 
-		<aui:button href="<%= backURL %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= backURL.toString() %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

@@ -16,6 +16,7 @@ package com.liferay.portal.reports.engine.console.web.admin.portlet;
 
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -27,7 +28,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
+import com.liferay.portal.reports.engine.console.model.Definition;
+import com.liferay.portal.reports.engine.console.model.Source;
+import com.liferay.portal.reports.engine.console.service.DefinitionLocalService;
+import com.liferay.portal.reports.engine.console.service.SourceLocalService;
 import com.liferay.portal.reports.engine.console.web.admin.configuration.ReportsEngineAdminWebConfiguration;
+import com.liferay.portal.reports.engine.console.web.admin.internal.constants.ReportsEngineWebKeys;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +50,7 @@ import javax.portlet.ResourceResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gavin Wan
@@ -86,6 +93,10 @@ public class AdminPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
+			setDefinitionRequestAttribute(request);
+
+			setSourceRequestAttribute(request);
+
 			request.setAttribute(
 				ReportsEngineAdminWebConfiguration.class.getName(),
 				_reportsEngineAdminWebConfiguration);
@@ -127,6 +138,18 @@ public class AdminPortlet extends MVCPortlet {
 		}
 	}
 
+	@Reference(unbind = "-")
+	public void setDefinitionLocalService(
+		DefinitionLocalService definitionLocalService) {
+
+		_definitionLocalService = definitionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setSourceLocalService(SourceLocalService sourceLocalService) {
+		_sourceLocalService = sourceLocalService;
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -155,7 +178,37 @@ public class AdminPortlet extends MVCPortlet {
 			contentType);
 	}
 
+	protected void setDefinitionRequestAttribute(RenderRequest renderRequest)
+		throws PortalException {
+
+		long definitionId = ParamUtil.getLong(renderRequest, "definitionId");
+
+		Definition definition = null;
+
+		if (definitionId > 0) {
+			definition = _definitionLocalService.getDefinition(definitionId);
+		}
+
+		renderRequest.setAttribute(ReportsEngineWebKeys.DEFINITION, definition);
+	}
+
+	protected void setSourceRequestAttribute(RenderRequest renderRequest)
+		throws PortalException {
+
+		long sourceId = ParamUtil.getLong(renderRequest, "sourceId");
+
+		Source source = null;
+
+		if (sourceId > 0) {
+			source = _sourceLocalService.getSource(sourceId);
+		}
+
+		renderRequest.setAttribute(ReportsEngineWebKeys.SOURCE, source);
+	}
+
+	private DefinitionLocalService _definitionLocalService;
 	private volatile ReportsEngineAdminWebConfiguration
 		_reportsEngineAdminWebConfiguration;
+	private SourceLocalService _sourceLocalService;
 
 }

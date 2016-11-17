@@ -17,24 +17,24 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long definitionId = ParamUtil.getLong(request, "definitionId");
+PortletURL searchDefinitionURL = reportsEngineDisplayContext.getPortletURL();
 
-Definition definition = DefinitionLocalServiceUtil.getDefinition(definitionId);
+searchDefinitionURL.setParameter("mvcPath", "/admin/view.jsp");
+searchDefinitionURL.setParameter("tabs1", "definitions");
+
+Definition definition = (Definition)request.getAttribute(ReportsEngineWebKeys.DEFINITION);
+
+long definitionId = BeanParamUtil.getLong(definition, request, "definitionId");
 
 String reportName = BeanParamUtil.getString(definition, request, "reportName");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(searchDefinitionURL.toString());
+
+renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 %>
 
-<portlet:renderURL var="searchDefinitionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-	<portlet:param name="mvcPath" value="/admin/view.jsp" />
-	<portlet:param name="tabs1" value="definitions" />
-</portlet:renderURL>
-
-<liferay-ui:header
-	backURL="<%= searchDefinitionURL %>"
-	title='<%= "new-report-entry" %>'
-/>
-
-<portlet:renderURL var="searchRequestsURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+<portlet:renderURL var="searchRequestsURL">
 	<portlet:param name="mvcPath" value="/admin/view.jsp" />
 	<portlet:param name="tabs1" value="reports" />
 </portlet:renderURL>
@@ -44,8 +44,8 @@ String reportName = BeanParamUtil.getString(definition, request, "reportName");
 	<portlet:param name="redirect" value="<%= searchRequestsURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= addSchedulerURL %>" method="post" name="fm">
-	<aui:input name="definitionId" type="hidden" value="<%= definitionId %>" />
+<aui:form action="<%= addSchedulerURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:input name="definitionId" type="hidden" value="<%= definition.getDefinitionId() %>" />
 
 	<portlet:renderURL var="generatedReportsURL">
 		<portlet:param name="mvcPath" value="/admin/report/requested_report_detail.jsp" />
@@ -57,132 +57,143 @@ String reportName = BeanParamUtil.getString(definition, request, "reportName");
 	<liferay-ui:error exception="<%= EntryEmailDeliveryException.class %>" message="please-enter-a-valid-email-address" />
 	<liferay-ui:error exception="<%= EntryEmailNotificationsException.class %>" message="please-enter-a-valid-email-address" />
 
-	<liferay-ui:input-scheduler />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input name="reportName" value="<%= reportName %>" />
 
-	<aui:select label="report-format" name="format">
+			<aui:select label="report-format" name="format">
+
+				<%
+				for (ReportFormat reportFormat : ReportFormat.values()) {
+				%>
+
+					<aui:option label="<%= reportFormat.getValue() %>" value="<%= reportFormat.getValue() %>" />
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
+			<aui:input label="email-notifications" name="emailNotifications" type="text" />
+
+			<aui:input label="email-recipient" name="emailDelivery" type="text" />
+		</aui:fieldset>
+
+		<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="schedule">
+			<liferay-ui:input-scheduler />
+		</aui:fieldset>
 
 		<%
-		for (ReportFormat reportFormat : ReportFormat.values()) {
+			JSONArray reportParametersJSONArray = JSONFactoryUtil.createJSONArray(definition.getReportParameters());
 		%>
 
-			<aui:option label="<%= reportFormat.getValue() %>" value="<%= reportFormat.getValue() %>" />
+		<c:if test="<%= reportParametersJSONArray.length() > 0 %>">
+			<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="report-parameters">
 
-		<%
-		}
-		%>
+				<%
+				for (int i = 0; i < reportParametersJSONArray.length(); i++) {
+					JSONObject reportParameterJSONObject = reportParametersJSONArray.getJSONObject(i);
 
-	</aui:select>
+					String key = reportParameterJSONObject.getString("key");
+					String type = reportParameterJSONObject.getString("type");
+					String value = reportParameterJSONObject.getString("value");
+				%>
 
-	<aui:input name="reportName" value="<%= reportName %>" />
+					<aui:row>
+						<c:choose>
+							<c:when test='<%= type.equals("date") %>'>
+								<aui:col width="<%= 20 %>">
+									<aui:field-wrapper helpMessage="entry-report-date-parameters-help" label="<%= key %>" />
+								</aui:col>
 
-	<aui:field-wrapper helpMessage="entry-report-parameters-help" label="report-parameters">
+								<aui:col width="<%= 30 %>">
 
-		<%
-		JSONArray reportParametersJSONArray = JSONFactoryUtil.createJSONArray(definition.getReportParameters());
+									<%
+									Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
-		for (int i = 0; i < reportParametersJSONArray.length(); i++) {
-			JSONObject reportParameterJSONObject = reportParametersJSONArray.getJSONObject(i);
+									String[] date = value.split("-");
 
-			String key = reportParameterJSONObject.getString("key");
-			String type = reportParameterJSONObject.getString("type");
-			String value = reportParameterJSONObject.getString("value");
-		%>
+									calendar.set(Calendar.YEAR, GetterUtil.getInteger(date[0]));
+									calendar.set(Calendar.MONTH, GetterUtil.getInteger(date[1]) - 1);
+									calendar.set(Calendar.DATE, GetterUtil.getInteger(date[2]));
+									%>
 
-			<aui:row>
-				<c:choose>
-					<c:when test='<%= type.equals("date") %>'>
-						<aui:col width="<%= 20 %>">
-							<aui:field-wrapper helpMessage="entry-report-date-parameters-help" label="<%= key %>" />
-						</aui:col>
+									<liferay-ui:input-date
+										dayParam='<%= key + "Day" %>'
+										dayValue="<%= calendar.get(Calendar.DATE) %>"
+										disabled="<%= false %>"
+										firstDayOfWeek="<%= calendar.getFirstDayOfWeek() - 1 %>"
+										monthParam='<%= key + "Month" %>'
+										monthValue="<%= calendar.get(Calendar.MONTH) %>"
+										yearParam='<%= key +"Year" %>'
+										yearValue="<%= calendar.get(Calendar.YEAR) %>"
+									/>
+								</aui:col>
 
-						<aui:col width="<%= 30 %>">
+								<aui:col columnWidth="<%= 50 %>">
+									<aui:select label="" name='<%= "useVariable" + key %>' onChange='<%= "useVariable" + key + "();" %>' showEmptyOption="<%= true %>">
+										<aui:option label="start-date" value="startDate" />
+										<aui:option label="end-date" value="endDate" />
+									</aui:select>
 
-							<%
-							Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
+									<script type="text/javascript">
+										function useVariable<%= key %>() {
+											var A = AUI();
 
-							String[] date = value.split("-");
+											var type = A.one('#<%= renderResponse.getNamespace() + "useVariable" + key %>').get('value');
+											var day = A.one('#<%= renderResponse.getNamespace()+ key + "Day" %>');
+											var month = A.one('#<%= renderResponse.getNamespace()+ key + "Month" %>');
+											var year = A.one('#<%= renderResponse.getNamespace()+ key + "Year" %>');
 
-							calendar.set(Calendar.YEAR, GetterUtil.getInteger(date[0]));
-							calendar.set(Calendar.MONTH, GetterUtil.getInteger(date[1]) - 1);
-							calendar.set(Calendar.DATE, GetterUtil.getInteger(date[2]));
-							%>
+											if ((type == 'startDate') || (type =='endDate')) {
+												day.attr('disabled', 'disabled');
+												month.attr('disabled', 'disabled');
+												year.attr('disabled', 'disabled');
 
-							<liferay-ui:input-date
-								dayParam='<%= key + "Day" %>'
-								dayValue="<%= calendar.get(Calendar.DATE) %>"
-								disabled="<%= false %>"
-								firstDayOfWeek="<%= calendar.getFirstDayOfWeek() - 1 %>"
-								monthParam='<%= key + "Month" %>'
-								monthValue="<%= calendar.get(Calendar.MONTH) %>"
-								yearParam='<%= key +"Year" %>'
-								yearValue="<%= calendar.get(Calendar.YEAR) %>"
-							/>
-						</aui:col>
-
-						<aui:col columnWidth="<%= 50 %>">
-							<aui:select label="" name='<%= "useVariable" + key %>' onChange='<%= "useVariable" + key + "();" %>' showEmptyOption="<%= true %>">
-								<aui:option label="start-date" value="startDate" />
-								<aui:option label="end-date" value="endDate" />
-							</aui:select>
-
-							<script type="text/javascript">
-								function useVariable<%= key %>() {
-									var A = AUI();
-
-									var type = A.one('#<%= renderResponse.getNamespace() + "useVariable" + key %>').get('value');
-									var day = A.one('#<%= renderResponse.getNamespace()+ key + "Day" %>');
-									var month = A.one('#<%= renderResponse.getNamespace()+ key + "Month" %>');
-									var year = A.one('#<%= renderResponse.getNamespace()+ key + "Year" %>');
-
-									if ((type == 'startDate') || (type =='endDate')) {
-										day.attr('disabled', 'disabled');
-										month.attr('disabled', 'disabled');
-										year.attr('disabled', 'disabled');
-
-										if (type =='endDate') {
-											document.<portlet:namespace />fm.<portlet:namespace />endDateType[1].checked = 'true';
+												if (type =='endDate') {
+													document.<portlet:namespace />fm.<portlet:namespace />endDateType[1].checked = 'true';
+												}
+											}
+											else {
+												day.attr('disabled', '');
+												month.attr('disabled', '');
+												year.attr('disabled', '');
+											}
 										}
-									}
-									else {
-										day.attr('disabled', '');
-										month.attr('disabled', '');
-										year.attr('disabled', '');
-									}
-								}
-							</script>
-						</aui:col>
-					</c:when>
-					<c:otherwise>
-						<aui:col width="<%= 20 %>">
-							<%= key %>
-						</aui:col>
+									</script>
+								</aui:col>
+							</c:when>
+							<c:otherwise>
+								<aui:col width="<%= 20 %>">
+									<%= key %>
+								</aui:col>
 
-						<aui:col width="<%= 80 %>">
-							<span class="field field-text" id="aui_3_2_0_1428">
-								<input class="form-control" name="<portlet:namespace /><%= "parameterValue" + key %>" type="text" value="<%= value %>" /><br />
-							</span>
-						</aui:col>
-					</c:otherwise>
-				</c:choose>
-			</aui:row>
+								<aui:col width="<%= 80 %>">
+									<span class="field field-text" id="aui_3_2_0_1428">
+										<input class="form-control" name="<portlet:namespace /><%= "parameterValue" + key %>" type="text" value="<%= value %>" /><br />
+									</span>
+								</aui:col>
+							</c:otherwise>
+						</c:choose>
+					</aui:row>
 
-		<%
-		}
-		%>
+				<%
+				}
+				%>
 
-	</aui:field-wrapper>
+			</aui:fieldset>
 
-	<aui:input label="email-notifications" name="emailNotifications" type="text" />
+		</c:if>
 
-	<aui:input label="email-recipient" name="emailDelivery" type="text" />
-
-	<aui:field-wrapper label="permissions">
-		<liferay-ui:input-permissions modelName="<%= Entry.class.getName() %>" />
-	</aui:field-wrapper>
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+			<liferay-ui:input-permissions modelName="<%= Entry.class.getName() %>" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button type="submit" value="schedule" />
+		<aui:button cssClass="btn-lg" type="submit" value="schedule" />
 
-		<aui:button href="<%= searchDefinitionURL %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= searchDefinitionURL.toString() %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

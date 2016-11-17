@@ -78,6 +78,7 @@ page import="com.liferay.portal.reports.engine.console.service.permission.Report
 page import="com.liferay.portal.reports.engine.console.service.permission.SourcePermissionChecker" %><%@
 page import="com.liferay.portal.reports.engine.console.status.ReportStatus" %><%@
 page import="com.liferay.portal.reports.engine.console.util.ReportsEngineConsoleUtil" %><%@
+page import="com.liferay.portal.reports.engine.console.web.admin.internal.constants.ReportsEngineWebKeys" %><%@
 page import="com.liferay.portal.reports.engine.console.web.admin.internal.display.context.ReportsEngineDisplayContext" %><%@
 page import="com.liferay.portal.reports.engine.console.web.admin.internal.display.context.util.ReportsEngineRequestHelper" %><%@
 page import="com.liferay.portal.reports.engine.console.web.admin.internal.search.DefinitionDisplayTerms" %><%@

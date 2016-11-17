@@ -23,43 +23,46 @@ portletURL.setParameter("mvcPath", "/admin/view.jsp");
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewReportsURL">
-			<portlet:param name="mvcPath" value="/admin/view.jsp" />
-			<portlet:param name="tabs1" value="reports" />
-		</portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= viewReportsURL %>"
-			label="reports"
-			selected="<%= reportsEngineDisplayContext.isReportsTabSelected() %>"
-		/>
-		<c:if test="<%= hasAddDefinitionPermission %>">
-			<portlet:renderURL var="viewDefinitionsURL">
+	<c:if test="<%= reportsEngineDisplayContext.isAdminPortlet() %>">
+		<aui:nav cssClass="navbar-nav">
+			<portlet:renderURL var="viewReportsURL">
 				<portlet:param name="mvcPath" value="/admin/view.jsp" />
-				<portlet:param name="tabs1" value="definitions" />
+				<portlet:param name="tabs1" value="reports" />
 			</portlet:renderURL>
 
 			<aui:nav-item
-				href="<%= viewDefinitionsURL %>"
-				label="definitions"
-				selected="<%= reportsEngineDisplayContext.isDefinitionsTabSelected() %>"
+				href="<%= viewReportsURL %>"
+				label="reports"
+				selected="<%= reportsEngineDisplayContext.isReportsTabSelected() %>"
 			/>
-		</c:if>
 
-		<c:if test="<%= hasAddSourcePermission %>">
-			<portlet:renderURL var="viewSourcesURL">
-				<portlet:param name="mvcPath" value="/admin/view.jsp" />
-				<portlet:param name="tabs1" value="sources" />
-			</portlet:renderURL>
+			<c:if test="<%= hasAddDefinitionPermission %>">
+				<portlet:renderURL var="viewDefinitionsURL">
+					<portlet:param name="mvcPath" value="/admin/view.jsp" />
+					<portlet:param name="tabs1" value="definitions" />
+				</portlet:renderURL>
 
-			<aui:nav-item
-				href="<%= viewSourcesURL %>"
-				label="sources"
-				selected="<%= reportsEngineDisplayContext.isSourcesTabSelected() %>"
-			/>
-		</c:if>
-	</aui:nav>
+				<aui:nav-item
+					href="<%= viewDefinitionsURL %>"
+					label="definitions"
+					selected="<%= reportsEngineDisplayContext.isDefinitionsTabSelected() %>"
+				/>
+			</c:if>
+
+			<c:if test="<%= hasAddSourcePermission %>">
+				<portlet:renderURL var="viewSourcesURL">
+					<portlet:param name="mvcPath" value="/admin/view.jsp" />
+					<portlet:param name="tabs1" value="sources" />
+				</portlet:renderURL>
+
+				<aui:nav-item
+					href="<%= viewSourcesURL %>"
+					label="sources"
+					selected="<%= reportsEngineDisplayContext.isSourcesTabSelected() %>"
+				/>
+			</c:if>
+		</aui:nav>
+	</c:if>
 
 	<aui:nav-bar-search>
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">

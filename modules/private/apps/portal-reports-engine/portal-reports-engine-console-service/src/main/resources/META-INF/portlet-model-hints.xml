@@ -11,7 +11,9 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field localized="true" name="name" type="String" />
-		<field localized="true" name="description" type="String" />
+		<field localized="true" name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="sourceId" type="long" />
 		<field name="reportName" type="String" />
 		<field name="reportParameters" type="String">

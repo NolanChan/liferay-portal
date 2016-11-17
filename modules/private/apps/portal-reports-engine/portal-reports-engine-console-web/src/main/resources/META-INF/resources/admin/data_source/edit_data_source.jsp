@@ -24,24 +24,22 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL", searchSourcesURL);
 
-long sourceId = ParamUtil.getLong(request, "sourceId");
-
-Source source = SourceLocalServiceUtil.fetchSource(sourceId);
+Source source = (Source)request.getAttribute(ReportsEngineWebKeys.SOURCE);
 
 String name = BeanParamUtil.getString(source, request, "name");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle((source != null) ? LanguageUtil.format(request, "edit-x", source.getName(locale), false) : LanguageUtil.get(request, "new-data-source"));
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	title='<%= (source == null) ? "new-data-source" : source.getName(locale) %>'
-/>
-
-<portlet:actionURL name="editDataSource" var="actionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+<portlet:actionURL name="editDataSource" var="actionURL">
 	<portlet:param name="mvcPath" value="/admin/data_source/edit_data_source.jsp" />
 	<portlet:param name="redirect" value="<%= searchSourcesURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= actionURL %>" method="post" name="fm">
+<aui:form action="<%= actionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<liferay-ui:error exception="<%= SourceDriverClassNameException.class %>" message="please-enter-a-valid-data-source-driver" />
 	<liferay-ui:error exception="<%= SourceJDBCConnectionException.class %>" message="could-not-connect-to-the-database.-please-verify-that-the-settings-are-correct" />
 	<liferay-ui:error exception="<%= SourceTypeException.class %>" message="please-enter-a-valid-data-source-type" />
@@ -50,35 +48,35 @@ String name = BeanParamUtil.getString(source, request, "name");
 
 	<aui:input name="sourceId" type="hidden" />
 
-	<aui:fieldset>
-		<div class="form-group">
-			<aui:field-wrapper label="data-source-name">
-				<liferay-ui:input-localized name="name" required="<%= true %>" xml="<%= name %>" />
-			</aui:field-wrapper>
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<div class="form-group">
+				<aui:input name="name" required="<%= true %>" />
 
-			<aui:input label="jdbc-driver-class-name" name="driverClassName" required="<%= true %>" />
+				<aui:input label="jdbc-driver-class-name" name="driverClassName" required="<%= true %>" />
 
-			<aui:input label="jdbc-url" name="driverUrl" required="<%= true %>" />
+				<aui:input label="jdbc-url" name="driverUrl" required="<%= true %>" />
 
-			<aui:input label="jdbc-user-name" name="driverUserName" required="<%= true %>" />
+				<aui:input label="jdbc-user-name" name="driverUserName" required="<%= true %>" />
 
-			<aui:input autocomplete="off" label="jdbc-password" name="driverPassword" type="password" />
-		</div>
+				<aui:input autocomplete="off" label="jdbc-password" name="driverPassword" type="password" />
+			</div>
+		</aui:fieldset>
 
 		<c:if test="<%= source == null %>">
-			<aui:field-wrapper label="permissions">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 				<liferay-ui:input-permissions modelName="<%= Source.class.getName() %>" />
-			</aui:field-wrapper>
+			</aui:fieldset>
 		</c:if>
+	</aui:fieldset-group>
 
-		<aui:button-row>
-			<aui:button type="submit" />
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
 
-			<aui:button href="<%= searchSourcesURL %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= searchSourcesURL %>" type="cancel" />
 
-			<aui:button name="testDatabaseConnectionButton" onClick='<%= renderResponse.getNamespace() + "testDatabaseConnection();" %>' value="test-database-connection" />
-		</aui:button-row>
-	</aui:fieldset>
+		<aui:button cssClass="btn-lg" name="testDatabaseConnectionButton" onClick='<%= renderResponse.getNamespace() + "testDatabaseConnection();" %>' value="test-database-connection" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script>

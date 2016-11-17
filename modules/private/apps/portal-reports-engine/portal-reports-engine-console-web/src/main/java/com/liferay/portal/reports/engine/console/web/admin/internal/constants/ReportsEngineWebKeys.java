@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,8 +11,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.portal.reports.engine.console.web.admin.internal.constants;
 
-<liferay-util:include page="/admin/view.jsp" servletContext="<%= application %>" />
+/**
+ * @author Rafael Praxedes
+ */
+public class ReportsEngineWebKeys {
+
+	public static final String DEFINITION = "DEFINITION";
+
+	public static final String SOURCE = "SOURCE";
+
+}

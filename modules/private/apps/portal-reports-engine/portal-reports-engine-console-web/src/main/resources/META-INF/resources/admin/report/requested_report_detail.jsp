@@ -17,25 +17,29 @@
 <%@ include file="/init.jsp" %>
 
 <%
+PortletURL searchRequestURL = reportsEngineDisplayContext.getPortletURL();
+
+searchRequestURL.setParameter("mvcPath", "/admin/view.jsp");
+
 long entryId = ParamUtil.getLong(request, "entryId", -1);
 
 Entry entry = EntryLocalServiceUtil.getEntry(entryId);
 
-Definition definition = DefinitionLocalServiceUtil.getDefinition(entry.getDefinitionId());
-%>
-
-<portlet:renderURL var="searchRequestURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-	<portlet:param name="mvcPath" value="/admin/view.jsp" />
-	<portlet:param name="tabs1" value="reports" />
-</portlet:renderURL>
-
-<liferay-ui:header
-	backURL="<%= searchRequestURL %>"
-	title="<%= definition.getName(locale) %>"
-/>
-
-<%
 String status = entry.getStatus();
+
+Definition definition = DefinitionLocalServiceUtil.getDefinition(entry.getDefinitionId());
+
+if (reportsEngineDisplayContext.isAdminPortlet()) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(searchRequestURL.toString());
+
+	renderResponse.setTitle((definition != null) ? LanguageUtil.format(request, "edit-x", definition.getName(locale), false) : LanguageUtil.get(request, "new-report-definition"));
+}
+else {
+	portletDisplay.setShowBackIcon(false);
+
+	renderResponse.setTitle(definition.getName(locale));
+}
 %>
 
 <div class="container-fluid-1280">
@@ -52,131 +56,172 @@ String status = entry.getStatus();
 		</c:when>
 	</c:choose>
 
-	<aui:fieldset>
-		<aui:field-wrapper label="requested-report-id">
-			<%= entry.getEntryId() %>
-		</aui:field-wrapper>
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:row cssClass="lfr-asset-column lfr-asset-column-details">
+				<aui:col width="50">
+					<aui:field-wrapper label="requested-report-id">
+						<%= entry.getEntryId() %>
+					</aui:field-wrapper>
 
-		<aui:field-wrapper label="definition-name">
-			<%= definition.getName(locale) %>
-		</aui:field-wrapper>
+					<aui:field-wrapper label="definition-name">
+						<%= definition.getName(locale) %>
+					</aui:field-wrapper>
 
-		<aui:field-wrapper label="description">
-			<%= definition.getDescription(locale) %>
-		</aui:field-wrapper>
+					<aui:field-wrapper label="description">
+						<%= definition.getDescription(locale) %>
+					</aui:field-wrapper>
 
-		<aui:field-wrapper label="data-source-name">
+					<aui:field-wrapper label="data-source-name">
 
-			<%
-			Source source = SourceLocalServiceUtil.fetchSource(definition.getSourceId());
-			%>
+						<%
+						Source source = SourceLocalServiceUtil.fetchSource(definition.getSourceId());
+						%>
 
-			<%= (source == null) ? ReportDataSourceType.PORTAL.getValue() : source.getName(locale) %>
-		</aui:field-wrapper>
+						<%= (source == null) ? ReportDataSourceType.PORTAL.getValue() : source.getName(locale) %>
+					</aui:field-wrapper>
+				</aui:col>
 
-		<aui:field-wrapper label="report-parameters">
+				<aui:col width="50">
+					<c:if test="<%= entry.isScheduleRequest() %>">
+						<aui:field-wrapper label="is-schedule-request">
 
-			<%
-			for (String reportParameter : StringUtil.split(entry.getReportParameters())) {
-			%>
+							<%
+							StringBundler sb = new StringBundler((entry.getEndDate() != null) ? 18 : 12);
 
-				<%= reportParameter.equals("[]") ? StringPool.BLANK : reportParameter %>
+							sb.append("<br />");
+							sb.append(LanguageUtil.get(request, "scheduler-from"));
+							sb.append(StringPool.BLANK);
+							sb.append(StringPool.COLON);
+							sb.append(StringPool.BLANK);
+							sb.append(dateFormatDateTime.format(entry.getStartDate()));
 
-			<%
-			}
-			%>
+							if (entry.getEndDate() != null) {
+								sb.append("<br />");
+								sb.append(LanguageUtil.get(request, "scheduler-to"));
+								sb.append(StringPool.BLANK);
+								sb.append(StringPool.COLON);
+								sb.append(StringPool.BLANK);
+								sb.append(dateFormatDateTime.format(entry.getEndDate()));
+							}
 
-		</aui:field-wrapper>
+							sb.append("<br />");
+							sb.append(LanguageUtil.get(request, "scheduler-crontext"));
+							sb.append(StringPool.BLANK);
+							sb.append(StringPool.COLON);
+							sb.append(StringPool.BLANK);
+							sb.append(entry.getRecurrence());
+							%>
 
-		<c:if test="<%= entry.isScheduleRequest() %>">
-			<aui:field-wrapper label="is-schedule-request">
+							<%= sb.toString() %>
+						</aui:field-wrapper>
+					</c:if>
 
-				<%
-				StringBundler sb = new StringBundler((entry.getEndDate() != null) ? 18 : 12);
+					<aui:field-wrapper label="requested-by">
+						<%= entry.getUserName() %>
+					</aui:field-wrapper>
 
-				sb.append("<br />");
-				sb.append(LanguageUtil.get(request, "scheduler-from"));
-				sb.append(StringPool.BLANK);
-				sb.append(StringPool.COLON);
-				sb.append(StringPool.BLANK);
-				sb.append(dateFormatDateTime.format(entry.getStartDate()));
+					<aui:field-wrapper label="requested-date">
+						<%= entry.getCreateDate() %>
+					</aui:field-wrapper>
 
-				if (entry.getEndDate() != null) {
-					sb.append("<br />");
-					sb.append(LanguageUtil.get(request, "scheduler-to"));
-					sb.append(StringPool.BLANK);
-					sb.append(StringPool.COLON);
-					sb.append(StringPool.BLANK);
-					sb.append(dateFormatDateTime.format(entry.getEndDate()));
-				}
+					<aui:field-wrapper label="completion-date">
+						<%= entry.getModifiedDate() %>
+					</aui:field-wrapper>
+				</aui:col>
+			</aui:row>
+		</aui:fieldset>
 
-				sb.append("<br />");
-				sb.append(LanguageUtil.get(request, "scheduler-crontext"));
-				sb.append(StringPool.BLANK);
-				sb.append(StringPool.COLON);
-				sb.append(StringPool.BLANK);
-				sb.append(entry.getRecurrence());
-				%>
+		<%
+		String[] reportParameters = StringUtil.split(entry.getReportParameters());
+		JSONArray reportParametersJSONArray = JSONFactoryUtil.createJSONArray(entry.getReportParameters());
+		%>
 
-				<%= sb.toString() %>
-			</aui:field-wrapper>
+		<c:if test="<%= reportParameters.length > 0 %>">
+			<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="report-parameters">
+				<table class="table table-autofit table-list">
+					<thead>
+						<tr>
+							<th><liferay-ui:message key="key" /></th>
+							<th><liferay-ui:message key="value" /></th>
+						</tr>
+					</thead>
+
+					<tbody>
+
+						<%
+						for (int i = 0; i < reportParametersJSONArray.length(); i++) {
+							JSONObject reportParameterJSONObject = reportParametersJSONArray.getJSONObject(i);
+
+							String key = reportParameterJSONObject.getString("key");
+							String value = reportParameterJSONObject.getString("value");
+						%>
+
+							<tr>
+								<td class="table-cell-content">
+									<span class="truncate-text"><%= key %></span>
+								</td>
+								<td class="table-cell-content">
+									<span class="truncate-text"><%= value %></span>
+								</td>
+							</tr>
+
+						<%
+						}
+						%>
+
+					</tbody>
+				</table>
+
+			</aui:fieldset>
 		</c:if>
 
-		<aui:field-wrapper label="requested-by">
-			<%= entry.getUserName() %>
-		</aui:field-wrapper>
+		<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="attachments">
 
-		<aui:field-wrapper label="requested-date">
-			<%= entry.getCreateDate() %>
-		</aui:field-wrapper>
+			<%
+			List<String> headerNames = new ArrayList<String>();
 
-		<aui:field-wrapper label="completion-date">
-			<%= entry.getModifiedDate() %>
-		</aui:field-wrapper>
-	</aui:fieldset>
+			headerNames.add("file");
+			headerNames.add("download");
 
-	<%
-	List<String> headerNames = new ArrayList<String>();
+			List<String> attachmentsFiles = Arrays.asList(entry.getAttachmentsFiles());
 
-	headerNames.add("file");
-	headerNames.add("download");
+			request.setAttribute("entry", entry);
 
-	List<String> attachmentsFiles = Arrays.asList(entry.getAttachmentsFiles());
+			PortletURL portletURL = renderResponse.createRenderURL();
 
-	request.setAttribute("entry", entry);
+			portletURL.setParameter("mvcPath", "/admin/report/requested_report_detail.jsp");
+			portletURL.setParameter("entryId", String.valueOf(entryId));
+			portletURL.setWindowState(WindowState.NORMAL);
+			%>
 
-	PortletURL portletURL = renderResponse.createRenderURL();
+			<liferay-ui:search-container
+				delta="<%= 2 %>"
+				iteratorURL="<%= portletURL %>"
+				searchContainer="<%= new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null) %>"
+				total="<%= attachmentsFiles.size() %>"
+			>
+				<liferay-ui:search-container-results
+					results="<%= ListUtil.subList(attachmentsFiles, searchContainer.getStart(), searchContainer.getEnd()) %>"
+				/>
 
-	portletURL.setParameter("mvcPath", "/admin/report/requested_report_detail.jsp");
-	portletURL.setParameter("entryId", String.valueOf(entryId));
-	portletURL.setWindowState(WindowState.NORMAL);
-	%>
+				<liferay-ui:search-container-row
+					className="java.lang.String"
+					modelVar="fileName"
+				>
+					<liferay-ui:search-container-column-text
+						name="file"
+						value="<%= StringUtil.extractLast(fileName, StringPool.SLASH) %>"
+					/>
 
-	<liferay-ui:search-container
-		delta="<%= 2 %>"
-		iteratorURL="<%= portletURL %>"
-		searchContainer="<%= new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null) %>"
-		total="<%= attachmentsFiles.size() %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= ListUtil.subList(attachmentsFiles, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
+					<liferay-ui:search-container-column-jsp
+						align="right"
+						path="/admin/report/report_file_actions.jsp"
+					/>
+				</liferay-ui:search-container-row>
 
-		<liferay-ui:search-container-row
-			className="java.lang.String"
-			modelVar="fileName"
-		>
-			<liferay-ui:search-container-column-text
-				name="file"
-				value="<%= StringUtil.extractLast(fileName, StringPool.SLASH) %>"
-			/>
-
-			<liferay-ui:search-container-column-jsp
-				align="right"
-				path="/admin/report/report_file_actions.jsp"
-			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator markupView="lexicon" />
-	</liferay-ui:search-container>
+				<liferay-ui:search-iterator markupView="lexicon" />
+			</liferay-ui:search-container>
+		</aui:fieldset>
+	</aui:fieldset-group>
 </div>

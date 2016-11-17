@@ -23,12 +23,10 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL", viewDefinitionsURL);
 
-long definitionId = ParamUtil.getLong(request, "definitionId");
+Definition definition = (Definition)request.getAttribute(ReportsEngineWebKeys.DEFINITION);
 
-Definition definition = DefinitionLocalServiceUtil.fetchDefinition(definitionId);
+long definitionId = BeanParamUtil.getLong(definition, request, "definitionId");
 
-String name = BeanParamUtil.getString(definition, request, "name");
-String description = BeanParamUtil.getString(definition, request, "description");
 long sourceId = BeanParamUtil.getLong(definition, request, "sourceId");
 
 String reportName = StringPool.BLANK;
@@ -36,16 +34,23 @@ String reportName = StringPool.BLANK;
 if (definition != null) {
 	reportName = definition.getReportName();
 }
+
+if (reportsEngineDisplayContext.isAdminPortlet()) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
+
+	renderResponse.setTitle((definition != null) ? LanguageUtil.format(request, "edit-x", definition.getName(locale), false) : LanguageUtil.get(request, "new-report-definition"));
+}
+else {
+	portletDisplay.setShowBackIcon(false);
+
+	renderResponse.setTitle(definition.getName(locale));
+}
 %>
 
 <portlet:renderURL var="definitionsURL">
 	<portlet:param name="tabs1" value="definitions" />
 </portlet:renderURL>
-
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	title='<%= (definition == null) ? "new-report-definition" : definition.getName(locale) %>'
-/>
 
 <div class="report-message"></div>
 
@@ -53,7 +58,7 @@ if (definition != null) {
 	<portlet:param name="mvcPath" value="/admin/definition/edit_definition.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= actionURL %>" enctype="multipart/form-data" method="post" name="fm">
+<aui:form action="<%= actionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
 	<liferay-ui:error exception="<%= DefinitionFileException.InvalidDefinitionFile.class %>" message="please-enter-a-valid-file" />
 	<liferay-ui:error exception="<%= DefinitionNameException.class %>" message="please-enter-a-valid-name" />
 
@@ -61,109 +66,112 @@ if (definition != null) {
 
 	<aui:input name="redirect" type="hidden" value="<%= definitionsURL %>" />
 	<aui:input name="viewDefinitionsURL" type="hidden" value="<%= viewDefinitionsURL %>" />
+	<aui:input name="definitionId" type="hidden" />
 
 	<c:if test="<%= definition != null %>">
-		<aui:input name="definitionId" type="hidden" />
+		<liferay-frontend:info-bar>
+			<span class="text-muted">
+				<span class="definition-id-label"><liferay-ui:message key="id" />:</span>
 
-		<%= definitionId %>
+				<span class="definition-id-value"><%= definition.getDefinitionId() %></span>
+			</span>
+		</liferay-frontend:info-bar>
 	</c:if>
 
-	<aui:fieldset>
-		<aui:field-wrapper label="definition-name">
-			<liferay-ui:input-localized name="name" xml="<%= name %>" />
-		</aui:field-wrapper>
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input label="definition-name" name="name" />
 
-		<aui:field-wrapper label="description">
-			<liferay-ui:input-localized name="description" type="textarea" xml="<%= description %>" />
-		</aui:field-wrapper>
+			<aui:input name="description" />
 
-		<aui:select label="data-source-name" name="sourceId">
-			<aui:option label="<%= ReportDataSourceType.PORTAL.getValue() %>" selected="<%= sourceId == 0 %>" value="<%= 0 %>" />
-
-			<%
-			List<Source> sources = SourceServiceUtil.getSources(themeDisplay.getSiteGroupId(), null, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			for (Source source : sources) {
-			%>
-
-				<aui:option label="<%= source.getName(locale) %>" selected="<%= sourceId == source.getSourceId() %>" value="<%= source.getSourceId() %>" />
-
-			<%
-			}
-			%>
-
-		</aui:select>
-
-		<aui:field-wrapper>
-			<span class="existing-report" style="<%= Validator.isNull(reportName) ? "display: none;" : "display: block;" %>">
-				<%= reportName %>
-
-				<img class="remove-existing-report" src="<%= themeDisplay.getPathThemeImages() %>/arrows/02_x.png" />
-
-				<aui:input name="reportName" type="hidden" value="<%= reportName %>" />
-			</span>
-
-			<aui:input cssClass="template-report" name="templateReport" style='<%= Validator.isNull(reportName) ? "display: block;" : "display: none;" %>' type="file" />
-
-			<aui:button cssClass="cancel-update-template-report" style="display:none;" value="cancel" />
-		</aui:field-wrapper>
-
-		<aui:field-wrapper helpMessage="definition-report-parameters-help" label="report-parameters">
-			<aui:input cssClass="report-parameters" name="reportParameters" type="hidden" />
-
-			<aui:col>
-				<aui:input cssClass="parameters-key" inlineLabel="key" name="key" size="20" type="text" />
-			</aui:col>
-
-			<aui:col>
-				<aui:input cssClass="parameters-value parameters-value-field-set" inlineLabel="default-value" name="value" size="20" type="text" />
+			<aui:select label="data-source-name" name="sourceId">
+				<aui:option label="<%= ReportDataSourceType.PORTAL.getValue() %>" selected="<%= sourceId == 0 %>" value="<%= 0 %>" />
 
 				<%
-				Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
+				List<Source> sources = SourceServiceUtil.getSources(themeDisplay.getSiteGroupId(), null, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+				for (Source source : sources) {
 				%>
 
-				<aui:field-wrapper cssClass="parameters-input-date">
-					<liferay-ui:input-date
-						dayParam="parameterDateDay"
-						dayValue="<%= calendar.get(Calendar.DATE) %>"
-						disabled="<%= false %>"
-						firstDayOfWeek="<%= calendar.getFirstDayOfWeek() - 1 %>"
-						monthParam="parameterDateMonth"
-						monthValue="<%= calendar.get(Calendar.MONTH) %>"
-						yearParam="parameterDateYear"
-						yearValue="<%= calendar.get(Calendar.YEAR) %>"
-					/>
-				</aui:field-wrapper>
-			</aui:col>
+					<aui:option label="<%= source.getName(locale) %>" selected="<%= sourceId == source.getSourceId() %>" value="<%= source.getSourceId() %>" />
 
-			<aui:col>
-				<aui:select cssClass="parameters-input-type" inlineLabel="type" name="type">
-					<aui:option label="text" value="text" />
-					<aui:option label="date" value="date" />
-				</aui:select>
-			</aui:col>
+				<%
+				}
+				%>
 
-			<aui:col>
-				<aui:button-row cssClass="add-parameter">
-					<aui:button value="add-parameter" />
-				</aui:button-row>
-			</aui:col>
-		</aui:field-wrapper>
+			</aui:select>
 
-		<div class="clearfix"></div>
+			<aui:field-wrapper>
+				<aui:input cssClass="template-report" name="templateReport" style='<%= Validator.isNull(reportName) ? "display: block;" : "display: none;" %>' type="file" />
 
-		<aui:field-wrapper>
-			<aui:col>
-				<div class="report-tags"></div>
-			</aui:col>
-		</aui:field-wrapper>
-	</aui:fieldset>
+				<span class="existing-report" style="<%= Validator.isNull(reportName) ? "display: none;" : "display: block;" %>">
+					<%= reportName %>
 
-	<c:if test="<%= definition == null %>">
-		<aui:field-wrapper label="permissions">
-			<liferay-ui:input-permissions modelName="<%= Definition.class.getName() %>" />
-		</aui:field-wrapper>
-	</c:if>
+					<img class="remove-existing-report" src="<%= themeDisplay.getPathThemeImages() %>/arrows/02_x.png" />
+
+					<aui:input name="reportName" type="hidden" value="<%= reportName %>" />
+				</span>
+
+				<aui:button cssClass="cancel-update-template-report" style="display:none;" value="cancel" />
+			</aui:field-wrapper>
+		</aui:fieldset>
+
+		<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="report-parameters">
+			<aui:input cssClass="report-parameters" name="reportParameters" type="hidden" />
+
+			<aui:row>
+				<aui:col width="35">
+					<aui:input cssClass="parameters-key" name="key" size="20" type="text" />
+				</aui:col>
+
+				<aui:col width="35">
+					<aui:input cssClass="parameters-value parameters-value-field-set" name="value" size="20" type="text" />
+
+					<%
+					Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
+					%>
+
+					<aui:field-wrapper cssClass="parameters-input-date">
+						<liferay-ui:input-date
+							dayParam="parameterDateDay"
+							dayValue="<%= calendar.get(Calendar.DATE) %>"
+							disabled="<%= false %>"
+							firstDayOfWeek="<%= calendar.getFirstDayOfWeek() - 1 %>"
+							monthParam="parameterDateMonth"
+							monthValue="<%= calendar.get(Calendar.MONTH) %>"
+							yearParam="parameterDateYear"
+							yearValue="<%= calendar.get(Calendar.YEAR) %>"
+						/>
+					</aui:field-wrapper>
+				</aui:col>
+
+				<aui:col width="15">
+					<aui:select cssClass="parameters-input-type" label="type" name="type">
+						<aui:option label="text" value="text" />
+						<aui:option label="date" value="date" />
+					</aui:select>
+				</aui:col>
+
+				<aui:col width="15">
+					<aui:button-row cssClass="add-parameter">
+						<aui:button value="add-parameter" />
+					</aui:button-row>
+				</aui:col>
+			</aui:row>
+
+			<aui:field-wrapper>
+				<aui:col>
+					<div class="report-tags"></div>
+				</aui:col>
+			</aui:field-wrapper>
+		</aui:fieldset>
+
+		<c:if test="<%= definition == null %>">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+				<liferay-ui:input-permissions modelName="<%= Definition.class.getName() %>" />
+			</aui:fieldset>
+		</c:if>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<portlet:renderURL var="viewURL">
@@ -171,19 +179,19 @@ if (definition != null) {
 			<portlet:param name="tabs1" value="definitions" />
 		</portlet:renderURL>
 
-		<aui:button type="submit" value='<%= (definition != null) ? "update" : "save" %>' />
+		<aui:button cssClass="btn-lg" type="submit" value='<%= (definition != null) ? "update" : "save" %>' />
 
 		<c:if test="<%= definition != null %>">
 			<c:if test="<%= DefinitionPermissionChecker.contains(permissionChecker, definition, ReportsActionKeys.ADD_REPORT) %>">
-				<aui:button onClick='<%= renderResponse.getNamespace() + "addReport();" %>' value="add-report" />
+				<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "addReport();" %>' value="add-report" />
 
-				<aui:button onClick='<%= renderResponse.getNamespace() + "addScheduler();" %>' value="add-schedule" />
+				<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "addScheduler();" %>' value="add-schedule" />
 			</c:if>
 
-			<aui:button onClick='<%= renderResponse.getNamespace() + "deleteDefinition();" %>' value="delete" />
+			<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "deleteDefinition();" %>' value="delete" />
 		</c:if>
 
-		<aui:button href="<%= viewURL %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= viewURL %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 
