@@ -24,7 +24,7 @@ Definition definition = (Definition)row.getObject();
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= DefinitionPermissionChecker.contains(permissionChecker, definition, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/admin/definition/edit_definition.jsp" />
 			<portlet:param name="definitionId" value="<%= String.valueOf(definition.getDefinitionId()) %>" />
 		</portlet:renderURL>
@@ -53,7 +53,7 @@ Definition definition = (Definition)row.getObject();
 	</c:if>
 
 	<c:if test="<%= DefinitionPermissionChecker.contains(permissionChecker, definition, ReportsActionKeys.ADD_REPORT) %>">
-		<portlet:renderURL var="addReportURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+		<portlet:renderURL var="addReportURL">
 			<portlet:param name="mvcPath" value="/admin/report/generate_report.jsp" />
 			<portlet:param name="definitionId" value="<%= String.valueOf(definition.getDefinitionId()) %>" />
 		</portlet:renderURL>
@@ -65,7 +65,7 @@ Definition definition = (Definition)row.getObject();
 	</c:if>
 
 	<c:if test="<%= DefinitionPermissionChecker.contains(permissionChecker, definition, ReportsActionKeys.ADD_REPORT) %>">
-		<portlet:renderURL var="addScheduleURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+		<portlet:renderURL var="addScheduleURL">
 			<portlet:param name="mvcPath" value="/admin/report/edit_schedule.jsp" />
 			<portlet:param name="definitionId" value="<%= String.valueOf(definition.getDefinitionId()) %>" />
 		</portlet:renderURL>
@@ -77,7 +77,7 @@ Definition definition = (Definition)row.getObject();
 	</c:if>
 
 	<c:if test="<%= DefinitionPermissionChecker.contains(permissionChecker, definition, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="deleteDefinition" var="deleteURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+		<portlet:actionURL name="deleteDefinition" var="deleteURL">
 			<portlet:param name="tabs1" value="definitions" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="definitionId" value="<%= String.valueOf(definition.getDefinitionId()) %>" />

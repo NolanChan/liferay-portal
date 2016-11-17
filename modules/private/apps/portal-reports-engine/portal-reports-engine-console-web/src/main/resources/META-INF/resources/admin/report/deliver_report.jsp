@@ -26,13 +26,13 @@ String fileName = ParamUtil.getString(request, "fileName");
 	<portlet:param name="entryId" value="<%= String.valueOf(entryId) %>" />
 </portlet:renderURL>
 
-<portlet:actionURL name="deliverReport" var="actionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-	<portlet:param name="redirect" value="<%= backURL %>" />
+<portlet:actionURL name="deliverReport" var="actionURL">
+	<portlet:param name="redirect" value="<%= backURL.toString() %>" />
 	<portlet:param name="entryId" value="<%= String.valueOf(entryId) %>" />
 	<portlet:param name="fileName" value="<%= fileName %>" />
 </portlet:actionURL>
 
-<portlet:actionURL name="editDataSource" var="editDataSourceURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+<portlet:actionURL name="editDataSource" var="editDataSourceURL">
 	<portlet:param name="mvcPath" value="/admin/data_source/edit_data_source.jsp" />
 </portlet:actionURL>
 

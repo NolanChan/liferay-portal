@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<portlet:renderURL var="searchSourcesURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+<portlet:renderURL var="searchSourcesURL">
 	<portlet:param name="mvcPath" value="/admin/view.jsp" />
 	<portlet:param name="tabs1" value="sources" />
 </portlet:renderURL>

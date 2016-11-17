@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<portlet:renderURL var="viewDefinitionsURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+<portlet:renderURL var="viewDefinitionsURL">
 	<portlet:param name="tabs1" value="definitions" />
 </portlet:renderURL>
 
@@ -49,7 +49,7 @@ if (definition != null) {
 
 <div class="report-message"></div>
 
-<portlet:actionURL name="editDefinition" var="actionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+<portlet:actionURL name="editDefinition" var="actionURL">
 	<portlet:param name="mvcPath" value="/admin/definition/edit_definition.jsp" />
 </portlet:actionURL>
 
@@ -166,7 +166,7 @@ if (definition != null) {
 	</c:if>
 
 	<aui:button-row>
-		<portlet:renderURL var="viewURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+		<portlet:renderURL var="viewURL">
 			<portlet:param name="mvcPath" value="/admin/view.jsp" />
 			<portlet:param name="tabs1" value="definitions" />
 		</portlet:renderURL>
@@ -200,16 +200,16 @@ if (definition != null) {
 	);
 
 	function <portlet:namespace />addReport() {
-		submitForm(document.<portlet:namespace />fm, '<portlet:renderURL windowState="<%= WindowState.MAXIMIZED.toString() %>"><portlet:param name="mvcPath" value="/admin/report/generate_report.jsp" /><portlet:param name="definitionId" value="<%= String.valueOf(definitionId) %>" /></portlet:renderURL>');
+		submitForm(document.<portlet:namespace />fm, '<portlet:renderURL><portlet:param name="mvcPath" value="/admin/report/generate_report.jsp" /><portlet:param name="definitionId" value="<%= String.valueOf(definitionId) %>" /></portlet:renderURL>');
 	}
 
 	function <portlet:namespace />addScheduler() {
-		submitForm(document.<portlet:namespace />fm, '<portlet:renderURL windowState="<%= WindowState.MAXIMIZED.toString() %>"><portlet:param name="mvcPath" value="/admin/report/edit_schedule.jsp" /><portlet:param name="definitionId" value="<%= String.valueOf(definitionId) %>" /></portlet:renderURL>');
+		submitForm(document.<portlet:namespace />fm, '<portlet:renderURL><portlet:param name="mvcPath" value="/admin/report/edit_schedule.jsp" /><portlet:param name="definitionId" value="<%= String.valueOf(definitionId) %>" /></portlet:renderURL>');
 	}
 
 	function <portlet:namespace />deleteDefinition() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-			submitForm(document.<portlet:namespace />fm, '<portlet:actionURL name="deleteDefinition" windowState="<%= WindowState.MAXIMIZED.toString() %>"><portlet:param name="redirect" value="<%= definitionsURL %>" /></portlet:actionURL>');
+			submitForm(document.<portlet:namespace />fm, '<portlet:actionURL name="deleteDefinition"><portlet:param name="redirect" value="<%= definitionsURL %>" /></portlet:actionURL>');
 		}
 	}
 </script>

@@ -24,7 +24,7 @@ Source source = (Source)row.getObject();
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= SourcePermissionChecker.contains(permissionChecker, source, ActionKeys.VIEW) %>">
-		<portlet:actionURL name="testDataSource" var="testConnectionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+		<portlet:actionURL name="testDataSource" var="testConnectionURL">
 			<portlet:param name="tabs1" value="sources" />
 			<portlet:param name="sourceId" value="<%= String.valueOf(source.getSourceId()) %>" />
 		</portlet:actionURL>
@@ -36,7 +36,7 @@ Source source = (Source)row.getObject();
 	</c:if>
 
 	<c:if test="<%= SourcePermissionChecker.contains(permissionChecker, source, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/admin/data_source/edit_data_source.jsp" />
 			<portlet:param name="sourceId" value="<%= String.valueOf(source.getSourceId()) %>" />
 		</portlet:renderURL>
@@ -65,7 +65,7 @@ Source source = (Source)row.getObject();
 	</c:if>
 
 	<c:if test="<%= SourcePermissionChecker.contains(permissionChecker, source, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="deleteDataSource" var="deleteURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+		<portlet:actionURL name="deleteDataSource" var="deleteURL">
 			<portlet:param name="tabs1" value="sources" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sourceId" value="<%= String.valueOf(source.getSourceId()) %>" />

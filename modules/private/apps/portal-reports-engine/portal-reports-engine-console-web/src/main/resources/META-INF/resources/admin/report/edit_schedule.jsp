@@ -39,7 +39,7 @@ String reportName = BeanParamUtil.getString(definition, request, "reportName");
 	<portlet:param name="tabs1" value="reports" />
 </portlet:renderURL>
 
-<portlet:actionURL name="addScheduler" var="addSchedulerURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+<portlet:actionURL name="addScheduler" var="addSchedulerURL">
 	<portlet:param name="mvcPath" value="/admin/report/edit_schedule.jsp" />
 	<portlet:param name="redirect" value="<%= searchRequestsURL %>" />
 </portlet:actionURL>
@@ -47,7 +47,7 @@ String reportName = BeanParamUtil.getString(definition, request, "reportName");
 <aui:form action="<%= addSchedulerURL %>" method="post" name="fm">
 	<aui:input name="definitionId" type="hidden" value="<%= definitionId %>" />
 
-	<portlet:renderURL var="generatedReportsURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+	<portlet:renderURL var="generatedReportsURL">
 		<portlet:param name="mvcPath" value="/admin/report/requested_report_detail.jsp" />
 	</portlet:renderURL>
 
