@@ -30,6 +30,8 @@ DocumentationProjectTypeSettings documentationProjectTypeSettings = null;
 String url = StringPool.BLANK;
 String gradientStartColor = "#ffffff";
 String gradientEndColor = "#ffffff";
+String repositoryOwner = StringPool.BLANK;
+String repositoryName = StringPool.BLANK;
 
 if (documentationProject != null) {
 	documentationProjectType = documentationProject.getType();
@@ -41,6 +43,8 @@ if (documentationProject != null) {
 	else {
 		gradientStartColor = ((DocumentationProjectSiteTypeSettings)documentationProjectTypeSettings).getHeaderGradientStartColor();
 		gradientEndColor = ((DocumentationProjectSiteTypeSettings)documentationProjectTypeSettings).getHeaderGradientEndColor();
+		repositoryOwner = ((DocumentationProjectSiteTypeSettings)documentationProjectTypeSettings).getGitHubRepositoryOwner();
+		repositoryName = ((DocumentationProjectSiteTypeSettings)documentationProjectTypeSettings).getGitHubRepositoryName();
 	}
 }
 
@@ -116,7 +120,7 @@ renderResponse.setTitle(headerTitle);
 					<div class="documentation-project-type-site">
 						<aui:input label="gradient-start-color" name="headerGradientStartColor" type="text" value="<%= gradientStartColor %>">
 							<aui:validator name="required" />
-							<aui:validator errorMessage="please-enter-correct-color-format" name="custom">
+							<aui:validator errorMessage="please-enter-a-correct-color-format" name="custom">
 								function(val, fieldNode, ruleValue) {
 									var result = false;
 									var pattern = /#[a-zA-Z0-9] {6}/;
@@ -132,7 +136,7 @@ renderResponse.setTitle(headerTitle);
 
 						<aui:input label="gradient-end-color" name="headerGradientEndColor" type="text" value="<%= gradientEndColor %>">
 							<aui:validator name="required" />
-							<aui:validator errorMessage="please-enter-correct-color-format" name="custom">
+							<aui:validator errorMessage="please-enter-a-correct-color-format" name="custom">
 								function(val, fieldNode, ruleValue) {
 									var result = false;
 									var pattern = /#[a-zA-Z0-9] {6}/;
@@ -150,6 +154,12 @@ renderResponse.setTitle(headerTitle);
 					<div class="documentation-project-type-url">
 						<aui:input label="url" name="url" type="text" value="<%= url %>" />
 					</div>
+				</aui:fieldset>
+
+				<aui:fieldset label="github-settings">
+					<aui:input label="repository-owner" name="repositoryOwner" type="text" value="<%= repositoryOwner %>" />
+
+					<aui:input label="repository-name" name="repositoryName" type="text" value="<%= repositoryName %>" />
 				</aui:fieldset>
 			</aui:fieldset-group>
 		</div>

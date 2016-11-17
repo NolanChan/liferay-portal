@@ -43,6 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ryan Park
+ * @author Howie Chou
  */
 @Component(
 	property = {
@@ -70,8 +71,8 @@ public class EditDocumentationProjectMVCActionCommand
 			uploadPortletRequest, "description");
 		String iconFileName = uploadPortletRequest.getFileName("icon");
 		File iconFile = uploadPortletRequest.getFile("icon");
-		int status = ParamUtil.getInteger(uploadPortletRequest, "status");
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
+		int status = ParamUtil.getInteger(uploadPortletRequest, "status");
 
 		DocumentationProjectTypeSettings settings =
 			DocumentationProjectTypeSettingsFactoryUtil.create(type);
@@ -86,6 +87,26 @@ public class EditDocumentationProjectMVCActionCommand
 				setHeaderGradientStartColor(headerGradientStartColor);
 			((DocumentationProjectSiteTypeSettings)settings).
 				setHeaderGradientEndColor(headerGradientEndColor);
+		}
+		else if (type.equals(DocumentationProjectConstants.TYPE_URL)) {
+			String url = ParamUtil.getString(uploadPortletRequest, "url");
+
+			((DocumentationProjectURLTypeSettings)settings).setURL(url);
+		}
+
+		DocumentationProjectTypeSettings settings =
+			DocumentationProjectTypeSettingsFactoryUtil.create(type);
+
+		if (type.equals(DocumentationProjectConstants.TYPE_SITE)) {
+			String repositoryOwner = ParamUtil.getString(
+				uploadPortletRequest, "repositoryOwner");
+			String repositoryName = ParamUtil.getString(
+				uploadPortletRequest, "repositoryName");
+
+			((DocumentationProjectSiteTypeSettings)settings).
+				setGitHubRepositoryOwner(repositoryOwner);
+			((DocumentationProjectSiteTypeSettings)settings).
+				setGitHubRepositoryName(repositoryName);
 		}
 		else if (type.equals(DocumentationProjectConstants.TYPE_URL)) {
 			String url = ParamUtil.getString(uploadPortletRequest, "url");
