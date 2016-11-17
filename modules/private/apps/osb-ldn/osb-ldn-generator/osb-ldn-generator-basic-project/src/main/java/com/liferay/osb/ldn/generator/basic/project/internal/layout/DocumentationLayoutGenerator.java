@@ -74,7 +74,7 @@ public class DocumentationLayoutGenerator extends BaseLayoutGenerator {
 		User user = _userLocalService.getDefaultUser(layout.getCompanyId());
 
 		if (!layoutTypePortlet.hasPortletId(_PROJECT_HEADER_PORTLET_ID)) {
-			String projectHeaderPortletId = layoutTypePortlet.addPortletId(
+			layoutTypePortlet.addPortletId(
 				layout.getUserId(), _PROJECT_HEADER_PORTLET_ID, "column-1", 0,
 				false);
 		}

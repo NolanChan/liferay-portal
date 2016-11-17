@@ -2,23 +2,26 @@
 
 /**
  * Renders a the heading of documentation project
- * @param gradientStartColor
+ *
  * @param gradientEndColor
+ * @param gradientStartColor
  * @param iconURL
  * @param projectName
  */
 {template .render}
-
 	<style type="text/css">
 		.documentation-project-heading .view {lb}
-		  background-image: linear-gradient(5deg, {$gradientStartColor}, {$gradientEndColor});
-		  {rb}
+			background-image: linear-gradient(5deg, {$gradientStartColor}, {$gradientEndColor});
+		{rb}
 	</style>
 
 	<div class="view">
 		<div class="project">
 			<img class="xsmall" src="{$iconURL}" />
-			<div class="project-name">{$projectName}</div>
+
+			<div class="project-name">
+				{$projectName}
+			</div>
 		</div>
 	</div>
 {/template}

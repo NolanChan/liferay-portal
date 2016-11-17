@@ -74,7 +74,7 @@ public class OverviewLayoutGenerator extends BaseLayoutGenerator {
 			user.getUserId(), "1_column", false);
 
 		if (!layoutTypePortlet.hasPortletId(_PROJECT_HEADER_PORTLET_ID)) {
-			String projectHeaderPortletId = layoutTypePortlet.addPortletId(
+			layoutTypePortlet.addPortletId(
 				user.getUserId(), _PROJECT_HEADER_PORTLET_ID, "column-1", 1,
 				false);
 		}

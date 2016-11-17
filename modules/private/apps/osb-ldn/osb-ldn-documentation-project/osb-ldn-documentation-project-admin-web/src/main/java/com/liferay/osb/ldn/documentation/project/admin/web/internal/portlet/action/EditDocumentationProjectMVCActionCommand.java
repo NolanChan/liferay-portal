@@ -76,23 +76,21 @@ public class EditDocumentationProjectMVCActionCommand
 		DocumentationProjectTypeSettings settings =
 			DocumentationProjectTypeSettingsFactoryUtil.create(type);
 
-		if (type.equals(DocumentationProjectConstants.TYPE_URL)) {
-			String url = ParamUtil.getString(uploadPortletRequest, "url");
-
-			((DocumentationProjectURLTypeSettings)settings).setURL(url);
-		}
-		else if (type.equals(DocumentationProjectConstants.TYPE_SITE)) {
+		if (type.equals(DocumentationProjectConstants.TYPE_SITE)) {
 			String headerGradientStartColor = ParamUtil.getString(
 				uploadPortletRequest, "headerGradientStartColor");
-
 			String headerGradientEndColor = ParamUtil.getString(
 				uploadPortletRequest, "headerGradientEndColor");
 
 			((DocumentationProjectSiteTypeSettings)settings).
 				setHeaderGradientStartColor(headerGradientStartColor);
-
 			((DocumentationProjectSiteTypeSettings)settings).
 				setHeaderGradientEndColor(headerGradientEndColor);
+		}
+		else if (type.equals(DocumentationProjectConstants.TYPE_URL)) {
+			String url = ParamUtil.getString(uploadPortletRequest, "url");
+
+			((DocumentationProjectURLTypeSettings)settings).setURL(url);
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

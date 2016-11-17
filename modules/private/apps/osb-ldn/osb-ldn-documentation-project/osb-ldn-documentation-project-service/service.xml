@@ -39,11 +39,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="Name">
-			<finder-column name="name" />
-		</finder>
 		<finder name="GroupId">
 			<finder-column name="groupId" />
+		</finder>
+		<finder name="Name">
+			<finder-column name="name" />
 		</finder>
 	</entity>
 	<exceptions>

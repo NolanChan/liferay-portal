@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletConfig;
@@ -56,12 +56,13 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
-		String documentProjectIdParam = portletPreferences.getValue(
-			"documentationProjectId", StringPool.BLANK);
-
-		long documentationProjectId = Long.parseLong(documentProjectIdParam);
+		long documentationProjectId = GetterUtil.getLong(
+			portletPreferences.getValue("documentationProjectId", null));
 
 		DocumentationProject documentationProject =
 			_documentationProjectLocalService.fetchDocumentationProject(
@@ -74,9 +75,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			DocumentationProjectTypeSettingsFactoryUtil.create(
 				documentationProject);
 
-		if (documentationProject.getType().equals(
-				DocumentationProjectConstants.TYPE_SITE)) {
+		String type = documentationProject.getType();
 
+		if (type.equals(DocumentationProjectConstants.TYPE_SITE)) {
 			DocumentationProjectSiteTypeSettings siteSettings =
 				(DocumentationProjectSiteTypeSettings)settings;
 
@@ -87,28 +88,22 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		PortletConfig portletConfig = (PortletConfig)renderRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		LiferayPortletURL iconURL = PortletURLFactoryUtil.create(
 			renderRequest, portletConfig.getPortletName(),
 			themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
 
 		iconURL.setCopyCurrentRenderParameters(false);
-		iconURL.setParameter("documentationProjectId", documentProjectIdParam);
+		iconURL.setParameter(
+			"documentationProjectId", String.valueOf(documentationProjectId));
 		iconURL.setResourceID("/serve_documentation_project_page_icon");
-
-		String iconUrlParam = iconURL.toString();
-
-		String projectName = documentationProject.getName();
 
 		Template template = (Template)renderRequest.getAttribute(
 			WebKeys.TEMPLATE);
 
-		template.put("gradientStartColor", gradientStartColor);
 		template.put("gradientEndColor", gradientEndColor);
-		template.put("iconURL", iconUrlParam);
-		template.put("projectName", projectName);
+		template.put("gradientStartColor", gradientStartColor);
+		template.put("iconURL", iconURL.toString());
+		template.put("projectName", documentationProject.getName());
 
 		return "view";
 	}

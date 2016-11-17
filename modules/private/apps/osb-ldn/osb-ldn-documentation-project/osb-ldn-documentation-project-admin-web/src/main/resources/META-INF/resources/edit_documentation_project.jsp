@@ -56,7 +56,7 @@ renderResponse.setTitle(headerTitle);
 	</portlet:actionURL>
 
 	<aui:form action="<%= editDocumentationProjectURL %>" method="post" name="fm">
-		<liferay-ui:error exception="<%= DocumentationProjectHeaderGradientColorException.class %>" message="please-enter-correct-color-format" />
+		<liferay-ui:error exception="<%= DocumentationProjectHeaderGradientColorException.class %>" message="please-enter-a-correct-color-format" />
 		<liferay-ui:error exception="<%= DocumentationProjectIconException.class %>" message="please-provide-a-valid-icon" />
 
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -103,7 +103,7 @@ renderResponse.setTitle(headerTitle);
 					</aui:select>
 				</aui:fieldset>
 
-				<div class="documentation-project-type"
+				<div class="documentation-project-type">
 					<aui:fieldset label="type">
 						<aui:select label="type" name="type">
 							<aui:option label="site" value="<%= DocumentationProjectConstants.TYPE_SITE %>" />
@@ -119,7 +119,7 @@ renderResponse.setTitle(headerTitle);
 							<aui:validator errorMessage="please-enter-correct-color-format" name="custom">
 								function(val, fieldNode, ruleValue) {
 									var result = false;
-									var pattern = /#[a-zA-Z0-9]{6}/;
+									var pattern = /#[a-zA-Z0-9] {6}/;
 
 									if (pattern.test(val)) {
 										result = true;
@@ -135,7 +135,7 @@ renderResponse.setTitle(headerTitle);
 							<aui:validator errorMessage="please-enter-correct-color-format" name="custom">
 								function(val, fieldNode, ruleValue) {
 									var result = false;
-									var pattern = /#[a-zA-Z0-9]{6}/;
+									var pattern = /#[a-zA-Z0-9] {6}/;
 
 									if (pattern.test(val)) {
 										result = true;
@@ -184,6 +184,7 @@ renderResponse.setTitle(headerTitle);
 			else if (event.currentTarget.val() === "url") {
 				A.one('#<portlet:namespace/>headerGradientStartColor').val('#ffffff');
 				A.one('#<portlet:namespace/>headerGradientEndColor').val('#ffffff');
+
 				A.one('.documentation-project-type-site').hide();
 				A.one('.documentation-project-type-url').show();
 			}
