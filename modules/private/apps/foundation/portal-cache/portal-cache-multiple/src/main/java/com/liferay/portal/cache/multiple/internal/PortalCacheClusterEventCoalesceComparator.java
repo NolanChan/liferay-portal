@@ -52,7 +52,7 @@ public class PortalCacheClusterEventCoalesceComparator
 			return -1;
 		}
 
-		// Must compare keys last as some cache keys do direct casting.
+		// Must compare keys last as some cache keys do direct casting
 
 		if (Objects.equals(
 				portalCacheClusterEvent1.getElementKey(),
