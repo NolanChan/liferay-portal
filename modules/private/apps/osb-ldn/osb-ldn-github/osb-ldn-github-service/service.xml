@@ -24,6 +24,7 @@
 		<column name="name" type="String" />
 		<column name="avatarURL" type="String" />
 		<column name="contributions" type="int" />
+		<column name="profileURL" type="String" />
 
 		<!-- Order -->
 

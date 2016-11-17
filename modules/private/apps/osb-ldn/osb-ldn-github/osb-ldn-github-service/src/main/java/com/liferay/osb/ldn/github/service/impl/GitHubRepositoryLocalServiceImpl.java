@@ -101,11 +101,11 @@ public class GitHubRepositoryLocalServiceImpl
 		List<GitHubRepository> gitHubRepositories =
 			gitHubRepositoryPersistence.findAll();
 
-		for (GitHubRepository gitHubRepository : gitHubRepositories) {
-			GitHubRepository gitHubRepositoryHolder = null;
+		GitHubRepository gitHubRepositoryHolder = null;
 
+		for (GitHubRepository gitHubRepository : gitHubRepositories) {
 			try {
-				GitHubCommunicatorUtil.getRepository(
+				gitHubRepositoryHolder = GitHubCommunicatorUtil.getRepository(
 					gitHubRepository.getOwner(), gitHubRepository.getName(),
 					GitHubServiceConfigurationUtil.getAPIKey());
 			}
@@ -208,6 +208,8 @@ public class GitHubRepositoryLocalServiceImpl
 				gitHubContributorHolder.getAvatarURL());
 			gitHubContributor.setContributions(
 				gitHubContributorHolder.getContributions());
+			gitHubContributor.setProfileURL(
+				gitHubContributorHolder.getProfileURL());
 
 			gitHubContributorPersistence.update(gitHubContributor);
 		}

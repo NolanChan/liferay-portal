@@ -31,9 +31,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.Http.Options;
-import com.liferay.portal.kernel.util.Http.Response;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -59,13 +58,20 @@ public class GitHubCommunicatorUtil {
 
 		Http.Options options = new Http.Options();
 
-		String apiCallURL = _API_CALL_PREFIX + owner + StringPool.SLASH + name;
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_API_CALL_PREFIX);
+		sb.append("repos");
+		sb.append(StringPool.SLASH);
+		sb.append(owner);
+		sb.append(StringPool.SLASH);
+		sb.append(name);
+
+		String apiCallURL = sb.toString();
 
 		apiCallURL = HttpUtil.addParameter(apiCallURL, "access_token", apiKey);
 
 		options.setLocation(apiCallURL);
-
-		options.setPost(false);
 
 		String content = HttpUtil.URLtoString(options);
 
@@ -121,9 +127,18 @@ public class GitHubCommunicatorUtil {
 
 		Http.Options options = new Http.Options();
 
-		String apiCallURL =
-			_API_CALL_PREFIX + owner + StringPool.SLASH + name +
-				"/contributors";
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_API_CALL_PREFIX);
+		sb.append("repos");
+		sb.append(StringPool.SLASH);
+		sb.append(owner);
+		sb.append(StringPool.SLASH);
+		sb.append(name);
+		sb.append(StringPool.SLASH);
+		sb.append("contributors");
+
+		String apiCallURL = sb.toString();
 
 		apiCallURL = HttpUtil.addParameter(apiCallURL, "access_token", apiKey);
 
@@ -131,8 +146,6 @@ public class GitHubCommunicatorUtil {
 			apiCallURL, "per_page", String.valueOf(count));
 
 		options.setLocation(apiCallURL);
-
-		options.setPost(false);
 
 		String content = HttpUtil.URLtoString(options);
 
@@ -156,7 +169,11 @@ public class GitHubCommunicatorUtil {
 
 			String avatarURL = jsonObject.getString("avatar_url");
 			int contributions = jsonObject.getInt("contributions");
-			String contributorName = jsonObject.getString("login");
+
+			String contributorName = getContributorName(
+				jsonObject.getString("login"), apiKey);
+
+			String profileURL = jsonObject.getString("html_url");
 
 			validateGitHubContributor(
 				contributorName, avatarURL, contributions);
@@ -167,6 +184,7 @@ public class GitHubCommunicatorUtil {
 			gitHubContributor.setAvatarURL(avatarURL);
 			gitHubContributor.setContributions(contributions);
 			gitHubContributor.setName(contributorName);
+			gitHubContributor.setProfileURL(profileURL);
 
 			gitHubContributors.add(gitHubContributor);
 		}
@@ -179,8 +197,18 @@ public class GitHubCommunicatorUtil {
 
 		Http.Options options = new Http.Options();
 
-		String apiCallURL =
-			_API_CALL_PREFIX + owner + StringPool.SLASH + name + "/commits";
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_API_CALL_PREFIX);
+		sb.append("repos");
+		sb.append(StringPool.SLASH);
+		sb.append(owner);
+		sb.append(StringPool.SLASH);
+		sb.append(name);
+		sb.append(StringPool.SLASH);
+		sb.append("commits");
+
+		String apiCallURL = sb.toString();
 
 		apiCallURL = HttpUtil.addParameter(apiCallURL, "access_token", apiKey);
 
@@ -195,7 +223,7 @@ public class GitHubCommunicatorUtil {
 
 		response = options.getResponse();
 
-		if (response.getResponseCode() != 200) {
+		if (response.getResponseCode() != HttpServletResponse.SC_OK) {
 			throw new Exception(
 				"Unable to get total commits from GitHub repository " + name);
 		}
@@ -209,6 +237,42 @@ public class GitHubCommunicatorUtil {
 		String commits = pagenationInfo.substring(begin + 16, end - 3);
 
 		return Integer.valueOf(commits);
+	}
+
+	protected static String getContributorName(
+			String contributorLogin, String apiKey)
+		throws Exception {
+
+		Http.Options options = new Http.Options();
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_API_CALL_PREFIX);
+		sb.append("users");
+		sb.append(StringPool.SLASH);
+		sb.append(contributorLogin);
+
+		String apiCallURL = sb.toString();
+
+		apiCallURL = HttpUtil.addParameter(apiCallURL, "access_token", apiKey);
+
+		options.setLocation(apiCallURL);
+
+		String content = HttpUtil.URLtoString(options);
+
+		Http.Response response = options.getResponse();
+
+		response = options.getResponse();
+
+		if (response.getResponseCode() != HttpServletResponse.SC_OK) {
+			throw new Exception(
+				"Unable to get contributor name for " + contributorLogin +
+					" from GitHub");
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(content);
+
+		return jsonObject.getString("name");
 	}
 
 	protected static void validateAPIKey(String apiKey) throws Exception {
@@ -267,7 +331,6 @@ public class GitHubCommunicatorUtil {
 		}
 	}
 
-	private static final String _API_CALL_PREFIX =
-		"https://api.github.com/repos/";
+	private static final String _API_CALL_PREFIX = "https://api.github.com/";
 
 }

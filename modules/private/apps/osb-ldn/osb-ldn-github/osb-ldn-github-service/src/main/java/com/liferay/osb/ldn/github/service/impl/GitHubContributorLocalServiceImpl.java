@@ -112,6 +112,8 @@ public class GitHubContributorLocalServiceImpl
 				gitHubContributorsHolder.getAvatarURL());
 			gitHubContributor.setContributions(
 				gitHubContributorsHolder.getContributions());
+			gitHubContributor.setProfileURL(
+				gitHubContributorsHolder.getProfileURL());
 
 			gitHubContributor = gitHubContributorPersistence.update(
 				gitHubContributor);
