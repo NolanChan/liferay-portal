@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.portal.reports.engine.console.model,\
 	com.liferay.portal.reports.engine.console.service,\
 	com.liferay.portal.reports.engine.console.service.persistence,\
-	com.liferay.portal.reports.engine.console.status
+	com.liferay.portal.reports.engine.console.status,\
+	com.liferay.portal.reports.engine.console.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Reports Engine Console
