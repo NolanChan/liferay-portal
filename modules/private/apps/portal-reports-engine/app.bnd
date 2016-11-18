@@ -1,5 +1,5 @@
 Liferay-Releng-App-Description:
-Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Portal Reports Engine
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Reports Engine
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category:
 Liferay-Releng-Demo-Url:
