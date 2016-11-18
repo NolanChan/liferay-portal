@@ -21,14 +21,24 @@ import com.liferay.osb.ldn.documentation.project.model.DocumentationProjectSiteT
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProjectTypeSettings;
 import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalService;
 import com.liferay.osb.ldn.documentation.project.util.DocumentationProjectTypeSettingsFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
@@ -106,15 +116,51 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		Template template = (Template)renderRequest.getAttribute(
 			WebKeys.TEMPLATE);
 
+		Layout layout = themeDisplay.getLayout();
+
+		Locale locale = themeDisplay.getLocale();
+
 		template.put("headerGradientEndColor", headerGradientEndColor);
 		template.put("headerGradientStartColor", headerGradientStartColor);
 		template.put("iconURL", iconURL.toString());
 		template.put("projectName", documentationProject.getName());
+		template.put("layoutNavigation", getLayoutNavigationList(themeDisplay));
+		template.put("layoutHTMLTitle", layout.getHTMLTitle(locale));
 
 		return "view";
 	}
 
+	protected List<Map<String, Object>> getLayoutNavigationList(
+		ThemeDisplay themeDisplay) {
+
+		Group siteGroup = themeDisplay.getSiteGroup();
+
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			siteGroup.getGroupId(), false, LayoutConstants.TYPE_PORTLET);
+
+		List<Map<String, Object>> layoutNavigationList = new LinkedList<>();
+
+		String displayURL = siteGroup.getDisplayURL(themeDisplay);
+
+		Locale locale = themeDisplay.getLocale();
+
+		for (Layout layout : layouts) {
+			Map<String, Object> layoutNavigationMap = new HashMap<>();
+
+			layoutNavigationMap.put("name", layout.getHTMLTitle(locale));
+			layoutNavigationMap.put(
+				"url", displayURL + layout.getFriendlyURL());
+
+			layoutNavigationList.add(layoutNavigationMap);
+		}
+
+		return layoutNavigationList;
+	}
+
 	@Reference
 	private DocumentationProjectLocalService _documentationProjectLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 }

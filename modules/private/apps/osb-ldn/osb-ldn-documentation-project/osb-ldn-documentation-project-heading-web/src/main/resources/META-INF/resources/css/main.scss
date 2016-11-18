@@ -1,24 +1,59 @@
 /* ---------- View ---------- */
 
-.documentation-project-heading .view {
-	margin-top: -64px;
-	min-height: 360px;
+.documentation-project-heading {
+	.view {
+		margin-top: -64px;
+		min-height: 360px;
 
-	.project {
-		left: 25%;
-		position: absolute;
-		top: 38%;
-
-		.project-name {
-			float: right;
-			font-size: 48px;
-			font-weight: 300;
-			margin-left: 20px;
+		.navigation, .project {
+			position: absolute;
+			left: 25%;
 		}
 
-		.xsmall {
-			max-height: 80px;
-			max-width: 80px;
+		.navigation {
+			bottom: 0;
+
+			.navigation-items {
+				list-style-type: none;
+				margin-bottom: 0;
+				padding-left: 0;
+
+				li {
+					display: inline-block;
+					margin-bottom: 6px;
+					margin-right: 64px;
+
+					&.selected{
+						border-bottom: 6px solid #DFE1E1;
+						margin-bottom: 0;
+
+						a {
+							color: #52585F;
+						}
+					}
+
+					a {
+						color: #C5C7CB;
+						text-transform: uppercase;
+					}
+				}
+			}
+		}
+
+		.project {
+			top: 38%;
+
+			.project-name {
+				float: right;
+				font-size: 48px;
+				font-weight: 300;
+				margin-left: 20px;
+			}
+
+			.xsmall {
+				max-height: 80px;
+				max-width: 80px;
+			}
 		}
 	}
 }

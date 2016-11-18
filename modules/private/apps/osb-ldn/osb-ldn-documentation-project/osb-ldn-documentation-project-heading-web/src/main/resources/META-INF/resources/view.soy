@@ -6,6 +6,8 @@
  * @param headerGradientEndColor
  * @param headerGradientStartColor
  * @param iconURL
+ * @param layoutNavigation
+ * @param layoutHTMLTitle
  * @param projectName
  */
 {template .render}
@@ -16,12 +18,23 @@
 	</style>
 
 	<div class="view">
+
 		<div class="project">
 			<img class="xsmall" src="{$iconURL}" />
 
 			<div class="project-name">
 				{$projectName}
 			</div>
+		</div>
+
+		<div class="navigation">
+			<ul class="navigation-items">
+				{foreach $layoutNavigationItem in $layoutNavigation}
+					<li {if $layoutNavigationItem.name == $layoutHTMLTitle}class="selected"{/if}>
+						<a href="{$layoutNavigationItem.url}">{$layoutNavigationItem.name}</a>
+					</li>
+				{/foreach}
+			</ul>
 		</div>
 	</div>
 {/template}
