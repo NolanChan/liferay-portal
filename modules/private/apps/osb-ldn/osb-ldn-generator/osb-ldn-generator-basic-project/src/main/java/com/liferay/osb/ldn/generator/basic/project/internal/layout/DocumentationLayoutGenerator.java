@@ -73,10 +73,13 @@ public class DocumentationLayoutGenerator extends BaseLayoutGenerator {
 
 		User user = _userLocalService.getDefaultUser(layout.getCompanyId());
 
-		if (!layoutTypePortlet.hasPortletId(_PROJECT_HEADER_PORTLET_ID)) {
+		if (!layoutTypePortlet.hasPortletId(
+				BasicProjectSiteConstants.PROJECT_HEADER_PORTLET_ID)) {
+
 			layoutTypePortlet.addPortletId(
-				layout.getUserId(), _PROJECT_HEADER_PORTLET_ID, "column-1", 0,
-				false);
+				layout.getUserId(),
+				BasicProjectSiteConstants.PROJECT_HEADER_PORTLET_ID, "column-1",
+				0, false);
 		}
 
 		layoutTypePortlet.addPortletId(
@@ -85,7 +88,7 @@ public class DocumentationLayoutGenerator extends BaseLayoutGenerator {
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				layout, _PROJECT_HEADER_PORTLET_ID);
+				layout, BasicProjectSiteConstants.PROJECT_HEADER_PORTLET_ID);
 
 		DocumentationProject documentationProject =
 			_documentationProjectLocalService.getDocumentationProjectByGroupId(
@@ -109,10 +112,6 @@ public class DocumentationLayoutGenerator extends BaseLayoutGenerator {
 	private void setLayoutVersion(LayoutVersion layoutVersion) {
 		this.layoutVersion = layoutVersion;
 	}
-
-	private static final String _PROJECT_HEADER_PORTLET_ID =
-		"com_liferay_osb_ldn_documentation_project_heading_web_" +
-			"ProjectHeadingPortlet";
 
 	@Reference
 	private DocumentationProjectLocalService _documentationProjectLocalService;

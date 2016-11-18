@@ -73,15 +73,18 @@ public class OverviewLayoutGenerator extends BaseLayoutGenerator {
 		layoutTypePortlet.setLayoutTemplateId(
 			user.getUserId(), "1_column", false);
 
-		if (!layoutTypePortlet.hasPortletId(_PROJECT_HEADER_PORTLET_ID)) {
+		if (!layoutTypePortlet.hasPortletId(
+				BasicProjectSiteConstants.PROJECT_HEADER_PORTLET_ID)) {
+
 			layoutTypePortlet.addPortletId(
-				user.getUserId(), _PROJECT_HEADER_PORTLET_ID, "column-1", 1,
-				false);
+				user.getUserId(),
+				BasicProjectSiteConstants.PROJECT_HEADER_PORTLET_ID, "column-1",
+				1, false);
 		}
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				layout, _PROJECT_HEADER_PORTLET_ID);
+				layout, BasicProjectSiteConstants.PROJECT_HEADER_PORTLET_ID);
 
 		DocumentationProject documentationProject =
 			_documentationProjectLocalService.getDocumentationProjectByGroupId(
@@ -102,14 +105,6 @@ public class OverviewLayoutGenerator extends BaseLayoutGenerator {
 	private void setLayoutVersion(LayoutVersion layoutVersion) {
 		this.layoutVersion = layoutVersion;
 	}
-
-	private static final String _PROJECT_HEADER_PORTLET_ID =
-		"com_liferay_osb_ldn_documentation_project_heading_web_" +
-			"ProjectHeadingPortlet";
-
-	private static final String _RANDOM_NINE_PORTLET_ID =
-		"com_liferay_osb_ldn_documentation_project_random_nine_web_" +
-			"DocumentationProjectRandomNinePortlet";
 
 	@Reference
 	private DocumentationProjectLocalService _documentationProjectLocalService;

@@ -21,4 +21,8 @@ public class BasicProjectSiteConstants {
 
 	public static final String BASIC_PROJECT_SITE_KEY = "basic_project";
 
+	public static final String PROJECT_HEADER_PORTLET_ID =
+		"com_liferay_osb_ldn_documentation_project_heading_web_" +
+			"ProjectHeadingPortlet";
+
 }
