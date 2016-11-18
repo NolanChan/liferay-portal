@@ -26,13 +26,11 @@
 
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-		<%
-		List<DocumentationProject> documentationProjects = DocumentationProjectLocalServiceUtil.getDocumentationProjects(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		%>
-
 		<aui:select label="open-source-project" name="preferences--documentationProjectId--" value="<%= documentationProjectId %>">
 
 			<%
+			List<DocumentationProject> documentationProjects = DocumentationProjectLocalServiceUtil.getDocumentationProjects(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
 			for (DocumentationProject documentationProject : documentationProjects) {
 			%>
 

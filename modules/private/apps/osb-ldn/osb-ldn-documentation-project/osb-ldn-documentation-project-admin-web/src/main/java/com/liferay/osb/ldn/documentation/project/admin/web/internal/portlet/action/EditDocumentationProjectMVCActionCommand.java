@@ -82,36 +82,26 @@ public class EditDocumentationProjectMVCActionCommand
 				uploadPortletRequest, "headerGradientStartColor");
 			String headerGradientEndColor = ParamUtil.getString(
 				uploadPortletRequest, "headerGradientEndColor");
-
-			((DocumentationProjectSiteTypeSettings)settings).
-				setHeaderGradientStartColor(headerGradientStartColor);
-			((DocumentationProjectSiteTypeSettings)settings).
-				setHeaderGradientEndColor(headerGradientEndColor);
-		}
-		else if (type.equals(DocumentationProjectConstants.TYPE_URL)) {
-			String url = ParamUtil.getString(uploadPortletRequest, "url");
-
-			((DocumentationProjectURLTypeSettings)settings).setURL(url);
-		}
-
-		DocumentationProjectTypeSettings settings =
-			DocumentationProjectTypeSettingsFactoryUtil.create(type);
-
-		if (type.equals(DocumentationProjectConstants.TYPE_SITE)) {
 			String repositoryOwner = ParamUtil.getString(
 				uploadPortletRequest, "repositoryOwner");
 			String repositoryName = ParamUtil.getString(
 				uploadPortletRequest, "repositoryName");
 
-			((DocumentationProjectSiteTypeSettings)settings).
-				setGitHubRepositoryOwner(repositoryOwner);
-			((DocumentationProjectSiteTypeSettings)settings).
-				setGitHubRepositoryName(repositoryName);
+			DocumentationProjectSiteTypeSettings siteSettings =
+				(DocumentationProjectSiteTypeSettings)settings;
+
+			siteSettings.setHeaderGradientStartColor(headerGradientStartColor);
+			siteSettings.setHeaderGradientEndColor(headerGradientEndColor);
+			siteSettings.setGitHubRepositoryOwner(repositoryOwner);
+			siteSettings.setGitHubRepositoryName(repositoryName);
 		}
 		else if (type.equals(DocumentationProjectConstants.TYPE_URL)) {
 			String url = ParamUtil.getString(uploadPortletRequest, "url");
 
-			((DocumentationProjectURLTypeSettings)settings).setURL(url);
+			DocumentationProjectURLTypeSettings urlSettings =
+				(DocumentationProjectURLTypeSettings)settings;
+
+			urlSettings.setURL(url);
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

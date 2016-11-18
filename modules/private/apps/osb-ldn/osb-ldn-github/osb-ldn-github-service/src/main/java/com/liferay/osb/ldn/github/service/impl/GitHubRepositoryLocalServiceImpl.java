@@ -101,9 +101,9 @@ public class GitHubRepositoryLocalServiceImpl
 		List<GitHubRepository> gitHubRepositories =
 			gitHubRepositoryPersistence.findAll();
 
-		GitHubRepository gitHubRepositoryHolder = null;
-
 		for (GitHubRepository gitHubRepository : gitHubRepositories) {
+			GitHubRepository gitHubRepositoryHolder = null;
+
 			try {
 				gitHubRepositoryHolder = GitHubCommunicatorUtil.getRepository(
 					gitHubRepository.getOwner(), gitHubRepository.getName(),

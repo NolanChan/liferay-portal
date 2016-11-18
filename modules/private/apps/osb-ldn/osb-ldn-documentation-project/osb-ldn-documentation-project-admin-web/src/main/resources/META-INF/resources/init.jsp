@@ -29,7 +29,6 @@ page import="com.liferay.osb.ldn.documentation.project.exception.DocumentationPr
 page import="com.liferay.osb.ldn.documentation.project.exception.DocumentationProjectIconException" %><%@
 page import="com.liferay.osb.ldn.documentation.project.model.DocumentationProject" %><%@
 page import="com.liferay.osb.ldn.documentation.project.model.DocumentationProjectSiteTypeSettings" %><%@
-page import="com.liferay.osb.ldn.documentation.project.model.DocumentationProjectTypeSettings" %><%@
 page import="com.liferay.osb.ldn.documentation.project.model.DocumentationProjectURLTypeSettings" %><%@
 page import="com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalServiceUtil" %><%@
 page import="com.liferay.osb.ldn.documentation.project.util.DocumentationProjectTypeSettingsFactoryUtil" %><%@

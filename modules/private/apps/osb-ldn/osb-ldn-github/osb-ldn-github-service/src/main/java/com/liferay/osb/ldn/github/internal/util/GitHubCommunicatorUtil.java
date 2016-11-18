@@ -58,11 +58,10 @@ public class GitHubCommunicatorUtil {
 
 		Http.Options options = new Http.Options();
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(_API_CALL_PREFIX);
-		sb.append("repos");
-		sb.append(StringPool.SLASH);
+		sb.append("repos/");
 		sb.append(owner);
 		sb.append(StringPool.SLASH);
 		sb.append(name);
@@ -127,16 +126,14 @@ public class GitHubCommunicatorUtil {
 
 		Http.Options options = new Http.Options();
 
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(_API_CALL_PREFIX);
-		sb.append("repos");
-		sb.append(StringPool.SLASH);
+		sb.append("repos/");
 		sb.append(owner);
 		sb.append(StringPool.SLASH);
 		sb.append(name);
-		sb.append(StringPool.SLASH);
-		sb.append("contributors");
+		sb.append("/contributors");
 
 		String apiCallURL = sb.toString();
 

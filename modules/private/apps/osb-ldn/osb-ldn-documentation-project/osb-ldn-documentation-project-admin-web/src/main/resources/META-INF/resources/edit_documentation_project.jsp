@@ -26,7 +26,6 @@ DocumentationProject documentationProject = DocumentationProjectLocalServiceUtil
 String headerTitle = (documentationProjectId > 0) ? LanguageUtil.format(request, "edit-x", documentationProject.getName(), false) : LanguageUtil.get(request, "add-open-source-project");
 
 String documentationProjectType = DocumentationProjectConstants.TYPE_SITE;
-DocumentationProjectTypeSettings documentationProjectTypeSettings = null;
 String url = StringPool.BLANK;
 String gradientStartColor = "#ffffff";
 String gradientEndColor = "#ffffff";
@@ -35,16 +34,19 @@ String repositoryName = StringPool.BLANK;
 
 if (documentationProject != null) {
 	documentationProjectType = documentationProject.getType();
-	documentationProjectTypeSettings = DocumentationProjectTypeSettingsFactoryUtil.create(documentationProject);
 
 	if (documentationProjectType.equals(DocumentationProjectConstants.TYPE_URL)) {
-		url = ((DocumentationProjectURLTypeSettings)documentationProjectTypeSettings).getURL();
+		DocumentationProjectURLTypeSettings urlSettings = (DocumentationProjectURLTypeSettings)DocumentationProjectTypeSettingsFactoryUtil.create(documentationProject);
+
+		url = urlSettings.getURL();
 	}
 	else {
-		gradientStartColor = ((DocumentationProjectSiteTypeSettings)documentationProjectTypeSettings).getHeaderGradientStartColor();
-		gradientEndColor = ((DocumentationProjectSiteTypeSettings)documentationProjectTypeSettings).getHeaderGradientEndColor();
-		repositoryOwner = ((DocumentationProjectSiteTypeSettings)documentationProjectTypeSettings).getGitHubRepositoryOwner();
-		repositoryName = ((DocumentationProjectSiteTypeSettings)documentationProjectTypeSettings).getGitHubRepositoryName();
+		DocumentationProjectSiteTypeSettings siteSettings = (DocumentationProjectSiteTypeSettings)DocumentationProjectTypeSettingsFactoryUtil.create(documentationProject);
+
+		gradientStartColor = siteSettings.getHeaderGradientStartColor();
+		gradientEndColor = siteSettings.getHeaderGradientEndColor();
+		repositoryOwner = siteSettings.getGitHubRepositoryOwner();
+		repositoryName = siteSettings.getGitHubRepositoryName();
 	}
 }
 

@@ -118,9 +118,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		String repositoryOwner = StringPool.BLANK;
 		String repositoryName = StringPool.BLANK;
 
-		if (documentationProject.getType().equals(
-				DocumentationProjectConstants.TYPE_SITE)) {
+		String type = documentationProject.getType();
 
+		if (type.equals(DocumentationProjectConstants.TYPE_SITE)) {
 			DocumentationProjectSiteTypeSettings siteSettings =
 				(DocumentationProjectSiteTypeSettings)settings;
 
@@ -149,16 +149,16 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	protected Map<String, Object> getStringsMap(String languageId) {
-		Map<String, Object> strings = new HashMap<>();
+		Map<String, Object> stringsMap = new HashMap<>();
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(languageId);
 
 		for (String key : resourceBundle.keySet()) {
-			strings.put(key, LanguageUtil.get(resourceBundle, key));
+			stringsMap.put(key, LanguageUtil.get(resourceBundle, key));
 		}
 
-		return strings;
+		return stringsMap;
 	}
 
 	@Reference
