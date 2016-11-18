@@ -29,17 +29,10 @@ String status = entry.getStatus();
 
 Definition definition = DefinitionLocalServiceUtil.getDefinition(entry.getDefinitionId());
 
-if (reportsEngineDisplayContext.isAdminPortlet()) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(searchRequestURL.toString());
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(searchRequestURL.toString());
 
-	renderResponse.setTitle((definition != null) ? LanguageUtil.format(request, "edit-x", definition.getName(locale), false) : LanguageUtil.get(request, "new-report-definition"));
-}
-else {
-	portletDisplay.setShowBackIcon(false);
-
-	renderResponse.setTitle(definition.getName(locale));
-}
+renderResponse.setTitle(definition.getName(locale));
 %>
 
 <div class="container-fluid-1280">

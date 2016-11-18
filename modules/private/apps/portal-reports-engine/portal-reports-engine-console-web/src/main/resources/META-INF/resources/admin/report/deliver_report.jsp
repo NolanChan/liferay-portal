@@ -25,17 +25,10 @@ PortletURL backURL = reportsEngineDisplayContext.getPortletURL();
 backURL.setParameter("mvcPath", "/admin/report/requested_report_detail.jsp");
 backURL.setParameter("entryId", String.valueOf(entryId));
 
-if (reportsEngineDisplayContext.isAdminPortlet()) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backURL.toString());
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL.toString());
 
-	renderResponse.setTitle(LanguageUtil.get(request, "deliver-report"));
-}
-else {
-	portletDisplay.setShowBackIcon(false);
-
-	renderResponse.setTitle(LanguageUtil.get(request, "deliver-report"));
-}
+renderResponse.setTitle(LanguageUtil.get(request, "deliver-report"));
 %>
 
 <portlet:actionURL name="deliverReport" var="actionURL">
