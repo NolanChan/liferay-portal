@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.nosql.util;
+package com.liferay.osb.lcs.nosql.internal.util;
 
 /**
  * @author Riccardo Ferrari
