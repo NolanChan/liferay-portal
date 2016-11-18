@@ -21,7 +21,6 @@ deployDependencies {
 	}
 
 	from configurations.provided
-
 	include "itextpdf-*.jar"
 
 	into {
