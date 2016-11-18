@@ -947,7 +947,8 @@ public class SamlSpIdpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((SamlSpIdpConnectionModelImpl)samlSpIdpConnection);
+		clearUniqueFindersCache((SamlSpIdpConnectionModelImpl)samlSpIdpConnection,
+			true);
 	}
 
 	@Override
@@ -960,52 +961,40 @@ public class SamlSpIdpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 				SamlSpIdpConnectionImpl.class,
 				samlSpIdpConnection.getPrimaryKey());
 
-			clearUniqueFindersCache((SamlSpIdpConnectionModelImpl)samlSpIdpConnection);
+			clearUniqueFindersCache((SamlSpIdpConnectionModelImpl)samlSpIdpConnection,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		SamlSpIdpConnectionModelImpl samlSpIdpConnectionModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					samlSpIdpConnectionModelImpl.getCompanyId(),
-					samlSpIdpConnectionModelImpl.getSamlIdpEntityId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_C_SIEI, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_C_SIEI, args,
-				samlSpIdpConnectionModelImpl);
-		}
-		else {
-			if ((samlSpIdpConnectionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_SIEI.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						samlSpIdpConnectionModelImpl.getCompanyId(),
-						samlSpIdpConnectionModelImpl.getSamlIdpEntityId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_C_SIEI, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_C_SIEI, args,
-					samlSpIdpConnectionModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		SamlSpIdpConnectionModelImpl samlSpIdpConnectionModelImpl) {
 		Object[] args = new Object[] {
 				samlSpIdpConnectionModelImpl.getCompanyId(),
 				samlSpIdpConnectionModelImpl.getSamlIdpEntityId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_SIEI, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_SIEI, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_SIEI, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_SIEI, args,
+			samlSpIdpConnectionModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		SamlSpIdpConnectionModelImpl samlSpIdpConnectionModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					samlSpIdpConnectionModelImpl.getCompanyId(),
+					samlSpIdpConnectionModelImpl.getSamlIdpEntityId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_SIEI, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_SIEI, args);
+		}
 
 		if ((samlSpIdpConnectionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_SIEI.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					samlSpIdpConnectionModelImpl.getOriginalCompanyId(),
 					samlSpIdpConnectionModelImpl.getOriginalSamlIdpEntityId()
 				};
@@ -1202,8 +1191,8 @@ public class SamlSpIdpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 			SamlSpIdpConnectionImpl.class, samlSpIdpConnection.getPrimaryKey(),
 			samlSpIdpConnection, false);
 
-		clearUniqueFindersCache(samlSpIdpConnectionModelImpl);
-		cacheUniqueFindersCache(samlSpIdpConnectionModelImpl, isNew);
+		clearUniqueFindersCache(samlSpIdpConnectionModelImpl, false);
+		cacheUniqueFindersCache(samlSpIdpConnectionModelImpl);
 
 		samlSpIdpConnection.resetOriginalValues();
 

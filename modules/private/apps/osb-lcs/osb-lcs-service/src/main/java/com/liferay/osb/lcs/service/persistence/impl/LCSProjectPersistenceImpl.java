@@ -2067,7 +2067,7 @@ public class LCSProjectPersistenceImpl extends BasePersistenceImpl<LCSProject>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((LCSProjectModelImpl)lcsProject);
+		clearUniqueFindersCache((LCSProjectModelImpl)lcsProject, true);
 	}
 
 	@Override
@@ -2079,45 +2079,34 @@ public class LCSProjectPersistenceImpl extends BasePersistenceImpl<LCSProject>
 			entityCache.removeResult(LCSProjectModelImpl.ENTITY_CACHE_ENABLED,
 				LCSProjectImpl.class, lcsProject.getPrimaryKey());
 
-			clearUniqueFindersCache((LCSProjectModelImpl)lcsProject);
+			clearUniqueFindersCache((LCSProjectModelImpl)lcsProject, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		LCSProjectModelImpl lcsProjectModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] { lcsProjectModelImpl.getCorpProjectId() };
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_CORPPROJECTID, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_CORPPROJECTID, args,
-				lcsProjectModelImpl);
-		}
-		else {
-			if ((lcsProjectModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_CORPPROJECTID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						lcsProjectModelImpl.getCorpProjectId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_CORPPROJECTID, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_CORPPROJECTID, args,
-					lcsProjectModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		LCSProjectModelImpl lcsProjectModelImpl) {
 		Object[] args = new Object[] { lcsProjectModelImpl.getCorpProjectId() };
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_CORPPROJECTID, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_CORPPROJECTID, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_CORPPROJECTID, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_CORPPROJECTID, args,
+			lcsProjectModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		LCSProjectModelImpl lcsProjectModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] { lcsProjectModelImpl.getCorpProjectId() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_CORPPROJECTID, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_CORPPROJECTID, args);
+		}
 
 		if ((lcsProjectModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_CORPPROJECTID.getColumnBitmask()) != 0) {
-			args = new Object[] { lcsProjectModelImpl.getOriginalCorpProjectId() };
+			Object[] args = new Object[] {
+					lcsProjectModelImpl.getOriginalCorpProjectId()
+				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_CORPPROJECTID, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_CORPPROJECTID, args);
@@ -2331,8 +2320,8 @@ public class LCSProjectPersistenceImpl extends BasePersistenceImpl<LCSProject>
 		entityCache.putResult(LCSProjectModelImpl.ENTITY_CACHE_ENABLED,
 			LCSProjectImpl.class, lcsProject.getPrimaryKey(), lcsProject, false);
 
-		clearUniqueFindersCache(lcsProjectModelImpl);
-		cacheUniqueFindersCache(lcsProjectModelImpl, isNew);
+		clearUniqueFindersCache(lcsProjectModelImpl, false);
+		cacheUniqueFindersCache(lcsProjectModelImpl);
 
 		lcsProject.resetOriginalValues();
 

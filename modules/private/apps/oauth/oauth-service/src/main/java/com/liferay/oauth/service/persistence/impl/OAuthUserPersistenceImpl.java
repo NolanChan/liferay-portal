@@ -1632,7 +1632,7 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((OAuthUserModelImpl)oAuthUser);
+		clearUniqueFindersCache((OAuthUserModelImpl)oAuthUser, true);
 	}
 
 	@Override
@@ -1644,82 +1644,62 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 			entityCache.removeResult(OAuthUserModelImpl.ENTITY_CACHE_ENABLED,
 				OAuthUserImpl.class, oAuthUser.getPrimaryKey());
 
-			clearUniqueFindersCache((OAuthUserModelImpl)oAuthUser);
+			clearUniqueFindersCache((OAuthUserModelImpl)oAuthUser, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		OAuthUserModelImpl oAuthUserModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] { oAuthUserModelImpl.getAccessToken() };
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_ACCESSTOKEN, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_ACCESSTOKEN, args,
-				oAuthUserModelImpl);
-
-			args = new Object[] {
-					oAuthUserModelImpl.getUserId(),
-					oAuthUserModelImpl.getOAuthApplicationId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_U_OAI, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_U_OAI, args,
-				oAuthUserModelImpl);
-		}
-		else {
-			if ((oAuthUserModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_ACCESSTOKEN.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { oAuthUserModelImpl.getAccessToken() };
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_ACCESSTOKEN, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_ACCESSTOKEN, args,
-					oAuthUserModelImpl);
-			}
-
-			if ((oAuthUserModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_U_OAI.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						oAuthUserModelImpl.getUserId(),
-						oAuthUserModelImpl.getOAuthApplicationId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_U_OAI, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_U_OAI, args,
-					oAuthUserModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		OAuthUserModelImpl oAuthUserModelImpl) {
 		Object[] args = new Object[] { oAuthUserModelImpl.getAccessToken() };
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_ACCESSTOKEN, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_ACCESSTOKEN, args);
-
-		if ((oAuthUserModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_ACCESSTOKEN.getColumnBitmask()) != 0) {
-			args = new Object[] { oAuthUserModelImpl.getOriginalAccessToken() };
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_ACCESSTOKEN, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_ACCESSTOKEN, args);
-		}
+		finderCache.putResult(FINDER_PATH_COUNT_BY_ACCESSTOKEN, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_ACCESSTOKEN, args,
+			oAuthUserModelImpl, false);
 
 		args = new Object[] {
 				oAuthUserModelImpl.getUserId(),
 				oAuthUserModelImpl.getOAuthApplicationId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_U_OAI, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_U_OAI, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_U_OAI, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_U_OAI, args,
+			oAuthUserModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		OAuthUserModelImpl oAuthUserModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] { oAuthUserModelImpl.getAccessToken() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_ACCESSTOKEN, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_ACCESSTOKEN, args);
+		}
+
+		if ((oAuthUserModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_ACCESSTOKEN.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					oAuthUserModelImpl.getOriginalAccessToken()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_ACCESSTOKEN, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_ACCESSTOKEN, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					oAuthUserModelImpl.getUserId(),
+					oAuthUserModelImpl.getOAuthApplicationId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_OAI, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_U_OAI, args);
+		}
 
 		if ((oAuthUserModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_U_OAI.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					oAuthUserModelImpl.getOriginalUserId(),
 					oAuthUserModelImpl.getOriginalOAuthApplicationId()
 				};
@@ -1928,8 +1908,8 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 		entityCache.putResult(OAuthUserModelImpl.ENTITY_CACHE_ENABLED,
 			OAuthUserImpl.class, oAuthUser.getPrimaryKey(), oAuthUser, false);
 
-		clearUniqueFindersCache(oAuthUserModelImpl);
-		cacheUniqueFindersCache(oAuthUserModelImpl, isNew);
+		clearUniqueFindersCache(oAuthUserModelImpl, false);
+		cacheUniqueFindersCache(oAuthUserModelImpl);
 
 		oAuthUser.resetOriginalValues();
 

@@ -1817,7 +1817,8 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((DocumentationProjectModelImpl)documentationProject);
+		clearUniqueFindersCache((DocumentationProjectModelImpl)documentationProject,
+			true);
 	}
 
 	@Override
@@ -1830,72 +1831,47 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 				DocumentationProjectImpl.class,
 				documentationProject.getPrimaryKey());
 
-			clearUniqueFindersCache((DocumentationProjectModelImpl)documentationProject);
+			clearUniqueFindersCache((DocumentationProjectModelImpl)documentationProject,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		DocumentationProjectModelImpl documentationProjectModelImpl,
-		boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					documentationProjectModelImpl.getUuid(),
-					documentationProjectModelImpl.getGroupId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				documentationProjectModelImpl);
-
-			args = new Object[] { documentationProjectModelImpl.getName() };
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_NAME, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_NAME, args,
-				documentationProjectModelImpl);
-		}
-		else {
-			if ((documentationProjectModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						documentationProjectModelImpl.getUuid(),
-						documentationProjectModelImpl.getGroupId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					documentationProjectModelImpl);
-			}
-
-			if ((documentationProjectModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_NAME.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						documentationProjectModelImpl.getName()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_NAME, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_NAME, args,
-					documentationProjectModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		DocumentationProjectModelImpl documentationProjectModelImpl) {
 		Object[] args = new Object[] {
 				documentationProjectModelImpl.getUuid(),
 				documentationProjectModelImpl.getGroupId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			documentationProjectModelImpl, false);
+
+		args = new Object[] { documentationProjectModelImpl.getName() };
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_NAME, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_NAME, args,
+			documentationProjectModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		DocumentationProjectModelImpl documentationProjectModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					documentationProjectModelImpl.getUuid(),
+					documentationProjectModelImpl.getGroupId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
 
 		if ((documentationProjectModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					documentationProjectModelImpl.getOriginalUuid(),
 					documentationProjectModelImpl.getOriginalGroupId()
 				};
@@ -1904,14 +1880,18 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		args = new Object[] { documentationProjectModelImpl.getName() };
+		if (clearCurrent) {
+			Object[] args = new Object[] { documentationProjectModelImpl.getName() };
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_NAME, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_NAME, args);
+		}
 
 		if ((documentationProjectModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_NAME.getColumnBitmask()) != 0) {
-			args = new Object[] { documentationProjectModelImpl.getOriginalName() };
+			Object[] args = new Object[] {
+					documentationProjectModelImpl.getOriginalName()
+				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_NAME, args);
@@ -2136,8 +2116,8 @@ public class DocumentationProjectPersistenceImpl extends BasePersistenceImpl<Doc
 			DocumentationProjectImpl.class,
 			documentationProject.getPrimaryKey(), documentationProject, false);
 
-		clearUniqueFindersCache(documentationProjectModelImpl);
-		cacheUniqueFindersCache(documentationProjectModelImpl, isNew);
+		clearUniqueFindersCache(documentationProjectModelImpl, false);
+		cacheUniqueFindersCache(documentationProjectModelImpl);
 
 		documentationProject.resetOriginalValues();
 

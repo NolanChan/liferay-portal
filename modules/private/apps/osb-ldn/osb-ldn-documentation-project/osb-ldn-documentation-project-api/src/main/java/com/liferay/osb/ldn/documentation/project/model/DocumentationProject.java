@@ -56,8 +56,8 @@ public interface DocumentationProject extends DocumentationProjectModel,
 			}
 		};
 
+	public DocumentationProjectTypeSettings getDocumentationProjectTypeSettings();
+
 	public java.io.InputStream getIconInputStream()
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public DocumentationProjectTypeSettings getDocumentationProjectTypeSettings();
 }

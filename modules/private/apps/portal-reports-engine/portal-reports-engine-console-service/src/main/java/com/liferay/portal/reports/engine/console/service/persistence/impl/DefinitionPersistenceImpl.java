@@ -2912,7 +2912,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((DefinitionModelImpl)definition);
+		clearUniqueFindersCache((DefinitionModelImpl)definition, true);
 	}
 
 	@Override
@@ -2924,51 +2924,37 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			entityCache.removeResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
 				DefinitionImpl.class, definition.getPrimaryKey());
 
-			clearUniqueFindersCache((DefinitionModelImpl)definition);
+			clearUniqueFindersCache((DefinitionModelImpl)definition, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		DefinitionModelImpl definitionModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					definitionModelImpl.getUuid(),
-					definitionModelImpl.getGroupId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				definitionModelImpl);
-		}
-		else {
-			if ((definitionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						definitionModelImpl.getUuid(),
-						definitionModelImpl.getGroupId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					definitionModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		DefinitionModelImpl definitionModelImpl) {
 		Object[] args = new Object[] {
 				definitionModelImpl.getUuid(), definitionModelImpl.getGroupId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			definitionModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		DefinitionModelImpl definitionModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					definitionModelImpl.getUuid(),
+					definitionModelImpl.getGroupId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
 
 		if ((definitionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					definitionModelImpl.getOriginalUuid(),
 					definitionModelImpl.getOriginalGroupId()
 				};
@@ -3225,8 +3211,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		entityCache.putResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
 			DefinitionImpl.class, definition.getPrimaryKey(), definition, false);
 
-		clearUniqueFindersCache(definitionModelImpl);
-		cacheUniqueFindersCache(definitionModelImpl, isNew);
+		clearUniqueFindersCache(definitionModelImpl, false);
+		cacheUniqueFindersCache(definitionModelImpl);
 
 		definition.resetOriginalValues();
 

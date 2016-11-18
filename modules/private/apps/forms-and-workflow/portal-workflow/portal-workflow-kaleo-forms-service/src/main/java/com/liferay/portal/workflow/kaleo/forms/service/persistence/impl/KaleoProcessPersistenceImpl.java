@@ -2626,7 +2626,7 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((KaleoProcessModelImpl)kaleoProcess);
+		clearUniqueFindersCache((KaleoProcessModelImpl)kaleoProcess, true);
 	}
 
 	@Override
@@ -2638,71 +2638,45 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 			entityCache.removeResult(KaleoProcessModelImpl.ENTITY_CACHE_ENABLED,
 				KaleoProcessImpl.class, kaleoProcess.getPrimaryKey());
 
-			clearUniqueFindersCache((KaleoProcessModelImpl)kaleoProcess);
+			clearUniqueFindersCache((KaleoProcessModelImpl)kaleoProcess, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		KaleoProcessModelImpl kaleoProcessModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					kaleoProcessModelImpl.getUuid(),
-					kaleoProcessModelImpl.getGroupId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				kaleoProcessModelImpl);
-
-			args = new Object[] { kaleoProcessModelImpl.getDDLRecordSetId() };
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_DDLRECORDSETID, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_DDLRECORDSETID, args,
-				kaleoProcessModelImpl);
-		}
-		else {
-			if ((kaleoProcessModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						kaleoProcessModelImpl.getUuid(),
-						kaleoProcessModelImpl.getGroupId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					kaleoProcessModelImpl);
-			}
-
-			if ((kaleoProcessModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_DDLRECORDSETID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						kaleoProcessModelImpl.getDDLRecordSetId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_DDLRECORDSETID,
-					args, Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_DDLRECORDSETID,
-					args, kaleoProcessModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		KaleoProcessModelImpl kaleoProcessModelImpl) {
 		Object[] args = new Object[] {
 				kaleoProcessModelImpl.getUuid(),
 				kaleoProcessModelImpl.getGroupId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			kaleoProcessModelImpl, false);
+
+		args = new Object[] { kaleoProcessModelImpl.getDDLRecordSetId() };
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_DDLRECORDSETID, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_DDLRECORDSETID, args,
+			kaleoProcessModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		KaleoProcessModelImpl kaleoProcessModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					kaleoProcessModelImpl.getUuid(),
+					kaleoProcessModelImpl.getGroupId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
 
 		if ((kaleoProcessModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					kaleoProcessModelImpl.getOriginalUuid(),
 					kaleoProcessModelImpl.getOriginalGroupId()
 				};
@@ -2711,14 +2685,18 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		args = new Object[] { kaleoProcessModelImpl.getDDLRecordSetId() };
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					kaleoProcessModelImpl.getDDLRecordSetId()
+				};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_DDLRECORDSETID, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_DDLRECORDSETID, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_DDLRECORDSETID, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_DDLRECORDSETID, args);
+		}
 
 		if ((kaleoProcessModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_DDLRECORDSETID.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					kaleoProcessModelImpl.getOriginalDDLRecordSetId()
 				};
 
@@ -2958,8 +2936,8 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 			KaleoProcessImpl.class, kaleoProcess.getPrimaryKey(), kaleoProcess,
 			false);
 
-		clearUniqueFindersCache(kaleoProcessModelImpl);
-		cacheUniqueFindersCache(kaleoProcessModelImpl, isNew);
+		clearUniqueFindersCache(kaleoProcessModelImpl, false);
+		cacheUniqueFindersCache(kaleoProcessModelImpl);
 
 		kaleoProcess.resetOriginalValues();
 

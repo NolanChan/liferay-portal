@@ -1005,7 +1005,8 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((SamlSpAuthRequestModelImpl)samlSpAuthRequest);
+		clearUniqueFindersCache((SamlSpAuthRequestModelImpl)samlSpAuthRequest,
+			true);
 	}
 
 	@Override
@@ -1017,52 +1018,40 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 			entityCache.removeResult(SamlSpAuthRequestModelImpl.ENTITY_CACHE_ENABLED,
 				SamlSpAuthRequestImpl.class, samlSpAuthRequest.getPrimaryKey());
 
-			clearUniqueFindersCache((SamlSpAuthRequestModelImpl)samlSpAuthRequest);
+			clearUniqueFindersCache((SamlSpAuthRequestModelImpl)samlSpAuthRequest,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		SamlSpAuthRequestModelImpl samlSpAuthRequestModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					samlSpAuthRequestModelImpl.getSamlIdpEntityId(),
-					samlSpAuthRequestModelImpl.getSamlSpAuthRequestKey()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_SIEI_SSARK, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_SIEI_SSARK, args,
-				samlSpAuthRequestModelImpl);
-		}
-		else {
-			if ((samlSpAuthRequestModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_SIEI_SSARK.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						samlSpAuthRequestModelImpl.getSamlIdpEntityId(),
-						samlSpAuthRequestModelImpl.getSamlSpAuthRequestKey()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_SIEI_SSARK, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_SIEI_SSARK, args,
-					samlSpAuthRequestModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		SamlSpAuthRequestModelImpl samlSpAuthRequestModelImpl) {
 		Object[] args = new Object[] {
 				samlSpAuthRequestModelImpl.getSamlIdpEntityId(),
 				samlSpAuthRequestModelImpl.getSamlSpAuthRequestKey()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_SIEI_SSARK, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_SIEI_SSARK, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_SIEI_SSARK, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_SIEI_SSARK, args,
+			samlSpAuthRequestModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		SamlSpAuthRequestModelImpl samlSpAuthRequestModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					samlSpAuthRequestModelImpl.getSamlIdpEntityId(),
+					samlSpAuthRequestModelImpl.getSamlSpAuthRequestKey()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_SIEI_SSARK, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_SIEI_SSARK, args);
+		}
 
 		if ((samlSpAuthRequestModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_SIEI_SSARK.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					samlSpAuthRequestModelImpl.getOriginalSamlIdpEntityId(),
 					samlSpAuthRequestModelImpl.getOriginalSamlSpAuthRequestKey()
 				};
@@ -1214,8 +1203,8 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 			SamlSpAuthRequestImpl.class, samlSpAuthRequest.getPrimaryKey(),
 			samlSpAuthRequest, false);
 
-		clearUniqueFindersCache(samlSpAuthRequestModelImpl);
-		cacheUniqueFindersCache(samlSpAuthRequestModelImpl, isNew);
+		clearUniqueFindersCache(samlSpAuthRequestModelImpl, false);
+		cacheUniqueFindersCache(samlSpAuthRequestModelImpl);
 
 		samlSpAuthRequest.resetOriginalValues();
 

@@ -2995,7 +2995,7 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((SPIDefinitionModelImpl)spiDefinition);
+		clearUniqueFindersCache((SPIDefinitionModelImpl)spiDefinition, true);
 	}
 
 	@Override
@@ -3007,75 +3007,48 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			entityCache.removeResult(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 				SPIDefinitionImpl.class, spiDefinition.getPrimaryKey());
 
-			clearUniqueFindersCache((SPIDefinitionModelImpl)spiDefinition);
+			clearUniqueFindersCache((SPIDefinitionModelImpl)spiDefinition, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		SPIDefinitionModelImpl spiDefinitionModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					spiDefinitionModelImpl.getCompanyId(),
-					spiDefinitionModelImpl.getName()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_C_N, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, args,
-				spiDefinitionModelImpl);
-
-			args = new Object[] {
-					spiDefinitionModelImpl.getConnectorAddress(),
-					spiDefinitionModelImpl.getConnectorPort()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_CA_CP, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_CA_CP, args,
-				spiDefinitionModelImpl);
-		}
-		else {
-			if ((spiDefinitionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						spiDefinitionModelImpl.getCompanyId(),
-						spiDefinitionModelImpl.getName()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_C_N, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, args,
-					spiDefinitionModelImpl);
-			}
-
-			if ((spiDefinitionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_CA_CP.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						spiDefinitionModelImpl.getConnectorAddress(),
-						spiDefinitionModelImpl.getConnectorPort()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_CA_CP, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_CA_CP, args,
-					spiDefinitionModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		SPIDefinitionModelImpl spiDefinitionModelImpl) {
 		Object[] args = new Object[] {
 				spiDefinitionModelImpl.getCompanyId(),
 				spiDefinitionModelImpl.getName()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_N, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, args,
+			spiDefinitionModelImpl, false);
+
+		args = new Object[] {
+				spiDefinitionModelImpl.getConnectorAddress(),
+				spiDefinitionModelImpl.getConnectorPort()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_CA_CP, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_CA_CP, args,
+			spiDefinitionModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		SPIDefinitionModelImpl spiDefinitionModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					spiDefinitionModelImpl.getCompanyId(),
+					spiDefinitionModelImpl.getName()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
+		}
 
 		if ((spiDefinitionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					spiDefinitionModelImpl.getOriginalCompanyId(),
 					spiDefinitionModelImpl.getOriginalName()
 				};
@@ -3084,17 +3057,19 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
 		}
 
-		args = new Object[] {
-				spiDefinitionModelImpl.getConnectorAddress(),
-				spiDefinitionModelImpl.getConnectorPort()
-			};
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					spiDefinitionModelImpl.getConnectorAddress(),
+					spiDefinitionModelImpl.getConnectorPort()
+				};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_CA_CP, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_CA_CP, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_CA_CP, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_CA_CP, args);
+		}
 
 		if ((spiDefinitionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_CA_CP.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					spiDefinitionModelImpl.getOriginalConnectorAddress(),
 					spiDefinitionModelImpl.getOriginalConnectorPort()
 				};
@@ -3309,8 +3284,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			SPIDefinitionImpl.class, spiDefinition.getPrimaryKey(),
 			spiDefinition, false);
 
-		clearUniqueFindersCache(spiDefinitionModelImpl);
-		cacheUniqueFindersCache(spiDefinitionModelImpl, isNew);
+		clearUniqueFindersCache(spiDefinitionModelImpl, false);
+		cacheUniqueFindersCache(spiDefinitionModelImpl);
 
 		spiDefinition.resetOriginalValues();
 

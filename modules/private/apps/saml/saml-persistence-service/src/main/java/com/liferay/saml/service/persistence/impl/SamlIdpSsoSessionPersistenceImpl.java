@@ -950,7 +950,8 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((SamlIdpSsoSessionModelImpl)samlIdpSsoSession);
+		clearUniqueFindersCache((SamlIdpSsoSessionModelImpl)samlIdpSsoSession,
+			true);
 	}
 
 	@Override
@@ -962,49 +963,40 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 			entityCache.removeResult(SamlIdpSsoSessionModelImpl.ENTITY_CACHE_ENABLED,
 				SamlIdpSsoSessionImpl.class, samlIdpSsoSession.getPrimaryKey());
 
-			clearUniqueFindersCache((SamlIdpSsoSessionModelImpl)samlIdpSsoSession);
+			clearUniqueFindersCache((SamlIdpSsoSessionModelImpl)samlIdpSsoSession,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		SamlIdpSsoSessionModelImpl samlIdpSsoSessionModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					samlIdpSsoSessionModelImpl.getSamlIdpSsoSessionKey()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_SAMLIDPSSOSESSIONKEY,
-				args, Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_SAMLIDPSSOSESSIONKEY,
-				args, samlIdpSsoSessionModelImpl);
-		}
-		else {
-			if ((samlIdpSsoSessionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_SAMLIDPSSOSESSIONKEY.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						samlIdpSsoSessionModelImpl.getSamlIdpSsoSessionKey()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_SAMLIDPSSOSESSIONKEY,
-					args, Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_SAMLIDPSSOSESSIONKEY,
-					args, samlIdpSsoSessionModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		SamlIdpSsoSessionModelImpl samlIdpSsoSessionModelImpl) {
 		Object[] args = new Object[] {
 				samlIdpSsoSessionModelImpl.getSamlIdpSsoSessionKey()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_SAMLIDPSSOSESSIONKEY, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_SAMLIDPSSOSESSIONKEY, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_SAMLIDPSSOSESSIONKEY, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_SAMLIDPSSOSESSIONKEY, args,
+			samlIdpSsoSessionModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		SamlIdpSsoSessionModelImpl samlIdpSsoSessionModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					samlIdpSsoSessionModelImpl.getSamlIdpSsoSessionKey()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_SAMLIDPSSOSESSIONKEY,
+				args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_SAMLIDPSSOSESSIONKEY,
+				args);
+		}
 
 		if ((samlIdpSsoSessionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_SAMLIDPSSOSESSIONKEY.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					samlIdpSsoSessionModelImpl.getOriginalSamlIdpSsoSessionKey()
 				};
 
@@ -1181,8 +1173,8 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 			SamlIdpSsoSessionImpl.class, samlIdpSsoSession.getPrimaryKey(),
 			samlIdpSsoSession, false);
 
-		clearUniqueFindersCache(samlIdpSsoSessionModelImpl);
-		cacheUniqueFindersCache(samlIdpSsoSessionModelImpl, isNew);
+		clearUniqueFindersCache(samlIdpSsoSessionModelImpl, false);
+		cacheUniqueFindersCache(samlIdpSsoSessionModelImpl);
 
 		samlIdpSsoSession.resetOriginalValues();
 
