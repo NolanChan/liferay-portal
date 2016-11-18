@@ -74,7 +74,7 @@ public class EditDocumentationProjectMVCActionCommand
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
 		int status = ParamUtil.getInteger(uploadPortletRequest, "status");
 
-		DocumentationProjectTypeSettings settings =
+		DocumentationProjectTypeSettings documentationProjectTypeSettings =
 			DocumentationProjectTypeSettingsFactoryUtil.create(type);
 
 		if (type.equals(DocumentationProjectConstants.TYPE_SITE)) {
@@ -87,19 +87,26 @@ public class EditDocumentationProjectMVCActionCommand
 			String repositoryName = ParamUtil.getString(
 				uploadPortletRequest, "repositoryName");
 
-			DocumentationProjectSiteTypeSettings siteSettings =
-				(DocumentationProjectSiteTypeSettings)settings;
+			DocumentationProjectSiteTypeSettings
+				documentationProjectSiteTypeSettings =
+					(DocumentationProjectSiteTypeSettings)
+						documentationProjectTypeSettings;
 
-			siteSettings.setHeaderGradientStartColor(headerGradientStartColor);
-			siteSettings.setHeaderGradientEndColor(headerGradientEndColor);
-			siteSettings.setGitHubRepositoryOwner(repositoryOwner);
-			siteSettings.setGitHubRepositoryName(repositoryName);
+			documentationProjectSiteTypeSettings.setGitHubRepositoryName(
+				repositoryName);
+			documentationProjectSiteTypeSettings.setGitHubRepositoryOwner(
+				repositoryOwner);
+			documentationProjectSiteTypeSettings.setHeaderGradientEndColor(
+				headerGradientEndColor);
+			documentationProjectSiteTypeSettings.setHeaderGradientStartColor(
+				headerGradientStartColor);
 		}
 		else if (type.equals(DocumentationProjectConstants.TYPE_URL)) {
 			String url = ParamUtil.getString(uploadPortletRequest, "url");
 
 			DocumentationProjectURLTypeSettings urlSettings =
-				(DocumentationProjectURLTypeSettings)settings;
+				(DocumentationProjectURLTypeSettings)
+					documentationProjectTypeSettings;
 
 			urlSettings.setURL(url);
 		}
@@ -113,14 +120,15 @@ public class EditDocumentationProjectMVCActionCommand
 			documentationProject =
 				_documentationProjectService.updateDocumentationProject(
 					documentationProjectId, name, description, iconFileName,
-					iconFile, type, settings.toString(), status,
-					serviceContext);
+					iconFile, type, documentationProjectTypeSettings.toString(),
+					status, serviceContext);
 		}
 		else {
 			documentationProject =
 				_documentationProjectService.addDocumentationProject(
 					name, description, iconFileName, iconFile, type,
-					settings.toString(), status, serviceContext);
+					documentationProjectTypeSettings.toString(), status,
+					serviceContext);
 
 			SiteGenerator siteGenerator =
 				_siteGeneratorRegistry.getSiteGenerator(

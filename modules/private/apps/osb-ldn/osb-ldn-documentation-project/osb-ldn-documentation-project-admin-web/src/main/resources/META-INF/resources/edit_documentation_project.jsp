@@ -41,12 +41,12 @@ if (documentationProject != null) {
 		url = urlSettings.getURL();
 	}
 	else {
-		DocumentationProjectSiteTypeSettings siteSettings = (DocumentationProjectSiteTypeSettings)DocumentationProjectTypeSettingsFactoryUtil.create(documentationProject);
+		DocumentationProjectSiteTypeSettings documentationProjectSiteTypeSettings = (DocumentationProjectSiteTypeSettings)DocumentationProjectTypeSettingsFactoryUtil.create(documentationProject);
 
-		gradientStartColor = siteSettings.getHeaderGradientStartColor();
-		gradientEndColor = siteSettings.getHeaderGradientEndColor();
-		repositoryOwner = siteSettings.getGitHubRepositoryOwner();
-		repositoryName = siteSettings.getGitHubRepositoryName();
+		gradientStartColor = documentationProjectSiteTypeSettings.getHeaderGradientStartColor();
+		gradientEndColor = documentationProjectSiteTypeSettings.getHeaderGradientEndColor();
+		repositoryOwner = documentationProjectSiteTypeSettings.getGitHubRepositoryOwner();
+		repositoryName = documentationProjectSiteTypeSettings.getGitHubRepositoryName();
 	}
 }
 

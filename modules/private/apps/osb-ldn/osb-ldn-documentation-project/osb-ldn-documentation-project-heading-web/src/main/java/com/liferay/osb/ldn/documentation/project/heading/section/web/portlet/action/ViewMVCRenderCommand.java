@@ -71,18 +71,24 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		String gradientStartColor = "#ffffff";
 		String gradientEndColor = "#ffffff";
 
-		DocumentationProjectTypeSettings settings =
+		DocumentationProjectTypeSettings documentationProjectTypeSettings =
 			DocumentationProjectTypeSettingsFactoryUtil.create(
 				documentationProject);
 
 		String type = documentationProject.getType();
 
 		if (type.equals(DocumentationProjectConstants.TYPE_SITE)) {
-			DocumentationProjectSiteTypeSettings siteSettings =
-				(DocumentationProjectSiteTypeSettings)settings;
+			DocumentationProjectSiteTypeSettings
+				documentationProjectSiteTypeSettings =
+					(DocumentationProjectSiteTypeSettings)
+						documentationProjectTypeSettings;
 
-			gradientStartColor = siteSettings.getHeaderGradientStartColor();
-			gradientEndColor = siteSettings.getHeaderGradientEndColor();
+			gradientStartColor =
+				documentationProjectSiteTypeSettings.
+					getHeaderGradientStartColor();
+			gradientEndColor =
+				documentationProjectSiteTypeSettings.
+					getHeaderGradientEndColor();
 		}
 
 		PortletConfig portletConfig = (PortletConfig)renderRequest.getAttribute(
