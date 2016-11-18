@@ -2,7 +2,6 @@ Bundle-Name: Liferay OSB LCS Web
 Bundle-SymbolicName: com.liferay.osb.lcs.web
 Bundle-Version: 1.0.0
 Import-Package: com.liferay.lcs.api;version="4.1.0"
-Provide-Capability: liferay.resource.bundle;bundle.symbolic.name=com.liferay.osb.lcs;resource.bundle.base.name=content.Language
 Web-ContextPath: /osb-lcs-web
 -includeresource:\
 	lib/httpclient.jar=httpclient-[0-9]*.jar;lib:=true,\
