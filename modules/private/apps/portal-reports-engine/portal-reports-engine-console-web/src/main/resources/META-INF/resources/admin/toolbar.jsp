@@ -96,7 +96,7 @@ portletURL.setParameter("mvcPath", "/admin/view.jsp");
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= reportsEngineDisplayContext.getOrderByCol() %>"
 			orderByType="<%= reportsEngineDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"last-activity-date", "due-date"} %>'
+			orderColumns='<%= new String[] {"create-date"} %>'
 			portletURL="<%= reportsEngineDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>

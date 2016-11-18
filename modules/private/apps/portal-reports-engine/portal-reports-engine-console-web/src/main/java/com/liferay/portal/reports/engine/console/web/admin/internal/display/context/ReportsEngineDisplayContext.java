@@ -20,10 +20,17 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
+import com.liferay.portal.reports.engine.console.model.Definition;
+import com.liferay.portal.reports.engine.console.model.Entry;
+import com.liferay.portal.reports.engine.console.model.Source;
+import com.liferay.portal.reports.engine.console.util.comparator.DefinitionCreateDateComparator;
+import com.liferay.portal.reports.engine.console.util.comparator.EntryCreateDateComparator;
+import com.liferay.portal.reports.engine.console.util.comparator.SourceCreateDateComparator;
 import com.liferay.portal.reports.engine.console.web.admin.configuration.ReportsEngineAdminWebConfiguration;
 import com.liferay.portal.reports.engine.console.web.admin.internal.display.context.util.ReportsEngineRequestHelper;
 import com.liferay.portal.reports.engine.console.web.admin.internal.search.DefinitionSearch;
@@ -62,8 +69,18 @@ public class ReportsEngineDisplayContext {
 	}
 
 	public DefinitionSearch getDefinitionSearch() {
-		return new DefinitionSearch(
+		DefinitionSearch definitionSearch = new DefinitionSearch(
 			_reportsEngineRequestHelper.getRenderRequest(), getPortletURL());
+
+		OrderByComparator<Definition> orderByComparator =
+			getDefinitionOrderByComparator(getOrderByCol(), getOrderByType());
+
+		definitionSearch.setOrderByCol(getOrderByCol());
+		definitionSearch.setOrderByType(getOrderByType());
+
+		definitionSearch.setOrderByComparator(orderByComparator);
+
+		return definitionSearch;
 	}
 
 	public String getDisplayStyle() {
@@ -106,8 +123,18 @@ public class ReportsEngineDisplayContext {
 	}
 
 	public EntrySearch getEntrySearch() {
-		return new EntrySearch(
+		EntrySearch entrySearch = new EntrySearch(
 			_reportsEngineRequestHelper.getRenderRequest(), getPortletURL());
+
+		OrderByComparator<Entry> orderByComparator = getEntryOrderByComparator(
+			getOrderByCol(), getOrderByType());
+
+		entrySearch.setOrderByCol(getOrderByCol());
+		entrySearch.setOrderByType(getOrderByType());
+
+		entrySearch.setOrderByComparator(orderByComparator);
+
+		return entrySearch;
 	}
 
 	public String getKeywords() {
@@ -130,7 +157,7 @@ public class ReportsEngineDisplayContext {
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = _portalPreferences.getValue(
 				ReportsEngineConsolePortletKeys.REPORTS_ADMIN, "order-by-col",
-				"last-activity-date");
+				"create-date");
 		}
 		else {
 			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
@@ -179,8 +206,18 @@ public class ReportsEngineDisplayContext {
 	}
 
 	public SourceSearch getSourceSearch() {
-		return new SourceSearch(
+		SourceSearch sourceSearch = new SourceSearch(
 			_reportsEngineRequestHelper.getRenderRequest(), getPortletURL());
+
+		OrderByComparator<Source> orderByComparator =
+			getSourceOrderByComparator(getOrderByCol(), getOrderByType());
+
+		sourceSearch.setOrderByCol(getOrderByCol());
+		sourceSearch.setOrderByType(getOrderByType());
+
+		sourceSearch.setOrderByComparator(orderByComparator);
+
+		return sourceSearch;
 	}
 
 	public String getTabs1() {
@@ -236,8 +273,44 @@ public class ReportsEngineDisplayContext {
 		return false;
 	}
 
+	protected OrderByComparator<Definition> getDefinitionOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		return new DefinitionCreateDateComparator(orderByAsc);
+	}
+
+	protected OrderByComparator<Entry> getEntryOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		return new EntryCreateDateComparator(orderByAsc);
+	}
+
 	protected String getPortletName() {
 		return _reportsEngineRequestHelper.getPortletName();
+	}
+
+	protected OrderByComparator<Source> getSourceOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		return new SourceCreateDateComparator(orderByAsc);
 	}
 
 	private static final String[] _DISPLAY_VIEWS = {"list"};

@@ -25,13 +25,13 @@ if (displayTerms.isAdvancedSearch()) {
 
 	searchContainer.setTotal(total);
 
-	searchContainer.setResults(EntryServiceUtil.getEntries(themeDisplay.getSiteGroupId(), displayTerms.getDefinitionName(), null, startDate, endDate, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), null));
+	searchContainer.setResults(EntryServiceUtil.getEntries(themeDisplay.getSiteGroupId(), displayTerms.getDefinitionName(), null, startDate, endDate, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
 }
 else {
 	total = EntryServiceUtil.getEntriesCount(themeDisplay.getSiteGroupId(), displayTerms.getKeywords(), null, null, null, false);
 
 	searchContainer.setTotal(total);
 
-	searchContainer.setResults(EntryServiceUtil.getEntries(themeDisplay.getSiteGroupId(), displayTerms.getKeywords(), null, null, null, false, searchContainer.getStart(), searchContainer.getEnd(), null));
+	searchContainer.setResults(EntryServiceUtil.getEntries(themeDisplay.getSiteGroupId(), displayTerms.getKeywords(), null, null, null, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
 }
 %>
