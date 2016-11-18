@@ -42,7 +42,7 @@ public class ReportFactoryImpl implements ReportFactory {
 			}
 			catch (Exception e) {
 				_log.error(
-					"Failed to initalize report type " + reportType.name());
+					"Unable to initalize report type " + reportType.name());
 			}
 		}
 	}
