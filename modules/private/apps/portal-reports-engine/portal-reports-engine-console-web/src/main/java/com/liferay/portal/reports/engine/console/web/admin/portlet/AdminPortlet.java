@@ -89,30 +89,30 @@ import org.osgi.service.component.annotations.Reference;
 public class AdminPortlet extends MVCPortlet {
 
 	@Override
-	public void render(RenderRequest request, RenderResponse response)
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
 		try {
-			setDefinitionRequestAttribute(request);
+			setDefinitionRequestAttribute(renderRequest);
 
-			setSourceRequestAttribute(request);
+			setSourceRequestAttribute(renderRequest);
 
-			request.setAttribute(
-				ReportsEngineAdminWebConfiguration.class.getName(),
-				_reportsEngineAdminWebConfiguration);
+			setReportsEngineAdminWebConfigurationRequestAttribute(
+				renderRequest);
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {
-				hideDefaultErrorMessage(request);
+				hideDefaultErrorMessage(renderRequest);
 
-				SessionErrors.add(request, e.getClass());
+				SessionErrors.add(renderRequest, e.getClass());
 			}
 			else {
 				throw new PortletException(e);
 			}
 		}
 
-		super.render(request, response);
+		super.render(renderRequest, renderResponse);
 	}
 
 	@Override
@@ -190,6 +190,14 @@ public class AdminPortlet extends MVCPortlet {
 		}
 
 		renderRequest.setAttribute(ReportsEngineWebKeys.DEFINITION, definition);
+	}
+
+	protected void setReportsEngineAdminWebConfigurationRequestAttribute(
+		RenderRequest renderRequest) {
+
+		renderRequest.setAttribute(
+			ReportsEngineAdminWebConfiguration.class.getName(),
+			_reportsEngineAdminWebConfiguration);
 	}
 
 	protected void setSourceRequestAttribute(RenderRequest renderRequest)

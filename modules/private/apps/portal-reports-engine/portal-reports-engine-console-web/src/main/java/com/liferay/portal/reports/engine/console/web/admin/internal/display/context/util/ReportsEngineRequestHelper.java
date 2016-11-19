@@ -16,7 +16,6 @@ package com.liferay.portal.reports.engine.console.web.admin.internal.display.con
 
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
@@ -48,43 +47,39 @@ public class ReportsEngineRequestHelper extends BaseRequestHelper {
 	}
 
 	public ReportsGroupServiceEmailConfiguration
-		getReportsGroupServiceEmailConfiguration() {
+			getReportsGroupServiceEmailConfiguration()
+		throws PortalException {
 
-	try {
-		if (_reportsGroupServiceEmailConfiguration == null) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_renderRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		if (_reportsGroupServiceEmailConfiguration != null) {
+			return _reportsGroupServiceEmailConfiguration;
+		}
 
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			if (Validator.isNotNull(portletDisplay.getPortletResource())) {
-				_reportsGroupServiceEmailConfiguration =
-					ConfigurationProviderUtil.getConfiguration(
-						ReportsGroupServiceEmailConfiguration.class,
-						new ParameterMapSettingsLocator(
-							_renderRequest.getParameterMap(),
-							new GroupServiceSettingsLocator(
-								themeDisplay.getSiteGroupId(),
-								ReportsEngineConsoleConstants.SERVICE_NAME)));
-			}
-			else {
-				_reportsGroupServiceEmailConfiguration =
-					ConfigurationProviderUtil.getConfiguration(
-						ReportsGroupServiceEmailConfiguration.class,
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		if (Validator.isNotNull(portletDisplay.getPortletResource())) {
+			_reportsGroupServiceEmailConfiguration =
+				ConfigurationProviderUtil.getConfiguration(
+					ReportsGroupServiceEmailConfiguration.class,
+					new ParameterMapSettingsLocator(
+						_renderRequest.getParameterMap(),
 						new GroupServiceSettingsLocator(
 							themeDisplay.getSiteGroupId(),
-							ReportsEngineConsoleConstants.SERVICE_NAME));
-			}
+							ReportsEngineConsoleConstants.SERVICE_NAME)));
+		}
+		else {
+			_reportsGroupServiceEmailConfiguration =
+				ConfigurationProviderUtil.getConfiguration(
+					ReportsGroupServiceEmailConfiguration.class,
+					new GroupServiceSettingsLocator(
+						themeDisplay.getSiteGroupId(),
+						ReportsEngineConsoleConstants.SERVICE_NAME));
 		}
 
 		return _reportsGroupServiceEmailConfiguration;
 	}
-
-	catch (PortalException pe) {
-		throw new SystemException(pe);
-	}
-}
 
 	public PortletPreferences getPortletPreferences() {
 		return _portletPreferences;

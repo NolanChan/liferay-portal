@@ -22,13 +22,17 @@ if (displayTerms.isAdvancedSearch()) {
 
 	searchContainer.setTotal(total);
 
-	searchContainer.setResults(DefinitionServiceUtil.getDefinitions(themeDisplay.getSiteGroupId(), displayTerms.getDefinitionName(), displayTerms.getDescription(), displayTerms.getSourceId(), displayTerms.getReportName(), displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
+	results = DefinitionServiceUtil.getDefinitions(themeDisplay.getSiteGroupId(), displayTerms.getDefinitionName(), displayTerms.getDescription(), displayTerms.getSourceId(), displayTerms.getReportName(), displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+	searchContainer.setResults(results);
 }
 else {
 	total = DefinitionServiceUtil.getDefinitionsCount(themeDisplay.getSiteGroupId(), displayTerms.getKeywords(), displayTerms.getKeywords(), null, displayTerms.getKeywords(), false);
 
 	searchContainer.setTotal(total);
 
-	searchContainer.setResults(DefinitionServiceUtil.getDefinitions(themeDisplay.getSiteGroupId(), displayTerms.getKeywords(), displayTerms.getKeywords(), null, displayTerms.getKeywords(), false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
+	results = DefinitionServiceUtil.getDefinitions(themeDisplay.getSiteGroupId(), displayTerms.getKeywords(), displayTerms.getKeywords(), null, displayTerms.getKeywords(), false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+	searchContainer.setResults(results);
 }
 %>

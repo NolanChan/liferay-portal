@@ -532,8 +532,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	}
 
 	protected ReportsGroupServiceEmailConfiguration
-			getReportsGroupServiceEmailConfiguration(
-				long groupId)
+			getReportsGroupServiceEmailConfiguration(long groupId)
 		throws ConfigurationException {
 
 		return configurationProvider.getConfiguration(
