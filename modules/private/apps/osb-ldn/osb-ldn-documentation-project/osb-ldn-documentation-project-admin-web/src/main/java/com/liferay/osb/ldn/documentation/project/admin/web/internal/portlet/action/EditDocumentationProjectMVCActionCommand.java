@@ -78,14 +78,14 @@ public class EditDocumentationProjectMVCActionCommand
 			DocumentationProjectTypeSettingsFactoryUtil.create(type);
 
 		if (type.equals(DocumentationProjectConstants.TYPE_SITE)) {
-			String headerGradientStartColor = ParamUtil.getString(
-				uploadPortletRequest, "headerGradientStartColor");
+			String gitHubRepositoryName = ParamUtil.getString(
+				uploadPortletRequest, "gitHubRepositoryName");
+			String gitHubRepositoryOwner = ParamUtil.getString(
+				uploadPortletRequest, "gitHubRepositoryOwner");
 			String headerGradientEndColor = ParamUtil.getString(
 				uploadPortletRequest, "headerGradientEndColor");
-			String repositoryOwner = ParamUtil.getString(
-				uploadPortletRequest, "repositoryOwner");
-			String repositoryName = ParamUtil.getString(
-				uploadPortletRequest, "repositoryName");
+			String headerGradientStartColor = ParamUtil.getString(
+				uploadPortletRequest, "headerGradientStartColor");
 
 			DocumentationProjectSiteTypeSettings
 				documentationProjectSiteTypeSettings =
@@ -93,9 +93,9 @@ public class EditDocumentationProjectMVCActionCommand
 						documentationProjectTypeSettings;
 
 			documentationProjectSiteTypeSettings.setGitHubRepositoryName(
-				repositoryName);
+				gitHubRepositoryName);
 			documentationProjectSiteTypeSettings.setGitHubRepositoryOwner(
-				repositoryOwner);
+				gitHubRepositoryOwner);
 			documentationProjectSiteTypeSettings.setHeaderGradientEndColor(
 				headerGradientEndColor);
 			documentationProjectSiteTypeSettings.setHeaderGradientStartColor(
@@ -104,11 +104,12 @@ public class EditDocumentationProjectMVCActionCommand
 		else if (type.equals(DocumentationProjectConstants.TYPE_URL)) {
 			String url = ParamUtil.getString(uploadPortletRequest, "url");
 
-			DocumentationProjectURLTypeSettings urlSettings =
-				(DocumentationProjectURLTypeSettings)
-					documentationProjectTypeSettings;
+			DocumentationProjectURLTypeSettings
+				documentationProjectURLTypeSettings =
+					(DocumentationProjectURLTypeSettings)
+						documentationProjectTypeSettings;
 
-			urlSettings.setURL(url);
+			documentationProjectURLTypeSettings.setURL(url);
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

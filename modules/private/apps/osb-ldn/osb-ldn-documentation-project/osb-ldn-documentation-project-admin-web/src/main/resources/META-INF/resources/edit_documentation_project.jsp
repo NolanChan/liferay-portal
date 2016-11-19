@@ -26,27 +26,27 @@ DocumentationProject documentationProject = DocumentationProjectLocalServiceUtil
 String headerTitle = (documentationProjectId > 0) ? LanguageUtil.format(request, "edit-x", documentationProject.getName(), false) : LanguageUtil.get(request, "add-open-source-project");
 
 String documentationProjectType = DocumentationProjectConstants.TYPE_SITE;
+String gitHubRepositoryName = StringPool.BLANK;
+String gitHubRepositoryOwner = StringPool.BLANK;
+String headerGradientEndColor = "#ffffff";
+String headerGradientStartColor = "#ffffff";
 String url = StringPool.BLANK;
-String gradientStartColor = "#ffffff";
-String gradientEndColor = "#ffffff";
-String repositoryOwner = StringPool.BLANK;
-String repositoryName = StringPool.BLANK;
 
 if (documentationProject != null) {
 	documentationProjectType = documentationProject.getType();
 
 	if (documentationProjectType.equals(DocumentationProjectConstants.TYPE_URL)) {
-		DocumentationProjectURLTypeSettings urlSettings = (DocumentationProjectURLTypeSettings)DocumentationProjectTypeSettingsFactoryUtil.create(documentationProject);
+		DocumentationProjectURLTypeSettings documentationProjectURLTypeSettings = (DocumentationProjectURLTypeSettings)DocumentationProjectTypeSettingsFactoryUtil.create(documentationProject);
 
-		url = urlSettings.getURL();
+		url = documentationProjectURLTypeSettings.getURL();
 	}
 	else {
 		DocumentationProjectSiteTypeSettings documentationProjectSiteTypeSettings = (DocumentationProjectSiteTypeSettings)DocumentationProjectTypeSettingsFactoryUtil.create(documentationProject);
 
-		gradientStartColor = documentationProjectSiteTypeSettings.getHeaderGradientStartColor();
-		gradientEndColor = documentationProjectSiteTypeSettings.getHeaderGradientEndColor();
-		repositoryOwner = documentationProjectSiteTypeSettings.getGitHubRepositoryOwner();
-		repositoryName = documentationProjectSiteTypeSettings.getGitHubRepositoryName();
+		gitHubRepositoryName = documentationProjectSiteTypeSettings.getGitHubRepositoryName();
+		gitHubRepositoryOwner = documentationProjectSiteTypeSettings.getGitHubRepositoryOwner();
+		headerGradientEndColor = documentationProjectSiteTypeSettings.getHeaderGradientEndColor();
+		headerGradientStartColor = documentationProjectSiteTypeSettings.getHeaderGradientStartColor();
 	}
 }
 
@@ -120,7 +120,7 @@ renderResponse.setTitle(headerTitle);
 
 				<aui:fieldset label="options">
 					<div class="documentation-project-type-site">
-						<aui:input label="gradient-start-color" name="headerGradientStartColor" type="text" value="<%= gradientStartColor %>">
+						<aui:input label="gradient-start-color" name="headerGradientStartColor" type="text" value="<%= headerGradientStartColor %>">
 							<aui:validator name="required" />
 							<aui:validator errorMessage="please-enter-a-correct-color-format" name="custom">
 								function(val, fieldNode, ruleValue) {
@@ -136,7 +136,7 @@ renderResponse.setTitle(headerTitle);
 							</aui:validator>
 						</aui:input>
 
-						<aui:input label="gradient-end-color" name="headerGradientEndColor" type="text" value="<%= gradientEndColor %>">
+						<aui:input label="gradient-end-color" name="headerGradientEndColor" type="text" value="<%= headerGradientEndColor %>">
 							<aui:validator name="required" />
 							<aui:validator errorMessage="please-enter-a-correct-color-format" name="custom">
 								function(val, fieldNode, ruleValue) {
@@ -159,9 +159,9 @@ renderResponse.setTitle(headerTitle);
 				</aui:fieldset>
 
 				<aui:fieldset label="github-settings">
-					<aui:input label="repository-owner" name="repositoryOwner" type="text" value="<%= repositoryOwner %>" />
+					<aui:input label="repository-owner" name="gitHubRepositoryOwner" type="text" value="<%= gitHubRepositoryOwner %>" />
 
-					<aui:input label="repository-name" name="repositoryName" type="text" value="<%= repositoryName %>" />
+					<aui:input label="repository-name" name="gitHubRepositoryName" type="text" value="<%= gitHubRepositoryName %>" />
 				</aui:fieldset>
 			</aui:fieldset-group>
 		</div>
@@ -194,8 +194,8 @@ renderResponse.setTitle(headerTitle);
 				A.one('.documentation-project-type-url').hide();
 			}
 			else if (event.currentTarget.val() === "url") {
-				A.one('#<portlet:namespace/>headerGradientStartColor').val('#ffffff');
 				A.one('#<portlet:namespace/>headerGradientEndColor').val('#ffffff');
+				A.one('#<portlet:namespace/>headerGradientStartColor').val('#ffffff');
 
 				A.one('.documentation-project-type-site').hide();
 				A.one('.documentation-project-type-url').show();

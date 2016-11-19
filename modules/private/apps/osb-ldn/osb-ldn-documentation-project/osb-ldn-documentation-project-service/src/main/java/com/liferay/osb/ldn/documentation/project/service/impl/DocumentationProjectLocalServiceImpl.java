@@ -167,10 +167,7 @@ public class DocumentationProjectLocalServiceImpl
 	public DocumentationProject getDocumentationProjectByGroupId(long groupId)
 		throws NoSuchDocumentationProjectException {
 
-		DocumentationProject documentationProject =
-			documentationProjectPersistence.findByGroupId(groupId);
-
-		return documentationProject;
+		return documentationProjectPersistence.findByGroupId(groupId);
 	}
 
 	@Override

@@ -104,34 +104,39 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		long documentationProjectId = GetterUtil.getLong(
 			portletPreferences.getValue("documentationProjectId", null));
-		int contributorsCount = GetterUtil.getInteger(
-			portletPreferences.getValue("contributorsCount", null), 5);
 
 		DocumentationProject documentationProject =
 			_documentationProjectLocalService.getDocumentationProject(
 				documentationProjectId);
 
-		DocumentationProjectTypeSettings settings =
+		DocumentationProjectTypeSettings documentationProjectTypeSettings =
 			DocumentationProjectTypeSettingsFactoryUtil.create(
 				documentationProject);
 
-		String repositoryOwner = StringPool.BLANK;
-		String repositoryName = StringPool.BLANK;
+		String gitHubRepositoryName = StringPool.BLANK;
+		String gitHubRepositoryOwner = StringPool.BLANK;
 
 		String type = documentationProject.getType();
 
 		if (type.equals(DocumentationProjectConstants.TYPE_SITE)) {
-			DocumentationProjectSiteTypeSettings siteSettings =
-				(DocumentationProjectSiteTypeSettings)settings;
+			DocumentationProjectSiteTypeSettings
+				documentationProjectSiteTypeSettings =
+					(DocumentationProjectSiteTypeSettings)
+						documentationProjectTypeSettings;
 
-			repositoryOwner = siteSettings.getGitHubRepositoryOwner();
-			repositoryName = siteSettings.getGitHubRepositoryName();
+			gitHubRepositoryName =
+				documentationProjectSiteTypeSettings.getGitHubRepositoryName();
+			gitHubRepositoryOwner =
+				documentationProjectSiteTypeSettings.getGitHubRepositoryOwner();
 		}
+
+		int contributorsCount = GetterUtil.getInteger(
+			portletPreferences.getValue("contributorsCount", null), 5);
 
 		List<GitHubContributor> gitHubContributors =
 			_gitHubContributorLocalService.getTopGitHubContributors(
-				themeDisplay.getUserId(), repositoryOwner, repositoryName,
-				contributorsCount);
+				themeDisplay.getUserId(), gitHubRepositoryOwner,
+				gitHubRepositoryName, contributorsCount);
 
 		for (GitHubContributor gitHubContributor : gitHubContributors) {
 			Map<String, Object> gitHubContributorMap = new HashMap<>();

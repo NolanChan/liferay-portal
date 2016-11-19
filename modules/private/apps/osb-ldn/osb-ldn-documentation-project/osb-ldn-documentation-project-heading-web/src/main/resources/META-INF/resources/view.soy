@@ -1,17 +1,17 @@
 {namespace view}
 
 /**
- * Renders a the heading of documentation project
+ * Renders the heading of a documentation project.
  *
- * @param gradientEndColor
- * @param gradientStartColor
+ * @param headerGradientEndColor
+ * @param headerGradientStartColor
  * @param iconURL
  * @param projectName
  */
 {template .render}
 	<style type="text/css">
 		.documentation-project-heading .view {lb}
-			background-image: linear-gradient(5deg, {$gradientStartColor}, {$gradientEndColor});
+			background-image: linear-gradient(5deg, {$headerGradientStartColor}, {$headerGradientEndColor});
 		{rb}
 	</style>
 

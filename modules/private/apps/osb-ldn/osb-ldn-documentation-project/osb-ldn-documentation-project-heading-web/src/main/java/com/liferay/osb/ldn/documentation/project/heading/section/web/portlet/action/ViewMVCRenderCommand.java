@@ -68,8 +68,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			_documentationProjectLocalService.fetchDocumentationProject(
 				documentationProjectId);
 
-		String gradientStartColor = "#ffffff";
-		String gradientEndColor = "#ffffff";
+		String headerGradientEndColor = "#ffffff";
+		String headerGradientStartColor = "#ffffff";
 
 		DocumentationProjectTypeSettings documentationProjectTypeSettings =
 			DocumentationProjectTypeSettingsFactoryUtil.create(
@@ -83,12 +83,12 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 					(DocumentationProjectSiteTypeSettings)
 						documentationProjectTypeSettings;
 
-			gradientStartColor =
-				documentationProjectSiteTypeSettings.
-					getHeaderGradientStartColor();
-			gradientEndColor =
+			headerGradientEndColor =
 				documentationProjectSiteTypeSettings.
 					getHeaderGradientEndColor();
+			headerGradientStartColor =
+				documentationProjectSiteTypeSettings.
+					getHeaderGradientStartColor();
 		}
 
 		PortletConfig portletConfig = (PortletConfig)renderRequest.getAttribute(
@@ -106,8 +106,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		Template template = (Template)renderRequest.getAttribute(
 			WebKeys.TEMPLATE);
 
-		template.put("gradientEndColor", gradientEndColor);
-		template.put("gradientStartColor", gradientStartColor);
+		template.put("headerGradientEndColor", headerGradientEndColor);
+		template.put("headerGradientStartColor", headerGradientStartColor);
 		template.put("iconURL", iconURL.toString());
 		template.put("projectName", documentationProject.getName());
 
