@@ -73,9 +73,9 @@ renderResponse.setTitle((source != null) ? LanguageUtil.format(request, "edit-x"
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button cssClass="btn-lg" href="<%= searchSourcesURL %>" type="cancel" />
-
 		<aui:button cssClass="btn-lg" name="testDatabaseConnectionButton" onClick='<%= renderResponse.getNamespace() + "testDatabaseConnection();" %>' value="test-database-connection" />
+
+		<aui:button cssClass="btn-lg" href="<%= searchSourcesURL %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 
