@@ -1717,7 +1717,7 @@ app.artifacts-7.0.9=\
 	com.ctc.wstx-4.4.1.jar,\
 	com.liferay.configuration.admin.web-1.0.12.jar,\
 	com.liferay.contacts.api-2.0.4.jar,\
-	com.liferay.contacts.service-2.0.5.jar,\
+	com.liferay.contacts.service-2.0.7.jar,\
 	com.liferay.contacts.web-1.0.18.jar,\
 	com.liferay.expando.web-1.0.6.jar,\
 	com.liferay.frontend.css.common-2.0.1.jar,\
@@ -1746,12 +1746,13 @@ app.artifacts-7.0.9=\
 	com.liferay.frontend.js.polyfill.babel.web-1.0.3.jar,\
 	com.liferay.frontend.js.soyutils.web-1.0.4.jar,\
 	com.liferay.frontend.js.spa.web-1.0.15.jar,\
-	com.liferay.frontend.js.web-1.0.18.jar,\
-	com.liferay.frontend.taglib-2.0.8.jar,\
+	com.liferay.frontend.js.web-1.0.21.jar,\
+	com.liferay.frontend.taglib-2.0.9.jar,\
+	com.liferay.frontend.taglib.soy-1.0.1.jar,\
 	com.liferay.frontend.taglib.util.freemarker.contributor-1.0.2.jar,\
 	com.liferay.frontend.theme.contributor.extender-1.0.5.jar,\
-	com.liferay.frontend.theme.styled-2.0.14.jar,\
-	com.liferay.frontend.theme.unstyled-2.0.15.jar,\
+	com.liferay.frontend.theme.styled-2.0.16.jar,\
+	com.liferay.frontend.theme.unstyled-2.0.16.jar,\
 	com.liferay.hello.soy.web-1.0.2.jar,\
 	com.liferay.hello.velocity.web-2.0.3.jar,\
 	com.liferay.hello.world.web-2.0.3.jar,\
@@ -1766,10 +1767,10 @@ app.artifacts-7.0.9=\
 	com.liferay.map.openstreetmap-2.0.3.jar,\
 	com.liferay.map.taglib-1.0.5.jar,\
 	com.liferay.mobile.device.rules.api-2.0.1.jar,\
-	com.liferay.mobile.device.rules.service-1.2.4.jar,\
+	com.liferay.mobile.device.rules.service-1.2.6.jar,\
 	com.liferay.mobile.device.rules.web-1.0.12.jar,\
 	com.liferay.monitoring.web-1.0.6.jar,\
-	com.liferay.my.account.web-1.0.3.jar,\
+	com.liferay.my.account.web-1.0.4.jar,\
 	com.liferay.password.policies.admin.api-2.0.1.jar,\
 	com.liferay.password.policies.admin.impl-1.0.4.jar,\
 	com.liferay.password.policies.admin.web-1.0.12.jar,\
@@ -1782,17 +1783,17 @@ app.artifacts-7.0.9=\
 	com.liferay.petra.mail-1.0.5.jar,\
 	com.liferay.plugins.admin.web-1.0.5.jar,\
 	com.liferay.portal.background.task.api-2.1.0.jar,\
-	com.liferay.portal.background.task.service-2.0.9.jar,\
+	com.liferay.portal.background.task.service-2.0.10.jar,\
 	com.liferay.portal.background.task.web-2.0.2.jar,\
-	com.liferay.portal.cache-2.2.0.jar,\
-	com.liferay.portal.cache.ehcache-2.1.4.jar,\
+	com.liferay.portal.cache-2.2.1.jar,\
+	com.liferay.portal.cache.ehcache-2.1.5.jar,\
 	com.liferay.portal.cache.ehcache.provider-2.0.2.jar,\
-	com.liferay.portal.cache.multiple-1.0.3.jar,\
+	com.liferay.portal.cache.multiple-1.0.4.jar,\
 	com.liferay.portal.cache.single-2.0.2.jar,\
 	com.liferay.portal.cluster.multiple-1.0.4.jar,\
 	com.liferay.portal.cluster.single-2.0.2.jar,\
 	com.liferay.portal.compound.session.id-2.0.1.jar,\
-	com.liferay.portal.configuration.cluster-2.1.1.jar,\
+	com.liferay.portal.configuration.cluster-2.1.2.jar,\
 	com.liferay.portal.configuration.extender-2.0.7.jar,\
 	com.liferay.portal.configuration.metatype.definitions.annotations-2.0.3.jar,\
 	com.liferay.portal.configuration.metatype.definitions.equinox-2.0.4.jar,\
@@ -1808,13 +1809,13 @@ app.artifacts-7.0.9=\
 	com.liferay.portal.language.servlet.filter-2.0.2.jar,\
 	com.liferay.portal.license.deployer-1.0.4.jar,\
 	com.liferay.portal.lock.api-2.0.1.jar,\
-	com.liferay.portal.lock.service-2.0.5.jar,\
+	com.liferay.portal.lock.service-2.0.7.jar,\
 	com.liferay.portal.messaging-3.0.4.jar,\
 	com.liferay.portal.mobile.device.recognition.api-1.0.1.jar,\
-	com.liferay.portal.monitoring-4.0.8.jar,\
+	com.liferay.portal.monitoring-4.0.10.jar,\
 	com.liferay.portal.output.stream.container-2.0.3.jar,\
 	com.liferay.portal.pop.notifications-2.0.2.jar,\
-	com.liferay.portal.portlet.bridge.soy-3.0.2.jar,\
+	com.liferay.portal.portlet.bridge.soy-3.0.3.jar,\
 	com.liferay.portal.properties.swapper-1.0.1.jar,\
 	com.liferay.portal.remote.axis.extender-1.0.4.jar,\
 	com.liferay.portal.remote.cxf.common-2.0.10.jar,\
@@ -1830,31 +1831,31 @@ app.artifacts-7.0.9=\
 	com.liferay.portal.scripting.api-1.0.2.jar,\
 	com.liferay.portal.scripting.executor-2.1.1.jar,\
 	com.liferay.portal.scripting.groovy-2.0.2.jar,\
-	com.liferay.portal.search-3.4.4.jar,\
-	com.liferay.portal.search.elasticsearch-2.0.10.jar,\
+	com.liferay.portal.search-3.4.6.jar,\
+	com.liferay.portal.search.elasticsearch-2.0.11.jar,\
 	com.liferay.portal.search.facet-2.0.2.jar,\
 	com.liferay.portal.search.web-1.1.10.jar,\
-	com.liferay.portal.security.antisamy-2.0.4.jar,\
+	com.liferay.portal.security.antisamy-2.0.5.jar,\
 	com.liferay.portal.security.audit.api-2.0.1.jar,\
 	com.liferay.portal.security.audit.event.generators-1.0.2.jar,\
 	com.liferay.portal.security.audit.router-1.0.4.jar,\
 	com.liferay.portal.security.audit.storage.api-1.0.1.jar,\
 	com.liferay.portal.security.audit.storage.service-1.0.2.jar,\
 	com.liferay.portal.security.audit.web-1.0.5.jar,\
-	com.liferay.portal.security.audit.wiring-2.0.2.jar,\
+	com.liferay.portal.security.audit.wiring-2.0.3.jar,\
 	com.liferay.portal.security.auth.verifier-2.0.2.jar,\
 	com.liferay.portal.security.auto.login-2.0.3.jar,\
 	com.liferay.portal.security.exportimport.api-2.0.1.jar,\
-	com.liferay.portal.security.ldap-2.1.1.jar,\
+	com.liferay.portal.security.ldap-2.1.2.jar,\
 	com.liferay.portal.security.service.access.policy.api-2.0.3.jar,\
-	com.liferay.portal.security.service.access.policy.service-2.0.10.jar,\
+	com.liferay.portal.security.service.access.policy.service-2.0.12.jar,\
 	com.liferay.portal.security.service.access.policy.web-1.0.6.jar,\
-	com.liferay.portal.security.sso.cas-3.0.6.jar,\
+	com.liferay.portal.security.sso.cas-3.0.7.jar,\
 	com.liferay.portal.security.sso.facebook.connect-3.0.3.jar,\
 	com.liferay.portal.security.sso.google-2.0.2.jar,\
-	com.liferay.portal.security.sso.ntlm-3.0.6.jar,\
+	com.liferay.portal.security.sso.ntlm-3.0.7.jar,\
 	com.liferay.portal.security.sso.openid-3.0.3.jar,\
-	com.liferay.portal.security.sso.opensso-3.0.3.jar,\
+	com.liferay.portal.security.sso.opensso-3.0.4.jar,\
 	com.liferay.portal.security.sso.token-3.0.3.jar,\
 	com.liferay.portal.settings.api-2.0.2.jar,\
 	com.liferay.portal.settings.authentication.cas.web-1.0.3.jar,\
@@ -1874,11 +1875,11 @@ app.artifacts-7.0.9=\
 	com.liferay.portal.store.s3-2.0.5.jar,\
 	com.liferay.portal.store.safe.file.name.wrapper-1.0.1.jar,\
 	com.liferay.portal.template.freemarker-2.0.14.jar,\
-	com.liferay.portal.template.soy-2.0.5.jar,\
+	com.liferay.portal.template.soy-2.1.0.jar,\
 	com.liferay.portal.template.velocity-2.0.8.jar,\
 	com.liferay.portal.template.xsl-2.0.2.jar,\
 	com.liferay.portal.upgrade-2.4.5.jar,\
-	com.liferay.portal.verify.extender-2.1.0.jar,\
+	com.liferay.portal.verify.extender-2.1.2.jar,\
 	com.liferay.portal.weblogic.support-2.0.2.jar,\
 	com.liferay.roles.admin.api-2.0.1.jar,\
 	com.liferay.roles.admin.impl-1.0.6.jar,\
@@ -1890,11 +1891,12 @@ app.artifacts-7.0.9=\
 	com.liferay.user.groups.admin.web-1.0.9.jar,\
 	com.liferay.users.admin.api-2.0.1.jar,\
 	com.liferay.users.admin.impl-1.0.4.jar,\
-	com.liferay.users.admin.web-2.0.13.jar,\
+	com.liferay.users.admin.web-2.0.14.jar,\
 	com.liferay.web.proxy.web-1.0.5.jar,\
+	com.liferay.websocket.whiteboard-1.0.1.jar,\
 	com.liferay.xstream.configurator.api-2.0.2.jar,\
 	org.codehaus.stax2-3.1.4.jar
 
-app.change.log-7.0.9=LPS-44965 LPS-52675 LPS-58672 LPS-61099 LPS-61420 LPS-62136 LPS-63038 LPS-63370 LPS-63740 LPS-64031 LPS-64414 LPS-64713 LPS-64814 LPS-64827 LPS-64863 LPS-64870 LPS-64979 LPS-64981 LPS-65012 LPS-65064 LPS-65135 LPS-65211 LPS-65225 LPS-65226 LPS-65362 LPS-65398 LPS-65510 LPS-65560 LPS-65607 LPS-65671 LPS-65683 LPS-65810 LPS-65865 LPS-65874 LPS-65909 LPS-65950 LPS-66007 LPS-66012 LPS-66064 LPS-66099 LPS-66173 LPS-66244 LPS-66292 LPS-66416 LPS-66697 LPS-66715 LPS-66810 LPS-66853 LPS-66929 LPS-66931 LPS-66974 LPS-67027 LPS-67132 LPS-67186 LPS-67352 LPS-67355 LPS-67464 LPS-67470 LPS-67491 LPS-67586 LPS-67712 LPS-67766 LPS-67806 LPS-67878 LPS-67890 LPS-67910 LPS-68062 LPS-68173 LPS-68180 LPS-68262 LPS-68289 LPS-68294 LPS-68298 LPS-68298: LPS-68326 LPS-68448 LPS-68490 LPS-68565 LPS-68612 LPS-68789 LPS-68814 LPS-68819 LPS-68837 LPS-68843 LPS-68862 LPS-68880 LPS-68921 LPS-68924 LPS-68942 LPS-68947 LPS-68964 LPS-68979 LPS-68980 LPS-69031 LPS-69034 LPS-69080 LPS-69083 LPS-69090
+app.change.log-7.0.9=LPS-44965 LPS-52675 LPS-61099 LPS-61420 LPS-62136 LPS-63038 LPS-63370 LPS-63740 LPS-64031 LPS-64414 LPS-64713 LPS-64814 LPS-64827 LPS-64863 LPS-64870 LPS-64979 LPS-64981 LPS-65012 LPS-65064 LPS-65135 LPS-65211 LPS-65225 LPS-65226 LPS-65362 LPS-65398 LPS-65498 LPS-65510 LPS-65560 LPS-65607 LPS-65683 LPS-65810 LPS-65865 LPS-65874 LPS-65909 LPS-65950 LPS-66007 LPS-66012 LPS-66064 LPS-66099 LPS-66173 LPS-66244 LPS-66292 LPS-66416 LPS-66697 LPS-66715 LPS-66853 LPS-66929 LPS-66931 LPS-66958 LPS-66974 LPS-67027 LPS-67132 LPS-67167 LPS-67186 LPS-67352 LPS-67355 LPS-67464 LPS-67470 LPS-67491 LPS-67712 LPS-67766 LPS-67806 LPS-67878 LPS-67890 LPS-68062 LPS-68180 LPS-68262 LPS-68289 LPS-68294 LPS-68298 LPS-68298: LPS-68415 LPS-68448 LPS-68490 LPS-68565 LPS-68612 LPS-68789 LPS-68819 LPS-68837 LPS-68843 LPS-68862 LPS-68880 LPS-68923 LPS-68924 LPS-68942 LPS-68947 LPS-68979 LPS-68980 LPS-69031 LPS-69046 LPS-69059 LPS-69068 LPS-69078 LPS-69080 LPS-69135 LPS-69168 LPS-69234 LPS-69241 LPS-69284 LPS-69287 LPS-69313
 
-app.git.id-7.0.9=b1904ed6b88736dd0010e3a6a470cbfdfeeb9606
+app.git.id-7.0.9=0ce2e8f367c135235bff4fab4fb2efcb0056ec0a
