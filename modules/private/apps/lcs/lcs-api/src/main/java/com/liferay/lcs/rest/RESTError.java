@@ -56,12 +56,13 @@ public enum RESTError {
 	}
 
 	public static RESTError toRESTError(int errorCode) {
-		if (errorCode == NO_SUCH_LCS_SUBSCRIPTION_ENTRY.getErrorCode()) {
-			return NO_SUCH_LCS_SUBSCRIPTION_ENTRY;
+		for (RESTError restError : values()) {
+			if (restError.getErrorCode() == errorCode) {
+				return restError;
+			}
 		}
-		else {
-			return UNDEFINED;
-		}
+
+		return UNDEFINED;
 	}
 
 	public int getErrorCode() {
@@ -90,7 +91,7 @@ public enum RESTError {
 			sb.append("\"");
 			sb.append(args[i]);
 			sb.append("\"");
-			sb.append("=");
+			sb.append(":");
 			sb.append("\"");
 			sb.append(String.valueOf(args[i + 1]));
 			sb.append("\"");
