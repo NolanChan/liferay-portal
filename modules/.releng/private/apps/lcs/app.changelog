@@ -63,3 +63,14 @@ app.artifacts-3.0.0=\
 app.change.log-3.0.0=CLDSVCS-2410
 
 app.git.id-3.0.0=e9df67c83e7684cf012eac06b275af442fd061ff
+
+#
+# Liferay App Version 3.0.1
+#
+
+app.artifacts-3.0.1=\
+	
+
+app.change.log-3.0.1=CLDSVCS-2359 CLDSVCS-2450
+
+app.git.id-3.0.1=a96775b99da93f518e3db1929cae00dc3317101d
