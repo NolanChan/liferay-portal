@@ -207,6 +207,7 @@ public abstract class Message implements Serializable {
 		return _queueName;
 	}
 
+	@JsonIgnore
 	public <T extends TransportMetadata> T getTransportMetadata() {
 		return (T)_transportMetadata;
 	}
