@@ -450,11 +450,11 @@ app.artifacts-7.0.9=\
 	com.liferay.portal.configuration.persistence-2.0.5.jar,\
 	com.liferay.portal.log4j.extender-2.0.3.jar,\
 	com.liferay.portal.lpkg.deployer-2.0.7.jar,\
-	com.liferay.portal.osgi.web.portlet.tracker-2.0.4.jar,\
-	com.liferay.portal.osgi.web.servlet.context.helper-2.1.6.jar,\
+	com.liferay.portal.osgi.web.portlet.tracker-2.0.6.jar,\
+	com.liferay.portal.osgi.web.servlet.context.helper-2.1.7.jar,\
 	com.liferay.portal.osgi.web.servlet.jsp.compiler-2.0.12.jar,\
 	com.liferay.portal.osgi.web.wab.extender-2.0.13.jar,\
-	com.liferay.portal.osgi.web.wab.generator-2.1.13.jar,\
+	com.liferay.portal.osgi.web.wab.generator-2.1.14.jar,\
 	com.liferay.portal.osgi.web.wab.reference.support-1.0.4.jar,\
 	com.liferay.portal.profile-1.0.4.jar,\
 	com.liferay.portal.remote.dependency.manager.tccl-2.0.2.jar,\
@@ -484,6 +484,6 @@ app.artifacts-7.0.9=\
 	org.osgi.service.http-3.5.0-20150611.165350-3.LIFERAY-PATCHED-2.jar,\
 	org.osgi.service.metatype-1.3.0.jar
 
-app.change.log-7.0.9=LPS-66530 LPS-66853 LPS-67018 LPS-67092 LPS-67352 LPS-68294 LPS-68843 LPS-68924 LPS-68989 LPS-69080 
+app.change.log-7.0.9=LPS-65786 LPS-65793 LPS-66530 LPS-66853 LPS-67018 LPS-67092 LPS-67352 LPS-68289 LPS-68294 LPS-68843 LPS-68924 LPS-68989 LPS-69080 LPS-69203 
 
-app.git.id-7.0.9=b1904ed6b88736dd0010e3a6a470cbfdfeeb9606
+app.git.id-7.0.9=0ce2e8f367c135235bff4fab4fb2efcb0056ec0a
