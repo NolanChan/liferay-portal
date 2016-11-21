@@ -125,7 +125,7 @@ renderResponse.setTitle(headerTitle);
 							<aui:validator errorMessage="please-enter-a-correct-color-format" name="custom">
 								function(val, fieldNode, ruleValue) {
 									var result = false;
-									var pattern = /#[a-zA-Z0-9] {6}/;
+									var pattern = /#[a-zA-Z0-9]{6}/;
 
 									if (pattern.test(val)) {
 										result = true;
@@ -141,7 +141,7 @@ renderResponse.setTitle(headerTitle);
 							<aui:validator errorMessage="please-enter-a-correct-color-format" name="custom">
 								function(val, fieldNode, ruleValue) {
 									var result = false;
-									var pattern = /#[a-zA-Z0-9] {6}/;
+									var pattern = /#[a-zA-Z0-9]{6}/;
 
 									if (pattern.test(val)) {
 										result = true;
