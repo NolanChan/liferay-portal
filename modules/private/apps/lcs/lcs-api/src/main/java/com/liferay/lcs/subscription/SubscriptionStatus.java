@@ -27,14 +27,10 @@ public enum SubscriptionStatus {
 	UNDEFINED("subscription-status-undefined", 0);
 
 	public static SubscriptionStatus valueOf(int status) {
-		if (status == 1) {
-			return ACTIVE;
-		}
-		else if (status == 2) {
-			return CLOSED;
-		}
-		else if (status == 3) {
-			return ON_HOLD;
+		for (SubscriptionStatus subscriptionStatus : values()) {
+			if (status == subscriptionStatus.getStatus()) {
+				return subscriptionStatus;
+			}
 		}
 
 		return UNDEFINED;

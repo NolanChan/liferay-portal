@@ -85,9 +85,7 @@ public enum LCSClusterNodeStatus {
 				objectArray[1] = false;
 			}
 
-			if (LCSClusterNodeStatus.HEARTBEAT_DELAYED.hasStatus(
-					lcsClusterNodeStatus.getStatus())) {
-
+			if (HEARTBEAT_DELAYED.hasStatus(lcsClusterNodeStatus.getStatus())) {
 				objectArray[2] = false;
 			}
 			else {

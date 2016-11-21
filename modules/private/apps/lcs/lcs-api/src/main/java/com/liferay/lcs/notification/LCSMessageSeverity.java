@@ -24,14 +24,10 @@ public enum LCSMessageSeverity {
 	WARNING("lcs-message-severity-warning", 2);
 
 	public static LCSMessageSeverity valueOf(int level) {
-		if (level == 1) {
-			return INFO;
-		}
-		else if (level == 2) {
-			return WARNING;
-		}
-		else if (level == 3) {
-			return DANGER;
+		for (LCSMessageSeverity lcsMessageSeverity : values()) {
+			if (level == lcsMessageSeverity.getLevel()) {
+				return lcsMessageSeverity;
+			}
 		}
 
 		return null;

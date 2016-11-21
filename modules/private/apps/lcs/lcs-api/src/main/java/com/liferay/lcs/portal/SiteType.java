@@ -38,12 +38,13 @@ public enum SiteType {
 	}
 
 	public static SiteType toSiteType(int type) {
-		if (type == SITE.getType()) {
-			return SITE;
+		for (SiteType siteType : values()) {
+			if (type == siteType.getType()) {
+				return siteType;
+			}
 		}
-		else {
-			return ORGANIZATION;
-		}
+
+		return ORGANIZATION;
 	}
 
 	public String getLabel() {

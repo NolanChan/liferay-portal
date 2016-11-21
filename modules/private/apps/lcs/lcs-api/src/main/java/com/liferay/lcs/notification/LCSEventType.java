@@ -79,54 +79,13 @@ public enum LCSEventType {
 	}
 
 	public static LCSEventType valueOf(int type) {
-		if (type == 0) {
-			return MONITORING_UNAVAILABLE;
+		for (LCSEventType lcsEventType : values()) {
+			if (type == lcsEventType.getType()) {
+				return lcsEventType;
+			}
 		}
-		else if (type == 1) {
-			return NEW_PATCH_AVAILABLE;
-		}
-		else if (type == 2) {
-			return PATCHING_TOOL_UNAVAILABLE;
-		}
-		else if (type == 3) {
-			return SERVER_UNEXPECTEDLY_SHUTDOWN;
-		}
-		else if (type == 4) {
-			return NEW_LCS_PORTLET_AVAILABLE;
-		}
-		else if (type == 5) {
-			return NEW_PATCHING_TOOL_AVAILABLE;
-		}
-		else if (type == 6) {
-			return SERVER_MANUALLY_SHUTDOWN;
-		}
-		else if (type == 7) {
-			return LCS_CLUSTER_NODE_CLUSTER_LINK_FAILED;
-		}
-		else if (type == 8) {
-			return OSB_SUBSCRIPTION_STATUS_RECEIVED;
-		}
-		else if (type == 9) {
-			return NEW_LCS_PROJECT_AVAILABLE;
-		}
-		else if (type == 10) {
-			return NEW_MEMBERSHIP_INVITATION;
-		}
-		else if (type == 11) {
-			return NEW_MEMBERSHIP_REQUEST;
-		}
-		else if (type == 12) {
-			return MEMBERSHIP_REQUEST_ACCEPTED;
-		}
-		else if (type == 13) {
-			return MEMBERSHIP_INVITATION_ACCEPTED;
-		}
-		else if (type == 14) {
-			return NEW_PROJECT_MEMBER;
-		}
-		else {
-			return null;
-		}
+
+		return null;
 	}
 
 	public String getLabel() {

@@ -31,45 +31,13 @@ public enum SubscriptionType {
 		if (licenseEntryType == null) {
 			return UNDEFINED;
 		}
-		else if (licenseEntryType.equals(BACKUP.getLicenseEntryType())) {
-			return BACKUP;
-		}
-		else if (licenseEntryType.equals(CLUSTER.getLicenseEntryType())) {
-			return CLUSTER;
-		}
-		else if (licenseEntryType.equals(DEVELOPER.getLicenseEntryType())) {
-			return DEVELOPER;
-		}
-		else if (licenseEntryType.equals(
-					DEVELOPER_CLUSTER.getLicenseEntryType())) {
 
-			return DEVELOPER_CLUSTER;
-		}
-		else if (licenseEntryType.equals(ELASTIC.getLicenseEntryType())) {
-			return ELASTIC;
-		}
-		else if (licenseEntryType.equals(ENTERPRISE.getLicenseEntryType())) {
-			return ENTERPRISE;
-		}
-		else if (licenseEntryType.equals(LIMITED.getLicenseEntryType())) {
-			return LIMITED;
-		}
-		else if (licenseEntryType.equals(
-					NON_PRODUCTION.getLicenseEntryType())) {
+		for (SubscriptionType subscriptionType : values()) {
+			if (licenseEntryType.equals(
+					subscriptionType.getLicenseEntryType())) {
 
-			return NON_PRODUCTION;
-		}
-		else if (licenseEntryType.equals(OEM.getLicenseEntryType())) {
-			return OEM;
-		}
-		else if (licenseEntryType.equals(PER_USER.getLicenseEntryType())) {
-			return PER_USER;
-		}
-		else if (licenseEntryType.equals(PRODUCTION.getLicenseEntryType())) {
-			return PRODUCTION;
-		}
-		else if (licenseEntryType.equals(TRIAL.getLicenseEntryType())) {
-			return TRIAL;
+				return subscriptionType;
+			}
 		}
 
 		return UNDEFINED;
