@@ -73,7 +73,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		List<Map<String, Object>> gitHubContributors = null;
 
 		try {
-			gitHubContributors = getGitHubContributorList(
+			gitHubContributors = getGitHubContributors(
 				renderRequest, themeDisplay);
 		}
 		catch (Exception e) {
@@ -94,11 +94,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return "view";
 	}
 
-	protected List<Map<String, Object>> getGitHubContributorList(
+	protected List<Map<String, Object>> getGitHubContributors(
 			RenderRequest renderRequest, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		List<Map<String, Object>> gitHubContributorList = new ArrayList<>();
+		List<Map<String, Object>> gitHubContributors = new ArrayList<>();
 
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
@@ -133,12 +133,12 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		int contributorsCount = GetterUtil.getInteger(
 			portletPreferences.getValue("contributorsCount", null), 5);
 
-		List<GitHubContributor> gitHubContributors =
+		List<GitHubContributor> topGitHubContributors =
 			_gitHubContributorLocalService.getTopGitHubContributors(
 				themeDisplay.getUserId(), gitHubRepositoryOwner,
 				gitHubRepositoryName, contributorsCount);
 
-		for (GitHubContributor gitHubContributor : gitHubContributors) {
+		for (GitHubContributor gitHubContributor : topGitHubContributors) {
 			Map<String, Object> gitHubContributorMap = new HashMap<>();
 
 			gitHubContributorMap.put(
@@ -147,10 +147,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			gitHubContributorMap.put(
 				"profileURL", gitHubContributor.getProfileURL());
 
-			gitHubContributorList.add(gitHubContributorMap);
+			gitHubContributors.add(gitHubContributorMap);
 		}
 
-		return gitHubContributorList;
+		return gitHubContributors;
 	}
 
 	protected Map<String, Object> getStringsMap(String languageId) {
