@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.osb.ldn.documentation.project.util;
+package com.liferay.osb.ldn.documentation.project.internal.util;
 
 import com.liferay.osb.ldn.documentation.project.constants.DocumentationProjectConstants;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProjectTypeSettings;
 import com.liferay.osb.ldn.documentation.project.model.impl.DocumentationProjectSiteTypeSettingsImpl;
 import com.liferay.osb.ldn.documentation.project.model.impl.DocumentationProjectURLTypeSettingsImpl;
+import com.liferay.osb.ldn.documentation.project.util.DocumentationProjectTypeSettingsFactory;
 
 import org.osgi.service.component.annotations.Component;
 

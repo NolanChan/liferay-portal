@@ -1,7 +1,6 @@
 Bundle-Name: Liferay OSB LDN Documentation Project Service
 Bundle-SymbolicName: com.liferay.osb.ldn.documentation.project.service
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.osb.ldn.documentation.project.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Liferay-Require-SchemaVersion: 2.0.0
