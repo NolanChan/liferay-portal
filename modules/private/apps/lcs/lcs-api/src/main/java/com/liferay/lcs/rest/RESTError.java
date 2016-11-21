@@ -14,7 +14,6 @@
 
 package com.liferay.lcs.rest;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -26,21 +25,17 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Mladen Cikara
+ * @author Igor Beslic
  */
-public enum JSONErrorCode {
+public enum RESTError {
 
 	UNDEFINED(0), NO_SUCH_LCS_SUBSCRIPTION_ENTRY(1);
 
-	public static JSONErrorCode getJSONErrorCode(
+	public static RESTError getRESTError(
 		JSONWebServiceInvocationException jsonwsie) {
 
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
-
-			objectMapper.configure(
-				JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-			objectMapper.configure(
-				JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
 
 			ObjectNode objectNode = objectMapper.readValue(
 				jsonwsie.getMessage(), ObjectNode.class);
@@ -51,7 +46,7 @@ public enum JSONErrorCode {
 				return UNDEFINED;
 			}
 
-			return toJSONErrorCode(errorCodeJsonNode.asInt());
+			return toRESTError(errorCodeJsonNode.asInt());
 		}
 		catch (Exception e) {
 			_log.error(e.getMessage(), e);
@@ -60,7 +55,7 @@ public enum JSONErrorCode {
 		}
 	}
 
-	public static JSONErrorCode toJSONErrorCode(int errorCode) {
+	public static RESTError toRESTError(int errorCode) {
 		if (errorCode == NO_SUCH_LCS_SUBSCRIPTION_ENTRY.getErrorCode()) {
 			return NO_SUCH_LCS_SUBSCRIPTION_ENTRY;
 		}
@@ -73,12 +68,48 @@ public enum JSONErrorCode {
 		return _errorCode;
 	}
 
-	private JSONErrorCode(int errorCode) {
+	public String toJSON(String message, int status, Object... args) {
+		StringBuilder sb = new StringBuilder(7 + (args.length * 8));
+
+		sb.append("{\"errorCode\": ");
+		sb.append(getErrorCode());
+		sb.append(", \"message\": \"");
+		sb.append(message);
+		sb.append("\", \"status\": ");
+		sb.append(status);
+
+		if (args.length == 0) {
+			sb.append("}");
+
+			return sb.toString();
+		}
+
+		sb.append(", \"args\": {");
+
+		for (int i = 0; i < (args.length - 1); i = i + 2) {
+			sb.append("\"");
+			sb.append(args[i]);
+			sb.append("\"");
+			sb.append("=");
+			sb.append("\"");
+			sb.append(String.valueOf(args[i + 1]));
+			sb.append("\"");
+
+			if ((i + 2) < args.length) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append("}}");
+
+		return sb.toString();
+	}
+
+	private RESTError(int errorCode) {
 		_errorCode = errorCode;
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
-		JSONErrorCode.class);
+	private static final Logger _log = LoggerFactory.getLogger(RESTError.class);
 
 	private final int _errorCode;
 
