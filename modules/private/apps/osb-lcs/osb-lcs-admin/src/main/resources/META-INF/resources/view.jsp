@@ -28,7 +28,7 @@ pageContext.setAttribute("portletURL", portletURL);
 %>
 
 <liferay-ui:tabs
-	names="infrastructure,lcs-portal,metadata,nodes,notification-audits,uptimes,patches,scripts,properties"
+	names="infrastructure,lcs-portal,metadata,nodes,notification-audits,uptimes,patches,scripts"
 	param="tabs1"
 	url="<%= portletURL.toString() %>"
 />
@@ -48,9 +48,6 @@ pageContext.setAttribute("portletURL", portletURL);
 	</c:when>
 	<c:when test='<%= tabs1.equals("patches") %>'>
 		<%@ include file="/patches.jspf" %>
-	</c:when>
-	<c:when test='<%= tabs1.equals("properties") %>'>
-		<%@ include file="/properties.jspf" %>
 	</c:when>
 	<c:when test='<%= tabs1.equals("scripts") %>'>
 		<%@ include file="/scripts.jspf" %>

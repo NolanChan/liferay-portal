@@ -18,11 +18,9 @@ import com.liferay.lcs.util.LCSClusterNodeStatus;
 import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.exception.NoSuchLCSClusterNodeException;
-import com.liferay.osb.lcs.amazon.EC2Instance;
 import com.liferay.osb.lcs.cache.ActiveLCSCLusterNodeCacheManager;
 import com.liferay.osb.lcs.cache.LCSClusterNodeLoggingCacheManager;
 import com.liferay.osb.lcs.cache.MessageForwardCacheManager;
-import com.liferay.osb.lcs.management.MBeanAttributeProvider;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSProject;
@@ -106,56 +104,6 @@ public class AdminAdvisor {
 		}
 		else {
 			_messageForwardCacheManager.remove(queuePrefix);
-		}
-	}
-
-	public Map<String, String> getEC2IpAddresses() {
-		if (_osbLCSConfiguration.applicationProfile() ==
-				ApplicationProfile.LOCAL_DEVELOPMENT) {
-
-			Map<String, String> ec2IpAddresses = new HashMap<String, String>();
-
-			ec2IpAddresses.put("127.0.0.1", "localhost");
-
-			return ec2IpAddresses;
-		}
-		else {
-			Map<String, String> ec2IpAddresses =
-				_ec2Instance.getPrivateIpAddressesNames();
-
-			Set<Map.Entry<String, String>> set = ec2IpAddresses.entrySet();
-
-			Iterator<Map.Entry<String, String>> iterator = set.iterator();
-
-			while (iterator.hasNext()) {
-				Map.Entry<String, String> entry = iterator.next();
-
-				String key = entry.getKey();
-
-				if (_osbLCSConfiguration.applicationProfile() ==
-						ApplicationProfile.PRODUCTION) {
-
-					if (!StringUtil.startsWith(key, "prod")) {
-						iterator.remove();
-					}
-				}
-				else if (_osbLCSConfiguration.applicationProfile() ==
-							ApplicationProfile.QUALITY_ASSURANCE) {
-
-					if (!StringUtil.startsWith(key, "qa")) {
-						iterator.remove();
-					}
-				}
-				else if (_osbLCSConfiguration.applicationProfile() ==
-							ApplicationProfile.REMOTE_DEVELOPMENT) {
-
-					if (!StringUtil.startsWith(key, "dev")) {
-						iterator.remove();
-					}
-				}
-			}
-
-			return ec2IpAddresses;
 		}
 	}
 
@@ -265,32 +213,6 @@ public class AdminAdvisor {
 		}
 
 		return lcsClusterNodeObjectArrays;
-	}
-
-	public Map<String, List<Object[]>>
-		getLCSModulePropertiesObjectArraysMap(String hostName) {
-
-		Map<String, List<Object[]>> lcsModulePropertiesObjectArraysMap =
-			new HashMap<String, List<Object[]>>();
-
-		Map<String, Object> objectNamesAttributesMap =
-			_mBeanAttributeProvider.getObjectNamesAttributes(
-				hostName, _pattern, "Properties");
-
-		for (String objectName : objectNamesAttributesMap.keySet()) {
-			Map<String, String> propertiesMap =
-				(Map<String, String>)objectNamesAttributesMap.get(objectName);
-
-			List<Object[]> objectArrays = new ArrayList<Object[]>();
-
-			for (String key : propertiesMap.keySet()) {
-				objectArrays.add(new Object[] {key, propertiesMap.get(key)});
-			}
-
-			lcsModulePropertiesObjectArraysMap.put(objectName, objectArrays);
-		}
-
-		return lcsModulePropertiesObjectArraysMap;
 	}
 
 	public PortletPreferences getPortletPreferences()
@@ -446,12 +368,6 @@ public class AdminAdvisor {
 	}
 
 	@Reference(unbind = "-")
-	protected void setEc2Instance(EC2Instance ec2Instance) {
-
-		_ec2Instance = ec2Instance;
-	}
-
-	@Reference(unbind = "-")
 	protected void setLCSClusterNodeDetailsService(
 		LCSClusterNodeDetailsService lcsClusterNodeDetailsService) {
 
@@ -486,13 +402,6 @@ public class AdminAdvisor {
 		LCSClusterNodePatchesService lcsClusterNodePatchesService) {
 
 		_lcsClusterNodePatchesService = lcsClusterNodePatchesService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBeanAttributeProvider(
-		MBeanAttributeProvider mBeanAttributeProvider) {
-
-		_mBeanAttributeProvider = mBeanAttributeProvider;
 	}
 
 	@Reference(unbind = "-")
@@ -532,7 +441,6 @@ public class AdminAdvisor {
 
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 	private ActiveLCSCLusterNodeCacheManager _activeLCSCLusterNodeCacheManager;
-	private EC2Instance _ec2Instance;
 	private LCSClusterNodeDetailsService _lcsClusterNodeDetailsService;
 	private LCSClusterNodeInstallationEnvironmentService
 		_lcsClusterNodeInstallationEnvironmentService;
@@ -542,7 +450,6 @@ public class AdminAdvisor {
 		_lcsClusterNodeLoggingCacheManager;
 
 	private LCSClusterNodePatchesService _lcsClusterNodePatchesService;
-	private MBeanAttributeProvider _mBeanAttributeProvider;
 	private MessageForwardCacheManager _messageForwardCacheManager;
 
 	private LCSClusterEntryLocalService _lcsClusterEntryLocalService;
