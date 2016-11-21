@@ -20,6 +20,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -46,6 +47,10 @@ public class ReportContext {
 
 	public long getLcsClusterNodeId() {
 		return _lcsClusterNodeId;
+	}
+
+	public List<Object[]> getLCSClusterNodeObjectArrays() {
+		return _lcsClusterNodeObjectArrays;
 	}
 
 	public long getLcsProjectId() {
@@ -106,6 +111,14 @@ public class ReportContext {
 			return this;
 		}
 
+		public ReportContextBuilder lcsClusterNodeObjectArrays(
+			List<Object[]> lcsClusterNodeObjectArrays) {
+
+			_lcsClusterNodeObjectArrays = lcsClusterNodeObjectArrays;
+
+			return this;
+		}
+
 		public ReportContextBuilder lcsProjectId(long lcsProjectId) {
 			_lcsProjectId = lcsProjectId;
 
@@ -160,6 +173,7 @@ public class ReportContext {
 		private String _dateTimeFormat;
 		private long _lcsClusterEntryId;
 		private long _lcsClusterNodeId;
+		private List<Object[]> _lcsClusterNodeObjectArrays;
 		private long _lcsProjectId;
 		private String _lineSeparator;
 		private Locale _locale;
@@ -182,6 +196,11 @@ public class ReportContext {
 
 		if (reportContextBuilder._lcsClusterNodeId != 0) {
 			_lcsClusterNodeId = reportContextBuilder._lcsClusterNodeId;
+		}
+
+		if (reportContextBuilder._lcsClusterNodeObjectArrays != null) {
+			_lcsClusterNodeObjectArrays =
+				reportContextBuilder._lcsClusterNodeObjectArrays;
 		}
 
 		_lcsProjectId = LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID;
@@ -231,6 +250,7 @@ public class ReportContext {
 
 	private long _lcsClusterEntryId;
 	private long _lcsClusterNodeId;
+	private List<Object[]> _lcsClusterNodeObjectArrays;
 	private long _lcsProjectId;
 	private String _lineSeparator;
 	private Locale _locale;

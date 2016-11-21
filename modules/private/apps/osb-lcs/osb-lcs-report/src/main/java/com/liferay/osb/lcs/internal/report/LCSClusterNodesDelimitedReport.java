@@ -14,7 +14,6 @@
 
 package com.liferay.osb.lcs.internal.report;
 
-import com.liferay.osb.lcs.admin.util.AdminUtil;
 import com.liferay.osb.lcs.report.ReportContext;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -43,7 +42,7 @@ public class LCSClusterNodesDelimitedReport extends BaseReport {
 			new OutputStreamWriter(byteArrayOutputStream));
 
 		List<Object[]> lcsClusterNodeObjectArrays =
-			AdminUtil.getLCSClusterNodeObjectArrays();
+			reportContext.getLCSClusterNodeObjectArrays();
 
 		for (Object[] lcsClusterNodeObjectArray : lcsClusterNodeObjectArrays) {
 			bufferedWriter.write((String)lcsClusterNodeObjectArray[1]);
