@@ -53,8 +53,8 @@ public class LCSClusterNodeServiceImpl
 				"processorCoresTotal", String.valueOf(processorCoresTotal));
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
-			if (JSONErrorCode.getJSONErrorCode(jsonwsie) ==
-					JSONErrorCode.NO_SUCH_LCS_SUBSCRIPTION_ENTRY) {
+			if (RESTError.getRESTError(jsonwsie) ==
+					RESTError.NO_SUCH_LCS_SUBSCRIPTION_ENTRY) {
 
 				throw new NoSuchLCSSubscriptionEntryException(jsonwsie);
 			}
@@ -76,8 +76,8 @@ public class LCSClusterNodeServiceImpl
 				String.valueOf(processorCoresTotal));
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
-			if (JSONErrorCode.getJSONErrorCode(jsonwsie) ==
-					JSONErrorCode.NO_SUCH_LCS_SUBSCRIPTION_ENTRY) {
+			if (RESTError.getRESTError(jsonwsie) ==
+					RESTError.NO_SUCH_LCS_SUBSCRIPTION_ENTRY) {
 
 				throw new NoSuchLCSSubscriptionEntryException(jsonwsie);
 			}
