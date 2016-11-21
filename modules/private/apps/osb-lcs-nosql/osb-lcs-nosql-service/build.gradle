@@ -7,7 +7,7 @@ dependencies {
 	provided group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.4.2"
 	provided group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.4.2"
 	provided group: "com.google.guava", name: "guava", version: "16.0.1"
-	provided group: "com.liferay", name: "com.liferay.lcs.api", version: "4.0.0"
+	provided group: "com.liferay", name: "com.liferay.lcs.api", version: "5.0.0"
 	provided group: "io.dropwizard.metrics", name: "metrics-core", version: "3.1.2"
 	provided group: "io.netty", name: "netty-buffer", version: "4.0.33.Final"
 	provided group: "io.netty", name: "netty-codec", version: "4.0.33.Final"
