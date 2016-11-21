@@ -35,7 +35,7 @@ public class RESTErrorTest extends PowerMockito {
 	public void testToJSON() throws Exception {
 		String restErrorJSONString =
 			RESTError.NO_SUCH_LCS_SUBSCRIPTION_ENTRY.toJSON(
-				"Test message", 400, "arg1", "10000", "arg2", 20000);
+				"Test Message", 400, "arg1", "10000", "arg2", 20000);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -58,7 +58,7 @@ public class RESTErrorTest extends PowerMockito {
 		Assert.assertEquals(400, statusJsonNode.asInt());
 
 		restErrorJSONString = RESTError.NO_SUCH_LCS_SUBSCRIPTION_ENTRY.toJSON(
-			"Test message", 404);
+			"Test Message", 404);
 
 		objectNode = objectMapper.readValue(
 			restErrorJSONString, ObjectNode.class);
