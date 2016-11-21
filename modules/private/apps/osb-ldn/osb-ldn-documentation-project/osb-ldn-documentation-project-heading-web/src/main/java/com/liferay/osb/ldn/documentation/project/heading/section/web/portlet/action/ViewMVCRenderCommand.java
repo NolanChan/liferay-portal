@@ -68,8 +68,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			_documentationProjectLocalService.fetchDocumentationProject(
 				documentationProjectId);
 
-		String headerGradientEndColor = "#ffffff";
-		String headerGradientStartColor = "#ffffff";
+		String headerGradientEndColor = "#FFFFFF";
+		String headerGradientStartColor = "#FFFFFF";
 
 		DocumentationProjectTypeSettings documentationProjectTypeSettings =
 			DocumentationProjectTypeSettingsFactoryUtil.create(
