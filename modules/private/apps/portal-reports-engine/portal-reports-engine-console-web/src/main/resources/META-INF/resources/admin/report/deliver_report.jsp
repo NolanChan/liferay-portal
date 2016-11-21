@@ -20,12 +20,13 @@
 long entryId = ParamUtil.getLong(request, "entryId", -1);
 String fileName = ParamUtil.getString(request, "fileName");
 
+portletDisplay.setShowBackIcon(true);
+
 PortletURL backURL = reportsEngineDisplayContext.getPortletURL();
 
 backURL.setParameter("mvcPath", "/admin/report/requested_report_detail.jsp");
 backURL.setParameter("entryId", String.valueOf(entryId));
 
-portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
 
 renderResponse.setTitle(LanguageUtil.get(request, "deliver-report"));

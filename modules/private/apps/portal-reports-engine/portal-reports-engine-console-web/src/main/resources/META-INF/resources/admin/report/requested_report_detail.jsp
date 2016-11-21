@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL searchRequestURL = reportsEngineDisplayContext.getPortletURL();
-
-searchRequestURL.setParameter("mvcPath", "/admin/view.jsp");
-
 long entryId = ParamUtil.getLong(request, "entryId", -1);
 
 Entry entry = EntryLocalServiceUtil.getEntry(entryId);
@@ -30,6 +26,11 @@ String status = entry.getStatus();
 Definition definition = DefinitionLocalServiceUtil.getDefinition(entry.getDefinitionId());
 
 portletDisplay.setShowBackIcon(true);
+
+PortletURL searchRequestURL = reportsEngineDisplayContext.getPortletURL();
+
+searchRequestURL.setParameter("mvcPath", "/admin/view.jsp");
+
 portletDisplay.setURLBack(searchRequestURL.toString());
 
 renderResponse.setTitle(definition.getName(locale));

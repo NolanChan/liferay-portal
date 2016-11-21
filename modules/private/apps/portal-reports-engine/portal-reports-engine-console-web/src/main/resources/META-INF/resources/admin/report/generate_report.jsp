@@ -17,16 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL searchDefinitionURL = reportsEngineDisplayContext.getPortletURL();
-
-searchDefinitionURL.setParameter("mvcPath", "/admin/view.jsp");
-searchDefinitionURL.setParameter("tabs1", "definitions");
-
 Definition definition = (Definition)request.getAttribute(ReportsEngineWebKeys.DEFINITION);
 
 String reportName = BeanParamUtil.getString(definition, request, "reportName");
 
 portletDisplay.setShowBackIcon(true);
+
+PortletURL searchDefinitionURL = reportsEngineDisplayContext.getPortletURL();
+
+searchDefinitionURL.setParameter("mvcPath", "/admin/view.jsp");
+searchDefinitionURL.setParameter("tabs1", "definitions");
+
 portletDisplay.setURLBack(searchDefinitionURL.toString());
 
 renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
