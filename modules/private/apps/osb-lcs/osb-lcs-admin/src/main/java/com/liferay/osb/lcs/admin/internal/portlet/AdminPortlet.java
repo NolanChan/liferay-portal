@@ -20,9 +20,11 @@ import com.liferay.osb.lcs.admin.internal.advisor.LCSMetadataDetailsAdvisor;
 import com.liferay.osb.lcs.advisor.CommandMessageAdvisor;
 import com.liferay.osb.lcs.advisor.PatchAdvisor;
 import com.liferay.osb.lcs.advisor.PortalPropertiesAdvisor;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSMetadata;
+import com.liferay.osb.lcs.nosql.service.LCSClusterNodeScriptService;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.report.Report;
 import com.liferay.osb.lcs.report.ReportContext;
@@ -33,6 +35,7 @@ import com.liferay.osb.lcs.service.LCSClusterNodeService;
 import com.liferay.osb.lcs.service.LCSMetadataLocalService;
 import com.liferay.osb.lcs.service.LCSProjectLocalService;
 import com.liferay.osb.lcs.service.LCSSubscriptionEntryService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -64,13 +67,19 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -78,7 +87,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marko Cikos
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = {
 		"javax.portlet.name=" + OSBLCSPortletKeys.ADMIN,
 		"javax.portlet.display-name=LCS Admin",
@@ -163,6 +173,21 @@ public class AdminPortlet extends MVCPortlet {
 			ParamUtil.getBoolean(actionRequest, "enableLogging"));
 	}
 
+	@Override
+	public void render(RenderRequest request, RenderResponse response)
+		throws IOException, PortletException {
+
+		request.setAttribute(AdminAdvisor.class.getName(), _adminAdvisor);
+
+		request.setAttribute(OSBLCSConfiguration.class.getName(),
+			_osbLCSConfiguration);
+
+		request.setAttribute(LCSClusterNodeScriptService.class.getName(),
+			_lcsClusterNodeScriptService);
+
+		super.render(request, response);
+	}
+
 	public void resetInstallablePatches(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -227,6 +252,17 @@ public class AdminPortlet extends MVCPortlet {
 		_commandMessageAdvisor.executeScript(lcsClusterNode, script);
 
 		sendRedirect(actionRequest, actionResponse);
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
+			OSBLCSConfiguration.class, properties);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_osbLCSConfiguration = null;
 	}
 
 	@Override
@@ -604,6 +640,13 @@ public class AdminPortlet extends MVCPortlet {
 		_patchAdvisor = patchAdvisor;
 	}
 
+	@Reference(unbind = "-")
+	public void setLCSClusterNodeScriptService(
+		LCSClusterNodeScriptService lcsClusterNodeScriptService) {
+
+		_lcsClusterNodeScriptService = lcsClusterNodeScriptService;
+	}
+
 	private LCSMetadataDetailsAdvisor _lcsMetadataDetailsAdvisor;
 
 	private static Log _log = LogFactoryUtil.getLog(AdminPortlet.class);
@@ -616,7 +659,9 @@ public class AdminPortlet extends MVCPortlet {
 	private LCSMetadataLocalService _lcsMetadataLocalService;
 	private LCSProjectLocalService _lcsProjectLocalService;
 	private LCSSubscriptionEntryService _lcsSubscriptionEntryService;
+	private OSBLCSConfiguration _osbLCSConfiguration;
 	private OSBPortletService _osbPortletService;
 	private PatchAdvisor _patchAdvisor;
+	private LCSClusterNodeScriptService _lcsClusterNodeScriptService;
 
 }
