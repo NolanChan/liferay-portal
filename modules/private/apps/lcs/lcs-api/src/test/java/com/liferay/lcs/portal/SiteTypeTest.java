@@ -31,11 +31,8 @@ public class SiteTypeTest extends PowerMockito {
 	public void testIsSpecificSiteType() {
 		Assert.assertTrue(
 			SiteType.isOrganization(SiteType.ORGANIZATION.getType()));
-
 		Assert.assertFalse(SiteType.isOrganization(SiteType.SITE.getType()));
-
 		Assert.assertTrue(SiteType.isSite(SiteType.SITE.getType()));
-
 		Assert.assertFalse(SiteType.isSite(SiteType.ORGANIZATION.getType()));
 	}
 
