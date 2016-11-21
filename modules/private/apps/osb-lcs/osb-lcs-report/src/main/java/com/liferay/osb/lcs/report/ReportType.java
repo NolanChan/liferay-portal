@@ -17,12 +17,14 @@ package com.liferay.osb.lcs.report;
 import com.liferay.osb.lcs.internal.report.LCSClusterNodeUptimesDelimitedReport;
 import com.liferay.osb.lcs.internal.report.LCSClusterNodeUptimesInvoicePDFReport;
 import com.liferay.osb.lcs.internal.report.LCSClusterNodeUptimesPDFReport;
+import com.liferay.osb.lcs.internal.report.LCSClusterNodesDelimitedReport;
 
 /**
  * @author Igor Beslic
  */
 public enum ReportType {
 
+	LCS_CLUSTER_NODES_DELIMITED(LCSClusterNodesDelimitedReport.class),
 	LCS_CLUSTER_NODE_UPTIMES_DELIMITED(
 		LCSClusterNodeUptimesDelimitedReport.class),
 	LCS_CLUSTER_NODE_UPTIMES_INVOICE_PDF(

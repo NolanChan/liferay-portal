@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.admin.portlet;
+package com.liferay.osb.lcs.admin.internal.portlet;
 
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.admin.internal.advisor.AdminAdvisor;
@@ -28,8 +28,8 @@ import com.liferay.osb.lcs.nosql.service.LCSClusterNodeScriptService;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.report.Report;
 import com.liferay.osb.lcs.report.ReportContext;
-import com.liferay.osb.lcs.web.internal.report.ReportFactory;
-import com.liferay.osb.lcs.web.internal.report.ReportFactoryUtil;
+import com.liferay.osb.lcs.report.ReportFactory;
+import com.liferay.osb.lcs.report.ReportType;
 import com.liferay.osb.lcs.service.LCSClusterEntryLocalService;
 import com.liferay.osb.lcs.service.LCSClusterNodeService;
 import com.liferay.osb.lcs.service.LCSMetadataLocalService;
@@ -329,12 +329,14 @@ public class AdminPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		Report report = ReportFactoryUtil.getReport(
-			ReportFactory.Type.LCS_CLUSTER_NODE_DELIMITED);
+		Report report = _reportFactory.getReport(
+			ReportType.LCS_CLUSTER_NODES_DELIMITED);
 
 		ReportContext.ReportContextBuilder reportContextBuilder =
 			new ReportContext.ReportContextBuilder();
 
+		reportContextBuilder.lcsClusterNodeObjectArrays(
+			_adminAdvisor.getLCSClusterNodeObjectArrays());
 		reportContextBuilder.lineSeparator(getLineSeparator(resourceRequest));
 
 		ByteArrayOutputStream byteArrayOutputStream =
@@ -350,8 +352,8 @@ public class AdminPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		Report report = ReportFactoryUtil.getReport(
-			ReportFactory.Type.LCS_CLUSTER_NODE_UPTIMES_DELIMITED);
+		Report report = _reportFactory.getReport(
+			ReportType.LCS_CLUSTER_NODE_UPTIMES_DELIMITED);
 
 		ReportContext.ReportContextBuilder reportContextBuilder =
 			new ReportContext.ReportContextBuilder();
@@ -385,8 +387,8 @@ public class AdminPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		Report report = ReportFactoryUtil.getReport(
-			ReportFactory.Type.LCS_CLUSTER_NODE_UPTIMES_INVOICE_PDF);
+		Report report = _reportFactory.getReport(
+			ReportType.LCS_CLUSTER_NODE_UPTIMES_INVOICE_PDF);
 
 		ReportContext.ReportContextBuilder reportContextBuilder =
 			new ReportContext.ReportContextBuilder();
@@ -420,8 +422,8 @@ public class AdminPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		Report report = ReportFactoryUtil.getReport(
-			ReportFactory.Type.LCS_CLUSTER_NODE_UPTIMES_PDF);
+		Report report = _reportFactory.getReport(
+			ReportType.LCS_CLUSTER_NODE_UPTIMES_PDF);
 
 		ReportContext.ReportContextBuilder reportContextBuilder =
 			new ReportContext.ReportContextBuilder();
@@ -647,6 +649,12 @@ public class AdminPortlet extends MVCPortlet {
 		_lcsClusterNodeScriptService = lcsClusterNodeScriptService;
 	}
 
+	@Reference(unbind = "-")
+	public void setReportFactory(ReportFactory reportFactory) {
+
+		_reportFactory = reportFactory;
+	}
+
 	private LCSMetadataDetailsAdvisor _lcsMetadataDetailsAdvisor;
 
 	private static Log _log = LogFactoryUtil.getLog(AdminPortlet.class);
@@ -663,5 +671,6 @@ public class AdminPortlet extends MVCPortlet {
 	private OSBPortletService _osbPortletService;
 	private PatchAdvisor _patchAdvisor;
 	private LCSClusterNodeScriptService _lcsClusterNodeScriptService;
+	private ReportFactory _reportFactory;
 
 }
