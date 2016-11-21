@@ -28,17 +28,14 @@ public class EntrySearchTerms extends EntryDisplayTerms {
 
 		definitionName = DAOParamUtil.getString(
 			portletRequest, DEFINITION_NAME);
-
 		endDateDay = DAOParamUtil.getInteger(portletRequest, END_DATE_DAY);
 		endDateMonth = DAOParamUtil.getInteger(portletRequest, END_DATE_MONTH);
 		endDateYear = DAOParamUtil.getInteger(portletRequest, END_DATE_YEAR);
-
 		startDateDay = DAOParamUtil.getInteger(portletRequest, START_DATE_DAY);
 		startDateMonth = DAOParamUtil.getInteger(
 			portletRequest, START_DATE_MONTH);
 		startDateYear = DAOParamUtil.getInteger(
 			portletRequest, START_DATE_YEAR);
-
 		userName = DAOParamUtil.getString(portletRequest, USERNAME);
 	}
 

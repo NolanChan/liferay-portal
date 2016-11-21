@@ -44,31 +44,32 @@ public class EntrySearch extends SearchContainer<Entry> {
 			new EntrySearchTerms(portletRequest), DEFAULT_CUR_PARAM,
 			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
 
-	EntryDisplayTerms entryDisplayTerms = (EntryDisplayTerms)getDisplayTerms();
+		EntryDisplayTerms entryDisplayTerms =
+			(EntryDisplayTerms)getDisplayTerms();
 
-	iteratorURL.setParameter(
-		EntryDisplayTerms.DEFINITION_NAME,
-		entryDisplayTerms.getDefinitionName());
-	iteratorURL.setParameter(
-		EntryDisplayTerms.END_DATE_DAY,
-		String.valueOf(entryDisplayTerms.getEndDateDay()));
-	iteratorURL.setParameter(
-		EntryDisplayTerms.END_DATE_MONTH,
-		String.valueOf(entryDisplayTerms.getEndDateMonth()));
-	iteratorURL.setParameter(
-		EntryDisplayTerms.END_DATE_YEAR,
-		String.valueOf(entryDisplayTerms.getEndDateYear()));
-	iteratorURL.setParameter(
-		EntryDisplayTerms.START_DATE_DAY,
-		String.valueOf(entryDisplayTerms.getStartDateDay()));
-	iteratorURL.setParameter(
-		EntryDisplayTerms.START_DATE_MONTH,
-		String.valueOf(entryDisplayTerms.getStartDateMonth()));
-	iteratorURL.setParameter(
-		EntryDisplayTerms.START_DATE_YEAR,
-		String.valueOf(entryDisplayTerms.getStartDateYear()));
-	iteratorURL.setParameter(
-		EntryDisplayTerms.USERNAME, entryDisplayTerms.getUserName());
+		iteratorURL.setParameter(
+			EntryDisplayTerms.DEFINITION_NAME,
+			entryDisplayTerms.getDefinitionName());
+		iteratorURL.setParameter(
+			EntryDisplayTerms.END_DATE_DAY,
+			String.valueOf(entryDisplayTerms.getEndDateDay()));
+		iteratorURL.setParameter(
+			EntryDisplayTerms.END_DATE_MONTH,
+			String.valueOf(entryDisplayTerms.getEndDateMonth()));
+		iteratorURL.setParameter(
+			EntryDisplayTerms.END_DATE_YEAR,
+			String.valueOf(entryDisplayTerms.getEndDateYear()));
+		iteratorURL.setParameter(
+			EntryDisplayTerms.START_DATE_DAY,
+			String.valueOf(entryDisplayTerms.getStartDateDay()));
+		iteratorURL.setParameter(
+			EntryDisplayTerms.START_DATE_MONTH,
+			String.valueOf(entryDisplayTerms.getStartDateMonth()));
+		iteratorURL.setParameter(
+			EntryDisplayTerms.START_DATE_YEAR,
+			String.valueOf(entryDisplayTerms.getStartDateYear()));
+		iteratorURL.setParameter(
+			EntryDisplayTerms.USERNAME, entryDisplayTerms.getUserName());
 	}
 
 }
