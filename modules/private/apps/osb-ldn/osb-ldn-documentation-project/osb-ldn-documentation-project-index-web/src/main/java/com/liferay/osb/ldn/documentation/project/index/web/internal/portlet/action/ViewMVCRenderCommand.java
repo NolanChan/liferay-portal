@@ -16,8 +16,10 @@ package com.liferay.osb.ldn.documentation.project.index.web.internal.portlet.act
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.osb.ldn.documentation.project.constants.DocumentationProjectConstants;
 import com.liferay.osb.ldn.documentation.project.index.web.internal.constants.DocumentationProjectPortletKeys;
 import com.liferay.osb.ldn.documentation.project.model.DocumentationProject;
+import com.liferay.osb.ldn.documentation.project.model.DocumentationProjectURLTypeSettings;
 import com.liferay.osb.ldn.documentation.project.service.DocumentationProjectLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -178,11 +180,25 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 			documentationProjectMap.put("name", documentationProject.getName());
 
-			Group group = _groupLocalService.getGroup(
-				documentationProject.getGroupId());
+			String url = StringPool.BLANK;
 
-			documentationProjectMap.put(
-				"siteURL", group.getDisplayURL(themeDisplay, false));
+			String type = documentationProject.getType();
+
+			if (type.equals(DocumentationProjectConstants.TYPE_SITE)) {
+				Group group = _groupLocalService.getGroup(
+					documentationProject.getGroupId());
+
+				url = group.getDisplayURL(themeDisplay, false);
+			}
+			else if (type.equals(DocumentationProjectConstants.TYPE_URL)) {
+				DocumentationProjectURLTypeSettings settings =
+					(DocumentationProjectURLTypeSettings)documentationProject.
+						getDocumentationProjectTypeSettings();
+
+				url = settings.getURL();
+			}
+
+			documentationProjectMap.put("siteURL", url);
 
 			documentationProjectList.add(documentationProjectMap);
 		}
