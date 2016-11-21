@@ -14,8 +14,12 @@
  */
 --%>
 
+<%
+AdminAdvisor adminAdvisor = (AdminAdvisor) renderRequest.getAttribute(AdminAdvisor.class.getName());
+%>
+
 <liferay-portlet:renderURL varImpl="iteratorURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
-	<portlet:param name="mvcPath" value="/admin/view.jsp" />
+	<portlet:param name="mvcPath" value="/view.jsp" />
 	<portlet:param name="tabs1" value="nodes" />
 </liferay-portlet:renderURL>
 
@@ -35,7 +39,7 @@
 
 			<aui:nav-bar-search cssClass="pull-right">
 				<liferay-ui:search-form
-					page="/admin/lcs_cluster_node_search.jsp"
+					page="/lcs_cluster_node_search.jsp"
 					servletContext="<%= application %>"
 				/>
 			</aui:nav-bar-search>
@@ -49,18 +53,18 @@
 			List<Object[]> lcsClusterNodeObjectArrays = null;
 
 			if (searchTerms.isAdvancedSearch()) {
-				lcsClusterNodeObjectArrays = AdminUtil.getLCSClusterNodeObjectArrays(searchTerms.getLCSClusterEntryName(), searchTerms.getLCSClusterNodeStatus(), searchTerms.getLCSProjectName(), searchTerms.isAndOperator());
+				lcsClusterNodeObjectArrays = adminAdvisor.getLCSClusterNodeObjectArrays(searchTerms.getLCSClusterEntryName(), searchTerms.getLCSClusterNodeStatus(), searchTerms.getLCSProjectName(), searchTerms.isAndOperator());
 
 				results = ListUtil.subList(lcsClusterNodeObjectArrays, searchContainer.getStart(), searchContainer.getEnd());
 				total = lcsClusterNodeObjectArrays.size();
 			}
 			else {
 				if (Validator.isNull(searchTerms.getKeywords())) {
-					results = AdminUtil.getLCSClusterNodeObjectArrays(searchContainer.getStart(), searchContainer.getEnd());
+					results = adminAdvisor.getLCSClusterNodeObjectArrays(searchContainer.getStart(), searchContainer.getEnd());
 					total = LCSClusterNodeLocalServiceUtil.getLCSClusterNodesCount();
 				}
 				else {
-					lcsClusterNodeObjectArrays = AdminUtil.getLCSClusterNodeObjectArrays(searchTerms.getKeywords());
+					lcsClusterNodeObjectArrays = adminAdvisor.getLCSClusterNodeObjectArrays(searchTerms.getKeywords());
 
 					results = ListUtil.subList(lcsClusterNodeObjectArrays, searchContainer.getStart(), searchContainer.getEnd());
 					total = lcsClusterNodeObjectArrays.size();
@@ -116,7 +120,7 @@
 				%>
 
 					<div class="status-item <%= (Boolean)lcsClusterNodeStatusObjectArray[1] == lcsClusterNodeStatusObjectArray[2] ? "expected" : "unexpected" %> <%= lcsClusterNodeStatus == LCSClusterNodeStatus.ACTIVE ? "primary" : "hide secondary" %>">
-						<%= LanguageUtil.get(pageContext, (String)lcsClusterNodeStatusObjectArray[0]) %>
+						<%= LanguageUtil.get(request, (String)lcsClusterNodeStatusObjectArray[0]) %>
 					</div>
 
 					<c:if test="<%= lcsClusterNodeStatus == LCSClusterNodeStatus.ACTIVE %>">
@@ -145,7 +149,7 @@
 
 			<liferay-ui:search-container-column-text name="patches-modified-date" value="<%= (lcsClusterNodeObjectArray[10] != null) ? mediumDateFormatDateTime.format(lcsClusterNodeObjectArray[10]) : StringPool.DASH %>" />
 
-			<liferay-ui:search-container-column-jsp path="/admin/lcs_cluster_node_action.jsp" />
+			<liferay-ui:search-container-column-jsp path="/lcs_cluster_node_action.jsp" />
 
 			<liferay-ui:search-container-column-text name="administrator-email-addresses" value="<%= (lcsClusterNodeObjectArray[12] != null) ? (String)lcsClusterNodeObjectArray[12] : StringPool.DASH %>" />
 		</liferay-ui:search-container-row>
@@ -159,7 +163,7 @@
 <aui:script use="lcs-admin">
 	var lcsAdmin = new Liferay.Portlet.LCSAdmin(
 		{
-			errorMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>',
+			errorMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>',
 			lcsConstants: {
 				JSON_KEY_DATA: '<%= LCSConstants.JSON_KEY_DATA %>',
 				JSON_KEY_MESSAGE: '<%= LCSConstants.JSON_KEY_MESSAGE %>',
@@ -167,20 +171,20 @@
 				JSON_VALUE_SUCCESS: '<%= LCSConstants.JSON_VALUE_SUCCESS %>'
 			},
 			namespace: '<portlet:namespace />',
-			successMessage: '<%= UnicodeLanguageUtil.get(pageContext, "your-request-completed-successfully") %>'
+			successMessage: '<%= UnicodeLanguageUtil.get(request, "your-request-completed-successfully") %>'
 		}
 	);
 
 	lcsAdmin.initializeNodesPanel(
 		{
 			labels: {
-				default: '<%= UnicodeLanguageUtil.get(pageContext, "default") %>',
-				difference: '<%= UnicodeLanguageUtil.get(pageContext, "properties-differences") %>',
-				key: '<%= UnicodeLanguageUtil.get(pageContext, "key") %>',
-				msgNoSearchResults: '<%= UnicodeLanguageUtil.get(pageContext, "there-are-no-search-results") %>',
-				msgPropertiesNotUploaded: '<%= UnicodeLanguageUtil.get(pageContext, "properties-were-not-uploaded-or-there-is-no-difference-between-the-default-values-and-the-current-values") %>',
-				search: '<%= UnicodeLanguageUtil.get(pageContext, "search") %>',
-				value: '<%= UnicodeLanguageUtil.get(pageContext, "value") %>'
+				default: '<%= UnicodeLanguageUtil.get(request, "default") %>',
+				difference: '<%= UnicodeLanguageUtil.get(request, "properties-differences") %>',
+				key: '<%= UnicodeLanguageUtil.get(request, "key") %>',
+				msgNoSearchResults: '<%= UnicodeLanguageUtil.get(request, "there-are-no-search-results") %>',
+				msgPropertiesNotUploaded: '<%= UnicodeLanguageUtil.get(request, "properties-were-not-uploaded-or-there-is-no-difference-between-the-default-values-and-the-current-values") %>',
+				search: '<%= UnicodeLanguageUtil.get(request, "search") %>',
+				value: '<%= UnicodeLanguageUtil.get(request, "value") %>'
 			},
 			urls: {
 				getPortalPropertiesDifference: '<%= getPortalPropertiesDifferenceURL %>'

@@ -15,7 +15,7 @@
 --%>
 
 <liferay-portlet:renderURL var="addLCSMetadataURL">
-	<portlet:param name="mvcPath" value="/admin/metadata_edit.jsp" />
+	<portlet:param name="mvcPath" value="/metadata_edit.jsp" />
 	<portlet:param name="tabs1" value="metadata" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </liferay-portlet:renderURL>
@@ -27,7 +27,7 @@
 </div>
 
 <liferay-portlet:renderURL varImpl="iteratorURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
-	<portlet:param name="mvcPath" value="/admin/view.jsp" />
+	<portlet:param name="mvcPath" value="/view.jsp" />
 	<portlet:param name="tabs1" value="metadata" />
 </liferay-portlet:renderURL>
 
@@ -64,7 +64,7 @@
 			%>
 
 				<div class="status-item <%= (lcsMetadataAvailabilityIndex == LCSMetadataAvailabilityIndex.PORTAL_PROPERTIES_AVAILABLE) ? "portal-properties-available" : StringPool.BLANK %>">
-					<%= LanguageUtil.get(pageContext, lcsMetadataAvailabilityIndex.getLabel()) %>
+					<%= LanguageUtil.get(request, lcsMetadataAvailabilityIndex.getLabel()) %>
 				</div>
 
 			<%
@@ -75,7 +75,7 @@
 
 		<liferay-ui:search-container-column-text align="right">
 			<liferay-portlet:renderURL var="editURL">
-				<portlet:param name="mvcPath" value="/admin/metadata_edit.jsp" />
+				<portlet:param name="mvcPath" value="/metadata_edit.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="lcsMetadataId" value="<%= String.valueOf(lcsMetadata.getLcsMetadataId()) %>" />
 			</liferay-portlet:renderURL>

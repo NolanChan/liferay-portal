@@ -18,6 +18,8 @@
 long lcsClusterEntryId = ParamUtil.getLong(request, "lcsClusterEntryId");
 long lcsClusterNodeId = ParamUtil.getLong(request, "lcsClusterNodeId");
 long lcsProjectId = ParamUtil.getLong(request, "lcsProjectId");
+
+LCSClusterNodeScriptService lcsClusterNodeScriptService = (LCSClusterNodeScriptService) renderRequest.getAttribute(LCSClusterNodeScriptService.class.getName());
 %>
 
 <aui:form action="<%= portletURL %>" method="get" name="fm">
@@ -27,7 +29,7 @@ long lcsProjectId = ParamUtil.getLong(request, "lcsProjectId");
 
 	<aui:fieldset>
 		<aui:select label="projects" name="lcsProjectId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
-			<aui:option label='<%= LanguageUtil.get(pageContext, "all-projects") %>' />
+			<aui:option label='<%= LanguageUtil.get(request, "all-projects") %>' />
 
 			<%
 			for (LCSProject lcsProject : LCSProjectLocalServiceUtil.getLCSProjects(QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
@@ -41,7 +43,7 @@ long lcsProjectId = ParamUtil.getLong(request, "lcsProjectId");
 
 		</aui:select>
 		<aui:select label="environments" name="lcsClusterEntryId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
-			<aui:option label='<%= LanguageUtil.get(pageContext, "all-environments") %>' />
+			<aui:option label='<%= LanguageUtil.get(request, "all-environments") %>' />
 
 			<%
 			for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSProjectLCSClusterEntries(lcsProjectId)) {
@@ -55,7 +57,7 @@ long lcsProjectId = ParamUtil.getLong(request, "lcsProjectId");
 
 		</aui:select>
 		<aui:select label="servers" name="lcsClusterNodeId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
-			<aui:option label='<%= LanguageUtil.get(pageContext, "all-nodes") %>' />
+			<aui:option label='<%= LanguageUtil.get(request, "all-nodes") %>' />
 
 			<%
 			for (LCSClusterNode lcsClusterNode : LCSClusterNodeLocalServiceUtil.getLCSClusterEntryLCSClusterNodes(lcsClusterEntryId)) {
@@ -88,7 +90,7 @@ long lcsProjectId = ParamUtil.getLong(request, "lcsProjectId");
 				<liferay-ui:search-container-results>
 
 					<%
-					List<LCSClusterNodeScript> lcsClusterNodeScripts = LCSClusterNodeScriptServiceUtil.getLCSClusterNodeScripts(lcsClusterNode.getKey());
+					List<LCSClusterNodeScript> lcsClusterNodeScripts = (List<LCSClusterNodeScript>) lcsClusterNodeScriptService.getLCSClusterNodeScripts(lcsClusterNode.getKey());
 
 					results = ListUtil.subList(lcsClusterNodeScripts, searchContainer.getStart(), searchContainer.getEnd());
 					total = lcsClusterNodeScripts.size();

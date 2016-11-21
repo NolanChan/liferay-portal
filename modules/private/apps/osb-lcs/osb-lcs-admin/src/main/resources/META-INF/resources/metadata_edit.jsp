@@ -34,7 +34,7 @@ LCSMetadata lcsMetadata = LCSMetadataLocalServiceUtil.fetchLCSMetadata(lcsMetada
 <liferay-portlet:actionURL name='<%= (lcsMetadata == null) ? "addLCSMetadata" : "updateLCSMetadata" %>' var="editLCSMetadataURL" />
 
 <aui:form action="<%= editLCSMetadataURL %>" enctype="multipart/form-data" method="post" name="fm">
-	<aui:input name="mvcPath" type="hidden" value="/admin/metadata_edit.jsp" />
+	<aui:input name="mvcPath" type="hidden" value="/metadata_edit.jsp" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="lcsMetadataId" type="hidden" value="<%= String.valueOf(lcsMetadataId) %>" />

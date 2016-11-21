@@ -15,6 +15,7 @@
 --%>
 
 <%
+AdminAdvisor adminAdvisor = (AdminAdvisor) renderRequest.getAttribute(AdminAdvisor.class.getName());
 String ipAddress = ParamUtil.getString(request, "ipAddress", null);
 %>
 
@@ -25,7 +26,7 @@ String ipAddress = ParamUtil.getString(request, "ipAddress", null);
 		<aui:option label="select-amazon-ec2-instances" value="" />
 
 		<%
-		Map<String, String> ec2IpAddresses = AdminUtil.getEC2IpAddresses();
+		Map<String, String> ec2IpAddresses = adminAdvisor.getEC2IpAddresses();
 
 		for (String curIpAddress : ec2IpAddresses.keySet()) {
 			String name = ec2IpAddresses.get(curIpAddress);
@@ -43,7 +44,7 @@ String ipAddress = ParamUtil.getString(request, "ipAddress", null);
 <c:if test="<%= Validator.isNotNull(ipAddress) %>">
 
 	<%
-	Map<String, List<Object[]>> lcsModulePropertiesObjectArraysMap = AdminUtil.getLCSModulePropertiesObjectArraysMap(ipAddress);
+	Map<String, List<Object[]>> lcsModulePropertiesObjectArraysMap = adminAdvisor.getLCSModulePropertiesObjectArraysMap(ipAddress);
 
 	for (Map.Entry<String, List<Object[]>> entry : lcsModulePropertiesObjectArraysMap.entrySet()) {
 		String lcsModule = entry.getKey();
@@ -70,10 +71,17 @@ String ipAddress = ParamUtil.getString(request, "ipAddress", null);
 			emptyResultsMessage="there-are-no-properties"
 			iteratorURL="<%= iteratorURL %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= lcsModulePropertiesObjectArrays %>"
-				total="<%= lcsModulePropertiesObjectArrays.size() %>"
-			/>
+			<liferay-ui:search-container-results>
+
+				<%
+				results = ListUtil.subList(lcsModulePropertiesObjectArrays, searchContainer.getStart(), searchContainer.getEnd());
+				total = lcsModulePropertiesObjectArrays.size();
+
+				pageContext.setAttribute("results", results);
+				pageContext.setAttribute("total", total);
+				%>
+
+			</liferay-ui:search-container-results>
 
 			<liferay-ui:search-container-row
 				className="java.lang.Object[]"

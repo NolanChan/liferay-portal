@@ -14,6 +14,10 @@
  */
 --%>
 
+<%
+OSBLCSConfiguration osbLCSConfiguration = (OSBLCSConfiguration) renderRequest.getAttribute(OSBLCSConfiguration.class.getName());
+%>
+
 <aui:form action='<%= "/c/portal/lcs/patch/upload?p_auth=" + AuthTokenUtil.getToken(request) %>' enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
@@ -26,7 +30,7 @@
 	<hr />
 
 	<aui:field-wrapper>
-		<c:if test="<%= ArrayUtil.contains(PortletPropsValues.OSB_PORTLET_SYNCHRONIZATION_SAFE_HOST_NAMES, PortletPropsValues.OSB_PORTLET_HOST_NAME) %>">
+		<c:if test="<%= ArrayUtil.contains(osbLCSConfiguration.osbPortletSynchronizationSafeHostNames(), osbLCSConfiguration.osbPortletHostName()) %>">
 			<aui:input label="patch-file" name="file" size="50" type="file" />
 
 			<aui:button-row>
@@ -39,7 +43,7 @@
 <hr />
 
 <liferay-portlet:renderURL varImpl="iteratorURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>">
-	<portlet:param name="mvcPath" value="/admin/view.jsp" />
+	<portlet:param name="mvcPath" value="/view.jsp" />
 	<portlet:param name="tabs1" value="patches" />
 </liferay-portlet:renderURL>
 

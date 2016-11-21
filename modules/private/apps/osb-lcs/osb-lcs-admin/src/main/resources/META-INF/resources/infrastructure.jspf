@@ -14,6 +14,10 @@
  */
 --%>
 
+<%
+OSBLCSConfiguration osbLCSConfiguration = (OSBLCSConfiguration) renderRequest.getAttribute(OSBLCSConfiguration.class.getName());
+%>
+
 <liferay-portlet:actionURL name="checkLCSProjects" var="checkLCSProjectsURL">
 	<portlet:param name="tabs1" value="infrastructure" />
 </liferay-portlet:actionURL>
@@ -33,17 +37,17 @@
 	</aui:field-wrapper>
 
 	<aui:field-wrapper label="osb-application">
-		<span><liferay-ui:message key="server-name" />: <%= PortletPropsValues.OSB_PORTLET_HOST_NAME %></span><br />
+		<span><liferay-ui:message key="server-name" />: <%= osbLCSConfiguration.osbPortletHostName() %></span><br />
 
-		<span><liferay-ui:message key="server-port" />: <%= PortletPropsValues.OSB_PORTLET_HOST_PORT %></span><br />
+		<span><liferay-ui:message key="server-port" />: <%= osbLCSConfiguration.osbPortletHostPort() %></span><br />
 
-		<span><liferay-ui:message key="username" />: <%= PortletPropsValues.OSB_PORTLET_LOGIN %></span>
+		<span><liferay-ui:message key="username" />: <%= osbLCSConfiguration.osbPortletLogin() %></span>
 	</aui:field-wrapper>
 
 	<aui:field-wrapper label="osb-lcs-application">
 
 		<%
-		Date signingKeyExpirationDate = KeyStoreFactory.getSigningKeyExpirationDate(PortletPropsValues.OSB_PORTLET_KEY_STORE_PATH, PortletPropsValues.OSB_PORTLET_KEY_STORE_TYPE, PortletPropsValues.OSB_PORTLET_KEY_STORE_DIGITAL_SIGNATURE_KEY_NAME);
+		Date signingKeyExpirationDate = KeyStoreFactory.getSigningKeyExpirationDate(osbLCSConfiguration.osbPortletKeyStorePath(), osbLCSConfiguration.osbPortletKeyStoreType(), osbLCSConfiguration.osbPortletKeyStoreDigitalSignatureKeyName());
 		%>
 
 		<span><liferay-ui:message key="lcs-signing-key-expiration-date" />: <%= mediumDateFormatDate.format(signingKeyExpirationDate) %></span><br />
@@ -64,7 +68,7 @@
 	</aui:field-wrapper>
 
 	<aui:field-wrapper label="actions">
-		<c:if test="<%= ArrayUtil.contains(PortletPropsValues.OSB_PORTLET_SYNCHRONIZATION_SAFE_HOST_NAMES, PortletPropsValues.OSB_PORTLET_HOST_NAME) %>">
+		<c:if test="<%= ArrayUtil.contains(osbLCSConfiguration.osbPortletSynchronizationSafeHostNames(), osbLCSConfiguration.osbPortletHostName()) %>">
 			<liferay-portlet:actionURL name="resetLCSOrderEntries" var="resetLCSOrderEntriesURL">
 				<portlet:param name="tabs1" value="infrastructure" />
 			</liferay-portlet:actionURL>

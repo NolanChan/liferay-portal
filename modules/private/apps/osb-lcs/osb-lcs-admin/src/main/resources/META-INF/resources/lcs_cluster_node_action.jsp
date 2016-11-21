@@ -17,11 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
+AdminAdvisor adminAdvisor = (AdminAdvisor) renderRequest.getAttribute(AdminAdvisor.class.getName());
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 Object[] lcsClusterNodeObjectArray = (Object[])row.getObject();
 
-boolean loggingEnabled = AdminUtil.isLCSClusterNodeLoggingEnabled(String.valueOf(lcsClusterNodeObjectArray[2]));
+boolean loggingEnabled = adminAdvisor.isLCSClusterNodeLoggingEnabled(String.valueOf(lcsClusterNodeObjectArray[2]));
 %>
 
 <aui:nav-bar cssClass="nav-tabs">

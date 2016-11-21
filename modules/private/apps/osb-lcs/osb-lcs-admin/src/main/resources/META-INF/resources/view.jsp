@@ -21,7 +21,7 @@ String tabs1 = ParamUtil.getString(request, "tabs1");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/admin/view.jsp");
+portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("tabs1", tabs1);
 
 pageContext.setAttribute("portletURL", portletURL);
@@ -35,30 +35,30 @@ pageContext.setAttribute("portletURL", portletURL);
 
 <c:choose>
 	<c:when test='<%= tabs1.equals("lcs-portal") %>'>
-		<%@ include file="/admin/lcs_portal.jspf" %>
+		<%@ include file="/lcs_portal.jspf" %>
 	</c:when>
 	<c:when test='<%= tabs1.equals("metadata") %>'>
-		<%@ include file="/admin/metadata.jspf" %>
+		<%@ include file="/metadata.jspf" %>
 	</c:when>
 	<c:when test='<%= tabs1.equals("nodes") %>'>
-		<%@ include file="/admin/lcs_cluster_nodes.jspf" %>
+		<%@ include file="/lcs_cluster_nodes.jspf" %>
 	</c:when>
 	<c:when test='<%= tabs1.equals("notification-audits") %>'>
-		<%@ include file="/admin/notification_audits.jspf" %>
+		<%@ include file="/notification_audits.jspf" %>
 	</c:when>
 	<c:when test='<%= tabs1.equals("patches") %>'>
-		<%@ include file="/admin/patches.jspf" %>
+		<%@ include file="/patches.jspf" %>
 	</c:when>
 	<c:when test='<%= tabs1.equals("properties") %>'>
-		<%@ include file="/admin/properties.jspf" %>
+		<%@ include file="/properties.jspf" %>
 	</c:when>
 	<c:when test='<%= tabs1.equals("scripts") %>'>
-		<%@ include file="/admin/scripts.jspf" %>
+		<%@ include file="/scripts.jspf" %>
 	</c:when>
 	<c:when test='<%= tabs1.equals("uptimes") %>'>
-		<%@ include file="/admin/uptimes.jspf" %>
+		<%@ include file="/uptimes.jspf" %>
 	</c:when>
 	<c:otherwise>
-		<%@ include file="/admin/infrastructure.jspf" %>
+		<%@ include file="/infrastructure.jspf" %>
 	</c:otherwise>
 </c:choose>

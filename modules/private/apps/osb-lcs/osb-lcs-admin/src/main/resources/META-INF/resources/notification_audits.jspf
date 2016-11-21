@@ -37,9 +37,9 @@ for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSPro
 
 	<aui:fieldset>
 		<aui:row>
-			<aui:column>
+			<aui:col>
 				<aui:select label="project" name="lcsProjectId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>' required="<%= true %>">
-					<aui:option label='<%= LanguageUtil.get(pageContext, "all-projects") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />
+					<aui:option label='<%= LanguageUtil.get(request, "all-projects") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />
 
 					<%
 					for (LCSProject lcsProject : LCSProjectLocalServiceUtil.getLCSProjects(QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
@@ -52,10 +52,10 @@ for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSPro
 					%>
 
 				</aui:select>
-			</aui:column>
-			<aui:column>
+			</aui:col>
+			<aui:col>
 				<aui:select label="environment" name="lcsClusterEntryId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
-					<aui:option label='<%= LanguageUtil.get(pageContext, "all-environments") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />
+					<aui:option label='<%= LanguageUtil.get(request, "all-environments") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />
 
 					<%
 					for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSProjectLCSClusterEntries(lcsProjectId)) {
@@ -68,10 +68,10 @@ for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSPro
 					%>
 
 				</aui:select>
-			</aui:column>
-			<aui:column>
+			</aui:col>
+			<aui:col>
 				<aui:select label="node" name="lcsClusterNodeId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
-					<aui:option label='<%= LanguageUtil.get(pageContext, "all-nodes") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />
+					<aui:option label='<%= LanguageUtil.get(request, "all-nodes") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />
 
 					<%
 					for (LCSClusterNode lcsClusterNode : LCSClusterNodeLocalServiceUtil.getLCSClusterEntryLCSClusterNodes(selLCSClusterEntryId)) {
@@ -84,13 +84,13 @@ for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSPro
 					%>
 
 				</aui:select>
-			</aui:column>
+			</aui:col>
 		</aui:row>
 	</aui:fieldset>
 </aui:form>
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
-	<portlet:param name="mvcPath" value="/admin/view.jsp" />
+	<portlet:param name="mvcPath" value="/view.jsp" />
 	<portlet:param name="tabs1" value="notification-audits" />
 	<portlet:param name="lcsProjectId" value="<%= String.valueOf(lcsProjectId) %>" />
 	<portlet:param name="lcsClusterEntryId" value="<%= String.valueOf(selLCSClusterEntryId) %>" />

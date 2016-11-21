@@ -15,11 +15,14 @@
 --%>
 
 <%
-boolean billingEnabled = AdminUtil.isBillingEnabled();
-boolean messageForwardDevEnabled = AdminUtil.isMessageForwardEnabled("dev");
-boolean messageForwardQAEnabled = AdminUtil.isMessageForwardEnabled("qa");
-boolean sendingEmailsEnabled = AdminUtil.isSendingEmailsEnabled();
-boolean subscriptionsEnabled = AdminUtil.isSubscriptionsEnabled();
+AdminAdvisor adminAdvisor = (AdminAdvisor) renderRequest.getAttribute(AdminAdvisor.class.getName());
+OSBLCSConfiguration osbLCSConfiguration = (OSBLCSConfiguration) renderRequest.getAttribute(OSBLCSConfiguration.class.getName());
+
+boolean billingEnabled = osbLCSConfiguration.billingEnabled();
+boolean messageForwardDevEnabled = adminAdvisor.isMessageForwardEnabled("dev");
+boolean messageForwardQAEnabled = adminAdvisor.isMessageForwardEnabled("qa");
+boolean sendingEmailsEnabled = osbLCSConfiguration.sendingEmailsEnabled();
+boolean subscriptionsEnabled = osbLCSConfiguration.subscriptionsEnabled();
 %>
 
 <liferay-portlet:actionURL name="saveLCSPortalPreferences" var="saveLCSPortalPreferencesURL">
@@ -40,7 +43,7 @@ boolean subscriptionsEnabled = AdminUtil.isSubscriptionsEnabled();
 			</aui:col>
 
 			<aui:col width="<%= 10 %>">
-				<aui:button cssClass='<%= "btn " + (billingEnabled ? "btn-success" : "btn-danger") %>' name="billingButton" value='<%= billingEnabled ? LanguageUtil.get(pageContext, "on") : LanguageUtil.get(pageContext, "off") %>' />
+				<aui:button cssClass='<%= "btn " + (billingEnabled ? "btn-success" : "btn-danger") %>' name="billingButton" value='<%= billingEnabled ? LanguageUtil.get(request, "on") : LanguageUtil.get(request, "off") %>' />
 			</aui:col>
 		</aui:row>
 
@@ -50,7 +53,7 @@ boolean subscriptionsEnabled = AdminUtil.isSubscriptionsEnabled();
 			</aui:col>
 
 			<aui:col width="<%= 10 %>">
-				<aui:button cssClass='<%= "btn " + (messageForwardDevEnabled ? "btn-success" : "btn-danger") %>' name="messageForwardDevButton" value='<%= messageForwardDevEnabled ? LanguageUtil.get(pageContext, "on") : LanguageUtil.get(pageContext, "off") %>' />
+				<aui:button cssClass='<%= "btn " + (messageForwardDevEnabled ? "btn-success" : "btn-danger") %>' name="messageForwardDevButton" value='<%= messageForwardDevEnabled ? LanguageUtil.get(request, "on") : LanguageUtil.get(request, "off") %>' />
 			</aui:col>
 		</aui:row>
 
@@ -60,7 +63,7 @@ boolean subscriptionsEnabled = AdminUtil.isSubscriptionsEnabled();
 			</aui:col>
 
 			<aui:col width="<%= 10 %>">
-				<aui:button cssClass='<%= "btn " + (messageForwardQAEnabled ? "btn-success" : "btn-danger") %>' name="messageForwardQAButton" value='<%= messageForwardQAEnabled ? LanguageUtil.get(pageContext, "on") : LanguageUtil.get(pageContext, "off") %>' />
+				<aui:button cssClass='<%= "btn " + (messageForwardQAEnabled ? "btn-success" : "btn-danger") %>' name="messageForwardQAButton" value='<%= messageForwardQAEnabled ? LanguageUtil.get(request, "on") : LanguageUtil.get(request, "off") %>' />
 			</aui:col>
 		</aui:row>
 
@@ -70,7 +73,7 @@ boolean subscriptionsEnabled = AdminUtil.isSubscriptionsEnabled();
 			</aui:col>
 
 			<aui:col width="<%= 10 %>">
-				<aui:button cssClass='<%= "btn " + (sendingEmailsEnabled ? "btn-success" : "btn-danger") %>' name="sendingEmailsButton" value='<%= sendingEmailsEnabled ? LanguageUtil.get(pageContext, "on") : LanguageUtil.get(pageContext, "off") %>' />
+				<aui:button cssClass='<%= "btn " + (sendingEmailsEnabled ? "btn-success" : "btn-danger") %>' name="sendingEmailsButton" value='<%= sendingEmailsEnabled ? LanguageUtil.get(request, "on") : LanguageUtil.get(request, "off") %>' />
 			</aui:col>
 		</aui:row>
 
@@ -80,7 +83,7 @@ boolean subscriptionsEnabled = AdminUtil.isSubscriptionsEnabled();
 			</aui:col>
 
 			<aui:col width="<%= 10 %>">
-				<aui:button cssClass='<%= "btn " + (subscriptionsEnabled ? "btn-success" : "btn-danger") %>' name="subscriptionsButton" value='<%= subscriptionsEnabled ? LanguageUtil.get(pageContext, "on") : LanguageUtil.get(pageContext, "off") %>' />
+				<aui:button cssClass='<%= "btn " + (subscriptionsEnabled ? "btn-success" : "btn-danger") %>' name="subscriptionsButton" value='<%= subscriptionsEnabled ? LanguageUtil.get(request, "on") : LanguageUtil.get(request, "off") %>' />
 			</aui:col>
 		</aui:row>
 	</div>
@@ -101,8 +104,8 @@ boolean subscriptionsEnabled = AdminUtil.isSubscriptionsEnabled();
 		{
 			billingEnabled: <%= billingEnabled %>,
 			labels: {
-				off: '<%= UnicodeLanguageUtil.get(pageContext, "off") %>',
-				on: '<%= UnicodeLanguageUtil.get(pageContext, "on") %>'
+				off: '<%= UnicodeLanguageUtil.get(request, "off") %>',
+				on: '<%= UnicodeLanguageUtil.get(request, "on") %>'
 			},
 			messageForwardDevEnabled: <%= messageForwardDevEnabled %>,
 			messageForwardQAEnabled: <%= messageForwardQAEnabled %>,
