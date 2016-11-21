@@ -168,11 +168,13 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				url = group.getDisplayURL(themeDisplay, false);
 			}
 			else if (type.equals(DocumentationProjectConstants.TYPE_URL)) {
-				DocumentationProjectURLTypeSettings settings =
-					(DocumentationProjectURLTypeSettings)documentationProject.
-						getDocumentationProjectTypeSettings();
+				DocumentationProjectURLTypeSettings
+					documentationProjectURLTypeSettings =
+						(DocumentationProjectURLTypeSettings)
+							documentationProject.
+								getDocumentationProjectTypeSettings();
 
-				url = settings.getURL();
+				url = documentationProjectURLTypeSettings.getURL();
 			}
 
 			documentationProjectMap.put("siteURL", url);
