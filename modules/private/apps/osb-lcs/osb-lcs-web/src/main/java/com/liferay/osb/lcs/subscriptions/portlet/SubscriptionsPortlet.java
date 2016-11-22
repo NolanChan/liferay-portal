@@ -22,7 +22,7 @@ import com.liferay.osb.lcs.model.LCSSubscriptionEntry;
 import com.liferay.osb.lcs.report.Report;
 import com.liferay.osb.lcs.report.ReportContext;
 import com.liferay.osb.lcs.report.ReportFactory;
-import com.liferay.osb.lcs.report.ReportFactoryUtil;
+import com.liferay.osb.lcs.report.ReportType;
 import com.liferay.osb.lcs.service.LCSClusterEntryService;
 import com.liferay.osb.lcs.service.LCSSubscriptionEntryService;
 import com.liferay.osb.lcs.util.ApplicationProfile;
@@ -58,6 +58,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marko Cikos
@@ -170,6 +171,11 @@ public class SubscriptionsPortlet extends MVCPortlet {
 		_lcsSubscriptionEntryService = lcsSubscriptionEntryService;
 	}
 
+	@Reference(unbind = "-")
+	public void setReportFactory(ReportFactory reportFactory) {
+		_reportFactory = reportFactory;
+	}
+
 	public void setSubscriptionsAdvisor(
 		SubscriptionsAdvisor subscriptionsAdvisor) {
 
@@ -191,8 +197,8 @@ public class SubscriptionsPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		Report report = ReportFactoryUtil.getReport(
-			ReportFactory.Type.LCS_CLUSTER_NODE_UPTIMES_DELIMITED);
+		Report report = _reportFactory.getReport(
+			ReportType.LCS_CLUSTER_NODE_UPTIMES_DELIMITED);
 
 		ReportContext.ReportContextBuilder reportContextBuilder =
 			new ReportContext.ReportContextBuilder();
@@ -212,8 +218,8 @@ public class SubscriptionsPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		Report report = ReportFactoryUtil.getReport(
-			ReportFactory.Type.LCS_CLUSTER_NODE_UPTIMES_INVOICE_PDF);
+		Report report = _reportFactory.getReport(
+			ReportType.LCS_CLUSTER_NODE_UPTIMES_INVOICE_PDF);
 
 		ReportContext.ReportContextBuilder reportContextBuilder =
 			new ReportContext.ReportContextBuilder();
@@ -236,8 +242,8 @@ public class SubscriptionsPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		Report report = ReportFactoryUtil.getReport(
-			ReportFactory.Type.LCS_CLUSTER_NODE_UPTIMES_PDF);
+		Report report = _reportFactory.getReport(
+			ReportType.LCS_CLUSTER_NODE_UPTIMES_PDF);
 
 		ReportContext.ReportContextBuilder reportContextBuilder =
 			new ReportContext.ReportContextBuilder();
@@ -537,6 +543,7 @@ public class SubscriptionsPortlet extends MVCPortlet {
 
 	private LCSClusterEntryService _lcsClusterEntryService;
 	private LCSSubscriptionEntryService _lcsSubscriptionEntryService;
+	private ReportFactory _reportFactory;
 	private SubscriptionsAdvisor _subscriptionsAdvisor;
 
 }
