@@ -21,8 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-import com.liferay.lcs.rest.JSONErrorCode;
 import com.liferay.lcs.subscription.SubscriptionType;
+import com.liferay.osb.lcs.advisor.StringAdvisor;
 import com.liferay.osb.lcs.exception.LCSSubscriptionEntryProductException;
 import com.liferay.osb.lcs.exception.LCSSubscriptionEntryTypeException;
 import com.liferay.osb.lcs.exception.NoSuchLCSSubscriptionEntryException;
@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -442,22 +442,12 @@ public class LCSSubscriptionEntryLocalServiceImpl
 			lcsSubscriptionEntryPersistence.findWithDynamicQuery(dynamicQuery);
 
 		if (lcsSubscriptionEntries.isEmpty()) {
-			StringBundler sb = new StringBundler(11);
-
-			sb.append("{errorCode: ");
-			sb.append(
-				JSONErrorCode.NO_SUCH_LCS_SUBSCRIPTION_ENTRY.getErrorCode());
-			sb.append(", increment: ");
-			sb.append(increment);
-			sb.append(", lcsProjectId: ");
-			sb.append(lcsProjectId);
-			sb.append(", processorCoresTotal: ");
-			sb.append(processorCoresTotal);
-			sb.append(", type: '");
-			sb.append(type);
-			sb.append("'}");
-
-			throw new NoSuchLCSSubscriptionEntryException(sb.toString());
+			throw new NoSuchLCSSubscriptionEntryException(
+				_stringAdvisor.concat(
+					"No entity exists with the key {increment:", increment,
+					"lcsProject:", lcsProjectId, "processorCoresTotal",
+					processorCoresTotal, ", subscriptionType:", type,
+					StringPool.CLOSE_CURLY_BRACE));
 		}
 
 		return lcsSubscriptionEntries.get(0);
@@ -611,8 +601,9 @@ public class LCSSubscriptionEntryLocalServiceImpl
 
 		if (subscriptionType == SubscriptionType.UNDEFINED) {
 			throw new LCSSubscriptionEntryTypeException(
-				"Invalid subscription type \"" + subscriptionType.name() +
-					"\"");
+				_stringAdvisor.concat(
+					"Invalid entity {subscriptionType:",
+						subscriptionType.name(), StringPool.CLOSE_CURLY_BRACE));
 		}
 
 		if (subscriptionType != SubscriptionType.PRODUCTION) {
@@ -622,15 +613,11 @@ public class LCSSubscriptionEntryLocalServiceImpl
 		String product = lcsSubscriptionEntry.getProduct();
 
 		if (product.contains("Non-Production")) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("Invalid product \"");
-			sb.append(product);
-			sb.append("\" for subscription type \"");
-			sb.append(subscriptionType.name());
-			sb.append("\"");
-
-			throw new LCSSubscriptionEntryProductException(sb.toString());
+			throw new LCSSubscriptionEntryProductException(
+				_stringAdvisor.concat(
+					"Invalid entity {product:", product,
+					", subscriptionType:",
+						subscriptionType.name(), StringPool.CLOSE_CURLY_BRACE));
 		}
 	}
 
@@ -641,5 +628,8 @@ public class LCSSubscriptionEntryLocalServiceImpl
 
 	@ServiceReference(type = OSBPortletService.class)
 	private OSBPortletService _osbPortletService;
+
+	@ServiceReference(type = StringAdvisor.class)
+	private StringAdvisor _stringAdvisor;
 
 }

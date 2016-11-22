@@ -21,6 +21,7 @@ import com.liferay.lcs.subscription.SubscriptionType;
 import com.liferay.lcs.util.LCSClusterNodeStatus;
 import com.liferay.osb.lcs.advisor.CommandMessageAdvisor;
 import com.liferay.osb.lcs.advisor.PortalPropertiesAdvisor;
+import com.liferay.osb.lcs.advisor.StringAdvisor;
 import com.liferay.osb.lcs.exception.DuplicateLCSClusterNodeNameException;
 import com.liferay.osb.lcs.exception.LCSClusterNodeBuildNumberException;
 import com.liferay.osb.lcs.exception.LCSClusterNodeKeyException;
@@ -44,7 +45,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -125,16 +126,12 @@ public class LCSClusterNodeLocalServiceImpl
 					subscriptionType);
 
 		if (subscriptionEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append("No subscription entry exists for LCS project ");
-			sb.append(lcsClusterEntry.getLcsProjectId());
-			sb.append(", subscription type ");
-			sb.append(subscriptionType.name());
-			sb.append(", and allowed processor cores greater or equal to ");
-			sb.append(processorCoresTotal);
-
-			throw new NoSuchLCSSubscriptionEntryException(sb.toString());
+			throw new NoSuchLCSSubscriptionEntryException(
+				_stringAdvisor.concat(
+					"No entity exists with the key {lcsProject:",
+					lcsClusterEntry.getLcsProjectId(), ", subscriptionType:",
+					subscriptionType.name(), ", processorCoresTotal:",
+					processorCoresTotal, StringPool.CLOSE_CURLY_BRACE));
 		}
 
 		if (!lcsClusterEntry.isElastic()) {
@@ -862,5 +859,8 @@ public class LCSClusterNodeLocalServiceImpl
 
 	@ServiceReference(type = StorageManager.class)
 	private StorageManager _storageManager;
+
+	@ServiceReference(type = StringAdvisor.class)
+	private StringAdvisor _stringAdvisor;
 
 }
