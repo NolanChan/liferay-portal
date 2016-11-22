@@ -152,10 +152,69 @@ public class ServletContextHelperRegistrationImpl
 		sb.append('(');
 		sb.append(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME);
 		sb.append('=');
-		sb.append(_servletContextName);
+
+		for (int i = 0; i < _servletContextName.length(); i++) {
+			char c = _servletContextName.charAt(i);
+
+			if ((c < _invalidChars.length) && (_invalidChars[c])) {
+				if (c == '(') {
+					sb.append("\\28");
+				}
+				else if (c == ')') {
+					sb.append("\\29");
+				}
+				else if (c == '&') {
+					sb.append("\\26");
+				}
+				else if (c == '|') {
+					sb.append("\\7c");
+				}
+				else if (c == '=') {
+					sb.append("\\3d");
+				}
+				else if (c == '>') {
+					sb.append("\\3e");
+				}
+				else if (c == '<') {
+					sb.append("\\3c");
+				}
+				else if (c == '~') {
+					sb.append("\\7e");
+				}
+				else if (c == '*') {
+					sb.append("\\2a");
+				}
+				else if (c == '/') {
+					sb.append("\\2f");
+				}
+				else if (c == '\\') {
+					sb.append("\\5c");
+				}
+			}
+			else {
+				sb.append(c);
+			}
+		}
+
 		sb.append(')');
 
 		return sb.toString();
+	}
+
+	private static final boolean[] _invalidChars = new boolean[128];
+
+	static {
+		_invalidChars['('] = true;
+		_invalidChars[')'] = true;
+		_invalidChars['&'] = true;
+		_invalidChars['|'] = true;
+		_invalidChars['='] = true;
+		_invalidChars['>'] = true;
+		_invalidChars['<'] = true;
+		_invalidChars['~'] = true;
+		_invalidChars['*'] = true;
+		_invalidChars['/'] = true;
+		_invalidChars['\\'] = true;
 	}
 
 	protected ServiceRegistration<?> createDefaultServlet() {
