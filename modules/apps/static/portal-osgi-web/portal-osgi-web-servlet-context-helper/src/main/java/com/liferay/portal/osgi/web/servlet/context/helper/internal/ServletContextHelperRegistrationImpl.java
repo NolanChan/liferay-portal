@@ -53,7 +53,6 @@ public class ServletContextHelperRegistrationImpl
 		Map<String, Object> properties) {
 
 		_bundle = bundle;
-		_logger = logger;
 		_properties = properties;
 
 		String contextPath = getContextPath();
@@ -66,7 +65,7 @@ public class ServletContextHelperRegistrationImpl
 			_wabShapedBundle = true;
 
 			WebXMLDefinitionLoader webXMLDefinitionLoader =
-				new WebXMLDefinitionLoader(_bundle, saxParserFactory, _logger);
+				new WebXMLDefinitionLoader(_bundle, saxParserFactory, logger);
 
 			WebXMLDefinition webXMLDefinition = null;
 
@@ -153,10 +152,69 @@ public class ServletContextHelperRegistrationImpl
 		sb.append('(');
 		sb.append(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME);
 		sb.append('=');
-		sb.append(_servletContextName);
+
+		for (int i = 0; i < _servletContextName.length(); i++) {
+			char c = _servletContextName.charAt(i);
+
+			if ((c < _invalidChars.length) && (_invalidChars[c])) {
+				if (c == '(') {
+					sb.append("\\28");
+				}
+				else if (c == ')') {
+					sb.append("\\29");
+				}
+				else if (c == '&') {
+					sb.append("\\26");
+				}
+				else if (c == '|') {
+					sb.append("\\7c");
+				}
+				else if (c == '=') {
+					sb.append("\\3d");
+				}
+				else if (c == '>') {
+					sb.append("\\3e");
+				}
+				else if (c == '<') {
+					sb.append("\\3c");
+				}
+				else if (c == '~') {
+					sb.append("\\7e");
+				}
+				else if (c == '*') {
+					sb.append("\\2a");
+				}
+				else if (c == '/') {
+					sb.append("\\2f");
+				}
+				else if (c == '\\') {
+					sb.append("\\5c");
+				}
+			}
+			else {
+				sb.append(c);
+			}
+		}
+
 		sb.append(')');
 
 		return sb.toString();
+	}
+
+	private static final boolean[] _invalidChars = new boolean[128];
+
+	static {
+		_invalidChars['('] = true;
+		_invalidChars[')'] = true;
+		_invalidChars['&'] = true;
+		_invalidChars['|'] = true;
+		_invalidChars['='] = true;
+		_invalidChars['>'] = true;
+		_invalidChars['<'] = true;
+		_invalidChars['~'] = true;
+		_invalidChars['*'] = true;
+		_invalidChars['/'] = true;
+		_invalidChars['\\'] = true;
 	}
 
 	protected ServiceRegistration<?> createDefaultServlet() {
@@ -288,9 +346,7 @@ public class ServletContextHelperRegistrationImpl
 			return contextPath;
 		}
 
-		String symbolicName = _bundle.getSymbolicName();
-
-		return '/' + symbolicName.replaceAll("[^a-zA-Z0-9]", "");
+		return '/' + _bundle.getSymbolicName();
 	}
 
 	protected String getServletContextName(String contextPath) {
@@ -302,9 +358,7 @@ public class ServletContextHelperRegistrationImpl
 			return header;
 		}
 
-		contextPath = contextPath.substring(1);
-
-		return contextPath.replaceAll("[^a-zA-Z0-9\\-]", "");
+		return contextPath.substring(1);
 	}
 
 	protected void registerServletContext() {
@@ -334,7 +388,6 @@ public class ServletContextHelperRegistrationImpl
 	private final CustomServletContextHelper _customServletContextHelper;
 	private final ServiceRegistration<?> _defaultServletServiceRegistration;
 	private final ServiceRegistration<Servlet> _jspServletServiceRegistration;
-	private final Logger _logger;
 	private final ServiceRegistration<Servlet>
 		_portletServletServiceRegistration;
 	private final Map<String, Object> _properties;
