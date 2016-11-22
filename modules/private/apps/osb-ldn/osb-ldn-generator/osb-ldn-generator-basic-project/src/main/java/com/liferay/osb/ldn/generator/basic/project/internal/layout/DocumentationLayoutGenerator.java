@@ -23,7 +23,6 @@ import com.liferay.osb.ldn.generator.layout.LayoutVersion;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -70,8 +69,6 @@ public class DocumentationLayoutGenerator extends BaseLayoutGenerator {
 
 		layoutTypePortlet.setLayoutTemplateId(
 			layout.getUserId(), "1_column", false);
-
-		User user = _userLocalService.getDefaultUser(layout.getCompanyId());
 
 		if (!layoutTypePortlet.hasPortletId(
 				BasicProjectSiteConstants.PROJECT_HEADER_PORTLET_ID)) {
