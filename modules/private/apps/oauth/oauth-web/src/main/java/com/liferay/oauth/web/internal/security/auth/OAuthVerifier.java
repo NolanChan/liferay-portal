@@ -14,7 +14,10 @@
 
 package com.liferay.oauth.web.internal.security.auth;
 
+import com.liferay.oauth.model.OAuthApplication;
+import com.liferay.oauth.model.OAuthApplicationConstants;
 import com.liferay.oauth.model.OAuthUser;
+import com.liferay.oauth.service.OAuthApplicationLocalService;
 import com.liferay.oauth.service.OAuthUserLocalService;
 import com.liferay.oauth.util.DefaultOAuthAccessor;
 import com.liferay.oauth.util.OAuthAccessor;
@@ -22,12 +25,14 @@ import com.liferay.oauth.util.OAuthConsumer;
 import com.liferay.oauth.util.OAuthMessage;
 import com.liferay.oauth.util.OAuthUtil;
 import com.liferay.oauth.util.WebServerUtil;
+import com.liferay.oauth.web.internal.service.access.policy.OAuthSAPEntryActivator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.oauth.OAuthException;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
+import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicyThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -89,6 +94,19 @@ public class OAuthVerifier implements AuthVerifier {
 
 			authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 			authVerifierResult.setUserId(oAuthUser.getUserId());
+
+			int accessLevel = getAccessLevel(oAuthUser);
+
+			if (accessLevel == OAuthApplicationConstants.ACCESS_READ) {
+				ServiceAccessPolicyThreadLocal.addActiveServiceAccessPolicyName(
+					String.valueOf(
+						OAuthSAPEntryActivator.SAP_ENTRY_OBJECT_ARRAYS[0][0]));
+			}
+			else if (accessLevel == OAuthApplicationConstants.ACCESS_WRITE) {
+				ServiceAccessPolicyThreadLocal.addActiveServiceAccessPolicyName(
+					String.valueOf(
+						OAuthSAPEntryActivator.SAP_ENTRY_OBJECT_ARRAYS[1][0]));
+			}
 		}
 		catch (Exception e) {
 			try {
@@ -107,6 +125,14 @@ public class OAuthVerifier implements AuthVerifier {
 		}
 
 		return authVerifierResult;
+	}
+
+	protected int getAccessLevel(OAuthUser oAuthUser) throws PortalException {
+		OAuthApplication oAuthApplication =
+			_oAuthApplicationLocalService.getOAuthApplication(
+				oAuthUser.getOAuthApplicationId());
+
+		return oAuthApplication.getAccessLevel();
 	}
 
 	protected OAuthAccessor getOAuthAccessor(
@@ -173,15 +199,12 @@ public class OAuthVerifier implements AuthVerifier {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setOAuthUserLocalService(
-		OAuthUserLocalService oAuthUserLocalService) {
-
-		_oAuthUserLocalService = oAuthUserLocalService;
-	}
-
 	private static final String _OAUTH = "OAuth";
 
+	@Reference(unbind = "-")
+	private OAuthApplicationLocalService _oAuthApplicationLocalService;
+
+	@Reference(unbind = "-")
 	private OAuthUserLocalService _oAuthUserLocalService;
 
 }
