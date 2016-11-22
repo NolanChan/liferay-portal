@@ -14,7 +14,9 @@
 
 package com.liferay.osb.lcs.web.internal.servlet;
 
+import com.liferay.lcs.rest.RESTError;
 import com.liferay.osb.lcs.advisor.ServiceControllerAdvisor;
+import com.liferay.osb.lcs.exception.NoSuchLCSSubscriptionEntryException;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.Log;
@@ -25,7 +27,6 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -106,10 +107,16 @@ public class LCSJSONWSServlet extends HttpServlet {
 			writer.write(content);
 		}
 		catch (Exception e) {
+			RESTError restError = RESTError.UNDEFINED;
+
 			int status = HttpServletResponse.SC_BAD_REQUEST;
 
 			if (e instanceof NoSuchModelException) {
 				status = HttpServletResponse.SC_NOT_FOUND;
+
+				if (e instanceof NoSuchLCSSubscriptionEntryException) {
+					restError = RESTError.NO_SUCH_LCS_SUBSCRIPTION_ENTRY;
+				}
 			}
 			else if (e instanceof ORMException) {
 				status = HttpServletResponse.SC_NOT_ACCEPTABLE;
@@ -120,18 +127,18 @@ public class LCSJSONWSServlet extends HttpServlet {
 
 			response.setStatus(status);
 
-			StringBundler sb = new StringBundler(5);
+			String message = restError.toJSON(e.getMessage(), status);
 
-			sb.append("{\"exception\":\"");
-			sb.append(e.getMessage());
-			sb.append(", \"status\":");
-			sb.append(status);
-			sb.append("\"}");
+			if (status == HttpServletResponse.SC_NOT_FOUND) {
+				if (_log.isWarnEnabled()) {
+					_log.error("Unable to complete request because " + message);
+				}
+			}
+			else {
+				_log.error("Unable to complete request because " + message, e);
+			}
 
-			_log.error(
-				"Unable to complete request because " + sb.toString(), e);
-
-			writer.write(sb.toString());
+			writer.write(restError.toJSON(e.getMessage(), status));
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
