@@ -53,7 +53,6 @@ public class ServletContextHelperRegistrationImpl
 		Map<String, Object> properties) {
 
 		_bundle = bundle;
-		_logger = logger;
 		_properties = properties;
 
 		String contextPath = getContextPath();
@@ -66,7 +65,7 @@ public class ServletContextHelperRegistrationImpl
 			_wabShapedBundle = true;
 
 			WebXMLDefinitionLoader webXMLDefinitionLoader =
-				new WebXMLDefinitionLoader(_bundle, saxParserFactory, _logger);
+				new WebXMLDefinitionLoader(_bundle, saxParserFactory, logger);
 
 			WebXMLDefinition webXMLDefinition = null;
 
@@ -330,7 +329,6 @@ public class ServletContextHelperRegistrationImpl
 	private final CustomServletContextHelper _customServletContextHelper;
 	private final ServiceRegistration<?> _defaultServletServiceRegistration;
 	private final ServiceRegistration<Servlet> _jspServletServiceRegistration;
-	private final Logger _logger;
 	private final ServiceRegistration<Servlet>
 		_portletServletServiceRegistration;
 	private final Map<String, Object> _properties;
