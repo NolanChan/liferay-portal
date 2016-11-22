@@ -288,9 +288,7 @@ public class ServletContextHelperRegistrationImpl
 			return contextPath;
 		}
 
-		String symbolicName = _bundle.getSymbolicName();
-
-		return '/' + symbolicName.replaceAll("[^a-zA-Z0-9]", "");
+		return '/' + _bundle.getSymbolicName();
 	}
 
 	protected String getServletContextName(String contextPath) {
@@ -302,9 +300,7 @@ public class ServletContextHelperRegistrationImpl
 			return header;
 		}
 
-		contextPath = contextPath.substring(1);
-
-		return contextPath.replaceAll("[^a-zA-Z0-9\\-]", "");
+		return contextPath.substring(1);
 	}
 
 	protected void registerServletContext() {
