@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.servlet;
+package com.liferay.osb.lcs.web.internal.servlet;
 
 import com.liferay.compat.portal.kernel.util.StringUtil;
 import com.liferay.osb.lcs.advisor.ServiceControllerAdvisor;
@@ -156,15 +156,14 @@ public class LCSJSONWSServlet extends HttpServlet {
 	}
 
 	protected Map<String, String> getParameterMap(HttpServletRequest request) {
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<>();
 
 		String method = request.getMethod();
 
 		if (method.equals(HttpMethods.PUT)) {
 			try {
-				BufferedReader bufferedReader =
-					new BufferedReader(
-						new InputStreamReader(request.getInputStream()));
+				BufferedReader bufferedReader = new BufferedReader(
+					new InputStreamReader(request.getInputStream()));
 
 				List<NameValuePair> nameValuePairs = URLEncodedUtils.parse(
 					bufferedReader.readLine(),
@@ -211,8 +210,7 @@ public class LCSJSONWSServlet extends HttpServlet {
 			throw new UnsupportedOperationException();
 		}
 
-		Map<String, String> serviceControllerMap =
-			new HashMap<String, String>();
+		Map<String, String> serviceControllerMap = new HashMap<>();
 
 		serviceControllerMap.put("controller", pathParts[1] + "Controller");
 		serviceControllerMap.put(
@@ -229,9 +227,11 @@ public class LCSJSONWSServlet extends HttpServlet {
 		return serviceControllerMap;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LCSJSONWSServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LCSJSONWSServlet.class);
 
-	private static Pattern _versionPattern = Pattern.compile("^v\\d+(_\\d+)?$");
+	private static final Pattern _versionPattern = Pattern.compile(
+		"^v\\d+(_\\d+)?$");
 
 	private ServiceControllerAdvisor _serviceControllerAdvisor;
 
