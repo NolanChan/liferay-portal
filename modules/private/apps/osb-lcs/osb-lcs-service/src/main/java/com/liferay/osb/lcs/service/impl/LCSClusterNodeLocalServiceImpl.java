@@ -118,15 +118,6 @@ public class LCSClusterNodeLocalServiceImpl
 			return node;
 		}
 
-		if (!lcsClusterEntry.isElastic()) {
-			lcsSubscriptionEntryLocalService.incrementServerUsed(
-				lcsClusterEntry.getLcsProjectId(),
-				lcsClusterEntry.getSubscriptionType(),
-				node.getProcessorCoresTotal());
-
-			return node;
-		}
-
 		LCSSubscriptionEntry subscriptionEntry =
 			lcsSubscriptionEntryLocalService.
 				fetchLCSProjectLCSSubscriptionEntry(
@@ -144,6 +135,15 @@ public class LCSClusterNodeLocalServiceImpl
 			sb.append(processorCoresTotal);
 
 			throw new NoSuchLCSSubscriptionEntryException(sb.toString());
+		}
+
+		if (!lcsClusterEntry.isElastic()) {
+			lcsSubscriptionEntryLocalService.incrementServerUsed(
+				lcsClusterEntry.getLcsProjectId(),
+				lcsClusterEntry.getSubscriptionType(),
+				node.getProcessorCoresTotal());
+
+			return node;
 		}
 
 		return node;
