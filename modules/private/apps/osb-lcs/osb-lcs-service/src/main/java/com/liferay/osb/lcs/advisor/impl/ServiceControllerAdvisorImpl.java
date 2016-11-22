@@ -16,6 +16,7 @@ package com.liferay.osb.lcs.advisor.impl;
 
 import com.liferay.osb.lcs.advisor.ServiceControllerAdvisor;
 import com.liferay.osb.lcs.annotation.JSONWebServiceParameter;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
@@ -92,7 +93,7 @@ public class ServiceControllerAdvisorImpl implements ServiceControllerAdvisor {
 
 					throw new RuntimeException(noSuchMethodError.getMessage());
 				}
-				else {
+				else if (e.getCause() instanceof NoSuchModelException) {
 					throw (Exception)e.getCause();
 				}
 			}
