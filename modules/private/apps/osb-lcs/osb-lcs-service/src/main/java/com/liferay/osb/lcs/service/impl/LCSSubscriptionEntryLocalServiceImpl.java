@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.IOException;
 
@@ -60,8 +61,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -353,11 +352,6 @@ public class LCSSubscriptionEntryLocalServiceImpl
 		}
 	}
 
-	@Reference(bind = "-")
-	public void setOSBPortletService(OSBPortletService osbPortletService) {
-		_osbPortletService = osbPortletService;
-	}
-
 	protected List<LCSSubscriptionEntry> doGetToList(String json)
 		throws PortalException {
 
@@ -644,6 +638,8 @@ public class LCSSubscriptionEntryLocalServiceImpl
 		LCSSubscriptionEntryLocalServiceImpl.class);
 
 	private ObjectMapper _objectMapper;
+
+	@ServiceReference(type = OSBPortletService.class)
 	private OSBPortletService _osbPortletService;
 
 }
