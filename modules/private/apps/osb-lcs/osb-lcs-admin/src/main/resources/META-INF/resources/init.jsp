@@ -15,122 +15,84 @@
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-
-<%@page import="com.liferay.lcs.notification.LCSEventType" %><%@
+<%@ page import="com.liferay.lcs.notification.LCSEventType" %><%@
 page import="com.liferay.lcs.security.KeyStoreFactory" %><%@
 page import="com.liferay.lcs.subscription.SubscriptionType" %><%@
 page import="com.liferay.lcs.util.LCSClusterNodeStatus" %><%@
 page import="com.liferay.lcs.util.LCSConstants" %><%@
-page import="com.liferay.lcs.util.PatchUtil" %><%@
-page import="com.liferay.osb.lcs.admin.search.LCSClusterNodeDisplayTerms" %><%@
-page import="com.liferay.osb.lcs.admin.search.LCSClusterNodeSearch" %><%@
-page import="com.liferay.osb.lcs.admin.search.LCSClusterNodeSearchTerms" %><%@
 page import="com.liferay.osb.lcs.admin.internal.advisor.AdminAdvisor" %><%@
-page import="com.liferay.osb.lcs.nosql.service.LCSClusterNodeScriptService" %><%@
+page import="com.liferay.osb.lcs.admin.internal.search.LCSClusterNodeDisplayTerms" %><%@
+page import="com.liferay.osb.lcs.admin.internal.search.LCSClusterNodeSearch" %><%@
+page import="com.liferay.osb.lcs.admin.internal.search.LCSClusterNodeSearchTerms" %><%@
+page import="com.liferay.osb.lcs.admin.internal.util.LCSMetadataAvailabilityIndex" %><%@
+page import="com.liferay.osb.lcs.configuration.OSBLCSConfiguration" %><%@
 page import="com.liferay.osb.lcs.model.LCSClusterEntry" %><%@
-page import="com.liferay.osb.lcs.model.LCSClusterEntryToken" %><%@
 page import="com.liferay.osb.lcs.model.LCSClusterNode" %><%@
 page import="com.liferay.osb.lcs.model.LCSClusterNodeUptime" %><%@
-page import="com.liferay.osb.lcs.model.LCSInvitation" %><%@
-page import="com.liferay.osb.lcs.model.LCSMessage" %><%@
 page import="com.liferay.osb.lcs.model.LCSMetadata" %><%@
-page import="com.liferay.osb.lcs.model.LCSNotification" %><%@
 page import="com.liferay.osb.lcs.model.LCSNotificationAuditEntry" %><%@
 page import="com.liferay.osb.lcs.model.LCSProject" %><%@
-page import="com.liferay.osb.lcs.model.LCSRole" %><%@
-page import="com.liferay.osb.lcs.model.LCSSubscriptionEntry" %><%@
-page import="com.liferay.osb.lcs.model.UserLCSMessage" %><%@
-page import="com.liferay.osb.lcs.nosql.model.LCSClusterNodeInstallationEnvironment" %><%@
-page import="com.liferay.osb.lcs.nosql.model.LCSClusterNodeLiferayVMMetrics" %><%@
 page import="com.liferay.osb.lcs.nosql.model.LCSClusterNodeScript" %><%@
+page import="com.liferay.osb.lcs.nosql.service.LCSClusterNodeScriptService" %><%@
 page import="com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil" %><%@
-page import="com.liferay.osb.lcs.service.LCSClusterEntryServiceUtil" %><%@
-page import="com.liferay.osb.lcs.service.LCSClusterEntryTokenServiceUtil" %><%@
 page import="com.liferay.osb.lcs.service.LCSClusterNodeLocalServiceUtil" %><%@
-page import="com.liferay.osb.lcs.service.LCSClusterNodeServiceUtil" %><%@
 page import="com.liferay.osb.lcs.service.LCSClusterNodeUptimeLocalServiceUtil" %><%@
-page import="com.liferay.osb.lcs.service.LCSInvitationServiceUtil" %><%@
-page import="com.liferay.osb.lcs.service.LCSMessageServiceUtil" %><%@
 page import="com.liferay.osb.lcs.service.LCSMetadataLocalServiceUtil" %><%@
 page import="com.liferay.osb.lcs.service.LCSNotificationAuditEntryLocalServiceUtil" %><%@
-page import="com.liferay.osb.lcs.service.LCSNotificationServiceUtil" %><%@
 page import="com.liferay.osb.lcs.service.LCSPatchEntryLocalServiceUtil" %><%@
 page import="com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil" %><%@
 page import="com.liferay.osb.lcs.service.LCSProjectServiceUtil" %><%@
-page import="com.liferay.osb.lcs.service.LCSRoleLocalServiceUtil" %><%@
-page import="com.liferay.osb.lcs.service.LCSSubscriptionEntryLocalServiceUtil" %><%@
-page import="com.liferay.osb.lcs.service.UserLCSMessageServiceUtil" %><%@
-page import="com.liferay.osb.lcs.util.ApplicationProfile" %><%@
-page import="com.liferay.osb.lcs.util.LCSClusterNodeUtil" %><%@
-page import="com.liferay.osb.lcs.admin.internal.util.LCSMetadataAvailabilityIndex" %><%@
-page import="com.liferay.osb.lcs.constants.OSBLCSPortletKeys" %><%@
-page import="com.liferay.osb.lcs.constants.OSBLCSWebKeys" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portal.kernel.exception.RequiredFieldException" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-page import="com.liferay.portal.kernel.json.JSONArray" %><%@
-page import="com.liferay.portal.kernel.json.JSONObject" %><%@
+page import="com.liferay.portal.kernel.exception.RequiredFieldException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.ServiceComponent" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %><%@
+page import="com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarUtil" %><%@
-page import="com.liferay.portal.kernel.util.DateUtil" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
-page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.model.ServiceComponent" %><%@
-page import="com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %><%@
-page import="com.liferay.osb.lcs.configuration.OSBLCSConfiguration" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %>
-
+page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.text.DateFormat" %><%@
 page import="java.text.DecimalFormat" %><%@
 page import="java.text.Format" %><%@
 page import="java.text.NumberFormat" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Calendar" %><%@
-page import="java.util.Date" %><%@
+<%@ page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
-page import="java.util.Locale" %><%@
-page import="java.util.Map" %>
+page import="java.util.Map" %><%@
+page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
-<portlet:defineObjects />
+<liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 
+<portlet:defineObjects />
+
 <%
-PortletURL currentURLObj = PortletURLUtil.getCurrent(renderRequest, renderResponse);
-
-String currentURL = currentURLObj.toString();
-
 DecimalFormat decimalFormat = new DecimalFormat("#.0");
 Format longDateFormatTime = FastDateFormatFactoryUtil.getTime(DateFormat.LONG, locale, timeZone);
 Format mediumDateFormatDate = FastDateFormatFactoryUtil.getDate(DateFormat.MEDIUM, locale, timeZone);

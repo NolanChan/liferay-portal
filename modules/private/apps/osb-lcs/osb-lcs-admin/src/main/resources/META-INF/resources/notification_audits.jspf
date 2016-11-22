@@ -53,6 +53,7 @@ for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSPro
 
 				</aui:select>
 			</aui:col>
+
 			<aui:col>
 				<aui:select label="environment" name="lcsClusterEntryId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
 					<aui:option label='<%= LanguageUtil.get(request, "all-environments") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />
@@ -69,6 +70,7 @@ for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSPro
 
 				</aui:select>
 			</aui:col>
+
 			<aui:col>
 				<aui:select label="node" name="lcsClusterNodeId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
 					<aui:option label='<%= LanguageUtil.get(request, "all-nodes") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />

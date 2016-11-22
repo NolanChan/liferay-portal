@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.admin.search;
+package com.liferay.osb.lcs.admin.internal.search;
 
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.portal.kernel.dao.search.SearchContainer;

@@ -19,7 +19,7 @@ long lcsClusterEntryId = ParamUtil.getLong(request, "lcsClusterEntryId");
 long lcsClusterNodeId = ParamUtil.getLong(request, "lcsClusterNodeId");
 long lcsProjectId = ParamUtil.getLong(request, "lcsProjectId");
 
-LCSClusterNodeScriptService lcsClusterNodeScriptService = (LCSClusterNodeScriptService) renderRequest.getAttribute(LCSClusterNodeScriptService.class.getName());
+LCSClusterNodeScriptService lcsClusterNodeScriptService = (LCSClusterNodeScriptService)renderRequest.getAttribute(LCSClusterNodeScriptService.class.getName());
 %>
 
 <aui:form action="<%= portletURL %>" method="get" name="fm">
@@ -42,6 +42,7 @@ LCSClusterNodeScriptService lcsClusterNodeScriptService = (LCSClusterNodeScriptS
 			%>
 
 		</aui:select>
+
 		<aui:select label="environments" name="lcsClusterEntryId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
 			<aui:option label='<%= LanguageUtil.get(request, "all-environments") %>' />
 
@@ -56,6 +57,7 @@ LCSClusterNodeScriptService lcsClusterNodeScriptService = (LCSClusterNodeScriptS
 			%>
 
 		</aui:select>
+
 		<aui:select label="servers" name="lcsClusterNodeId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
 			<aui:option label='<%= LanguageUtil.get(request, "all-nodes") %>' />
 
@@ -90,7 +92,7 @@ LCSClusterNodeScriptService lcsClusterNodeScriptService = (LCSClusterNodeScriptS
 				<liferay-ui:search-container-results>
 
 					<%
-					List<LCSClusterNodeScript> lcsClusterNodeScripts = (List<LCSClusterNodeScript>) lcsClusterNodeScriptService.getLCSClusterNodeScripts(lcsClusterNode.getKey());
+					List<LCSClusterNodeScript> lcsClusterNodeScripts = (List<LCSClusterNodeScript>)lcsClusterNodeScriptService.getLCSClusterNodeScripts(lcsClusterNode.getKey());
 
 					results = ListUtil.subList(lcsClusterNodeScripts, searchContainer.getStart(), searchContainer.getEnd());
 					total = lcsClusterNodeScripts.size();

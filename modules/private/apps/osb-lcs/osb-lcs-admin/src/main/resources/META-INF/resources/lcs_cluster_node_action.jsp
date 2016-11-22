@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AdminAdvisor adminAdvisor = (AdminAdvisor) renderRequest.getAttribute(AdminAdvisor.class.getName());
+AdminAdvisor adminAdvisor = (AdminAdvisor)renderRequest.getAttribute(AdminAdvisor.class.getName());
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 

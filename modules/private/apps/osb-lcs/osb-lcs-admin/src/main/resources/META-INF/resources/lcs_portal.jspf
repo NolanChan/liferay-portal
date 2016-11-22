@@ -15,8 +15,8 @@
 --%>
 
 <%
-AdminAdvisor adminAdvisor = (AdminAdvisor) renderRequest.getAttribute(AdminAdvisor.class.getName());
-OSBLCSConfiguration osbLCSConfiguration = (OSBLCSConfiguration) renderRequest.getAttribute(OSBLCSConfiguration.class.getName());
+AdminAdvisor adminAdvisor = (AdminAdvisor)renderRequest.getAttribute(AdminAdvisor.class.getName());
+OSBLCSConfiguration osbLCSConfiguration = (OSBLCSConfiguration)renderRequest.getAttribute(OSBLCSConfiguration.class.getName());
 
 boolean billingEnabled = osbLCSConfiguration.billingEnabled();
 boolean messageForwardDevEnabled = adminAdvisor.isMessageForwardEnabled("dev");

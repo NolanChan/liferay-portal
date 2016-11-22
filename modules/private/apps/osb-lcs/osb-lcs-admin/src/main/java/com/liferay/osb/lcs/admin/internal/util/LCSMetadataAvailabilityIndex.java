@@ -28,7 +28,7 @@ public enum LCSMetadataAvailabilityIndex {
 		getLCSMetadataAvailabilityIndexes(long index) {
 
 		List<LCSMetadataAvailabilityIndex> lcsMetadataAvailabilityIndexes =
-			new ArrayList<LCSMetadataAvailabilityIndex>();
+			new ArrayList<>();
 
 		for (LCSMetadataAvailabilityIndex lcsMetadataAvailabilityIndex :
 				values()) {
@@ -84,7 +84,7 @@ public enum LCSMetadataAvailabilityIndex {
 		_index = index;
 	}
 
-	private long _index;
-	private String _label;
+	private final long _index;
+	private final String _label;
 
 }

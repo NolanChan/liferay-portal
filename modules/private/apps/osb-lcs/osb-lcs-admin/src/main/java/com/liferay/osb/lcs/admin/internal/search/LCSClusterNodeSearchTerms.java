@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osb.lcs.admin.search;
+package com.liferay.osb.lcs.admin.internal.search;
 
 import javax.portlet.PortletRequest;
 

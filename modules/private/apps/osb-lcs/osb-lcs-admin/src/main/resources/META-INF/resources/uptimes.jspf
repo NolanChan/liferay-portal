@@ -56,6 +56,7 @@ for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSPro
 
 				</aui:select>
 			</aui:col>
+
 			<aui:col>
 				<aui:select label="environment" name="lcsClusterEntryId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
 					<aui:option label='<%= LanguageUtil.get(request, "all-environments") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />
@@ -72,6 +73,7 @@ for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSPro
 
 				</aui:select>
 			</aui:col>
+
 			<aui:col>
 				<aui:select label="node" name="lcsClusterNodeId" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>'>
 					<aui:option label='<%= LanguageUtil.get(request, "all-nodes") %>' value="<%= LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID %>" />
@@ -88,6 +90,7 @@ for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSPro
 
 				</aui:select>
 			</aui:col>
+
 			<aui:col>
 				<aui:select label="month" name="month" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>' required="<%= true %>">
 					<aui:option label='<%= LanguageUtil.get(request, "all-months") %>' />
@@ -106,6 +109,7 @@ for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSPro
 
 				</aui:select>
 			</aui:col>
+
 			<aui:col>
 				<aui:select label="year" name="year" onChange='<%= renderResponse.getNamespace() + "fm.submit();" %>' required="<%= true %>">
 					<aui:option label='<%= LanguageUtil.get(request, "all-years") %>' />
@@ -123,6 +127,7 @@ for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSPro
 				</aui:select>
 			</aui:col>
 		</aui:row>
+
 		<c:if test="<%= (lcsProjectId != LCSConstants.ALL_LCS_CLUSTER_OBJECTS_ID) && (month != -1) && (year != -1) %>">
 			<aui:row>
 				<aui:col>
@@ -136,6 +141,7 @@ for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSPro
 
 					<aui:button href="<%= downloadLCSClusterNodeUptimesDelimitedReportURL %>" value="download-csv-report" />
 				</aui:col>
+
 				<aui:col>
 					<portlet:resourceURL id="downloadLCSClusterNodeUptimesPDFReport" var="downloadLCSClusterNodeUptimesPDFReportURL">
 						<portlet:param name="lcsProjectId" value="<%= String.valueOf(lcsProjectId) %>" />
@@ -147,6 +153,7 @@ for (LCSClusterEntry lcsClusterEntry : LCSClusterEntryLocalServiceUtil.getLCSPro
 
 					<aui:button href="<%= downloadLCSClusterNodeUptimesPDFReportURL %>" value="download-pdf-report" />
 				</aui:col>
+
 				<aui:col>
 					<portlet:resourceURL id="downloadLCSClusterNodeUptimesInvoicePDFReport" var="downloadLCSClusterNodeUptimesInvoicePDFReportURL">
 						<portlet:param name="lcsProjectId" value="<%= String.valueOf(lcsProjectId) %>" />

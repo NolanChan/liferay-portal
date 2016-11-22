@@ -18,6 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 long lcsMetadataId = ParamUtil.getLong(request, "lcsMetadataId");
@@ -45,7 +46,7 @@ LCSMetadata lcsMetadata = LCSMetadataLocalServiceUtil.fetchLCSMetadata(lcsMetada
 
 	<aui:fieldset>
 		<c:choose>
-			<c:when test="<%= (lcsMetadata == null) %>">
+			<c:when test="<%= lcsMetadata == null %>">
 				<aui:input name="buildNumber" />
 			</c:when>
 			<c:otherwise>
@@ -56,7 +57,7 @@ LCSMetadata lcsMetadata = LCSMetadataLocalServiceUtil.fetchLCSMetadata(lcsMetada
 		</c:choose>
 
 		<c:choose>
-			<c:when test="<%= (lcsMetadata == null) %>">
+			<c:when test="<%= lcsMetadata == null %>">
 				<aui:input name="gitTag" />
 			</c:when>
 			<c:otherwise>
@@ -67,7 +68,7 @@ LCSMetadata lcsMetadata = LCSMetadataLocalServiceUtil.fetchLCSMetadata(lcsMetada
 		</c:choose>
 
 		<c:choose>
-			<c:when test="<%= (lcsMetadata == null) %>">
+			<c:when test="<%= lcsMetadata == null %>">
 				<aui:input name="portalEdition" />
 			</c:when>
 			<c:otherwise>

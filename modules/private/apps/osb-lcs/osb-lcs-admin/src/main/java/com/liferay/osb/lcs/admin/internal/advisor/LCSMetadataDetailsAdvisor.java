@@ -20,33 +20,30 @@ import com.liferay.osb.lcs.nosql.model.LCSMetadataDetails;
 import com.liferay.osb.lcs.nosql.service.LCSMetadataDetailsService;
 import com.liferay.osb.lcs.service.LCSMetadataLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Matija Petanjek
  */
-@Component(immediate = true)
+@Component(immediate = true, service = LCSMetadataDetailsAdvisor.class)
 public class LCSMetadataDetailsAdvisor {
 
 	public LCSMetadataDetails addLCSMetadataDetails(
-			int buildNumber, Map<String, String> generalProperties,
-			String gitTag, String portalEdition,
-			Map<String, String> portalProperties)
-		throws SystemException {
+		int buildNumber, Map<String, String> generalProperties, String gitTag,
+		String portalEdition, Map<String, String> portalProperties) {
 
 		LCSMetadataDetails lcsMetadataDetails =
 			_lcsMetadataDetailsService.addLCSMetadataDetails(
 				buildNumber, generalProperties, gitTag, portalEdition,
 				portalProperties);
 
-		LCSMetadata lcsMetadata =
-			_lcsMetadataLocalService.fetchLCSMetadata(
-				buildNumber, gitTag, portalEdition);
+		LCSMetadata lcsMetadata = _lcsMetadataLocalService.fetchLCSMetadata(
+			buildNumber, gitTag, portalEdition);
 
 		long availabilityIndex =
 			LCSMetadataAvailabilityIndex.PORTAL_PROPERTIES_AVAILABLE.merge(
@@ -58,9 +55,36 @@ public class LCSMetadataDetailsAdvisor {
 		return lcsMetadataDetails;
 	}
 
+	public LCSMetadataDetails fetchLCSMetadataDetails(
+		int buildNumber, String gitTag, String portalEdition) {
+
+		return _lcsMetadataDetailsService.fetchLCSMetadataDetails(
+			buildNumber, gitTag, portalEdition);
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSMetadataDetailsService(
+		LCSMetadataDetailsService lcsMetadataDetailsService) {
+
+		_lcsMetadataDetailsService = lcsMetadataDetailsService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSMetadataLocalService(
+		LCSMetadataLocalService lcsMetadataLocalService) {
+
+		_lcsMetadataLocalService = lcsMetadataLocalService;
+	}
+
+	public void updateLCSMetadataDetails(
+		LCSMetadataDetails lcsMetadataDetails) {
+
+		_lcsMetadataDetailsService.updateLCSMetadataDetails(lcsMetadataDetails);
+	}
+
 	public void updateLCSMetadataDetailsPortletProperties(
 			long lcsMetadataId, Map<String, String> portalProperties)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		LCSMetadata lcsMetadata = _lcsMetadataLocalService.getLCSMetadata(
 			lcsMetadataId);
@@ -80,35 +104,6 @@ public class LCSMetadataDetailsAdvisor {
 				lcsMetadata.getGitTag(), lcsMetadata.getPortalEdition(),
 				portalProperties);
 		}
-	}
-
-	public LCSMetadataDetails fetchLCSMetadataDetails(
-		int buildNumber, String gitTag, String portalEdition) {
-
-		return _lcsMetadataDetailsService.fetchLCSMetadataDetails(
-			buildNumber, gitTag, portalEdition);
-	}
-
-	public void updateLCSMetadataDetails(
-			LCSMetadataDetails lcsMetadataDetails)
-		throws SystemException {
-
-		_lcsMetadataDetailsService.updateLCSMetadataDetails(
-			lcsMetadataDetails);
-	}
-
-	@Reference(unbind = "-")
-	protected void setLCSMetadataDetailsService(
-		LCSMetadataDetailsService lcsMetadataDetailsService) {
-
-		_lcsMetadataDetailsService = lcsMetadataDetailsService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLCSMetadataLocalService(
-		LCSMetadataLocalService lcsMetadataLocalService) {
-
-		_lcsMetadataLocalService = lcsMetadataLocalService;
 	}
 
 	private LCSMetadataDetailsService _lcsMetadataDetailsService;

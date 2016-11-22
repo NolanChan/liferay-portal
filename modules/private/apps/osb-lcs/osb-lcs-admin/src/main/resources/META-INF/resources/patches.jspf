@@ -15,7 +15,7 @@
 --%>
 
 <%
-OSBLCSConfiguration osbLCSConfiguration = (OSBLCSConfiguration) renderRequest.getAttribute(OSBLCSConfiguration.class.getName());
+OSBLCSConfiguration osbLCSConfiguration = (OSBLCSConfiguration)renderRequest.getAttribute(OSBLCSConfiguration.class.getName());
 %>
 
 <aui:form action='<%= "/c/portal/lcs/patch/upload?p_auth=" + AuthTokenUtil.getToken(request) %>' enctype="multipart/form-data" method="post" name="fm">

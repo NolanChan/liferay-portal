@@ -49,9 +49,9 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.ByteArrayOutputStream;
@@ -73,9 +73,11 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -90,24 +92,24 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = {
-		"javax.portlet.name=" + OSBLCSPortletKeys.ADMIN,
-		"javax.portlet.display-name=LCS Admin",
-		"javax.portlet.init-param.template-path=/admin/",
-		"javax.portlet.init-param.view-template=/admin/view.jsp",
-		"javax.portlet.expiration-cache=0",
-		"javax.portlet.mime-type=text/html",
-		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.info.title=LCS Admin",
-		"javax.portlet.info.short-title=LCS Admin",
-		"javax.portlet.info.keywords=LCS Admin",
-		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"com.liferay.portlet.control-panel-entry-category=portal",
-		"com.liferay.portlet.preferences-company-wide=true",
-		"com.liferay.portlet.header-portlet-css=/css/lcs-admin.css",
+		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-admin",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-admin.js",
 		"com.liferay.portlet.footer-portlet-javascript=/js/lcs-base.js",
-		"com.liferay.portlet.css-class-wrapper=osb-lcs-portlet osb-lcs-portlet-admin",
-		"com.liferay.portlet.display-category=category.hidden"
+		"com.liferay.portlet.header-portlet-css=/css/lcs-admin.css",
+		"com.liferay.portlet.preferences-company-wide=true",
+		"javax.portlet.display-name=LCS Admin",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.info.keywords=LCS Admin",
+		"javax.portlet.info.short-title=LCS Admin",
+		"javax.portlet.info.title=LCS Admin",
+		"javax.portlet.init-param.template-path=/admin/",
+		"javax.portlet.init-param.view-template=/admin/view.jsp",
+		"javax.portlet.mime-type=text/html",
+		"javax.portlet.name=" + OSBLCSPortletKeys.ADMIN,
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
 	},
 	service = Portlet.class
 )
@@ -179,11 +181,12 @@ public class AdminPortlet extends MVCPortlet {
 
 		request.setAttribute(AdminAdvisor.class.getName(), _adminAdvisor);
 
-		request.setAttribute(OSBLCSConfiguration.class.getName(),
-			_osbLCSConfiguration);
-
-		request.setAttribute(LCSClusterNodeScriptService.class.getName(),
+		request.setAttribute(
+			LCSClusterNodeScriptService.class.getName(),
 			_lcsClusterNodeScriptService);
+
+		request.setAttribute(
+			OSBLCSConfiguration.class.getName(), _osbLCSConfiguration);
 
 		super.render(request, response);
 	}
@@ -199,8 +202,7 @@ public class AdminPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_lcsSubscriptionEntryService.
-			refreshLCSProjectLCSSubscriptionEntries();
+		_lcsSubscriptionEntryService.refreshLCSProjectLCSSubscriptionEntries();
 	}
 
 	public void saveLCSPortalPreferences(
@@ -254,17 +256,6 @@ public class AdminPortlet extends MVCPortlet {
 		sendRedirect(actionRequest, actionResponse);
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
-			OSBLCSConfiguration.class, properties);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_osbLCSConfiguration = null;
-	}
-
 	@Override
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -301,10 +292,91 @@ public class AdminPortlet extends MVCPortlet {
 			}
 		}
 		catch (Exception e) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Unable to generate delimited file", e);
-			}
+			_log.error("Unable to generate delimited file", e);
 		}
+	}
+
+	@Reference(unbind = "-")
+	public void setAdminAdvisor(AdminAdvisor adminAdvisor) {
+		_adminAdvisor = adminAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setCommandMessageAdvisor(
+		CommandMessageAdvisor commandMessageAdvisor) {
+
+		_commandMessageAdvisor = commandMessageAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSClusterEntryLocalService(
+		LCSClusterEntryLocalService lcsClusterEntryLocalService) {
+
+		_lcsClusterEntryLocalService = lcsClusterEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSClusterNodeScriptService(
+		LCSClusterNodeScriptService lcsClusterNodeScriptService) {
+
+		_lcsClusterNodeScriptService = lcsClusterNodeScriptService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSClusterNodeService(
+		LCSClusterNodeService lcsClusterNodeService) {
+
+		_lcsClusterNodeService = lcsClusterNodeService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSMetadataDetailsAdvisor(
+		LCSMetadataDetailsAdvisor lcsMetadataDetailsAdvisor) {
+
+		_lcsMetadataDetailsAdvisor = lcsMetadataDetailsAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSMetadataLocalService(
+		LCSMetadataLocalService lcsMetadataLocalService) {
+
+		_lcsMetadataLocalService = lcsMetadataLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSProjectLocalService(
+		LCSProjectLocalService lcsProjectLocalService) {
+
+		_lcsProjectLocalService = lcsProjectLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSSubscriptionEntryService(
+		LCSSubscriptionEntryService lcsSubscriptionEntryService) {
+
+		_lcsSubscriptionEntryService = lcsSubscriptionEntryService;
+	}
+
+	@Reference(unbind = "-")
+	public void setOSBPortletService(OSBPortletService osbPortletService) {
+		_osbPortletService = osbPortletService;
+	}
+
+	@Reference(unbind = "-")
+	public void setPatchAdvisor(PatchAdvisor patchAdvisor) {
+		_patchAdvisor = patchAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setPortalPropertiesAdvisor(
+		PortalPropertiesAdvisor portalPropertiesAdvisor) {
+
+		_portalPropertiesAdvisor = portalPropertiesAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setReportFactory(ReportFactory reportFactory) {
+		_reportFactory = reportFactory;
 	}
 
 	public void updateLCSMetadata(
@@ -325,6 +397,17 @@ public class AdminPortlet extends MVCPortlet {
 		uploadPortalPropertiesFile(actionRequest, lcsMetadataId);
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_osbLCSConfiguration = ConfigurableUtil.createConfigurable(
+			OSBLCSConfiguration.class, properties);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_osbLCSConfiguration = null;
+	}
+
 	protected void downloadLCSClusterNodesDelimitedReport(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
@@ -339,8 +422,8 @@ public class AdminPortlet extends MVCPortlet {
 			_adminAdvisor.getLCSClusterNodeObjectArrays());
 		reportContextBuilder.lineSeparator(getLineSeparator(resourceRequest));
 
-		ByteArrayOutputStream byteArrayOutputStream =
-			report.process(reportContextBuilder.build());
+		ByteArrayOutputStream byteArrayOutputStream = report.process(
+			reportContextBuilder.build());
 
 		writeFile(
 			resourceResponse, byteArrayOutputStream,
@@ -360,21 +443,21 @@ public class AdminPortlet extends MVCPortlet {
 
 		ThemeDisplay themeDisplay = getThemeDisplay(resourceRequest);
 
-		reportContextBuilder.lcsClusterEntryId(Long.parseLong(
-			resourceRequest.getParameter("lcsClusterEntryId")));
-		reportContextBuilder.lcsClusterNodeId(Long.parseLong(
-			resourceRequest.getParameter("lcsClusterNodeId")));
-		reportContextBuilder.lcsProjectId(Long.parseLong(
-			resourceRequest.getParameter("lcsProjectId")));
+		reportContextBuilder.lcsClusterEntryId(
+			Long.parseLong(resourceRequest.getParameter("lcsClusterEntryId")));
+		reportContextBuilder.lcsClusterNodeId(
+			Long.parseLong(resourceRequest.getParameter("lcsClusterNodeId")));
+		reportContextBuilder.lcsProjectId(
+			Long.parseLong(resourceRequest.getParameter("lcsProjectId")));
 		reportContextBuilder.lineSeparator(getLineSeparator(resourceRequest));
 		reportContextBuilder.locale(themeDisplay.getLocale());
-		reportContextBuilder.month(Integer.parseInt(
-			resourceRequest.getParameter("month")));
-		reportContextBuilder.year(Integer.parseInt(
-			resourceRequest.getParameter("year")));
+		reportContextBuilder.month(
+			Integer.parseInt(resourceRequest.getParameter("month")));
+		reportContextBuilder.year(
+			Integer.parseInt(resourceRequest.getParameter("year")));
 
-		ByteArrayOutputStream byteArrayOutputStream =
-			report.process(reportContextBuilder.build());
+		ByteArrayOutputStream byteArrayOutputStream = report.process(
+			reportContextBuilder.build());
 
 		writeFile(
 			resourceResponse, byteArrayOutputStream,
@@ -395,18 +478,18 @@ public class AdminPortlet extends MVCPortlet {
 
 		ThemeDisplay themeDisplay = getThemeDisplay(resourceRequest);
 
-		reportContextBuilder.lcsClusterEntryId(Long.parseLong(
-			resourceRequest.getParameter("lcsClusterEntryId")));
-		reportContextBuilder.lcsClusterNodeId(Long.parseLong(
-			resourceRequest.getParameter("lcsClusterNodeId")));
-		reportContextBuilder.lcsProjectId(Long.parseLong(
-			resourceRequest.getParameter("lcsProjectId")));
+		reportContextBuilder.lcsClusterEntryId(
+			Long.parseLong(resourceRequest.getParameter("lcsClusterEntryId")));
+		reportContextBuilder.lcsClusterNodeId(
+			Long.parseLong(resourceRequest.getParameter("lcsClusterNodeId")));
+		reportContextBuilder.lcsProjectId(
+			Long.parseLong(resourceRequest.getParameter("lcsProjectId")));
 		reportContextBuilder.locale(themeDisplay.getLocale());
-		reportContextBuilder.month(Integer.parseInt(
-			resourceRequest.getParameter("month")));
+		reportContextBuilder.month(
+			Integer.parseInt(resourceRequest.getParameter("month")));
 		reportContextBuilder.userId(themeDisplay.getUserId());
-		reportContextBuilder.year(Integer.parseInt(
-			resourceRequest.getParameter("year")));
+		reportContextBuilder.year(
+			Integer.parseInt(resourceRequest.getParameter("year")));
 
 		ByteArrayOutputStream byteArrayOutputStream = report.process(
 			reportContextBuilder.build());
@@ -430,13 +513,13 @@ public class AdminPortlet extends MVCPortlet {
 
 		ThemeDisplay themeDisplay = getThemeDisplay(resourceRequest);
 
-		reportContextBuilder.lcsProjectId(Long.parseLong(
-			resourceRequest.getParameter("lcsProjectId")));
+		reportContextBuilder.lcsProjectId(
+			Long.parseLong(resourceRequest.getParameter("lcsProjectId")));
 		reportContextBuilder.locale(themeDisplay.getLocale());
-		reportContextBuilder.month(Integer.parseInt(
-			resourceRequest.getParameter("month")));
-		reportContextBuilder.year(Integer.parseInt(
-			resourceRequest.getParameter("year")));
+		reportContextBuilder.month(
+			Integer.parseInt(resourceRequest.getParameter("month")));
+		reportContextBuilder.year(
+			Integer.parseInt(resourceRequest.getParameter("year")));
 
 		ByteArrayOutputStream byteArrayOutputStream = report.process(
 			reportContextBuilder.build());
@@ -446,6 +529,18 @@ public class AdminPortlet extends MVCPortlet {
 			"lcs-cluster-node-uptime-report-" + System.currentTimeMillis() +
 				".pdf",
 			"application/pdf");
+	}
+
+	protected String getLineSeparator(ResourceRequest resourceRequest) {
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(resourceRequest);
+
+		if (BrowserSnifferUtil.isWindows(httpServletRequest)) {
+			return StringPool.RETURN_NEW_LINE;
+		}
+		else {
+			return StringPool.NEW_LINE;
+		}
 	}
 
 	protected void getPortalPropertiesDifference(
@@ -467,11 +562,9 @@ public class AdminPortlet extends MVCPortlet {
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
 
-	@Reference(unbind = "-")
-	public void setCommandMessageAdvisor(
-		CommandMessageAdvisor commandMessageAdvisor) {
-
-		_commandMessageAdvisor = commandMessageAdvisor;
+	protected ThemeDisplay getThemeDisplay(ResourceRequest resourceRequest) {
+		return (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	protected void uploadPortalPropertiesFile(
@@ -495,8 +588,7 @@ public class AdminPortlet extends MVCPortlet {
 
 			propertiesConfiguration.load(inputStream);
 
-			Map<String, String> portalProperties =
-				new HashMap<String, String>();
+			Map<String, String> portalProperties = new HashMap<>();
 
 			Iterator<String> iterator = propertiesConfiguration.getKeys();
 
@@ -561,116 +653,21 @@ public class AdminPortlet extends MVCPortlet {
 		outputStream.close();
 	}
 
-	protected ThemeDisplay getThemeDisplay(ResourceRequest resourceRequest) {
-		return (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-	}
-
-	protected String getLineSeparator(ResourceRequest resourceRequest) {
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(resourceRequest);
-
-		if (BrowserSnifferUtil.isWindows(httpServletRequest)) {
-			return StringPool.RETURN_NEW_LINE;
-		}
-		else {
-			return StringPool.NEW_LINE;
-		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setAdminAdvisor(AdminAdvisor adminAdvisor) {
-		_adminAdvisor = adminAdvisor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortalPropertiesAdvisor(
-		PortalPropertiesAdvisor portalPropertiesAdvisor) {
-
-		_portalPropertiesAdvisor = portalPropertiesAdvisor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLCSClusterEntryLocalService(
-		LCSClusterEntryLocalService lcsClusterEntryLocalService) {
-
-		_lcsClusterEntryLocalService = lcsClusterEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLCSClusterNodeService(
-		LCSClusterNodeService lcsClusterNodeService) {
-
-		_lcsClusterNodeService = lcsClusterNodeService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLCSMetadataLocalService(
-		LCSMetadataLocalService lcsMetadataLocalService) {
-
-		_lcsMetadataLocalService = lcsMetadataLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLCSProjectLocalService(
-		LCSProjectLocalService lcsProjectLocalService) {
-
-		_lcsProjectLocalService = lcsProjectLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLCSSubscriptionEntryService(
-		LCSSubscriptionEntryService lcsSubscriptionEntryService) {
-
-		_lcsSubscriptionEntryService = lcsSubscriptionEntryService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setOSBPortletService(OSBPortletService osbPortletService) {
-
-		_osbPortletService = osbPortletService;
-	}
-	@Reference(bind = "-", unbind = "-")
-	public void setLCSMetadataDetailsAdvisor(
-		LCSMetadataDetailsAdvisor lcsMetadataDetailsAdvisor) {
-
-		_lcsMetadataDetailsAdvisor = lcsMetadataDetailsAdvisor;
-	}
-
-	@Reference(unbind = "-")
-	public void setPatchAdvisor(PatchAdvisor patchAdvisor) {
-		_patchAdvisor = patchAdvisor;
-	}
-
-	@Reference(unbind = "-")
-	public void setLCSClusterNodeScriptService(
-		LCSClusterNodeScriptService lcsClusterNodeScriptService) {
-
-		_lcsClusterNodeScriptService = lcsClusterNodeScriptService;
-	}
-
-	@Reference(unbind = "-")
-	public void setReportFactory(ReportFactory reportFactory) {
-
-		_reportFactory = reportFactory;
-	}
-
-	private LCSMetadataDetailsAdvisor _lcsMetadataDetailsAdvisor;
-
-	private static Log _log = LogFactoryUtil.getLog(AdminPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(AdminPortlet.class);
 
 	private AdminAdvisor _adminAdvisor;
 	private CommandMessageAdvisor _commandMessageAdvisor;
-	private PortalPropertiesAdvisor _portalPropertiesAdvisor;
 	private LCSClusterEntryLocalService _lcsClusterEntryLocalService;
+	private LCSClusterNodeScriptService _lcsClusterNodeScriptService;
 	private LCSClusterNodeService _lcsClusterNodeService;
+	private LCSMetadataDetailsAdvisor _lcsMetadataDetailsAdvisor;
 	private LCSMetadataLocalService _lcsMetadataLocalService;
 	private LCSProjectLocalService _lcsProjectLocalService;
 	private LCSSubscriptionEntryService _lcsSubscriptionEntryService;
 	private OSBLCSConfiguration _osbLCSConfiguration;
 	private OSBPortletService _osbPortletService;
 	private PatchAdvisor _patchAdvisor;
-	private LCSClusterNodeScriptService _lcsClusterNodeScriptService;
+	private PortalPropertiesAdvisor _portalPropertiesAdvisor;
 	private ReportFactory _reportFactory;
 
 }

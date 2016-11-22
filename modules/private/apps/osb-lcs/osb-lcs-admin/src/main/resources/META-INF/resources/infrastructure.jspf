@@ -15,7 +15,7 @@
 --%>
 
 <%
-OSBLCSConfiguration osbLCSConfiguration = (OSBLCSConfiguration) renderRequest.getAttribute(OSBLCSConfiguration.class.getName());
+OSBLCSConfiguration osbLCSConfiguration = (OSBLCSConfiguration)renderRequest.getAttribute(OSBLCSConfiguration.class.getName());
 %>
 
 <liferay-portlet:actionURL name="checkLCSProjects" var="checkLCSProjectsURL">
@@ -56,7 +56,7 @@ OSBLCSConfiguration osbLCSConfiguration = (OSBLCSConfiguration) renderRequest.ge
 		long serviceComponentBuildNumber = 0;
 
 		for (ServiceComponent serviceComponent : ServiceComponentLocalServiceUtil.getServiceComponents(QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-			if (Validator.equals(serviceComponent.getBuildNamespace(), "OSBLCS")) {
+			if (Objects.equals(serviceComponent.getBuildNamespace(), "OSBLCS")) {
 				if (serviceComponentBuildNumber < serviceComponent.getBuildNumber()) {
 					serviceComponentBuildNumber = serviceComponent.getBuildNumber();
 				}
