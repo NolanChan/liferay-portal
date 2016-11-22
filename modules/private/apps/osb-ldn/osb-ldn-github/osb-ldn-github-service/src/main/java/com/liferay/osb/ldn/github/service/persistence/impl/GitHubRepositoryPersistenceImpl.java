@@ -460,7 +460,8 @@ public class GitHubRepositoryPersistenceImpl extends BasePersistenceImpl<GitHubR
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((GitHubRepositoryModelImpl)gitHubRepository);
+		clearUniqueFindersCache((GitHubRepositoryModelImpl)gitHubRepository,
+			true);
 	}
 
 	@Override
@@ -472,52 +473,40 @@ public class GitHubRepositoryPersistenceImpl extends BasePersistenceImpl<GitHubR
 			entityCache.removeResult(GitHubRepositoryModelImpl.ENTITY_CACHE_ENABLED,
 				GitHubRepositoryImpl.class, gitHubRepository.getPrimaryKey());
 
-			clearUniqueFindersCache((GitHubRepositoryModelImpl)gitHubRepository);
+			clearUniqueFindersCache((GitHubRepositoryModelImpl)gitHubRepository,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		GitHubRepositoryModelImpl gitHubRepositoryModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					gitHubRepositoryModelImpl.getOwner(),
-					gitHubRepositoryModelImpl.getName()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_O_N, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_O_N, args,
-				gitHubRepositoryModelImpl);
-		}
-		else {
-			if ((gitHubRepositoryModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_O_N.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						gitHubRepositoryModelImpl.getOwner(),
-						gitHubRepositoryModelImpl.getName()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_O_N, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_O_N, args,
-					gitHubRepositoryModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		GitHubRepositoryModelImpl gitHubRepositoryModelImpl) {
 		Object[] args = new Object[] {
 				gitHubRepositoryModelImpl.getOwner(),
 				gitHubRepositoryModelImpl.getName()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_O_N, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_O_N, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_O_N, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_O_N, args,
+			gitHubRepositoryModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		GitHubRepositoryModelImpl gitHubRepositoryModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					gitHubRepositoryModelImpl.getOwner(),
+					gitHubRepositoryModelImpl.getName()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_O_N, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_O_N, args);
+		}
 
 		if ((gitHubRepositoryModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_O_N.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					gitHubRepositoryModelImpl.getOriginalOwner(),
 					gitHubRepositoryModelImpl.getOriginalName()
 				};
@@ -692,8 +681,8 @@ public class GitHubRepositoryPersistenceImpl extends BasePersistenceImpl<GitHubR
 			GitHubRepositoryImpl.class, gitHubRepository.getPrimaryKey(),
 			gitHubRepository, false);
 
-		clearUniqueFindersCache(gitHubRepositoryModelImpl);
-		cacheUniqueFindersCache(gitHubRepositoryModelImpl, isNew);
+		clearUniqueFindersCache(gitHubRepositoryModelImpl, false);
+		cacheUniqueFindersCache(gitHubRepositoryModelImpl);
 
 		gitHubRepository.resetOriginalValues();
 
