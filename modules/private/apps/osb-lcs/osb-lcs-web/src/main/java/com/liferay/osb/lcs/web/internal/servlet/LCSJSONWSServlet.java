@@ -14,20 +14,20 @@
 
 package com.liferay.osb.lcs.web.internal.servlet;
 
-import com.liferay.compat.portal.kernel.util.StringUtil;
 import com.liferay.osb.lcs.advisor.ServiceControllerAdvisor;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.ORMException;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,17 +51,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Igor Beslic
  */
 public class LCSJSONWSServlet extends HttpServlet {
-
-	@Override
-	public void init() throws ServletException {
-		super.init();
-
-		_serviceControllerAdvisor = new ServiceControllerAdvisor();
-	}
 
 	@Override
 	protected void doDelete(
@@ -233,6 +228,7 @@ public class LCSJSONWSServlet extends HttpServlet {
 	private static final Pattern _versionPattern = Pattern.compile(
 		"^v\\d+(_\\d+)?$");
 
+	@Reference(unbind = "-")
 	private ServiceControllerAdvisor _serviceControllerAdvisor;
 
 }
