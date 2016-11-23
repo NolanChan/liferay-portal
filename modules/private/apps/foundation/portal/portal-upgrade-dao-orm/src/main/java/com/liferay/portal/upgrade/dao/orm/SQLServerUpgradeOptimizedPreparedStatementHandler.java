@@ -62,7 +62,7 @@ public class SQLServerUpgradeOptimizedPreparedStatementHandler
 		ResultSet resultSet = _preparedStatement.executeQuery();
 
 		return (ResultSet)ProxyUtil.newProxyInstance(
-			classLoader, new Class[] {ResultSet.class},
+			classLoader, new Class<?>[] {ResultSet.class},
 			new SQLServerUpgradeOptimizedResultSetHandler(resultSet));
 	}
 

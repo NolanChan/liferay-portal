@@ -150,7 +150,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 		ClusterEventListener clusterEventListener = clusterEventListeners.get(
 			0);
 
-		Class clusterEventListenerClass = clusterEventListener.getClass();
+		Class<?> clusterEventListenerClass = clusterEventListener.getClass();
 
 		Assert.assertEquals(
 			DebuggingClusterEventListenerImpl.class.getName(),

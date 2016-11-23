@@ -205,7 +205,7 @@ public class PatchAdvisorImpl implements PatchAdvisor {
 			OSBLCSConfiguration.class, properties);
 
 		try {
-			Class storageManagerClass = Class.forName(
+			Class<?> storageManagerClass = Class.forName(
 				_osbLCSConfiguration.patchStorageManagerClassName());
 
 			_storageManager = (StorageManager)storageManagerClass.newInstance();

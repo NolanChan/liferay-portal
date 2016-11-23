@@ -44,7 +44,7 @@ public class AuditEventAutoEscapeBeanHandler extends AutoEscapeBeanHandler {
 
 		return (AuditEvent)ProxyUtil.newProxyInstance(
 			AuditEventAutoEscapeBeanHandler.class.getClassLoader(),
-			new Class[] {AuditEvent.class, BaseModel.class},
+			new Class<?>[] {AuditEvent.class, BaseModel.class},
 			auditEventAutoEscapeBeanHandler);
 	}
 
@@ -62,7 +62,7 @@ public class AuditEventAutoEscapeBeanHandler extends AutoEscapeBeanHandler {
 
 		String methodName = method.getName();
 
-		Class auditEventModelClass =
+		Class<?> auditEventModelClass =
 			com.liferay.portal.security.audit.storage.model.AuditEvent.class;
 
 		Method originalMethod = auditEventModelClass.getMethod(

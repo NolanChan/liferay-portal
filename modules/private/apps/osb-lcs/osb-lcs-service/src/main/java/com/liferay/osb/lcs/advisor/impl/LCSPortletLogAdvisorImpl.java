@@ -55,7 +55,7 @@ public class LCSPortletLogAdvisorImpl implements LCSPortletLogAdvisor {
 			OSBLCSConfiguration.class, properties);
 
 		try {
-			Class storageManagerClass = Class.forName(
+			Class<?> storageManagerClass = Class.forName(
 				_osbLCSConfiguration.logStorageManagerClassName());
 
 			_storageManager = (StorageManager)storageManagerClass.newInstance();

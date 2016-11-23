@@ -200,7 +200,7 @@ public class LCSClusterEntryTokenContentAdvisorTest extends PowerMockito {
 		InputStream inputStream = null;
 
 		try {
-			Class clazz = LCSClusterEntryTokenContentAdvisorTest.class;
+			Class<?> clazz = LCSClusterEntryTokenContentAdvisorTest.class;
 
 			inputStream = clazz.getResourceAsStream("dependencies/" + fileName);
 

@@ -99,7 +99,7 @@ public abstract class BaseEmailTemplate implements EmailTemplate {
 
 		Map<Locale, String> map = new HashMap<>();
 
-		Class clazz = getClass();
+		Class<?> clazz = getClass();
 
 		map.put(
 			LocaleUtil.getDefault(),

@@ -415,7 +415,7 @@ public class LCSSubscriptionEntryLocalServiceImpl
 			boolean increment)
 		throws PortalException {
 
-		Class clazz = getClass();
+		Class<?> clazz = getClass();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			LCSSubscriptionEntry.class, clazz.getClassLoader());

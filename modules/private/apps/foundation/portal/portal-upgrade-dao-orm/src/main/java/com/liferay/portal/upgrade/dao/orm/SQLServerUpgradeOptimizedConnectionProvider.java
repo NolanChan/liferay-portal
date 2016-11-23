@@ -46,7 +46,7 @@ public class SQLServerUpgradeOptimizedConnectionProvider
 		ClassLoader classLoader = currentThread.getContextClassLoader();
 
 		return (Connection)ProxyUtil.newProxyInstance(
-			classLoader, new Class[] {Connection.class},
+			classLoader, new Class<?>[] {Connection.class},
 			new UpgradeOptimizedConnectionHandler(dataSource.getConnection()));
 	}
 
@@ -96,7 +96,7 @@ public class SQLServerUpgradeOptimizedConnectionProvider
 				ResultSet.CONCUR_UPDATABLE);
 
 			return (PreparedStatement)ProxyUtil.newProxyInstance(
-				classLoader, new Class[] {PreparedStatement.class},
+				classLoader, new Class<?>[] {PreparedStatement.class},
 				new SQLServerUpgradeOptimizedPreparedStatementHandler(
 					preparedStatement));
 		}
