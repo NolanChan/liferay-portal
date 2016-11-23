@@ -51,6 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DevelopmentAdvisorImpl implements DevelopmentAdvisor {
 
+	@Override
 	public Role addLCSUserRole(long companyId) throws PortalException {
 		_checkApplicationProfile();
 
@@ -72,6 +73,7 @@ public class DevelopmentAdvisorImpl implements DevelopmentAdvisor {
 			descriptionMap, RoleConstants.TYPE_ORGANIZATION, null, null);
 	}
 
+	@Override
 	public User addUser(
 			long creatorUserId, long companyId, String firstName,
 			String lastName)

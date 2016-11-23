@@ -38,6 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = UserAdvisor.class)
 public class UserAdvisorImpl implements UserAdvisor {
 
+	@Override
 	public User addLDAPUser(String uuid) throws PortalException {
 		User user = _userLocalService.fetchUserByUuidAndCompanyId(
 			uuid, _companyAdvisor.getCompanyId());
@@ -70,6 +71,7 @@ public class UserAdvisorImpl implements UserAdvisor {
 		return user;
 	}
 
+	@Override
 	public User getAdminUser(long companyId) throws PortalException {
 		Role role = _roleLocalService.getRole(
 			companyId, RoleConstants.ADMINISTRATOR);
@@ -79,6 +81,7 @@ public class UserAdvisorImpl implements UserAdvisor {
 		return users.get(0);
 	}
 
+	@Override
 	public boolean hasUserDefaultLCSProject(long userId)
 		throws PortalException {
 
@@ -113,6 +116,7 @@ public class UserAdvisorImpl implements UserAdvisor {
 		_userLocalService = userLocalService;
 	}
 
+	@Override
 	public void updateDefaultLCSProject(long userId, long lcsProjectId)
 		throws PortalException {
 

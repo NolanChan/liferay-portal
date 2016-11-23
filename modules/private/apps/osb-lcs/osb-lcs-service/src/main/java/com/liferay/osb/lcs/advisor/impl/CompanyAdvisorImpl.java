@@ -28,6 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CompanyAdvisor.class)
 public class CompanyAdvisorImpl implements CompanyAdvisor {
 
+	@Override
 	public long getCompanyId() throws PortalException {
 		if (_companyId != 0) {
 			return _companyId;

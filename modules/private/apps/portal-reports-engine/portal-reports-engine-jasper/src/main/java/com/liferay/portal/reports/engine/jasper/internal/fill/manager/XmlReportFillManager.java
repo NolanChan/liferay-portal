@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class XmlReportFillManager extends BaseReportFillManager {
 
+	@Override
 	protected JRDataSource getJRDataSource(ReportRequest reportRequest)
 		throws Exception {
 

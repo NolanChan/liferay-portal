@@ -48,6 +48,7 @@ public class LCSSubscriptionEntryServiceImpl
 		}
 	}
 
+	@Override
 	public LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key) {
 		try {
 			return doGetToObject(

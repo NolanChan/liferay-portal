@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class HtmlReportFormatExporter extends BaseReportFormatExporter {
 
+	@Override
 	public JRExporter getJRExporter() {
 		return new JRXhtmlExporter();
 	}

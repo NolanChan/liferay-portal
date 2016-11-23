@@ -49,6 +49,7 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 )
 public class ServiceControllerAdvisorImpl implements ServiceControllerAdvisor {
 
+	@Override
 	public String execute(Map<String, String> serviceControllerMap)
 		throws Exception {
 

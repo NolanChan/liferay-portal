@@ -261,6 +261,7 @@ public abstract class BaseOSBPortletServiceImpl
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public CorpProject updateCorpProject(long corpProjectId, String name)
 		throws PortalException {
 

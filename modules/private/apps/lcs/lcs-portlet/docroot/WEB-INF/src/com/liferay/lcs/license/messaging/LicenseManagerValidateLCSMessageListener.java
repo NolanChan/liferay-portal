@@ -34,6 +34,7 @@ public class LicenseManagerValidateLCSMessageListener
 			LicenseManagerMessageType.VALIDATE_LCS);
 	}
 
+	@Override
 	protected Message createResponseMessage(JSONObject jsonObject) {
 		LicenseManagerMessageType licenseManagerMessageType =
 			LicenseManagerMessageType.LCS_AVAILABLE;

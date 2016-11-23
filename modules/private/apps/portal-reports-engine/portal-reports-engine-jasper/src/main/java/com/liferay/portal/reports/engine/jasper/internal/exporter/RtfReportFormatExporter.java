@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class RtfReportFormatExporter extends BaseReportFormatExporter {
 
+	@Override
 	protected JRExporter getJRExporter() {
 		return new JRRtfExporter();
 	}

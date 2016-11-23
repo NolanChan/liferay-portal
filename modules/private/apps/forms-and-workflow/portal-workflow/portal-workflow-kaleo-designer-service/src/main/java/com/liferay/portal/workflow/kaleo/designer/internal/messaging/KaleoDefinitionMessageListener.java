@@ -26,6 +26,7 @@ import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLo
  */
 public class KaleoDefinitionMessageListener implements MessageListener {
 
+	@Override
 	public void receive(Message message) {
 		try {
 			doReceive(message);

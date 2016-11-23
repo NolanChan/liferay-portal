@@ -129,10 +129,12 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		}
 	}
 
+	@Override
 	public boolean isHandshakeExpired() {
 		return _handshakeExpired;
 	}
 
+	@Override
 	public boolean isLCSGatewayAvailable() {
 		return _lcsGatewayAvailable;
 	}
@@ -206,6 +208,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		return start();
 	}
 
+	@Override
 	public void sendMessage(Message message) throws PortalException {
 		try {
 			_lcsGatewayService.sendMessage(message);
@@ -228,6 +231,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		_commandMessageTask = commandMessageTask;
 	}
 
+	@Override
 	public void setHandshakeExpired(boolean handshakeExpired) {
 		_handshakeExpired = handshakeExpired;
 	}
@@ -262,6 +266,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		_lcsExceptionSender = lcsExceptionSender;
 	}
 
+	@Override
 	public void setLCSGatewayAvailable(boolean lcsGatewayAvailable) {
 		_lcsGatewayAvailable = lcsGatewayAvailable;
 	}
@@ -309,6 +314,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		return stop(false, false);
 	}
 
+	@Override
 	public Future<?> stop(boolean deregister, boolean serverManuallyShutdown) {
 		if (!isReady()) {
 			return null;

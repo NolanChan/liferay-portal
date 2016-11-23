@@ -33,6 +33,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = LCSMessageAdvisor.class)
 public class LCSMessageAdvisorImpl implements LCSMessageAdvisor {
 
+	@Override
 	public void addClusterLCSMessage(
 			boolean cluster, LCSClusterNode lcsClusterNode,
 			LCSEventType lcsEventType)
@@ -48,6 +49,7 @@ public class LCSMessageAdvisorImpl implements LCSMessageAdvisor {
 		}
 	}
 
+	@Override
 	public LCSMessage addLCSClusterEntryLCSMessage(
 			boolean generateUserLCSMessages, long lcsClusterEntryId,
 			LCSEventType lcsEventType)
@@ -72,6 +74,7 @@ public class LCSMessageAdvisorImpl implements LCSMessageAdvisor {
 			lcsEventType.getSeverityLevel(), lcsEventType.getType());
 	}
 
+	@Override
 	public void addLCSMessage(
 			boolean cluster, LCSClusterNode lcsClusterNode,
 			LCSEventType lcsEventType)
@@ -104,6 +107,7 @@ public class LCSMessageAdvisorImpl implements LCSMessageAdvisor {
 		}
 	}
 
+	@Override
 	public LCSMessage addLCSProjectLCSMessage(
 			boolean adminsOnly, String content, boolean generateUserLCSMessages,
 			LCSEventType lcsEventType, long lcsProjectId)

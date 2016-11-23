@@ -286,6 +286,7 @@ public class SingleLogoutProfileImpl
 		}
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	public void setIdentifierGenerator(
 		IdentifierGenerator identifierGenerator) {
@@ -293,6 +294,7 @@ public class SingleLogoutProfileImpl
 		super.setIdentifierGenerator(identifierGenerator);
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	public void setMetadataManager(MetadataManager metadataManager) {
 		super.setMetadataManager(metadataManager);

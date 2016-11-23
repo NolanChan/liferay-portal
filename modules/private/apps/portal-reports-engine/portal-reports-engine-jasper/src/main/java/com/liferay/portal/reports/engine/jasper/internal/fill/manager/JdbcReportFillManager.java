@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class JdbcReportFillManager extends BaseReportFillManager {
 
+	@Override
 	protected Connection getConnection(ReportRequest reportRequest)
 		throws Exception {
 

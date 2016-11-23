@@ -40,6 +40,7 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class CSVLogMessageFormatter implements LogMessageFormatter {
 
+	@Override
 	public String format(AuditMessage auditMessage) {
 		StringBundler sb = new StringBundler(_columns.length * 4 - 1);
 

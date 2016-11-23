@@ -207,6 +207,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		_attributeResolver = attributeResolver;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	public void setIdentifierGenerator(
 		IdentifierGenerator identifierGenerator) {
@@ -214,6 +215,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		super.setIdentifierGenerator(identifierGenerator);
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	public void setMetadataManager(MetadataManager metadataManager) {
 		super.setMetadataManager(metadataManager);
@@ -237,6 +239,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		_userResolver = userResolver;
 	}
 
+	@Override
 	public void unsetSamlBinding(SamlBinding samlBinding) {
 		removeSamlBinding(samlBinding);
 	}

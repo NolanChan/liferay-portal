@@ -112,6 +112,7 @@ public class S3StorageManagerImpl implements StorageManager {
 		return filteredFileNameSizes;
 	}
 
+	@Override
 	public void setBucketName(String bucketName) {
 		_bucketName = bucketName;
 	}

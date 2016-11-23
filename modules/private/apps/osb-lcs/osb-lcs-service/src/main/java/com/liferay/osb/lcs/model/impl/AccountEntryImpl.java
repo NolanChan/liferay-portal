@@ -21,26 +21,32 @@ import com.liferay.osb.lcs.model.AccountEntry;
  */
 public class AccountEntryImpl implements AccountEntry {
 
+	@Override
 	public long getAccountEntryId() {
 		return _accountEntryId;
 	}
 
+	@Override
 	public long getCorpProjectId() {
 		return _corpProjectId;
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
 
+	@Override
 	public void setAccountEntryId(long accountEntryId) {
 		_accountEntryId = accountEntryId;
 	}
 
+	@Override
 	public void setCorpProjectId(long corpProjectId) {
 		_corpProjectId = corpProjectId;
 	}
 
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}

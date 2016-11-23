@@ -31,6 +31,7 @@ import javax.management.ObjectName;
  */
 public class TomcatServerMetricsTask extends BaseServerMetricsTask {
 
+	@Override
 	protected Map<String, Map<String, Object>> getCurrentThreadsMetrics()
 		throws Exception {
 

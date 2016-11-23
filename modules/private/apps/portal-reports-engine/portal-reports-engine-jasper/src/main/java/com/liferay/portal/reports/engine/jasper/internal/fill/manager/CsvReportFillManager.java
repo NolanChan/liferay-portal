@@ -33,6 +33,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CsvReportFillManager extends BaseReportFillManager {
 
+	@Override
 	protected JRDataSource getJRDataSource(ReportRequest reportRequest)
 		throws Exception {
 

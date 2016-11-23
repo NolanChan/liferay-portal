@@ -155,6 +155,7 @@ public class SharepointWSRepository
 		}
 	}
 
+	@Override
 	public SharepointConnection buildConnection() throws RepositoryException {
 		try {
 			return SharepointConnectionFactory.getInstance(

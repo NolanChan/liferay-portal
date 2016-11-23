@@ -55,6 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 public class LCSClusterEntryTokenAdvisorImpl
 	implements LCSClusterEntryTokenAdvisor {
 
+	@Override
 	public void generateLCSClusterEntryToken(
 			long lcsClusterEntryId,
 			Map<String, String> lcsServicesConfiguration,
@@ -91,6 +92,7 @@ public class LCSClusterEntryTokenAdvisorImpl
 			lcsClusterEntryId, lcsClusterEntryTokenContentAdvisor.getContent());
 	}
 
+	@Override
 	public byte[] getLCSEntryTokenEncryptedBytes(long lcsClusterEntryId)
 		throws Exception {
 
@@ -133,6 +135,7 @@ public class LCSClusterEntryTokenAdvisorImpl
 			symmetricKeyEncrypted, lcsClusterEntryTokenEncrypted);
 	}
 
+	@Override
 	public void regenerateLCSClusterEntryToken(
 			long lcsClusterEntryId,
 			Map<String, String> lcsServicesConfiguration,

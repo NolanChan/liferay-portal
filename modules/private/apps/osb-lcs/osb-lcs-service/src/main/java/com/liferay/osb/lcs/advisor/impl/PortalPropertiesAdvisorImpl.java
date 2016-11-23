@@ -61,6 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 
+	@Override
 	public String fetchLCSClusterNodePropertiesHashCode(String key) {
 		LCSClusterNodeProperties lcsClusterNodeProperties =
 			_lcsClusterNodePropertiesService.fetchLCSClusterNodeProperties(key);
@@ -86,6 +87,7 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 				getLCSClusterEntryPropertyDifferencesMap(lcsClusterEntryId);
 	}
 
+	@Override
 	public JSONArray getPortalPropertiesDifference(String key)
 		throws PortalException {
 
@@ -150,6 +152,7 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 		return jsonArray;
 	}
 
+	@Override
 	public void processLCSClusterEntryPropertyDifferences(
 		String key, long lcsClusterEntryId) {
 
@@ -214,6 +217,7 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 			getHashCode(portalProperties), key, new Date(), portalProperties);
 	}
 
+	@Override
 	public void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(
 			String key)
 		throws PortalException {

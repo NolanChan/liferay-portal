@@ -23,6 +23,7 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
  */
 public class BaseLCSServiceImpl extends BaseJSONWebServiceClientHandler {
 
+	@Override
 	public JSONWebServiceClient getJSONWebServiceClient() {
 		return _jsonWebServiceClient;
 	}

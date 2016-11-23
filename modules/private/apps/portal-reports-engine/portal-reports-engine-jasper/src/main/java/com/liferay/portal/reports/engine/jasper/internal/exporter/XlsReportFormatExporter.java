@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class XlsReportFormatExporter extends BaseReportFormatExporter {
 
+	@Override
 	protected JRExporter getJRExporter() {
 		return new JRXlsExporter();
 	}

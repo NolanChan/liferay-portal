@@ -63,6 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MetadataUtilImpl implements MetadataUtil {
 
+	@Override
 	public InputStream getMetadata(String url) {
 		GetMethod getMethod = new GetMethod(url);
 
@@ -110,6 +111,7 @@ public class MetadataUtilImpl implements MetadataUtil {
 		return null;
 	}
 
+	@Override
 	public String parseMetadataXml(InputStream inputStream, String entityId)
 		throws Exception {
 

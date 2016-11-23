@@ -29,6 +29,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class JSONLogMessageFormatter implements LogMessageFormatter {
 
+	@Override
 	public String format(AuditMessage auditMessage) {
 		JSONObject jsonObject = auditMessage.toJSONObject();
 

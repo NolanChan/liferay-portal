@@ -40,6 +40,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class TxtReportFormatExporter extends BaseReportFormatExporter {
 
+	@Override
 	public void format(
 			Object report, ReportRequest reportRequest,
 			ReportResultContainer reportResultContainer)
@@ -87,6 +88,7 @@ public class TxtReportFormatExporter extends BaseReportFormatExporter {
 		}
 	}
 
+	@Override
 	protected JRExporter getJRExporter() {
 		return new JRTextExporter();
 	}

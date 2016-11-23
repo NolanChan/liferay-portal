@@ -74,14 +74,17 @@ public class LCSClusterNodePatchesPersistenceImpl
 		return lcsClusterNodePatches;
 	}
 
+	@Override
 	public void updateErrorColumn(Object key, Object value) {
 		updateColumn("error", value, "key_", key);
 	}
 
+	@Override
 	public void updateModifiedDateColumn(Object key, Object value) {
 		updateColumn("modifiedDate", value, "key_", key);
 	}
 
+	@Override
 	public void updatePatchIdsStatusesColumn(
 		String key, Object mapKey, Object mapValue) {
 

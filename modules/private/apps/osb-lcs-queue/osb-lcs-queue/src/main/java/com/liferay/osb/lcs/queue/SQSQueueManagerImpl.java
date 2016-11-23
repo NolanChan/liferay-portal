@@ -193,6 +193,7 @@ public class SQSQueueManagerImpl extends AbstractQueueManagerImpl {
 		return messages;
 	}
 
+	@Override
 	public <T extends Message> void moveMessageToDeadLetterQueue(T message) {
 		String cloudOutDeadLetterQueueURL = getQueueURL(
 			Queue.CLOUD_OUT_DEAD_LETTER.getName());

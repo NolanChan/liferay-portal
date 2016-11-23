@@ -21,26 +21,32 @@ import com.liferay.osb.lcs.model.CorpProject;
  */
 public class CorpProjectImpl implements CorpProject {
 
+	@Override
 	public long getCorpProjectId() {
 		return _corpProjectId;
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
 
+	@Override
 	public long getOrganizationId() {
 		return _organizationId;
 	}
 
+	@Override
 	public void setCorpProjectId(long corpProjectId) {
 		_corpProjectId = corpProjectId;
 	}
 
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}
 
+	@Override
 	public void setOrganizationId(long organizationId) {
 		_organizationId = organizationId;
 	}

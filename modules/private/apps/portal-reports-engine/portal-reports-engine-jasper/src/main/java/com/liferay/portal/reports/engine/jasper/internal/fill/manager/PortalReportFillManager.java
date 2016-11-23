@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class PortalReportFillManager extends BaseReportFillManager {
 
+	@Override
 	protected Connection getConnection(ReportRequest reportRequest)
 		throws Exception {
 

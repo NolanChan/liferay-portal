@@ -282,6 +282,7 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 		);
 	}
 
+	@Override
 	protected void setUpPortalUtil() {
 		Portal portal = mock(Portal.class);
 

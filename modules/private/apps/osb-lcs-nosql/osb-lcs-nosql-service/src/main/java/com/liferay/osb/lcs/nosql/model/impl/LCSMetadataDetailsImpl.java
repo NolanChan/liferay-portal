@@ -23,22 +23,27 @@ import java.util.Map;
  */
 public class LCSMetadataDetailsImpl implements LCSMetadataDetails {
 
+	@Override
 	public int getBuildNumber() {
 		return _buildNumber;
 	}
 
+	@Override
 	public String getGitTag() {
 		return _gitTag;
 	}
 
+	@Override
 	public String getPortalEdition() {
 		return _portalEdition;
 	}
 
+	@Override
 	public Map<String, String> getPortalProperties() {
 		return _portalProperties;
 	}
 
+	@Override
 	public Map<String, String> getProperties() {
 		return _properties;
 	}
@@ -48,10 +53,12 @@ public class LCSMetadataDetailsImpl implements LCSMetadataDetails {
 		return _new;
 	}
 
+	@Override
 	public void setBuildNumber(int buildNumber) {
 		_buildNumber = buildNumber;
 	}
 
+	@Override
 	public void setGitTag(String gitTag) {
 		_gitTag = gitTag;
 	}
@@ -61,14 +68,17 @@ public class LCSMetadataDetailsImpl implements LCSMetadataDetails {
 		_new = n;
 	}
 
+	@Override
 	public void setPortalEdition(String portalEdition) {
 		_portalEdition = portalEdition;
 	}
 
+	@Override
 	public void setPortalProperties(Map<String, String> portalProperties) {
 		_portalProperties = portalProperties;
 	}
 
+	@Override
 	public void setProperties(Map<String, String> properties) {
 		_properties = properties;
 	}

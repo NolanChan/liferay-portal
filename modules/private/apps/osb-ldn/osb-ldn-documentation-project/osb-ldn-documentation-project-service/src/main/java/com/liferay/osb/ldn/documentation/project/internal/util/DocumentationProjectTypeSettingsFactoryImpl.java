@@ -30,6 +30,7 @@ import org.osgi.service.component.annotations.Component;
 public class DocumentationProjectTypeSettingsFactoryImpl
 	implements DocumentationProjectTypeSettingsFactory {
 
+	@Override
 	public DocumentationProjectTypeSettings create(
 		DocumentationProject documentationProject) {
 
@@ -47,6 +48,7 @@ public class DocumentationProjectTypeSettingsFactoryImpl
 		return null;
 	}
 
+	@Override
 	public DocumentationProjectTypeSettings create(String type) {
 		if (type.equals(DocumentationProjectConstants.TYPE_SITE)) {
 			return new DocumentationProjectSiteTypeSettingsImpl();
