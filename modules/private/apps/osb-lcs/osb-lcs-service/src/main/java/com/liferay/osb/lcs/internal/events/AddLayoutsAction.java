@@ -223,6 +223,13 @@ public class AddLayoutsAction implements LifecycleAction {
 					group.getGroupId(), privateLayout, normalizedFriendlyURL);
 			}
 			catch (NoSuchLayoutException nsle) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsle, nsle);
+				}
+
 				String layoutTemplateId =
 					_osbLCSConfiguration.osbLcsPortalPublicLayoutTemplateId();
 
