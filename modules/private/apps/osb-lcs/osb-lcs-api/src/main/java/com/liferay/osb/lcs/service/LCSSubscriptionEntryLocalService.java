@@ -158,6 +158,9 @@ public interface LCSSubscriptionEntryLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getActiveLCSSubscriptionEntriesCount();
+
 	/**
 	* Returns the number of l c s subscription entries.
 	*
@@ -211,6 +214,10 @@ public interface LCSSubscriptionEntryLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LCSSubscriptionEntry> getActiveLCSSubscriptionEntries(
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(

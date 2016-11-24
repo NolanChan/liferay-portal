@@ -195,6 +195,11 @@ public class LCSClusterNodeLocalServiceUtil {
 		return getService().getLCSClusterNode(lcsClusterNodeId, details);
 	}
 
+	public static com.liferay.osb.lcs.model.LCSClusterNode mergeStatus(
+		com.liferay.osb.lcs.model.LCSClusterNode lcsClusterNode, int status) {
+		return getService().mergeStatus(lcsClusterNode, status);
+	}
+
 	/**
 	* Updates the l c s cluster node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -255,6 +260,14 @@ public class LCSClusterNodeLocalServiceUtil {
 	*/
 	public static int getLCSClusterNodesCount() {
 		return getService().getLCSClusterNodesCount();
+	}
+
+	public static int getLCSClusterNodesCount(long lcsClusterEntryId) {
+		return getService().getLCSClusterNodesCount(lcsClusterEntryId);
+	}
+
+	public static int getLCSClusterNodesCount(long[] lcsClusterEntryIds) {
+		return getService().getLCSClusterNodesCount(lcsClusterEntryIds);
 	}
 
 	/**

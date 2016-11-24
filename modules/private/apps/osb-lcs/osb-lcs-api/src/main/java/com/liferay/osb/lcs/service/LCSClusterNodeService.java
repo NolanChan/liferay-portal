@@ -246,6 +246,9 @@ public interface LCSClusterNodeService extends BaseService {
 	public void deleteLCSClusterNode(long lcsClusterNodeId)
 		throws PortalException;
 
+	public void mergeStatus(java.lang.String key, int status)
+		throws PortalException;
+
 	public void updateBuildNumber(java.lang.String key, int buildNumber)
 		throws PortalException;
 

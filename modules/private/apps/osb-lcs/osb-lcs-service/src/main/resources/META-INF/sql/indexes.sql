@@ -39,6 +39,7 @@ create index IX_3B06F6AD on OSBLCS_LCSRole (lcsProjectId, role);
 create unique index IX_7DFD27E2 on OSBLCS_LCSRole (userId, lcsProjectId, lcsClusterEntryId);
 create index IX_C784DE1B on OSBLCS_LCSRole (userId, role);
 
+create index IX_34348B49 on OSBLCS_LCSSubscriptionEntry (active_);
 create index IX_70EDAD3D on OSBLCS_LCSSubscriptionEntry (lcsProjectId, active_);
 create index IX_A1F96420 on OSBLCS_LCSSubscriptionEntry (lcsProjectId, type_[$COLUMN_LENGTH:75$], active_);
 

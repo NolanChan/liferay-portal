@@ -391,6 +391,18 @@ public class LCSClusterNodeServiceSoap {
 		}
 	}
 
+	public static void mergeStatus(java.lang.String key, int status)
+		throws RemoteException {
+		try {
+			LCSClusterNodeServiceUtil.mergeStatus(key, status);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void updateBuildNumber(long lcsClusterNodeId, int buildNumber)
 		throws RemoteException {
 		try {

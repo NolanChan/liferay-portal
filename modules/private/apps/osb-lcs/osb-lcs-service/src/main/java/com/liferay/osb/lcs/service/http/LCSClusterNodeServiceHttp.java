@@ -539,12 +539,40 @@ public class LCSClusterNodeServiceHttp {
 		}
 	}
 
+	public static void mergeStatus(HttpPrincipal httpPrincipal,
+		java.lang.String key, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
+					"mergeStatus", _mergeStatusParameterTypes15);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, key,
+					status);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void updateBuildNumber(HttpPrincipal httpPrincipal,
 		long lcsClusterNodeId, int buildNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
-					"updateBuildNumber", _updateBuildNumberParameterTypes15);
+					"updateBuildNumber", _updateBuildNumberParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterNodeId, buildNumber);
@@ -572,7 +600,7 @@ public class LCSClusterNodeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
-					"updateBuildNumber", _updateBuildNumberParameterTypes16);
+					"updateBuildNumber", _updateBuildNumberParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, key,
 					buildNumber);
@@ -603,7 +631,7 @@ public class LCSClusterNodeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
 					"updateLCSClusterNode",
-					_updateLCSClusterNodeParameterTypes17);
+					_updateLCSClusterNodeParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterNodeId, name, description, location);
@@ -636,7 +664,7 @@ public class LCSClusterNodeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
 					"verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences",
-					_verifyLCSClusterEntryLCSClusterNodesPropertiesDifferencesParameterTypes18);
+					_verifyLCSClusterEntryLCSClusterNodesPropertiesDifferencesParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, key);
 
@@ -665,7 +693,7 @@ public class LCSClusterNodeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
 					"verifyLCSClusterNodeClusterLink",
-					_verifyLCSClusterNodeClusterLinkParameterTypes19);
+					_verifyLCSClusterNodeClusterLinkParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, key,
 					siblingKeys);
@@ -731,18 +759,21 @@ public class LCSClusterNodeServiceHttp {
 	private static final Class<?>[] _getUserLCSClusterNodesParameterTypes14 = new Class[] {
 			boolean.class
 		};
-	private static final Class<?>[] _updateBuildNumberParameterTypes15 = new Class[] {
-			long.class, int.class
-		};
-	private static final Class<?>[] _updateBuildNumberParameterTypes16 = new Class[] {
+	private static final Class<?>[] _mergeStatusParameterTypes15 = new Class[] {
 			java.lang.String.class, int.class
 		};
-	private static final Class<?>[] _updateLCSClusterNodeParameterTypes17 = new Class[] {
+	private static final Class<?>[] _updateBuildNumberParameterTypes16 = new Class[] {
+			long.class, int.class
+		};
+	private static final Class<?>[] _updateBuildNumberParameterTypes17 = new Class[] {
+			java.lang.String.class, int.class
+		};
+	private static final Class<?>[] _updateLCSClusterNodeParameterTypes18 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class
 		};
-	private static final Class<?>[] _verifyLCSClusterEntryLCSClusterNodesPropertiesDifferencesParameterTypes18 =
+	private static final Class<?>[] _verifyLCSClusterEntryLCSClusterNodesPropertiesDifferencesParameterTypes19 =
 		new Class[] { java.lang.String.class };
-	private static final Class<?>[] _verifyLCSClusterNodeClusterLinkParameterTypes19 =
+	private static final Class<?>[] _verifyLCSClusterNodeClusterLinkParameterTypes20 =
 		new Class[] { java.lang.String.class, java.lang.String.class };
 }

@@ -200,6 +200,12 @@ public class LCSClusterNodeLocalServiceWrapper
 			details);
 	}
 
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterNode mergeStatus(
+		com.liferay.osb.lcs.model.LCSClusterNode lcsClusterNode, int status) {
+		return _lcsClusterNodeLocalService.mergeStatus(lcsClusterNode, status);
+	}
+
 	/**
 	* Updates the l c s cluster node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -268,6 +274,16 @@ public class LCSClusterNodeLocalServiceWrapper
 	@Override
 	public int getLCSClusterNodesCount() {
 		return _lcsClusterNodeLocalService.getLCSClusterNodesCount();
+	}
+
+	@Override
+	public int getLCSClusterNodesCount(long lcsClusterEntryId) {
+		return _lcsClusterNodeLocalService.getLCSClusterNodesCount(lcsClusterEntryId);
+	}
+
+	@Override
+	public int getLCSClusterNodesCount(long[] lcsClusterEntryIds) {
+		return _lcsClusterNodeLocalService.getLCSClusterNodesCount(lcsClusterEntryIds);
 	}
 
 	/**

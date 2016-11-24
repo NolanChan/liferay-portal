@@ -166,6 +166,11 @@ public class LCSSubscriptionEntryLocalServiceWrapper
 		return _lcsSubscriptionEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public int getActiveLCSSubscriptionEntriesCount() {
+		return _lcsSubscriptionEntryLocalService.getActiveLCSSubscriptionEntriesCount();
+	}
+
 	/**
 	* Returns the number of l c s subscription entries.
 	*
@@ -238,6 +243,13 @@ public class LCSSubscriptionEntryLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _lcsSubscriptionEntryLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.lcs.model.LCSSubscriptionEntry> getActiveLCSSubscriptionEntries(
+		int start, int end) {
+		return _lcsSubscriptionEntryLocalService.getActiveLCSSubscriptionEntries(start,
+			end);
 	}
 
 	@Override

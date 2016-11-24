@@ -113,6 +113,165 @@ public class LCSSubscriptionEntryUtil {
 	}
 
 	/**
+	* Returns all the l c s subscription entries where active = &#63;.
+	*
+	* @param active the active
+	* @return the matching l c s subscription entries
+	*/
+	public static List<LCSSubscriptionEntry> findByActive(boolean active) {
+		return getPersistence().findByActive(active);
+	}
+
+	/**
+	* Returns a range of all the l c s subscription entries where active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LCSSubscriptionEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param active the active
+	* @param start the lower bound of the range of l c s subscription entries
+	* @param end the upper bound of the range of l c s subscription entries (not inclusive)
+	* @return the range of matching l c s subscription entries
+	*/
+	public static List<LCSSubscriptionEntry> findByActive(boolean active,
+		int start, int end) {
+		return getPersistence().findByActive(active, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the l c s subscription entries where active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LCSSubscriptionEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param active the active
+	* @param start the lower bound of the range of l c s subscription entries
+	* @param end the upper bound of the range of l c s subscription entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching l c s subscription entries
+	*/
+	public static List<LCSSubscriptionEntry> findByActive(boolean active,
+		int start, int end,
+		OrderByComparator<LCSSubscriptionEntry> orderByComparator) {
+		return getPersistence()
+				   .findByActive(active, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the l c s subscription entries where active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LCSSubscriptionEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param active the active
+	* @param start the lower bound of the range of l c s subscription entries
+	* @param end the upper bound of the range of l c s subscription entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching l c s subscription entries
+	*/
+	public static List<LCSSubscriptionEntry> findByActive(boolean active,
+		int start, int end,
+		OrderByComparator<LCSSubscriptionEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByActive(active, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first l c s subscription entry in the ordered set where active = &#63;.
+	*
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching l c s subscription entry
+	* @throws NoSuchLCSSubscriptionEntryException if a matching l c s subscription entry could not be found
+	*/
+	public static LCSSubscriptionEntry findByActive_First(boolean active,
+		OrderByComparator<LCSSubscriptionEntry> orderByComparator)
+		throws com.liferay.osb.lcs.exception.NoSuchLCSSubscriptionEntryException {
+		return getPersistence().findByActive_First(active, orderByComparator);
+	}
+
+	/**
+	* Returns the first l c s subscription entry in the ordered set where active = &#63;.
+	*
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching l c s subscription entry, or <code>null</code> if a matching l c s subscription entry could not be found
+	*/
+	public static LCSSubscriptionEntry fetchByActive_First(boolean active,
+		OrderByComparator<LCSSubscriptionEntry> orderByComparator) {
+		return getPersistence().fetchByActive_First(active, orderByComparator);
+	}
+
+	/**
+	* Returns the last l c s subscription entry in the ordered set where active = &#63;.
+	*
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching l c s subscription entry
+	* @throws NoSuchLCSSubscriptionEntryException if a matching l c s subscription entry could not be found
+	*/
+	public static LCSSubscriptionEntry findByActive_Last(boolean active,
+		OrderByComparator<LCSSubscriptionEntry> orderByComparator)
+		throws com.liferay.osb.lcs.exception.NoSuchLCSSubscriptionEntryException {
+		return getPersistence().findByActive_Last(active, orderByComparator);
+	}
+
+	/**
+	* Returns the last l c s subscription entry in the ordered set where active = &#63;.
+	*
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching l c s subscription entry, or <code>null</code> if a matching l c s subscription entry could not be found
+	*/
+	public static LCSSubscriptionEntry fetchByActive_Last(boolean active,
+		OrderByComparator<LCSSubscriptionEntry> orderByComparator) {
+		return getPersistence().fetchByActive_Last(active, orderByComparator);
+	}
+
+	/**
+	* Returns the l c s subscription entries before and after the current l c s subscription entry in the ordered set where active = &#63;.
+	*
+	* @param lcsSubscriptionEntryId the primary key of the current l c s subscription entry
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next l c s subscription entry
+	* @throws NoSuchLCSSubscriptionEntryException if a l c s subscription entry with the primary key could not be found
+	*/
+	public static LCSSubscriptionEntry[] findByActive_PrevAndNext(
+		long lcsSubscriptionEntryId, boolean active,
+		OrderByComparator<LCSSubscriptionEntry> orderByComparator)
+		throws com.liferay.osb.lcs.exception.NoSuchLCSSubscriptionEntryException {
+		return getPersistence()
+				   .findByActive_PrevAndNext(lcsSubscriptionEntryId, active,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the l c s subscription entries where active = &#63; from the database.
+	*
+	* @param active the active
+	*/
+	public static void removeByActive(boolean active) {
+		getPersistence().removeByActive(active);
+	}
+
+	/**
+	* Returns the number of l c s subscription entries where active = &#63;.
+	*
+	* @param active the active
+	* @return the number of matching l c s subscription entries
+	*/
+	public static int countByActive(boolean active) {
+		return getPersistence().countByActive(active);
+	}
+
+	/**
 	* Returns all the l c s subscription entries where lcsProjectId = &#63;.
 	*
 	* @param lcsProjectId the lcs project ID

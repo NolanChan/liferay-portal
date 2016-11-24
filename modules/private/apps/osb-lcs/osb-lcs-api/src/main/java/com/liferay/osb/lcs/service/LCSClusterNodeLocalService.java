@@ -184,6 +184,8 @@ public interface LCSClusterNodeLocalService extends BaseLocalService,
 	public LCSClusterNode getLCSClusterNode(long lcsClusterNodeId,
 		boolean details);
 
+	public LCSClusterNode mergeStatus(LCSClusterNode lcsClusterNode, int status);
+
 	/**
 	* Updates the l c s cluster node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -227,6 +229,12 @@ public interface LCSClusterNodeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLCSClusterNodesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLCSClusterNodesCount(long lcsClusterEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLCSClusterNodesCount(long[] lcsClusterEntryIds);
 
 	/**
 	* Returns the OSGi service identifier.

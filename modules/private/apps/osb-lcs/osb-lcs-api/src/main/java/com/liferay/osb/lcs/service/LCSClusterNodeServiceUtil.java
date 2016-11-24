@@ -269,6 +269,11 @@ public class LCSClusterNodeServiceUtil {
 		getService().deleteLCSClusterNode(lcsClusterNodeId);
 	}
 
+	public static void mergeStatus(java.lang.String key, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().mergeStatus(key, status);
+	}
+
 	public static void updateBuildNumber(java.lang.String key, int buildNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateBuildNumber(key, buildNumber);

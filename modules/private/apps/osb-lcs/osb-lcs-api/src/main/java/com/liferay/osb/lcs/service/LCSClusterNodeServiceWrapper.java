@@ -278,6 +278,12 @@ public class LCSClusterNodeServiceWrapper implements LCSClusterNodeService,
 	}
 
 	@Override
+	public void mergeStatus(java.lang.String key, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_lcsClusterNodeService.mergeStatus(key, status);
+	}
+
+	@Override
 	public void updateBuildNumber(java.lang.String key, int buildNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_lcsClusterNodeService.updateBuildNumber(key, buildNumber);

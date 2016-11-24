@@ -972,7 +972,7 @@ public class LCSPatchEntryPersistenceImpl extends BasePersistenceImpl<LCSPatchEn
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((LCSPatchEntryModelImpl)lcsPatchEntry, true);
+		clearUniqueFindersCache((LCSPatchEntryModelImpl)lcsPatchEntry);
 	}
 
 	@Override
@@ -984,34 +984,43 @@ public class LCSPatchEntryPersistenceImpl extends BasePersistenceImpl<LCSPatchEn
 			entityCache.removeResult(LCSPatchEntryModelImpl.ENTITY_CACHE_ENABLED,
 				LCSPatchEntryImpl.class, lcsPatchEntry.getPrimaryKey());
 
-			clearUniqueFindersCache((LCSPatchEntryModelImpl)lcsPatchEntry, true);
+			clearUniqueFindersCache((LCSPatchEntryModelImpl)lcsPatchEntry);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		LCSPatchEntryModelImpl lcsPatchEntryModelImpl) {
-		Object[] args = new Object[] { lcsPatchEntryModelImpl.getPatchId() };
+		LCSPatchEntryModelImpl lcsPatchEntryModelImpl, boolean isNew) {
+		if (isNew) {
+			Object[] args = new Object[] { lcsPatchEntryModelImpl.getPatchId() };
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_PATCHID, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_PATCHID, args,
-			lcsPatchEntryModelImpl, false);
+			finderCache.putResult(FINDER_PATH_COUNT_BY_PATCHID, args,
+				Long.valueOf(1));
+			finderCache.putResult(FINDER_PATH_FETCH_BY_PATCHID, args,
+				lcsPatchEntryModelImpl);
+		}
+		else {
+			if ((lcsPatchEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_PATCHID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { lcsPatchEntryModelImpl.getPatchId() };
+
+				finderCache.putResult(FINDER_PATH_COUNT_BY_PATCHID, args,
+					Long.valueOf(1));
+				finderCache.putResult(FINDER_PATH_FETCH_BY_PATCHID, args,
+					lcsPatchEntryModelImpl);
+			}
+		}
 	}
 
 	protected void clearUniqueFindersCache(
-		LCSPatchEntryModelImpl lcsPatchEntryModelImpl, boolean clearCurrent) {
-		if (clearCurrent) {
-			Object[] args = new Object[] { lcsPatchEntryModelImpl.getPatchId() };
+		LCSPatchEntryModelImpl lcsPatchEntryModelImpl) {
+		Object[] args = new Object[] { lcsPatchEntryModelImpl.getPatchId() };
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_PATCHID, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_PATCHID, args);
-		}
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_PATCHID, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_PATCHID, args);
 
 		if ((lcsPatchEntryModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_PATCHID.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					lcsPatchEntryModelImpl.getOriginalPatchId()
-				};
+			args = new Object[] { lcsPatchEntryModelImpl.getOriginalPatchId() };
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_PATCHID, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_PATCHID, args);
@@ -1158,8 +1167,8 @@ public class LCSPatchEntryPersistenceImpl extends BasePersistenceImpl<LCSPatchEn
 			LCSPatchEntryImpl.class, lcsPatchEntry.getPrimaryKey(),
 			lcsPatchEntry, false);
 
-		clearUniqueFindersCache(lcsPatchEntryModelImpl, false);
-		cacheUniqueFindersCache(lcsPatchEntryModelImpl);
+		clearUniqueFindersCache(lcsPatchEntryModelImpl);
+		cacheUniqueFindersCache(lcsPatchEntryModelImpl, isNew);
 
 		lcsPatchEntry.resetOriginalValues();
 
