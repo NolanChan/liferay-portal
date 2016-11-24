@@ -139,6 +139,18 @@ public class LCSSubscriptionEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<LCSSubscriptionEntry> getActiveLCSSubscriptionEntries(
+		int start, int end) {
+
+		return lcsSubscriptionEntryPersistence.findByActive(true, start, end);
+	}
+
+	@Override
+	public int getActiveLCSSubscriptionEntriesCount() {
+		return lcsSubscriptionEntryPersistence.countByActive(true);
+	}
+
+	@Override
 	public List<LCSSubscriptionEntry> getLCSProjectLCSSubscriptionEntries(
 		long lcsProjectId) {
 
