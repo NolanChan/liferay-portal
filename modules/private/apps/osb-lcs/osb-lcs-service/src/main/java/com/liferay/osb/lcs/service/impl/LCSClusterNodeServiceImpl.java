@@ -344,6 +344,18 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 	}
 
 	@Override
+	public void mergeStatus(String key, int status) throws PortalException {
+		LCSClusterNode lcsClusterNode = lcsClusterNodePersistence.findByKey(
+			key);
+
+		LCSClusterEntryPermission.check(
+			getPermissionChecker(), lcsClusterNode.getLcsClusterEntryId(),
+			OSBLCSActionKeys.MANAGE_ENTRY);
+
+		lcsClusterNodeLocalService.mergeStatus(lcsClusterNode, status);
+	}
+
+	@Override
 	public void updateBuildNumber(long lcsClusterNodeId, int buildNumber)
 		throws PortalException {
 

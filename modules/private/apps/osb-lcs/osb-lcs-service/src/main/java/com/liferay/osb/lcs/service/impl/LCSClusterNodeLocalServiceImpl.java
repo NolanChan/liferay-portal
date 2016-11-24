@@ -437,6 +437,18 @@ public class LCSClusterNodeLocalServiceImpl
 		return addDetails(lcsClusterNodes);
 	}
 
+	@Override
+	public int getLCSClusterNodesCount(long lcsClusterEntryId) {
+		return lcsClusterNodePersistence.countByLCSClusterEntryId(
+			lcsClusterEntryId);
+	}
+
+	@Override
+	public int getLCSClusterNodesCount(long[] lcsClusterEntryIds) {
+		return lcsClusterNodePersistence.countByLCSClusterEntryId(
+			lcsClusterEntryIds);
+	}
+
 	/**
 	 * Returns all LCS cluster nodes accessible to the user and belonging to the
 	 * corporate project. The LCS cluster nodes' transient details are excluded.
@@ -593,6 +605,24 @@ public class LCSClusterNodeLocalServiceImpl
 		}
 
 		return true;
+	}
+
+	@Override
+	public LCSClusterNode mergeStatus(
+		LCSClusterNode lcsClusterNode, int status) {
+
+		LCSClusterNodeStatus[] lcsClusterNodeStatuses =
+			LCSClusterNodeStatus.getLCSClusterNodeStatuses(status);
+
+		int newStatus = lcsClusterNodeStatuses[0].merge(
+			_lcsClusterNodeDetailsService.getStatus(lcsClusterNode.getKey()));
+
+		_lcsClusterNodeDetailsService.updateStatus(
+			lcsClusterNode.getKey(), newStatus);
+
+		lcsClusterNode.setStatus(newStatus);
+
+		return updateLCSClusterNode(lcsClusterNode);
 	}
 
 	@Override
