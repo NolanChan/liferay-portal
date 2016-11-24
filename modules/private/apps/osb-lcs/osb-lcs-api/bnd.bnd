@@ -9,7 +9,6 @@ Export-Package:\
 	com.liferay.osb.lcs.exception,\
 	com.liferay.osb.lcs.model,\
 	com.liferay.osb.lcs.osbportlet.service,\
-	com.liferay.osb.lcs.report,\
 	com.liferay.osb.lcs.service,\
 	com.liferay.osb.lcs.service.persistence,\
 	com.liferay.osb.lcs.util,\
