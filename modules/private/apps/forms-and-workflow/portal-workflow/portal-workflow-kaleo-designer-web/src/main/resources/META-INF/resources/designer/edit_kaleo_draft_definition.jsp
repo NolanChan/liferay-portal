@@ -446,17 +446,16 @@
 						);
 
 						Liferay.provide(
-								window,
-								'<portlet:namespace />closeKaleoDialog',
-								function() {
+							window,
+							'<portlet:namespace />closeKaleoDialog',
+							function() {
+								var dialog = Liferay.Util.getWindow();
 
-									var dialog = Liferay.Util.getWindow();
-
-									if (dialog) {
-										dialog.destroy();
-									}
-								},
-								['aui-base']
+								if (dialog) {
+									dialog.destroy();
+								}
+							},
+							['aui-base']
 						);
 
 						Liferay.provide(
