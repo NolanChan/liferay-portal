@@ -139,8 +139,6 @@ public class LCSClusterNodeLocalServiceImpl
 				lcsClusterEntry.getLcsProjectId(),
 				lcsClusterEntry.getSubscriptionType(),
 				node.getProcessorCoresTotal());
-
-			return node;
 		}
 
 		return node;
