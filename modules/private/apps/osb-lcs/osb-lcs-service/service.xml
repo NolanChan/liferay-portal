@@ -534,11 +534,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="Active" return-type="Collection">
-			<finder-column name="active" />
-		</finder>
 		<finder name="LCSProjectId" return-type="Collection">
 			<finder-column name="lcsProjectId" />
+		</finder>
+		<finder name="Active" return-type="Collection">
+			<finder-column name="active" />
 		</finder>
 		<finder name="LPI_A" return-type="Collection">
 			<finder-column name="lcsProjectId" />
