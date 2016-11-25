@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -442,17 +443,19 @@ public class AdminPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = getThemeDisplay(resourceRequest);
 
 		reportContextBuilder.lcsClusterEntryId(
-			Long.parseLong(resourceRequest.getParameter("lcsClusterEntryId")));
+			GetterUtil.getLong(
+				resourceRequest.getParameter("lcsClusterEntryId")));
 		reportContextBuilder.lcsClusterNodeId(
-			Long.parseLong(resourceRequest.getParameter("lcsClusterNodeId")));
+			GetterUtil.getLong(
+				resourceRequest.getParameter("lcsClusterNodeId")));
 		reportContextBuilder.lcsProjectId(
-			Long.parseLong(resourceRequest.getParameter("lcsProjectId")));
+			GetterUtil.getLong(resourceRequest.getParameter("lcsProjectId")));
 		reportContextBuilder.lineSeparator(getLineSeparator(resourceRequest));
 		reportContextBuilder.locale(themeDisplay.getLocale());
 		reportContextBuilder.month(
-			Integer.parseInt(resourceRequest.getParameter("month")));
+			GetterUtil.getInteger(resourceRequest.getParameter("month")));
 		reportContextBuilder.year(
-			Integer.parseInt(resourceRequest.getParameter("year")));
+			GetterUtil.getInteger(resourceRequest.getParameter("year")));
 
 		ByteArrayOutputStream byteArrayOutputStream = report.process(
 			reportContextBuilder.build());
@@ -477,17 +480,19 @@ public class AdminPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = getThemeDisplay(resourceRequest);
 
 		reportContextBuilder.lcsClusterEntryId(
-			Long.parseLong(resourceRequest.getParameter("lcsClusterEntryId")));
+			GetterUtil.getLong(
+				resourceRequest.getParameter("lcsClusterEntryId")));
 		reportContextBuilder.lcsClusterNodeId(
-			Long.parseLong(resourceRequest.getParameter("lcsClusterNodeId")));
+			GetterUtil.getLong(
+				resourceRequest.getParameter("lcsClusterNodeId")));
 		reportContextBuilder.lcsProjectId(
-			Long.parseLong(resourceRequest.getParameter("lcsProjectId")));
+			GetterUtil.getLong(resourceRequest.getParameter("lcsProjectId")));
 		reportContextBuilder.locale(themeDisplay.getLocale());
 		reportContextBuilder.month(
-			Integer.parseInt(resourceRequest.getParameter("month")));
+			GetterUtil.getInteger(resourceRequest.getParameter("month")));
 		reportContextBuilder.userId(themeDisplay.getUserId());
 		reportContextBuilder.year(
-			Integer.parseInt(resourceRequest.getParameter("year")));
+			GetterUtil.getInteger(resourceRequest.getParameter("year")));
 
 		ByteArrayOutputStream byteArrayOutputStream = report.process(
 			reportContextBuilder.build());
@@ -512,12 +517,12 @@ public class AdminPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = getThemeDisplay(resourceRequest);
 
 		reportContextBuilder.lcsProjectId(
-			Long.parseLong(resourceRequest.getParameter("lcsProjectId")));
+			GetterUtil.getLong(resourceRequest.getParameter("lcsProjectId")));
 		reportContextBuilder.locale(themeDisplay.getLocale());
 		reportContextBuilder.month(
-			Integer.parseInt(resourceRequest.getParameter("month")));
+			GetterUtil.getInteger(resourceRequest.getParameter("month")));
 		reportContextBuilder.year(
-			Integer.parseInt(resourceRequest.getParameter("year")));
+			GetterUtil.getInteger(resourceRequest.getParameter("year")));
 
 		ByteArrayOutputStream byteArrayOutputStream = report.process(
 			reportContextBuilder.build());
