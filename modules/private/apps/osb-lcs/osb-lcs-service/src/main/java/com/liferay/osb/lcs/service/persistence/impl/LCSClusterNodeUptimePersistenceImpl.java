@@ -1443,7 +1443,8 @@ public class LCSClusterNodeUptimePersistenceImpl extends BasePersistenceImpl<LCS
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((LCSClusterNodeUptimeModelImpl)lcsClusterNodeUptime);
+		clearUniqueFindersCache((LCSClusterNodeUptimeModelImpl)lcsClusterNodeUptime,
+			true);
 	}
 
 	@Override
@@ -1456,76 +1457,50 @@ public class LCSClusterNodeUptimePersistenceImpl extends BasePersistenceImpl<LCS
 				LCSClusterNodeUptimeImpl.class,
 				lcsClusterNodeUptime.getPrimaryKey());
 
-			clearUniqueFindersCache((LCSClusterNodeUptimeModelImpl)lcsClusterNodeUptime);
+			clearUniqueFindersCache((LCSClusterNodeUptimeModelImpl)lcsClusterNodeUptime,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		LCSClusterNodeUptimeModelImpl lcsClusterNodeUptimeModelImpl,
-		boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					lcsClusterNodeUptimeModelImpl.getLcsClusterNodeId(),
-					lcsClusterNodeUptimeModelImpl.getStartTime()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_LCNI_ST, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_LCNI_ST, args,
-				lcsClusterNodeUptimeModelImpl);
-
-			args = new Object[] {
-					lcsClusterNodeUptimeModelImpl.getLcsClusterNodeId(),
-					lcsClusterNodeUptimeModelImpl.getEndTime()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_LCNI_ET, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_LCNI_ET, args,
-				lcsClusterNodeUptimeModelImpl);
-		}
-		else {
-			if ((lcsClusterNodeUptimeModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_LCNI_ST.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						lcsClusterNodeUptimeModelImpl.getLcsClusterNodeId(),
-						lcsClusterNodeUptimeModelImpl.getStartTime()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_LCNI_ST, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_LCNI_ST, args,
-					lcsClusterNodeUptimeModelImpl);
-			}
-
-			if ((lcsClusterNodeUptimeModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_LCNI_ET.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						lcsClusterNodeUptimeModelImpl.getLcsClusterNodeId(),
-						lcsClusterNodeUptimeModelImpl.getEndTime()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_LCNI_ET, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_LCNI_ET, args,
-					lcsClusterNodeUptimeModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		LCSClusterNodeUptimeModelImpl lcsClusterNodeUptimeModelImpl) {
 		Object[] args = new Object[] {
 				lcsClusterNodeUptimeModelImpl.getLcsClusterNodeId(),
 				lcsClusterNodeUptimeModelImpl.getStartTime()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_LCNI_ST, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_LCNI_ST, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_LCNI_ST, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_LCNI_ST, args,
+			lcsClusterNodeUptimeModelImpl, false);
+
+		args = new Object[] {
+				lcsClusterNodeUptimeModelImpl.getLcsClusterNodeId(),
+				lcsClusterNodeUptimeModelImpl.getEndTime()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_LCNI_ET, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_LCNI_ET, args,
+			lcsClusterNodeUptimeModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		LCSClusterNodeUptimeModelImpl lcsClusterNodeUptimeModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					lcsClusterNodeUptimeModelImpl.getLcsClusterNodeId(),
+					lcsClusterNodeUptimeModelImpl.getStartTime()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_LCNI_ST, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_LCNI_ST, args);
+		}
 
 		if ((lcsClusterNodeUptimeModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_LCNI_ST.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					lcsClusterNodeUptimeModelImpl.getOriginalLcsClusterNodeId(),
 					lcsClusterNodeUptimeModelImpl.getOriginalStartTime()
 				};
@@ -1534,17 +1509,19 @@ public class LCSClusterNodeUptimePersistenceImpl extends BasePersistenceImpl<LCS
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_LCNI_ST, args);
 		}
 
-		args = new Object[] {
-				lcsClusterNodeUptimeModelImpl.getLcsClusterNodeId(),
-				lcsClusterNodeUptimeModelImpl.getEndTime()
-			};
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					lcsClusterNodeUptimeModelImpl.getLcsClusterNodeId(),
+					lcsClusterNodeUptimeModelImpl.getEndTime()
+				};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_LCNI_ET, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_LCNI_ET, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_LCNI_ET, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_LCNI_ET, args);
+		}
 
 		if ((lcsClusterNodeUptimeModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_LCNI_ET.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					lcsClusterNodeUptimeModelImpl.getOriginalLcsClusterNodeId(),
 					lcsClusterNodeUptimeModelImpl.getOriginalEndTime()
 				};
@@ -1719,8 +1696,8 @@ public class LCSClusterNodeUptimePersistenceImpl extends BasePersistenceImpl<LCS
 			LCSClusterNodeUptimeImpl.class,
 			lcsClusterNodeUptime.getPrimaryKey(), lcsClusterNodeUptime, false);
 
-		clearUniqueFindersCache(lcsClusterNodeUptimeModelImpl);
-		cacheUniqueFindersCache(lcsClusterNodeUptimeModelImpl, isNew);
+		clearUniqueFindersCache(lcsClusterNodeUptimeModelImpl, false);
+		cacheUniqueFindersCache(lcsClusterNodeUptimeModelImpl);
 
 		lcsClusterNodeUptime.resetOriginalValues();
 

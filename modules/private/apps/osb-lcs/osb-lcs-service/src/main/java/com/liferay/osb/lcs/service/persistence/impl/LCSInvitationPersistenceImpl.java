@@ -1486,7 +1486,7 @@ public class LCSInvitationPersistenceImpl extends BasePersistenceImpl<LCSInvitat
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((LCSInvitationModelImpl)lcsInvitation);
+		clearUniqueFindersCache((LCSInvitationModelImpl)lcsInvitation, true);
 	}
 
 	@Override
@@ -1498,52 +1498,38 @@ public class LCSInvitationPersistenceImpl extends BasePersistenceImpl<LCSInvitat
 			entityCache.removeResult(LCSInvitationModelImpl.ENTITY_CACHE_ENABLED,
 				LCSInvitationImpl.class, lcsInvitation.getPrimaryKey());
 
-			clearUniqueFindersCache((LCSInvitationModelImpl)lcsInvitation);
+			clearUniqueFindersCache((LCSInvitationModelImpl)lcsInvitation, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		LCSInvitationModelImpl lcsInvitationModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					lcsInvitationModelImpl.getLcsProjectId(),
-					lcsInvitationModelImpl.getEmailAddress()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_LPI_EA, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_LPI_EA, args,
-				lcsInvitationModelImpl);
-		}
-		else {
-			if ((lcsInvitationModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_LPI_EA.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						lcsInvitationModelImpl.getLcsProjectId(),
-						lcsInvitationModelImpl.getEmailAddress()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_LPI_EA, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_LPI_EA, args,
-					lcsInvitationModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		LCSInvitationModelImpl lcsInvitationModelImpl) {
 		Object[] args = new Object[] {
 				lcsInvitationModelImpl.getLcsProjectId(),
 				lcsInvitationModelImpl.getEmailAddress()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_LPI_EA, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_LPI_EA, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_LPI_EA, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_LPI_EA, args,
+			lcsInvitationModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		LCSInvitationModelImpl lcsInvitationModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					lcsInvitationModelImpl.getLcsProjectId(),
+					lcsInvitationModelImpl.getEmailAddress()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_LPI_EA, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_LPI_EA, args);
+		}
 
 		if ((lcsInvitationModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_LPI_EA.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					lcsInvitationModelImpl.getOriginalLcsProjectId(),
 					lcsInvitationModelImpl.getOriginalEmailAddress()
 				};
@@ -1729,8 +1715,8 @@ public class LCSInvitationPersistenceImpl extends BasePersistenceImpl<LCSInvitat
 			LCSInvitationImpl.class, lcsInvitation.getPrimaryKey(),
 			lcsInvitation, false);
 
-		clearUniqueFindersCache(lcsInvitationModelImpl);
-		cacheUniqueFindersCache(lcsInvitationModelImpl, isNew);
+		clearUniqueFindersCache(lcsInvitationModelImpl, false);
+		cacheUniqueFindersCache(lcsInvitationModelImpl);
 
 		lcsInvitation.resetOriginalValues();
 

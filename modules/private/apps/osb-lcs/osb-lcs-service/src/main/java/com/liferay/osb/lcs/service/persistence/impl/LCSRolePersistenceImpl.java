@@ -3549,7 +3549,7 @@ public class LCSRolePersistenceImpl extends BasePersistenceImpl<LCSRole>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((LCSRoleModelImpl)lcsRole);
+		clearUniqueFindersCache((LCSRoleModelImpl)lcsRole, true);
 	}
 
 	@Override
@@ -3561,53 +3561,38 @@ public class LCSRolePersistenceImpl extends BasePersistenceImpl<LCSRole>
 			entityCache.removeResult(LCSRoleModelImpl.ENTITY_CACHE_ENABLED,
 				LCSRoleImpl.class, lcsRole.getPrimaryKey());
 
-			clearUniqueFindersCache((LCSRoleModelImpl)lcsRole);
+			clearUniqueFindersCache((LCSRoleModelImpl)lcsRole, true);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(LCSRoleModelImpl lcsRoleModelImpl,
-		boolean isNew) {
-		if (isNew) {
+	protected void cacheUniqueFindersCache(LCSRoleModelImpl lcsRoleModelImpl) {
+		Object[] args = new Object[] {
+				lcsRoleModelImpl.getUserId(), lcsRoleModelImpl.getLcsProjectId(),
+				lcsRoleModelImpl.getLcsClusterEntryId()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_U_LPI_LCEI, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_U_LPI_LCEI, args,
+			lcsRoleModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(LCSRoleModelImpl lcsRoleModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
 			Object[] args = new Object[] {
 					lcsRoleModelImpl.getUserId(),
 					lcsRoleModelImpl.getLcsProjectId(),
 					lcsRoleModelImpl.getLcsClusterEntryId()
 				};
 
-			finderCache.putResult(FINDER_PATH_COUNT_BY_U_LPI_LCEI, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_U_LPI_LCEI, args,
-				lcsRoleModelImpl);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_LPI_LCEI, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_U_LPI_LCEI, args);
 		}
-		else {
-			if ((lcsRoleModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_U_LPI_LCEI.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						lcsRoleModelImpl.getUserId(),
-						lcsRoleModelImpl.getLcsProjectId(),
-						lcsRoleModelImpl.getLcsClusterEntryId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_U_LPI_LCEI, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_U_LPI_LCEI, args,
-					lcsRoleModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(LCSRoleModelImpl lcsRoleModelImpl) {
-		Object[] args = new Object[] {
-				lcsRoleModelImpl.getUserId(), lcsRoleModelImpl.getLcsProjectId(),
-				lcsRoleModelImpl.getLcsClusterEntryId()
-			};
-
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_U_LPI_LCEI, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_U_LPI_LCEI, args);
 
 		if ((lcsRoleModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_U_LPI_LCEI.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					lcsRoleModelImpl.getOriginalUserId(),
 					lcsRoleModelImpl.getOriginalLcsProjectId(),
 					lcsRoleModelImpl.getOriginalLcsClusterEntryId()
@@ -3872,8 +3857,8 @@ public class LCSRolePersistenceImpl extends BasePersistenceImpl<LCSRole>
 		entityCache.putResult(LCSRoleModelImpl.ENTITY_CACHE_ENABLED,
 			LCSRoleImpl.class, lcsRole.getPrimaryKey(), lcsRole, false);
 
-		clearUniqueFindersCache(lcsRoleModelImpl);
-		cacheUniqueFindersCache(lcsRoleModelImpl, isNew);
+		clearUniqueFindersCache(lcsRoleModelImpl, false);
+		cacheUniqueFindersCache(lcsRoleModelImpl);
 
 		lcsRole.resetOriginalValues();
 

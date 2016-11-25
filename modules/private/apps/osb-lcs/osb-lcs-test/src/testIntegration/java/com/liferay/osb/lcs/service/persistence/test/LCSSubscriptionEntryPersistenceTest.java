@@ -206,17 +206,17 @@ public class LCSSubscriptionEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByActive() throws Exception {
-		_persistence.countByActive(RandomTestUtil.randomBoolean());
-
-		_persistence.countByActive(RandomTestUtil.randomBoolean());
-	}
-
-	@Test
 	public void testCountByLCSProjectId() throws Exception {
 		_persistence.countByLCSProjectId(RandomTestUtil.nextLong());
 
 		_persistence.countByLCSProjectId(0L);
+	}
+
+	@Test
+	public void testCountByActive() throws Exception {
+		_persistence.countByActive(RandomTestUtil.randomBoolean());
+
+		_persistence.countByActive(RandomTestUtil.randomBoolean());
 	}
 
 	@Test

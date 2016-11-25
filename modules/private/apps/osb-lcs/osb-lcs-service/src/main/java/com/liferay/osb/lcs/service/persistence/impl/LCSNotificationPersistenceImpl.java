@@ -2075,7 +2075,7 @@ public class LCSNotificationPersistenceImpl extends BasePersistenceImpl<LCSNotif
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((LCSNotificationModelImpl)lcsNotification);
+		clearUniqueFindersCache((LCSNotificationModelImpl)lcsNotification, true);
 	}
 
 	@Override
@@ -2087,44 +2087,12 @@ public class LCSNotificationPersistenceImpl extends BasePersistenceImpl<LCSNotif
 			entityCache.removeResult(LCSNotificationModelImpl.ENTITY_CACHE_ENABLED,
 				LCSNotificationImpl.class, lcsNotification.getPrimaryKey());
 
-			clearUniqueFindersCache((LCSNotificationModelImpl)lcsNotification);
+			clearUniqueFindersCache((LCSNotificationModelImpl)lcsNotification,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		LCSNotificationModelImpl lcsNotificationModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					lcsNotificationModelImpl.getUserId(),
-					lcsNotificationModelImpl.getClassNameId(),
-					lcsNotificationModelImpl.getClassPK(),
-					lcsNotificationModelImpl.getType()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_U_C_C_T, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_U_C_C_T, args,
-				lcsNotificationModelImpl);
-		}
-		else {
-			if ((lcsNotificationModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_U_C_C_T.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						lcsNotificationModelImpl.getUserId(),
-						lcsNotificationModelImpl.getClassNameId(),
-						lcsNotificationModelImpl.getClassPK(),
-						lcsNotificationModelImpl.getType()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_U_C_C_T, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_U_C_C_T, args,
-					lcsNotificationModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		LCSNotificationModelImpl lcsNotificationModelImpl) {
 		Object[] args = new Object[] {
 				lcsNotificationModelImpl.getUserId(),
@@ -2133,12 +2101,29 @@ public class LCSNotificationPersistenceImpl extends BasePersistenceImpl<LCSNotif
 				lcsNotificationModelImpl.getType()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_U_C_C_T, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_U_C_C_T, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_U_C_C_T, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_U_C_C_T, args,
+			lcsNotificationModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		LCSNotificationModelImpl lcsNotificationModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					lcsNotificationModelImpl.getUserId(),
+					lcsNotificationModelImpl.getClassNameId(),
+					lcsNotificationModelImpl.getClassPK(),
+					lcsNotificationModelImpl.getType()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_C_C_T, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_U_C_C_T, args);
+		}
 
 		if ((lcsNotificationModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_U_C_C_T.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					lcsNotificationModelImpl.getOriginalUserId(),
 					lcsNotificationModelImpl.getOriginalClassNameId(),
 					lcsNotificationModelImpl.getOriginalClassPK(),
@@ -2376,8 +2361,8 @@ public class LCSNotificationPersistenceImpl extends BasePersistenceImpl<LCSNotif
 			LCSNotificationImpl.class, lcsNotification.getPrimaryKey(),
 			lcsNotification, false);
 
-		clearUniqueFindersCache(lcsNotificationModelImpl);
-		cacheUniqueFindersCache(lcsNotificationModelImpl, isNew);
+		clearUniqueFindersCache(lcsNotificationModelImpl, false);
+		cacheUniqueFindersCache(lcsNotificationModelImpl);
 
 		lcsNotification.resetOriginalValues();
 
