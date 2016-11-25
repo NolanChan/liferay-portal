@@ -615,7 +615,7 @@ public class LCSSubscriptionEntryLocalServiceImpl
 			throw new LCSSubscriptionEntryTypeException(
 				_stringAdvisor.concat(
 					"Invalid entity {subscriptionType:",
-						subscriptionType.name(), StringPool.CLOSE_CURLY_BRACE));
+					subscriptionType.name(), StringPool.CLOSE_CURLY_BRACE));
 		}
 
 		if (subscriptionType != SubscriptionType.PRODUCTION) {
@@ -627,9 +627,8 @@ public class LCSSubscriptionEntryLocalServiceImpl
 		if (product.contains("Non-Production")) {
 			throw new LCSSubscriptionEntryProductException(
 				_stringAdvisor.concat(
-					"Invalid entity {product:", product,
-					", subscriptionType:",
-						subscriptionType.name(), StringPool.CLOSE_CURLY_BRACE));
+					"Invalid entity {product:", product, ", subscriptionType:",
+					subscriptionType.name(), StringPool.CLOSE_CURLY_BRACE));
 		}
 	}
 
