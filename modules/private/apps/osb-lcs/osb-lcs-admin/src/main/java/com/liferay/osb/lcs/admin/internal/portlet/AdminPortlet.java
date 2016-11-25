@@ -180,11 +180,9 @@ public class AdminPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		request.setAttribute(AdminAdvisor.class.getName(), _adminAdvisor);
-
 		request.setAttribute(
 			LCSClusterNodeScriptService.class.getName(),
 			_lcsClusterNodeScriptService);
-
 		request.setAttribute(
 			OSBLCSConfiguration.class.getName(), _osbLCSConfiguration);
 
