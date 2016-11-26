@@ -12,10 +12,14 @@
  * details.
  */
 
-package com.liferay.lcs.security;
+package com.liferay.lcs.internal.security;
 
 import com.liferay.lcs.messaging.CommandMessage;
 import com.liferay.lcs.messaging.Message;
+import com.liferay.lcs.security.DigitalSignature;
+import com.liferay.lcs.security.KeyStoreAdvisor;
+import com.liferay.lcs.security.KeyStoreFactory;
+import org.osgi.service.component.annotations.Component;
 
 import java.security.KeyStore;
 import java.security.Signature;
@@ -35,6 +39,7 @@ import javax.xml.bind.DatatypeConverter;
  * @version 2.1.1
  * @since   LCS 0.1
  */
+@Component(immediate = true, service = DigitalSignature.class)
 public class DigitalSignatureImpl implements DigitalSignature {
 
 	public DigitalSignatureImpl() {
