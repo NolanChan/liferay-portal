@@ -28,9 +28,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  */
+@Component(
+	immediate = true, service = LCSClusterNodePortletMetricsService.class
+)
 public class LCSClusterNodePortletMetricsServiceImpl
 	implements LCSClusterNodePortletMetricsService {
 

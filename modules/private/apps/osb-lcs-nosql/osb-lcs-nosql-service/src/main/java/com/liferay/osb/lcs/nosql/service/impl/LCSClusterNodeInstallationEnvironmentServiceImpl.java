@@ -21,9 +21,15 @@ import com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeInstallationE
 import java.util.Date;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Igor Beslic
  */
+@Component(
+	immediate = true,
+	service = LCSClusterNodeInstallationEnvironmentService.class
+)
 public class LCSClusterNodeInstallationEnvironmentServiceImpl
 	implements LCSClusterNodeInstallationEnvironmentService {
 

@@ -37,10 +37,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
+@Component(immediate = true, service = LCSClusterNodeDetailsService.class)
 public class LCSClusterNodeDetailsServiceImpl
 	implements LCSClusterNodeDetailsService {
 

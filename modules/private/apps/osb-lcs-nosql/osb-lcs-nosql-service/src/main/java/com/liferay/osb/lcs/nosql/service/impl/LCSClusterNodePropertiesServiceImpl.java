@@ -22,9 +22,12 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  */
+@Component(immediate = true, service = LCSClusterNodePropertiesService.class)
 public class LCSClusterNodePropertiesServiceImpl
 	implements LCSClusterNodePropertiesService {
 

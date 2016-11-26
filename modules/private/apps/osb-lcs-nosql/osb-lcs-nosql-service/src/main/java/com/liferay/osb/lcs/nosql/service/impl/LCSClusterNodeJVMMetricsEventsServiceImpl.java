@@ -26,9 +26,14 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Riccardo Ferrari
  */
+@Component(
+	immediate = true, service = LCSClusterNodeJVMMetricsEventsService.class
+)
 public class LCSClusterNodeJVMMetricsEventsServiceImpl
 	implements LCSClusterNodeJVMMetricsEventsService {
 

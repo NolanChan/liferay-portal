@@ -21,9 +21,15 @@ import com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeJDBCConnectio
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  */
+@Component(
+	immediate = true,
+	service = LCSClusterNodeJDBCConnectionPoolMetricsService.class
+)
 public class LCSClusterNodeJDBCConnectionPoolMetricsServiceImpl
 	implements LCSClusterNodeJDBCConnectionPoolMetricsService {
 

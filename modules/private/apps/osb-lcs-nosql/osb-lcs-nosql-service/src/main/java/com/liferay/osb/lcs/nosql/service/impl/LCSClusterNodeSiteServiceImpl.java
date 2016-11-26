@@ -21,9 +21,12 @@ import com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeSitePersisten
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Riccardo Ferrari
  */
+@Component(immediate = true, service = LCSClusterNodeSiteService.class)
 public class LCSClusterNodeSiteServiceImpl
 	implements LCSClusterNodeSiteService {
 

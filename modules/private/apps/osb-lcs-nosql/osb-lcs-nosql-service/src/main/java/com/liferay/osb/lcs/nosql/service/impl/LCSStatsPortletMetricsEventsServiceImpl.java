@@ -22,9 +22,14 @@ import com.liferay.osb.lcs.nosql.service.persistence.LCSStatsPortletMetricsSumma
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Riccardo Ferrari
  */
+@Component(
+	immediate = true, service = LCSStatsPortletMetricsEventsService.class
+)
 public class LCSStatsPortletMetricsEventsServiceImpl
 	implements LCSStatsPortletMetricsEventsService {
 

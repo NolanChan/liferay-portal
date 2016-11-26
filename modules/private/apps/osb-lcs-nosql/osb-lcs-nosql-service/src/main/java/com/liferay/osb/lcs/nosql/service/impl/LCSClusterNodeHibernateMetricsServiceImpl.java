@@ -20,9 +20,14 @@ import com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeHibernateMetr
 
 import java.util.Date;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  */
+@Component(
+	immediate = true, service = LCSClusterNodeHibernateMetricsService.class
+)
 public class LCSClusterNodeHibernateMetricsServiceImpl
 	implements LCSClusterNodeHibernateMetricsService {
 

@@ -25,9 +25,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  */
+@Component(immediate = true, service = LCSClusterNodePatchesService.class)
 public class LCSClusterNodePatchesServiceImpl
 	implements LCSClusterNodePatchesService {
 

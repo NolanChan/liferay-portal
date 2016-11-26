@@ -21,9 +21,14 @@ import com.liferay.osb.lcs.nosql.service.persistence.LCSClusterNodeLiferayVMMetr
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  */
+@Component(
+	immediate = true, service = LCSClusterNodeLiferayVMMetricsService.class
+)
 public class LCSClusterNodeLiferayVMMetricsServiceImpl
 	implements LCSClusterNodeLiferayVMMetricsService {
 

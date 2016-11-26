@@ -25,9 +25,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  */
+@Component(immediate = true, service = LCSClusterNodeLayoutMetricsService.class)
 public class LCSClusterNodeLayoutMetricsServiceImpl
 	implements LCSClusterNodeLayoutMetricsService {
 

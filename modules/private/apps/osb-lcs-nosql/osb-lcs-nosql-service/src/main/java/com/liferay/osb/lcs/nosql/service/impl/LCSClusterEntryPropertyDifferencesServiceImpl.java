@@ -22,9 +22,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Matija Petanjek
  */
+@Component(
+	immediate = true, service = LCSClusterEntryPropertyDifferencesService.class
+)
 public class LCSClusterEntryPropertyDifferencesServiceImpl
 	implements LCSClusterEntryPropertyDifferencesService {
 

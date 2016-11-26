@@ -20,9 +20,12 @@ import com.liferay.osb.lcs.nosql.service.persistence.LCSMetadataDetailsPersisten
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  */
+@Component(immediate = true, service = LCSMetadataDetailsService.class)
 public class LCSMetadataDetailsServiceImpl
 	implements LCSMetadataDetailsService {
 

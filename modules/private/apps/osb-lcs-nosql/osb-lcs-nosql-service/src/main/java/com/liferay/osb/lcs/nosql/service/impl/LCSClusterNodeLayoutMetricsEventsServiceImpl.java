@@ -24,9 +24,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Riccardo Ferrari
  */
+@Component(
+	immediate = true, service = LCSClusterNodeLayoutMetricsEventsService.class
+)
 public class LCSClusterNodeLayoutMetricsEventsServiceImpl
 	implements LCSClusterNodeLayoutMetricsEventsService {
 
