@@ -17,6 +17,7 @@ package com.liferay.osb.lcs.internal.events;
 import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
 import com.liferay.osb.lcs.model.LCSMetadata;
 import com.liferay.osb.lcs.nosql.service.LCSMetadataDetailsService;
+import com.liferay.osb.lcs.service.LCSMetadataLocalService;
 import com.liferay.osb.lcs.service.LCSMetadataLocalServiceUtil;
 import com.liferay.osb.lcs.util.ApplicationProfile;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -36,6 +37,7 @@ import java.util.Properties;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Matija Petanjek
@@ -89,9 +91,8 @@ public class SetUpLCSMetadataAction implements LifecycleAction {
 			String gitTag = lcsMetadataAttributes[1];
 			String portalEdition = lcsMetadataAttributes[2];
 
-			LCSMetadata lcsMetadata =
-				LCSMetadataLocalServiceUtil.fetchLCSMetadata(
-					buildNumber, gitTag, portalEdition);
+			LCSMetadata lcsMetadata = _lcsMetadataLocalService.fetchLCSMetadata(
+				buildNumber, gitTag, portalEdition);
 
 			if (lcsMetadata == null) {
 				int supportedLCSPortlet = GetterUtil.getInteger(
@@ -133,5 +134,8 @@ public class SetUpLCSMetadataAction implements LifecycleAction {
 	private static volatile OSBLCSConfiguration _osbLCSConfiguration;
 
 	private LCSMetadataDetailsService _lcsMetadataDetailsService;
+
+	@Reference(unbind = "-")
+	private LCSMetadataLocalService _lcsMetadataLocalService;
 
 }

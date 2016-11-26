@@ -24,7 +24,6 @@ import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodeDetailsService;
 import com.liferay.osb.lcs.service.base.LCSClusterNodeServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSClusterEntryPermission;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -500,10 +500,10 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 		MessageBusUtil.sendMessage("liferay/osb_lcs_events", message);
 	}
 
-	@BeanReference(type = LCSClusterNodeDetailsService.class)
+	@ServiceReference(type = LCSClusterNodeDetailsService.class)
 	private LCSClusterNodeDetailsService _lcsClusterNodeDetailsService;
 
-	@BeanReference(name = "com.liferay.osb.lcs.advisor.PortalPropertiesAdvisor")
+	@ServiceReference(type = PortalPropertiesAdvisor.class)
 	private PortalPropertiesAdvisor _portalPropertiesAdvisor;
 
 }

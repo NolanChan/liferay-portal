@@ -24,7 +24,6 @@ import com.liferay.osb.lcs.service.base.LCSClusterEntryServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSClusterEntryPermission;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
 import com.liferay.osb.lcs.util.ApplicationProfile;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -321,7 +320,7 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 	@ServiceReference(type = ConfigurationProvider.class)
 	private ConfigurationProvider _configurationProvider;
 
-	@BeanReference(type = LCSClusterEntryTokenAdvisor.class)
+	@ServiceReference(type = LCSClusterEntryTokenAdvisor.class)
 	private LCSClusterEntryTokenAdvisor _lcsClusterEntryTokenAdvisor;
 
 }

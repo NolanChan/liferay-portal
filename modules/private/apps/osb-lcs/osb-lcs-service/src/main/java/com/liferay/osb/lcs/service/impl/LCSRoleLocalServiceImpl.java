@@ -27,11 +27,11 @@ import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.service.base.LCSRoleLocalServiceBaseImpl;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -541,13 +541,13 @@ public class LCSRoleLocalServiceImpl extends LCSRoleLocalServiceBaseImpl {
 		}
 	}
 
-	@BeanReference(type = CompanyAdvisor.class)
+	@ServiceReference(type = CompanyAdvisor.class)
 	private CompanyAdvisor _companyAdvisor;
 
-	@BeanReference(type = OSBPortletService.class)
+	@ServiceReference(type = OSBPortletService.class)
 	private OSBPortletService _osbPortletService;
 
-	@BeanReference(type = UserAdvisor.class)
+	@ServiceReference(type = UserAdvisor.class)
 	private UserAdvisor _userAdvisor;
 
 }

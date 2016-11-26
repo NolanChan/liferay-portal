@@ -125,7 +125,7 @@ public class CommandMessageAdvisorImpl implements CommandMessageAdvisor {
 	}
 
 	@Reference(bind = "-", unbind = "-")
-	public void setPatchStorageManager(PatchAdvisor patchAdvisor) {
+	public void setPatchAdvisor(PatchAdvisor patchAdvisor) {
 		_patchAdvisor = patchAdvisor;
 	}
 

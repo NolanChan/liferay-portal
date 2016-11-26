@@ -21,13 +21,13 @@ import com.liferay.osb.lcs.model.LCSPatchEntry;
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodePatches;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodePatchesService;
 import com.liferay.osb.lcs.service.base.LCSPatchingAdvisorServiceBaseImpl;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -350,7 +350,7 @@ public class LCSPatchingAdvisorServiceImpl
 		return true;
 	}
 
-	@BeanReference(type = LCSClusterNodePatchesService.class)
+	@ServiceReference(type = LCSClusterNodePatchesService.class)
 	private LCSClusterNodePatchesService _lcsClusterNodePatchesService;
 
 }

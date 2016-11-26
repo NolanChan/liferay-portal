@@ -164,14 +164,14 @@ public class PatchAdvisorImpl implements PatchAdvisor {
 		_downloadURLResolver = downloadURLResolver;
 	}
 
-	@Reference(unbind = "-")
+	@Reference(bind = "-", unbind = "-")
 	public void setLCSClusterNodePatchesService(
 		LCSClusterNodePatchesService lcsClusterNodePatchesService) {
 
 		_lcsClusterNodePatchesService = lcsClusterNodePatchesService;
 	}
 
-	@Reference(unbind = "-")
+	@Reference(bind = "-", unbind = "-")
 	public void setLCSPatchingAdvisorService(
 		LCSPatchingAdvisorService lcsPatchingAdvisorService) {
 
