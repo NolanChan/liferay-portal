@@ -117,7 +117,6 @@
 			<finder-column name="archived" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="LCSClusterNodePatches" remote-service="false" />
 	<entity local-service="true" name="LCSClusterNodeUptime" remote-service="true">
 
 		<!-- PK fields -->
