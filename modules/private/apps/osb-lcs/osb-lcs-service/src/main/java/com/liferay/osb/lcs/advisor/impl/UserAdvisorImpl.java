@@ -16,6 +16,7 @@ package com.liferay.osb.lcs.advisor.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.osb.lcs.advisor.CompanyAdvisor;
 import com.liferay.osb.lcs.advisor.StringAdvisor;
 import com.liferay.osb.lcs.advisor.UserAdvisor;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -97,7 +98,7 @@ public class UserAdvisorImpl implements UserAdvisor {
 	}
 
 	@Reference(bind = "-", unbind = "-")
-	public void setCompanyAdvisor(CompanyAdvisorImpl companyAdvisor) {
+	public void setCompanyAdvisor(CompanyAdvisor companyAdvisor) {
 		_companyAdvisor = companyAdvisor;
 	}
 
@@ -138,7 +139,7 @@ public class UserAdvisorImpl implements UserAdvisor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserAdvisorImpl.class);
 
-	private CompanyAdvisorImpl _companyAdvisor;
+	private CompanyAdvisor _companyAdvisor;
 	private RoleLocalService _roleLocalService;
 	private StringAdvisor _stringAdvisor;
 	private UserLocalService _userLocalService;
