@@ -123,7 +123,7 @@ public class LCSClusterNodeServiceWrapper implements LCSClusterNodeService,
 	* Returns the LCS cluster node with primary key.
 	*
 	* @param lcsClusterNodeId the primary key of the LCS cluster node
-	* @param details          whether to include transient details in the nodes
+	* @param details whether to include transient details in the nodes
 	* @return the LCS cluster node with primary key
 	* @throws PortalException if an LCS cluster node associated with the LCS
 	cluster entry could not be found or an operation was not allowed
@@ -142,9 +142,9 @@ public class LCSClusterNodeServiceWrapper implements LCSClusterNodeService,
 	* Updates the LCS cluster node.
 	*
 	* @param lcsClusterNodeId the primary key of LCS cluster node
-	* @param name             the portal instance friendly name
-	* @param description      the portal instance description
-	* @param location         the portal instance location
+	* @param name the portal instance friendly name
+	* @param description the portal instance description
+	* @param location the portal instance location
 	* @return the LCS cluster node
 	* @throws PortalException if a matching LCS cluster node could not be
 	found, or new attributes were invalid, or an operation was not
@@ -191,7 +191,7 @@ public class LCSClusterNodeServiceWrapper implements LCSClusterNodeService,
 	* Returns all LCS cluster nodes belonging to the LCS cluster entry.
 	*
 	* @param lcsClusterEntryId the primary key of the LCS cluster entry
-	* @param details           whether to include transient details in the nodes
+	* @param details whether to include transient details in the nodes
 	* @return the LCS cluster nodes belonging to the LCS cluster entry
 	* @throws PortalException if an operation was not allowed by the LCS
 	cluster entry membership policy
@@ -235,7 +235,7 @@ public class LCSClusterNodeServiceWrapper implements LCSClusterNodeService,
 	* belonging to the corp project.
 	*
 	* @param lcsProjectId the primary key of corp project
-	* @param details      whether to include transient details in the nodes
+	* @param details whether to include transient details in the nodes
 	* @return the LCS cluster nodes belonging to the corp project and
 	accessible to the current user
 	* @throws PortalException if an operation was not allowed by the LCS
@@ -259,9 +259,9 @@ public class LCSClusterNodeServiceWrapper implements LCSClusterNodeService,
 
 	/**
 	* Deletes the LCS cluster node.
+	*
 	* <p>
-	* <p>
-	* This method assures that the LCS cluster node connected to LCS is
+	* <p> This method assures that the LCS cluster node connected to LCS is
 	* properly disconnected. All NoSQL data is deleted.
 	* </p>
 	*

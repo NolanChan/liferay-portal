@@ -149,7 +149,6 @@ public class LCSPatchEntryLocalServiceUtil {
 	*
 	* @param patchId the patch ID defined by Liferay support
 	* @return the LCS patch entry matching the patch ID
-	* @throws NoSuchLCSPatchEntryException
 	* @since LCS 0.1
 	*/
 	public static com.liferay.osb.lcs.model.LCSPatchEntry getLCSPatchEntry(

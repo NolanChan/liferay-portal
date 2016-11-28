@@ -438,8 +438,7 @@ public class LCSClusterNodeLocalServiceWrapper
 	* are not primary keys: they are indices in the result set. Therefore, a
 	* start value of <code>0</code> refers to the first result in the set. The
 	* maximum number of instances returned is the end index minus the start
-	* index. Setting both indices to {@link
-	* QueryUtil#ALL_POS} returns the full
+	* index. Setting both indices to {@link QueryUtil#ALL_POS} returns the full
 	* result set.
 	* </p>
 	*

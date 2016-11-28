@@ -151,7 +151,6 @@ public interface LCSPatchEntryLocalService extends BaseLocalService,
 	*
 	* @param patchId the patch ID defined by Liferay support
 	* @return the LCS patch entry matching the patch ID
-	* @throws NoSuchLCSPatchEntryException
 	* @since LCS 0.1
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

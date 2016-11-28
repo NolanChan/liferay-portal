@@ -80,8 +80,7 @@ public interface LCSRoleLocalService extends BaseLocalService,
 	*
 	* <p>
 	* This method checks for the presence of any LCS role except the role
-	* {@link
-	* LCSRoleConstants#ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER}.
+	* {@link LCSRoleConstants#ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER}.
 	* </p>
 	*
 	* @param userId the primary key of the user
