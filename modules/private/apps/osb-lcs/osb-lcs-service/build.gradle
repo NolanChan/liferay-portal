@@ -13,7 +13,6 @@ dependencies {
 	provided group: "com.amazonaws", name: "aws-java-sdk-sqs", version: "1.10.27"
 	provided group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.4.2"
 	provided group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.4.2"
-	provided group: "com.liferay", name: "com.liferay.lcs.api", version: "5.0.0"
 	provided group: "com.liferay", name: "com.liferay.oauth.api", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.json.web.service.client", version: "1.2.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
@@ -29,6 +28,7 @@ dependencies {
 	provided project(":apps:foundation:petra:petra-content")
 	provided project(":apps:foundation:petra:petra-encryptor")
 	provided project(":apps:foundation:portal:portal-dao-orm-custom-sql")
+	provided project(":private:apps:lcs:lcs-api")
 	provided project(":private:apps:osb-lcs-nosql:osb-lcs-nosql")
 	provided project(":private:apps:osb-lcs-nosql:osb-lcs-nosql-api")
 	provided project(":private:apps:osb-lcs-queue:osb-lcs-queue")
