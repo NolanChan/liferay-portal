@@ -15,8 +15,8 @@
 package com.liferay.osb.lcs.notifications.portlet;
 
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.osb.lcs.advisor.PatchAdvisor;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
-import com.liferay.osb.lcs.service.LCSClusterNodePatchesLocalService;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -106,12 +106,8 @@ public class NotificationsPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	public void setLCSClusterNodePatchesLocalService(
-		LCSClusterNodePatchesLocalService
-			lcsLcsClusterNodePatchesLocalService) {
-
-		_lcsLcsClusterNodePatchesLocalService =
-			lcsLcsClusterNodePatchesLocalService;
+	public void setPatchAdvisor(PatchAdvisor patchAdvisor) {
+		_patchAdvisor = patchAdvisor;
 	}
 
 	protected void downloadPatch(
@@ -127,8 +123,7 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		String patchName = ParamUtil.getString(resourceRequest, "patchName");
 
-		_lcsLcsClusterNodePatchesLocalService.downloadPatch(
-			lcsClusterNodeIds, patchName);
+		_patchAdvisor.downloadPatch(lcsClusterNodeIds, patchName);
 	}
 
 	protected String downloadPatchStatus(
@@ -141,14 +136,13 @@ public class NotificationsPortlet extends MVCPortlet {
 			resourceRequest, "lcsClusterNodeKeys");
 		String patchId = ParamUtil.getString(resourceRequest, "patchId");
 
-		return _lcsLcsClusterNodePatchesLocalService.getDownloadPatchStatus(
+		return _patchAdvisor.getDownloadPatchStatus(
 			lcsClusterNodeIds, lcsClusterNodeKeys, patchId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		NotificationsPortlet.class);
 
-	private LCSClusterNodePatchesLocalService
-		_lcsLcsClusterNodePatchesLocalService;
+	private PatchAdvisor _patchAdvisor;
 
 }
