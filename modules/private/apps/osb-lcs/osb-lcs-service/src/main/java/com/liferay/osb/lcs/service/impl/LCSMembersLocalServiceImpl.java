@@ -20,6 +20,7 @@ import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.osb.lcs.constants.OSBPortletConstants;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.service.base.LCSMembersLocalServiceBaseImpl;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
@@ -36,8 +37,6 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -76,33 +75,6 @@ public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {
 			_groupLocalService.unsetUserGroups(
 				userId, new long[] {group.getGroupId()});
 		}
-	}
-
-	@ServiceReference
-	public void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(bind = "-")
-	public void setOSBPortletService(OSBPortletService osbPortletService) {
-		_osbPortletService = osbPortletService;
-	}
-
-	@ServiceReference
-	public void setRoleLocalService(RoleLocalService roleLocalService) {
-		_roleLocalService = roleLocalService;
-	}
-
-	@ServiceReference
-	public void setUserGroupRoleLocalService(
-		UserGroupRoleLocalService userGroupRoleLocalService) {
-
-		_userGroupRoleLocalService = userGroupRoleLocalService;
-	}
-
-	@ServiceReference
-	public void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	@Override
@@ -162,10 +134,19 @@ public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {
 			group.getGroupId(), new long[] {userId});
 	}
 
+	@BeanReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
+
+	@ServiceReference(type = OSBPortletService.class)
 	private OSBPortletService _osbPortletService;
+
+	@BeanReference(type = RoleLocalService.class)
 	private RoleLocalService _roleLocalService;
+
+	@BeanReference(type = UserGroupRoleLocalService.class)
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@BeanReference(type = UserLocalService.class)
 	private UserLocalService _userLocalService;
 
 }
