@@ -15,7 +15,10 @@
 package com.liferay.osb.lcs.advisor.impl;
 
 import com.liferay.lcs.notification.LCSEventType;
+import com.liferay.lcs.util.LCSClusterNodeStatus;
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.lcs.util.PatchUtil;
+import com.liferay.osb.lcs.advisor.CommandMessageAdvisor;
 import com.liferay.osb.lcs.advisor.PatchAdvisor;
 import com.liferay.osb.lcs.advisor.StringAdvisor;
 import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
@@ -24,6 +27,7 @@ import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodePatches;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodePatchesService;
 import com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil;
+import com.liferay.osb.lcs.service.LCSClusterNodeLocalService;
 import com.liferay.osb.lcs.service.LCSClusterNodeLocalServiceUtil;
 import com.liferay.osb.lcs.service.LCSPatchingAdvisorService;
 import com.liferay.osb.lcs.storage.DownloadURLResolver;
@@ -31,8 +35,12 @@ import com.liferay.osb.lcs.storage.StorageManager;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
 
@@ -40,6 +48,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +69,113 @@ import org.osgi.service.component.annotations.Reference;
 	service = PatchAdvisor.class
 )
 public class PatchAdvisorImpl implements PatchAdvisor {
+
+	@Override
+	public void downloadPatch(long[] lcsClusterNodeIds, String patchName)
+		throws PortalException {
+
+		Map<String, Map<String, Integer>> keysPatchIdsStatuses =
+			new HashMap<>();
+
+		for (long lcsClusterNodeId : lcsClusterNodeIds) {
+			LCSClusterNode lcsClusterNode =
+				_lcsClusterNodeLocalService.getLCSClusterNode(
+					lcsClusterNodeId, true);
+
+			String patchId = PatchUtil.getPatchId(patchName);
+
+			if (LCSClusterNodeStatus.isInactive(lcsClusterNode.getStatus())) {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Unable to download patch ");
+				sb.append(patchId);
+				sb.append(" because LCS cluster node ");
+				sb.append(lcsClusterNodeId);
+				sb.append(" is offline");
+
+				throw new PortalException(sb.toString());
+			}
+
+			Map<String, String> patchNamesURLs = new HashMap<>();
+
+			URL patchURL = getPatchAsURL(patchName);
+
+			patchNamesURLs.put(patchName, patchURL.toString());
+
+			_commandMessageAdvisor.downloadPatches(
+				lcsClusterNode, patchNamesURLs);
+
+			LCSClusterNodePatches lcsClusterNodePatches =
+				_lcsClusterNodePatchesService.fetchLCSClusterNodePatches(
+					lcsClusterNode.getKey());
+
+			Map<String, Integer> patchIdsStatuses = new HashMap<>(
+				lcsClusterNodePatches.getPatchIdsStatuses());
+
+			if (patchIdsStatuses.containsKey(patchId)) {
+				if (patchIdsStatuses.get(patchId) >=
+						LCSConstants.PATCHES_DOWNLOAD_INITIATED) {
+
+					continue;
+				}
+			}
+
+			patchIdsStatuses.put(
+				patchId, LCSConstants.PATCHES_DOWNLOAD_INITIATED);
+
+			keysPatchIdsStatuses.put(lcsClusterNode.getKey(), patchIdsStatuses);
+		}
+
+		_lcsClusterNodePatchesService.updateLCSClusterNodePatchesList(
+			keysPatchIdsStatuses);
+	}
+
+	@Override
+	public String getDownloadPatchStatus(
+		long[] lcsClusterNodeIds, String lcsClusterNodeKeys, String patchId) {
+
+		for (long lcsClusterNodeId : lcsClusterNodeIds) {
+			LCSClusterNode lcsClusterNode =
+				_lcsClusterNodeLocalService.getLCSClusterNode(
+					lcsClusterNodeId, true);
+
+			if (LCSClusterNodeStatus.isActive(lcsClusterNode.getStatus())) {
+				continue;
+			}
+
+			LCSClusterNodePatches lcsClusterNodePatches =
+				_lcsClusterNodePatchesService.fetchLCSClusterNodePatches(
+					lcsClusterNode.getKey());
+
+			Map<String, Integer> patchIdsStatuses = new HashMap<>(
+				lcsClusterNodePatches.getPatchIdsStatuses());
+
+			patchIdsStatuses.put(patchId, LCSConstants.PATCHES_ERROR);
+
+			Map<String, Map<String, Integer>> keysPatchIdsStatuses =
+				new HashMap<>();
+
+			keysPatchIdsStatuses.put(lcsClusterNode.getKey(), patchIdsStatuses);
+
+			_lcsClusterNodePatchesService.updateLCSClusterNodePatchesList(
+				keysPatchIdsStatuses);
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("LCS cluster node ");
+			sb.append(lcsClusterNodeId);
+			sb.append(" went down while downloading patch ");
+			sb.append(patchId);
+
+			_log.error(sb.toString());
+
+			return String.valueOf(LCSConstants.PATCHES_ERROR);
+		}
+
+		return String.valueOf(
+			_lcsClusterNodePatchesService.getPatchStatus(
+				lcsClusterNodeKeys.split(StringPool.COMMA), patchId));
+	}
 
 	@Override
 	public URL getPatchAsURL(String patchFileName) {
@@ -158,10 +274,24 @@ public class PatchAdvisorImpl implements PatchAdvisor {
 	}
 
 	@Reference(bind = "-", unbind = "-")
+	public void setCommandMessageAdvisor(
+		CommandMessageAdvisor commandMessageAdvisor) {
+
+		_commandMessageAdvisor = commandMessageAdvisor;
+	}
+
+	@Reference(bind = "-", unbind = "-")
 	public void setDownloadURLResolver(
 		DownloadURLResolver downloadURLResolver) {
 
 		_downloadURLResolver = downloadURLResolver;
+	}
+
+	@Reference(bind = "-", unbind = "-")
+	public void setLcsClusterNodeLocalService(
+		LCSClusterNodeLocalService lcsClusterNodeLocalService) {
+
+		_lcsClusterNodeLocalService = lcsClusterNodeLocalService;
 	}
 
 	@Reference(bind = "-", unbind = "-")
@@ -296,9 +426,14 @@ public class PatchAdvisorImpl implements PatchAdvisor {
 		return true;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		PatchAdvisorImpl.class);
+
 	private static volatile OSBLCSConfiguration _osbLCSConfiguration;
 
+	private CommandMessageAdvisor _commandMessageAdvisor;
 	private DownloadURLResolver _downloadURLResolver;
+	private LCSClusterNodeLocalService _lcsClusterNodeLocalService;
 	private LCSClusterNodePatchesService _lcsClusterNodePatchesService;
 	private LCSPatchingAdvisorService _lcsPatchingAdvisorService;
 	private Map<String, Long> _patchFileNamesSizes;

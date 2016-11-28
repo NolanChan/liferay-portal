@@ -18,9 +18,7 @@ import com.liferay.lcs.messaging.CommandMessage;
 import com.liferay.lcs.messaging.HandshakeMessage;
 import com.liferay.lcs.messaging.Message;
 import com.liferay.lcs.security.DigitalSignature;
-import com.liferay.lcs.util.PatchUtil;
 import com.liferay.osb.lcs.advisor.CommandMessageAdvisor;
-import com.liferay.osb.lcs.advisor.PatchAdvisor;
 import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.nosql.model.LCSClusterNodeInstallationEnvironment;
@@ -33,10 +31,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 
-import java.net.URL;
-
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
@@ -59,7 +53,7 @@ public class CommandMessageAdvisorImpl implements CommandMessageAdvisor {
 
 	@Override
 	public void downloadPatches(
-			LCSClusterNode lcsClusterNode, List<String> patchNames)
+			LCSClusterNode lcsClusterNode, Map<String, String> patchNamesURLs)
 		throws PortalException {
 
 		LCSClusterEntryPermission.check(
@@ -67,19 +61,9 @@ public class CommandMessageAdvisorImpl implements CommandMessageAdvisor {
 			lcsClusterNode.getLcsClusterEntryId(),
 			OSBLCSActionKeys.DOWNLOAD_PATCH);
 
-		Map<String, String> payload = new HashMap<>();
-
-		for (String patchName : patchNames) {
-			String patchFileName = PatchUtil.getPatchFileName(patchName);
-
-			URL url = _patchAdvisor.getPatchAsURL(patchFileName);
-
-			payload.put(patchFileName, url.toString());
-		}
-
 		sendCommandMessage(
 			CommandMessage.COMMAND_TYPE_DOWNLOAD_PATCHES,
-			lcsClusterNode.getKey(), payload);
+			lcsClusterNode.getKey(), patchNamesURLs);
 	}
 
 	@Override
@@ -122,11 +106,6 @@ public class CommandMessageAdvisorImpl implements CommandMessageAdvisor {
 		LCSClusterNodeScriptService lcsClusterNodeScriptService) {
 
 		_lcsClusterNodeScriptService = lcsClusterNodeScriptService;
-	}
-
-	@Reference(bind = "-", unbind = "-")
-	public void setPatchAdvisor(PatchAdvisor patchAdvisor) {
-		_patchAdvisor = patchAdvisor;
 	}
 
 	@Reference(bind = "-", unbind = "-")
@@ -209,7 +188,6 @@ public class CommandMessageAdvisorImpl implements CommandMessageAdvisor {
 	private LCSClusterNodeInstallationEnvironmentService
 		_lcsClusterNodeInstallationEnvironmentService;
 	private LCSClusterNodeScriptService _lcsClusterNodeScriptService;
-	private PatchAdvisor _patchAdvisor;
 	private QueueManager _queueManager;
 
 }
