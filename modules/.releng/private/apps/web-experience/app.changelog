@@ -1110,11 +1110,11 @@ app.git.id-7.0.8=5f1d4389eaa43e05e52ba5e88fd8ec7f9593da6a
 #
 
 app.artifacts-7.0.9=\
-	com.liferay.application.list.api-2.1.4.jar,\
+	com.liferay.application.list.api-2.1.5.jar,\
 	com.liferay.application.list.taglib-2.0.5.jar,\
-	com.liferay.application.list.user.personal.site.permissions-2.0.4.jar,\
-	com.liferay.asset.browser.web-1.0.10.jar,\
-	com.liferay.asset.categories.admin.web-1.0.13.jar,\
+	com.liferay.application.list.user.personal.site.permissions-2.0.5.jar,\
+	com.liferay.asset.browser.web-1.0.11.jar,\
+	com.liferay.asset.categories.admin.web-1.0.14.jar,\
 	com.liferay.asset.categories.navigation.web-1.0.10.jar,\
 	com.liferay.asset.categories.service-1.0.6.jar,\
 	com.liferay.asset.display.web-1.0.2.jar,\
@@ -1147,13 +1147,13 @@ app.artifacts-7.0.9=\
 	com.liferay.journal.item.selector.web-1.0.3.jar,\
 	com.liferay.journal.lang-2.0.3.jar,\
 	com.liferay.journal.ratings.definition-2.0.2.jar,\
-	com.liferay.journal.service-3.4.7.jar,\
+	com.liferay.journal.service-3.4.8.jar,\
 	com.liferay.journal.terms.of.use-2.0.17.jar,\
-	com.liferay.journal.web-1.4.0.jar,\
-	com.liferay.layout.admin.web-1.0.18.jar,\
+	com.liferay.journal.web-1.4.1.jar,\
+	com.liferay.layout.admin.web-1.0.19.jar,\
 	com.liferay.layout.impl-2.0.2.jar,\
 	com.liferay.layout.item.selector.api-1.0.2.jar,\
-	com.liferay.layout.item.selector.web-1.1.1.jar,\
+	com.liferay.layout.item.selector.web-1.1.2.jar,\
 	com.liferay.layout.prototype.api-1.0.1.jar,\
 	com.liferay.layout.prototype.impl-1.0.3.jar,\
 	com.liferay.layout.prototype.web-1.0.8.jar,\
@@ -1166,7 +1166,7 @@ app.artifacts-7.0.9=\
 	com.liferay.layout.type.controller.node-2.0.2.jar,\
 	com.liferay.layout.type.controller.shared.portlet-2.0.2.jar,\
 	com.liferay.nested.portlets.web-2.0.3.jar,\
-	com.liferay.portlet.configuration.css.web-2.0.4.jar,\
+	com.liferay.portlet.configuration.css.web-2.0.5.jar,\
 	com.liferay.portlet.configuration.icon.close-2.0.2.jar,\
 	com.liferay.portlet.configuration.icon.edit-2.0.2.jar,\
 	com.liferay.portlet.configuration.icon.edit.defaults-2.0.2.jar,\
@@ -1181,7 +1181,7 @@ app.artifacts-7.0.9=\
 	com.liferay.portlet.configuration.toolbar.contributor.locator.api-2.0.2.jar,\
 	com.liferay.portlet.configuration.web-1.0.11.jar,\
 	com.liferay.portlet.display.template-2.0.6.jar,\
-	com.liferay.portlet.display.template.web-2.0.5.jar,\
+	com.liferay.portlet.display.template.web-2.0.6.jar,\
 	com.liferay.product.navigation.control.menu.api-3.0.0.jar,\
 	com.liferay.product.navigation.control.menu.dxp.theme.contributor-1.0.5.jar,\
 	com.liferay.product.navigation.control.menu.web-2.0.8.jar,\
@@ -1198,18 +1198,18 @@ app.artifacts-7.0.9=\
 	com.liferay.product.navigation.user.personal.bar.web-2.0.3.jar,\
 	com.liferay.rss.util-1.0.4.jar,\
 	com.liferay.rss.web-2.1.3.jar,\
-	com.liferay.site.admin.web-1.0.14.jar,\
+	com.liferay.site.admin.web-1.0.15.jar,\
 	com.liferay.site.api-2.1.2.jar,\
-	com.liferay.site.browser.web-2.0.6.jar,\
+	com.liferay.site.browser.web-2.0.7.jar,\
 	com.liferay.site.item.selector.api-1.0.2.jar,\
 	com.liferay.site.item.selector.web-2.0.6.jar,\
 	com.liferay.site.memberships.web-1.0.14.jar,\
 	com.liferay.site.my.sites.web-1.0.6.jar,\
-	com.liferay.site.navigation.breadcrumb.web-2.0.5.jar,\
+	com.liferay.site.navigation.breadcrumb.web-2.0.6.jar,\
 	com.liferay.site.navigation.directory.web-2.0.3.jar,\
 	com.liferay.site.navigation.language.web-2.1.2.jar,\
 	com.liferay.site.navigation.menu.web-2.0.5.jar,\
-	com.liferay.site.navigation.site.map.web-2.0.4.jar,\
+	com.liferay.site.navigation.site.map.web-2.0.5.jar,\
 	com.liferay.site.navigation.taglib-2.0.4.jar,\
 	com.liferay.site.teams.web-1.0.10.jar,\
 	com.liferay.staging.api-2.0.1.jar,\
@@ -1221,9 +1221,9 @@ app.artifacts-7.0.9=\
 	com.liferay.staging.security-2.0.14.jar,\
 	com.liferay.staging.taglib-3.1.6.jar,\
 	com.liferay.trash.taglib-2.0.3.jar,\
-	com.liferay.trash.web-1.0.10.jar,\
+	com.liferay.trash.web-1.0.11.jar,\
 	com.liferay.xsl.content.web-2.0.3.jar
 
-app.change.log-7.0.9=LPS-52675 LPS-61099 LPS-61420 LPS-63907 LPS-64031 LPS-64557 LPS-64834 LPS-64849 LPS-64981 LPS-65012 LPS-65135 LPS-65225 LPS-65240 LPS-65362 LPS-65432 LPS-65435 LPS-65439 LPS-65535 LPS-65537 LPS-65660 LPS-65810 LPS-66232 LPS-66405 LPS-66416 LPS-66552 LPS-66644 LPS-66732 LPS-66853 LPS-66883 LPS-66938 LPS-66974 LPS-66997 LPS-67079 LPS-67152 LPS-67291 LPS-67298 LPS-67352 LPS-67455 LPS-67624 LPS-67866 LPS-67918 LPS-68062 LPS-68191 LPS-68289 LPS-68514 LPS-68580 LPS-68680 LPS-68702 LPS-68731 LPS-68794 LPS-68865 LPS-68908 LPS-68921 LPS-68923 LPS-69082 LPS-69287 SYNC-1656
+app.change.log-7.0.9=LPS-52675 LPS-61099 LPS-61420 LPS-63907 LPS-64031 LPS-64557 LPS-64834 LPS-64849 LPS-64981 LPS-65012 LPS-65135 LPS-65225 LPS-65240 LPS-65362 LPS-65432 LPS-65435 LPS-65439 LPS-65535 LPS-65537 LPS-65660 LPS-65810 LPS-66232 LPS-66359 LPS-66405 LPS-66416 LPS-66552 LPS-66644 LPS-66732 LPS-66853 LPS-66883 LPS-66938 LPS-66974 LPS-66997 LPS-67079 LPS-67291 LPS-67298 LPS-67311 LPS-67352 LPS-67455 LPS-67624 LPS-67866 LPS-67918 LPS-68062 LPS-68191 LPS-68289 LPS-68514 LPS-68580 LPS-68680 LPS-68702 LPS-68731 LPS-68794 LPS-68865 LPS-68921 LPS-68923 LPS-69082 LPS-69252 LPS-69271 LPS-69287 LPS-69333 SYNC-1656
 
-app.git.id-7.0.9=0ce2e8f367c135235bff4fab4fb2efcb0056ec0a
+app.git.id-7.0.9=870078ae5dc30d4d916bf89f5e7a95f98e80d6ac
