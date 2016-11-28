@@ -18,7 +18,7 @@ import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.advisor.EmailAdvisor;
 import com.liferay.osb.lcs.advisor.impl.CompanyAdvisorImpl;
-import com.liferay.osb.lcs.advisor.impl.LCSMessageAdvisorImpl;
+import com.liferay.osb.lcs.constants.LCSMessageConstants;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.email.EmailContext;
 import com.liferay.osb.lcs.model.LCSMessage;
@@ -26,6 +26,7 @@ import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
 import com.liferay.osb.lcs.service.LCSInvitationService;
 import com.liferay.osb.lcs.service.LCSMembersLocalService;
+import com.liferay.osb.lcs.service.LCSMessageLocalService;
 import com.liferay.osb.lcs.service.LCSProjectService;
 import com.liferay.osb.lcs.service.LCSRoleLocalService;
 import com.liferay.osb.lcs.service.LCSRoleService;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -182,8 +184,10 @@ public class MembersPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	public void setLCSMessageAdvisor(LCSMessageAdvisorImpl lcsMessageAdvisor) {
-		_lcsMessageAdvisor = lcsMessageAdvisor;
+	public void setLCSMessageLocalService(
+		LCSMessageLocalService lcsMessageLocalServce) {
+
+		_lcsMessageLocalService = lcsMessageLocalServce;
 	}
 
 	@Reference(unbind = "-")
@@ -221,9 +225,14 @@ public class MembersPortlet extends MVCPortlet {
 
 		long lcsProjectId = ParamUtil.getLong(resourceRequest, "lcsProjectId");
 
-		LCSMessage lcsMessage = _lcsMessageAdvisor.addLCSProjectLCSMessage(
-			false, null, false, LCSEventType.MEMBERSHIP_REQUEST_ACCEPTED,
-			lcsProjectId);
+		LCSEventType lcsEventType = LCSEventType.MEMBERSHIP_REQUEST_ACCEPTED;
+
+		LCSMessage lcsMessage = _lcsMessageLocalService.addLCSProjectLCSMessage(
+			lcsProjectId, LCSMessageConstants.LCS_SOURCE_MESSAGE_ID,
+			LCSConstants.SOURCE_SYSTEM_NAME_LCS, null,
+			new Date(LCSMessageConstants.END_DATE_INDEFINITE), false,
+			lcsEventType.getSeverityLevel(), lcsEventType.getType(), false,
+			false);
 
 		long[] userIds = ParamUtil.getLongValues(resourceRequest, "userId");
 
@@ -375,7 +384,7 @@ public class MembersPortlet extends MVCPortlet {
 	private EmailAdvisor _emailAdvisor;
 	private LCSInvitationService _lcsInvitationService;
 	private LCSMembersLocalService _lcsMembersLocalService;
-	private LCSMessageAdvisorImpl _lcsMessageAdvisor;
+	private LCSMessageLocalService _lcsMessageLocalService;
 	private LCSProjectService _lcsProjectService;
 	private LCSRoleLocalService _lcsRoleLocalService;
 	private LCSRoleService _lcsRoleService;

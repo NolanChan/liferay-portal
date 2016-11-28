@@ -17,12 +17,13 @@ package com.liferay.osb.lcs.enrollment.portlet;
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.advisor.EmailAdvisor;
-import com.liferay.osb.lcs.advisor.impl.LCSMessageAdvisorImpl;
+import com.liferay.osb.lcs.constants.LCSMessageConstants;
 import com.liferay.osb.lcs.constants.LCSRoleConstants;
 import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.email.EmailContext;
 import com.liferay.osb.lcs.model.LCSProject;
+import com.liferay.osb.lcs.service.LCSMessageLocalService;
 import com.liferay.osb.lcs.service.LCSProjectLocalService;
 import com.liferay.osb.lcs.service.LCSProjectService;
 import com.liferay.osb.lcs.service.LCSRoleService;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.portlet.Portlet;
@@ -88,14 +90,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class EnrollmentPortlet extends MVCPortlet {
-
-	@Override
-	public void destroy() {
-		super.destroy();
-
-		_emailAdvisor = null;
-		_lcsMessageAdvisor = null;
-	}
 
 	@Override
 	public void serveResource(
@@ -156,8 +150,10 @@ public class EnrollmentPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	public void setLCSMessageAdvisor(LCSMessageAdvisorImpl lcsMessageAdvisor) {
-		_lcsMessageAdvisor = lcsMessageAdvisor;
+	public void setLCSMessageLocalService(
+		LCSMessageLocalService lcsMessageLocalService) {
+
+		_lcsMessageLocalService = lcsMessageLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -240,9 +236,14 @@ public class EnrollmentPortlet extends MVCPortlet {
 
 		_emailAdvisor.sendToLCSProjectAdminsEmail(emailContextBuilder.build());
 
-		_lcsMessageAdvisor.addLCSProjectLCSMessage(
-			true, null, true, LCSEventType.NEW_MEMBERSHIP_REQUEST,
-			lcsProjectId);
+		LCSEventType lcsEventType = LCSEventType.NEW_MEMBERSHIP_REQUEST;
+
+		_lcsMessageLocalService.addLCSProjectLCSMessage(
+			lcsProjectId, LCSMessageConstants.LCS_SOURCE_MESSAGE_ID,
+			LCSConstants.SOURCE_SYSTEM_NAME_LCS, null,
+			new Date(LCSMessageConstants.END_DATE_INDEFINITE), false,
+			lcsEventType.getSeverityLevel(), lcsEventType.getType(), true,
+			true);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -372,7 +373,7 @@ public class EnrollmentPortlet extends MVCPortlet {
 
 	private EmailAdvisor _emailAdvisor;
 	private EnrollmentAdvisor _enrollmentAdvisor;
-	private LCSMessageAdvisorImpl _lcsMessageAdvisor;
+	private LCSMessageLocalService _lcsMessageLocalService;
 	private LCSProjectLocalService _lcsProjectLocalService;
 	private LCSProjectService _lcsProjectService;
 	private LCSRoleService _lcsRoleService;

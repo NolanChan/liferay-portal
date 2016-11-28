@@ -15,8 +15,9 @@
 package com.liferay.osb.lcs.web.internal.action;
 
 import com.liferay.lcs.notification.LCSEventType;
+import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.advisor.EmailAdvisor;
-import com.liferay.osb.lcs.advisor.impl.LCSMessageAdvisorImpl;
+import com.liferay.osb.lcs.constants.LCSMessageConstants;
 import com.liferay.osb.lcs.constants.NavigationConstants;
 import com.liferay.osb.lcs.constants.OSBLCSConstants;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
@@ -28,6 +29,7 @@ import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.service.LCSInvitationLocalService;
 import com.liferay.osb.lcs.service.LCSMembersLocalService;
+import com.liferay.osb.lcs.service.LCSMessageLocalService;
 import com.liferay.osb.lcs.service.LCSProjectLocalService;
 import com.liferay.osb.lcs.service.LCSRoleLocalService;
 import com.liferay.osb.lcs.web.internal.advisor.PortletURLAdvisor;
@@ -48,6 +50,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
+
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -160,8 +164,10 @@ public class CheckLCSInvitationAction extends BaseStrutsAction {
 	}
 
 	@Reference(unbind = "-")
-	public void setLCSMessageAdvisor(LCSMessageAdvisorImpl lcsMessageAdvisor) {
-		_lcsMessageAdvisor = lcsMessageAdvisor;
+	public void setLCSMessageLocalService(
+		LCSMessageLocalService lcsMessageLocalService) {
+
+		_lcsMessageLocalService = lcsMessageLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -228,9 +234,14 @@ public class CheckLCSInvitationAction extends BaseStrutsAction {
 
 		_emailAdvisor.sendToLCSProjectAdminsEmail(emailContextBuilder.build());
 
-		_lcsMessageAdvisor.addLCSProjectLCSMessage(
-			true, user.getFullName(), true,
-			LCSEventType.MEMBERSHIP_INVITATION_ACCEPTED, lcsProjectId);
+		LCSEventType lcsEventType = LCSEventType.MEMBERSHIP_INVITATION_ACCEPTED;
+
+		_lcsMessageLocalService.addLCSProjectLCSMessage(
+			lcsProjectId, LCSMessageConstants.LCS_SOURCE_MESSAGE_ID,
+			LCSConstants.SOURCE_SYSTEM_NAME_LCS, user.getFullName(),
+			new Date(LCSMessageConstants.END_DATE_INDEFINITE), false,
+			lcsEventType.getSeverityLevel(), lcsEventType.getType(), true,
+			true);
 
 		LCSInvitation lcsInvitation =
 			_lcsInvitationLocalService.getLCSProjectLCSInvitation(
@@ -262,7 +273,7 @@ public class CheckLCSInvitationAction extends BaseStrutsAction {
 	private EmailAdvisor _emailAdvisor;
 	private LCSInvitationLocalService _lcsInvitationLocalService;
 	private LCSMembersLocalService _lcsMembersLocalService;
-	private LCSMessageAdvisorImpl _lcsMessageAdvisor;
+	private LCSMessageLocalService _lcsMessageLocalService;
 	private LCSProjectLocalService _lcsProjectLocalService;
 	private LCSRoleLocalService _lcsRoleLocalService;
 	private OSBPortletService _osbPortletService;

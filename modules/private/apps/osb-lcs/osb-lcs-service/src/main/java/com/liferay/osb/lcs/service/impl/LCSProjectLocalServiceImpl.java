@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.lcs.util.LCSConstants;
 import com.liferay.osb.lcs.advisor.EmailAdvisor;
-import com.liferay.osb.lcs.advisor.LCSMessageAdvisor;
 import com.liferay.osb.lcs.advisor.StringAdvisor;
 import com.liferay.osb.lcs.advisor.UserAdvisor;
 import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
@@ -597,9 +596,14 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 
 		_emailAdvisor.sendToLCSProjectAdminsEmail(emailContextBuilder.build());
 
-		_lcsMessageAdvisor.addLCSProjectLCSMessage(
-			true, user.getFullName(), true, LCSEventType.NEW_PROJECT_MEMBER,
-			lcsProjectId);
+		LCSEventType lcsEventType = LCSEventType.NEW_PROJECT_MEMBER;
+
+		lcsMessageLocalService.addLCSProjectLCSMessage(
+			lcsProjectId, LCSMessageConstants.LCS_SOURCE_MESSAGE_ID,
+			LCSConstants.SOURCE_SYSTEM_NAME_LCS, user.getFullName(),
+			new Date(LCSMessageConstants.END_DATE_INDEFINITE), false,
+			lcsEventType.getSeverityLevel(), lcsEventType.getType(), true,
+			true);
 
 		lcsRoleLocalService.addLCSRole(
 			user.getUserId(), lcsProjectId, 0,
@@ -627,9 +631,6 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 
 	@ServiceReference(type = EmailAdvisor.class)
 	private EmailAdvisor _emailAdvisor;
-
-	@ServiceReference(type = LCSMessageAdvisor.class)
-	private LCSMessageAdvisor _lcsMessageAdvisor;
 
 	@ServiceReference(type = OSBPortletService.class)
 	private OSBPortletService _osbPortletService;
