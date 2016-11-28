@@ -17,7 +17,7 @@ package com.liferay.osb.lcs.advisor;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ivica Cardic
@@ -28,7 +28,7 @@ public interface CommandMessageAdvisor {
 	public void deregister(String key);
 
 	public void downloadPatches(
-			LCSClusterNode lcsClusterNode, List<String> patchNames)
+			LCSClusterNode lcsClusterNode, Map<String, String> patchNamesURLs)
 		throws PortalException;
 
 	public void executeScript(LCSClusterNode lcsClusterNode, String script)

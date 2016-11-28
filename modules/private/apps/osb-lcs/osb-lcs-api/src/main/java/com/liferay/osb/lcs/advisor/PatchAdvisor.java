@@ -29,6 +29,12 @@ import java.util.Map;
  */
 public interface PatchAdvisor {
 
+	public void downloadPatch(long[] lcsClusterNodeIds, String patchName)
+		throws PortalException;
+
+	public String getDownloadPatchStatus(
+		long[] lcsClusterNodeIds, String lcsClusterNodeKeys, String patchId);
+
 	public URL getPatchAsURL(String patchFileName);
 
 	public List<String> getPatchFileNames(Date sinceModifiedDate);
