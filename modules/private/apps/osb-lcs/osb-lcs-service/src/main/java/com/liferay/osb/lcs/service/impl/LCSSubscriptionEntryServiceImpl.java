@@ -35,8 +35,8 @@ import java.util.List;
 
 /**
  * @author Igor Beslic
- * @see LCSSubscriptionEntryServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSSubscriptionEntryServiceUtil
+ * @see    LCSSubscriptionEntryServiceBaseImpl
+ * @see    com.liferay.osb.lcs.service.LCSSubscriptionEntryServiceUtil
  */
 @ProviderType
 public class LCSSubscriptionEntryServiceImpl

@@ -16,7 +16,7 @@ package com.liferay.portal.search.elasticsearch.marvel.web.internal.constants;
 
 /**
  * @author André de Oliveira
-*/
+ */
 public class MarvelPortletKeys {
 
 	public static final String MARVEL =

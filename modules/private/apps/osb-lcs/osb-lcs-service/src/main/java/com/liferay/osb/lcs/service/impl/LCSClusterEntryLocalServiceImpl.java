@@ -48,8 +48,8 @@ import java.util.Set;
 
 /**
  * @author Igor Beslic
- * @see LCSClusterEntryLocalServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil
+ * @see    LCSClusterEntryLocalServiceBaseImpl
+ * @see    com.liferay.osb.lcs.service.LCSClusterEntryLocalServiceUtil
  */
 @ProviderType
 public class LCSClusterEntryLocalServiceImpl

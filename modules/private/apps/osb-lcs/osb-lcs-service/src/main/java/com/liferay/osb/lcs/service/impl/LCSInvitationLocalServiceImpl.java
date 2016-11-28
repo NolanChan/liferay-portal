@@ -28,8 +28,8 @@ import java.util.List;
 
 /**
  * @author Igor Beslic
- * @see LCSInvitationLocalServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSInvitationLocalServiceUtil
+ * @see    LCSInvitationLocalServiceBaseImpl
+ * @see    com.liferay.osb.lcs.service.LCSInvitationLocalServiceUtil
  */
 @ProviderType
 public class LCSInvitationLocalServiceImpl

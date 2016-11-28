@@ -34,8 +34,8 @@ import java.util.Map;
 
 /**
  * @author Igor Beslic
- * @see LCSClusterNodeUptimeServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSClusterNodeUptimeServiceUtil
+ * @see    LCSClusterNodeUptimeServiceBaseImpl
+ * @see    com.liferay.osb.lcs.service.LCSClusterNodeUptimeServiceUtil
  */
 @ProviderType
 public class LCSClusterNodeUptimeServiceImpl

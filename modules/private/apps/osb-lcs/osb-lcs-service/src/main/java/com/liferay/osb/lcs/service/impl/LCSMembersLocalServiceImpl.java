@@ -41,8 +41,8 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
- * @see LCSMembersLocalServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSMembersLocalServiceUtil
+ * @see    LCSMembersLocalServiceBaseImpl
+ * @see    com.liferay.osb.lcs.service.LCSMembersLocalServiceUtil
  */
 @ProviderType
 public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {

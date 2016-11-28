@@ -38,8 +38,8 @@ import java.util.Map;
 
 /**
  * @author Igor Beslic
- * @see LCSClusterNodePatchesLocalServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSClusterNodePatchesLocalServiceUtil
+ * @see    LCSClusterNodePatchesLocalServiceBaseImpl
+ * @see    com.liferay.osb.lcs.service.LCSClusterNodePatchesLocalServiceUtil
  */
 @ProviderType
 public class LCSClusterNodePatchesLocalServiceImpl

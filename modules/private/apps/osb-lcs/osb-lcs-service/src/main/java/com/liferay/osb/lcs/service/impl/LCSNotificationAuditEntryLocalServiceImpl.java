@@ -31,8 +31,8 @@ import java.util.List;
 
 /**
  * @author Igor Beslic
- * @see LCSNotificationAuditEntryLocalServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSNotificationAuditEntryLocalServiceUtil
+ * @see    LCSNotificationAuditEntryLocalServiceBaseImpl
+ * @see    com.liferay.osb.lcs.service.LCSNotificationAuditEntryLocalServiceUtil
  */
 @ProviderType
 public class LCSNotificationAuditEntryLocalServiceImpl

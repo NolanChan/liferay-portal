@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
  * @author Igor Beslic
- * @see LCSClusterEntryTokenServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSClusterEntryTokenServiceUtil
+ * @see    LCSClusterEntryTokenServiceBaseImpl
+ * @see    com.liferay.osb.lcs.service.LCSClusterEntryTokenServiceUtil
  */
 @ProviderType
 public class LCSClusterEntryTokenServiceImpl

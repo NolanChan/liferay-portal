@@ -43,8 +43,8 @@ import java.util.TimeZone;
 
 /**
  * @author Igor Beslic
- * @see LCSClusterNodeUptimeLocalServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSClusterNodeUptimeLocalServiceUtil
+ * @see    LCSClusterNodeUptimeLocalServiceBaseImpl
+ * @see    com.liferay.osb.lcs.service.LCSClusterNodeUptimeLocalServiceUtil
  */
 @ProviderType
 public class LCSClusterNodeUptimeLocalServiceImpl

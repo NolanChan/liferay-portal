@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Angelo Caldas Gallindo
  * @author Artur Aquino
  * @author André de Oliveira
-*/
+ */
 @Component(
 	configurationPid = "com.liferay.portal.search.elasticsearch.marvel.web.configuration.MarvelWebConfiguration",
 	immediate = true,

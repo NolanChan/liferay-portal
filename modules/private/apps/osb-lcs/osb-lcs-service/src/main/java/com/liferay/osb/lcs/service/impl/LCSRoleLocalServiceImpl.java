@@ -394,8 +394,7 @@ public class LCSRoleLocalServiceImpl extends LCSRoleLocalServiceBaseImpl {
 	 *
 	 * <p>
 	 * This method checks for the presence of any LCS role except the role
-	 * {@link
-	 * LCSRoleConstants#ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER}.
+	 * {@link LCSRoleConstants#ROLE_LCS_ENVIRONMENT_MEMBERSHIP_PENDING_USER}.
 	 * </p>
 	 *
 	 * @param  userId the primary key of the user
@@ -529,9 +528,9 @@ public class LCSRoleLocalServiceImpl extends LCSRoleLocalServiceBaseImpl {
 	/**
 	 * Deletes the user's LCS roles in the LCS project.
 	 *
-	 * @param  userId the primary key of the user
-	 * @param  lcsProjectId the primary key of the LCS project
-	 * @since  LCS 0.1
+	 * @param userId the primary key of the user
+	 * @param lcsProjectId the primary key of the LCS project
+	 * @since LCS 0.1
 	 */
 	protected void deleteLCSRoles(long userId, long lcsProjectId) {
 		List<LCSRole> lcsRoles = lcsRolePersistence.findByU_LPI(

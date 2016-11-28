@@ -64,8 +64,8 @@ import java.util.Map;
 
 /**
  * @author Igor Beslic
- * @see LCSSubscriptionEntryLocalServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSSubscriptionEntryLocalServiceUtil
+ * @see    LCSSubscriptionEntryLocalServiceBaseImpl
+ * @see    com.liferay.osb.lcs.service.LCSSubscriptionEntryLocalServiceUtil
  */
 @ProviderType
 public class LCSSubscriptionEntryLocalServiceImpl

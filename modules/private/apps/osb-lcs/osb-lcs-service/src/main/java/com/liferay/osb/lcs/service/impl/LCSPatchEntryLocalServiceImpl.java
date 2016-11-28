@@ -143,7 +143,6 @@ public class LCSPatchEntryLocalServiceImpl
 	 *
 	 * @param  patchId the patch ID defined by Liferay support
 	 * @return the LCS patch entry matching the patch ID
-	 * @throws NoSuchLCSPatchEntryException
 	 * @since  LCS 0.1
 	 */
 	@Override
@@ -162,9 +161,9 @@ public class LCSPatchEntryLocalServiceImpl
 	 * patching tool version is less than the patching tool version.
 	 * </p>
 	 *
-	 * @param  patchingToolVersion the patching tool version
-	 * @param  product the portal instance build number
-	 * @since  LCS 1.1
+	 * @param patchingToolVersion the patching tool version
+	 * @param product the portal instance build number
+	 * @since LCS 1.1
 	 */
 	protected void updateSupportedPatchingTool(
 		int patchingToolVersion, String product) {

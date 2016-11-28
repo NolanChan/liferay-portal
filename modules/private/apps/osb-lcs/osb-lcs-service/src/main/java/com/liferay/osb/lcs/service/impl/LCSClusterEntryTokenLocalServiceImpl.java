@@ -29,8 +29,8 @@ import java.util.List;
 
 /**
  * @author Igor Beslic
- * @see LCSClusterEntryTokenLocalServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSClusterEntryTokenLocalServiceUtil
+ * @see    LCSClusterEntryTokenLocalServiceBaseImpl
+ * @see    com.liferay.osb.lcs.service.LCSClusterEntryTokenLocalServiceUtil
  */
 @ProviderType
 public class LCSClusterEntryTokenLocalServiceImpl

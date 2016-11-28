@@ -102,7 +102,7 @@ public class LCSNotificationLocalServiceImpl
 	/**
 	 * Deletes the LCS notification for the LCS cluster entry.
 	 *
-	 * @param  lcsClusterEntryId the primary key of the LCS cluster entry
+	 * @param lcsClusterEntryId the primary key of the LCS cluster entry
 	 */
 	@Override
 	public void deleteLCSClusterEntryLCSNotification(long lcsClusterEntryId) {
@@ -113,7 +113,7 @@ public class LCSNotificationLocalServiceImpl
 	/**
 	 * Deletes the LCS notification for the LCS cluster node.
 	 *
-	 * @param  lcsClusterNodeId the primary key of the LCS cluster node
+	 * @param lcsClusterNodeId the primary key of the LCS cluster node
 	 */
 	@Override
 	public void deleteLCSClusterNodeLCSNotification(long lcsClusterNodeId) {
@@ -124,7 +124,7 @@ public class LCSNotificationLocalServiceImpl
 	/**
 	 * Deletes the LCS notification for the LCS project.
 	 *
-	 * @param  lcsProjectId the primary key of the LCS project
+	 * @param lcsProjectId the primary key of the LCS project
 	 */
 	@Override
 	public void deleteLCSProjectLCSNotification(long lcsProjectId) {
@@ -135,7 +135,7 @@ public class LCSNotificationLocalServiceImpl
 	/**
 	 * Deletes the LCS notifications of the user.
 	 *
-	 * @param  userId the primary key of the user
+	 * @param userId the primary key of the user
 	 */
 	@Override
 	public void deleteUserLCSNotifications(long userId) {
@@ -151,9 +151,9 @@ public class LCSNotificationLocalServiceImpl
 	 * Deletes the LCS notifications of the user, for the name and primary key
 	 * of the class.
 	 *
-	 * @param  userId the primary key of the user
-	 * @param  classNameValue the class name
-	 * @param  classPK the primary key for the object of class
+	 * @param userId the primary key of the user
+	 * @param classNameValue the class name
+	 * @param classPK the primary key for the object of class
 	 */
 	@Override
 	public void deleteUserLCSNotifications(
@@ -262,8 +262,8 @@ public class LCSNotificationLocalServiceImpl
 	/**
 	 * Deletes the LCS notification of the class.
 	 *
-	 * @param  classNameId the primary key of the class name
-	 * @param  classPK the primary key of the class object
+	 * @param classNameId the primary key of the class name
+	 * @param classPK the primary key of the class object
 	 */
 	protected void deleteClassNameLCSNotification(
 		long classNameId, long classPK) {

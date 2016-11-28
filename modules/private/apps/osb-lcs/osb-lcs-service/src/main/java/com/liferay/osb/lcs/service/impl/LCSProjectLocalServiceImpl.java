@@ -66,8 +66,8 @@ import java.util.Set;
 
 /**
  * @author Igor Beslic
- * @see LCSProjectLocalServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil
+ * @see    LCSProjectLocalServiceBaseImpl
+ * @see    com.liferay.osb.lcs.service.LCSProjectLocalServiceUtil
  */
 @ProviderType
 public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {

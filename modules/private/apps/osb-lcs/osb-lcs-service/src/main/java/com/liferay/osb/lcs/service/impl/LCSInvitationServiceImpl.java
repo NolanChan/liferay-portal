@@ -26,8 +26,8 @@ import java.util.List;
 
 /**
  * @author Igor Beslic
- * @see LCSInvitationServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSInvitationServiceUtil
+ * @see    LCSInvitationServiceBaseImpl
+ * @see    com.liferay.osb.lcs.service.LCSInvitationServiceUtil
  */
 @ProviderType
 public class LCSInvitationServiceImpl extends LCSInvitationServiceBaseImpl {

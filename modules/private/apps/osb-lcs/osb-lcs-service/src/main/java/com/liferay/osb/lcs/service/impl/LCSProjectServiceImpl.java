@@ -47,8 +47,8 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
- * @see LCSProjectServiceBaseImpl
- * @see LCSProjectServiceUtil
+ * @see    LCSProjectServiceBaseImpl
+ * @see    LCSProjectServiceUtil
  */
 @ProviderType
 public class LCSProjectServiceImpl extends LCSProjectServiceBaseImpl {

@@ -41,8 +41,8 @@ import java.util.List;
 
 /**
  * @author Igor Beslic
- * @see LCSClusterEntryServiceBaseImpl
- * @see com.liferay.osb.lcs.service.LCSClusterEntryServiceUtil
+ * @see    LCSClusterEntryServiceBaseImpl
+ * @see    com.liferay.osb.lcs.service.LCSClusterEntryServiceUtil
  */
 @ProviderType
 public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {

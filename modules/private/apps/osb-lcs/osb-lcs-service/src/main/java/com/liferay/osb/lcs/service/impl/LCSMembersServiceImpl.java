@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.util.StringUtil;
  * <p>
  * This class's send email methods send an email message to any watchers
  * subscribed to the event. Each send email method uses the appropriate {@link
- * LCSEventType} to create the message that {@link
- * #fireLCSEvent(String, LCSEventType)} publishes to the message bus.
+ * LCSEventType} to create the message that {@link #fireLCSEvent(String,
+ * LCSEventType)} publishes to the message bus.
  * </p>
  *
  * @author  Igor Beslic
