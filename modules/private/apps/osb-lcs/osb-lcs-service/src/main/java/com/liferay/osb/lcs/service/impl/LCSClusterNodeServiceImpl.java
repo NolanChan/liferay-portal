@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.lcs.util.LCSClusterNodeStatus;
-import com.liferay.osb.lcs.advisor.PortalPropertiesAdvisor;
 import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.nosql.service.LCSClusterNodeDetailsService;
@@ -415,23 +414,6 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 	}
 
 	@Override
-	public void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(
-			String key)
-		throws PortalException {
-
-		User user = getUser();
-
-		if (!StringUtil.equalsIgnoreCase(
-				user.getEmailAddress(), "system@liferay.com")) {
-
-			throw new PrincipalException();
-		}
-
-		_portalPropertiesAdvisor.
-			verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(key);
-	}
-
-	@Override
 	public void verifyLCSClusterNodeClusterLink(String key, String siblingKeys)
 		throws PortalException {
 
@@ -502,8 +484,5 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 
 	@ServiceReference(type = LCSClusterNodeDetailsService.class)
 	private LCSClusterNodeDetailsService _lcsClusterNodeDetailsService;
-
-	@ServiceReference(type = PortalPropertiesAdvisor.class)
-	private PortalPropertiesAdvisor _portalPropertiesAdvisor;
 
 }
