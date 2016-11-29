@@ -16,16 +16,28 @@ package com.liferay.osb.lcs.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.lcs.activation.LCSClusterEntryTokenContentAdvisor;
+import com.liferay.lcs.util.LCSConstants;
+import com.liferay.oauth.model.OAuthUser;
+import com.liferay.oauth.service.OAuthUserService;
 import com.liferay.osb.lcs.advisor.CommandMessageAdvisor;
+import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
 import com.liferay.osb.lcs.model.LCSClusterEntryToken;
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.impl.LCSClusterEntryTokenImpl;
 import com.liferay.osb.lcs.service.base.LCSClusterEntryTokenLocalServiceBaseImpl;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Igor Beslic
@@ -38,7 +50,9 @@ public class LCSClusterEntryTokenLocalServiceImpl
 
 	@Override
 	public LCSClusterEntryToken addLCSClusterEntryToken(
-		long userId, long lcsClusterEntryId, String content) {
+			long userId, long lcsClusterEntryId,
+			Map<String, String> lcsServicesConfiguration)
+		throws PortalException {
 
 		LCSClusterEntryToken lcsClusterEntryToken =
 			new LCSClusterEntryTokenImpl();
@@ -50,7 +64,39 @@ public class LCSClusterEntryTokenLocalServiceImpl
 		lcsClusterEntryToken.setUserId(userId);
 		lcsClusterEntryToken.setCreateDate(new Date());
 		lcsClusterEntryToken.setLcsClusterEntryId(lcsClusterEntryId);
-		lcsClusterEntryToken.setContent(content);
+
+		OSBLCSConfiguration configuration = getConfiguration();
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		OAuthUser oAuthUser = _oAuthUserService.addOAuthUser(
+			configuration.osbLcsPortletOauthConsumerKey(), serviceContext);
+
+		boolean portalPropertiesLCSServiceEnabled = GetterUtil.getBoolean(
+			lcsServicesConfiguration.get(
+				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED));
+
+		String blacklistedPropertyKeysString = null;
+
+		if (portalPropertiesLCSServiceEnabled &&
+			lcsServicesConfiguration.containsKey(
+				LCSConstants.PORTAL_PROPERTIES_BLACKLIST)) {
+
+			blacklistedPropertyKeysString = lcsServicesConfiguration.get(
+				LCSConstants.PORTAL_PROPERTIES_BLACKLIST);
+
+			lcsServicesConfiguration.remove(
+				LCSConstants.PORTAL_PROPERTIES_BLACKLIST);
+		}
+
+		LCSClusterEntryTokenContentAdvisor lcsClusterEntryTokenContentAdvisor =
+			new LCSClusterEntryTokenContentAdvisor(
+				oAuthUser.getAccessSecret(), oAuthUser.getAccessToken(),
+				lcsServicesConfiguration, blacklistedPropertyKeysString);
+
+		lcsClusterEntryToken.setContent(
+			lcsClusterEntryTokenContentAdvisor.getContent());
 
 		return lcsClusterEntryTokenPersistence.update(lcsClusterEntryToken);
 	}
@@ -96,7 +142,36 @@ public class LCSClusterEntryTokenLocalServiceImpl
 			lcsClusterEntryTokenId);
 	}
 
+	@Override
+	public LCSClusterEntryToken regenerateLCSClusterEntryToken(
+			long userId, long lcsClusterEntryId,
+			Map<String, String> lcsServicesConfiguration)
+		throws PortalException {
+
+		LCSClusterEntryToken lcsClusterEntryToken =
+			fetchLCSClusterEntryLCSClusterEntryToken(lcsClusterEntryId);
+
+		deleteLCSClusterEntryToken(
+			lcsClusterEntryToken.getLcsClusterEntryTokenId());
+
+		return addLCSClusterEntryToken(
+			userId, lcsClusterEntryId, lcsServicesConfiguration);
+	}
+
+	protected OSBLCSConfiguration getConfiguration()
+		throws ConfigurationException {
+
+		return _configurationProvider.getCompanyConfiguration(
+			OSBLCSConfiguration.class, 0);
+	}
+
 	@ServiceReference(type = CommandMessageAdvisor.class)
 	private CommandMessageAdvisor _commandMessageAdvisor;
+
+	@ServiceReference(type = ConfigurationProvider.class)
+	private ConfigurationProvider _configurationProvider;
+
+	@BeanReference(type = OAuthUserService.class)
+	private OAuthUserService _oAuthUserService;
 
 }

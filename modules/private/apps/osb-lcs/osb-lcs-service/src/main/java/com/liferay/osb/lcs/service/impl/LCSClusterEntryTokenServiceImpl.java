@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
+import java.util.Map;
+
 /**
  * @author Igor Beslic
  * @see    LCSClusterEntryTokenServiceBaseImpl
@@ -39,7 +41,8 @@ public class LCSClusterEntryTokenServiceImpl
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public LCSClusterEntryToken addLCSClusterEntryToken(
-			long lcsClusterEntryId, String content)
+			long lcsClusterEntryId,
+			Map<String, String> lcsServicesConfiguration)
 		throws PortalException {
 
 		LCSClusterEntryPermission.check(
@@ -47,7 +50,7 @@ public class LCSClusterEntryTokenServiceImpl
 			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return lcsClusterEntryTokenLocalService.addLCSClusterEntryToken(
-			getUserId(), lcsClusterEntryId, content);
+			getUserId(), lcsClusterEntryId, lcsServicesConfiguration);
 	}
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
@@ -126,6 +129,21 @@ public class LCSClusterEntryTokenServiceImpl
 			OSBLCSActionKeys.MANAGE_ENTRY);
 
 		return true;
+	}
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public LCSClusterEntryToken regenerateLCSClusterEntryToken(
+			long lcsClusterEntryId,
+			Map<String, String> lcsServicesConfiguration)
+		throws PortalException {
+
+		LCSClusterEntryPermission.check(
+			getPermissionChecker(), lcsClusterEntryId,
+			OSBLCSActionKeys.MANAGE_ENTRY);
+
+		return lcsClusterEntryTokenLocalService.regenerateLCSClusterEntryToken(
+			getUserId(), lcsClusterEntryId, lcsServicesConfiguration);
 	}
 
 }

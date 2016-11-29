@@ -14,29 +14,15 @@
 
 package com.liferay.osb.lcs.advisor;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.util.Map;
+import com.liferay.osb.lcs.model.LCSClusterEntryToken;
 
 /**
  * @author Igor Beslic
  */
 public interface LCSClusterEntryTokenAdvisor {
 
-	public void generateLCSClusterEntryToken(
-			long lcsClusterEntryId,
-			Map<String, String> lcsServicesConfiguration,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public byte[] getLCSEntryTokenEncryptedBytes(long lcsClusterEntryId)
+	public byte[] getLCSEntryTokenEncryptedBytes(
+			LCSClusterEntryToken lcsClusterEntryToken)
 		throws Exception;
-
-	public void regenerateLCSClusterEntryToken(
-			long lcsClusterEntryId,
-			Map<String, String> lcsServicesConfiguration,
-			ServiceContext serviceContext)
-		throws PortalException;
 
 }

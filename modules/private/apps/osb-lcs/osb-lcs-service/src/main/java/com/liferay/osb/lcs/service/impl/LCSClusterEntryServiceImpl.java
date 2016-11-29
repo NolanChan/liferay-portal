@@ -20,6 +20,7 @@ import com.liferay.osb.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.osb.lcs.configuration.OSBLCSConfiguration;
 import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
+import com.liferay.osb.lcs.model.LCSClusterEntryToken;
 import com.liferay.osb.lcs.service.base.LCSClusterEntryServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSClusterEntryPermission;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
@@ -106,14 +106,14 @@ public class LCSClusterEntryServiceImpl extends LCSClusterEntryServiceBaseImpl {
 			lcsProjectId, lcsClusterEntryName, lcsClusterEntryName,
 			lcsClusterEntryName, subscriptionType, type);
 
-		_lcsClusterEntryTokenAdvisor.generateLCSClusterEntryToken(
-			lcsClusterEntry.getLcsClusterEntryId(),
-			new HashMap<String, String>(),
-			ServiceContextThreadLocal.getServiceContext());
+		LCSClusterEntryToken lcsClusterEntryToken =
+			lcsClusterEntryTokenService.addLCSClusterEntryToken(
+				lcsClusterEntry.getLcsClusterEntryId(),
+				new HashMap<String, String>());
 
 		try {
 			return _lcsClusterEntryTokenAdvisor.getLCSEntryTokenEncryptedBytes(
-				lcsClusterEntry.getLcsClusterEntryId());
+				lcsClusterEntryToken);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
