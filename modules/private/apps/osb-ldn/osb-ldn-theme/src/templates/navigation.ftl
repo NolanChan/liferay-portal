@@ -10,9 +10,13 @@
 
 				<ul class="layouts">
 					<#list navigation_layouts as navigation_layout>
-						<li class="lfr-nav-item">
-							<a href="${navigation_layout.getFriendlyURL(locale)}" class="lfr-nav-item">${navigation_layout.getHTMLTitle(locale)}</a>
-						</li>
+						<#assign navigation_layout_friendlyURL = navigation_layout.getFriendlyURL(locale) />
+
+						<#if !navigation_layout_friendlyURL.contains("/home")>
+							<li class="lfr-nav-item">
+								<a href="${navigation_layout_friendlyURL}" class="lfr-nav-item">${navigation_layout.getHTMLTitle(locale)}</a>
+							</li>
+						</#if>
 					</#list>
 				</ul>
 			</div>
