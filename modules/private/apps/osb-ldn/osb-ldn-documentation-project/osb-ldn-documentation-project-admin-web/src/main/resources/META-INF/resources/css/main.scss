@@ -17,5 +17,10 @@
 
 	.panel-body {
 		padding: 30px;
+
+		.icon img {
+			max-height: 80px;
+			max-width: 80px;
+		}
 	}
 }
