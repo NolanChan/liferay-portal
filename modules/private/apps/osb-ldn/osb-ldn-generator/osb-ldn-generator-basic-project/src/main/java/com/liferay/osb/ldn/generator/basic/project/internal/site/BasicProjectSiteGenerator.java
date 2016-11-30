@@ -43,9 +43,9 @@ public class BasicProjectSiteGenerator extends BaseSiteGenerator {
 	public void generate(long groupId) throws Exception {
 		generateLayout(groupId, _overviewLayoutGenerator);
 
-		generateLayout(groupId, _contributionLayoutGenerator);
-
 		generateLayout(groupId, _documentationLayoutGenerator);
+
+		generateLayout(groupId, _contributionLayoutGenerator);
 
 		generateLayoutSets(groupId);
 	}
