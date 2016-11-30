@@ -2815,7 +2815,7 @@ public class LCSMessagePersistenceImpl extends BasePersistenceImpl<LCSMessage>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((LCSMessageModelImpl)lcsMessage, true);
+		clearUniqueFindersCache((LCSMessageModelImpl)lcsMessage);
 	}
 
 	@Override
@@ -2827,11 +2827,44 @@ public class LCSMessagePersistenceImpl extends BasePersistenceImpl<LCSMessage>
 			entityCache.removeResult(LCSMessageModelImpl.ENTITY_CACHE_ENABLED,
 				LCSMessageImpl.class, lcsMessage.getPrimaryKey());
 
-			clearUniqueFindersCache((LCSMessageModelImpl)lcsMessage, true);
+			clearUniqueFindersCache((LCSMessageModelImpl)lcsMessage);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
+		LCSMessageModelImpl lcsMessageModelImpl, boolean isNew) {
+		if (isNew) {
+			Object[] args = new Object[] {
+					lcsMessageModelImpl.getSourceMessageId(),
+					lcsMessageModelImpl.getSourceSystemName(),
+					lcsMessageModelImpl.getClassNameId(),
+					lcsMessageModelImpl.getClassPK()
+				};
+
+			finderCache.putResult(FINDER_PATH_COUNT_BY_S_S_C_C, args,
+				Long.valueOf(1));
+			finderCache.putResult(FINDER_PATH_FETCH_BY_S_S_C_C, args,
+				lcsMessageModelImpl);
+		}
+		else {
+			if ((lcsMessageModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_S_S_C_C.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						lcsMessageModelImpl.getSourceMessageId(),
+						lcsMessageModelImpl.getSourceSystemName(),
+						lcsMessageModelImpl.getClassNameId(),
+						lcsMessageModelImpl.getClassPK()
+					};
+
+				finderCache.putResult(FINDER_PATH_COUNT_BY_S_S_C_C, args,
+					Long.valueOf(1));
+				finderCache.putResult(FINDER_PATH_FETCH_BY_S_S_C_C, args,
+					lcsMessageModelImpl);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(
 		LCSMessageModelImpl lcsMessageModelImpl) {
 		Object[] args = new Object[] {
 				lcsMessageModelImpl.getSourceMessageId(),
@@ -2840,29 +2873,12 @@ public class LCSMessagePersistenceImpl extends BasePersistenceImpl<LCSMessage>
 				lcsMessageModelImpl.getClassPK()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_S_S_C_C, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_S_S_C_C, args,
-			lcsMessageModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		LCSMessageModelImpl lcsMessageModelImpl, boolean clearCurrent) {
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					lcsMessageModelImpl.getSourceMessageId(),
-					lcsMessageModelImpl.getSourceSystemName(),
-					lcsMessageModelImpl.getClassNameId(),
-					lcsMessageModelImpl.getClassPK()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_S_S_C_C, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_S_S_C_C, args);
-		}
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_S_S_C_C, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_S_S_C_C, args);
 
 		if ((lcsMessageModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_S_S_C_C.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
+			args = new Object[] {
 					lcsMessageModelImpl.getOriginalSourceMessageId(),
 					lcsMessageModelImpl.getOriginalSourceSystemName(),
 					lcsMessageModelImpl.getOriginalClassNameId(),
@@ -3104,8 +3120,8 @@ public class LCSMessagePersistenceImpl extends BasePersistenceImpl<LCSMessage>
 		entityCache.putResult(LCSMessageModelImpl.ENTITY_CACHE_ENABLED,
 			LCSMessageImpl.class, lcsMessage.getPrimaryKey(), lcsMessage, false);
 
-		clearUniqueFindersCache(lcsMessageModelImpl, false);
-		cacheUniqueFindersCache(lcsMessageModelImpl);
+		clearUniqueFindersCache(lcsMessageModelImpl);
+		cacheUniqueFindersCache(lcsMessageModelImpl, isNew);
 
 		lcsMessage.resetOriginalValues();
 

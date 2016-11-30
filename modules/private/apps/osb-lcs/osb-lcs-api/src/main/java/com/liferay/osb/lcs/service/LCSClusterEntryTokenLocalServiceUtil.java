@@ -54,9 +54,12 @@ public class LCSClusterEntryTokenLocalServiceUtil {
 	}
 
 	public static com.liferay.osb.lcs.model.LCSClusterEntryToken addLCSClusterEntryToken(
-		long userId, long lcsClusterEntryId, java.lang.String content) {
+		long userId, long lcsClusterEntryId,
+		java.util.Map<java.lang.String, java.lang.String> lcsServicesConfiguration)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addLCSClusterEntryToken(userId, lcsClusterEntryId, content);
+				   .addLCSClusterEntryToken(userId, lcsClusterEntryId,
+			lcsServicesConfiguration);
 	}
 
 	/**
@@ -116,6 +119,15 @@ public class LCSClusterEntryTokenLocalServiceUtil {
 		long lcsClusterEntryTokenId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLCSClusterEntryToken(lcsClusterEntryTokenId);
+	}
+
+	public static com.liferay.osb.lcs.model.LCSClusterEntryToken regenerateLCSClusterEntryToken(
+		long userId, long lcsClusterEntryId,
+		java.util.Map<java.lang.String, java.lang.String> lcsServicesConfiguration)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .regenerateLCSClusterEntryToken(userId, lcsClusterEntryId,
+			lcsServicesConfiguration);
 	}
 
 	/**

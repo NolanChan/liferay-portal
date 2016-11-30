@@ -2493,7 +2493,7 @@ public class UserLCSMessagePersistenceImpl extends BasePersistenceImpl<UserLCSMe
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((UserLCSMessageModelImpl)userLCSMessage, true);
+		clearUniqueFindersCache((UserLCSMessageModelImpl)userLCSMessage);
 	}
 
 	@Override
@@ -2505,39 +2505,52 @@ public class UserLCSMessagePersistenceImpl extends BasePersistenceImpl<UserLCSMe
 			entityCache.removeResult(UserLCSMessageModelImpl.ENTITY_CACHE_ENABLED,
 				UserLCSMessageImpl.class, userLCSMessage.getPrimaryKey());
 
-			clearUniqueFindersCache((UserLCSMessageModelImpl)userLCSMessage,
-				true);
+			clearUniqueFindersCache((UserLCSMessageModelImpl)userLCSMessage);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
+		UserLCSMessageModelImpl userLCSMessageModelImpl, boolean isNew) {
+		if (isNew) {
+			Object[] args = new Object[] {
+					userLCSMessageModelImpl.getUserId(),
+					userLCSMessageModelImpl.getLcsMessageId()
+				};
+
+			finderCache.putResult(FINDER_PATH_COUNT_BY_U_LMI, args,
+				Long.valueOf(1));
+			finderCache.putResult(FINDER_PATH_FETCH_BY_U_LMI, args,
+				userLCSMessageModelImpl);
+		}
+		else {
+			if ((userLCSMessageModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_U_LMI.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						userLCSMessageModelImpl.getUserId(),
+						userLCSMessageModelImpl.getLcsMessageId()
+					};
+
+				finderCache.putResult(FINDER_PATH_COUNT_BY_U_LMI, args,
+					Long.valueOf(1));
+				finderCache.putResult(FINDER_PATH_FETCH_BY_U_LMI, args,
+					userLCSMessageModelImpl);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(
 		UserLCSMessageModelImpl userLCSMessageModelImpl) {
 		Object[] args = new Object[] {
 				userLCSMessageModelImpl.getUserId(),
 				userLCSMessageModelImpl.getLcsMessageId()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_U_LMI, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_U_LMI, args,
-			userLCSMessageModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		UserLCSMessageModelImpl userLCSMessageModelImpl, boolean clearCurrent) {
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					userLCSMessageModelImpl.getUserId(),
-					userLCSMessageModelImpl.getLcsMessageId()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_LMI, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_U_LMI, args);
-		}
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_U_LMI, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_U_LMI, args);
 
 		if ((userLCSMessageModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_U_LMI.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
+			args = new Object[] {
 					userLCSMessageModelImpl.getOriginalUserId(),
 					userLCSMessageModelImpl.getOriginalLcsMessageId()
 				};
@@ -2765,8 +2778,8 @@ public class UserLCSMessagePersistenceImpl extends BasePersistenceImpl<UserLCSMe
 			UserLCSMessageImpl.class, userLCSMessage.getPrimaryKey(),
 			userLCSMessage, false);
 
-		clearUniqueFindersCache(userLCSMessageModelImpl, false);
-		cacheUniqueFindersCache(userLCSMessageModelImpl);
+		clearUniqueFindersCache(userLCSMessageModelImpl);
+		cacheUniqueFindersCache(userLCSMessageModelImpl, isNew);
 
 		userLCSMessage.resetOriginalValues();
 

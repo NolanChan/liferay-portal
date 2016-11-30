@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for LCSClusterEntryToken. Methods of this
@@ -72,7 +73,9 @@ public interface LCSClusterEntryTokenLocalService extends BaseLocalService,
 		LCSClusterEntryToken lcsClusterEntryToken);
 
 	public LCSClusterEntryToken addLCSClusterEntryToken(long userId,
-		long lcsClusterEntryId, java.lang.String content);
+		long lcsClusterEntryId,
+		Map<java.lang.String, java.lang.String> lcsServicesConfiguration)
+		throws PortalException;
 
 	/**
 	* Creates a new l c s cluster entry token with the primary key. Does not add the l c s cluster entry token to the database.
@@ -122,6 +125,11 @@ public interface LCSClusterEntryTokenLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LCSClusterEntryToken getLCSClusterEntryToken(
 		long lcsClusterEntryTokenId) throws PortalException;
+
+	public LCSClusterEntryToken regenerateLCSClusterEntryToken(long userId,
+		long lcsClusterEntryId,
+		Map<java.lang.String, java.lang.String> lcsServicesConfiguration)
+		throws PortalException;
 
 	/**
 	* Updates the l c s cluster entry token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

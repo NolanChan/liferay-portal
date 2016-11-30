@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class LCSClusterEntryTokenServiceHttp {
 	public static com.liferay.osb.lcs.model.LCSClusterEntryToken addLCSClusterEntryToken(
 		HttpPrincipal httpPrincipal, long lcsClusterEntryId,
-		java.lang.String content)
+		java.util.Map<java.lang.String, java.lang.String> lcsServicesConfiguration)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterEntryTokenServiceUtil.class,
@@ -65,7 +65,7 @@ public class LCSClusterEntryTokenServiceHttp {
 					_addLCSClusterEntryTokenParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					lcsClusterEntryId, content);
+					lcsClusterEntryId, lcsServicesConfiguration);
 
 			Object returnObj = null;
 
@@ -220,9 +220,43 @@ public class LCSClusterEntryTokenServiceHttp {
 		}
 	}
 
+	public static com.liferay.osb.lcs.model.LCSClusterEntryToken regenerateLCSClusterEntryToken(
+		HttpPrincipal httpPrincipal, long lcsClusterEntryId,
+		java.util.Map<java.lang.String, java.lang.String> lcsServicesConfiguration)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LCSClusterEntryTokenServiceUtil.class,
+					"regenerateLCSClusterEntryToken",
+					_regenerateLCSClusterEntryTokenParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					lcsClusterEntryId, lcsServicesConfiguration);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.osb.lcs.model.LCSClusterEntryToken)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(LCSClusterEntryTokenServiceHttp.class);
 	private static final Class<?>[] _addLCSClusterEntryTokenParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, java.util.Map.class
 		};
 	private static final Class<?>[] _deleteLCSClusterEntryTokenParameterTypes1 = new Class[] {
 			long.class
@@ -235,4 +269,6 @@ public class LCSClusterEntryTokenServiceHttp {
 	private static final Class<?>[] _isValidParameterTypes4 = new Class[] {
 			long.class
 		};
+	private static final Class<?>[] _regenerateLCSClusterEntryTokenParameterTypes5 =
+		new Class[] { long.class, java.util.Map.class };
 }

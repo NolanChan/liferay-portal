@@ -116,10 +116,12 @@ public class LCSClusterNodeServiceSoap {
 	by the LCS cluster entry membership policy
 	* @since LCS 0.1
 	*/
-	public static void deleteLCSClusterNode(long lcsClusterNodeId)
-		throws RemoteException {
+	public static com.liferay.osb.lcs.model.LCSClusterNodeSoap deleteLCSClusterNode(
+		long lcsClusterNodeId) throws RemoteException {
 		try {
-			LCSClusterNodeServiceUtil.deleteLCSClusterNode(lcsClusterNodeId);
+			com.liferay.osb.lcs.model.LCSClusterNode returnValue = LCSClusterNodeServiceUtil.deleteLCSClusterNode(lcsClusterNodeId);
+
+			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -450,18 +452,6 @@ public class LCSClusterNodeServiceSoap {
 					name, description, location);
 
 			return com.liferay.osb.lcs.model.LCSClusterNodeSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(
-		java.lang.String key) throws RemoteException {
-		try {
-			LCSClusterNodeServiceUtil.verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(key);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

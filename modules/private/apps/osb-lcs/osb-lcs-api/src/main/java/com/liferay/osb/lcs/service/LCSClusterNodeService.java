@@ -66,6 +66,24 @@ public interface LCSClusterNodeService extends BaseService {
 		throws PortalException;
 
 	/**
+	* Deletes the LCS cluster node.
+	*
+	* <p>
+	* <p> This method assures that the LCS cluster node connected to LCS is
+	* properly disconnected. All NoSQL data is deleted.
+	* </p>
+	*
+	* @param lcsClusterNodeId the primary key of the LCS cluster node
+	* @throws PortalException if an LCS cluster node associated with the LCS
+	cluster entry could not be found or an operation was not allowed
+	by the LCS cluster entry membership policy
+	* @since LCS 0.1
+	*/
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	public LCSClusterNode deleteLCSClusterNode(long lcsClusterNodeId)
+		throws PortalException;
+
+	/**
 	* Returns an LCS cluster node matching the key.
 	*
 	* @param key the portal instance key provided by the licence tool
@@ -228,24 +246,6 @@ public interface LCSClusterNodeService extends BaseService {
 	public List<LCSClusterNode> getUserLCSClusterNodes(boolean details)
 		throws PortalException;
 
-	/**
-	* Deletes the LCS cluster node.
-	*
-	* <p>
-	* <p> This method assures that the LCS cluster node connected to LCS is
-	* properly disconnected. All NoSQL data is deleted.
-	* </p>
-	*
-	* @param lcsClusterNodeId the primary key of the LCS cluster node
-	* @throws PortalException if an LCS cluster node associated with the LCS
-	cluster entry could not be found or an operation was not allowed
-	by the LCS cluster entry membership policy
-	* @since LCS 0.1
-	*/
-	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public void deleteLCSClusterNode(long lcsClusterNodeId)
-		throws PortalException;
-
 	public void mergeStatus(java.lang.String key, int status)
 		throws PortalException;
 
@@ -254,9 +254,6 @@ public interface LCSClusterNodeService extends BaseService {
 
 	public void updateBuildNumber(long lcsClusterNodeId, int buildNumber)
 		throws PortalException;
-
-	public void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(
-		java.lang.String key) throws PortalException;
 
 	public void verifyLCSClusterNodeClusterLink(java.lang.String key,
 		java.lang.String siblingKeys) throws PortalException;

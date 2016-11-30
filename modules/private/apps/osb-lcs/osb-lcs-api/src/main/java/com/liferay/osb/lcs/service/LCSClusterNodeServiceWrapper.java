@@ -54,6 +54,27 @@ public class LCSClusterNodeServiceWrapper implements LCSClusterNodeService,
 	}
 
 	/**
+	* Deletes the LCS cluster node.
+	*
+	* <p>
+	* <p> This method assures that the LCS cluster node connected to LCS is
+	* properly disconnected. All NoSQL data is deleted.
+	* </p>
+	*
+	* @param lcsClusterNodeId the primary key of the LCS cluster node
+	* @throws PortalException if an LCS cluster node associated with the LCS
+	cluster entry could not be found or an operation was not allowed
+	by the LCS cluster entry membership policy
+	* @since LCS 0.1
+	*/
+	@Override
+	public com.liferay.osb.lcs.model.LCSClusterNode deleteLCSClusterNode(
+		long lcsClusterNodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lcsClusterNodeService.deleteLCSClusterNode(lcsClusterNodeId);
+	}
+
+	/**
 	* Returns an LCS cluster node matching the key.
 	*
 	* @param key the portal instance key provided by the licence tool
@@ -257,26 +278,6 @@ public class LCSClusterNodeServiceWrapper implements LCSClusterNodeService,
 		return _lcsClusterNodeService.getUserLCSClusterNodes(details);
 	}
 
-	/**
-	* Deletes the LCS cluster node.
-	*
-	* <p>
-	* <p> This method assures that the LCS cluster node connected to LCS is
-	* properly disconnected. All NoSQL data is deleted.
-	* </p>
-	*
-	* @param lcsClusterNodeId the primary key of the LCS cluster node
-	* @throws PortalException if an LCS cluster node associated with the LCS
-	cluster entry could not be found or an operation was not allowed
-	by the LCS cluster entry membership policy
-	* @since LCS 0.1
-	*/
-	@Override
-	public void deleteLCSClusterNode(long lcsClusterNodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_lcsClusterNodeService.deleteLCSClusterNode(lcsClusterNodeId);
-	}
-
 	@Override
 	public void mergeStatus(java.lang.String key, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -293,13 +294,6 @@ public class LCSClusterNodeServiceWrapper implements LCSClusterNodeService,
 	public void updateBuildNumber(long lcsClusterNodeId, int buildNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_lcsClusterNodeService.updateBuildNumber(lcsClusterNodeId, buildNumber);
-	}
-
-	@Override
-	public void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(
-		java.lang.String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_lcsClusterNodeService.verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(key);
 	}
 
 	@Override

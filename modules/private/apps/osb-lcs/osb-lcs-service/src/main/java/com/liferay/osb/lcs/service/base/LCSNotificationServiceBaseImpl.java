@@ -258,25 +258,6 @@ public abstract class LCSNotificationServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the l c s cluster node patches local service.
-	 *
-	 * @return the l c s cluster node patches local service
-	 */
-	public com.liferay.osb.lcs.service.LCSClusterNodePatchesLocalService getLCSClusterNodePatchesLocalService() {
-		return lcsClusterNodePatchesLocalService;
-	}
-
-	/**
-	 * Sets the l c s cluster node patches local service.
-	 *
-	 * @param lcsClusterNodePatchesLocalService the l c s cluster node patches local service
-	 */
-	public void setLCSClusterNodePatchesLocalService(
-		com.liferay.osb.lcs.service.LCSClusterNodePatchesLocalService lcsClusterNodePatchesLocalService) {
-		this.lcsClusterNodePatchesLocalService = lcsClusterNodePatchesLocalService;
-	}
-
-	/**
 	 * Returns the l c s cluster node uptime local service.
 	 *
 	 * @return the l c s cluster node uptime local service
@@ -1140,8 +1121,6 @@ public abstract class LCSNotificationServiceBaseImpl extends BaseServiceImpl
 	protected LCSClusterNodePersistence lcsClusterNodePersistence;
 	@BeanReference(type = LCSClusterNodeFinder.class)
 	protected LCSClusterNodeFinder lcsClusterNodeFinder;
-	@BeanReference(type = com.liferay.osb.lcs.service.LCSClusterNodePatchesLocalService.class)
-	protected com.liferay.osb.lcs.service.LCSClusterNodePatchesLocalService lcsClusterNodePatchesLocalService;
 	@BeanReference(type = com.liferay.osb.lcs.service.LCSClusterNodeUptimeLocalService.class)
 	protected com.liferay.osb.lcs.service.LCSClusterNodeUptimeLocalService lcsClusterNodeUptimeLocalService;
 	@BeanReference(type = com.liferay.osb.lcs.service.LCSClusterNodeUptimeService.class)

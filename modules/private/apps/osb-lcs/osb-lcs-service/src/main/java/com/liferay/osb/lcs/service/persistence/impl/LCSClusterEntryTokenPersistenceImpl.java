@@ -362,8 +362,7 @@ public class LCSClusterEntryTokenPersistenceImpl extends BasePersistenceImpl<LCS
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((LCSClusterEntryTokenModelImpl)lcsClusterEntryToken,
-			true);
+		clearUniqueFindersCache((LCSClusterEntryTokenModelImpl)lcsClusterEntryToken);
 	}
 
 	@Override
@@ -376,40 +375,50 @@ public class LCSClusterEntryTokenPersistenceImpl extends BasePersistenceImpl<LCS
 				LCSClusterEntryTokenImpl.class,
 				lcsClusterEntryToken.getPrimaryKey());
 
-			clearUniqueFindersCache((LCSClusterEntryTokenModelImpl)lcsClusterEntryToken,
-				true);
+			clearUniqueFindersCache((LCSClusterEntryTokenModelImpl)lcsClusterEntryToken);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
+		LCSClusterEntryTokenModelImpl lcsClusterEntryTokenModelImpl,
+		boolean isNew) {
+		if (isNew) {
+			Object[] args = new Object[] {
+					lcsClusterEntryTokenModelImpl.getLcsClusterEntryId()
+				};
+
+			finderCache.putResult(FINDER_PATH_COUNT_BY_LCSCLUSTERENTRYID, args,
+				Long.valueOf(1));
+			finderCache.putResult(FINDER_PATH_FETCH_BY_LCSCLUSTERENTRYID, args,
+				lcsClusterEntryTokenModelImpl);
+		}
+		else {
+			if ((lcsClusterEntryTokenModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_LCSCLUSTERENTRYID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						lcsClusterEntryTokenModelImpl.getLcsClusterEntryId()
+					};
+
+				finderCache.putResult(FINDER_PATH_COUNT_BY_LCSCLUSTERENTRYID,
+					args, Long.valueOf(1));
+				finderCache.putResult(FINDER_PATH_FETCH_BY_LCSCLUSTERENTRYID,
+					args, lcsClusterEntryTokenModelImpl);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(
 		LCSClusterEntryTokenModelImpl lcsClusterEntryTokenModelImpl) {
 		Object[] args = new Object[] {
 				lcsClusterEntryTokenModelImpl.getLcsClusterEntryId()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_LCSCLUSTERENTRYID, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_LCSCLUSTERENTRYID, args,
-			lcsClusterEntryTokenModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		LCSClusterEntryTokenModelImpl lcsClusterEntryTokenModelImpl,
-		boolean clearCurrent) {
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					lcsClusterEntryTokenModelImpl.getLcsClusterEntryId()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_LCSCLUSTERENTRYID,
-				args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_LCSCLUSTERENTRYID,
-				args);
-		}
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_LCSCLUSTERENTRYID, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_LCSCLUSTERENTRYID, args);
 
 		if ((lcsClusterEntryTokenModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_LCSCLUSTERENTRYID.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
+			args = new Object[] {
 					lcsClusterEntryTokenModelImpl.getOriginalLcsClusterEntryId()
 				};
 
@@ -562,8 +571,8 @@ public class LCSClusterEntryTokenPersistenceImpl extends BasePersistenceImpl<LCS
 			LCSClusterEntryTokenImpl.class,
 			lcsClusterEntryToken.getPrimaryKey(), lcsClusterEntryToken, false);
 
-		clearUniqueFindersCache(lcsClusterEntryTokenModelImpl, false);
-		cacheUniqueFindersCache(lcsClusterEntryTokenModelImpl);
+		clearUniqueFindersCache(lcsClusterEntryTokenModelImpl);
+		cacheUniqueFindersCache(lcsClusterEntryTokenModelImpl, isNew);
 
 		lcsClusterEntryToken.resetOriginalValues();
 

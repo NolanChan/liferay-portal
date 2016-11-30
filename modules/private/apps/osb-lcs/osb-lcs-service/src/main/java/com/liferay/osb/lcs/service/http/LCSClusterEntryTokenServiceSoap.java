@@ -65,22 +65,6 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class LCSClusterEntryTokenServiceSoap {
-	public static com.liferay.osb.lcs.model.LCSClusterEntryTokenSoap addLCSClusterEntryToken(
-		long lcsClusterEntryId, java.lang.String content)
-		throws RemoteException {
-		try {
-			com.liferay.osb.lcs.model.LCSClusterEntryToken returnValue = LCSClusterEntryTokenServiceUtil.addLCSClusterEntryToken(lcsClusterEntryId,
-					content);
-
-			return com.liferay.osb.lcs.model.LCSClusterEntryTokenSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.osb.lcs.model.LCSClusterEntryTokenSoap deleteLCSClusterEntryToken(
 		long lcsClusterEntryTokenId) throws RemoteException {
 		try {

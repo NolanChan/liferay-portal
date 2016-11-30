@@ -125,8 +125,8 @@ public class LCSClusterNodeServiceHttp {
 		}
 	}
 
-	public static void deleteLCSClusterNode(HttpPrincipal httpPrincipal,
-		long lcsClusterNodeId)
+	public static com.liferay.osb.lcs.model.LCSClusterNode deleteLCSClusterNode(
+		HttpPrincipal httpPrincipal, long lcsClusterNodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
@@ -135,8 +135,10 @@ public class LCSClusterNodeServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsClusterNodeId);
 
+			Object returnObj = null;
+
 			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
@@ -145,6 +147,8 @@ public class LCSClusterNodeServiceHttp {
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
+
+			return (com.liferay.osb.lcs.model.LCSClusterNode)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -658,34 +662,6 @@ public class LCSClusterNodeServiceHttp {
 		}
 	}
 
-	public static void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(
-		HttpPrincipal httpPrincipal, java.lang.String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
-					"verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences",
-					_verifyLCSClusterEntryLCSClusterNodesPropertiesDifferencesParameterTypes19);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, key);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static void verifyLCSClusterNodeClusterLink(
 		HttpPrincipal httpPrincipal, java.lang.String key,
 		java.lang.String siblingKeys)
@@ -693,7 +669,7 @@ public class LCSClusterNodeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSClusterNodeServiceUtil.class,
 					"verifyLCSClusterNodeClusterLink",
-					_verifyLCSClusterNodeClusterLinkParameterTypes20);
+					_verifyLCSClusterNodeClusterLinkParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, key,
 					siblingKeys);
@@ -772,8 +748,6 @@ public class LCSClusterNodeServiceHttp {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class
 		};
-	private static final Class<?>[] _verifyLCSClusterEntryLCSClusterNodesPropertiesDifferencesParameterTypes19 =
-		new Class[] { java.lang.String.class };
-	private static final Class<?>[] _verifyLCSClusterNodeClusterLinkParameterTypes20 =
+	private static final Class<?>[] _verifyLCSClusterNodeClusterLinkParameterTypes19 =
 		new Class[] { java.lang.String.class, java.lang.String.class };
 }
