@@ -98,7 +98,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 	 */
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
-	public void deleteLCSClusterNode(long lcsClusterNodeId)
+	public LCSClusterNode deleteLCSClusterNode(long lcsClusterNodeId)
 		throws PortalException {
 
 		LCSClusterNode lcsClusterNode =
@@ -108,7 +108,7 @@ public class LCSClusterNodeServiceImpl extends LCSClusterNodeServiceBaseImpl {
 			getPermissionChecker(), lcsClusterNode.getLcsClusterEntryId(),
 			OSBLCSActionKeys.MANAGE_ENTRY);
 
-		lcsClusterNodeLocalService.deleteLCSClusterNode(lcsClusterNode);
+		return lcsClusterNodeLocalService.deleteLCSClusterNode(lcsClusterNode);
 	}
 
 	/**

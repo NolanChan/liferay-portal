@@ -20,7 +20,6 @@ import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.lcs.subscription.SubscriptionType;
 import com.liferay.lcs.util.LCSClusterNodeStatus;
 import com.liferay.osb.lcs.advisor.CommandMessageAdvisor;
-import com.liferay.osb.lcs.advisor.PortalPropertiesAdvisor;
 import com.liferay.osb.lcs.advisor.StringAdvisor;
 import com.liferay.osb.lcs.exception.DuplicateLCSClusterNodeNameException;
 import com.liferay.osb.lcs.exception.LCSClusterNodeBuildNumberException;
@@ -233,9 +232,6 @@ public class LCSClusterNodeLocalServiceImpl
 
 		lcsNotificationAuditEntryPersistence.removeByLCSClusterNodeId(
 			lcsClusterNode.getLcsClusterNodeId());
-
-		_portalPropertiesAdvisor.processLCSClusterEntryPropertyDifferences(
-			lcsClusterNode.getKey(), lcsClusterNode.getLcsClusterEntryId());
 
 		_commandMessageAdvisor.deregister(lcsClusterNode.getKey());
 
@@ -880,9 +876,6 @@ public class LCSClusterNodeLocalServiceImpl
 
 	@ServiceReference(type = LCSClusterNodePatchesService.class)
 	private LCSClusterNodePatchesService _lcsClusterNodePatchesService;
-
-	@ServiceReference(type = PortalPropertiesAdvisor.class)
-	private PortalPropertiesAdvisor _portalPropertiesAdvisor;
 
 	@ServiceReference(type = StorageManager.class)
 	private StorageManager _storageManager;
