@@ -154,17 +154,20 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 
 	@Override
 	public void processLCSClusterEntryPropertyDifferences(
-		String key, long lcsClusterEntryId) {
+		LCSClusterNode lcsClusterNode) {
 
 		Map<String, Map<String, String>> lcsClusterEntryPropertyDifferencesMap =
 			_lcsClusterEntryPropertyDifferencesService.
-				getLCSClusterEntryPropertyDifferencesMap(lcsClusterEntryId);
+				getLCSClusterEntryPropertyDifferencesMap(
+					lcsClusterNode.getLcsClusterEntryId());
 
-		removeKey(key, lcsClusterEntryPropertyDifferencesMap);
+		removeKey(
+			lcsClusterNode.getKey(), lcsClusterEntryPropertyDifferencesMap);
 
 		_lcsClusterEntryPropertyDifferencesService.
 			addLCSClusterEntryPropertyDifferencesMap(
-				lcsClusterEntryId, lcsClusterEntryPropertyDifferencesMap);
+				lcsClusterNode.getLcsClusterEntryId(),
+				lcsClusterEntryPropertyDifferencesMap);
 	}
 
 	@Reference(bind = "-", unbind = "-")

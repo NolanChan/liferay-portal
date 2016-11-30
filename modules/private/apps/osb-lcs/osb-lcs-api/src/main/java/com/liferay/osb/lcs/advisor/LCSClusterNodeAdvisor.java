@@ -16,23 +16,13 @@ package com.liferay.osb.lcs.advisor;
 
 import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 
 /**
  * @author Igor Beslic
  */
-public interface PortalPropertiesAdvisor {
+public interface LCSClusterNodeAdvisor {
 
-	public String fetchLCSClusterNodePropertiesHashCode(String key);
-
-	public JSONArray getPortalPropertiesDifference(String key)
-		throws PortalException;
-
-	public void processLCSClusterEntryPropertyDifferences(
-		LCSClusterNode lcsClusterNode);
-
-	public void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(
-			String key)
+	public LCSClusterNode deleteLCSClusterNode(long lcsClusterNodeId)
 		throws PortalException;
 
 }
