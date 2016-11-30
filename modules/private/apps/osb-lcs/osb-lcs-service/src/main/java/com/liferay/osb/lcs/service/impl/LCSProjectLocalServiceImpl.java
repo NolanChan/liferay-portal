@@ -33,7 +33,7 @@ import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSMessage;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
+import com.liferay.osb.lcs.osbportlet.OSBPortletServiceProxy;
 import com.liferay.osb.lcs.service.base.LCSProjectLocalServiceBaseImpl;
 import com.liferay.osb.lcs.util.ApplicationProfile;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -111,7 +111,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 			throw new DuplicateLCSProjectCorpProjectIdException();
 		}
 
-		CorpProject corpProject = _osbPortletService.getCorpProject(
+		CorpProject corpProject = _osbPortletServiceProxy.getCorpProject(
 			corpProjectId);
 
 		List<User> users = new ArrayList<>();
@@ -124,7 +124,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 		}
 
 		List<String> uuids =
-			_osbPortletService.getCorpProjectAccountCustomerUUIDs(
+			_osbPortletServiceProxy.getCorpProjectAccountCustomerUUIDs(
 				corpProjectId);
 
 		if (uuids.isEmpty()) {
@@ -226,7 +226,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 
 		lcsProject = addLCSProject(lcsProject);
 
-		CorpProject corpProject = _osbPortletService.addCorpProject(
+		CorpProject corpProject = _osbPortletServiceProxy.addCorpProject(
 			userId, name);
 
 		lcsProject.setOrganizationId(corpProject.getOrganizationId());
@@ -248,7 +248,8 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 		String userUUID = user.getUserUuid();
 
 		for (CorpProject corpProject :
-				_osbPortletService.getUserCorpProjects(user.getUserId())) {
+				_osbPortletServiceProxy.getUserCorpProjects(
+					user.getUserId())) {
 
 			LCSProject lcsProject = fetchByCorpProject(
 				corpProject.getCorpProjectId());
@@ -271,7 +272,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 			}
 
 			List<String> uuids =
-				_osbPortletService.getCorpProjectAccountCustomerUUIDs(
+				_osbPortletServiceProxy.getCorpProjectAccountCustomerUUIDs(
 					corpProject.getCorpProjectId());
 
 			for (String uuid : uuids) {
@@ -483,7 +484,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 		List<LCSProject> lcsProjects = new ArrayList<>();
 
 		for (CorpProject corpProject :
-				_osbPortletService.getUserCorpProjects(userId)) {
+				_osbPortletServiceProxy.getUserCorpProjects(userId)) {
 
 			LCSProject lcsProject = null;
 
@@ -632,8 +633,8 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 	@ServiceReference(type = EmailAdvisor.class)
 	private EmailAdvisor _emailAdvisor;
 
-	@ServiceReference(type = OSBPortletService.class)
-	private OSBPortletService _osbPortletService;
+	@ServiceReference(type = OSBPortletServiceProxy.class)
+	private OSBPortletServiceProxy _osbPortletServiceProxy;
 
 	@ServiceReference(type = StringAdvisor.class)
 	private StringAdvisor _stringAdvisor;

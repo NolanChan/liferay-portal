@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.lcs.notification.LCSEventType;
 import com.liferay.osb.lcs.constants.OSBPortletConstants;
-import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
+import com.liferay.osb.lcs.osbportlet.OSBPortletServiceProxy;
 import com.liferay.osb.lcs.service.base.LCSMembersLocalServiceBaseImpl;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -85,13 +85,15 @@ public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {
 		List<Long> noCorpProjectRoleUserIds = new ArrayList<>();
 
 		for (long userId : userIds) {
-			if (!_osbPortletService.hasUserCorpProject(userId, corpProjectId)) {
+			if (!_osbPortletServiceProxy.hasUserCorpProject(
+					userId, corpProjectId)) {
+
 				noCorpProjectUserIds.add(userId);
 
 				continue;
 			}
 
-			if (_osbPortletService.hasUserCorpProjectRole(
+			if (_osbPortletServiceProxy.hasUserCorpProjectRole(
 					userId, corpProjectId,
 					OSBPortletConstants.ROLE_OSB_CORP_LCS_USER)) {
 
@@ -101,12 +103,12 @@ public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {
 			noCorpProjectRoleUserIds.add(userId);
 		}
 
-		_osbPortletService.addCorpProjectUsers(
+		_osbPortletServiceProxy.addCorpProjectUsers(
 			corpProjectId, ArrayUtil.toLongArray(noCorpProjectUserIds));
 
 		noCorpProjectRoleUserIds.addAll(noCorpProjectUserIds);
 
-		_osbPortletService.addUserCorpProjectRoles(
+		_osbPortletServiceProxy.addUserCorpProjectRoles(
 			corpProjectId, ArrayUtil.toLongArray(noCorpProjectRoleUserIds),
 			OSBPortletConstants.ROLE_OSB_CORP_LCS_USER);
 	}
@@ -137,8 +139,8 @@ public class LCSMembersLocalServiceImpl extends LCSMembersLocalServiceBaseImpl {
 	@BeanReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
 
-	@ServiceReference(type = OSBPortletService.class)
-	private OSBPortletService _osbPortletService;
+	@ServiceReference(type = OSBPortletServiceProxy.class)
+	private OSBPortletServiceProxy _osbPortletServiceProxy;
 
 	@BeanReference(type = RoleLocalService.class)
 	private RoleLocalService _roleLocalService;

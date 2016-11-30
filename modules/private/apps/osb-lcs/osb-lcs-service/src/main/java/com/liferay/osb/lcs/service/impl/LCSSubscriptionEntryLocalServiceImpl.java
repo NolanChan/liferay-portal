@@ -32,7 +32,7 @@ import com.liferay.osb.lcs.model.LCSClusterNode;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSSubscriptionEntry;
 import com.liferay.osb.lcs.model.impl.LCSSubscriptionEntryImpl;
-import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
+import com.liferay.osb.lcs.osbportlet.OSBPortletServiceProxy;
 import com.liferay.osb.lcs.service.base.LCSSubscriptionEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -256,7 +256,7 @@ public class LCSSubscriptionEntryLocalServiceImpl
 			lcsProjectId);
 
 		String lcsSubscriptionEntriesJSON =
-			_osbPortletService.getCorpProjectLCSSubscriptionEntriesJSON(
+			_osbPortletServiceProxy.getCorpProjectLCSSubscriptionEntriesJSON(
 				lcsProject.getCorpProjectId());
 
 		refreshLCSProjectLCSSubscriptionEntries(
@@ -637,8 +637,8 @@ public class LCSSubscriptionEntryLocalServiceImpl
 
 	private ObjectMapper _objectMapper;
 
-	@ServiceReference(type = OSBPortletService.class)
-	private OSBPortletService _osbPortletService;
+	@ServiceReference(type = OSBPortletServiceProxy.class)
+	private OSBPortletServiceProxy _osbPortletServiceProxy;
 
 	@ServiceReference(type = StringAdvisor.class)
 	private StringAdvisor _stringAdvisor;

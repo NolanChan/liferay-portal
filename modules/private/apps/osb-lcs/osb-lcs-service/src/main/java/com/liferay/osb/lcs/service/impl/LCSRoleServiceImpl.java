@@ -21,7 +21,7 @@ import com.liferay.osb.lcs.constants.OSBLCSActionKeys;
 import com.liferay.osb.lcs.constants.OSBPortletConstants;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
+import com.liferay.osb.lcs.osbportlet.OSBPortletServiceProxy;
 import com.liferay.osb.lcs.service.base.LCSRoleServiceBaseImpl;
 import com.liferay.osb.lcs.service.permission.LCSProjectPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,12 +29,11 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the remote service for accessing, adding, deleting, updating, and
@@ -228,11 +227,6 @@ public class LCSRoleServiceImpl extends LCSRoleServiceBaseImpl {
 			getUserId(), lcsProjectId, manageLCSClusterEntry);
 	}
 
-	@Reference(bind = "-")
-	public void setOSBPortletService(OSBPortletService osbPortletService) {
-		_osbPortletService = osbPortletService;
-	}
-
 	/**
 	 * Returns <code>true</code> if the user can be the first LCS role owner in
 	 * the LCS project.
@@ -261,11 +255,12 @@ public class LCSRoleServiceImpl extends LCSRoleServiceBaseImpl {
 		LCSProject lcsProject = lcsProjectPersistence.findByPrimaryKey(
 			lcsProjectId);
 
-		return _osbPortletService.hasUserCorpProjectRole(
+		return _osbPortletServiceProxy.hasUserCorpProjectRole(
 			userId, lcsProject.getCorpProjectId(),
 			OSBPortletConstants.ROLE_OSB_CORP_LCS_USER);
 	}
 
-	private OSBPortletService _osbPortletService;
+	@ServiceReference(type = OSBPortletServiceProxy.class)
+	private OSBPortletServiceProxy _osbPortletServiceProxy;
 
 }
