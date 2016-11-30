@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marko Cikos
  * @author Matija Petanjek
  */
-@Component(immediate = true)
+@Component(immediate = true, service = SubscriptionsAdvisor.class)
 public class SubscriptionsAdvisorImpl implements SubscriptionsAdvisor {
 
 	public static final int UPTIMES_START_MONTH = Calendar.JANUARY;

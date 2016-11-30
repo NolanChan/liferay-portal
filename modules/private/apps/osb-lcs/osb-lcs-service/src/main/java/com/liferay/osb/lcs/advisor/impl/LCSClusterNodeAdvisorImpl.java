@@ -45,7 +45,7 @@ public class LCSClusterNodeAdvisorImpl implements LCSClusterNodeAdvisor {
 	@Reference(bind = "-")
 	private LCSClusterNodeService _lcsClusterNodeService;
 
-	@Reference
+	@Reference(bind = "-")
 	private PortalPropertiesAdvisor _portalPropertiesAdvisor;
 
 }
