@@ -31,12 +31,14 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = ReportCompiler.class)
 public class DefaultReportCompiler implements ReportCompiler {
 
+	@Override
 	public JasperReport compile(ReportDesignRetriever reportDesignRetriever)
 		throws JRException {
 
 		return compile(reportDesignRetriever, false);
 	}
 
+	@Override
 	public JasperReport compile(
 			ReportDesignRetriever reportDesignRetriever, boolean force)
 		throws JRException {
@@ -46,6 +48,7 @@ public class DefaultReportCompiler implements ReportCompiler {
 		return JasperCompileManager.compileReport(inputStream);
 	}
 
+	@Override
 	public void flush() {
 	}
 

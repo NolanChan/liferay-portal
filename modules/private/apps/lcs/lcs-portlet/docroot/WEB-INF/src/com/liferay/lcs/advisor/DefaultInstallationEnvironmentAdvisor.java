@@ -48,6 +48,7 @@ import org.hyperic.sigar.Swap;
 public class DefaultInstallationEnvironmentAdvisor
 	implements InstallationEnvironmentAdvisor {
 
+	@Override
 	public Map<String, String> getHardwareMetadata() {
 		Map<String, String> hardwareMetadata = new HashMap<>();
 

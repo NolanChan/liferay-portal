@@ -34,12 +34,14 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ReportCompiler.class)
 public class CachedReportCompiler implements ReportCompiler {
 
+	@Override
 	public JasperReport compile(ReportDesignRetriever reportDesignRetriever)
 		throws JRException {
 
 		return compile(reportDesignRetriever, false);
 	}
 
+	@Override
 	public JasperReport compile(
 			ReportDesignRetriever reportDesignRetriever, boolean force)
 		throws JRException {
@@ -65,6 +67,7 @@ public class CachedReportCompiler implements ReportCompiler {
 		return cachedJasperReport.getJasperReport();
 	}
 
+	@Override
 	public void flush() {
 		_cachedJasperReports.clear();
 	}
