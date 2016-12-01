@@ -239,7 +239,7 @@ public class OSBPortletServiceProxy implements OSBPortletService {
 				(OSBPortletService)osbPortletServiceImplClass.newInstance();
 		}
 		catch (Exception e) {
-			throw new SystemException("Activation failed");
+			throw new SystemException("Unable to activate");
 		}
 	}
 
