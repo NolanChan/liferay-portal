@@ -123,9 +123,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		template.put("headerGradientEndColor", headerGradientEndColor);
 		template.put("headerGradientStartColor", headerGradientStartColor);
 		template.put("iconURL", iconURL.toString());
-		template.put("projectName", documentationProject.getName());
-		template.put("layoutNavigation", getLayoutNavigationList(themeDisplay));
 		template.put("layoutHTMLTitle", layout.getHTMLTitle(locale));
+		template.put(
+			"layoutNavigationList", getLayoutNavigationList(themeDisplay));
+		template.put("projectName", documentationProject.getName());
 
 		return "view";
 	}

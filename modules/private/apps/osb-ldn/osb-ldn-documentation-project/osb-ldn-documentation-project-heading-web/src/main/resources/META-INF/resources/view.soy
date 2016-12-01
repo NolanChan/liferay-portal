@@ -6,8 +6,8 @@
  * @param headerGradientEndColor
  * @param headerGradientStartColor
  * @param iconURL
- * @param layoutNavigation
  * @param layoutHTMLTitle
+ * @param layoutNavigationList
  * @param projectName
  */
 {template .render}
@@ -29,7 +29,7 @@
 
 		<div class="navigation">
 			<ul class="navigation-items">
-				{foreach $layoutNavigationItem in $layoutNavigation}
+				{foreach $layoutNavigationItem in $layoutNavigationList}
 					<li {if $layoutNavigationItem.name == $layoutHTMLTitle}class="selected"{/if}>
 						<a href="{$layoutNavigationItem.url}">{$layoutNavigationItem.name}</a>
 					</li>
