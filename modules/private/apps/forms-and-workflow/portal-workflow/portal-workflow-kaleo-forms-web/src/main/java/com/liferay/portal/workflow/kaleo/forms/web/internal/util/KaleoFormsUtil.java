@@ -399,8 +399,8 @@ public class KaleoFormsUtil {
 	public static boolean isWorkflowDefinitionActive(
 		long companyId, String name, int version) {
 
-		WorkflowDefinition workflowDefinition =
-			KaleoFormsUtil.getWorkflowDefinition(companyId, name, version);
+		WorkflowDefinition workflowDefinition = getWorkflowDefinition(
+			companyId, name, version);
 
 		if (workflowDefinition != null) {
 			return workflowDefinition.isActive();

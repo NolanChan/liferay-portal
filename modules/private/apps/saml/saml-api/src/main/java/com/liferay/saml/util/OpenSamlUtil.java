@@ -148,7 +148,7 @@ public class OpenSamlUtil {
 	public static Attribute buildAttribute(
 		String name, String friendlyName, String nameFormat, Boolean value) {
 
-		Attribute attribute = OpenSamlUtil.buildAttribute();
+		Attribute attribute = buildAttribute();
 
 		if (Validator.isNotNull(friendlyName)) {
 			attribute.setFriendlyName(friendlyName);
@@ -157,7 +157,7 @@ public class OpenSamlUtil {
 		attribute.setName(name);
 		attribute.setNameFormat(nameFormat);
 
-		XMLObject xmlObject = OpenSamlUtil.buildAttributeValue(value);
+		XMLObject xmlObject = buildAttributeValue(value);
 
 		List<XMLObject> xmlObjects = attribute.getAttributeValues();
 
@@ -169,7 +169,7 @@ public class OpenSamlUtil {
 	public static Attribute buildAttribute(
 		String name, String friendlyName, String nameFormat, boolean[] values) {
 
-		Attribute attribute = OpenSamlUtil.buildAttribute();
+		Attribute attribute = buildAttribute();
 
 		if (Validator.isNotNull(friendlyName)) {
 			attribute.setFriendlyName(friendlyName);
@@ -181,8 +181,7 @@ public class OpenSamlUtil {
 		List<XMLObject> xmlObjects = attribute.getAttributeValues();
 
 		for (boolean value : values) {
-			XMLObject xmlObject = OpenSamlUtil.buildAttributeValue(
-				Boolean.valueOf(value));
+			XMLObject xmlObject = buildAttributeValue(Boolean.valueOf(value));
 
 			xmlObjects.add(xmlObject);
 		}
@@ -219,7 +218,7 @@ public class OpenSamlUtil {
 	public static Attribute buildAttribute(
 		String name, String friendlyName, String nameFormat, DateTime value) {
 
-		Attribute attribute = OpenSamlUtil.buildAttribute();
+		Attribute attribute = buildAttribute();
 
 		if (Validator.isNotNull(friendlyName)) {
 			attribute.setFriendlyName(friendlyName);
@@ -228,7 +227,7 @@ public class OpenSamlUtil {
 		attribute.setName(name);
 		attribute.setNameFormat(nameFormat);
 
-		XMLObject xmlObject = OpenSamlUtil.buildAttributeValue(value);
+		XMLObject xmlObject = buildAttributeValue(value);
 
 		List<XMLObject> xmlObjects = attribute.getAttributeValues();
 
@@ -241,7 +240,7 @@ public class OpenSamlUtil {
 		String name, String friendlyName, String nameFormat,
 		DateTime[] values) {
 
-		Attribute attribute = OpenSamlUtil.buildAttribute();
+		Attribute attribute = buildAttribute();
 
 		if (Validator.isNotNull(friendlyName)) {
 			attribute.setFriendlyName(friendlyName);
@@ -253,7 +252,7 @@ public class OpenSamlUtil {
 		List<XMLObject> xmlObjects = attribute.getAttributeValues();
 
 		for (DateTime value : values) {
-			XMLObject xmlObject = OpenSamlUtil.buildAttributeValue(value);
+			XMLObject xmlObject = buildAttributeValue(value);
 
 			xmlObjects.add(xmlObject);
 		}
@@ -264,7 +263,7 @@ public class OpenSamlUtil {
 	public static Attribute buildAttribute(
 		String name, String friendlyName, String nameFormat, int[] values) {
 
-		Attribute attribute = OpenSamlUtil.buildAttribute();
+		Attribute attribute = buildAttribute();
 
 		if (Validator.isNotNull(friendlyName)) {
 			attribute.setFriendlyName(friendlyName);
@@ -276,8 +275,7 @@ public class OpenSamlUtil {
 		List<XMLObject> xmlObjects = attribute.getAttributeValues();
 
 		for (int value : values) {
-			XMLObject xmlObject = OpenSamlUtil.buildAttributeValue(
-				Integer.valueOf(value));
+			XMLObject xmlObject = buildAttributeValue(Integer.valueOf(value));
 
 			xmlObjects.add(xmlObject);
 		}
@@ -355,7 +353,7 @@ public class OpenSamlUtil {
 	public static Attribute buildAttribute(
 		String name, String friendlyName, String nameFormat, String value) {
 
-		Attribute attribute = OpenSamlUtil.buildAttribute();
+		Attribute attribute = buildAttribute();
 
 		if (Validator.isNotNull(friendlyName)) {
 			attribute.setFriendlyName(friendlyName);
@@ -364,7 +362,7 @@ public class OpenSamlUtil {
 		attribute.setName(name);
 		attribute.setNameFormat(nameFormat);
 
-		XMLObject xmlObject = OpenSamlUtil.buildAttributeValue(value);
+		XMLObject xmlObject = buildAttributeValue(value);
 
 		List<XMLObject> xmlObjects = attribute.getAttributeValues();
 
@@ -376,7 +374,7 @@ public class OpenSamlUtil {
 	public static Attribute buildAttribute(
 		String name, String friendlyName, String nameFormat, String[] values) {
 
-		Attribute attribute = OpenSamlUtil.buildAttribute();
+		Attribute attribute = buildAttribute();
 
 		if (Validator.isNotNull(friendlyName)) {
 			attribute.setFriendlyName(friendlyName);
@@ -388,7 +386,7 @@ public class OpenSamlUtil {
 		List<XMLObject> xmlObjects = attribute.getAttributeValues();
 
 		for (String value : values) {
-			XMLObject xmlObject = OpenSamlUtil.buildAttributeValue(value);
+			XMLObject xmlObject = buildAttributeValue(value);
 
 			xmlObjects.add(xmlObject);
 		}

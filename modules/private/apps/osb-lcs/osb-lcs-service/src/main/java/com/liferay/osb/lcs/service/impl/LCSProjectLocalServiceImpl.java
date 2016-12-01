@@ -398,7 +398,7 @@ public class LCSProjectLocalServiceImpl extends LCSProjectLocalServiceBaseImpl {
 	@Override
 	public long[] getLocalCorpProjectIds() {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			LCSProject.class, this.getClassLoader());
+			LCSProject.class, getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("archived", false));
 

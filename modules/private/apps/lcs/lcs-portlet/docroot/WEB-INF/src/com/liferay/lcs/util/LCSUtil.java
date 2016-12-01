@@ -326,7 +326,7 @@ public class LCSUtil {
 
 	public static Map<String, Boolean> getLCSServicesPreferences() {
 		javax.portlet.PortletPreferences jxPortletPreferences =
-			LCSUtil.fetchJxPortletPreferences();
+			fetchJxPortletPreferences();
 
 		Boolean metricsServiceEnabled = Boolean.valueOf(
 			jxPortletPreferences.getValue(
@@ -420,7 +420,7 @@ public class LCSUtil {
 
 	public static boolean hasLCSServicesPreferences() {
 		javax.portlet.PortletPreferences jxPortletPreferences =
-			LCSUtil.fetchJxPortletPreferences();
+			fetchJxPortletPreferences();
 
 		Map<String, String[]> map = jxPortletPreferences.getMap();
 

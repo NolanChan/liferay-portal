@@ -133,7 +133,7 @@ public class KeyStoreFactory {
 		KeyStore.ProtectionParameter protectionParameter =
 			new KeyStore.PasswordProtection(keyStorePassword.toCharArray());
 
-		KeyStore keyStore = KeyStoreFactory.getInstance(
+		KeyStore keyStore = getInstance(
 			keyStorePath, keyStoreType, keyStorePassword);
 
 		KeyStoreAdvisor keyStoreAdvisor = new KeyStoreAdvisor();

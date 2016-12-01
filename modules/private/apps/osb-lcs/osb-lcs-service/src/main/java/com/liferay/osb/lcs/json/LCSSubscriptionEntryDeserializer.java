@@ -134,7 +134,7 @@ public class LCSSubscriptionEntryDeserializer extends JsonDeserializer {
 	protected Class<LCSSubscriptionEntry> getLCSSubscriptionEntryClass() {
 		if (_lcsSubscriptionEntryClass == null) {
 			try {
-				Class<?> thisClass = this.getClass();
+				Class<?> thisClass = getClass();
 
 				_lcsSubscriptionEntryClass = Class.forName(
 					"com.liferay.osb.lcs.model.impl.LCSSubscriptionEntryImpl",

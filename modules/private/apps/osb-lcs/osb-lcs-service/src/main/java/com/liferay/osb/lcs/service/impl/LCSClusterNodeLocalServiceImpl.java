@@ -782,7 +782,7 @@ public class LCSClusterNodeLocalServiceImpl
 		}
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			LCSClusterNode.class, this.getClassLoader());
+			LCSClusterNode.class, getClassLoader());
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.in(
