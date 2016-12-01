@@ -12,4 +12,4 @@ Import-Package:\
 -includeresource:\
 	@jackson-core-asl-[0-9]*.jar,\
 	@jackson-mapper-asl-[0-9]*.jar,\
-	@lib-ee/wurfl-1.6.0.jar
+	@wurfl-[0-9]*.jar
