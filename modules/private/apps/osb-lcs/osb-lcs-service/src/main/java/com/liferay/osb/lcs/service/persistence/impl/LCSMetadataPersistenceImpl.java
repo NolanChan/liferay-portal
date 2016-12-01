@@ -1061,7 +1061,7 @@ public class LCSMetadataPersistenceImpl extends BasePersistenceImpl<LCSMetadata>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((LCSMetadataModelImpl)lcsMetadata);
+		clearUniqueFindersCache((LCSMetadataModelImpl)lcsMetadata, true);
 	}
 
 	@Override
@@ -1073,42 +1073,11 @@ public class LCSMetadataPersistenceImpl extends BasePersistenceImpl<LCSMetadata>
 			entityCache.removeResult(LCSMetadataModelImpl.ENTITY_CACHE_ENABLED,
 				LCSMetadataImpl.class, lcsMetadata.getPrimaryKey());
 
-			clearUniqueFindersCache((LCSMetadataModelImpl)lcsMetadata);
+			clearUniqueFindersCache((LCSMetadataModelImpl)lcsMetadata, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		LCSMetadataModelImpl lcsMetadataModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					lcsMetadataModelImpl.getBuildNumber(),
-					lcsMetadataModelImpl.getGitTag(),
-					lcsMetadataModelImpl.getPortalEdition()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_BN_GT_PE, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_BN_GT_PE, args,
-				lcsMetadataModelImpl);
-		}
-		else {
-			if ((lcsMetadataModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_BN_GT_PE.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						lcsMetadataModelImpl.getBuildNumber(),
-						lcsMetadataModelImpl.getGitTag(),
-						lcsMetadataModelImpl.getPortalEdition()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_BN_GT_PE, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_BN_GT_PE, args,
-					lcsMetadataModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		LCSMetadataModelImpl lcsMetadataModelImpl) {
 		Object[] args = new Object[] {
 				lcsMetadataModelImpl.getBuildNumber(),
@@ -1116,12 +1085,28 @@ public class LCSMetadataPersistenceImpl extends BasePersistenceImpl<LCSMetadata>
 				lcsMetadataModelImpl.getPortalEdition()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_BN_GT_PE, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_BN_GT_PE, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_BN_GT_PE, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_BN_GT_PE, args,
+			lcsMetadataModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		LCSMetadataModelImpl lcsMetadataModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					lcsMetadataModelImpl.getBuildNumber(),
+					lcsMetadataModelImpl.getGitTag(),
+					lcsMetadataModelImpl.getPortalEdition()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_BN_GT_PE, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_BN_GT_PE, args);
+		}
 
 		if ((lcsMetadataModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_BN_GT_PE.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					lcsMetadataModelImpl.getOriginalBuildNumber(),
 					lcsMetadataModelImpl.getOriginalGitTag(),
 					lcsMetadataModelImpl.getOriginalPortalEdition()
@@ -1295,8 +1280,8 @@ public class LCSMetadataPersistenceImpl extends BasePersistenceImpl<LCSMetadata>
 			LCSMetadataImpl.class, lcsMetadata.getPrimaryKey(), lcsMetadata,
 			false);
 
-		clearUniqueFindersCache(lcsMetadataModelImpl);
-		cacheUniqueFindersCache(lcsMetadataModelImpl, isNew);
+		clearUniqueFindersCache(lcsMetadataModelImpl, false);
+		cacheUniqueFindersCache(lcsMetadataModelImpl);
 
 		lcsMetadata.resetOriginalValues();
 

@@ -443,7 +443,7 @@ public class LCSProjectServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LCSProjectServiceUtil.class,
 					"updateLCSProjectName",
-					_updateLCSProjectNameParameterTypes13);
+					_updateLCSProjectNameParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					lcsProjectId, name);
@@ -504,7 +504,7 @@ public class LCSProjectServiceHttp {
 		};
 	private static final Class<?>[] _getUserManageableLCSProjectsParameterTypes11 =
 		new Class[] {  };
-	private static final Class<?>[] _updateLCSProjectNameParameterTypes13 = new Class[] {
+	private static final Class<?>[] _updateLCSProjectNameParameterTypes12 = new Class[] {
 			long.class, java.lang.String.class
 		};
 }
