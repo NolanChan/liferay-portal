@@ -29,5 +29,5 @@ Import-Package:\
 	!sun.misc,\
 	*
 -includeresource:\
-	@lib-ee/ehcache-ee-2.8.5.jar,\
-	@lib-ee/terracotta-toolkit-runtime-ee-4.1.5.jar
+	@lib-ee/ehcache-ee-[0-9]*.jar,\
+	@lib-ee/terracotta-toolkit-runtime-ee-[0-9]*.jar

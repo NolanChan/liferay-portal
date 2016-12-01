@@ -421,8 +421,8 @@ public class DocumentumRepository
 					IDfDocument idfDocument = (IDfDocument)idfSession.getObject(
 						idfId);
 
-					IDfDocument latestIDfDocument =
-						getLatestIDfDocument(idfSession, idfDocument);
+					IDfDocument latestIDfDocument = getLatestIDfDocument(
+						idfSession, idfDocument);
 
 					if (latestIDfDocument.isCheckedOut()) {
 						latestIDfDocument.cancelCheckout();
