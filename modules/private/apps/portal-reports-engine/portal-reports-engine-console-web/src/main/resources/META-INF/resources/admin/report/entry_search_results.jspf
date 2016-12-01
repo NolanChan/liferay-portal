@@ -27,6 +27,10 @@ if (displayTerms.isAdvancedSearch()) {
 
 	results = EntryServiceUtil.getEntries(themeDisplay.getSiteGroupId(), displayTerms.getDefinitionName(), null, startDate, endDate, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
+	if (results.size() < total) {
+		searchContainer.setTotal(results.size());
+	}
+
 	searchContainer.setResults(results);
 }
 else {
@@ -35,6 +39,10 @@ else {
 	searchContainer.setTotal(total);
 
 	results = EntryServiceUtil.getEntries(themeDisplay.getSiteGroupId(), displayTerms.getKeywords(), null, null, null, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+	if (results.size() < total) {
+		searchContainer.setTotal(results.size());
+	}
 
 	searchContainer.setResults(results);
 }
