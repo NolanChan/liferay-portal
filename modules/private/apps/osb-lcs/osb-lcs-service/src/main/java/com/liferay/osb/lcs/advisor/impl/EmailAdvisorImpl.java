@@ -278,27 +278,23 @@ public class EmailAdvisorImpl implements EmailAdvisor {
 	}
 
 	private boolean _isEmailMembershipInvitationAcceptedEnabled() {
-		return
-			_osbLCSConfiguration.
-				osbLcsPortletMembersEmailMembershipInvitationAcceptedEnabled();
+		return _osbLCSConfiguration.
+			osbLcsPortletMembersEmailMembershipInvitationAcceptedEnabled();
 	}
 
 	private boolean _isEmailMembershipInvitationEnabled() {
-		return
-			_osbLCSConfiguration.
-				osbLcsPortletMembersEmailMembershipInvitationEnabled();
+		return _osbLCSConfiguration.
+			osbLcsPortletMembersEmailMembershipInvitationEnabled();
 	}
 
 	private boolean _isEmailMembershipRequestAcceptedEnabled() {
-		return
-			_osbLCSConfiguration.
-				osbLcsPortletMembersEmailMembershipRequestAcceptedEnabled();
+		return _osbLCSConfiguration.
+			osbLcsPortletMembersEmailMembershipRequestAcceptedEnabled();
 	}
 
 	private boolean _isEmailMembershipRequestEnabled() {
-		return
-			_osbLCSConfiguration.
-				osbLcsPortletMembersEmailMembershipRequestEnabled();
+		return _osbLCSConfiguration.
+			osbLcsPortletMembersEmailMembershipRequestEnabled();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

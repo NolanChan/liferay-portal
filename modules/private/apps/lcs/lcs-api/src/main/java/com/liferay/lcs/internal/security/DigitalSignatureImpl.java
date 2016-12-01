@@ -19,7 +19,6 @@ import com.liferay.lcs.messaging.Message;
 import com.liferay.lcs.security.DigitalSignature;
 import com.liferay.lcs.security.KeyStoreAdvisor;
 import com.liferay.lcs.security.KeyStoreFactory;
-import org.osgi.service.component.annotations.Component;
 
 import java.security.KeyStore;
 import java.security.Signature;
@@ -28,6 +27,8 @@ import java.security.cert.Certificate;
 import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Provides digital signing and verification methods. The LCS system is the

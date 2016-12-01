@@ -82,9 +82,8 @@ public class PortalPropertiesAdvisorImpl implements PortalPropertiesAdvisor {
 			throw new UnsupportedOperationException();
 		}
 
-		return
-			_lcsClusterEntryPropertyDifferencesService.
-				getLCSClusterEntryPropertyDifferencesMap(lcsClusterEntryId);
+		return _lcsClusterEntryPropertyDifferencesService.
+			getLCSClusterEntryPropertyDifferencesMap(lcsClusterEntryId);
 	}
 
 	@Override

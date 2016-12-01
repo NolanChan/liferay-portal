@@ -95,9 +95,8 @@ public class LCSClusterEntryPropertyDifferencesServiceImpl
 	public List<LCSClusterEntryPropertyDifferences>
 		getLCSClusterEntryPropertyDifferencesList(long lcsClusterEntryId) {
 
-		return
-			_lcsClusterEntryPropertyDifferencesPersistence.
-				findByLCSClusterEntryId(lcsClusterEntryId);
+		return _lcsClusterEntryPropertyDifferencesPersistence.
+			findByLCSClusterEntryId(lcsClusterEntryId);
 	}
 
 	@Override
