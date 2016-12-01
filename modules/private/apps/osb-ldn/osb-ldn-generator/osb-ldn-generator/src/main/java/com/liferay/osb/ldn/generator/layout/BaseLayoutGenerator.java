@@ -26,6 +26,7 @@ import org.osgi.framework.BundleContext;
  */
 public abstract class BaseLayoutGenerator implements LayoutGenerator {
 
+	@Override
 	public void generate(long plid) throws Exception {
 		if (layoutVersion.getLayoutVersion(plid) > getLayoutVersion()) {
 			return;
@@ -36,26 +37,32 @@ public abstract class BaseLayoutGenerator implements LayoutGenerator {
 		layoutVersion.setLayoutVersion(plid, getLayoutVersion());
 	}
 
+	@Override
 	public String getLayoutDescription() {
 		return _layoutDescription;
 	}
 
+	@Override
 	public String getLayoutFriendlyURL() {
 		return _layoutFriendlyURL;
 	}
 
+	@Override
 	public boolean getLayoutHidden() {
 		return _layoutHidden;
 	}
 
+	@Override
 	public String getLayoutName() {
 		return _layoutName;
 	}
 
+	@Override
 	public String getLayoutTitle() {
 		return _layoutTitle;
 	}
 
+	@Override
 	public String getLayoutType() {
 		return _layoutType;
 	}
