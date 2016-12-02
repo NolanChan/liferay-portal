@@ -10,7 +10,7 @@
 
 				<ul class="layouts">
 					<#list navigation_layouts as navigation_layout>
-						<#if navigation_layouts.getLayoutId() == 1>
+						<#if navigation_layout.getLayoutId() != 1>
 							<li class="lfr-nav-item">
 								<a href="${navigation_layout.getFriendlyURL(locale)}" class="lfr-nav-item">${navigation_layout.getHTMLTitle(locale)}</a>
 							</li>
