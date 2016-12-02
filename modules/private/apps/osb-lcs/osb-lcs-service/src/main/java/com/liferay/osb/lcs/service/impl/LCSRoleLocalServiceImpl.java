@@ -25,7 +25,7 @@ import com.liferay.osb.lcs.model.LCSClusterEntry;
 import com.liferay.osb.lcs.model.LCSInvitation;
 import com.liferay.osb.lcs.model.LCSProject;
 import com.liferay.osb.lcs.model.LCSRole;
-import com.liferay.osb.lcs.osbportlet.OSBPortletServiceProxy;
+import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.osb.lcs.service.base.LCSRoleLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -120,18 +120,16 @@ public class LCSRoleLocalServiceImpl extends LCSRoleLocalServiceBaseImpl {
 
 		long corpProjectId = lcsProject.getCorpProjectId();
 
-		if (!_osbPortletServiceProxy.hasUserCorpProject(
-				userId, corpProjectId)) {
-
-			_osbPortletServiceProxy.addCorpProjectUsers(
+		if (!_osbPortletService.hasUserCorpProject(userId, corpProjectId)) {
+			_osbPortletService.addCorpProjectUsers(
 				corpProjectId, new long[] {userId});
 		}
 
-		if (!_osbPortletServiceProxy.hasUserCorpProjectRole(
+		if (!_osbPortletService.hasUserCorpProjectRole(
 				userId, corpProjectId,
 				OSBPortletConstants.ROLE_OSB_CORP_LCS_USER)) {
 
-			_osbPortletServiceProxy.addUserCorpProjectRoles(
+			_osbPortletService.addUserCorpProjectRoles(
 				lcsProject.getCorpProjectId(), new long[] {userId},
 				OSBPortletConstants.ROLE_OSB_CORP_LCS_USER);
 		}
@@ -181,7 +179,7 @@ public class LCSRoleLocalServiceImpl extends LCSRoleLocalServiceBaseImpl {
 			LCSProject lcsProject = lcsProjectPersistence.findByPrimaryKey(
 				lcsRole.getLcsProjectId());
 
-			_osbPortletServiceProxy.deleteUserCorpProjectRoles(
+			_osbPortletService.deleteUserCorpProjectRoles(
 				lcsProject.getCorpProjectId(),
 				new long[] {lcsRole.getUserId()});
 
@@ -546,8 +544,8 @@ public class LCSRoleLocalServiceImpl extends LCSRoleLocalServiceBaseImpl {
 	@ServiceReference(type = CompanyAdvisor.class)
 	private CompanyAdvisor _companyAdvisor;
 
-	@ServiceReference(type = OSBPortletServiceProxy.class)
-	private OSBPortletServiceProxy _osbPortletServiceProxy;
+	@ServiceReference(type = OSBPortletService.class)
+	private OSBPortletService _osbPortletService;
 
 	@ServiceReference(type = UserAdvisor.class)
 	private UserAdvisor _userAdvisor;
