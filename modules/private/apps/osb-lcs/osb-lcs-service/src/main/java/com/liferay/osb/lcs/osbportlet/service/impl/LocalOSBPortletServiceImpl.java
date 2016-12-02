@@ -14,14 +14,23 @@
 
 package com.liferay.osb.lcs.osbportlet.service.impl;
 
+import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.portal.kernel.model.User;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+
 /**
  * @author Igor Beslic
  */
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSLocalConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = OSBPortletService.class
+)
 public class LocalOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override

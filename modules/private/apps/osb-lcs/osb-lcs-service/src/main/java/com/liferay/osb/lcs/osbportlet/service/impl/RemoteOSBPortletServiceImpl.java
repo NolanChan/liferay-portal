@@ -25,6 +25,7 @@ import com.liferay.osb.lcs.model.AccountEntry;
 import com.liferay.osb.lcs.model.CorpProject;
 import com.liferay.osb.lcs.model.impl.AccountEntryImpl;
 import com.liferay.osb.lcs.model.impl.CorpProjectImpl;
+import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
@@ -53,11 +54,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
  */
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSProductionConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = OSBPortletService.class
+)
 public class RemoteOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	public RemoteOSBPortletServiceImpl() {

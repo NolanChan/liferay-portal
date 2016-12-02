@@ -16,15 +16,11 @@ package com.liferay.osb.lcs.osbportlet.service.impl;
 
 import com.liferay.lcs.subscription.SubscriptionType;
 import com.liferay.osb.lcs.constants.OSBPortletConstants;
-import com.liferay.osb.lcs.exception.NoSuchLCSProjectException;
 import com.liferay.osb.lcs.model.AccountEntry;
 import com.liferay.osb.lcs.model.CorpProject;
-import com.liferay.osb.lcs.model.LCSProject;
-import com.liferay.osb.lcs.model.LCSSubscriptionEntry;
 import com.liferay.osb.lcs.model.impl.AccountEntryImpl;
 import com.liferay.osb.lcs.model.impl.CorpProjectImpl;
-import com.liferay.osb.lcs.service.LCSProjectLocalService;
-import com.liferay.osb.lcs.service.LCSSubscriptionEntryLocalService;
+import com.liferay.osb.lcs.osbportlet.service.OSBPortletService;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
@@ -57,11 +53,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
  */
+@Component(
+	configurationPid = "com.liferay.osb.lcs.configuration.OSBLCSDevelopmentConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = OSBPortletService.class
+)
 public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	@Override
@@ -253,76 +256,44 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 	public String getCorpProjectLCSSubscriptionEntriesJSON(long corpProjectId)
 		throws PortalException {
 
-		LCSProject lcsProject = _lcsProjectLocalService.fetchByCorpProject(
-			corpProjectId);
-
-		if (lcsProject == null) {
-			throw new NoSuchLCSProjectException();
-		}
-
-		List<LCSSubscriptionEntry> lcsSubscriptionEntries =
-			_lcsSubscriptionEntryLocalService.
-				getLCSProjectLCSSubscriptionEntries(
-					lcsProject.getLcsProjectId());
-
-		if (lcsSubscriptionEntries.isEmpty()) {
-			throw new UnsupportedOperationException();
-		}
-
 		JSONArray lcsSubscriptionEntriesJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
-		for (LCSSubscriptionEntry lcsSubscriptionEntry :
-				lcsSubscriptionEntries) {
-
+		for (SubscriptionType subscriptionType : SubscriptionType.values()) {
 			JSONObject subscriptionEntryJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
-			subscriptionEntryJSONObject.put(
-				"actualPrice", lcsSubscriptionEntry.getActualPrice());
-			subscriptionEntryJSONObject.put(
-				"currencyCode", lcsSubscriptionEntry.getCurrencyCode());
-			subscriptionEntryJSONObject.put(
-				"instanceSize", lcsSubscriptionEntry.getInstanceSize());
+			subscriptionEntryJSONObject.put("actualPrice", 400);
+			subscriptionEntryJSONObject.put("currencyCode", "USD");
+			subscriptionEntryJSONObject.put("instanceSize", 2);
 
-			Date endDate = lcsSubscriptionEntry.getEndDate();
+			Date endDate = new Date();
 
 			subscriptionEntryJSONObject.put("endDate", endDate.getTime());
 
-			subscriptionEntryJSONObject.put(
-				"platform", lcsSubscriptionEntry.getPlatform());
-			subscriptionEntryJSONObject.put(
-				"platformVersion", lcsSubscriptionEntry.getPlatformVersion());
-			subscriptionEntryJSONObject.put(
-				"processorCoresAllowed",
-				lcsSubscriptionEntry.getProcessorCoresAllowed());
-			subscriptionEntryJSONObject.put(
-				"product", lcsSubscriptionEntry.getProduct());
-			subscriptionEntryJSONObject.put(
-				"productVersion", lcsSubscriptionEntry.getProductVersion());
-			subscriptionEntryJSONObject.put(
-				"serversAllowed", lcsSubscriptionEntry.getServersAllowed());
-			subscriptionEntryJSONObject.put(
-				"serversUsed", lcsSubscriptionEntry.getServersUsed());
+			subscriptionEntryJSONObject.put("platform", "portal");
+			subscriptionEntryJSONObject.put("platformVersion", "6.2.0");
+			subscriptionEntryJSONObject.put("processorCoresAllowed", 12);
+			subscriptionEntryJSONObject.put("product", "portal");
+			subscriptionEntryJSONObject.put("productVersion", "6.2");
+			subscriptionEntryJSONObject.put("serversAllowed", 20);
+			subscriptionEntryJSONObject.put("serversUsed", 5);
 
-			Date startDate = lcsSubscriptionEntry.getStartDate();
+			Date startDate = new Date();
 
 			subscriptionEntryJSONObject.put("startDate", startDate.getTime());
 
-			Date supportEndDate = lcsSubscriptionEntry.getSupportEndDate();
+			Date supportEndDate = new Date();
 
 			subscriptionEntryJSONObject.put(
 				"supportEndDate", supportEndDate.getTime());
 
-			Date supportStartDate = lcsSubscriptionEntry.getSupportStartDate();
+			Date supportStartDate = new Date();
 
 			if (supportStartDate != null) {
 				subscriptionEntryJSONObject.put(
 					"supportStartDate", supportStartDate.getTime());
 			}
-
-			SubscriptionType subscriptionType = SubscriptionType.valueOf(
-				lcsSubscriptionEntry.getType());
 
 			subscriptionEntryJSONObject.put(
 				"type", subscriptionType.getLicenseEntryType());
@@ -407,20 +378,6 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 		return _userGroupRoleLocalService.hasUserGroupRole(
 			userId, organization.getGroupId(), osbCorpRoleId);
-	}
-
-	@Reference(unbind = "-")
-	public void setLCSProjectLocalService(
-		LCSProjectLocalService lcsProjectLocalService) {
-
-		_lcsProjectLocalService = lcsProjectLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setLCSSubscriptionEntryLocalService(
-		LCSSubscriptionEntryLocalService lcsSubscriptionEntryLocalService) {
-
-		_lcsSubscriptionEntryLocalService = lcsSubscriptionEntryLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -601,8 +558,6 @@ public class MockOSBPortletServiceImpl extends BaseOSBPortletServiceImpl {
 
 	private final Map<Long, AccountEntry> _allAccountEntries = new HashMap<>();
 	private final Map<Long, CorpProject> _allCorpProjects = new HashMap<>();
-	private LCSProjectLocalService _lcsProjectLocalService;
-	private LCSSubscriptionEntryLocalService _lcsSubscriptionEntryLocalService;
 	private final Map<Long, CorpProject> _organizationCorpProjects =
 		new HashMap<>();
 	private OrganizationLocalService _organizationLocalService;
