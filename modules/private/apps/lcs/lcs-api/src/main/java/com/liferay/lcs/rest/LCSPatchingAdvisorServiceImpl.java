@@ -29,12 +29,14 @@ public class LCSPatchingAdvisorServiceImpl
 
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0; i < installedPatchIds.length - 1; i++) {
-			sb.append(installedPatchIds[i]);
-			sb.append(",");
-		}
+		if (installedPatchIds.length > 0) {
+			for (int i = 0; i < installedPatchIds.length - 1; i++) {
+				sb.append(installedPatchIds[i]);
+				sb.append(",");
+			}
 
-		sb.append(installedPatchIds[installedPatchIds.length - 1]);
+			sb.append(installedPatchIds[installedPatchIds.length - 1]);
+		}
 
 		return doGetToList(
 			String.class, _URL_PATCHING_ADVISOR, "key", key,
