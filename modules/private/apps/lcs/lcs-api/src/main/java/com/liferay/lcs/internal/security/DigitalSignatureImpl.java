@@ -198,8 +198,7 @@ public class DigitalSignatureImpl implements DigitalSignature {
 
 		CommandMessage commandMessage = (CommandMessage)message;
 
-		Signature signature = Signature.getInstance(
-			_signingAlgorithm, _algorithmProvider);
+		Signature signature = Signature.getInstance(_signingAlgorithm);
 
 		KeyStore.ProtectionParameter protectionParameter =
 			new KeyStore.PasswordProtection(_keyStorePassword.toCharArray());
