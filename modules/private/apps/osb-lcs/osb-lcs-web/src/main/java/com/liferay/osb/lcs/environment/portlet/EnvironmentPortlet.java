@@ -20,15 +20,15 @@ import com.liferay.osb.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.osb.lcs.constants.OSBLCSPortletKeys;
 import com.liferay.osb.lcs.exception.DuplicateLCSClusterEntryNameException;
 import com.liferay.osb.lcs.model.LCSClusterEntry;
+import com.liferay.osb.lcs.model.LCSClusterEntryToken;
 import com.liferay.osb.lcs.service.LCSClusterEntryService;
+import com.liferay.osb.lcs.service.LCSClusterEntryTokenService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -148,11 +148,8 @@ public class EnvironmentPortlet extends MVCPortlet {
 		Map<String, String> lcsServicesConfiguration =
 			getLCSServicesConfiguration(actionRequest);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		_lcsClusterEntryTokenAdvisor.generateLCSClusterEntryToken(
-			lcsClusterEntryId, lcsServicesConfiguration, serviceContext);
+		_lcsClusterEntryTokenService.addLCSClusterEntryToken(
+			lcsClusterEntryId, lcsServicesConfiguration);
 	}
 
 	public void regenerateLCSClusterEntryToken(
@@ -165,11 +162,8 @@ public class EnvironmentPortlet extends MVCPortlet {
 		Map<String, String> lcsServicesConfiguration =
 			getLCSServicesConfiguration(actionRequest);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		_lcsClusterEntryTokenAdvisor.regenerateLCSClusterEntryToken(
-			lcsClusterEntryId, lcsServicesConfiguration, serviceContext);
+		_lcsClusterEntryTokenService.regenerateLCSClusterEntryToken(
+			lcsClusterEntryId, lcsServicesConfiguration);
 	}
 
 	@Override
@@ -200,10 +194,18 @@ public class EnvironmentPortlet extends MVCPortlet {
 		_lcsClusterEntryService = lcsClusterEntryService;
 	}
 
+	@Reference(unbind = "-")
 	public void setLCSClusterEntryTokenAdvisor(
 		LCSClusterEntryTokenAdvisor lcsClusterEntryTokenAdvisor) {
 
 		_lcsClusterEntryTokenAdvisor = lcsClusterEntryTokenAdvisor;
+	}
+
+	@Reference(unbind = "-")
+	public void setLCSClusterEntryTokenService(
+		LCSClusterEntryTokenService lcsClusterEntryTokenService) {
+
+		_lcsClusterEntryTokenService = lcsClusterEntryTokenService;
 	}
 
 	public void updateLCSClusterEntry(
@@ -237,11 +239,15 @@ public class EnvironmentPortlet extends MVCPortlet {
 		long lcsClusterEntryId = ParamUtil.getLong(
 			resourceRequest, "lcsClusterEntryId");
 
+		LCSClusterEntryToken lcsClusterEntryToken =
+			_lcsClusterEntryTokenService.
+				fetchLCSClusterEntryLCSClusterEntryToken(lcsClusterEntryId);
+
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse,
 			"lcs-aatf-" + lcsClusterEntryId + ".aatf",
 			_lcsClusterEntryTokenAdvisor.getLCSEntryTokenEncryptedBytes(
-				lcsClusterEntryId),
+				lcsClusterEntryToken),
 			ContentTypes.APPLICATION_OCTET_STREAM,
 			HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 	}
@@ -289,5 +295,6 @@ public class EnvironmentPortlet extends MVCPortlet {
 
 	private LCSClusterEntryService _lcsClusterEntryService;
 	private LCSClusterEntryTokenAdvisor _lcsClusterEntryTokenAdvisor;
+	private LCSClusterEntryTokenService _lcsClusterEntryTokenService;
 
 }
