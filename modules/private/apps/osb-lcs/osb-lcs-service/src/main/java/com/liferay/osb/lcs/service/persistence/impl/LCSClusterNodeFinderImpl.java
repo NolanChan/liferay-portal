@@ -41,6 +41,7 @@ public class LCSClusterNodeFinderImpl
 	public static final String FIND_BY_U_A =
 		LCSClusterNodeFinder.class.getName() + ".findByU_A";
 
+	@Override
 	public List<LCSClusterNode> findByLCEN_LPN(
 		String lcsClusterEntryName, String lcsProjectName, boolean andOperator,
 		int start, int end) {
@@ -108,6 +109,7 @@ public class LCSClusterNodeFinderImpl
 		}
 	}
 
+	@Override
 	public List<LCSClusterNode> findByU_A(
 		long userId, boolean archived, int start, int end) {
 
