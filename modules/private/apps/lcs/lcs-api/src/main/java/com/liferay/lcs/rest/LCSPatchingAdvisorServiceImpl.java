@@ -29,13 +29,12 @@ public class LCSPatchingAdvisorServiceImpl
 
 		StringBuilder sb = new StringBuilder();
 
-		if (installedPatchIds.length > 0) {
-			for (int i = 0; i < installedPatchIds.length - 1; i++) {
-				sb.append(installedPatchIds[i]);
+		for (int i = 0; i < installedPatchIds.length; i++) {
+			sb.append(installedPatchIds[i]);
+
+			if ((i + 1) < installedPatchIds.length) {
 				sb.append(",");
 			}
-
-			sb.append(installedPatchIds[installedPatchIds.length - 1]);
 		}
 
 		return doGetToList(
