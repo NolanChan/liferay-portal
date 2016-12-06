@@ -23,6 +23,7 @@ public class MessageBusCommandMessage extends CommandMessage {
 		return _destinationName;
 	}
 
+	@Override
 	public String getPayload() {
 		return (String)super.getPayload();
 	}
