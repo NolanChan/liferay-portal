@@ -53,10 +53,10 @@ public class PostUpgradeFixOSGiCommands {
 		DB db = DBManagerUtil.getDB();
 
 		if (db.getDBType() == DBType.SQLSERVER) {
-			alterNVarcharColumns();
+			alterNVarcharColumnsSQLServer();
 		}
 		else if (db.getDBType() == DBType.SYBASE) {
-			alterVarcharColumns();
+			alterVarcharColumnsSybase();
 		}
 		else {
 			if (_log.isInfoEnabled()) {
@@ -66,52 +66,54 @@ public class PostUpgradeFixOSGiCommands {
 							"during upgrade.");
 			}
 		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Finished executing postUpgradeFix:LPS_68410");
+		}
 	}
 
-	protected void alterNVarcharColumns() throws Exception {
-		StringBundler sb1 = new StringBundler(3);
+	protected void alterNVarcharColumnsSQLServer() throws Exception {
+		StringBundler sb = new StringBundler(3);
 
-		sb1.append("select table_name, column_name from ");
-		sb1.append("INFORMATION_SCHEMA.COLUMNS where DATA_TYPE = 'nvarchar' ");
-		sb1.append("and character_maximum_length = 2000");
+		sb.append("select table_name, column_name from ");
+		sb.append("INFORMATION_SCHEMA.COLUMNS where DATA_TYPE = 'nvarchar' ");
+		sb.append("and character_maximum_length = 2000");
 
 		Connection connection = DataAccess.getConnection();
 
-		try (PreparedStatement ps1 = connection.prepareStatement(
-				sb1.toString());
+		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			ResultSet rs1 = ps1.executeQuery()) {
 
 			while (rs1.next()) {
 				String tableName = rs1.getString(1);
 				String columnName = rs1.getString(2);
 
-				StringBundler sb2 = new StringBundler(5);
+				sb = new StringBundler(5);
 
-				sb2.append("alter table ");
-				sb2.append(tableName);
-				sb2.append(" alter column ");
-				sb2.append(columnName);
-				sb2.append(" nvarchar(4000)");
+				sb.append("alter table ");
+				sb.append(tableName);
+				sb.append(" alter column ");
+				sb.append(columnName);
+				sb.append(" nvarchar(4000)");
 
 				try (PreparedStatement ps2 =
-						connection.prepareStatement(sb2.toString())) {
+						connection.prepareStatement(sb.toString())) {
 
 					ps2.execute();
 				}
 				catch (SQLException sqle) {
 					if (sqle.getErrorCode() == 1441) {
 						if (_log.isWarnEnabled()) {
-							StringBundler warnSB = new StringBundler(6);
+							sb = new StringBundler(6);
 
-							warnSB.append("Unable to alter length of column ");
-							warnSB.append(columnName);
-							warnSB.append(" for table ");
-							warnSB.append(tableName);
-							warnSB.append(
-								" because it contains values larger ");
-							warnSB.append("than the new column length");
+							sb.append("Unable to alter length of column ");
+							sb.append(columnName);
+							sb.append(" for table ");
+							sb.append(tableName);
+							sb.append(" because it contains values larger ");
+							sb.append("than the new column length");
 
-							_log.warn(warnSB.toString());
+							_log.warn(sb.toString());
 						}
 					}
 					else {
@@ -123,10 +125,6 @@ public class PostUpgradeFixOSGiCommands {
 						throw sqle;
 					}
 				}
-			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Finished executing postUpgradeFix:LPS_68410");
 			}
 		}
 		catch (Exception e) {
@@ -134,50 +132,48 @@ public class PostUpgradeFixOSGiCommands {
 		}
 	}
 
-	protected void alterVarcharColumns() throws Exception {
-		StringBundler sb1 = new StringBundler(3);
+	protected void alterVarcharColumnsSybase() throws Exception {
+		StringBundler sb = new StringBundler(3);
 
-		sb1.append("select o.name, c.name from sysobjects o, syscolumns c, ");
-		sb1.append("systypes t where o.id = c.id and c.type = t.type and ");
-		sb1.append("t.name = 'varchar' and c.length = 1000");
+		sb.append("select o.name, c.name from sysobjects o, syscolumns c, ");
+		sb.append("systypes t where o.id = c.id and c.type = t.type and ");
+		sb.append("t.name = 'varchar' and c.length = 1000");
 
 		Connection connection = DataAccess.getConnection();
 
-		try (PreparedStatement ps1 = connection.prepareStatement(
-				sb1.toString());
+		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			ResultSet rs1 = ps1.executeQuery()) {
 
 			while (rs1.next()) {
 				String tableName = rs1.getString(1);
 				String columnName = rs1.getString(2);
 
-				StringBundler sb2 = new StringBundler(5);
+				sb = new StringBundler(5);
 
-				sb2.append("alter table ");
-				sb2.append(tableName);
-				sb2.append(" modify ");
-				sb2.append(columnName);
-				sb2.append(" varchar(4000)");
+				sb.append("alter table ");
+				sb.append(tableName);
+				sb.append(" modify ");
+				sb.append(columnName);
+				sb.append(" varchar(4000)");
 
 				try (PreparedStatement ps2 =
-						connection.prepareStatement(sb2.toString())) {
+						connection.prepareStatement(sb.toString())) {
 
 					ps2.execute();
 				}
 				catch (SQLException sqle) {
 					if (sqle.getErrorCode() == 1441) {
 						if (_log.isWarnEnabled()) {
-							StringBundler warnSB = new StringBundler(6);
+							sb = new StringBundler(6);
 
-							warnSB.append("Unable to alter length of column ");
-							warnSB.append(columnName);
-							warnSB.append(" for table ");
-							warnSB.append(tableName);
-							warnSB.append(
-								" because it contains values larger ");
-							warnSB.append("than the new column length");
+							sb.append("Unable to alter length of column ");
+							sb.append(columnName);
+							sb.append(" for table ");
+							sb.append(tableName);
+							sb.append(" because it contains values larger ");
+							sb.append("than the new column length");
 
-							_log.warn(warnSB.toString());
+							_log.warn(sb.toString());
 						}
 					}
 					else {
@@ -189,10 +185,6 @@ public class PostUpgradeFixOSGiCommands {
 						throw sqle;
 					}
 				}
-			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Finished executing postUpgradeFix:LPS_68410");
 			}
 		}
 	}
