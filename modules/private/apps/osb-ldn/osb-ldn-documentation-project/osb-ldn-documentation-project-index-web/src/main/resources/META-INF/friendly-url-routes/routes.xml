@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 7.0.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_7_0_0.dtd">
+
+<routes>
+	<route>
+		<pattern>/</pattern>
+		<ignored-parameter name="p_auth" />
+		<ignored-parameter name="p_p_col_count" />
+		<ignored-parameter name="p_p_col_id" />
+		<ignored-parameter name="p_p_id" />
+		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/{predefinedFilterTag}</pattern>
+		<ignored-parameter name="p_auth" />
+		<ignored-parameter name="p_p_col_count" />
+		<ignored-parameter name="p_p_col_id" />
+		<ignored-parameter name="p_p_id" />
+		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+	</route>
+</routes>
