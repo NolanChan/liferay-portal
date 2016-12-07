@@ -93,13 +93,13 @@ public class LCSClusterNodeServiceImpl
 				LCSClusterNodeImpl.class, _URL_LCS_CLUSTER_NODE, "key", key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
-			throw new RuntimeException(jsonwsie);
-		}
-		catch (JSONWebServiceTransportException jsonwste) {
-			if (jsonwste.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
+			if (jsonwsie.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
 				return null;
 			}
 
+			throw new RuntimeException(jsonwsie);
+		}
+		catch (JSONWebServiceTransportException jsonwste) {
 			throw new RuntimeException(jsonwste);
 		}
 	}
