@@ -713,9 +713,9 @@ app.artifacts-7.0.8=\
 	com.liferay.blogs.layout.prototype-2.0.3.jar,\
 	com.liferay.blogs.recent.bloggers.web-1.1.1.jar,\
 	com.liferay.blogs.service-1.0.10.jar,\
-	com.liferay.blogs.web-1.1.2.jar,\
+	com.liferay.blogs.web-1.1.3.jar,\
 	com.liferay.bookmarks.api-2.0.2.jar,\
-	com.liferay.bookmarks.service-1.1.2.jar,\
+	com.liferay.bookmarks.service-1.1.3.jar,\
 	com.liferay.bookmarks.web-1.0.14.jar,\
 	com.liferay.comment.api-2.0.1.jar,\
 	com.liferay.comment.editor.configuration-1.0.2.jar,\
@@ -756,11 +756,11 @@ app.artifacts-7.0.8=\
 	com.liferay.message.boards.layout.set.prototype-1.0.6.jar,\
 	com.liferay.message.boards.parser.bbcode-2.0.6.jar,\
 	com.liferay.message.boards.service-1.0.9.jar,\
-	com.liferay.message.boards.web-1.2.3.jar,\
+	com.liferay.message.boards.web-1.2.4.jar,\
 	com.liferay.microblogs.api-2.1.0.jar,\
 	com.liferay.microblogs.service-2.1.6.jar,\
-	com.liferay.microblogs.web-2.0.9.jar,\
-	com.liferay.notifications.web-1.0.13.jar,\
+	com.liferay.microblogs.web-2.0.10.jar,\
+	com.liferay.notifications.web-1.0.15.jar,\
 	com.liferay.quick.note.web-2.0.2.jar,\
 	com.liferay.ratings.api-2.0.1.jar,\
 	com.liferay.ratings.page.ratings.web-2.0.3.jar,\
@@ -774,16 +774,16 @@ app.artifacts-7.0.8=\
 	com.liferay.social.user.statistics.web-2.1.2.jar,\
 	com.liferay.wiki.api-2.2.2.jar,\
 	com.liferay.wiki.editor.configuration-1.0.6.jar,\
-	com.liferay.wiki.engine.creole-2.0.7.jar,\
+	com.liferay.wiki.engine.creole-2.0.8.jar,\
 	com.liferay.wiki.engine.html-2.0.2.jar,\
 	com.liferay.wiki.engine.input.editor.common-2.0.2.jar,\
 	com.liferay.wiki.engine.lang-1.0.1.jar,\
 	com.liferay.wiki.engine.text-2.0.2.jar,\
 	com.liferay.wiki.layout.prototype-1.0.5.jar,\
 	com.liferay.wiki.navigation.web-2.0.6.jar,\
-	com.liferay.wiki.service-1.2.18.jar,\
-	com.liferay.wiki.web-2.1.12.jar
+	com.liferay.wiki.service-1.3.0.jar,\
+	com.liferay.wiki.web-2.1.13.jar
 
-app.change.log-7.0.8=LPS-52675 LPS-60850 LPS-61099 LPS-61420 LPS-63232 LPS-64031 LPS-64383 LPS-65012 LPS-65225 LPS-65362 LPS-65810 LPS-65909 LPS-66416 LPS-66452 LPS-66478 LPS-66593 LPS-66697 LPS-66791 LPS-66853 LPS-66923 LPS-66986 LPS-66997 LPS-67352 LPS-67498 LPS-67714 LPS-67743 LPS-67757 LPS-67771 LPS-67901 LPS-67944 LPS-68062 LPS-68187 LPS-68212 LPS-68214 LPS-68289 LPS-68460 LPS-68552 LPS-68590 LPS-68780 LPS-68814 LPS-68923 LPS-68939 LPS-69007 LPS-69127 LPS-69159 LPS-69271 LPS-69287 LPS-69293 LPS-69309 LPS-69414
+app.change.log-7.0.8=LPS-52675 LPS-60850 LPS-61099 LPS-61420 LPS-63232 LPS-64031 LPS-64383 LPS-65012 LPS-65225 LPS-65362 LPS-65810 LPS-65909 LPS-66416 LPS-66452 LPS-66478 LPS-66593 LPS-66697 LPS-66791 LPS-66853 LPS-66923 LPS-66986 LPS-66997 LPS-67352 LPS-67714 LPS-67771 LPS-67901 LPS-67944 LPS-67951 LPS-68062 LPS-68187 LPS-68212 LPS-68214 LPS-68289 LPS-68552 LPS-68590 LPS-68780 LPS-68814 LPS-68923 LPS-68927 LPS-68939 LPS-69226 LPS-69271 LPS-69287 LPS-69293 LPS-69309 LPS-69381 LPS-69414 LPS-69512 LPS-69558
 
-app.git.id-7.0.8=adea620739846b7976156bdc0ac7361363c6f957
+app.git.id-7.0.8=f68cbd440ecf9a81a3e8e5534ac20e1e26dfdb90
