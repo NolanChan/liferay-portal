@@ -25,10 +25,6 @@ import com.liferay.post.upgrade.fix.BasePostUpgradeFixOSGiCommands;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * <p>
- * Post upgrade fix for https://issues.liferay.com/browse/LPS-66133
- * </p>
- *
  * @author Jorge Díaz
  */
 @Component(

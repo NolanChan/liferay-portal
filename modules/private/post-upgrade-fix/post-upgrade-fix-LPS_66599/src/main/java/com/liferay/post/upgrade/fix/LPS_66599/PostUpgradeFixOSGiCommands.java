@@ -26,10 +26,6 @@ import java.sql.ResultSet;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * <p>
- * Post upgrade fix for https://issues.liferay.com/browse/LPS-66599
- * </p>
- *
  * @author Alberto Chaparro
  */
 @Component(

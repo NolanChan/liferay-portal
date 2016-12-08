@@ -29,10 +29,6 @@ import java.sql.SQLException;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * <p>
- * Post upgrade fix for https://issues.liferay.com/browse/LPS-68410
- * </p>
- *
  * @author Christopher Kian
  */
 @Component(
