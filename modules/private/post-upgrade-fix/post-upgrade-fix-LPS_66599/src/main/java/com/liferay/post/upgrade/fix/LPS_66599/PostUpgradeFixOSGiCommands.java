@@ -16,9 +16,8 @@ package com.liferay.post.upgrade.fix.LPS_66599;
 
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.post.upgrade.fix.BasePostUpgradeFixOSGiCommands;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,17 +35,21 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.command.function=LPS_66599", "osgi.command.scope=postUpgradeFix"
+		"osgi.command.function=" + PostUpgradeFixOSGiCommands.FUNCTION,
+		"osgi.command.scope=" + BasePostUpgradeFixOSGiCommands.SCOPE
 	},
 	service = PostUpgradeFixOSGiCommands.class
 )
-public class PostUpgradeFixOSGiCommands {
+public class PostUpgradeFixOSGiCommands extends BasePostUpgradeFixOSGiCommands {
+
+	public static final String FUNCTION = "LPS_66599";
 
 	public void LPS_66599() {
-		if (_log.isInfoEnabled()) {
-			_log.info("Executing postUpgradeFix:LPS_66599");
-		}
+		execute();
+	}
 
+	@Override
+	protected void doExecute() throws Exception {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("select MBThread.groupId, MBDiscussion.discussionId from ");
@@ -75,20 +78,12 @@ public class PostUpgradeFixOSGiCommands {
 
 				ps1.executeBatch();
 			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Finished executing postUpgradeFix:LPS_66599");
-			}
-		}
-		catch (Exception e) {
-			_log.error(
-				"An exception was thrown while executing postUpgradeFix:" +
-					"LPS_66599",
-				e);
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		PostUpgradeFixOSGiCommands.class);
+	@Override
+	protected String getFunction() {
+		return FUNCTION;
+	}
 
 }

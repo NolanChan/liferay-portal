@@ -18,9 +18,8 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.post.upgrade.fix.BasePostUpgradeFixOSGiCommands;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,37 +38,17 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.command.function=LPS_68410", "osgi.command.scope=postUpgradeFix"
+		"osgi.command.function=" + PostUpgradeFixOSGiCommands.FUNCTION,
+		"osgi.command.scope=" + PostUpgradeFixOSGiCommands.SCOPE
 	},
 	service = PostUpgradeFixOSGiCommands.class
 )
-public class PostUpgradeFixOSGiCommands {
+public class PostUpgradeFixOSGiCommands extends BasePostUpgradeFixOSGiCommands {
 
-	public void LPS_68410() throws Exception {
-		if (_log.isInfoEnabled()) {
-			_log.info("Executing postUpgradeFix:LPS_68410");
-		}
+	public static final String FUNCTION = "LPS_68410";
 
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.SQLSERVER) {
-			alterNVarcharColumnsSQLServer();
-		}
-		else if (db.getDBType() == DBType.SYBASE) {
-			alterVarcharColumnsSybase();
-		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"No changes occurred during postUpgradeFix:LPS_68410.  " +
-						"Database type: " + db.getDBType() + " not affected " +
-							"during upgrade.");
-			}
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Finished executing postUpgradeFix:LPS_68410");
-		}
+	public void LPS_68410() {
+		execute();
 	}
 
 	protected void alterNVarcharColumnsSQLServer() throws SQLException {
@@ -103,7 +82,7 @@ public class PostUpgradeFixOSGiCommands {
 				}
 				catch (SQLException sqle) {
 					if (sqle.getErrorCode() == 1441) {
-						if (_log.isWarnEnabled()) {
+						if (log.isWarnEnabled()) {
 							sb = new StringBundler(6);
 
 							sb.append("Unable to alter length of column ");
@@ -113,22 +92,14 @@ public class PostUpgradeFixOSGiCommands {
 							sb.append(" because it contains values larger ");
 							sb.append("than the new column length");
 
-							_log.warn(sb.toString());
+							log.warn(sb.toString());
 						}
 					}
 					else {
-						_log.error(
-							"An exception was thrown while executing" +
-								"postUpgradeFix:LPS_68410",
-							sqle);
-
 						throw sqle;
 					}
 				}
 			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -163,7 +134,7 @@ public class PostUpgradeFixOSGiCommands {
 				}
 				catch (SQLException sqle) {
 					if (sqle.getErrorCode() == 1441) {
-						if (_log.isWarnEnabled()) {
+						if (log.isWarnEnabled()) {
 							sb = new StringBundler(6);
 
 							sb.append("Unable to alter length of column ");
@@ -173,15 +144,10 @@ public class PostUpgradeFixOSGiCommands {
 							sb.append(" because it contains values larger ");
 							sb.append("than the new column length");
 
-							_log.warn(sb.toString());
+							log.warn(sb.toString());
 						}
 					}
 					else {
-						_log.error(
-							"An exception was thrown while executing" +
-								"postUpgradeFix:LPS_68410",
-							sqle);
-
 						throw sqle;
 					}
 				}
@@ -189,7 +155,29 @@ public class PostUpgradeFixOSGiCommands {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		PostUpgradeFixOSGiCommands.class);
+	@Override
+	protected void doExecute() throws Exception {
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() == DBType.SQLSERVER) {
+			alterNVarcharColumnsSQLServer();
+		}
+		else if (db.getDBType() == DBType.SYBASE) {
+			alterVarcharColumnsSybase();
+		}
+		else {
+			if (log.isInfoEnabled()) {
+				log.info(
+					"No changes occurred during " + getCommand() +
+						". Database type " + db.getDBType() +
+							" not affected during upgrade");
+			}
+		}
+	}
+
+	@Override
+	protected String getFunction() {
+		return FUNCTION;
+	}
 
 }
