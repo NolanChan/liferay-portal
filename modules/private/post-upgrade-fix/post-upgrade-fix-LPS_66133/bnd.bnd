@@ -1,3 +1,4 @@
 Bundle-Name: Liferay Post Upgrade Fix LPS_66133
 Bundle-SymbolicName: com.liferay.post.upgrade.fix.LPS_66133
 Bundle-Version: 1.0.0
+-includeresource: @com.liferay.post.upgrade.fix.api-[0-9]*.jar
