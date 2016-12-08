@@ -1915,9 +1915,9 @@ app.artifacts-7.0.10=\
 	com.liferay.frontend.css.common-2.0.1.jar,\
 	com.liferay.frontend.css.rtl.converter-1.0.3.jar,\
 	com.liferay.frontend.css.rtl.servlet-1.0.3.jar,\
-	com.liferay.frontend.css.web-1.0.17.jar,\
+	com.liferay.frontend.css.web-1.0.18.jar,\
 	com.liferay.frontend.editor.alloyeditor.accessibility.web-1.0.2.jar,\
-	com.liferay.frontend.editor.alloyeditor.web-1.0.12.jar,\
+	com.liferay.frontend.editor.alloyeditor.web-1.0.13.jar,\
 	com.liferay.frontend.editor.ckeditor.web-1.0.16.jar,\
 	com.liferay.frontend.editor.lang-1.0.2.jar,\
 	com.liferay.frontend.editor.simple.web-1.0.5.jar,\
@@ -1939,11 +1939,11 @@ app.artifacts-7.0.10=\
 	com.liferay.frontend.js.soyutils.web-1.0.4.jar,\
 	com.liferay.frontend.js.spa.web-1.0.15.jar,\
 	com.liferay.frontend.js.web-1.0.23.jar,\
-	com.liferay.frontend.taglib-2.0.11.jar,\
+	com.liferay.frontend.taglib-2.0.13.jar,\
 	com.liferay.frontend.taglib.soy-1.0.2.jar,\
 	com.liferay.frontend.taglib.util.freemarker.contributor-1.0.2.jar,\
 	com.liferay.frontend.theme.contributor.extender-1.0.5.jar,\
-	com.liferay.frontend.theme.styled-2.0.17.jar,\
+	com.liferay.frontend.theme.styled-2.0.18.jar,\
 	com.liferay.frontend.theme.unstyled-2.0.18.jar,\
 	com.liferay.hello.soy.web-1.0.2.jar,\
 	com.liferay.hello.velocity.web-2.0.3.jar,\
@@ -1955,11 +1955,11 @@ app.artifacts-7.0.10=\
 	com.liferay.login.web-1.1.4.jar,\
 	com.liferay.map.api-2.0.1.jar,\
 	com.liferay.map.common-2.0.1.jar,\
-	com.liferay.map.google.maps-1.0.7.jar,\
+	com.liferay.map.google.maps-1.0.8.jar,\
 	com.liferay.map.openstreetmap-2.0.4.jar,\
 	com.liferay.map.taglib-1.0.6.jar,\
 	com.liferay.mobile.device.rules.api-2.0.1.jar,\
-	com.liferay.mobile.device.rules.service-1.2.6.jar,\
+	com.liferay.mobile.device.rules.service-1.2.7.jar,\
 	com.liferay.mobile.device.rules.web-1.0.12.jar,\
 	com.liferay.monitoring.web-1.0.7.jar,\
 	com.liferay.my.account.web-1.0.4.jar,\
@@ -2024,7 +2024,7 @@ app.artifacts-7.0.10=\
 	com.liferay.portal.scripting.executor-2.1.1.jar,\
 	com.liferay.portal.scripting.groovy-2.0.2.jar,\
 	com.liferay.portal.search-3.4.9.jar,\
-	com.liferay.portal.search.elasticsearch-2.0.12.jar,\
+	com.liferay.portal.search.elasticsearch-2.0.13.jar,\
 	com.liferay.portal.search.facet-2.0.2.jar,\
 	com.liferay.portal.search.web-1.1.13.jar,\
 	com.liferay.portal.security.antisamy-2.0.5.jar,\
@@ -2084,12 +2084,12 @@ app.artifacts-7.0.10=\
 	com.liferay.users.admin.api-2.0.1.jar,\
 	com.liferay.users.admin.impl-1.0.4.jar,\
 	com.liferay.users.admin.web-2.0.16.jar,\
-	com.liferay.web.proxy.web-1.0.5.jar,\
+	com.liferay.web.proxy.web-1.0.6.jar,\
 	com.liferay.websocket.whiteboard-1.0.1.jar,\
 	com.liferay.xstream.configurator.api-2.0.2.jar,\
 	javax.validation.api-1.1.0.Final.jar,\
 	org.codehaus.stax2-3.1.4.jar
 
-app.change.log-7.0.10=LPS-44965 LPS-52675 LPS-61099 LPS-61420 LPS-63370 LPS-63740 LPS-64031 LPS-64414 LPS-64713 LPS-64863 LPS-64870 LPS-64981 LPS-65012 LPS-65064 LPS-65135 LPS-65211 LPS-65225 LPS-65362 LPS-65398 LPS-65560 LPS-65672 LPS-65683 LPS-65810 LPS-65874 LPS-65909 LPS-65950 LPS-66007 LPS-66012 LPS-66064 LPS-66099 LPS-66173 LPS-66244 LPS-66292 LPS-66697 LPS-66715 LPS-66853 LPS-66929 LPS-66931 LPS-66974 LPS-67027 LPS-67167 LPS-67352 LPS-67355 LPS-67502 LPS-67806 LPS-67878 LPS-68062 LPS-68180 LPS-68289 LPS-68294 LPS-68298 LPS-68298: LPS-68415 LPS-68448 LPS-68581 LPS-68612 LPS-68736 LPS-68819 LPS-68837 LPS-68843 LPS-68862 LPS-68893 LPS-68942 LPS-68979 LPS-68980 LPS-69031 LPS-69059 LPS-69068 LPS-69078 LPS-69080 LPS-69135 LPS-69143 LPS-69168 LPS-69267 LPS-69268 LPS-69271 LPS-69283 LPS-69287 LPS-69305 LPS-69392 LPS-69427 LPS-69469 LPS-69495
+app.change.log-7.0.10=LPS-44965 LPS-48219 LPS-52675 LPS-61099 LPS-61420 LPS-63370 LPS-63740 LPS-64031 LPS-64414 LPS-64713 LPS-64863 LPS-64870 LPS-64981 LPS-65012 LPS-65064 LPS-65135 LPS-65211 LPS-65225 LPS-65362 LPS-65398 LPS-65560 LPS-65658 LPS-65683 LPS-65810 LPS-65874 LPS-65909 LPS-65950 LPS-66007 LPS-66012 LPS-66064 LPS-66099 LPS-66173 LPS-66244 LPS-66292 LPS-66551 LPS-66697 LPS-66715 LPS-66853 LPS-66929 LPS-66931 LPS-66974 LPS-67027 LPS-67167 LPS-67352 LPS-67355 LPS-67502 LPS-67806 LPS-67878 LPS-68041 LPS-68062 LPS-68180 LPS-68289 LPS-68294 LPS-68298 LPS-68298: LPS-68415 LPS-68448 LPS-68541 LPS-68581 LPS-68612 LPS-68819 LPS-68837 LPS-68843 LPS-68862 LPS-68893 LPS-68927 LPS-68942 LPS-68979 LPS-68980 LPS-69031 LPS-69059 LPS-69068 LPS-69078 LPS-69080 LPS-69135 LPS-69168 LPS-69267 LPS-69268 LPS-69271 LPS-69287 LPS-69305 LPS-69392 LPS-69427 LPS-69469 LPS-69495 LPS-69508 LPS-69557
 
-app.git.id-7.0.10=adea620739846b7976156bdc0ac7361363c6f957
+app.git.id-7.0.10=1e645960fe09ab36522ee0694ec17cfc671cba5f
