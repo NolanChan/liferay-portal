@@ -27,6 +27,7 @@ public abstract class AbstractQueueManagerImpl implements QueueManager {
 	public void afterPropertiesSet() {
 	}
 
+	@Override
 	public <T extends Message> List<T> getMessages(String queueName) {
 		return getMessages(queueName, Message.class);
 	}
