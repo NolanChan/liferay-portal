@@ -60,6 +60,16 @@
 
 						counter = counter + 1;
 					}
+					else {
+						var tags = node.querySelector('.documentation-project-tags');
+						var tagText = instance._normalizeQuery(tags.innerText);
+
+						if (tagText.search(normalizeQuery) != -1) {
+							match = true;
+
+							counter = counter + 1;
+						}
+					}
 
 					results.push(
 						{
