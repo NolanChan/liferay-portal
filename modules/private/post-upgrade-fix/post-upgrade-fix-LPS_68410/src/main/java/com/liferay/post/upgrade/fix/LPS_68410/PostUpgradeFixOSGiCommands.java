@@ -72,7 +72,7 @@ public class PostUpgradeFixOSGiCommands {
 		}
 	}
 
-	protected void alterNVarcharColumnsSQLServer() throws Exception {
+	protected void alterNVarcharColumnsSQLServer() throws SQLException {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("select table_name, column_name from ");
@@ -132,7 +132,7 @@ public class PostUpgradeFixOSGiCommands {
 		}
 	}
 
-	protected void alterVarcharColumnsSybase() throws Exception {
+	protected void alterVarcharColumnsSybase() throws SQLException {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("select o.name, c.name from sysobjects o, syscolumns c, ");
