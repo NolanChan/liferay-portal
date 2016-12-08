@@ -161,14 +161,6 @@ public class PostUpgradeFixOSGiCommands extends BasePostUpgradeFixOSGiCommands {
 		else if (db.getDBType() == DBType.SYBASE) {
 			alterVarcharColumnsSybase();
 		}
-		else {
-			if (log.isInfoEnabled()) {
-				log.info(
-					"No changes occurred during " + getCommand() +
-						". Database type " + db.getDBType() +
-							" not affected during upgrade");
-			}
-		}
 	}
 
 	@Override
