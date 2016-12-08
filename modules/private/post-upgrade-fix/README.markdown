@@ -24,7 +24,7 @@ who upgrade to DXP after installing this fix pack.
 
 3. If it's a critical issue or your customer needs to solve the problem but
 can't repeat the upgrade, create a new module in the
-`modules/private/fixes/upgrade` directory inside the **liferay-portal-ee**
+`modules/private/post-upgrade-fix` directory inside the **liferay-portal-ee**
 (`ee-7.0.x`) branch. This module must include a Gogo console command which
 executes the same modifications as the upgrade process. Create a knowledge base
 article with the instructions to execute the process so that other customers can
