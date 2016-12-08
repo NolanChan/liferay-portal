@@ -47,6 +47,7 @@ public class ReportFactoryImpl implements ReportFactory {
 		}
 	}
 
+	@Override
 	public Report getReport(ReportType reportType) {
 		return _reports.get(reportType);
 	}
