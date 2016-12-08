@@ -96,8 +96,8 @@ public class PostUpgradeFixOSGiCommands {
 				sb.append(columnName);
 				sb.append(" nvarchar(4000)");
 
-				try (PreparedStatement ps2 =
-						connection.prepareStatement(sb.toString())) {
+				try (PreparedStatement ps2 = connection.prepareStatement(
+						sb.toString())) {
 
 					ps2.execute();
 				}
@@ -156,8 +156,8 @@ public class PostUpgradeFixOSGiCommands {
 				sb.append(columnName);
 				sb.append(" varchar(4000)");
 
-				try (PreparedStatement ps2 =
-						connection.prepareStatement(sb.toString())) {
+				try (PreparedStatement ps2 = connection.prepareStatement(
+						sb.toString())) {
 
 					ps2.execute();
 				}
