@@ -37,6 +37,6 @@ public class DocumentationProjectIndexFriendlyURLMapper extends DefaultFriendlyU
 		return _MAPPING;
 	}
 
-	private static final String _MAPPING = "documentation_project";
+	private static final String _MAPPING = "index";
 
 }

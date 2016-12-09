@@ -3,20 +3,14 @@
 
 <routes>
 	<route>
-		<pattern>/</pattern>
-		<ignored-parameter name="p_auth" />
-		<ignored-parameter name="p_p_col_count" />
-		<ignored-parameter name="p_p_col_id" />
-		<ignored-parameter name="p_p_id" />
+		<pattern></pattern>
+		<implicit-parameter name="mvcRenderCommandName">/view</implicit-parameter>
 		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{predefinedFilterTag}</pattern>
-		<ignored-parameter name="p_auth" />
-		<ignored-parameter name="p_p_col_count" />
-		<ignored-parameter name="p_p_col_id" />
-		<ignored-parameter name="p_p_id" />
+		<implicit-parameter name="mvcRenderCommandName">/view</implicit-parameter>
 		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 	</route>
