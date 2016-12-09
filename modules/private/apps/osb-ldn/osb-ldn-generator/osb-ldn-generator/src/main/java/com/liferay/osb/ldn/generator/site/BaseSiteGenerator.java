@@ -23,10 +23,12 @@ import java.util.Map;
  */
 public abstract class BaseSiteGenerator implements SiteGenerator {
 
+	@Override
 	public String getKey() {
 		return _key;
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}

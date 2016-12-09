@@ -40,6 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class GuestSiteGenerator extends BaseSiteGenerator {
 
+	@Override
 	public void generate(long groupId) throws Exception {
 		generateLayout(groupId, _homeLayoutGenerator);
 
