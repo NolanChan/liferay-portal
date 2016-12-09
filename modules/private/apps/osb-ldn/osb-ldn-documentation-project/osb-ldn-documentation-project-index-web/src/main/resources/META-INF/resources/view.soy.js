@@ -62,6 +62,7 @@
 					}
 					else {
 						var tags = node.querySelector('.documentation-project-tags');
+
 						var tagText = instance._normalizeQuery(tags.innerText);
 
 						if (tagText.search(normalizeQuery) != -1) {
