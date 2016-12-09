@@ -66,8 +66,8 @@ public class KeyGeneratorImplTest extends PowerMockito {
 
 		Set<String> ipAddresses = new HashSet<>();
 
-		ipAddresses.add("192.168.0.238");
 		ipAddresses.add("172.17.42.1");
+		ipAddresses.add("192.168.0.238");
 
 		when(
 			LicenseManagerUtil.getIpAddresses()
@@ -77,9 +77,9 @@ public class KeyGeneratorImplTest extends PowerMockito {
 
 		Set<String> macAddresses = new HashSet<>();
 
+		macAddresses.add("02:42:78:89:ec:18");
 		macAddresses.add("34:e6:d7:20:64:60");
 		macAddresses.add("80:00:0b:6d:63:16");
-		macAddresses.add("02:42:78:89:ec:18");
 
 		when(
 			LicenseManagerUtil.getMacAddresses()
