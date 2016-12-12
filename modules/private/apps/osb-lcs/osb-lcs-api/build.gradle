@@ -14,7 +14,6 @@ deploy {
 }
 
 deployConfigs {
-
 	ext {
 		autoClean = false
 	}
@@ -31,14 +30,13 @@ deployConfigs {
 			from "configs/com.liferay.osb.lcs.configuration.OSBLCSProductionConfiguration.cfg"
 			into new File(liferay.liferayHome, "osgi/configs")
 		}
-		else if (applicationProfile.equals("TEST")) {
-			from "configs/com.liferay.osb.lcs.configuration.OSBLCSTestConfiguration.cfg"
-			into new File(liferay.liferayHome, "osgi/configs")
-		}
 		else if (applicationProfile.equals("QA")) {
 			from "configs/com.liferay.osb.lcs.configuration.OSBLCSQAConfiguration.cfg"
 			into new File(liferay.liferayHome, "osgi/configs")
 		}
-
+		else if (applicationProfile.equals("TEST")) {
+			from "configs/com.liferay.osb.lcs.configuration.OSBLCSTestConfiguration.cfg"
+			into new File(liferay.liferayHome, "osgi/configs")
+		}
 	}
 }
