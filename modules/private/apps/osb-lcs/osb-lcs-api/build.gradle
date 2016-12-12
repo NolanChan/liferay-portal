@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.GradleUtil
+
 task deployConfigs(type: Copy)
 
 dependencies {
@@ -14,25 +16,26 @@ deploy {
 }
 
 deployConfigs {
+	String applicationProfile = GradleUtil.getProperty(project, "applicationProfile", "")
+
 	ext {
 		autoClean = false
 	}
 
 	from "configs/com.liferay.osb.lcs.configuration.OSBLCSConfiguration.cfg"
-	into new File(liferay.liferayHome, "osgi/configs")
 
-	if (project.hasProperty("applicationProfile")) {
-		if (applicationProfile.equals("LOCAL_DEVELOPMENT")) {
-			from "configs/com.liferay.osb.lcs.configuration.OSBLCSDevelopmentConfiguration.cfg"
-		}
-		else if (applicationProfile.equals("PRODUCTION")) {
-			from "configs/com.liferay.osb.lcs.configuration.OSBLCSProductionConfiguration.cfg"
-		}
-		else if (applicationProfile.equals("QA")) {
-			from "configs/com.liferay.osb.lcs.configuration.OSBLCSQAConfiguration.cfg"
-		}
-		else if (applicationProfile.equals("TEST")) {
-			from "configs/com.liferay.osb.lcs.configuration.OSBLCSTestConfiguration.cfg"
-		}
+	if (applicationProfile.equals("LOCAL_DEVELOPMENT")) {
+		from "configs/com.liferay.osb.lcs.configuration.OSBLCSDevelopmentConfiguration.cfg"
 	}
+	else if (applicationProfile.equals("PRODUCTION")) {
+		from "configs/com.liferay.osb.lcs.configuration.OSBLCSProductionConfiguration.cfg"
+	}
+	else if (applicationProfile.equals("QA")) {
+		from "configs/com.liferay.osb.lcs.configuration.OSBLCSQAConfiguration.cfg"
+	}
+	else if (applicationProfile.equals("TEST")) {
+		from "configs/com.liferay.osb.lcs.configuration.OSBLCSTestConfiguration.cfg"
+	}
+
+	into new File(liferay.liferayHome, "osgi/configs")
 }
