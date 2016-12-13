@@ -19,7 +19,7 @@
 <@liferay.control_menu />
 
 <div id="wrapper">
-	<header class="banner<#if light_navigation> light-navigation</#if>" id="banner" role="banner">
+	<header class="banner" id="banner" role="banner">
 		<div class="row">
 			<div class="navbar-header" id="heading">
 				<a class="${logo_css_class}" href="${home_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">

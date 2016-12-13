@@ -14,10 +14,6 @@
 		color: $fontColor;
 	}
 
-	&.light-navigation a {
-		color: $lightFontColor;
-	}
-
 	.logo.custom-logo {
 		margin-right: auto;
 		padding-top: 16px;
@@ -129,22 +125,8 @@
 	@include transform(translateY(-100%));
 }
 
-.nav-light {
-	#banner:not(.banner-fill) {
-		.navbar-toggle {
-			border-color: #FFF;
-
-			.icon-bar {
-				background-color: #FFF;
-			}
-		}
-
-		@include sm {
-			a {
-				color: #FFF;
-			}
-		}
-	}
+.light-navigation #banner a {
+	color: $lightFontColor;
 }
 
 .open-admin-panel #banner .navbar-header {

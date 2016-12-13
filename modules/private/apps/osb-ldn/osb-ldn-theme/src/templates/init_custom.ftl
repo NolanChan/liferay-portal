@@ -5,3 +5,7 @@
 
 	light_navigation = getterUtil.getBoolean(themeDisplay.getThemeSetting("light-navigation"))
 />
+
+<#if light_navigation == true>
+	<#assign css_class = css_class + " light-navigation" />
+</#if>
