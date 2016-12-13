@@ -64,9 +64,9 @@ public class LCSPatcherUtil {
 			return 0;
 		}
 
-		String[] parsedInstalledPatchId = installedPatches[0].split("-");
+		String[] parts = installedPatches[0].split("-");
 
-		return GetterUtil.getInteger(parsedInstalledPatchId[1]);
+		return GetterUtil.getInteger(parts[1]);
 	}
 
 	private static void _resetProperties() {
