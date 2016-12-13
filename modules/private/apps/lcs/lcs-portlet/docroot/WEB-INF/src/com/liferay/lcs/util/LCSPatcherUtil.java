@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.patcher.PatcherUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.File;
 
@@ -56,31 +57,47 @@ public class LCSPatcherUtil {
 		return PatcherUtil.isConfigured();
 	}
 
-	private static void _resetProperties() {
-		try {
-			Object patcherUtil = PortalBeanLocatorUtil.locate(
-				"com.liferay.portal.kernel.patcher.PatcherUtil");
+	private static int _getInstalledPatchVersion() {
+		String[] installedPatches = PatcherUtil.getInstalledPatches();
 
-			Class<?> clazz = patcherUtil.getClass();
-
-			Field patcherField = clazz.getDeclaredField("_patcher");
-
-			patcherField.setAccessible(true);
-
-			Object patcherImpl = patcherField.get(patcherUtil);
-
-			clazz = patcherImpl.getClass();
-
-			Field propertiesField = clazz.getDeclaredField("_properties");
-
-			propertiesField.setAccessible(true);
-
-			propertiesField.set(patcherImpl, null);
+		if (installedPatches.length == 0) {
+			return 0;
 		}
-		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+
+		String[] parsedInstalledPatchId = installedPatches[0].split("-");
+
+		return GetterUtil.getInteger(parsedInstalledPatchId[1]);
+	}
+
+	private static void _resetProperties() {
+		if (_getInstalledPatchVersion() < _PATCHER_IMPL_FIX_PATCH_VERSION) {
+			try {
+				Object patcherUtil = PortalBeanLocatorUtil.locate(
+					"com.liferay.portal.kernel.patcher.PatcherUtil");
+
+				Class<?> clazz = patcherUtil.getClass();
+
+				Field patcherField = clazz.getDeclaredField("_patcher");
+
+				patcherField.setAccessible(true);
+
+				Object patcherImpl = patcherField.get(patcherUtil);
+
+				clazz = patcherImpl.getClass();
+
+				Field propertiesField = clazz.getDeclaredField("_properties");
+
+				propertiesField.setAccessible(true);
+
+				propertiesField.set(patcherImpl, null);
+			}
+			catch (Exception e) {
+				_log.error(e.getMessage(), e);
+			}
 		}
 	}
+
+	private static final int _PATCHER_IMPL_FIX_PATCH_VERSION = 8;
 
 	private static final Log _log = LogFactoryUtil.getLog(LCSPatcherUtil.class);
 
