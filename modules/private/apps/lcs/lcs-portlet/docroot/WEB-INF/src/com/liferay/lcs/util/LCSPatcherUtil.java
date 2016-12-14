@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
 
@@ -64,36 +65,38 @@ public class LCSPatcherUtil {
 			return 0;
 		}
 
-		String[] parts = installedPatches[0].split("-");
+		String[] parts = installedPatches[0].split(StringPool.DASH);
 
 		return GetterUtil.getInteger(parts[1]);
 	}
 
 	private static void _resetProperties() {
-		if (_getInstalledPatchVersion() < _PATCHER_IMPL_FIX_PATCH_VERSION) {
-			try {
-				Object patcherUtil = PortalBeanLocatorUtil.locate(
-					"com.liferay.portal.kernel.patcher.PatcherUtil");
+		if (_PATCHER_IMPL_FIX_PATCH_VERSION >= _getInstalledPatchVersion()) {
+			return;
+		}
 
-				Class<?> clazz = patcherUtil.getClass();
+		try {
+			Object patcherUtil = PortalBeanLocatorUtil.locate(
+				"com.liferay.portal.kernel.patcher.PatcherUtil");
 
-				Field patcherField = clazz.getDeclaredField("_patcher");
+			Class<?> clazz = patcherUtil.getClass();
 
-				patcherField.setAccessible(true);
+			Field patcherField = clazz.getDeclaredField("_patcher");
 
-				Object patcherImpl = patcherField.get(patcherUtil);
+			patcherField.setAccessible(true);
 
-				clazz = patcherImpl.getClass();
+			Object patcherImpl = patcherField.get(patcherUtil);
 
-				Field propertiesField = clazz.getDeclaredField("_properties");
+			clazz = patcherImpl.getClass();
 
-				propertiesField.setAccessible(true);
+			Field propertiesField = clazz.getDeclaredField("_properties");
 
-				propertiesField.set(patcherImpl, null);
-			}
-			catch (Exception e) {
-				_log.error(e.getMessage(), e);
-			}
+			propertiesField.setAccessible(true);
+
+			propertiesField.set(patcherImpl, null);
+		}
+		catch (Exception e) {
+			_log.error(e.getMessage(), e);
 		}
 	}
 
