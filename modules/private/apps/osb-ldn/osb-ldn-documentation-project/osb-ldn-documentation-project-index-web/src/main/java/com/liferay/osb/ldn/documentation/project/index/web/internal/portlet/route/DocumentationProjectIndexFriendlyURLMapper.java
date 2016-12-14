@@ -30,7 +30,8 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = FriendlyURLMapper.class
 )
-public class DocumentationProjectIndexFriendlyURLMapper extends DefaultFriendlyURLMapper {
+public class DocumentationProjectIndexFriendlyURLMapper
+	extends DefaultFriendlyURLMapper {
 
 	@Override
 	public String getMapping() {
