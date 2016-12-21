@@ -1561,11 +1561,29 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 				additionalConfigurations=\
 					cluster.routing.allocation.disk.threshold_enabled: false\n\
 					cluster.service.slow_task_logging_threshold: 600s\n\
+					httpEnabled: false\n\
 					index.indexing.slowlog.threshold.index.warn: 600s\n\
 					index.search.slowlog.threshold.fetch.warn: 600s\n\
 					index.search.slowlog.threshold.query.warn: 600s\n\
 					monitor.jvm.gc.old.warn: 600s\n\
-					monitor.jvm.gc.young.warn: 600s
+					monitor.jvm.gc.young.warn: 600s\n\
+					threadpool.bulk.size: 1\n\
+					threadpool.fetch_shard_started.size: 1\n\
+					threadpool.fetch_shard_store.size: 1\n\
+					threadpool.flush.size: 1\n\
+					threadpool.force_merge.size: 1\n\
+					threadpool.generic.size: 1\n\
+					threadpool.get.size: 1\n\
+					threadpool.index.size: 1\n\
+					threadpool.listener.size: 1\n\
+					threadpool.management.size: 1\n\
+					threadpool.percolate.size: 1\n\
+					threadpool.refresh.size: 1\n\
+					threadpool.search.size: 1\n\
+					threadpool.snapshot.size: 1\n\
+					threadpool.suggest.size: 1\n\
+					threadpool.warmer.size: 1\n\
+					transport.local.workers: 1
 				logExceptionsOnly=false
 			</echo>
 		</sequential>
@@ -2104,10 +2122,11 @@ tell application "Safari" to quit
 						src="${test.build.plugins.war.zip.url}"
 					/>
 
-					<unzip
-						dest="."
-						src="plugins.war.zip"
-					/>
+					<unzip dest="." src="plugins.war.zip">
+						<mapper>
+							<globmapper from="plugins/*" to="plugins/marketplace/*" />
+						</mapper>
+					</unzip>
 
 					<delete file="plugins.war.zip" />
 				</then>
@@ -2366,8 +2385,11 @@ ${tomcat-gc-log}
 								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/LPKGUpgradeLogAssertorTest.java",
 								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/LPKGUpgradeTest.java",
 								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/test/java/com/liferay/portal/lpkg/LPKGVersionChangeLogAssertorTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/test/LPKGDeployerTest.java",
-								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGOverrideVerifyTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/test/LPKGDeployerCleanStartupTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/test/LPKGDeployerDowngradeTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/deployer/test/LPKGDeployerUpgradeTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGOverrideVerifyCleanStartupTest.java",
+								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGOverrideVerifySecondStartupTest.java",
 								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGRevertOverrideVerifyTest.java",
 								"modules/apps/web-experience/export-import/export-import-resources-importer-test/src/testIntegration/java/com/liferay/exportimport/resources/importer/test/ResourcesImporterTest.java",
 								"modules/private/apps/osb-lcs/**",
@@ -2541,24 +2563,18 @@ ${tomcat-gc-log}
 		</sequential>
 	</macrodef>
 
-	<macrodef name="set-portal-impl-portal-ext-properties">
-		<sequential>
-			<generate-jdbc-properties properties.file="portal-impl/src/portal-ext.properties">
-				<post-action>
-					<echo file="@{properties.file}" append="true"><![CDATA[
-javascript.single.page.application.timeout=300000]]></echo>
-				</post-action>
-			</generate-jdbc-properties>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="set-portal-impl-portal-test-ext-properties">
 		<sequential>
 			<generate-jdbc-properties properties.file="portal-impl/test/portal-test-ext.properties">
 				<post-action>
 					<echo file="@{properties.file}" append="true"><![CDATA[
 module.framework.base.dir=${liferay.home}/osgi
-sprite.root.dir=/tmp/sprite]]></echo>
+
+sprite.root.dir=/tmp/sprite
+
+memory.scheduler.org.quartz.threadPool.threadCount=1
+
+persisted.scheduler.org.quartz.threadPool.threadCount=1]]></echo>
 				</post-action>
 			</generate-jdbc-properties>
 		</sequential>
@@ -4516,7 +4532,6 @@ go]]></replacevalue>
 			<elseif>
 				<and>
 					<equals arg1="${database.type}" arg2="sybase" />
-					<equals arg1="${database.version}" arg2="16.0" />
 				</and>
 				<then>
 					<delete failonerror="false" includeemptydirs="true">
@@ -4528,7 +4543,7 @@ go]]></replacevalue>
 
 					<mirrors-get
 						dest="${todir}"
-						src="${test.jdbc.drivers.url}/sybase/16.0/${jdbc.sybase.driver}"
+						src="${test.jdbc.drivers.url}/sybase/${database.version}/${jdbc.sybase.driver}"
 					/>
 				</then>
 			</elseif>
@@ -4631,6 +4646,64 @@ go]]></replacevalue>
 					dest="${liferay.home}/deploy/license.xml"
 					src="${test.build.license.xml.zip.url}"
 				/>
+			</then>
+		</if>
+	</target>
+
+	<target name="deploy-osgi-apps">
+		<get-testcase-property property.name="osgi.app.includes" />
+
+		<if>
+			<isset property="osgi.app.includes" />
+			<then>
+				<for list="${osgi.app.includes}" param="osgi.app.name">
+					<sequential>
+						<for param="app.dir">
+							<path>
+								<dirset dir="modules">
+									<include name="apps/@{osgi.app.name}" />
+									<include name="private/apps/@{osgi.app.name}" />
+								</dirset>
+							</path>
+							<sequential>
+								<local name="Liferay-Releng-App-Title" />
+
+								<property file="@{app.dir}/app.bnd" />
+
+								<if>
+									<available file="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+									<then>
+										<echo>${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg already exists.</echo>
+									</then>
+									<elseif>
+										<available file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+										<then>
+											<echo>Copying ${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg to ${liferay.home}/osgi/marketplace</echo>
+
+											<copy file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg" todir="${liferay.home}/osgi/marketplace" />
+										</then>
+									</elseif>
+									<else>
+										<echo>Deploying all relevant modules that make up '${Liferay-Releng-App-Title}.lpkg'</echo>
+
+										<for param="osgi.module.bnd.file">
+											<fileset dir="@{app.dir}">
+												<include name="**/bnd.bnd" />
+											</fileset>
+											<sequential>
+												<local name="osgi.module.dir" />
+
+												<dirname file="@{osgi.module.bnd.file}" property="osgi.module.dir" />
+
+												<gradle-execute dir="${osgi.module.dir}" task="deploy" />
+											</sequential>
+										</for>
+									</else>
+								</if>
+							</sequential>
+						</for>
+					</sequential>
+				</for>
 			</then>
 		</if>
 	</target>
@@ -5283,8 +5356,8 @@ go]]></replacevalue>
 					int passCount = totalCount - failCount;
 
 					lines.add(summaryLocation, "\t</summary>");
-					lines.add(summaryLocation, "\t\t<property name=\"FAILED\" value=\"" + Integer.toString(failCount) + "\" />");
-					lines.add(summaryLocation, "\t\t<property name=\"PASSED\" value=\"" + Integer.toString(passCount) + "\" />");
+					lines.add(summaryLocation, "\t\t<property name=\"failed\" value=\"" + Integer.toString(failCount) + "\" />");
+					lines.add(summaryLocation, "\t\t<property name=\"passed\" value=\"" + Integer.toString(passCount) + "\" />");
 					lines.add(summaryLocation, "\t<summary>");
 
 					FileWriter fileWriter = new FileWriter(jenkinsResultsXMLSuiteFile);
@@ -5563,6 +5636,10 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<category name="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.spring.hibernate.DialectDetector">
 		<priority value="${dialect.detector.log.level}" />
 	</category>
@@ -5622,6 +5699,26 @@ jdbc.default.url=${database.url}
 jdbc.default.username=${database.username}
 jdbc.default.password=${database.password}
 
+// HikariCP
+
+jdbc.default.maximumPoolSize=20
+jdbc.default.minimumIdle=0
+
+jdbc.counter.maximumPoolSize=5
+jdbc.counter.minimumIdle=0
+
+// Tomcat
+
+jdbc.default.initialSize=0
+jdbc.default.maxActive=20
+jdbc.default.maxIdle=0
+jdbc.default.minIdle=0
+
+jdbc.counter.initialSize=0
+jdbc.counter.maxActive=5
+jdbc.counter.maxIdle=0
+jdbc.counter.minIdle=0
+
 captcha.max.challenges=-1
 
 browser.launcher.url=
@@ -5633,6 +5730,10 @@ setup.wizard.enabled=false
 mail.session.jndi.name=
 
 sprite.root.dir=/tmp/sprite
+
+memory.scheduler.org.quartz.threadPool.threadCount=1
+
+persisted.scheduler.org.quartz.threadPool.threadCount=1
 
 axis.servlet.hosts.allowed=
 
@@ -7183,6 +7284,28 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
+		<get-testcase-property property.name="theme.file.name" />
+
+		<if>
+			<isset property="theme.file.name" />
+			<then>
+				<if>
+					<resourcecount count="0" when="greater">
+						<zipfileset src="${liferay.home}/osgi/war/${theme.file.name}">
+							<patternset>
+								<include name="**/private.lar" />
+							</patternset>
+						</zipfileset>
+					</resourcecount>
+					<then>
+						<echo append="true" file="${test.ext.properties.file}">
+							theme.contains.resources=true
+						</echo>
+					</then>
+				</if>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="timeout.explicit.wait" />
 
 		<if>
@@ -7418,7 +7541,19 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					<elseif>
 						<equals arg1="${app.server.type}" arg2="weblogic" />
 						<then>
-							<ant antfile="build-dist.xml" inheritAll="false" target="unzip-weblogic" />
+							<ant antfile="build-dist.xml" inheritAll="false" target="unzip-weblogic-custom" />
+
+							<chmod perm="a+x">
+								<fileset dir="${app.server.weblogic.bin.dir}">
+									<include name="**/*.sh" />
+								</fileset>
+							</chmod>
+
+							<chmod perm="a+x">
+								<fileset dir="${app.server.weblogic.instance.dir}">
+									<include name="**/*.sh" />
+								</fileset>
+							</chmod>
 						</then>
 					</elseif>
 				</if>
@@ -7458,6 +7593,24 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				</unzip>
 
 				<delete file="liferay-portal-dependencies.zip" />
+
+				<mirrors-get
+					dest="liferay-portal-osgi.zip"
+					src="${test.build.portal.osgi.zip.url}"
+				/>
+
+				<unzip
+					dest="${liferay.home}"
+					src="liferay-portal-osgi.zip"
+				>
+					<mapper
+						from="[^/]+/(osgi.*)"
+						to="\1"
+						type="regexp"
+					/>
+				</unzip>
+
+				<delete file="liferay-portal-osgi.zip" />
 			</else>
 		</if>
 	</target>
@@ -8698,6 +8851,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<if>
 			<equals arg1="${openam.enabled}" arg2="true" />
 			<then>
+				<ant antfile="build-test-authentication.xml" target="delete-openam-config" />
+
 				<ant antfile="build-test-authentication.xml" target="setup-openam" />
 			</then>
 		</if>
@@ -8737,6 +8892,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<start-test-smtp-server />
 			</then>
 		</if>
+
+		<antcall target="deploy-osgi-apps" />
 
 		<antcall target="deploy-osgi-modules" />
 
@@ -8803,15 +8960,15 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<equals arg1="${skip.start-app-server}" arg2="true" />
 			</not>
 			<then>
-				<get-testcase-property property.name="themes.delayed.deployment" />
+				<get-testcase-property property.name="theme.file.name" />
 
 				<if>
-					<isset property="themes.delayed.deployment" />
+					<isset property="theme.file.name" />
 					<then>
 						<mkdir dir="${liferay.home}/tmp" />
 
 						<move todir="${liferay.home}/tmp">
-							<fileset dir="${liferay.home}/deploy" includes="${themes.delayed.deployment}" />
+							<fileset dir="${liferay.home}/deploy" includes="${theme.file.name}" />
 						</move>
 					</then>
 				</if>
@@ -8857,15 +9014,19 @@ jdbc.default.password=${database.mysql.password}</echo>
 				</if>
 
 				<if>
-					<isset property="themes.delayed.deployment" />
+					<isset property="theme.file.name" />
 					<then>
 						<move todir="${liferay.home}/deploy">
-							<fileset dir="${liferay.home}/tmp" includes="${themes.delayed.deployment}" />
+							<fileset dir="${liferay.home}/tmp" includes="${theme.file.name}" />
 						</move>
 
 						<delete dir="${liferay.home}/tmp" failonerror="false" />
 
-						<sleep seconds="60" />
+						<waitfor checkevery="5" maxwait="300" maxwaitunit="second" timeoutproperty="theme.not.deployed">
+							<available file="${liferay.home}/osgi/war/${theme.file.name}" />
+						</waitfor>
+
+						<fail if="theme.not.deployed" message="${theme.file.name} has failed to deploy." />
 					</then>
 				</if>
 			</then>
@@ -8986,10 +9147,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 		</if>
 
 		<antcall target="clean-up-web-xml" />
-	</target>
-
-	<target name="set-portal-impl-portal-ext-properties">
-		<set-portal-impl-portal-ext-properties />
 	</target>
 
 	<target name="set-portal-impl-portal-test-ext-properties">

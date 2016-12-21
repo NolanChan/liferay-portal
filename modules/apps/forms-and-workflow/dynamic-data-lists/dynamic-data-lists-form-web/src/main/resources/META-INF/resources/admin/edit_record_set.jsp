@@ -164,8 +164,6 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 				<aui:button cssClass="btn-lg ddl-button" id="save" value="save-form" />
 
 				<aui:button cssClass="btn-lg btn-link" id="preview" value="preview-form" />
-
-				<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 			</aui:button-row>
 		</div>
 
@@ -228,15 +226,19 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 							window,
 							'<portlet:namespace />init',
 							function() {
+								var definition = <%= ddlFormAdminDisplayContext.getSerializedDDMForm() %>;
+
 								Liferay.DDM.Renderer.FieldTypes.register(fieldTypes);
 
 								Liferay.component(
 									'formPortlet',
 									new Liferay.DDL.Portlet(
 										{
+											availableLanguageIds: definition.availableLanguageIds,
 											autosaveInterval: '<%= ddlFormAdminDisplayContext.getAutosaveInterval() %>',
 											autosaveURL: '<%= saveRecordSetURL.toString() %>',
-											definition: <%= ddlFormAdminDisplayContext.getSerializedDDMForm() %>,
+											defaultLanguageId: definition.defaultLanguageId,
+											definition: definition,
 											description: '<%= HtmlUtil.escapeJS(description) %>',
 											editForm: event.form,
 											evaluatorURL: '<%= ddlFormAdminDisplayContext.getDDMFormContextProviderServletURL() %>',

@@ -252,12 +252,11 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		return ParamUtil.getString(
-			_renderRequest, "orderByCol", "modified-date");
+		return ParamUtil.getString(_renderRequest, "orderByCol", "create-date");
 	}
 
 	public String getOrderByType() {
-		return ParamUtil.getString(_renderRequest, "orderByType", "asc");
+		return ParamUtil.getString(_renderRequest, "orderByType", "desc");
 	}
 
 	public PortletURL getPortletURL() {
@@ -362,6 +361,9 @@ public class DDLFormAdminDisplayContext {
 
 		DDMForm ddmForm = new DDMForm();
 
+		ddmForm.addAvailableLocale(getSiteDefaultLocale());
+		ddmForm.setDefaultLocale(getSiteDefaultLocale());
+
 		if (ddmStructure != null) {
 			ddmForm = ddmStructure.getDDMForm();
 		}
@@ -432,6 +434,10 @@ public class DDLFormAdminDisplayContext {
 			_ddlFormAdminRequestHelper.getPermissionChecker(),
 			_ddlFormAdminRequestHelper.getScopeGroupId(),
 			DDLActionKeys.ADD_RECORD_SET);
+	}
+
+	public boolean isShowCopyRecordSetButton() {
+		return isShowAddRecordSetButton();
 	}
 
 	public boolean isShowDeleteRecordSetIcon(DDLRecordSet recordSet) {
@@ -596,6 +602,13 @@ public class DDLFormAdminDisplayContext {
 		ServletContext servletContext = servletConfig.getServletContext();
 
 		return servletContext.getContextPath();
+	}
+
+	protected Locale getSiteDefaultLocale() {
+		ThemeDisplay themeDisplay =
+			_ddlFormAdminRequestHelper.getThemeDisplay();
+
+		return themeDisplay.getSiteDefaultLocale();
 	}
 
 	protected int getTotal() throws PortalException {

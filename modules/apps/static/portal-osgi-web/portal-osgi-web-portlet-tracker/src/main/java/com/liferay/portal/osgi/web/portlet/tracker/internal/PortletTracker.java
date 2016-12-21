@@ -121,10 +121,10 @@ public class PortletTracker
 			portletName = clazz.getName();
 		}
 
-		String portletId = PortalUtil.getJsSafePortletId(portletName);
+		String portletId = StringUtil.replace(
+			portletName, new char[] {'.', '$'}, new char[] {'_', '_'});
 
-		portletId = StringUtil.replace(
-			portletId, new char[] {'$'}, new char[] {'_'});
+		portletId = PortalUtil.getJsSafePortletId(portletId);
 
 		if (portletId.length() >
 				PortletInstance.PORTLET_INSTANCE_KEY_MAX_LENGTH) {
@@ -464,10 +464,6 @@ public class PortletTracker
 			GetterUtil.getString(
 				get(serviceReference, "css-class-wrapper"),
 				portletModel.getCssClassWrapper()));
-		portletModel.setFacebookIntegration(
-			GetterUtil.getString(
-				get(serviceReference, "facebook-integration"),
-				portletModel.getFacebookIntegration()));
 		portletModel.setFooterPortalCss(
 			StringPlus.asList(get(serviceReference, "footer-portal-css")));
 		portletModel.setFooterPortalJavaScript(

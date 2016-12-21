@@ -416,8 +416,8 @@ public class DLFileEntryLocalServiceImpl
 				}
 			}
 			catch (PortalException pe) {
-				if ((pe instanceof ExpiredLockException) ||
-					(pe instanceof NoSuchLockException)) {
+				if (pe instanceof ExpiredLockException ||
+					pe instanceof NoSuchLockException) {
 				}
 				else {
 					throw pe;
@@ -1608,7 +1608,7 @@ public class DLFileEntryLocalServiceImpl
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #isKeepFileVersionLabel(long,
-	 * boolean, ServiceContext)}
+	 *             boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -2121,8 +2121,8 @@ public class DLFileEntryLocalServiceImpl
 			}
 		}
 		catch (PortalException pe) {
-			if ((pe instanceof ExpiredLockException) ||
-				(pe instanceof NoSuchLockException)) {
+			if (pe instanceof ExpiredLockException ||
+				pe instanceof NoSuchLockException) {
 
 				DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
 					fileEntryId);

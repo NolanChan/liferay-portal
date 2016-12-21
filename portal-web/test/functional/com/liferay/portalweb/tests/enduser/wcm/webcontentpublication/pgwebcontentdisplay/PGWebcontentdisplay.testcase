@@ -460,8 +460,6 @@
 	</command>
 
 	<command name="LocalizeWebContent" priority="4">
-		<var name="languageKey" value="zh_CN" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -573,7 +571,7 @@
 	</command>
 
 	<command name="SelectWebContent" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#openURL" />
 
