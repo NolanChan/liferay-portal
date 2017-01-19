@@ -49,6 +49,8 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.always-display-default-configuration-icons=true",
 		"javax.portlet.name=" + HelloWorldPortletKeys.HELLO_WORLD,
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
@@ -57,17 +59,17 @@ import org.osgi.service.component.annotations.Component;
 )
 public class HelloWorldPortlet extends MVCPortlet {
 
-	@Override
-	public void doView(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		renderResponse.setContentType(ContentTypes.TEXT_HTML_UTF8);
-
-		PrintWriter printWriter = renderResponse.getWriter();
-
-		printWriter.print(
-			"Welcome to ".concat(ReleaseInfo.getReleaseInfo()).concat("."));
-	}
+//	@Override
+//	public void doView(
+//			RenderRequest renderRequest, RenderResponse renderResponse)
+//		throws IOException, PortletException {
+//
+//		renderResponse.setContentType(ContentTypes.TEXT_HTML_UTF8);
+//
+//		PrintWriter printWriter = renderResponse.getWriter();
+//
+//		printWriter.print(
+//			"Welcome to ".concat(ReleaseInfo.getReleaseInfo()).concat("."));
+//	}
 
 }
